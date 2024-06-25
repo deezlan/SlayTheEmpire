@@ -7,7 +7,7 @@ public class Main {
         JFrame window = new JFrame();
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setResizable(false);
-        window.setTitle("Slay the Empiresssssssssssssssssssss danial update");
+        window.setTitle("Slay the Empiresssssssssssssssssssss");
 
         GamePanel gamePanel = new GamePanel();
         window.add(gamePanel);

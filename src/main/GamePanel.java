@@ -10,9 +10,9 @@ import entity.Player;
 import tile.TileManager;
 
 public class GamePanel extends JPanel implements Runnable {
+    // Screen Setting
     final int ORIGINAL_TILE_SIZE = 16;
     final double SCALE = 3;
-
     public final int TILE_SIZE = (int)(ORIGINAL_TILE_SIZE * SCALE);
     public final int MAX_SCREEN_COL = 16;
     public final int MAX_SCREEN_ROW = 12;
@@ -25,6 +25,7 @@ public class GamePanel extends JPanel implements Runnable {
     TileManager tileM = new TileManager(this);
     KeyHandler keyH = new KeyHandler();
     Thread gameThread;
+    public CollisionChecker cChecker = new CollisionChecker(this);
     Player player = new Player(this, keyH);
 
     public GamePanel() {

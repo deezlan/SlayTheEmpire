@@ -9,7 +9,8 @@ import java.util.Objects;
 
 public class TileManager {
     GamePanel gp;
-    Tile[] tile;
+    public Tile[] tile;
+    public int[][] mapTileNum; //to check which tile the player is currently hitting
 
     public TileManager (GamePanel gp) {
         this.gp = gp;
@@ -23,14 +24,17 @@ public class TileManager {
             tile[0].image
                     = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
                             "/tiles/lobby/walls/topLeft.png"), "Missing top left wall tile"));
+            tile[0].collision = true;
 
             tile[1] = new Tile();
             tile[1].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
                             "/tiles/lobby/walls/topMiddle.png"), "Missing top middle wall tile"));
+            tile[1].collision = true;
 
             tile[2] = new Tile();
             tile[2].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
                             "/tiles/lobby/walls/hole.png"), "Missing hole wall tile"));
+            tile[2].collision = true;
 
             tile[3] = new Tile();
             tile[3].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
@@ -39,10 +43,12 @@ public class TileManager {
             tile[4] = new Tile();
             tile[4].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
                             "/tiles/lobby/walls/old.png"), "Missing old wall tile"));
+            tile[4].collision = true;
 
             tile[5] = new Tile();
             tile[5].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
                     "/tiles/lobby/walls/topRight.png"), "Missing top right wall tile"));
+            tile[5].collision = true;
         } catch (IOException e) {
             e.printStackTrace(System.out);
         }

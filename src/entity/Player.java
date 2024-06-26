@@ -4,7 +4,7 @@ import main.GamePanel;
 import main.KeyHandler;
 
 import javax.imageio.ImageIO;
-import java.awt.Graphics2D;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Objects;
@@ -16,13 +16,20 @@ public class Player extends Entity {
     public Player (GamePanel gp, KeyHandler keyH) {
         this.gp = gp;
         this.keyH = keyH;
+
         setDefaultValues();
         getPlayerImages();
+
+        solidArea = new Rectangle(); // draws a square at the centre of the player
+        solidArea.x = 56; // actual collision square
+        solidArea.y = 72;
+        solidArea.width = 30; // outer area of collision square
+        solidArea.height = 20;
     }
 
     public void setDefaultValues() {
-        x = 100;
-        y = 100;
+        worldX = 100; // changed it for locating the player in the world map
+        worldY = 100; // same thing
         speed = 3;
         action = "idleRight";
         lookingRight = true;
@@ -100,19 +107,35 @@ public class Player extends Entity {
         if ((keyH.wPressed || keyH.sPressed || keyH.aPressed || keyH.dPressed) && !action.equals("stuckOppositeDirection")) {
             if (keyH.wPressed) {
                 action = "moveUp";
-                y -= speed;
             }
             if (keyH.sPressed) {
                 action = "moveDown";
-                y += speed;
             }
             if (keyH.aPressed) {
                 action = "moveLeft";
-                x -= speed;
             }
             if (keyH.dPressed) {
                 action = "moveRight";
-                x += speed;
+            }
+
+            // CHECK TILE COLLISION
+            collisionOn = false; // turns on collision
+            gp.cChecker.checkTile(this); // pass the current tile into the checker to check if it has collision
+
+            //IF COLLISION IS FALSE, PLAYER CAN MOVE
+            if(!collisionOn){
+                if (keyH.wPressed) {
+                    worldY -= speed;
+                }
+                if (keyH.sPressed) {
+                    worldY += speed;
+                }
+                if (keyH.aPressed) {
+                    worldX -= speed;
+                }
+                if (keyH.dPressed) {
+                    worldX += speed;
+                }
             }
 
             if (keyH.wPressed && keyH.dPressed) { action = "moveUpRight"; }
@@ -227,7 +250,7 @@ public class Player extends Entity {
                 lookingRight = false;
                 break;
         }
-
-        g2.drawImage(image, x, y, gp.TILE_SIZE*3, gp.TILE_SIZE*2, null);
+      
+        g2.drawImage(image, worldX, worldY, gp.TILE_SIZE*3, gp.TILE_SIZE*2, null);
     }
 }

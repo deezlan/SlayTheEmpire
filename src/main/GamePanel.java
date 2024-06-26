@@ -10,14 +10,14 @@ import entity.Player;
 import tile.TileManager;
 
 public class GamePanel extends JPanel implements Runnable {
-    final int originalTileSize = 16;
-    final double scale = 3;
+    final int ORIGINAL_TILE_SIZE = 16;
+    final double SCALE = 3;
 
-    public final int tileSize = (int)(originalTileSize * scale);
-    public final int maxScreenCol = 16;
-    public final int maxScreenRow = 12;
-    final int screenWidth = tileSize * maxScreenCol;
-    final int screenHeight = tileSize * maxScreenRow;
+    public final int TILE_SIZE = (int)(ORIGINAL_TILE_SIZE * SCALE);
+    public final int MAX_SCREEN_COL = 16;
+    public final int MAX_SCREEN_ROW = 12;
+    final int SCREEN_WIDTH = TILE_SIZE * MAX_SCREEN_COL;
+    final int SCREEN_HEIGHT = TILE_SIZE * MAX_SCREEN_ROW;
 
     // FPS Settings
     final int FPS = 60;
@@ -28,7 +28,7 @@ public class GamePanel extends JPanel implements Runnable {
     Player player = new Player(this, keyH);
 
     public GamePanel() {
-        this.setPreferredSize(new Dimension(screenWidth, screenHeight));
+        this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
         this.setBackground(Color.decode("#222034"));
         this.setDoubleBuffered(true);
         this.addKeyListener(keyH);
@@ -42,7 +42,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     @Override
     public void run() {
-        double drawInterval = 1000000000/FPS;
+        double drawInterval = (double) 1000000000 /FPS;
         double delta = 0;
         long lastTime = System.nanoTime();
         long currentTime;

@@ -11,12 +11,12 @@ import tile.TileManager;
 import object.SuperObject;
 
 public class GamePanel extends JPanel implements Runnable {
+    // Screen Setting
     final int ORIGINAL_TILE_SIZE = 16;
     final double SCALE = 3;
-
     public final int TILE_SIZE = (int)(ORIGINAL_TILE_SIZE * SCALE);
-    public final int MAX_SCREEN_COL = 16;
-    public final int MAX_SCREEN_ROW = 12;
+    public final int MAX_SCREEN_COL = 17;
+    public final int MAX_SCREEN_ROW = 13;
     final int SCREEN_WIDTH = TILE_SIZE * MAX_SCREEN_COL;
     final int SCREEN_HEIGHT = TILE_SIZE * MAX_SCREEN_ROW;
 
@@ -30,6 +30,7 @@ public class GamePanel extends JPanel implements Runnable {
     public AssetSetter aSetter = new AssetSetter(this);
     public Player player = new Player(this, keyH);
     public SuperObject[] objArray = new SuperObject[10];
+    public CollisionChecker cChecker = new CollisionChecker(this);
 
     public GamePanel() {
         this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));

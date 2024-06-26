@@ -10,6 +10,7 @@ public class SuperObject {
 //    public boolean colliison = false;
     public int worldX, worldY, spriteCounter = 0, spriteNum = 1;
 
+    // Change current object sprite to next
     public void update() {
         spriteCounter++;
         if (spriteCounter > 9) {
@@ -18,6 +19,7 @@ public class SuperObject {
         }
     }
 
+    // Draw latest object sprite
     public void draw(Graphics2D g2) {
         BufferedImage image = imageList.get(spriteNum - 1);
         g2.drawImage(image, worldX, worldY, 192, 128, null);

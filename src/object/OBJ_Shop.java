@@ -8,6 +8,7 @@ public class OBJ_Shop extends SuperObject {
     public OBJ_Shop() {
         name = "Shop";
 
+        // Load shop sprites
         try {
             imageList.add(0, ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
                     "/objects/shop/0.png"), "Missing shop sprite 1")));

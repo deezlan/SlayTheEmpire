@@ -21,9 +21,9 @@ public class Player extends Entity {
         getPlayerImages();
 
         solidArea = new Rectangle(); // draws a square at the centre of the player
-        solidArea.x = 56;
+        solidArea.x = 56; // actual collision square
         solidArea.y = 72;
-        solidArea.width = 30;
+        solidArea.width = 30; // outer area of collision square
         solidArea.height = 20;
     }
 

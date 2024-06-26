@@ -6,7 +6,6 @@ import java.awt.image.BufferedImage;
 public class Entity {
     public int worldX, worldY;
     public int speed;
-
     public BufferedImage
             idleRight1, idleRight2, idleRight3, idleRight4, idleRight5, idleRight6,
             idleLeft1, idleLeft2, idleLeft3, idleLeft4, idleLeft5, idleLeft6,
@@ -15,10 +14,9 @@ public class Entity {
 
     public String action;
     public boolean lookingRight;
-
     public int spriteCounter = 0;
     public int spriteNum = 1;
 
-    public Rectangle solidArea;
-    public boolean collisionOn = false;
+    public Rectangle solidArea; // draw area around player
+    public boolean collisionOn = false; // set collision to false
 }

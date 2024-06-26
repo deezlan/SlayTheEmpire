@@ -17,7 +17,7 @@ public class Player extends Entity {
         this.gp = gp;
         this.keyH = keyH;
         setDefaultValues();
-        getPlayerImage();
+        getPlayerImages();
     }
 
     public void setDefaultValues() {
@@ -28,7 +28,7 @@ public class Player extends Entity {
         lookingRight = true;
     }
 
-    public void getPlayerImage() {
+    public void getPlayerImages() {
         try {
             moveRight1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
                     "/player/Warrior/run/right/Warrior_Run_Right_1.png"), "Missing right sprite 1"));

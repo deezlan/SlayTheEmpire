@@ -8,6 +8,7 @@ import java.awt.Graphics2D;
 
 import entity.Player;
 import tile.TileManager;
+import object.SuperObject;
 
 public class GamePanel extends JPanel implements Runnable {
     final int ORIGINAL_TILE_SIZE = 16;
@@ -25,7 +26,10 @@ public class GamePanel extends JPanel implements Runnable {
     TileManager tileM = new TileManager(this);
     KeyHandler keyH = new KeyHandler();
     Thread gameThread;
-    Player player = new Player(this, keyH);
+
+    public AssetSetter aSetter = new AssetSetter(this);
+    public Player player = new Player(this, keyH);
+    public SuperObject[] objArray = new SuperObject[10];
 
     public GamePanel() {
         this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
@@ -33,6 +37,10 @@ public class GamePanel extends JPanel implements Runnable {
         this.setDoubleBuffered(true);
         this.addKeyListener(keyH);
         this.setFocusable(true);
+    }
+
+    public void setupLobby() {
+        aSetter.setObject();
     }
 
     public void startGameThread() {
@@ -72,13 +80,28 @@ public class GamePanel extends JPanel implements Runnable {
 
     public void update() {
         player.update();
+
+        for (SuperObject superObject : objArray) {
+            if (superObject != null) {
+                superObject.update();
+            }
+        }
     }
 
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D)g;
-        tileM.draw(g2);
-        player.draw(g2);
+
+        tileM.draw(g2); // Draw tiles
+
+        player.draw(g2); // Draw player
+
+        // Draw object
+        for (SuperObject superObject : objArray) {
+            if (superObject != null)
+                superObject.draw(g2, superObject.spriteWidth, superObject.spriteHeight);
+        }
+
         g2.dispose();
     }
 }

@@ -23,7 +23,7 @@ public class CollisionChecker {
         int tileNum1, tileNum2; //only need to check two tiles
 
         switch (entity.action){
-            case "moveUp":
+            case "moveUp": // check if top corners of the square hitting any tiles
                 entityTopRow = (entityTopWorldY - entity.speed)/gp.TILE_SIZE;
                 tileNum1 = gp.tileM.mapTileNum[entityLeftCol][entityTopRow];
                 tileNum2 = gp.tileM.mapTileNum[entityRightCol][entityTopRow];
@@ -31,13 +31,30 @@ public class CollisionChecker {
                     entity.collisionOn = true;
                 }
                 break;
-            case "moveDown":
+            case "moveDown": // check both corners at the bottom of the square hitting a tile
+                entityBottomRow = (entityBottomWorldY + entity.speed)/gp.TILE_SIZE;
+                tileNum1 = gp.tileM.mapTileNum[entityLeftCol][entityBottomRow];
+                tileNum2 = gp.tileM.mapTileNum[entityRightCol][entityBottomRow];
+                if (gp.tileM.tile[tileNum1].collision || gp.tileM.tile[tileNum2].collision){
+                    entity.collisionOn = true;
+                }
                 break;
-            case "moveLeft":
+            case "moveLeft": // check both corners on the left side if hitting any tile
+                entityLeftCol = (entityLeftWorldX - entity.speed)/gp.TILE_SIZE;
+                tileNum1 = gp.tileM.mapTileNum[entityLeftCol][entityTopRow];
+                tileNum2 = gp.tileM.mapTileNum[entityLeftCol][entityBottomRow];
+                if (gp.tileM.tile[tileNum1].collision || gp.tileM.tile[tileNum2].collision){
+                    entity.collisionOn = true;
+                }
                 break;
-            case "moveRight":
+            case "moveRight": //check both corners on the right if hitting any tile
+                entityTopRow = (entityTopWorldY + entity.speed)/gp.TILE_SIZE;
+                tileNum1 = gp.tileM.mapTileNum[entityRightCol][entityTopRow];
+                tileNum2 = gp.tileM.mapTileNum[entityRightCol][entityBottomRow];
+                if (gp.tileM.tile[tileNum1].collision || gp.tileM.tile[tileNum2].collision){
+                    entity.collisionOn = true;
+                }
                 break;
-
         }
     }
 }

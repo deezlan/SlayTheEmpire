@@ -21,10 +21,10 @@ public class Player extends Entity {
         getPlayerImages();
 
         solidArea = new Rectangle(); // draws a square at the centre of the player
-        solidArea.x = 8;
-        solidArea.y = 16;
-        solidArea.width = 32;
-        solidArea.height = 32;
+        solidArea.x = 56;
+        solidArea.y = 72;
+        solidArea.width = 30;
+        solidArea.height = 20;
     }
 
     public void setDefaultValues() {
@@ -119,25 +119,22 @@ public class Player extends Entity {
             }
 
             // CHECK TILE COLLISION
-            collisionOn = true; // turns on collision
+            collisionOn = false; // turns on collision
             gp.cChecker.checkTile(this); // pass the current tile into the checker to check if it has collision
 
             //IF COLLISION IS FALSE, PLAYER CAN MOVE
-            if(collisionOn == false){
-                switch(action){
-                    case "moveUp":
-                        worldY -= speed; // move player movement to here
-                        break;
-                    case "moveDown":
-                        worldY += speed;
-                        break;
-                    case "moveLeft":
-                        worldX -= speed;
-                        break;
-                    case "moveRight":
-                        worldX += speed;
-                        break;
-
+            if(!collisionOn){
+                if (keyH.wPressed) {
+                    worldY -= speed;
+                }
+                if (keyH.sPressed) {
+                    worldY += speed;
+                }
+                if (keyH.aPressed) {
+                    worldX -= speed;
+                }
+                if (keyH.dPressed) {
+                    worldX += speed;
                 }
             }
 

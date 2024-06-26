@@ -19,7 +19,6 @@ public class Player extends Entity {
 
         setDefaultValues();
         getPlayerImages();
-        getPlayerImage();
 
         solidArea = new Rectangle(); // draws a square at the centre of the player
         solidArea.x = 8;

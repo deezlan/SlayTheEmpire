@@ -7,6 +7,7 @@ import javax.imageio.ImageIO;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.Objects;
 
 public class Player extends Entity {
     GamePanel gp;
@@ -16,7 +17,7 @@ public class Player extends Entity {
         this.gp = gp;
         this.keyH = keyH;
         setDefaultValues();
-        getPlayerImage();
+        getPlayerImages();
     }
 
     public void setDefaultValues() {
@@ -27,69 +28,97 @@ public class Player extends Entity {
         lookingRight = true;
     }
 
-    public void getPlayerImage() {
+    public void getPlayerImages() {
         try {
-            right1 = ImageIO.read(getClass().getResourceAsStream("/player/Warrior/run/right/Warrior_Run_Right_1.png"));
-            right2 = ImageIO.read(getClass().getResourceAsStream("/player/Warrior/run/right/Warrior_Run_Right_2.png"));
-            right3 = ImageIO.read(getClass().getResourceAsStream("/player/Warrior/run/right/Warrior_Run_Right_3.png"));
-            right4 = ImageIO.read(getClass().getResourceAsStream("/player/Warrior/run/right/Warrior_Run_Right_4.png"));
-            right5 = ImageIO.read(getClass().getResourceAsStream("/player/Warrior/run/right/Warrior_Run_Right_5.png"));
-            right6 = ImageIO.read(getClass().getResourceAsStream("/player/Warrior/run/right/Warrior_Run_Right_6.png"));
-            right7 = ImageIO.read(getClass().getResourceAsStream("/player/Warrior/run/right/Warrior_Run_Right_7.png"));
-            right8 = ImageIO.read(getClass().getResourceAsStream("/player/Warrior/run/right/Warrior_Run_Right_8.png"));
+            moveRight1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
+                    "/player/Warrior/run/right/Warrior_Run_Right_1.png"), "Missing right sprite 1"));
+            moveRight2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
+                    "/player/Warrior/run/right/Warrior_Run_Right_2.png"), "Missing right sprite 2"));
+            moveRight3 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
+                    "/player/Warrior/run/right/Warrior_Run_Right_3.png"), "Missing right sprite 3"));
+            moveRight4 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
+                    "/player/Warrior/run/right/Warrior_Run_Right_4.png"), "Missing right sprite 4"));
+            moveRight5 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
+                    "/player/Warrior/run/right/Warrior_Run_Right_5.png"), "Missing right sprite 5"));
+            moveRight6 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
+                    "/player/Warrior/run/right/Warrior_Run_Right_6.png"), "Missing right sprite 6"));
+            moveRight7 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
+                    "/player/Warrior/run/right/Warrior_Run_Right_7.png"), "Missing right sprite 7"));
+            moveRight8 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
+                    "/player/Warrior/run/right/Warrior_Run_Right_8.png"), "Missing right sprite 8"));
 
-            left1 = ImageIO.read(getClass().getResourceAsStream("/player/Warrior/run/left/Warrior_Run_Left_1.png"));
-            left2 = ImageIO.read(getClass().getResourceAsStream("/player/Warrior/run/left/Warrior_Run_Left_2.png"));
-            left3 = ImageIO.read(getClass().getResourceAsStream("/player/Warrior/run/left/Warrior_Run_Left_3.png"));
-            left4 = ImageIO.read(getClass().getResourceAsStream("/player/Warrior/run/left/Warrior_Run_Left_4.png"));
-            left5 = ImageIO.read(getClass().getResourceAsStream("/player/Warrior/run/left/Warrior_Run_Left_5.png"));
-            left6 = ImageIO.read(getClass().getResourceAsStream("/player/Warrior/run/left/Warrior_Run_Left_6.png"));
-            left7 = ImageIO.read(getClass().getResourceAsStream("/player/Warrior/run/left/Warrior_Run_Left_7.png"));
-            left8 = ImageIO.read(getClass().getResourceAsStream("/player/Warrior/run/left/Warrior_Run_Left_8.png"));
+            moveLeft1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
+                    "/player/Warrior/run/left/Warrior_Run_Left_1.png"), "Missing left sprite 1"));
+            moveLeft2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
+                    "/player/Warrior/run/left/Warrior_Run_Left_2.png"), "Missing left sprite 2"));
+            moveLeft3 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
+                    "/player/Warrior/run/left/Warrior_Run_Left_3.png"), "Missing left sprite 3"));
+            moveLeft4 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
+                    "/player/Warrior/run/left/Warrior_Run_Left_4.png"), "Missing left sprite 4"));
+            moveLeft5 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
+                    "/player/Warrior/run/left/Warrior_Run_Left_5.png"), "Missing left sprite 5"));
+            moveLeft6 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
+                    "/player/Warrior/run/left/Warrior_Run_Left_6.png"), "Missing left sprite 6"));
+            moveLeft7 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
+                    "/player/Warrior/run/left/Warrior_Run_Left_7.png"), "Missing left sprite 7"));
+            moveLeft8 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
+                    "/player/Warrior/run/left/Warrior_Run_Left_8.png"), "Missing left sprite 8"));
 
-            idleRight1 = ImageIO.read(getClass().getResourceAsStream("/player/Warrior/idle/right/Warrior_Idle_1.png"));
-            idleRight2 = ImageIO.read(getClass().getResourceAsStream("/player/Warrior/idle/right/Warrior_Idle_2.png"));
-            idleRight3 = ImageIO.read(getClass().getResourceAsStream("/player/Warrior/idle/right/Warrior_Idle_3.png"));
-            idleRight4 = ImageIO.read(getClass().getResourceAsStream("/player/Warrior/idle/right/Warrior_Idle_4.png"));
-            idleRight5 = ImageIO.read(getClass().getResourceAsStream("/player/Warrior/idle/right/Warrior_Idle_5.png"));
-            idleRight6 = ImageIO.read(getClass().getResourceAsStream("/player/Warrior/idle/right/Warrior_Idle_6.png"));
+            idleRight1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
+                    "/player/Warrior/idle/right/Warrior_Idle_1.png"), "Missing idle right sprite 1"));
+            idleRight2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
+                    "/player/Warrior/idle/right/Warrior_Idle_2.png"), "Missing idle right sprite 2"));
+            idleRight3 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
+                    "/player/Warrior/idle/right/Warrior_Idle_3.png"), "Missing idle right sprite 3"));
+            idleRight4 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
+                    "/player/Warrior/idle/right/Warrior_Idle_4.png"), "Missing idle right sprite 4"));
+            idleRight5 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
+                    "/player/Warrior/idle/right/Warrior_Idle_5.png"), "Missing idle right sprite 5"));
+            idleRight6 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
+                    "/player/Warrior/idle/right/Warrior_Idle_6.png"), "Missing idle right sprite 6"));
 
-            idleLeft1 = ImageIO.read(getClass().getResourceAsStream("/player/Warrior/idle/left/Warrior_Idle_1.png"));
-            idleLeft2 = ImageIO.read(getClass().getResourceAsStream("/player/Warrior/idle/left/Warrior_Idle_2.png"));
-            idleLeft3 = ImageIO.read(getClass().getResourceAsStream("/player/Warrior/idle/left/Warrior_Idle_3.png"));
-            idleLeft4 = ImageIO.read(getClass().getResourceAsStream("/player/Warrior/idle/left/Warrior_Idle_4.png"));
-            idleLeft5 = ImageIO.read(getClass().getResourceAsStream("/player/Warrior/idle/left/Warrior_Idle_5.png"));
-            idleLeft6 = ImageIO.read(getClass().getResourceAsStream("/player/Warrior/idle/left/Warrior_Idle_6.png"));
+            idleLeft1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
+                    "/player/Warrior/idle/left/Warrior_Idle_1.png"), "Missing idle left sprite 1"));
+            idleLeft2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
+                    "/player/Warrior/idle/left/Warrior_Idle_2.png"), "Missing idle left sprite 2"));
+            idleLeft3 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
+                    "/player/Warrior/idle/left/Warrior_Idle_3.png"), "Missing idle left sprite 3"));
+            idleLeft4 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
+                    "/player/Warrior/idle/left/Warrior_Idle_4.png"), "Missing idle left sprite 4"));
+            idleLeft5 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
+                    "/player/Warrior/idle/left/Warrior_Idle_5.png"), "Missing idle left sprite 5"));
+            idleLeft6 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
+                    "/player/Warrior/idle/left/Warrior_Idle_6.png"), "Missing idle left sprite 6"));
         } catch (IOException e) {
-            e.printStackTrace();
+            e.printStackTrace(System.out);
         }
     }
 
     public void update() {
-        if ((keyH.wPressed && keyH.sPressed) || (keyH.aPressed && keyH.dPressed)) { action = "stuck"; }
+        if ((keyH.wPressed && keyH.sPressed) || (keyH.aPressed && keyH.dPressed)) { action = "stuckOppositeDirection"; }
 
-        if ((keyH.wPressed || keyH.sPressed || keyH.aPressed || keyH.dPressed) && !action.equals("stuck")) {
+        if ((keyH.wPressed || keyH.sPressed || keyH.aPressed || keyH.dPressed) && !action.equals("stuckOppositeDirection")) {
             if (keyH.wPressed) {
-                action = "up";
+                action = "moveUp";
                 y -= speed;
             }
             if (keyH.sPressed) {
-                action = "down";
+                action = "moveDown";
                 y += speed;
             }
             if (keyH.aPressed) {
-                action = "left";
+                action = "moveLeft";
                 x -= speed;
             }
             if (keyH.dPressed) {
-                action = "right";
+                action = "moveRight";
                 x += speed;
             }
 
-            if (keyH.wPressed && keyH.dPressed) { action = "upRight"; }
-            if (keyH.sPressed && keyH.dPressed) { action = "downRight"; }
-            if (keyH.wPressed && keyH.aPressed) { action = "upLeft"; }
-            if (keyH.sPressed && keyH.aPressed) { action = "downLeft"; }
+            if (keyH.wPressed && keyH.dPressed) { action = "moveUpRight"; }
+            if (keyH.sPressed && keyH.dPressed) { action = "moveDownRight"; }
+            if (keyH.wPressed && keyH.aPressed) { action = "moveUpLeft"; }
+            if (keyH.sPressed && keyH.aPressed) { action = "moveDownLeft"; }
 
             spriteCounter++;
             if (spriteCounter > 5) {
@@ -147,58 +176,58 @@ public class Player extends Entity {
                 if (spriteNum == 6) { image = idleLeft6; }
                 break;
 
-            case "up":
-            case "down":
+            case "moveUp":
+            case "moveDown":
                 if (lookingRight) {
-                    if (spriteNum == 1) { image = right1; }
-                    if (spriteNum == 2) { image = right2; }
-                    if (spriteNum == 3) { image = right3; }
-                    if (spriteNum == 4) { image = right4; }
-                    if (spriteNum == 5) { image = right5; }
-                    if (spriteNum == 6) { image = right6; }
-                    if (spriteNum == 7) { image = right7; }
-                    if (spriteNum == 8) { image = right8; }
+                    if (spriteNum == 1) { image = moveRight1; }
+                    if (spriteNum == 2) { image = moveRight2; }
+                    if (spriteNum == 3) { image = moveRight3; }
+                    if (spriteNum == 4) { image = moveRight4; }
+                    if (spriteNum == 5) { image = moveRight5; }
+                    if (spriteNum == 6) { image = moveRight6; }
+                    if (spriteNum == 7) { image = moveRight7; }
+                    if (spriteNum == 8) { image = moveRight8; }
                 } else {
-                    if (spriteNum == 1) { image = left1; }
-                    if (spriteNum == 2) { image = left2; }
-                    if (spriteNum == 3) { image = left3; }
-                    if (spriteNum == 4) { image = left4; }
-                    if (spriteNum == 5) { image = left5; }
-                    if (spriteNum == 6) { image = left6; }
-                    if (spriteNum == 7) { image = left7; }
-                    if (spriteNum == 8) { image = left8; }
+                    if (spriteNum == 1) { image = moveLeft1; }
+                    if (spriteNum == 2) { image = moveLeft2; }
+                    if (spriteNum == 3) { image = moveLeft3; }
+                    if (spriteNum == 4) { image = moveLeft4; }
+                    if (spriteNum == 5) { image = moveLeft5; }
+                    if (spriteNum == 6) { image = moveLeft6; }
+                    if (spriteNum == 7) { image = moveLeft7; }
+                    if (spriteNum == 8) { image = moveLeft8; }
                 }
                 break;
 
-            case "right":
-            case "upRight":
-            case "downRight":
-                if (spriteNum == 1) { image = right1; }
-                if (spriteNum == 2) { image = right2; }
-                if (spriteNum == 3) { image = right3; }
-                if (spriteNum == 4) { image = right4; }
-                if (spriteNum == 5) { image = right5; }
-                if (spriteNum == 6) { image = right6; }
-                if (spriteNum == 7) { image = right7; }
-                if (spriteNum == 8) { image = right8; }
+            case "moveRight":
+            case "moveUpRight":
+            case "moveDownRight":
+                if (spriteNum == 1) { image = moveRight1; }
+                if (spriteNum == 2) { image = moveRight2; }
+                if (spriteNum == 3) { image = moveRight3; }
+                if (spriteNum == 4) { image = moveRight4; }
+                if (spriteNum == 5) { image = moveRight5; }
+                if (spriteNum == 6) { image = moveRight6; }
+                if (spriteNum == 7) { image = moveRight7; }
+                if (spriteNum == 8) { image = moveRight8; }
                 lookingRight = true;
                 break;
 
-            case "left":
-            case "upLeft":
-            case "downLeft":
-                if (spriteNum == 1) { image = left1; }
-                if (spriteNum == 2) { image = left2; }
-                if (spriteNum == 3) { image = left3; }
-                if (spriteNum == 4) { image = left4; }
-                if (spriteNum == 5) { image = left5; }
-                if (spriteNum == 6) { image = left6; }
-                if (spriteNum == 7) { image = left7; }
-                if (spriteNum == 8) { image = left8; }
+            case "moveLeft":
+            case "moveUpLeft":
+            case "moveDownLeft":
+                if (spriteNum == 1) { image = moveLeft1; }
+                if (spriteNum == 2) { image = moveLeft2; }
+                if (spriteNum == 3) { image = moveLeft3; }
+                if (spriteNum == 4) { image = moveLeft4; }
+                if (spriteNum == 5) { image = moveLeft5; }
+                if (spriteNum == 6) { image = moveLeft6; }
+                if (spriteNum == 7) { image = moveLeft7; }
+                if (spriteNum == 8) { image = moveLeft8; }
                 lookingRight = false;
                 break;
         }
 
-        g2.drawImage(image, x, y, gp.tileSize*3, gp.tileSize*2, null);
+        g2.drawImage(image, x, y, gp.TILE_SIZE*3, gp.TILE_SIZE*2, null);
     }
 }

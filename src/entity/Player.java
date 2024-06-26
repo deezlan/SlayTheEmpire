@@ -18,6 +18,7 @@ public class Player extends Entity {
         this.keyH = keyH;
 
         setDefaultValues();
+        getPlayerImages();
         getPlayerImage();
 
         solidArea = new Rectangle(); // draws a square at the centre of the player
@@ -35,7 +36,7 @@ public class Player extends Entity {
         lookingRight = true;
     }
 
-    public void getPlayerImage() {
+    public void getPlayerImages() {
         try {
             moveRight1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
                     "/player/Warrior/run/right/Warrior_Run_Right_1.png"), "Missing right sprite 1"));

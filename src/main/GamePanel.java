@@ -99,7 +99,7 @@ public class GamePanel extends JPanel implements Runnable {
         // Draw object
         for (SuperObject superObject : objArray) {
             if (superObject != null)
-                superObject.draw(g2);
+                superObject.draw(g2, superObject.spriteWidth, superObject.spriteHeight);
         }
 
         g2.dispose();

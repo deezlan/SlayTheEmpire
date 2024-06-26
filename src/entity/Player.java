@@ -250,7 +250,7 @@ public class Player extends Entity {
                 lookingRight = false;
                 break;
         }
-
+      
         g2.drawImage(image, worldX, worldY, gp.TILE_SIZE*3, gp.TILE_SIZE*2, null);
     }
 }

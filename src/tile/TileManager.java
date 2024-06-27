@@ -45,6 +45,7 @@ public class TileManager {
             tile[3] = new Tile();
             tile[3].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
                             "/tiles/lobby/walls/door.png"), "Missing top door wall tile"));
+            tile[3].collision = true;
 
             tile[4] = new Tile();
             tile[4].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(

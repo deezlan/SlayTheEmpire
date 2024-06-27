@@ -7,7 +7,7 @@ import java.util.Objects;
 public class OBJ_Shop extends SuperObject {
     public OBJ_Shop() {
         name = "Shop";
-        spriteWidth = 192;
+        spriteWidth = 198;
         spriteHeight = 128;
 
         // Load shop sprites

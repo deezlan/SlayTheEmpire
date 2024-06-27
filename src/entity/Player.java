@@ -10,12 +10,17 @@ import java.io.IOException;
 import java.util.Objects;
 
 public class Player extends Entity {
-    GamePanel gp;
     KeyHandler keyH;
 
+    public final int screenX;
+    public final int screenY;
+
     public Player (GamePanel gp, KeyHandler keyH) {
+        super(gp);
         this.gp = gp;
         this.keyH = keyH;
+        screenX = gp.SCREEN_WIDTH/2 - (gp.TILE_SIZE/2); // added screen position
+        screenY = gp.SCREEN_HEIGHT/2 - (gp.TILE_SIZE/2);
 
         setDefaultValues();
         getPlayerImages();
@@ -30,8 +35,8 @@ public class Player extends Entity {
     }
 
     public void setDefaultValues() {
-        worldX = 100; // changed it for locating the player in the world map
-        worldY = 100; // same thing
+        worldX = gp.TILE_SIZE; // changed it for locating the player in the world map
+        worldY = gp.TILE_SIZE; // same thing
         speed = 3;
         action = "idleRight";
         lookingRight = true;
@@ -274,6 +279,6 @@ public class Player extends Entity {
                 break;
         }
 
-        g2.drawImage(image, worldX, worldY, gp.TILE_SIZE*3, gp.TILE_SIZE*2, null);
+        g2.drawImage(image, screenX, screenY, gp.TILE_SIZE*3, gp.TILE_SIZE*2, null);
     }
 }

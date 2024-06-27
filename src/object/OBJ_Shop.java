@@ -7,6 +7,7 @@ import java.util.Objects;
 public class OBJ_Shop extends SuperObject {
     public OBJ_Shop() {
         name = "Shop";
+        message = "Shop closed bitch";
         spriteWidth = 198;
         spriteHeight = 128;
 
@@ -23,8 +24,10 @@ public class OBJ_Shop extends SuperObject {
         } catch (IOException e) {
             e.printStackTrace(System.out);
         }
-        solidArea.x = 32;
-        solidArea.y = 96;
+        solidArea.x = 20;
+        solidArea.y = 0;
+        solidArea.width = 172;
+        solidArea.height = 118;
         solidAreaDefaultX = solidArea.x;
         solidAreaDefaultY = solidArea.y;
         collision = true;

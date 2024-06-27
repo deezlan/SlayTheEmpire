@@ -3,6 +3,7 @@ package entity;
 import main.GamePanel;
 
 import java.awt.*;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
@@ -22,6 +23,10 @@ public class Entity {
     public int spriteCounter = 0;
     public int spriteNum = 1;
 
+    public int maxLife;
+    public int life;
+
+    public Rectangle solidArea; // draw area around player
     public Entity(GamePanel gp){
         this.gp=gp;
     }

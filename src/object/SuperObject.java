@@ -2,12 +2,13 @@ package object;
 
 import main.UtilityTool;
 
-import java.awt.*;
+import java.awt.Rectangle;
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 public class SuperObject {
-    public ArrayList<BufferedImage> imageList = new ArrayList<>();
+    public ArrayList<BufferedImage> spriteList = new ArrayList<>();
     public String name, message;
     public boolean collision = false;
 
@@ -22,7 +23,7 @@ public class SuperObject {
     // Change current object sprite to next
     public void update() {
         spriteCounter++;
-        if (this.imageList.size() > 7) {
+        if (this.spriteList.size() > 7) {
             if (spriteCounter > 5) loopThroughSprites();
         } else {
             if (spriteCounter > 9) loopThroughSprites();
@@ -30,13 +31,13 @@ public class SuperObject {
     }
 
     public void loopThroughSprites() {
-        spriteNum = (spriteNum < imageList.size()) ? spriteNum + 1 : 1;
+        spriteNum = (spriteNum < spriteList.size()) ? spriteNum + 1 : 1;
         spriteCounter = 0;
     }
 
     // Draw latest object sprite
     public void draw(Graphics2D g2, int width, int height) {
-        BufferedImage image = imageList.get(spriteNum - 1);
+        BufferedImage image = spriteList.get(spriteNum - 1);
         g2.drawImage(image, worldX, worldY, width, height, null);
     }
 }

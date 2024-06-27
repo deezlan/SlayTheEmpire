@@ -5,10 +5,9 @@ import main.GamePanel;
 import java.awt.*;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
+
 
 public class Entity {
-//    public ArrayList<BufferedImage> imageList = new ArrayList<>();
     GamePanel gp;
     public int worldX, worldY, spriteWidth, spriteHeight;
     public int speed;

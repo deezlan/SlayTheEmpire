@@ -23,6 +23,8 @@ public class Player extends Entity {
         solidArea = new Rectangle(); // draws a square at the centre of the player
         solidArea.x = 56; // actual collision square
         solidArea.y = 72;
+        solidAreaDefaultX = solidArea.x;
+        solidAreaDefaultY = solidArea.y;
         solidArea.width = 30; // outer area of collision square
         solidArea.height = 20;
     }
@@ -103,45 +105,60 @@ public class Player extends Entity {
 
     public void update() {
         if ((keyH.wPressed && keyH.sPressed) || (keyH.aPressed && keyH.dPressed)) { action = "stuckOppositeDirection"; }
+        if (keyH.wPressed && keyH.sPressed && keyH.aPressed) { action = "moveLeft"; }
+        if (keyH.wPressed && keyH.sPressed && keyH.dPressed) { action = "moveRight"; }
+        if (keyH.aPressed && keyH.dPressed && keyH.wPressed) { action = "moveUp"; }
+        if (keyH.aPressed && keyH.dPressed && keyH.sPressed) { action = "moveDown"; }
 
         if ((keyH.wPressed || keyH.sPressed || keyH.aPressed || keyH.dPressed) && !action.equals("stuckOppositeDirection")) {
-            if (keyH.wPressed) {
-                action = "moveUp";
-            }
-            if (keyH.sPressed) {
-                action = "moveDown";
-            }
-            if (keyH.aPressed) {
-                action = "moveLeft";
-            }
-            if (keyH.dPressed) {
-                action = "moveRight";
-            }
-
-            // CHECK TILE COLLISION
-            collisionOn = false; // turns on collision
-            gp.cChecker.checkTile(this); // pass the current tile into the checker to check if it has collision
-
-            //IF COLLISION IS FALSE, PLAYER CAN MOVE
-            if(!collisionOn){
-                if (keyH.wPressed) {
-                    worldY -= speed;
-                }
-                if (keyH.sPressed) {
-                    worldY += speed;
-                }
-                if (keyH.aPressed) {
-                    worldX -= speed;
-                }
-                if (keyH.dPressed) {
-                    worldX += speed;
-                }
-            }
+            if (keyH.wPressed) { action = "moveUp"; }
+            if (keyH.sPressed) { action = "moveDown"; }
+            if (keyH.aPressed) { action = "moveLeft"; }
+            if (keyH.dPressed) { action = "moveRight"; }
 
             if (keyH.wPressed && keyH.dPressed) { action = "moveUpRight"; }
             if (keyH.sPressed && keyH.dPressed) { action = "moveDownRight"; }
             if (keyH.wPressed && keyH.aPressed) { action = "moveUpLeft"; }
             if (keyH.sPressed && keyH.aPressed) { action = "moveDownLeft"; }
+
+            // CHECK TILE COLLISION
+            upCollisionOn = false; // resets collisions off
+            downCollisionOn = false;
+            leftCollisionOn = false;
+            rightCollisionOn = false;
+            gp.cChecker.checkTile(this); // pass the current tile into the checker to check if it has collision
+
+            // CHECK OBJECT COLLISION BEFORE INTERACTING
+            int objIndex = gp.cChecker.checkObject(this, true);
+            interactObject(objIndex);
+
+            if (!upCollisionOn && !downCollisionOn && !leftCollisionOn && !rightCollisionOn) {
+                // NO COLLISION
+                if (keyH.wPressed) { worldY -= speed; }
+                if (keyH.sPressed) { worldY += speed; }
+                if (keyH.aPressed) { worldX -= speed; }
+                if (keyH.dPressed) { worldX += speed; }
+            } else if (upCollisionOn && !leftCollisionOn && !rightCollisionOn) {
+                // UP COLLISION
+                if (keyH.sPressed) { worldY += speed; }
+                if (keyH.aPressed) { worldX -= speed; }
+                if (keyH.dPressed) { worldX += speed; }
+            } else if (downCollisionOn && !leftCollisionOn && !rightCollisionOn) {
+                // DOWN COLLISION
+                if (keyH.wPressed) { worldY -= speed; }
+                if (keyH.aPressed) { worldX -= speed; }
+                if (keyH.dPressed) { worldX += speed; }
+            } else if (leftCollisionOn && !upCollisionOn && !downCollisionOn) {
+                // LEFT COLLISION
+                if (keyH.wPressed) { worldY -= speed; }
+                if (keyH.sPressed) { worldY += speed; }
+                if (keyH.dPressed) { worldX += speed; }
+            } else if (rightCollisionOn && !upCollisionOn && !downCollisionOn) {
+                // RIGHT COLLISION
+                if (keyH.wPressed) { worldY -= speed; }
+                if (keyH.sPressed) { worldY += speed; }
+                if (keyH.aPressed) { worldX += speed; }
+            }
 
             spriteCounter++;
             if (spriteCounter > 5) {
@@ -176,11 +193,17 @@ public class Player extends Entity {
         }
     }
 
+    public void interactObject (int index) {
+        if (index != 999) {
+//            gp.objArray[index] = null;
+            System.out.println("Cake");
+        }
+    }
+
     public void draw(Graphics2D g2) {
         BufferedImage image = null;
 
         switch (action) {
-//            case "stuck":
             case "idleRight":
                 if (spriteNum == 1) { image = idleRight1; }
                 if (spriteNum == 2) { image = idleRight2; }

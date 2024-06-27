@@ -18,5 +18,12 @@ public class Entity {
     public int spriteNum = 1;
 
     public Rectangle solidArea; // draw area around player
-    public boolean collisionOn = false; // set collision to false
+    public int solidAreaDefaultX, solidAreaDefaultY;
+
+    // entity's collision directions
+    public boolean
+            upCollisionOn = false,
+            downCollisionOn = false,
+            leftCollisionOn = false,
+            rightCollisionOn = false;
 }

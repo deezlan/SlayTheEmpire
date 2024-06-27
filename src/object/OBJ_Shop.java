@@ -23,5 +23,10 @@ public class OBJ_Shop extends SuperObject {
         } catch (IOException e) {
             e.printStackTrace(System.out);
         }
+        solidArea.x = 32;
+        solidArea.y = 96;
+        solidAreaDefaultX = solidArea.x;
+        solidAreaDefaultY = solidArea.y;
+        collision = true;
     }
 }

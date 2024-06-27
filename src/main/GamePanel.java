@@ -97,7 +97,7 @@ public class GamePanel extends JPanel implements Runnable {
 
         player.draw(g2); // Draw player
 
-        // Draw object
+        // Draw every object
         for (SuperObject superObject : objArray) {
             if (superObject != null)
                 superObject.draw(g2, superObject.spriteWidth, superObject.spriteHeight);

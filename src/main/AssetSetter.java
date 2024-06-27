@@ -16,7 +16,7 @@ public class AssetSetter {
         gp.objArray[0].worldY = 192;
 
         gp.objArray[1] = new OBJ_SavePedestal();
-        gp.objArray[1].worldX = 50;
-        gp.objArray[1].worldY = 50;
+        gp.objArray[1].worldX = 96+48;
+        gp.objArray[1].worldY = 400;
     }
 }

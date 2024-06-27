@@ -1,16 +1,19 @@
 package object;
 
-import java.awt.Graphics2D;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 public class SuperObject {
     public ArrayList<BufferedImage> imageList = new ArrayList<>();
     public String name;
-//    public boolean colliison = false;
+    public boolean collision = false;
     public int worldX, worldY, spriteWidth, spriteHeight,
         spriteCounter = 0,
         spriteNum = 1;
+    public Rectangle solidArea = new Rectangle(0, 0, 48, 48);
+    public int solidAreaDefaultX;
+    public int solidAreaDefaultY;
 
     // Change current object sprite to next
     public void update() {

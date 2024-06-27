@@ -26,7 +26,7 @@ public class Entity {
     public int maxLife;
     public int life;
 
-    public Rectangle solidArea; // draw area around player
+    public Rectangle solidArea = new Rectangle(0,0,48,48);; // draw area around player
     public Entity(GamePanel gp){
         this.gp=gp;
     }
@@ -116,7 +116,6 @@ public class Entity {
     }
 
 
-    public Rectangle solidArea = new Rectangle(0,0,48,48); // draw area around entities
     public int solidAreaDefaultX, solidAreaDefaultY;
 
     // entity's collision directions

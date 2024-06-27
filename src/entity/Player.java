@@ -11,10 +11,12 @@ import java.io.IOException;
 public class Player extends Entity {
     GamePanel gp;
     KeyHandler keyH;
+    private Cursor cursor;
 
-    public Player (GamePanel gp, KeyHandler keyH) {
+    public Player (GamePanel gp, KeyHandler keyH, Cursor cursor) {
         this.gp = gp;
         this.keyH = keyH;
+        this.cursor = cursor;
         setDefaultValues();
         getPlayerImage();
     }
@@ -120,8 +122,10 @@ public class Player extends Entity {
                     case 6: spriteNum = 1; break;
                 }
                 spriteCounter = 0;
-            }
-        }
+            }}
+
+        // Update angle based on mouse position
+        cursor.calculateAngle((int) (x + gp.tileSize * 1.5), y + gp.tileSize);
     }
 
     public void draw(Graphics2D g2) {
@@ -200,5 +204,8 @@ public class Player extends Entity {
         }
 
         g2.drawImage(image, x, y, gp.tileSize*3, gp.tileSize*2, null);
+
+        // draw arrow
+        cursor.draw(g2, (int) (x + gp.tileSize * 1.5), y + gp.tileSize);
     }
 }

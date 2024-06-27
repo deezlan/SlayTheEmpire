@@ -2,16 +2,17 @@ package entity;
 
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 public class Entity {
     public int worldX, worldY;
     public int speed;
-    public BufferedImage
-            idleRight1, idleRight2, idleRight3, idleRight4, idleRight5, idleRight6,
-            idleLeft1, idleLeft2, idleLeft3, idleLeft4, idleLeft5, idleLeft6,
-            moveLeft1, moveLeft2, moveLeft3, moveLeft4, moveLeft5, moveLeft6, moveLeft7, moveLeft8,
-            moveRight1, moveRight2, moveRight3, moveRight4, moveRight5, moveRight6, moveRight7, moveRight8;
-
+    public ArrayList<BufferedImage>
+            currentSpriteList = new ArrayList<>(),
+            idleRightSpriteList = new ArrayList<>(),
+            idleLeftSpriteList = new ArrayList<>(),
+            moveRightSpriteList = new ArrayList<>(),
+            moveLeftSpriteList = new ArrayList<>();
     public String action;
     public boolean lookingRight;
     public int spriteCounter = 0;
@@ -22,6 +23,20 @@ public class Entity {
 
     public Rectangle solidArea; // draw area around player
     public int solidAreaDefaultX, solidAreaDefaultY;
+
+    public void loopThroughSprites() {
+        spriteNum = (spriteNum < currentSpriteList.size()) ? spriteNum + 1 : 1;
+        spriteCounter = 0;
+    }
+
+    public void update() {
+        spriteCounter++;
+        if (this.currentSpriteList.size() > 7) {
+            if (spriteCounter > 5) loopThroughSprites();
+        } else {
+            if (spriteCounter > 9) loopThroughSprites();
+        }
+    }
 
     // entity's collision directions
     public boolean

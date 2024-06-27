@@ -9,25 +9,27 @@ import java.util.Objects;
 
 public class OBJ_Heart extends SuperObject{
     GamePanel gp;
-    BufferedImage image1, image2, image3;
+    BufferedImage sprite1, sprite2, sprite3;
     public OBJ_Heart(GamePanel gp) {
         this.gp = gp;
         name = "Heart";
 
         // Load shop sprites
         try {
-            image1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
+            sprite1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
                     "/objects/life/heart_blank.png"), "Missing life sprite 0"));
-            image1 = uTool.scaleImage(image1, gp.TILE_SIZE, gp.TILE_SIZE);
-            image2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
+            sprite1 = uTool.scaleImage(sprite1, gp.TILE_SIZE, gp.TILE_SIZE);
+
+            sprite2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
                     "/objects/life/heart_half.png"), "Missing life sprite 1"));
-            image2 = uTool.scaleImage(image2, gp.TILE_SIZE, gp.TILE_SIZE);
-            image3 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
+            sprite2 = uTool.scaleImage(sprite2, gp.TILE_SIZE, gp.TILE_SIZE);
+
+            sprite3 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
                     "/objects/life/heart_full.png"), "Missing life sprite 2"));
-            image3 = uTool.scaleImage(image3, gp.TILE_SIZE, gp.TILE_SIZE);
-            imageList.add(0, image1);
-            imageList.add(1, image2);
-            imageList.add(2, image3);
+            sprite3 = uTool.scaleImage(sprite3, gp.TILE_SIZE, gp.TILE_SIZE);
+            spriteList.add(0, sprite1);
+            spriteList.add(1, sprite2);
+            spriteList.add(2, sprite3);
 
         } catch (IOException e) {
             e.printStackTrace(System.out);

@@ -3,7 +3,7 @@ package main;
 import object.OBJ_Heart;
 import object.SuperObject;
 
-import java.awt.*;
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
 public class UI {
@@ -17,9 +17,9 @@ public class UI {
 
         //HUD Components
         SuperObject heart = new OBJ_Heart(gp);
-        fullHeart = heart.imageList.get(2);
-        halfHeart = heart.imageList.get(1);
-        emptyHeart = heart.imageList.get(0);
+        fullHeart = heart.spriteList.get(2);
+        halfHeart = heart.spriteList.get(1);
+        emptyHeart = heart.spriteList.get(0);
     }
 
     public void draw(Graphics2D g2){

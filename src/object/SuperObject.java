@@ -1,5 +1,7 @@
 package object;
 
+import main.GamePanel;
+
 import main.UtilityTool;
 
 import java.awt.Rectangle;
@@ -36,8 +38,17 @@ public class SuperObject {
     }
 
     // Draw latest object sprite
-    public void draw(Graphics2D g2, int width, int height) {
+    public void draw(Graphics2D g2, GamePanel gp, int i) {
         BufferedImage image = spriteList.get(spriteNum - 1);
-        g2.drawImage(image, worldX, worldY, width, height, null);
+        int screenX = worldX - gp.player.worldX + gp.player.screenX;
+        int screenY = worldY - gp.player.worldY + gp.player.screenY;
+
+        if(worldX + gp.TILE_SIZE > gp.player.worldX - gp.player.screenX &&
+                worldX - gp.TILE_SIZE < gp.player.worldX + gp.player.screenX &&
+                worldY + gp.TILE_SIZE > gp.player.worldY - gp.player.screenY &&
+                worldY - gp.TILE_SIZE < gp.player.worldY + gp.player.screenY)
+        {
+            g2.drawImage(image, screenX, screenY, gp.objArr[i].spriteWidth, gp.objArr[i].spriteHeight, null);
+        }
     }
 }

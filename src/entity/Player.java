@@ -11,15 +11,20 @@ import java.io.IOException;
 import java.util.Objects;
 
 public class Player extends Entity {
-    GamePanel gp;
     KeyHandler keyH;
 
+    public final int screenX;
+    public final int screenY;
+
     public Player (GamePanel gp, KeyHandler keyH) {
+        super(gp);
         this.gp = gp;
         this.keyH = keyH;
+        screenX = gp.SCREEN_WIDTH/2 - (gp.TILE_SIZE/2); // added screen position
+        screenY = gp.SCREEN_HEIGHT/2 - (gp.TILE_SIZE/2);
 
         setDefaultValues();
-        getPlayerImages();
+        getPlayerSprites();
 
         solidArea = new Rectangle(); // draws a square at the centre of the player
         solidArea.x = 56; // position of actual collision square
@@ -31,8 +36,8 @@ public class Player extends Entity {
     }
 
     public void setDefaultValues() {
-        worldX = 100; // changed it for locating the player in the world map
-        worldY = 100; // same thing
+        worldX = 350; // Player spawn location x
+        worldY = 10; // player spawn location y
         speed = 3;
         action = "idleRight";
         currentSpriteList = idleRightSpriteList;
@@ -118,7 +123,7 @@ public class Player extends Entity {
     public void interactObject (int index) {
         if (index != 999) {
 //            gp.objArray[index] = null;
-            System.out.println(gp.objArray[index].message);
+            System.out.println(gp.objArr[index].message);
         }
     }
 
@@ -126,10 +131,10 @@ public class Player extends Entity {
         if (spriteNum > currentSpriteList.size() - 1) spriteNum = 1;
         BufferedImage image = currentSpriteList.get(spriteNum - 1);
 
-        g2.drawImage(image, worldX, worldY, gp.TILE_SIZE*3, gp.TILE_SIZE*2, null);
+        g2.drawImage(image, screenX, screenY, gp.TILE_SIZE*3, gp.TILE_SIZE*2, null);
     }
 
-    public void getPlayerImages() {
+    public void getPlayerSprites() {
         try {
             moveRightSpriteList.add(0, ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
                     "/player/Warrior/run/right/Warrior_Run_Right_1.png"), "Missing right sprite 0")));

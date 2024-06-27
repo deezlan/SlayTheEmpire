@@ -162,50 +162,50 @@ public class CollisionChecker {
     public int checkObject (Entity entity, boolean player) {
         int index = 999;
 
-        for (int i = 0; i < gp.objArray.length; i++) {
-            if (gp.objArray[i] != null) {
+        for (int i = 0; i < gp.objArr.length; i++) {
+            if (gp.objArr[i] != null) {
                 // Get entity's solid area position
                 entity.solidArea.x = entity.worldX + entity.solidArea.x;
                 entity.solidArea.y = entity.worldY + entity.solidArea.y;
 
                 // Get the object's solid area position
-                gp.objArray[i].solidArea.x = gp.objArray[i].worldX + gp.objArray[i].solidArea.x;
-                gp.objArray[i].solidArea.y = gp.objArray[i].worldY + gp.objArray[i].solidArea.y;
+                gp.objArr[i].solidArea.x = gp.objArr[i].worldX + gp.objArr[i].solidArea.x;
+                gp.objArr[i].solidArea.y = gp.objArr[i].worldY + gp.objArr[i].solidArea.y;
 
                 switch (entity.action) {
                     case "moveUp":
                         entity.solidArea.y -= entity.speed;
-                        if (entity.solidArea.intersects(gp.objArray[i].solidArea)) {
-                            if (gp.objArray[i].collision) entity.upCollisionOn = true;
+                        if (entity.solidArea.intersects(gp.objArr[i].solidArea)) {
+                            if (gp.objArr[i].collision) entity.upCollisionOn = true;
                             if (player) index = i;
                         }
                         break;
                     case "moveDown":
                         entity.solidArea.y += entity.speed;
-                        if (entity.solidArea.intersects(gp.objArray[i].solidArea)) {
-                            if (gp.objArray[i].collision) entity.downCollisionOn = true;
+                        if (entity.solidArea.intersects(gp.objArr[i].solidArea)) {
+                            if (gp.objArr[i].collision) entity.downCollisionOn = true;
                             if (player) index = i;
                         }
                         break;
                     case "moveLeft":
                         entity.solidArea.x -= entity.speed;
-                        if (entity.solidArea.intersects(gp.objArray[i].solidArea)) {
-                            if (gp.objArray[i].collision) entity.leftCollisionOn = true;
+                        if (entity.solidArea.intersects(gp.objArr[i].solidArea)) {
+                            if (gp.objArr[i].collision) entity.leftCollisionOn = true;
                             if (player) index = i;
                         }
                         break;
                     case "moveRight":
                         entity.solidArea.x += entity.speed;
-                        if (entity.solidArea.intersects(gp.objArray[i].solidArea)) {
-                            if (gp.objArray[i].collision) entity.rightCollisionOn = true;
+                        if (entity.solidArea.intersects(gp.objArr[i].solidArea)) {
+                            if (gp.objArr[i].collision) entity.rightCollisionOn = true;
                             if (player) index = i;
                         }
                         break;
                     case "moveUpRight":
                         entity.solidArea.y -= entity.speed;
                         entity.solidArea.x += entity.speed;
-                        if (entity.solidArea.intersects(gp.objArray[i].solidArea)) {
-                            if (gp.objArray[i].collision) {
+                        if (entity.solidArea.intersects(gp.objArr[i].solidArea)) {
+                            if (gp.objArr[i].collision) {
                                 entity.rightCollisionOn = true;
                                 entity.upCollisionOn = true;
                             }
@@ -215,8 +215,8 @@ public class CollisionChecker {
                     case "moveDownRight":
                         entity.solidArea.y += entity.speed;
                         entity.solidArea.x += entity.speed;
-                        if (entity.solidArea.intersects(gp.objArray[i].solidArea)) {
-                            if (gp.objArray[i].collision) {
+                        if (entity.solidArea.intersects(gp.objArr[i].solidArea)) {
+                            if (gp.objArr[i].collision) {
                                 entity.rightCollisionOn = true;
                                 entity.downCollisionOn = true;
                             }
@@ -226,8 +226,8 @@ public class CollisionChecker {
                     case "moveUpLeft":
                         entity.solidArea.y -= entity.speed;
                         entity.solidArea.x -= entity.speed;
-                        if (entity.solidArea.intersects(gp.objArray[i].solidArea)) {
-                            if (gp.objArray[i].collision) {
+                        if (entity.solidArea.intersects(gp.objArr[i].solidArea)) {
+                            if (gp.objArr[i].collision) {
                                 entity.leftCollisionOn = true;
                                 entity.upCollisionOn = true;
                             }
@@ -237,8 +237,8 @@ public class CollisionChecker {
                     case "moveDownLeft":
                         entity.solidArea.y += entity.speed;
                         entity.solidArea.x += entity.speed;
-                        if (entity.solidArea.intersects(gp.objArray[i].solidArea)) {
-                            if (gp.objArray[i].collision) {
+                        if (entity.solidArea.intersects(gp.objArr[i].solidArea)) {
+                            if (gp.objArr[i].collision) {
                                 entity.downCollisionOn = true;
                                 entity.leftCollisionOn = true;
                             }
@@ -248,8 +248,8 @@ public class CollisionChecker {
                 }
                 entity.solidArea.x = entity.solidAreaDefaultX;
                 entity.solidArea.y = entity.solidAreaDefaultY;
-                gp.objArray[i].solidArea.x = gp.objArray[i].solidAreaDefaultX;
-                gp.objArray[i].solidArea.y = gp.objArray[i].solidAreaDefaultY;
+                gp.objArr[i].solidArea.x = gp.objArr[i].solidAreaDefaultX;
+                gp.objArr[i].solidArea.y = gp.objArr[i].solidAreaDefaultY;
             }
         }
         return index;

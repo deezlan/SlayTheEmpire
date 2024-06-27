@@ -8,8 +8,8 @@ public class OBJ_Shop extends SuperObject {
     public OBJ_Shop() {
         name = "Shop";
         message = "Shop closed bitch";
-        spriteWidth = 16*12;
-        spriteHeight = 16*8;
+        spriteWidth = 198;
+        spriteHeight = 128;
 
         // Load shop sprites
         try {

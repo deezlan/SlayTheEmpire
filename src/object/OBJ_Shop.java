@@ -13,13 +13,13 @@ public class OBJ_Shop extends SuperObject {
 
         // Load shop sprites
         try {
-            imageList.add(0, ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
+            spriteList.add(0, ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
                     "/objects/shop/0.png"), "Missing shop sprite 0")));
-            imageList.add(1, ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
+            spriteList.add(1, ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
                     "/objects/shop/1.png"), "Missing shop sprite 1")));
-            imageList.add(2, ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
+            spriteList.add(2, ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
                     "/objects/shop/2.png"), "Missing shop sprite 2")));
-            imageList.add(3, ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
+            spriteList.add(3, ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
                     "/objects/shop/3.png"), "Missing shop sprite 3")));
         } catch (IOException e) {
             e.printStackTrace(System.out);

@@ -36,6 +36,10 @@ public class Player extends Entity {
         speed = 3;
         action = "idleRight";
         lookingRight = true;
+
+        //Status
+        maxLife = 10;
+        life = maxLife;
     }
 
     public void getPlayerImages() {

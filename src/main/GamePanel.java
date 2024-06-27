@@ -31,7 +31,7 @@ public class GamePanel extends JPanel implements Runnable {
     public Player player = new Player(this, keyH);
     public SuperObject[] objArray = new SuperObject[10];
     public CollisionChecker cChecker = new CollisionChecker(this);
-
+    public UI ui = new UI(this);
     public GamePanel() {
         this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
         this.setBackground(Color.decode("#222034"));
@@ -96,6 +96,8 @@ public class GamePanel extends JPanel implements Runnable {
         tileM.draw(g2); // Draw tiles
 
         player.draw(g2); // Draw player
+
+        ui.draw(g2);
 
         // Draw every object
         for (SuperObject superObject : objArray) {

@@ -1,5 +1,7 @@
 package object;
 
+import main.UtilityTool;
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
@@ -8,6 +10,8 @@ public class SuperObject {
     public ArrayList<BufferedImage> imageList = new ArrayList<>();
     public String name, message;
     public boolean collision = false;
+
+    UtilityTool uTool = new UtilityTool();
     public int worldX, worldY, spriteWidth, spriteHeight,
         spriteCounter = 0,
         spriteNum = 1;

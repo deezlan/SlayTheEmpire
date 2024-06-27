@@ -1,9 +1,7 @@
 package object;
 
 import main.GamePanel;
-
 import main.UtilityTool;
-
 import java.awt.Rectangle;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
@@ -25,6 +23,7 @@ public class SuperObject {
     // Change current object sprite to next
     public void update() {
         spriteCounter++;
+      
         if (this.spriteList.size() > 7) {
             if (spriteCounter > 5) loopThroughSprites();
         } else {

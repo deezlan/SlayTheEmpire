@@ -150,6 +150,35 @@ public class TileManager {
         }
     }
 
+    public void loadMap() {
+        try {
+            InputStream map = getClass().getResourceAsStream("/tiles/lobby/map.txt");
+            BufferedReader mapScanner = new BufferedReader(new InputStreamReader(Objects.requireNonNull(map)));
+
+            int col = 0;
+            int row = 0;
+
+            while (col < gp.MAX_SCREEN_COL && row < gp.MAX_SCREEN_ROW){
+                String line = mapScanner.readLine();
+
+                while(col < gp.MAX_SCREEN_COL) {
+                    String[] numbers = line.split(" ");
+
+                    int num = Integer.parseInt(numbers[col]); // changes string to integer
+
+                    mapTileNum[col][row] = num;
+                    col++;
+                }
+                if(col == gp.MAX_SCREEN_COL){
+                    col = 0;
+                    row++;
+                }
+            }
+            mapScanner.close();
+        } catch(Exception e){
+            e.printStackTrace(System.out);
+        }
+    }
     public void draw(Graphics2D g2) {
         int WORLD_COL = 0;
         int WORLD_ROW = 0;
@@ -167,7 +196,8 @@ public class TileManager {
                 if (worldX + gp.TILE_SIZE > gp.player.worldX - gp.player.screenX &&
                         worldX - gp.TILE_SIZE < gp.player.worldX + gp.player.screenX &&
                         worldY + gp.TILE_SIZE > gp.player.worldY - gp.player.screenY &&
-                        worldY - gp.TILE_SIZE < gp.player.worldY + gp.player.screenY) {
+                        worldY - gp.TILE_SIZE < gp.player.worldY + gp.player.screenY) 
+                {
                     g2.drawImage(tile[tileNum].image, screenX, screenY, gp.TILE_SIZE, gp.TILE_SIZE, null);
                 }
             } else {

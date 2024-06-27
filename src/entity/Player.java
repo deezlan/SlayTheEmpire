@@ -20,6 +20,7 @@ public class Player extends Entity {
         super(gp);
         this.gp = gp;
         this.keyH = keyH;
+
         screenX = gp.SCREEN_WIDTH/2 - (gp.TILE_SIZE/2); // added screen position
         screenY = gp.SCREEN_HEIGHT/2 - (gp.TILE_SIZE/2);
 

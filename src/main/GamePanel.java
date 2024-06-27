@@ -6,6 +6,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 
+import entity.Entity;
 import entity.Player;
 import tile.TileManager;
 import object.SuperObject;
@@ -17,8 +18,14 @@ public class GamePanel extends JPanel implements Runnable {
     public final int TILE_SIZE = (int)(ORIGINAL_TILE_SIZE * SCALE);
     public final int MAX_SCREEN_COL = 17;
     public final int MAX_SCREEN_ROW = 13;
-    final int SCREEN_WIDTH = TILE_SIZE * MAX_SCREEN_COL;
-    final int SCREEN_HEIGHT = TILE_SIZE * MAX_SCREEN_ROW;
+    public final int SCREEN_WIDTH = TILE_SIZE * MAX_SCREEN_COL;
+    public final int SCREEN_HEIGHT = TILE_SIZE * MAX_SCREEN_ROW;
+
+    //World Settings
+    public final int MAX_WORLD_COL = 17; //must be same as map size
+    public final int MAX_WORLD_ROW = 13; //must be same as map size
+//    public final int WORLD_WIDTH = TILE_SIZE * MAX_WORLD_COL;
+//    public final int WORLD_HEIGHT = TILE_SIZE * MAX_WORLD_ROW;
 
     // FPS Settings
     final int FPS = 60;
@@ -29,9 +36,10 @@ public class GamePanel extends JPanel implements Runnable {
 
     public AssetSetter aSetter = new AssetSetter(this);
     public Player player = new Player(this, keyH);
-    public SuperObject[] objArray = new SuperObject[10];
+    public SuperObject[] objArr= new SuperObject[10];
+    public Entity[] npcArr = new Entity[10];
     public CollisionChecker cChecker = new CollisionChecker(this);
-
+    public UI ui = new UI(this);
     public GamePanel() {
         this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
         this.setBackground(Color.decode("#222034"));
@@ -42,6 +50,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     public void setupLobby() {
         aSetter.setObject();
+        aSetter.setNPC();
     }
 
     public void startGameThread() {
@@ -82,9 +91,15 @@ public class GamePanel extends JPanel implements Runnable {
     public void update() {
         player.update();
 
-        for (SuperObject superObject : objArray) {
-            if (superObject != null) {
-                superObject.update();
+        for (SuperObject obj : objArr) {
+            if (obj != null) {
+                obj.update();
+            }
+        }
+
+        for (Entity npc : npcArr) {
+            if (npc != null) {
+                npc.update();
             }
         }
     }
@@ -97,11 +112,13 @@ public class GamePanel extends JPanel implements Runnable {
 
         player.draw(g2); // Draw player
 
-        // Draw object
-        for (SuperObject superObject : objArray) {
-            if (superObject != null)
-                superObject.draw(g2, superObject.spriteWidth, superObject.spriteHeight);
-        }
+        ui.draw(g2);
+
+        for(int i = 0; i < objArr.length; i++)
+            if(objArr[i] != null) objArr[i].draw(g2,this,i);
+
+        for (int i = 0; i < npcArr.length; i++)
+            if (npcArr[i] != null) npcArr[i].draw(g2, i);
 
         g2.dispose();
     }

@@ -1,5 +1,6 @@
 package main;
 
+import entity.NPCMaiden;
 import object.OBJ_SavePedestal;
 import object.OBJ_Shop;
 
@@ -11,12 +12,19 @@ public class AssetSetter {
     }
 
     public void setObject() {
-        gp.objArray[0] = new OBJ_Shop();
-        gp.objArray[0].worldX = 106;
-        gp.objArray[0].worldY = 192;
+        gp.objArr[0] = new OBJ_Shop();
+        gp.objArr[0].worldX = 570;
+        gp.objArr[0].worldY = 0;
 
-        gp.objArray[1] = new OBJ_SavePedestal();
-        gp.objArray[1].worldX = 50;
-        gp.objArray[1].worldY = 50;
+        gp.objArr[1] = new OBJ_SavePedestal();
+        gp.objArr[1].worldX = 300;
+        gp.objArr[1].worldY = 500;
+    }
+
+    public void setNPC() {
+        gp.npcArr[0] = new NPCMaiden(gp);
+        gp.npcArr[0].worldX = 300;
+        gp.npcArr[0].worldY = 10;
+        System.out.println("NPC Maiden set at (" + gp.npcArr[0].worldX + ", " + gp.npcArr[0].worldY + ")");
     }
 }

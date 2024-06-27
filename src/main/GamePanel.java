@@ -36,8 +36,8 @@ public class GamePanel extends JPanel implements Runnable {
 
     public AssetSetter aSetter = new AssetSetter(this);
     public Player player = new Player(this, keyH);
-    public SuperObject[] objArray = new SuperObject[10];
-    public Entity[] npc = new Entity[10];
+    public SuperObject[] objArr= new SuperObject[10];
+    public Entity[] npcArr = new Entity[10];
     public CollisionChecker cChecker = new CollisionChecker(this);
     public UI ui = new UI(this);
     public GamePanel() {
@@ -91,9 +91,15 @@ public class GamePanel extends JPanel implements Runnable {
     public void update() {
         player.update();
 
-        for (SuperObject superObject : objArray) {
-            if (superObject != null) {
-                superObject.update();
+        for (SuperObject obj : objArr) {
+            if (obj != null) {
+                obj.update();
+            }
+        }
+
+        for (Entity npc : npcArr) {
+            if (npc != null) {
+                npc.update();
             }
         }
     }
@@ -108,18 +114,11 @@ public class GamePanel extends JPanel implements Runnable {
 
         ui.draw(g2);
 
-        for(int i = 0; i < objArray.length; i++){
-            if(objArray[i] != null){
-                objArray[i].draw(g2,this,i);
-            }
+        for(int i = 0; i < objArr.length; i++)
+            if(objArr[i] != null) objArr[i].draw(g2,this,i);
 
-        }
-
-        for (int a = 0; a < npc.length; a++) {
-            if (npc[a] != null) {
-                npc[a].draw(g2,a);
-            }
-        }
+        for (int i = 0; i < npcArr.length; i++)
+            if (npcArr[i] != null) npcArr[i].draw(g2, i);
 
         g2.dispose();
     }

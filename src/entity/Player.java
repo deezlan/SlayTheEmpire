@@ -24,7 +24,7 @@ public class Player extends Entity {
         screenY = gp.SCREEN_HEIGHT/2 - (gp.TILE_SIZE/2);
 
         setDefaultValues();
-        getPlayerImages();
+        getPlayerSprites();
 
         solidArea = new Rectangle(); // draws a square at the centre of the player
         solidArea.x = 56; // position of actual collision square
@@ -123,7 +123,7 @@ public class Player extends Entity {
     public void interactObject (int index) {
         if (index != 999) {
 //            gp.objArray[index] = null;
-            System.out.println(gp.objArray[index].message);
+            System.out.println(gp.objArr[index].message);
         }
     }
 
@@ -134,7 +134,7 @@ public class Player extends Entity {
         g2.drawImage(image, screenX, screenY, gp.TILE_SIZE*3, gp.TILE_SIZE*2, null);
     }
 
-    public void getPlayerImages() {
+    public void getPlayerSprites() {
         try {
             moveRightSpriteList.add(0, ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
                     "/player/Warrior/run/right/Warrior_Run_Right_1.png"), "Missing right sprite 0")));

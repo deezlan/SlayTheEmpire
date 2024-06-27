@@ -10,25 +10,25 @@ public class NPCMaiden extends Entity {
     public NPCMaiden(GamePanel gp) {
         super(gp);
         action = "idleRight";
-        speed = 1;
         spriteWidth = 70;
         spriteHeight= 70;
-        getNPCImage();
+        getNpcSprites();
     }
 
-    public void getNPCImage() {
+    public void getNpcSprites() {
         try {
-            idleRight1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
-                    "/NPCs/maiden/villager_01_00.png"), "Missing Maiden idle right sprite 1"));
-            idleRight2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
-                    "/NPCs/maiden/villager_01_01.png"), "Missing Maiden idle right sprite 2"));
-            idleRight3 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
-                    "/NPCs/maiden/villager_01_02.png"), "Missing Maiden idle right sprite 3"));
-            idleRight4 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
-                    "/NPCs/maiden/villager_01_03.png"), "Missing Maiden idle right sprite 4"));
-            idleRight5 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
-                    "/NPCs/maiden/villager_01_04.png"), "Missing Maiden idle right sprite 5"));
-            System.out.println("Images loaded successfully");
+            idleRightSpriteList.add(0, ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
+                    "/NPCs/maiden/villager_01_00.png"), "Missing Maiden idle right sprite 1")));
+            idleRightSpriteList.add(1, ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
+                    "/NPCs/maiden/villager_01_01.png"), "Missing Maiden idle right sprite 2")));
+            idleRightSpriteList.add(2, ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
+                    "/NPCs/maiden/villager_01_02.png"), "Missing Maiden idle right sprite 3")));
+            idleRightSpriteList.add(3, ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
+                    "/NPCs/maiden/villager_01_03.png"), "Missing Maiden idle right sprite 4")));
+            idleRightSpriteList.add(4, ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
+                    "/NPCs/maiden/villager_01_04.png"), "Missing Maiden idle right sprite 5")));
+            System.out.println("NPC images loaded successfully");
+            currentSpriteList = idleRightSpriteList;
         } catch (IOException e) {
             e.printStackTrace(System.out);
         }

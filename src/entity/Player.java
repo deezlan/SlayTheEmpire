@@ -4,7 +4,8 @@ import main.GamePanel;
 import main.KeyHandler;
 
 import javax.imageio.ImageIO;
-import java.awt.*;
+import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Objects;
@@ -21,7 +22,7 @@ public class Player extends Entity {
         getPlayerImages();
 
         solidArea = new Rectangle(); // draws a square at the centre of the player
-        solidArea.x = 56; // actual collision square
+        solidArea.x = 56; // position of actual collision square
         solidArea.y = 72;
         solidAreaDefaultX = solidArea.x;
         solidAreaDefaultY = solidArea.y;
@@ -104,7 +105,9 @@ public class Player extends Entity {
     }
 
     public void update() {
-        if ((keyH.wPressed && keyH.sPressed) || (keyH.aPressed && keyH.dPressed)) { action = "stuckOppositeDirection"; }
+        if ((keyH.wPressed && keyH.sPressed) || (keyH.aPressed && keyH.dPressed)) {
+            action = "stuckOppositeDirection";
+        }
         if (keyH.wPressed && keyH.sPressed && keyH.aPressed) { action = "moveLeft"; }
         if (keyH.wPressed && keyH.sPressed && keyH.dPressed) { action = "moveRight"; }
         if (keyH.aPressed && keyH.dPressed && keyH.wPressed) { action = "moveUp"; }
@@ -121,6 +124,15 @@ public class Player extends Entity {
             if (keyH.wPressed && keyH.aPressed) { action = "moveUpLeft"; }
             if (keyH.sPressed && keyH.aPressed) { action = "moveDownLeft"; }
 
+            if (!upCollisionOn)
+                if (keyH.wPressed) { worldY -= speed; }
+            if (!downCollisionOn)
+                if (keyH.sPressed) { worldY += speed; }
+            if (!leftCollisionOn)
+                if (keyH.aPressed) { worldX -= speed; }
+            if (!rightCollisionOn)
+                if (keyH.dPressed) { worldX += speed; }
+
             // CHECK TILE COLLISION
             upCollisionOn = false; // resets collisions off
             downCollisionOn = false;
@@ -129,36 +141,9 @@ public class Player extends Entity {
             gp.cChecker.checkTile(this); // pass the current tile into the checker to check if it has collision
 
             // CHECK OBJECT COLLISION BEFORE INTERACTING
+            gp.cChecker.checkObject(this, true);
             int objIndex = gp.cChecker.checkObject(this, true);
             interactObject(objIndex);
-
-            if (!upCollisionOn && !downCollisionOn && !leftCollisionOn && !rightCollisionOn) {
-                // NO COLLISION
-                if (keyH.wPressed) { worldY -= speed; }
-                if (keyH.sPressed) { worldY += speed; }
-                if (keyH.aPressed) { worldX -= speed; }
-                if (keyH.dPressed) { worldX += speed; }
-            } else if (upCollisionOn && !leftCollisionOn && !rightCollisionOn) {
-                // UP COLLISION
-                if (keyH.sPressed) { worldY += speed; }
-                if (keyH.aPressed) { worldX -= speed; }
-                if (keyH.dPressed) { worldX += speed; }
-            } else if (downCollisionOn && !leftCollisionOn && !rightCollisionOn) {
-                // DOWN COLLISION
-                if (keyH.wPressed) { worldY -= speed; }
-                if (keyH.aPressed) { worldX -= speed; }
-                if (keyH.dPressed) { worldX += speed; }
-            } else if (leftCollisionOn && !upCollisionOn && !downCollisionOn) {
-                // LEFT COLLISION
-                if (keyH.wPressed) { worldY -= speed; }
-                if (keyH.sPressed) { worldY += speed; }
-                if (keyH.dPressed) { worldX += speed; }
-            } else if (rightCollisionOn && !upCollisionOn && !downCollisionOn) {
-                // RIGHT COLLISION
-                if (keyH.wPressed) { worldY -= speed; }
-                if (keyH.sPressed) { worldY += speed; }
-                if (keyH.aPressed) { worldX += speed; }
-            }
 
             spriteCounter++;
             if (spriteCounter > 5) {
@@ -196,7 +181,7 @@ public class Player extends Entity {
     public void interactObject (int index) {
         if (index != 999) {
 //            gp.objArray[index] = null;
-            System.out.println("Cake");
+            System.out.println(gp.objArray[index].message);
         }
     }
 

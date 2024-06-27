@@ -32,8 +32,6 @@ public class GamePanel extends JPanel implements Runnable {
     public SuperObject[] objArray = new SuperObject[10];
     public CollisionChecker cChecker = new CollisionChecker(this);
     public UI ui = new UI(this);
-    public UtilityTool uTool = new UtilityTool();
-
     public GamePanel() {
         this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
         this.setBackground(Color.decode("#222034"));

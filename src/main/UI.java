@@ -9,7 +9,6 @@ import java.awt.image.BufferedImage;
 public class UI {
 
     GamePanel gp;
-    Font arial_40;
     BufferedImage fullHeart, halfHeart, emptyHeart;
     Graphics2D g2;
 
@@ -42,7 +41,6 @@ public class UI {
         }
 
         postX = gp.TILE_SIZE/2;
-        postY = gp.TILE_SIZE/2;
         i = 0;
 
         while (i < gp.player.life){

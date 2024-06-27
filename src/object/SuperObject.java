@@ -8,14 +8,14 @@ import java.util.ArrayList;
 
 public class SuperObject {
     public ArrayList<BufferedImage> imageList = new ArrayList<>();
-    public String name;
+    public String name, message;
     public boolean collision = false;
 
     UtilityTool uTool = new UtilityTool();
     public int worldX, worldY, spriteWidth, spriteHeight,
         spriteCounter = 0,
         spriteNum = 1;
-    public Rectangle solidArea = new Rectangle(0, 0, 48, 48);
+    public Rectangle solidArea = new Rectangle();
     public int solidAreaDefaultX;
     public int solidAreaDefaultY;
 
@@ -23,13 +23,9 @@ public class SuperObject {
     public void update() {
         spriteCounter++;
         if (this.imageList.size() > 7) {
-            if (spriteCounter > 5) {
-                loopThroughSprites();
-            }
+            if (spriteCounter > 5) loopThroughSprites();
         } else {
-            if (spriteCounter > 9) {
-                loopThroughSprites();
-            }
+            if (spriteCounter > 9) loopThroughSprites();
         }
     }
 

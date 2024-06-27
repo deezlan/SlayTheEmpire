@@ -13,18 +13,18 @@ public class AssetSetter {
 
     public void setObject() {
         gp.objArray[0] = new OBJ_Shop();
-        gp.objArray[0].worldX = gp.TILE_SIZE*6;
+        gp.objArray[0].worldX = 570;
         gp.objArray[0].worldY = 0;
 
         gp.objArray[1] = new OBJ_SavePedestal();
-        gp.objArray[1].worldX = 96+48;
-        gp.objArray[1].worldY = 400;
+        gp.objArray[1].worldX = 300;
+        gp.objArray[1].worldY = 500;
     }
 
     public void setNPC() {
-
         gp.npc[0] = new NPCMaiden(gp);
-        gp.npc[0].worldX = gp.TILE_SIZE*21;
-        gp.npc[0].worldY = gp.TILE_SIZE*21;
+        gp.npc[0].worldX = 300;
+        gp.npc[0].worldY = 10;
+        System.out.println("NPC Maiden set at (" + gp.npc[0].worldX + ", " + gp.npc[0].worldY + ")");
     }
 }

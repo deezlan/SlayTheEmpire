@@ -24,8 +24,8 @@ public class GamePanel extends JPanel implements Runnable {
     //World Settings
     public final int MAX_WORLD_COL = 17; //must be same as map size
     public final int MAX_WORLD_ROW = 13; //must be same as map size
-    public final int WORLD_WIDTH = TILE_SIZE * MAX_WORLD_COL;
-    public final int WORLD_HEIGHT = TILE_SIZE * MAX_WORLD_ROW;
+//    public final int WORLD_WIDTH = TILE_SIZE * MAX_WORLD_COL;
+//    public final int WORLD_HEIGHT = TILE_SIZE * MAX_WORLD_ROW;
 
     // FPS Settings
     final int FPS = 60;
@@ -108,12 +108,6 @@ public class GamePanel extends JPanel implements Runnable {
 
         ui.draw(g2);
 
-        // Draw every object
-//        for (SuperObject superObject : objArray) {
-//            if (superObject != null)
-//                superObject.draw(g2, superObject.spriteWidth, superObject.spriteHeight);
-//        }
-
         for(int i = 0; i < objArray.length; i++){
             if(objArray[i] != null){
                 objArray[i].draw(g2,this,i);
@@ -121,12 +115,11 @@ public class GamePanel extends JPanel implements Runnable {
 
         }
 
-        for (Entity entity : npc) {
-            if (entity != null) {
-                entity.draw(g2);
+        for (int a = 0; a < npc.length; a++) {
+            if (npc[a] != null) {
+                npc[a].draw(g2,a);
             }
         }
-
 
         g2.dispose();
     }

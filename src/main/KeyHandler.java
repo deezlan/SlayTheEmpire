@@ -9,7 +9,8 @@ public class KeyHandler implements KeyListener {
             wPressed,
             sPressed,
             aPressed,
-            dPressed;
+            dPressed,
+            enterPressed;
 
     public KeyHandler(GamePanel gp){
         this.gp = gp;
@@ -58,6 +59,9 @@ public class KeyHandler implements KeyListener {
                 gp.gameState = gp.playState;
             }
         }
+        if (code == KeyEvent.VK_ENTER) {
+            enterPressed = true;
+        }
     }
 
     @Override
@@ -68,5 +72,6 @@ public class KeyHandler implements KeyListener {
         if (code == KeyEvent.VK_S) { sPressed = false; }
         if (code == KeyEvent.VK_A) { aPressed = false; }
         if (code == KeyEvent.VK_D) { dPressed = false; }
+        if (code == KeyEvent.VK_ENTER) { enterPressed = false; }
     }
 }

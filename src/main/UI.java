@@ -32,7 +32,6 @@ public class UI {
         g2.setFont(new Font("Microsoft YaHei", Font.PLAIN, 28));
         g2.setColor(Color.white);
         drawPlayerLife();
-        drawInventory();
 //        if (gp.gameState == gp.playState) {
 //
 //        }
@@ -46,9 +45,9 @@ public class UI {
             drawDialogScreen();
         }
 
-//        if (gp.gameState == gp.shopState){
-//            draw
-//        }
+        if (gp.gameState == gp.shopState){
+            drawInventory();
+        }
     }
 
     public void drawInventory() {

@@ -2,7 +2,7 @@ package entity;
 
 import main.GamePanel;
 import main.KeyHandler;
-import object.OBJ_Heart;
+import main.UtilityTool;
 
 import javax.imageio.ImageIO;
 import java.awt.Graphics2D;
@@ -20,8 +20,6 @@ public class Player extends Entity {
     public ArrayList<Entity> inventory = new ArrayList<>();
     public final int inventorySize = 8;
 
-    OBJ_Heart image = new OBJ_Heart(gp);
-
     public Player (GamePanel gp, KeyHandler keyH) {
         super(gp);
         this.gp = gp;
@@ -31,6 +29,7 @@ public class Player extends Entity {
 
         setDefaultValues();
         getPlayerSprites();
+        getPlayerAttackImage();
         setItems();
 
         solidArea = new Rectangle(); // draws a square at the centre of the player
@@ -51,7 +50,7 @@ public class Player extends Entity {
         lookingRight = true;
 
         //Status
-        maxLife = 10;
+        maxLife = 6;
         life = maxLife;
     }
 
@@ -60,6 +59,8 @@ public class Player extends Entity {
     }
 
     public void update() {
+        if (attacking) attacking();
+
         if ((keyH.wPressed && keyH.sPressed) || (keyH.aPressed && keyH.dPressed)) {
             action = "stuckOppositeDirection";
             currentSpriteList = lookingRight ? idleRightSpriteList : idleLeftSpriteList;
@@ -70,6 +71,7 @@ public class Player extends Entity {
         if (keyH.aPressed && keyH.dPressed && keyH.sPressed) { action = "moveDown"; }
 
         if ((keyH.wPressed || keyH.sPressed || keyH.aPressed || keyH.dPressed) && !action.equals("stuckOppositeDirection")) {
+
             if (keyH.wPressed) { action = "moveUp"; }
             if (keyH.sPressed) { action = "moveDown"; }
             if (keyH.aPressed) { action = "moveLeft";}
@@ -88,6 +90,9 @@ public class Player extends Entity {
                 if (keyH.aPressed) { worldX -= speed; }
             if (!rightCollisionOn)
                 if (keyH.dPressed) { worldX += speed; }
+            if (keyH.enterPressed){
+                attacking = true;
+            }
 
             // CHECK TILE COLLISION
             upCollisionOn = false; // resets collisions off
@@ -123,9 +128,14 @@ public class Player extends Entity {
                     lookingRight = true;
                     break;
             }
+            System.out.println(action);
         } else {
             action = lookingRight ? "idleRight" : "idleLeft";
             currentSpriteList = action.equals("idleRight") ? idleRightSpriteList : idleLeftSpriteList;
+
+            if (keyH.enterPressed){
+                attacking = true;
+            }
         }
 
         spriteCounter++;
@@ -142,22 +152,32 @@ public class Player extends Entity {
     }
 
     public void interactNPC (int index){
-        if (index != 999) {
-            gp.gameState = gp.dialogueState;
+        switch (index){
+            case 999:
+                break;
+            case 2:
+                gp.gameState = gp.shopState;
+                break;
+            default:
+                gp.gameState = gp.dialogueState;
         }
-//          else if (index == 2) {
-//            gp.gameState = gp.shopState;
-//        }
-
     }
 
     public void draw(Graphics2D g2) {
         if (spriteNum > currentSpriteList.size() - 1) spriteNum = 1;
         BufferedImage image = currentSpriteList.get(spriteNum - 1);
+        if (weaponSpriteNum > weaponSpriteList.size()) weaponSpriteNum =1;
+        BufferedImage weaponImage = weaponSpriteList.get(weaponSpriteNum);
         if (gp.gameArea == 0) {
             g2.drawImage(image, worldX, worldY, gp.TILE_SIZE*3, gp.TILE_SIZE*2, null);
+            if (attacking){
+                g2.drawImage(weaponImage, worldX + 40, worldY, gp.TILE_SIZE*3, gp.TILE_SIZE*2, null);
+            }
         } else {
             g2.drawImage(image, screenX, screenY, gp.TILE_SIZE*3, gp.TILE_SIZE*2, null);
+            if (attacking){
+                g2.drawImage(weaponImage, screenX, screenY, gp.TILE_SIZE*3, gp.TILE_SIZE*2, null);
+            }
         }
     }
 
@@ -225,5 +245,22 @@ public class Player extends Entity {
         } catch (IOException e) {
             e.printStackTrace(System.out);
         }
+    }
+    public void getPlayerAttackImage() {
+        try {
+            weaponSpriteList.add(0, UtilityTool.weaponSetup("/Weapon/Sword/sword_slash_1.png"));
+            weaponSpriteList.add(1, UtilityTool.weaponSetup("/Weapon/Sword/sword_slash_2.png"));
+            weaponSpriteList.add(2, UtilityTool.weaponSetup("/Weapon/Sword/sword_slash_3.png"));
+            weaponSpriteList.add(3, UtilityTool.weaponSetup("/Weapon/Sword/sword_slash_4.png"));
+            weaponSpriteList.add(4, UtilityTool.weaponSetup("/Weapon/Sword/sword_slash_5.png"));
+            weaponSpriteList.add(5, UtilityTool.weaponSetup("/Weapon/Sword/sword_slash_6.png"));
+        } catch (IOException e){
+            e.printStackTrace(System.out);
+        }
+    }
+
+    public void attacking(){
+        weaponSpriteCounter++;
+        loopThroughWeaponSprites();
     }
 }

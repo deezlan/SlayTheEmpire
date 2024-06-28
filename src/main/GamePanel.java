@@ -47,10 +47,10 @@ public class GamePanel extends JPanel implements Runnable {
     public final int pauseState = 2; // NO USAGE SO FAR
     public final int dialogueState = 3; // NO USAGE SO FAR
 
-//    public final int shopState = 4;
+    public final int shopState = 4;
 
 
-    public GamePanel() {
+    public GamePanel(){
         this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
         this.setBackground(Color.decode("#222034"));
         this.setDoubleBuffered(true);

@@ -3,10 +3,13 @@ package main;
 import entity.Entity;
 import object.SuperObject;
 
+import javax.imageio.ImageIO;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class UtilityTool {
     public static BufferedImage scaleImage (BufferedImage original, int width, int height){
@@ -30,5 +33,11 @@ public class UtilityTool {
             BufferedImage scaledSprite = scaleImage(original, width, height);
             entity.currentSpriteList.add(scaledSprite);
         }
+    }
+
+    public static BufferedImage weaponSetup (String path) throws IOException {
+        BufferedImage image = ImageIO.read(Objects.requireNonNull(UtilityTool.class.getResourceAsStream(path), "aa"));
+        image = scaleImage(image, 48, 48);
+        return image;
     }
 }

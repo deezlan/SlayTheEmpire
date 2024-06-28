@@ -25,8 +25,6 @@ public class GamePanel extends JPanel implements Runnable {
     //World Settings
     public final int MAX_WORLD_COL = 17; //must be same as map size
     public final int MAX_WORLD_ROW = 13; //must be same as map size
-//    public final int WORLD_WIDTH = TILE_SIZE * MAX_WORLD_COL;
-//    public final int WORLD_HEIGHT = TILE_SIZE * MAX_WORLD_ROW;
 
     // FPS Settings
     final int FPS = 60;
@@ -41,6 +39,17 @@ public class GamePanel extends JPanel implements Runnable {
     public Entity[] npcArr = new Entity[10];
     public CollisionChecker cChecker = new CollisionChecker(this);
     public UI ui = new UI(this);
+
+    // Game States
+    public int gameState;
+    public final int titleState = 0;
+    public final int playState = 1; // NO USAGE SO FAR
+    public final int pauseState = 2; // NO USAGE SO FAR
+    public final int dialogueState = 3; // NO USAGE SO FAR
+
+//    public final int shopState = 4;
+
+
     public GamePanel() {
         this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
         this.setBackground(Color.decode("#222034"));
@@ -53,6 +62,8 @@ public class GamePanel extends JPanel implements Runnable {
         gameArea = 0;
         aSetter.setObject();
         aSetter.setNPC();
+        gameState = playState;
+
     }
 
     public void startGameThread() {
@@ -91,36 +102,110 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     public void update() {
-        player.update();
 
-        for (SuperObject obj : objArr) {
-            if (obj != null) {
-                obj.update();
+        if (gameState == playState) {
+            player.update();
+
+            for (SuperObject obj : objArr) {
+                if (obj != null) {
+                    obj.update();
+                }
+            }
+
+            for (Entity npc : npcArr) {
+                if (npc != null) {
+                    npc.update();
+                }
             }
         }
 
-        for (Entity npc : npcArr) {
-            if (npc != null) {
-                npc.update();
-            }
-        }
+//        if (gameState == pauseState) {
+//            // placeholder
+//        }
     }
+
+//    public void paintComponent(Graphics g) {
+//        super.paintComponent(g);
+//        Graphics2D g2 = (Graphics2D) g;
+//
+//        // Draw tiles
+//        tileM.draw(g2);
+//
+//        // Draw player
+//        player.draw(g2);
+//
+//        // Draw objects
+//        for (SuperObject superObject : objArr) {
+//            if (superObject != null) {
+//                superObject.draw(g2, this);
+//            }
+//        }
+//
+//        // Draw NPCs
+//        for (Entity entity : npcArr) {
+//            if (entity != null) {
+//                entity.draw(g2);
+//            }
+//        }
+//
+//        // Draw UI elements
+//        ui.draw(g2);
+//
+//        g2.dispose();
+//    }
+
 
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D)g;
 
-        tileM.draw(g2); // Draw tiles
+        // Title Screen
+        if (gameState == titleState) {
+            ui.draw(g2);
+        } else if (gameState == playState) {
+            tileM.draw(g2); // Draw tiles
 
-        player.draw(g2); // Draw player
+            player.draw(g2); // Draw player
 
-        ui.draw(g2);
+            for (SuperObject superObject : objArr)
+                if (superObject != null) superObject.draw(g2, this);
 
-        for(int i = 0; i < objArr.length; i++)
-            if(objArr[i] != null) objArr[i].draw(g2,this,i);
+            for (Entity entity : npcArr)
+                if (entity != null) entity.draw(g2);
 
-        for (int i = 0; i < npcArr.length; i++)
-            if (npcArr[i] != null) npcArr[i].draw(g2, i);
+            ui.draw(g2);
+
+        } else if (gameState == dialogueState){
+            tileM.draw(g2); // Draw tiles
+
+            player.draw(g2); // Draw player
+
+            for (SuperObject superObject : objArr)
+                if (superObject != null) superObject.draw(g2, this);
+
+            for (Entity entity : npcArr)
+                if (entity != null) entity.draw(g2);
+
+            ui.draw(g2);
+        } else if (gameState == pauseState) {
+            tileM.draw(g2); // Draw tiles
+
+            player.draw(g2); // Draw player
+
+            for (SuperObject superObject : objArr)
+                if (superObject != null) superObject.draw(g2, this);
+
+            for (Entity entity : npcArr)
+                if (entity != null) entity.draw(g2);
+
+            ui.draw(g2);
+        } else{
+            tileM.draw(g2); // Draw tiles
+
+            player.draw(g2); // Draw player
+
+            ui.draw(g2);
+        }
 
         g2.dispose();
     }

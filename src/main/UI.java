@@ -21,28 +21,36 @@ public class UI {
 
         //HUD Components
         SuperObject heart = new OBJ_Heart(gp);
-        fullHeart = heart.spriteList.get(2);
-        halfHeart = heart.spriteList.get(1);
-        emptyHeart = heart.spriteList.get(0);
+        fullHeart = heart.scaledList.get(2);
+        halfHeart = heart.scaledList.get(1);
+        emptyHeart = heart.scaledList.get(0);
     }
 
     public void draw(Graphics2D g2){
-        this.g2 = g2;
 
+        this.g2 = g2;
+        g2.setFont(new Font("Microsoft YaHei", Font.PLAIN, 28));
+        g2.setColor(Color.white);
         drawPlayerLife();
         drawInventory();
-    }
-    public void drawSubWindow(int x, int y, int width, int height){
+//        if (gp.gameState == gp.playState) {
+//
+//        }
+        //Pause State
+        if (gp.gameState == gp.pauseState) {
+            drawPauseScreen();
+        }
 
-        Color c = new Color(0, 0, 0, 220);
-        g2.setColor(c);
-        g2.fillRoundRect(x, y, width, height, 35, 35);
+        //Dialog State
+        if(gp.gameState == gp.dialogueState){
+            drawDialogScreen();
+        }
 
-        c = new Color(255, 255, 255);
-        g2.setColor(c);
-        g2.setStroke(new BasicStroke(5));
-        g2.drawRoundRect(x+5, y+5, width-10, height-10, 25, 25);
+//        if (gp.gameState == gp.shopState){
+//            draw
+//        }
     }
+
     public void drawInventory() {
         int frameX = gp.TILE_SIZE*3;
         int frameY = gp.TILE_SIZE;
@@ -74,27 +82,65 @@ public class UI {
     }
 
     public void drawPlayerLife(){
-
-        int postX = gp.TILE_SIZE/2;
-        int postY = gp.TILE_SIZE/2;
+        int posX = gp.TILE_SIZE/2;
+        int posY = gp.TILE_SIZE/2;
         int i = 0;
 
         while (i < gp.player.maxLife/2){
-            g2.drawImage(emptyHeart, postX, postY, null);
+            g2.drawImage(emptyHeart, posX, posY, null);
             i++;
-            postX += gp.TILE_SIZE;
+            posX += gp.TILE_SIZE;
         }
 
-        postX = gp.TILE_SIZE/2;
+        posX = gp.TILE_SIZE/2;
         i = 0;
 
         while (i < gp.player.life){
-            g2.drawImage (halfHeart, postX, postY, null);
+            g2.drawImage (halfHeart, posX, posY, null);
             i++;
             if (i < gp.player.life)
-                g2.drawImage(fullHeart, postX, postY, null);
+                g2.drawImage(fullHeart, posX, posY, null);
             i++;
-            postX += gp.TILE_SIZE;
+            posX += gp.TILE_SIZE;
         }
+    }
+
+    // Draw Pause Screen
+    public void drawPauseScreen() {
+
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD));
+        String text = "GO TOUCH GRASS BITCH";
+        int x = getXforCenteredText(text);
+        int y = gp.SCREEN_HEIGHT/2;
+
+        g2.drawString(text, x, y);
+
+    }
+
+    //Draw dialog
+    public void drawDialogScreen() {
+        // WINDOW
+        int dialogX = gp.TILE_SIZE*2;
+        int dialogY = gp.TILE_SIZE/2;
+        int dialogWidth = gp.SCREEN_WIDTH - (gp.TILE_SIZE*4);
+        int dialogHeight = gp.TILE_SIZE*4;
+
+        drawSubWindow(dialogX,dialogY,dialogWidth,dialogHeight);
+    }
+
+    public void drawSubWindow(int x, int y, int width,int height){
+        Color custom = new Color(0,0,0);
+        g2.setColor(custom);
+        g2.fillRoundRect(x,y,width,height,35,35);
+
+        custom = new Color(255,255,255);
+        g2.setColor(custom);
+        g2.setStroke(new BasicStroke((5)));
+        g2.drawRoundRect(x+5,y+5,width-10,height-10,25,25);
+    }
+
+    public int getXforCenteredText(String text) {
+        int length = (int)g2.getFontMetrics().getStringBounds(text, g2).getWidth();
+        return gp.SCREEN_WIDTH/2 - length/2;
     }
 }

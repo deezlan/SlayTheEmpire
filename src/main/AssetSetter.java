@@ -1,9 +1,9 @@
 package main;
 
-import entity.NPCBlacksmith;
 import entity.NPCMaiden;
 import entity.NPCMerchant;
 import entity.NPCMystery;
+import entity.NPCBlacksmith;
 import object.OBJ_DialogueBubble;
 import object.OBJ_SavePedestal;
 import object.OBJ_Shop;
@@ -18,13 +18,13 @@ public class AssetSetter {
     public void setObject() {
         switch (gp.gameArea) {
             case 0:
-                gp.objArr[0] = new OBJ_Shop();
-                gp.objArr[0].worldX = 430;
-                gp.objArr[0].worldY = 50;
+                gp.objArr[0] = new OBJ_Shop(gp);
+                gp.objArr[0].worldX = gp.TILE_SIZE*9 + 20;
+                gp.objArr[0].worldY = gp.TILE_SIZE/2;
 
                 gp.objArr[1] = new OBJ_SavePedestal();
-                gp.objArr[1].worldX = 300;
-                gp.objArr[1].worldY = 450;
+                gp.objArr[1].worldX = 272;
+                gp.objArr[1].worldY = 446;
 
                 gp.objArr[3] = new OBJ_DialogueBubble(); // Maiden chat bubble
                 gp.objArr[3].worldX = 410;
@@ -45,13 +45,13 @@ public class AssetSetter {
             case 1:
                 break;
             default:
-                gp.objArr[0] = new OBJ_Shop();
+                gp.objArr[0] = new OBJ_Shop(gp);
                 gp.objArr[0].worldX = 570;
-                gp.objArr[0].worldY = 100;
+                gp.objArr[0].worldY = 0;
 
                 gp.objArr[1] = new OBJ_SavePedestal();
-                gp.objArr[1].worldX = 330;
-                gp.objArr[1].worldY = 500;
+                gp.objArr[1].worldX = 216;
+                gp.objArr[1].worldY = 480;
         }
     }
 
@@ -77,7 +77,6 @@ public class AssetSetter {
                 gp.npcArr[3].worldX = 550;
                 gp.npcArr[3].worldY = 130;
                 System.out.println("NPC Merchant set at (" + gp.npcArr[0].worldX + ", " + gp.npcArr[0].worldY + ")");
-
 
                 break;
             case 1:

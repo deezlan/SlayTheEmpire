@@ -60,7 +60,7 @@ public class UI {
         //SLOT
         final int slotXstart = frameX + 35;
         final int slotYstart = frameY + 35;
-//        int slotX = slotXstart; // temporary commented out Inventory!
+//        int slotX = slotXstart; temp commented
 //        int slotY = slotYstart;
 //
 //        //DRAW PLAYER INVENTORY

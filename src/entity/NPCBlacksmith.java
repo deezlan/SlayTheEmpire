@@ -11,9 +11,9 @@ public class NPCBlacksmith extends Entity {
     public NPCBlacksmith(GamePanel gp) {
         super(gp);
         action = "idleRight";
-//        message = "Hands off the hammer!";
         getNpcSprites();
     }
+
 
     public void getNpcSprites() {
         try {
@@ -40,4 +40,5 @@ public class NPCBlacksmith extends Entity {
         solidAreaDefaultX = solidArea.x;
         solidAreaDefaultY = solidArea.y;
     }
+
 }

@@ -112,42 +112,7 @@ public class GamePanel extends JPanel implements Runnable {
                 if (npc != null) npc.update();
             }
         }
-
-//        if (gameState == pauseState) {
-//            // placeholder
-//        }
     }
-
-//    public void paintComponent(Graphics g) {
-//        super.paintComponent(g);
-//        Graphics2D g2 = (Graphics2D) g;
-//
-//        // Draw tiles
-//        tileM.draw(g2);
-//
-//        // Draw player
-//        player.draw(g2);
-//
-//        // Draw objects
-//        for (SuperObject superObject : objArr) {
-//            if (superObject != null) {
-//                superObject.draw(g2, this);
-//            }
-//        }
-//
-//        // Draw NPCs
-//        for (Entity entity : npcArr) {
-//            if (entity != null) {
-//                entity.draw(g2);
-//            }
-//        }
-//
-//        // Draw UI elements
-//        ui.draw(g2);
-//
-//        g2.dispose();
-//    }
-
 
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -169,7 +134,7 @@ public class GamePanel extends JPanel implements Runnable {
 
             ui.draw(g2);
 
-        } else if (gameState == dialogueState){
+        } else {
             tileM.draw(g2); // Draw tiles
 
             player.draw(g2); // Draw player
@@ -179,28 +144,9 @@ public class GamePanel extends JPanel implements Runnable {
 
             for (Entity entity : npcArr)
                 if (entity != null) entity.draw(g2);
-
-            ui.draw(g2);
-        } else if (gameState == pauseState) {
-            tileM.draw(g2); // Draw tiles
-
-            player.draw(g2); // Draw player
-
-            for (SuperObject superObject : objArr)
-                if (superObject != null) superObject.draw(g2, this);
-
-            for (Entity entity : npcArr)
-                if (entity != null) entity.draw(g2);
-
-            ui.draw(g2);
-        } else{
-            tileM.draw(g2); // Draw tiles
-
-            player.draw(g2); // Draw player
 
             ui.draw(g2);
         }
-
         g2.dispose();
     }
 }

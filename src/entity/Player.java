@@ -9,7 +9,7 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-//import java.util.ArrayList;
+//import java.util.ArrayList; temp
 import java.util.Objects;
 
 public class Player extends Entity {
@@ -17,8 +17,8 @@ public class Player extends Entity {
 
     public final int screenX;
     public final int screenY;
-//    public ArrayList<Entity> inventory = new ArrayList<>(); tmp disable
-//    public final int inventorySize = 8; temp disable
+//    public ArrayList<Entity> inventory = new ArrayList<>(); temp commented
+//    public final int inventorySize = 8; temp commented
 
     public Player (GamePanel gp, KeyHandler keyH) {
         super(gp);
@@ -160,6 +160,7 @@ public class Player extends Entity {
             default:
                 gp.gameState = gp.dialogueState;
                 gp.npcArr[index].speak();
+                break;
         }
     }
 

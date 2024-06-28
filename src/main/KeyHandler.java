@@ -69,6 +69,8 @@ public class KeyHandler implements KeyListener {
             ePressed = true;
             if(gp.gameState == gp.dialogueState){
                 gp.gameState = gp.playState;
+            }  else if (gp.gameState == gp.shopState) {
+                gp.gameState = gp.playState;
             }
         }
         if (code == KeyEvent.VK_ENTER) {

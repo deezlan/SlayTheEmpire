@@ -1,13 +1,21 @@
 package main;
 
 import javax.swing.JPanel;
-import java.awt.Dimension;
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Toolkit;
+import java.awt.Point;
+import java.awt.Dimension;
+import java.awt.Color;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 import entity.Cursor;
 import entity.Player;
+//import entity.Projectile;
+import entity.Projectile;
 import tile.TileManager;
 import object.SuperObject;
 
@@ -32,9 +40,9 @@ public class GamePanel extends JPanel implements Runnable {
     Thread gameThread;
 
     public AssetSetter aSetter = new AssetSetter(this);
-    public Player player = new Player(this, keyH);
     public SuperObject[] objArray = new SuperObject[10];
     public CollisionChecker cChecker = new CollisionChecker(this);
+    public Projectile[] projectileArr = new Projectile[10];
 
     public GamePanel() {
         this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
@@ -49,6 +57,13 @@ public class GamePanel extends JPanel implements Runnable {
             @Override
             public void mouseMoved(MouseEvent e) {
                 cursor.updateMousePosition(e.getX(), e.getY());
+            }
+
+        });
+        addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                mouseH.mouseClicked(e);
             }
         });
     }
@@ -114,6 +129,10 @@ public class GamePanel extends JPanel implements Runnable {
                 superObject.update();
             }
         }
+
+//        for (int i = 0; i < projectileList.size(); i++){
+//            projectileList.get(i);
+//        }
     }
 
     public void paintComponent(Graphics g) {
@@ -121,7 +140,6 @@ public class GamePanel extends JPanel implements Runnable {
         Graphics2D g2 = (Graphics2D)g;
 
         tileM.draw(g2); // Draw tiles
-
         player.draw(g2); // Draw player
 
         // Draw object
@@ -130,6 +148,11 @@ public class GamePanel extends JPanel implements Runnable {
                 superObject.draw(g2, superObject.spriteWidth, superObject.spriteHeight);
         }
 
+        for (Projectile proj : projectileArr){
+//            if(projectileArr.get(i) != null){
+//                proj.
+//            }
+        }
         g2.dispose();
     }
 }

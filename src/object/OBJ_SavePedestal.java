@@ -1,5 +1,7 @@
 package object;
 
+import main.UtilityTool;
+
 import javax.imageio.ImageIO;
 import java.io.IOException;
 import java.util.Objects;
@@ -8,8 +10,6 @@ public class OBJ_SavePedestal extends SuperObject {
     public OBJ_SavePedestal() {
         name = "Save Pedestal";
         message = "Saving not implemented... go away";
-        spriteWidth = 32;
-        spriteHeight = 96;
 
         // Load save pedestal sprites
         try {
@@ -29,6 +29,8 @@ public class OBJ_SavePedestal extends SuperObject {
                     "/objects/savePedestal/6.png"), "Missing save pedestal sprite 6")));
             spriteList.add(7, ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
                     "/objects/savePedestal/7.png"), "Missing save pedestal sprite 7")));
+
+            UtilityTool.scaleObjectList(this, spriteList, 32, 96);
         } catch (IOException e) {
             e.printStackTrace(System.out);
         }

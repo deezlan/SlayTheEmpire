@@ -1,6 +1,7 @@
 package entity;
 
 import main.GamePanel;
+import main.UtilityTool;
 
 import javax.imageio.ImageIO;
 import java.io.IOException;
@@ -11,8 +12,6 @@ public class NPCMerchant extends Entity {
         super(gp);
         action = "idleRight";
         message = "Potions are best of quality!";
-        spriteWidth = 90;
-        spriteHeight= 90;
         getNpcSprites();
     }
 
@@ -29,7 +28,8 @@ public class NPCMerchant extends Entity {
             idleRightSpriteList.add(4, ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
                     "/NPCs/Merchant/merchant_04.png"), "Missing merchant idle right sprite 5")));
             System.out.println("NPC images loaded successfully");
-            currentSpriteList = idleRightSpriteList;
+
+            UtilityTool.scaleEntityList(this, idleRightSpriteList, 90, 90);
         } catch (IOException e) {
             e.printStackTrace(System.out);
         }

@@ -29,9 +29,9 @@ public class UI {
         g2.setFont(new Font("Microsoft YaHei", Font.PLAIN, 28));
         g2.setColor(Color.white);
 
-        if(gp.gameState == gp.playState) {
-            // placeholder
-        }
+//        if (gp.gameState == gp.playState) {
+//
+//        }
         if (gp.gameState == gp.pauseState) {
             drawPauseScreen();
         }

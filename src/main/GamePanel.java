@@ -46,7 +46,7 @@ public class GamePanel extends JPanel implements Runnable {
     public final int titleState = 0;
     public final int playState = 1; // NO USAGE SO FAR
     public final int pauseState = 2; // NO USAGE SO FAR
-    public final int dialogueState = 3; // NO USAGE SO FAR
+//    public final int dialogueState = 3; // NO USAGE SO FAR
 
 
     public GamePanel() {
@@ -116,9 +116,9 @@ public class GamePanel extends JPanel implements Runnable {
                 }
             }
         }
-        if (gameState == pauseState) {
-            // placeholder
-        }
+//        if (gameState == pauseState) {
+//            // placeholder
+//        }
 
 
     }

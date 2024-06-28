@@ -3,7 +3,8 @@ package main;
 import object.OBJ_Heart;
 import object.SuperObject;
 
-import java.awt.Graphics2D;
+import java.awt.*;
+
 import java.awt.image.BufferedImage;
 
 public class UI {
@@ -23,7 +24,17 @@ public class UI {
     }
 
     public void draw(Graphics2D g2){
+
         this.g2 = g2;
+        g2.setFont(new Font("Microsoft YaHei", Font.PLAIN, 28));
+        g2.setColor(Color.white);
+
+        if(gp.gameState == gp.playState) {
+            // placeholder
+        }
+        if (gp.gameState == gp.pauseState) {
+            drawPauseScreen();
+        }
 
         drawPlayerLife();
     }
@@ -52,5 +63,22 @@ public class UI {
             i++;
             postX += gp.TILE_SIZE;
         }
+    }
+
+    public void drawPauseScreen() {
+
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD));
+        String text = "GO TOUCH GRASS BITCH";
+        int x = getXforCenteredText(text);
+        int y = gp.SCREEN_HEIGHT/2;
+
+        g2.drawString(text, x, y);
+
+    }
+
+    public int getXforCenteredText(String text) {
+        int length = (int)g2.getFontMetrics().getStringBounds(text, g2).getWidth();
+        int x = gp.SCREEN_WIDTH/2 - length/2;
+        return x;
     }
 }

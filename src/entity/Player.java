@@ -176,7 +176,7 @@ public class Player extends Entity {
         } else {
             g2.drawImage(image, screenX, screenY, gp.TILE_SIZE*3, gp.TILE_SIZE*2, null);
             if (attacking){
-                g2.drawImage(weaponImage, screenX, screenY, gp.TILE_SIZE*3, gp.TILE_SIZE*2, null);
+                g2.drawImage(weaponImage, screenX + 40, screenY, gp.TILE_SIZE*3, gp.TILE_SIZE*2, null);
             }
         }
     }

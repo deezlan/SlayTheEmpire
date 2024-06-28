@@ -9,7 +9,7 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.util.ArrayList;
+//import java.util.ArrayList; temp
 import java.util.Objects;
 
 public class Player extends Entity {
@@ -17,8 +17,8 @@ public class Player extends Entity {
 
     public final int screenX;
     public final int screenY;
-    public ArrayList<Entity> inventory = new ArrayList<>();
-    public final int inventorySize = 8;
+//    public ArrayList<Entity> inventory = new ArrayList<>(); temp commented
+//    public final int inventorySize = 8; temp commented
 
     public Player (GamePanel gp, KeyHandler keyH) {
         super(gp);
@@ -128,7 +128,6 @@ public class Player extends Entity {
                     lookingRight = true;
                     break;
             }
-            System.out.println(action);
         } else {
             action = lookingRight ? "idleRight" : "idleLeft";
             currentSpriteList = action.equals("idleRight") ? idleRightSpriteList : idleLeftSpriteList;
@@ -151,8 +150,8 @@ public class Player extends Entity {
         }
     }
 
-    public void interactNPC (int index){
-        switch (index){
+    public void interactNPC (int index) {
+        switch (index) {
             case 999:
                 break;
             case 2:
@@ -160,6 +159,8 @@ public class Player extends Entity {
                 break;
             default:
                 gp.gameState = gp.dialogueState;
+                gp.npcArr[index].speak();
+                break;
         }
     }
 
@@ -168,7 +169,12 @@ public class Player extends Entity {
         BufferedImage image = currentSpriteList.get(spriteNum - 1);
         if (weaponSpriteNum > weaponSpriteList.size()) weaponSpriteNum =1;
         BufferedImage weaponImage = weaponSpriteList.get(weaponSpriteNum);
-        if (gp.gameArea == 0) {
+        if (gp.gameArea == 1) {
+            g2.drawImage(image, worldX, worldY, gp.TILE_SIZE*3, gp.TILE_SIZE*2, null);
+            if (attacking){
+                g2.drawImage(weaponImage, worldX + 40, worldY, gp.TILE_SIZE*3, gp.TILE_SIZE*2, null);
+            }
+        } else if (gp.gameState == 1){
             g2.drawImage(image, worldX, worldY, gp.TILE_SIZE*3, gp.TILE_SIZE*2, null);
             if (attacking){
                 g2.drawImage(weaponImage, worldX + 40, worldY, gp.TILE_SIZE*3, gp.TILE_SIZE*2, null);

@@ -11,6 +11,7 @@ public class UI {
     GamePanel gp;
     BufferedImage fullHeart, halfHeart, emptyHeart;
     Graphics2D g2;
+    public String currentDialog = "";
     public int slotCol = 0;
     public int slotRow = 0;
     public int slotColMove = 0;
@@ -32,9 +33,7 @@ public class UI {
         g2.setFont(new Font("Microsoft YaHei", Font.PLAIN, 28));
         g2.setColor(Color.white);
         drawPlayerLife();
-//        if (gp.gameState == gp.playState) {
-//
-//        }
+
         //Pause State
         if (gp.gameState == gp.pauseState) {
             drawPauseScreen();
@@ -61,13 +60,13 @@ public class UI {
         //SLOT
         final int slotXstart = frameX + 35;
         final int slotYstart = frameY + 35;
-        int slotX = slotXstart;
-        int slotY = slotYstart;
-
-        //DRAW PLAYER INVENTORY
-        for (int i = 0; i < gp.player.inventory.size(); i++){
-            //insert weapons
-        }
+//        int slotX = slotXstart; temp commented
+//        int slotY = slotYstart;
+//
+//        //DRAW PLAYER INVENTORY
+//        for (int i = 0; i < gp.player.inventory.size(); i++){
+//            //insert weapons
+//        }
 
         //CURSOR
         int cursorX = slotXstart + (gp.TILE_SIZE * slotColMove);
@@ -123,12 +122,20 @@ public class UI {
         int dialogY = gp.TILE_SIZE/2;
         int dialogWidth = gp.SCREEN_WIDTH - (gp.TILE_SIZE*4);
         int dialogHeight = gp.TILE_SIZE*4;
-
         drawSubWindow(dialogX,dialogY,dialogWidth,dialogHeight);
+
+        g2.setFont(g2.getFont().deriveFont(Font.PLAIN,32));
+        dialogX += gp.TILE_SIZE;
+        dialogY += gp.TILE_SIZE;
+
+        for(String line : currentDialog.split("\n")){ // breaks long dialogues // for up to use
+            g2.drawString(line,dialogX,dialogY);
+            dialogY += 40;
+        }
     }
 
     public void drawSubWindow(int x, int y, int width,int height){
-        Color custom = new Color(0,0,0);
+        Color custom = new Color(0,0,0,220);
         g2.setColor(custom);
         g2.fillRoundRect(x,y,width,height,35,35);
 

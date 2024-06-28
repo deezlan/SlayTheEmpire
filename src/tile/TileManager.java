@@ -24,11 +24,12 @@ public class TileManager {
 
         switch (gp.gameArea) {
             case 0:
-                loadMap("/tiles/lobby/map.txt");
+                loadMap("/tiles/lobby/test.txt");
                 break;
             case 1:
+                loadMap("/tiles/lobby/map.txt");
             default:
-                loadMap("/tiles/lobby/test.txt");
+//                loadMap("/tiles/lobby/map.txt");
         }
     }
 
@@ -66,7 +67,6 @@ public class TileManager {
         int WORLD_COL = 0;
         int WORLD_ROW = 0;
 
-        // AUTOMATIC TILE PLACER
         while (WORLD_COL < gp.MAX_WORLD_COL && WORLD_ROW < gp.MAX_WORLD_ROW) {
             int tileNum = mapTileNum[WORLD_COL][WORLD_ROW];
 
@@ -79,6 +79,8 @@ public class TileManager {
                         g2.drawImage(tile[tileNum].image, worldX, worldY, gp.TILE_SIZE, gp.TILE_SIZE, null);
                         break;
                     case 1:
+                        g2.drawImage(tile[tileNum].image, worldX, worldY, gp.TILE_SIZE, gp.TILE_SIZE, null);
+                        break;
                     default:
                         int screenX = worldX - gp.player.worldX + gp.player.screenX;
                         int screenY = worldY - gp.player.worldY + gp.player.screenY;
@@ -93,6 +95,8 @@ public class TileManager {
             } else {
                 System.err.println("Tile or tile image is null for tile number: " + tileNum);
             }
+
+//
 
             WORLD_COL++;
             if (WORLD_COL == gp.MAX_WORLD_COL) {

@@ -132,8 +132,11 @@ public class Player extends Entity {
 
     public void interactNPC (int index){
         if (index != 999) {
-            System.out.println(gp.npcArr[index].message);
+            gp.gameState = gp.dialogueState;
         }
+//          else if (index == 2) {
+//            gp.gameState = gp.shopState;
+//        }
 
     }
 

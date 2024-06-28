@@ -45,7 +45,9 @@ public class GamePanel extends JPanel implements Runnable {
     public final int titleState = 0;
     public final int playState = 1; // NO USAGE SO FAR
     public final int pauseState = 2; // NO USAGE SO FAR
-//    public final int dialogueState = 3; // NO USAGE SO FAR
+    public final int dialogueState = 3; // NO USAGE SO FAR
+
+//    public final int shopState = 4;
 
 
     public GamePanel() {
@@ -116,10 +118,42 @@ public class GamePanel extends JPanel implements Runnable {
                 }
             }
         }
+
 //        if (gameState == pauseState) {
 //            // placeholder
 //        }
     }
+
+//    public void paintComponent(Graphics g) {
+//        super.paintComponent(g);
+//        Graphics2D g2 = (Graphics2D) g;
+//
+//        // Draw tiles
+//        tileM.draw(g2);
+//
+//        // Draw player
+//        player.draw(g2);
+//
+//        // Draw objects
+//        for (SuperObject superObject : objArr) {
+//            if (superObject != null) {
+//                superObject.draw(g2, this);
+//            }
+//        }
+//
+//        // Draw NPCs
+//        for (Entity entity : npcArr) {
+//            if (entity != null) {
+//                entity.draw(g2);
+//            }
+//        }
+//
+//        // Draw UI elements
+//        ui.draw(g2);
+//
+//        g2.dispose();
+//    }
+
 
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -133,16 +167,39 @@ public class GamePanel extends JPanel implements Runnable {
 
             player.draw(g2); // Draw player
 
+            for (SuperObject superObject : objArr)
+                if (superObject != null) superObject.draw(g2, this);
+
+            for (Entity entity : npcArr)
+                if (entity != null) entity.draw(g2);
+
             ui.draw(g2);
+
+        } else if (gameState == dialogueState){
+            tileM.draw(g2); // Draw tiles
+
+            player.draw(g2); // Draw player
 
             for (SuperObject superObject : objArr)
                 if (superObject != null) superObject.draw(g2, this);
 
             for (Entity entity : npcArr)
                 if (entity != null) entity.draw(g2);
-//        } else if (gameState == pauseState) {
 
-        } else {
+            ui.draw(g2);
+        } else if (gameState == pauseState) {
+            tileM.draw(g2); // Draw tiles
+
+            player.draw(g2); // Draw player
+
+            for (SuperObject superObject : objArr)
+                if (superObject != null) superObject.draw(g2, this);
+
+            for (Entity entity : npcArr)
+                if (entity != null) entity.draw(g2);
+
+            ui.draw(g2);
+        } else{
             tileM.draw(g2); // Draw tiles
 
             player.draw(g2); // Draw player

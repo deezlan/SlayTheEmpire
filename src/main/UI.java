@@ -28,15 +28,25 @@ public class UI {
         this.g2 = g2;
         g2.setFont(new Font("Microsoft YaHei", Font.PLAIN, 28));
         g2.setColor(Color.white);
+        drawPlayerLife();
 
 //        if (gp.gameState == gp.playState) {
 //
 //        }
+        //Pause State
         if (gp.gameState == gp.pauseState) {
             drawPauseScreen();
         }
 
-        drawPlayerLife();
+        //Dialog State
+        if(gp.gameState == gp.dialogueState){
+            drawDialogScreen();
+        }
+
+//        if (gp.gameState == gp.shopState){
+//            draw
+//        }
+
     }
 
     public void drawPlayerLife(){
@@ -63,6 +73,7 @@ public class UI {
         }
     }
 
+    // Draw Pause Screen
     public void drawPauseScreen() {
 
         g2.setFont(g2.getFont().deriveFont(Font.BOLD));
@@ -74,9 +85,30 @@ public class UI {
 
     }
 
+    //Draw dialog
+    public void drawDialogScreen() {
+        // WINDOW
+        int dialogX = gp.TILE_SIZE*2;
+        int dialogY = gp.TILE_SIZE/2;
+        int dialogWidth = gp.SCREEN_WIDTH - (gp.TILE_SIZE*4);
+        int dialogHeight = gp.TILE_SIZE*4;
+
+        drawSubWindow(dialogX,dialogY,dialogWidth,dialogHeight);
+    }
+
+    public void drawSubWindow(int x, int y, int width,int height){
+        Color custom = new Color(0,0,0);
+        g2.setColor(custom);
+        g2.fillRoundRect(x,y,width,height,35,35);
+
+        custom = new Color(255,255,255);
+        g2.setColor(custom);
+        g2.setStroke(new BasicStroke((5)));
+        g2.drawRoundRect(x+5,y+5,width-10,height-10,25,25);
+    }
+
     public int getXforCenteredText(String text) {
         int length = (int)g2.getFontMetrics().getStringBounds(text, g2).getWidth();
-        int x = gp.SCREEN_WIDTH/2 - length/2;
-        return x;
+        return gp.SCREEN_WIDTH/2 - length/2;
     }
 }

@@ -10,8 +10,8 @@ public class NPCMaiden extends Entity {
     public NPCMaiden(GamePanel gp) {
         super(gp);
         action = "idleRight";
-        spriteWidth = 70;
-        spriteHeight= 70;
+        spriteWidth = 80;
+        spriteHeight= 80;
         getNpcSprites();
     }
 
@@ -32,5 +32,11 @@ public class NPCMaiden extends Entity {
         } catch (IOException e) {
             e.printStackTrace(System.out);
         }
+        solidArea.x = 20;
+        solidArea.y = gp.TILE_SIZE;
+        solidArea.width = 48;
+        solidArea.height = 48;
+        solidAreaDefaultX = solidArea.x;
+        solidAreaDefaultY = solidArea.y;
     }
 }

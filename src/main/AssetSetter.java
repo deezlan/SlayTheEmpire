@@ -23,7 +23,7 @@ public class AssetSetter {
 
     public void setNPC() {
         gp.npcArr[0] = new NPCMaiden(gp);
-        gp.npcArr[0].worldX = 300;
+        gp.npcArr[0].worldX = 270;
         gp.npcArr[0].worldY = 10;
         System.out.println("NPC Maiden set at (" + gp.npcArr[0].worldX + ", " + gp.npcArr[0].worldY + ")");
     }

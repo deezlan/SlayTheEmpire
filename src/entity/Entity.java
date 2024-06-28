@@ -53,6 +53,8 @@ public class Entity {
         } else {
             if (spriteCounter > 9) loopThroughSprites();
         }
+        gp.cChecker.checkObject(this,false);
+        gp.cChecker.checkPLayer(this);
     }
 
     public void draw(Graphics2D g2, int i) {

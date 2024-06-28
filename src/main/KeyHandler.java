@@ -11,6 +11,7 @@ public class KeyHandler implements KeyListener {
             aPressed,
             dPressed,
             ePressed,
+            pPressed,
             enterPressed;
 
     public KeyHandler(GamePanel gp){
@@ -55,11 +56,17 @@ public class KeyHandler implements KeyListener {
                     gp.ui.slotCol++;
                 }
             }
-        } else if (code == KeyEvent.VK_P) {  // Pause State
-            if (gp.gameState == gp.pauseState){
-                gp.gameState = gp.playState;
+        }
+        if (code == KeyEvent.VK_P) {
+            pPressed = true;
+            if(gp.gameState == gp.playState){
+                gp.gameState = gp.pauseState;
+            } else if (gp.gameState == gp.pauseState){
+                    gp.gameState = gp.playState;
             }
-        } else if (code == KeyEvent.VK_E){  //Dialogue State
+        }
+        if (code == KeyEvent.VK_E) {
+            ePressed = true;
             if(gp.gameState == gp.dialogueState){
                 gp.gameState = gp.playState;
             }

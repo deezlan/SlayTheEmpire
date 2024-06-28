@@ -18,7 +18,7 @@ public class Player extends Entity {
     public final int screenX;
     public final int screenY;
     public ArrayList<Entity> inventory = new ArrayList<>();
-    public final int inventorySize = 8;
+//    public final int inventorySize = 8; temp disable
 
     public Player (GamePanel gp, KeyHandler keyH) {
         super(gp);
@@ -128,7 +128,6 @@ public class Player extends Entity {
                     lookingRight = true;
                     break;
             }
-            System.out.println(action);
         } else {
             action = lookingRight ? "idleRight" : "idleLeft";
             currentSpriteList = action.equals("idleRight") ? idleRightSpriteList : idleLeftSpriteList;
@@ -151,8 +150,8 @@ public class Player extends Entity {
         }
     }
 
-    public void interactNPC (int index){
-        switch (index){
+    public void interactNPC (int index) {
+        switch (index) {
             case 999:
                 break;
             case 2:
@@ -160,16 +159,9 @@ public class Player extends Entity {
                 break;
             default:
                 gp.gameState = gp.dialogueState;
+                gp.npcArr[index].speak();
         }
     }
-//        if (index != 999) {
-////            if (gp.keyH.ePressed) {
-//                gp.gameState = gp.dialogueState;
-//                gp.npcArr[index].speak();
-////            }
-//        }
-//        gp.keyH.ePressed = false;
-//    }
 
     public void draw(Graphics2D g2) {
         if (spriteNum > currentSpriteList.size() - 1) spriteNum = 1;
@@ -177,6 +169,11 @@ public class Player extends Entity {
         if (weaponSpriteNum > weaponSpriteList.size()) weaponSpriteNum =1;
         BufferedImage weaponImage = weaponSpriteList.get(weaponSpriteNum);
         if (gp.gameArea == 0) {
+            g2.drawImage(image, worldX, worldY, gp.TILE_SIZE*3, gp.TILE_SIZE*2, null);
+            if (attacking){
+                g2.drawImage(weaponImage, worldX + 40, worldY, gp.TILE_SIZE*3, gp.TILE_SIZE*2, null);
+            }
+        } else if (gp.gameState == 1){
             g2.drawImage(image, worldX, worldY, gp.TILE_SIZE*3, gp.TILE_SIZE*2, null);
             if (attacking){
                 g2.drawImage(weaponImage, worldX + 40, worldY, gp.TILE_SIZE*3, gp.TILE_SIZE*2, null);

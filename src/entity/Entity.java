@@ -26,7 +26,6 @@ public class Entity {
 
     public int weaponSpriteCounter = 0;
     public int weaponSpriteNum = 1;
-
     public int interactionCounter = 0;
     String[] dialogs = new String[20];
     public void speak() {
@@ -94,11 +93,6 @@ public class Entity {
 
         switch (gp.gameArea) {
             case 0:
-                g2.drawImage(image, worldX, worldY, null);
-                break;
-            case 1:
-            case 2:
-            default:
                 int screenX = worldX - gp.player.worldX + gp.player.screenX;
                 int screenY = worldY - gp.player.worldY + gp.player.screenY; // Corrected worldY subtraction
 
@@ -109,6 +103,17 @@ public class Entity {
                 {
                     g2.drawImage(image, screenX, screenY, null);
                 }
+                g2.drawImage(image, worldX, worldY, null);
+
+                break;
+            case 1:
+                g2.drawImage(image, worldX, worldY, null);
+                break;
+            case 2:
+                g2.drawImage(image, worldX, worldY, null);
+                break;
+            default:
+                g2.drawImage(image, worldX, worldY, null);
         }
     }
 }

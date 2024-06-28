@@ -11,8 +11,6 @@ public class OBJ_Shop extends SuperObject {
     public OBJ_Shop(GamePanel gp) {
         name = "Shop";
         message = "Shop closed bitch";
-//        spriteWidth = 198;
-//        spriteHeight = 128;
 
         // Load shop sprites
         try {

@@ -4,7 +4,6 @@ import object.OBJ_Heart;
 import object.SuperObject;
 
 import java.awt.*;
-
 import java.awt.image.BufferedImage;
 
 public class UI {
@@ -12,6 +11,10 @@ public class UI {
     GamePanel gp;
     BufferedImage fullHeart, halfHeart, emptyHeart;
     Graphics2D g2;
+    public int slotCol = 0;
+    public int slotRow = 0;
+    public int slotColMove = 0;
+    public int slotRowMove = 0;
 
     public UI(GamePanel gp) {
         this.gp = gp;
@@ -29,7 +32,6 @@ public class UI {
         g2.setFont(new Font("Microsoft YaHei", Font.PLAIN, 28));
         g2.setColor(Color.white);
         drawPlayerLife();
-
 //        if (gp.gameState == gp.playState) {
 //
 //        }
@@ -43,10 +45,39 @@ public class UI {
             drawDialogScreen();
         }
 
-//        if (gp.gameState == gp.shopState){
-//            draw
-//        }
+        if (gp.gameState == gp.shopState){
+            drawInventory();
+        }
+    }
 
+    public void drawInventory() {
+        int frameX = gp.TILE_SIZE*3;
+        int frameY = gp.TILE_SIZE;
+        int frameWidth = (gp.TILE_SIZE*5) + 25;
+        int frameHeight= (gp.TILE_SIZE*9) + 25;
+
+        drawSubWindow(frameX, frameY, frameWidth, frameHeight);
+
+        //SLOT
+        final int slotXstart = frameX + 35;
+        final int slotYstart = frameY + 35;
+        int slotX = slotXstart;
+        int slotY = slotYstart;
+
+        //DRAW PLAYER INVENTORY
+        for (int i = 0; i < gp.player.inventory.size(); i++){
+            //insert weapons
+        }
+
+        //CURSOR
+        int cursorX = slotXstart + (gp.TILE_SIZE * slotColMove);
+        int cursorY = slotYstart + (gp.TILE_SIZE * slotRowMove);
+        int cursorWidth = gp.TILE_SIZE*2;
+        int cursorHeight = gp.TILE_SIZE*2;
+        //DRAW CURSOR
+        g2.setColor(Color.WHITE);
+        g2.setStroke(new BasicStroke(3));
+        g2.drawRoundRect(cursorX, cursorY, cursorWidth, cursorHeight, 10, 10);
     }
 
     public void drawPlayerLife(){

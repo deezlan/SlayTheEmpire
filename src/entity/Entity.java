@@ -18,7 +18,7 @@ public class Entity {
             idleLeftSpriteList = new ArrayList<>(),
             moveRightSpriteList = new ArrayList<>(),
             moveLeftSpriteList = new ArrayList<>(),
-//            weaponSpriteList = new ArrayList<>();
+            weaponSpriteList = new ArrayList<>();
 //            scaledList = new ArrayList<>();
     public String action;
     public boolean lookingRight;

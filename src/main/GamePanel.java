@@ -14,7 +14,6 @@ import java.awt.image.BufferedImage;
 import entity.Cursor;
 import entity.Entity;
 import entity.Player;
-//import entity.Projectile;
 import entity.Projectile;
 import tile.TileManager;
 import object.SuperObject;
@@ -28,6 +27,7 @@ public class GamePanel extends JPanel implements Runnable {
     public final int MAX_SCREEN_ROW = 13;
     public final int SCREEN_WIDTH = TILE_SIZE * MAX_SCREEN_COL;
     public final int SCREEN_HEIGHT = TILE_SIZE * MAX_SCREEN_ROW;
+    public int gameArea;
 
     // World Settings
     public final int MAX_WORLD_COL = 17;
@@ -37,7 +37,6 @@ public class GamePanel extends JPanel implements Runnable {
     final int FPS = 60;
 
     TileManager tileM = new TileManager(this);
-
     KeyHandler keyH = new KeyHandler(this);
     Cursor cursor = new Cursor(); // Initialize cursor
     public Player player = new Player(this, keyH, cursor); // Pass cursor to player
@@ -59,8 +58,7 @@ public class GamePanel extends JPanel implements Runnable {
     public final int pauseState = 2; // NO USAGE SO FAR
     public final int dialogueState = 3; // NO USAGE SO FAR
 
-//    public final int shopState = 4;
-    public int gameArea;
+    public final int shopState = 4;
 
     public GamePanel() {
         this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
@@ -96,11 +94,11 @@ public class GamePanel extends JPanel implements Runnable {
         this.setCursor(blankCursor);
     }
 
-//    public Cursor getPCursor() {
-//        return cursor;
-//    }
+    public Cursor getPCursor() {
+        return cursor;
+    }
 
-    public void setupLobby() {
+    public void setupGame() {
         aSetter.setObject();
         aSetter.setNPC();
         gameState = playState;
@@ -160,6 +158,37 @@ public class GamePanel extends JPanel implements Runnable {
 //            // placeholder
 //        }
     }
+
+//    public void paintComponent(Graphics g) {
+//        super.paintComponent(g);
+//        Graphics2D g2 = (Graphics2D) g;
+//
+//        // Draw tiles
+//        tileM.draw(g2);
+//
+//        // Draw player
+//        player.draw(g2);
+//
+//        // Draw objects
+//        for (SuperObject superObject : objArr) {
+//            if (superObject != null) {
+//                superObject.draw(g2, this);
+//            }
+//        }
+//
+//        // Draw NPCs
+//        for (Entity entity : npcArr) {
+//            if (entity != null) {
+//                entity.draw(g2);
+//            }
+//        }
+//
+//        // Draw UI elements
+//        ui.draw(g2);
+//
+//        g2.dispose();
+//    }
+
 
     public void paintComponent(Graphics g) {
         super.paintComponent(g);

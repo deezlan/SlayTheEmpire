@@ -59,7 +59,6 @@ public class Player extends Entity {
         if (keyH.aPressed && keyH.dPressed && keyH.wPressed) { action = "moveUp"; }
         if (keyH.aPressed && keyH.dPressed && keyH.sPressed) { action = "moveDown"; }
 
-
         if ((keyH.wPressed || keyH.sPressed || keyH.aPressed || keyH.dPressed) && !action.equals("stuckOppositeDirection")) {
             if (keyH.wPressed) { action = "moveUp"; }
             if (keyH.sPressed) { action = "moveDown"; }
@@ -131,8 +130,11 @@ public class Player extends Entity {
     public void draw(Graphics2D g2) {
         if (spriteNum > currentSpriteList.size() - 1) spriteNum = 1;
         BufferedImage image = currentSpriteList.get(spriteNum - 1);
-
-        g2.drawImage(image, screenX, screenY, gp.TILE_SIZE*3, gp.TILE_SIZE*2, null);
+        if (gp.gameArea == 0) {
+            g2.drawImage(image, worldX, worldY, gp.TILE_SIZE*3, gp.TILE_SIZE*2, null);
+        } else {
+            g2.drawImage(image, screenX, screenY, gp.TILE_SIZE*3, gp.TILE_SIZE*2, null);
+        }
     }
 
     public void getPlayerSprites() {

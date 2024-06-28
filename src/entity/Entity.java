@@ -55,15 +55,23 @@ public class Entity {
 
     public void draw(Graphics2D g2, int i) {
         BufferedImage image = currentSpriteList.get(spriteNum - 1);
-        int screenX = worldX - gp.player.worldX + gp.player.screenX;
-        int screenY = worldY - gp.player.worldY + gp.player.screenY; // Corrected worldY subtraction
 
-        if (worldX + gp.TILE_SIZE > gp.player.worldX - gp.player.screenX &&
-                worldX - gp.TILE_SIZE < gp.player.worldX + gp.player.screenX &&
-                worldY + gp.TILE_SIZE > gp.player.worldY - gp.player.screenY &&
-                worldY - gp.TILE_SIZE < gp.player.worldY + gp.player.screenY)
-        {
-            g2.drawImage(image, screenX, screenY, gp.npcArr[i].spriteWidth, gp.npcArr[i].spriteHeight, null);
+        switch (gp.gameArea) {
+            case 0:
+                g2.drawImage(image, worldX, worldY, gp.npcArr[i].spriteWidth, gp.npcArr[i].spriteHeight, null);
+                break;
+            case 1:
+            default:
+                int screenX = worldX - gp.player.worldX + gp.player.screenX;
+                int screenY = worldY - gp.player.worldY + gp.player.screenY; // Corrected worldY subtraction
+
+                if (worldX + gp.TILE_SIZE > gp.player.worldX - gp.player.screenX &&
+                        worldX - gp.TILE_SIZE < gp.player.worldX + gp.player.screenX &&
+                        worldY + gp.TILE_SIZE > gp.player.worldY - gp.player.screenY &&
+                        worldY - gp.TILE_SIZE < gp.player.worldY + gp.player.screenY)
+                {
+                    g2.drawImage(image, screenX, screenY, gp.npcArr[i].spriteWidth, gp.npcArr[i].spriteHeight, null);
+                }
         }
     }
 }

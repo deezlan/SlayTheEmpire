@@ -30,7 +30,7 @@ public class GamePanel extends JPanel implements Runnable {
     final int FPS = 60;
 
     TileManager tileM = new TileManager(this);
-    KeyHandler keyH = new KeyHandler();
+    KeyHandler keyH = new KeyHandler(this);
     Thread gameThread;
 
     public AssetSetter aSetter = new AssetSetter(this);
@@ -39,6 +39,15 @@ public class GamePanel extends JPanel implements Runnable {
     public Entity[] npcArr = new Entity[10];
     public CollisionChecker cChecker = new CollisionChecker(this);
     public UI ui = new UI(this);
+
+    // Game States
+    public int gameState;
+    public final int titleState = 0;
+    public final int playState = 1; // NO USAGE SO FAR
+    public final int pauseState = 2; // NO USAGE SO FAR
+//    public final int dialogueState = 3; // NO USAGE SO FAR
+
+
     public GamePanel() {
         this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
         this.setBackground(Color.decode("#222034"));
@@ -51,6 +60,8 @@ public class GamePanel extends JPanel implements Runnable {
         gameArea = 0;
         aSetter.setObject();
         aSetter.setNPC();
+        gameState = playState;
+
     }
 
     public void startGameThread() {
@@ -89,30 +100,43 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     public void update() {
-        player.update();
 
-        for (SuperObject obj : objArr) {
-            if (obj != null) {
-                obj.update();
+        if (gameState == playState) {
+            player.update();
+
+            for (SuperObject obj : objArr) {
+                if (obj != null) {
+                    obj.update();
+                }
+            }
+
+            for (Entity npc : npcArr) {
+                if (npc != null) {
+                    npc.update();
+                }
             }
         }
+//        if (gameState == pauseState) {
+//            // placeholder
+//        }
 
-        for (Entity npc : npcArr) {
-            if (npc != null) {
-                npc.update();
-            }
-        }
+
     }
 
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D)g;
 
-        tileM.draw(g2); // Draw tiles
+        // Title Screen
+        if (gameState == titleState) {
+            ui.draw(g2);
+        }
+        else {
+            tileM.draw(g2); // Draw tiles
 
-        player.draw(g2); // Draw player
+            player.draw(g2); // Draw player
 
-        ui.draw(g2);
+            ui.draw(g2);
 
         for (SuperObject superObject : objArr)
             if (superObject != null) superObject.draw(g2, this);

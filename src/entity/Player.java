@@ -12,13 +12,15 @@ import java.util.Objects;
 public class Player extends Entity {
     GamePanel gp;
     KeyHandler keyH;
+    private Cursor cursor;
 
-    public Player (GamePanel gp, KeyHandler keyH) {
+    public Player (GamePanel gp, KeyHandler keyH, Cursor cursor) {
+        super(gp);
         this.gp = gp;
         this.keyH = keyH;
-
+        this.cursor = cursor;
         setDefaultValues();
-        getPlayerImages();
+        getPlayerImage();
 
         solidArea = new Rectangle(); // draws a square at the centre of the player
         solidArea.x = 56; // actual collision square
@@ -35,7 +37,7 @@ public class Player extends Entity {
         lookingRight = true;
     }
 
-    public void getPlayerImages() {
+    public void getPlayerImage() {
         try {
             moveRight1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
                     "/player/Warrior/run/right/Warrior_Run_Right_1.png"), "Missing right sprite 1"));
@@ -172,8 +174,10 @@ public class Player extends Entity {
                     case 6: spriteNum = 1; break;
                 }
                 spriteCounter = 0;
-            }
-        }
+            }}
+
+        // Update angle based on mouse position
+        cursor.calculateAngle((int) (worldX + gp.TILE_SIZE * 1.5), worldY + gp.TILE_SIZE);
     }
 
     public void draw(Graphics2D g2) {
@@ -252,5 +256,8 @@ public class Player extends Entity {
         }
 
         g2.drawImage(image, worldX, worldY, gp.TILE_SIZE*3, gp.TILE_SIZE*2, null);
+
+        // draw arrow
+        cursor.draw(g2, (int) (worldX + gp.TILE_SIZE * 1.5), worldY + gp.TILE_SIZE);
     }
 }

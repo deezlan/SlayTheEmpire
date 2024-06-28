@@ -16,7 +16,7 @@ public class TileManager {
     public int[][] mapTileNum; // to check which tile the player is currently hitting
 
     public TileManager(GamePanel gp) {
-        gp.gameArea = 1;
+        gp.gameArea = 0;
         this.gp = gp;
         tile = new Tile[30];
         mapTileNum = new int[gp.MAX_WORLD_COL][gp.MAX_WORLD_ROW];

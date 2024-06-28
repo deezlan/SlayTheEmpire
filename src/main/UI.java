@@ -44,11 +44,10 @@ public class UI {
         i = 0;
 
         while (i < gp.player.life){
-            g2.drawImage(halfHeart, postX, postY, null);
+            g2.drawImage (halfHeart, postX, postY, null);
             i++;
-            if (i < gp.player.life){
+            if (i < gp.player.life)
                 g2.drawImage(fullHeart, postX, postY, null);
-            }
             i++;
             postX += gp.TILE_SIZE;
         }

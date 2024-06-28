@@ -10,8 +10,8 @@ public class NPCMaiden extends Entity {
     public NPCMaiden(GamePanel gp) {
         super(gp);
         action = "idleRight";
-        spriteWidth = 80;
-        spriteHeight= 80;
+        spriteWidth = 90;
+        spriteHeight= 90;
         getNpcSprites();
     }
 

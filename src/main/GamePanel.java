@@ -20,6 +20,7 @@ public class GamePanel extends JPanel implements Runnable {
     public final int MAX_SCREEN_ROW = 13;
     public final int SCREEN_WIDTH = TILE_SIZE * MAX_SCREEN_COL;
     public final int SCREEN_HEIGHT = TILE_SIZE * MAX_SCREEN_ROW;
+    public int gameArea;
 
     //World Settings
     public final int MAX_WORLD_COL = 17; //must be same as map size
@@ -49,6 +50,7 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     public void setupLobby() {
+        gameArea = 0;
         aSetter.setObject();
         aSetter.setNPC();
     }

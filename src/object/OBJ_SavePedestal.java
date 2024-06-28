@@ -32,6 +32,7 @@ public class OBJ_SavePedestal extends SuperObject {
         } catch (IOException e) {
             e.printStackTrace(System.out);
         }
+      
         solidArea.x = 0;
         solidArea.y = 50;
         solidArea.width = 24;

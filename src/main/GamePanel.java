@@ -116,11 +116,11 @@ public class GamePanel extends JPanel implements Runnable {
 
         ui.draw(g2);
 
-        for(int i = 0; i < objArr.length; i++)
-            if(objArr[i] != null) objArr[i].draw(g2,this,i);
+        for (SuperObject superObject : objArr)
+            if (superObject != null) superObject.draw(g2, this);
 
-        for (int i = 0; i < npcArr.length; i++)
-            if (npcArr[i] != null) npcArr[i].draw(g2, i);
+        for (Entity entity : npcArr)
+            if (entity != null) entity.draw(g2);
 
         g2.dispose();
     }

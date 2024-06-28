@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 public class Entity {
     GamePanel gp;
-    public int worldX, worldY, spriteWidth, spriteHeight;
+    public int worldX, worldY;
     public int speed;
     public ArrayList<BufferedImage>
             currentSpriteList = new ArrayList<>(),
@@ -16,6 +16,7 @@ public class Entity {
             idleLeftSpriteList = new ArrayList<>(),
             moveRightSpriteList = new ArrayList<>(),
             moveLeftSpriteList = new ArrayList<>();
+//            scaledList = new ArrayList<>();
     public String action;
     public boolean lookingRight;
     public int spriteCounter = 0;
@@ -53,12 +54,12 @@ public class Entity {
         }
     }
 
-    public void draw(Graphics2D g2, int i) {
+    public void draw(Graphics2D g2) {
         BufferedImage image = currentSpriteList.get(spriteNum - 1);
 
         switch (gp.gameArea) {
             case 0:
-                g2.drawImage(image, worldX, worldY, gp.npcArr[i].spriteWidth, gp.npcArr[i].spriteHeight, null);
+                g2.drawImage(image, worldX, worldY, null);
                 break;
             case 1:
             default:
@@ -70,7 +71,7 @@ public class Entity {
                         worldY + gp.TILE_SIZE > gp.player.worldY - gp.player.screenY &&
                         worldY - gp.TILE_SIZE < gp.player.worldY + gp.player.screenY)
                 {
-                    g2.drawImage(image, screenX, screenY, gp.npcArr[i].spriteWidth, gp.npcArr[i].spriteHeight, null);
+                    g2.drawImage(image, screenX, screenY, null);
                 }
         }
     }

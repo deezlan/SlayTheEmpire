@@ -14,8 +14,8 @@ public class AssetSetter {
     public void setObject() {
         switch (gp.gameArea) {
             case 0:
-                gp.objArr[0] = new OBJ_Shop();
-                gp.objArr[0].worldX = gp.TILE_SIZE*9;
+                gp.objArr[0] = new OBJ_Shop(gp);
+                gp.objArr[0].worldX = gp.TILE_SIZE*9 + 20;
                 gp.objArr[0].worldY = gp.TILE_SIZE/2;
 
                 gp.objArr[1] = new OBJ_SavePedestal();
@@ -25,7 +25,7 @@ public class AssetSetter {
             case 1:
                 break;
             default:
-                gp.objArr[0] = new OBJ_Shop();
+                gp.objArr[0] = new OBJ_Shop(gp);
                 gp.objArr[0].worldX = 570;
                 gp.objArr[0].worldY = 0;
 

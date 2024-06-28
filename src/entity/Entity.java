@@ -7,7 +7,6 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 public class Entity {
-    String message;
     GamePanel gp;
     public int worldX, worldY;
     public int speed;
@@ -22,6 +21,13 @@ public class Entity {
     public boolean lookingRight;
     public int spriteCounter = 0;
     public int spriteNum = 1;
+    public int interactionCounter = 0;
+    String[] dialogs = new String[20];
+    public void speak() {
+        if (dialogs[interactionCounter] == null) interactionCounter = 0;
+        gp.ui.currentDialog = dialogs[interactionCounter];
+        interactionCounter++;
+    }
 
     // entity's collision directions
     public boolean

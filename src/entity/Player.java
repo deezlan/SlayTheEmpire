@@ -132,12 +132,12 @@ public class Player extends Entity {
 
     public void interactNPC (int index){
         if (index != 999) {
-            gp.gameState = gp.dialogueState;
+//            if (gp.keyH.ePressed) {
+                gp.gameState = gp.dialogueState;
+                gp.npcArr[index].speak();
+//            }
         }
-//          else if (index == 2) {
-//            gp.gameState = gp.shopState;
-//        }
-
+        gp.keyH.ePressed = false;
     }
 
     public void draw(Graphics2D g2) {

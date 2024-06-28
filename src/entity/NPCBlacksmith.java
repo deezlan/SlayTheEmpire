@@ -11,7 +11,7 @@ public class NPCBlacksmith extends Entity {
     public NPCBlacksmith(GamePanel gp) {
         super(gp);
         action = "idleRight";
-        message = "Hands off the hammer!";
+//        message = "Hands off the hammer!";
         getNpcSprites();
     }
 

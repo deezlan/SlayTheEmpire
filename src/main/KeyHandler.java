@@ -9,8 +9,8 @@ public class KeyHandler implements KeyListener {
             wPressed,
             sPressed,
             aPressed,
-            dPressed;
-
+            dPressed,
+            ePressed;
     public KeyHandler(GamePanel gp) {
         this.gp = gp;
     }
@@ -23,14 +23,19 @@ public class KeyHandler implements KeyListener {
     public void keyPressed(KeyEvent e) {
         int code = e.getKeyCode();
 
-        if (code == KeyEvent.VK_W) { wPressed = true; }
-        if (code == KeyEvent.VK_S) { sPressed = true; }
-        if (code == KeyEvent.VK_A) { aPressed = true; }
-        if (code == KeyEvent.VK_D) { dPressed = true; }
-        if (code == KeyEvent.VK_P) {
-            if(gp.gameState == gp.playState) {
-               gp.gameState = gp.pauseState;
-            } else if (gp.gameState == gp.pauseState){
+        // PLaystate
+        if (gp.gameState == gp.playState){
+            if (code == KeyEvent.VK_W) { wPressed = true; }
+            if (code == KeyEvent.VK_S) { sPressed = true; }
+            if (code == KeyEvent.VK_A) { aPressed = true; }
+            if (code == KeyEvent.VK_D) { dPressed = true; }
+            if (code == KeyEvent.VK_E) { ePressed = true; }
+        } else if (code == KeyEvent.VK_P) {  // Pause State
+            if (gp.gameState == gp.pauseState){
+                gp.gameState = gp.playState;
+            }
+        } else if (code == KeyEvent.VK_E){  //Dialogue State
+            if(gp.gameState == gp.dialogueState){
                 gp.gameState = gp.playState;
             }
         }

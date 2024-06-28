@@ -11,7 +11,7 @@ public class NPCMystery extends Entity {
     public NPCMystery(GamePanel gp){
         super(gp);
         action = "idleRight";
-        message = "Wanna buy some magic crystals?";
+//        message = "Wanna buy some magic crystals?";
         getNpcSprites();
     }
 

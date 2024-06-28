@@ -11,7 +11,7 @@ public class NPCMerchant extends Entity {
     public NPCMerchant(GamePanel gp) {
         super(gp);
         action = "idleRight";
-        message = "Potions are best of quality!";
+//        message = "Potions are best of quality!";
         getNpcSprites();
     }
 

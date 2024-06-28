@@ -12,6 +12,7 @@ public class UI {
     GamePanel gp;
     BufferedImage fullHeart, halfHeart, emptyHeart;
     Graphics2D g2;
+    public String currentDialog = "";
 
     public UI(GamePanel gp) {
         this.gp = gp;
@@ -92,12 +93,19 @@ public class UI {
         int dialogY = gp.TILE_SIZE/2;
         int dialogWidth = gp.SCREEN_WIDTH - (gp.TILE_SIZE*4);
         int dialogHeight = gp.TILE_SIZE*4;
-
         drawSubWindow(dialogX,dialogY,dialogWidth,dialogHeight);
+
+        g2.setFont(g2.getFont().deriveFont(Font.PLAIN,32));
+        dialogX += gp.TILE_SIZE;
+        dialogY += gp.TILE_SIZE;
+        for(String dialogs : currentDialog.split("/n")){ // breaks long dialogues // for up to use
+            g2.drawString(currentDialog,dialogX,dialogY);
+            dialogY += 40;
+        }
     }
 
     public void drawSubWindow(int x, int y, int width,int height){
-        Color custom = new Color(0,0,0);
+        Color custom = new Color(0,0,0,220);
         g2.setColor(custom);
         g2.fillRoundRect(x,y,width,height,35,35);
 

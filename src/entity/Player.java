@@ -37,7 +37,7 @@ public class Player extends Entity {
 
     public void setDefaultValues() {
         worldX = 350; // Player spawn location x
-        worldY = 10; // player spawn location y
+        worldY = 30; // player spawn location y
         speed = 3;
         action = "idleRight";
         currentSpriteList = idleRightSpriteList;

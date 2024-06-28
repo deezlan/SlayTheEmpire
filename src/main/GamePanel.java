@@ -119,8 +119,6 @@ public class GamePanel extends JPanel implements Runnable {
 //        if (gameState == pauseState) {
 //            // placeholder
 //        }
-
-
     }
 
     public void paintComponent(Graphics g) {
@@ -130,19 +128,27 @@ public class GamePanel extends JPanel implements Runnable {
         // Title Screen
         if (gameState == titleState) {
             ui.draw(g2);
-        }
-        else {
+        } else if (gameState == playState) {
             tileM.draw(g2); // Draw tiles
 
             player.draw(g2); // Draw player
 
             ui.draw(g2);
 
-        for (SuperObject superObject : objArr)
-            if (superObject != null) superObject.draw(g2, this);
+            for (SuperObject superObject : objArr)
+                if (superObject != null) superObject.draw(g2, this);
 
-        for (Entity entity : npcArr)
-            if (entity != null) entity.draw(g2);
+            for (Entity entity : npcArr)
+                if (entity != null) entity.draw(g2);
+//        } else if (gameState == pauseState) {
+
+        } else {
+            tileM.draw(g2); // Draw tiles
+
+            player.draw(g2); // Draw player
+
+            ui.draw(g2);
+        }
 
         g2.dispose();
     }

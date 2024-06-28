@@ -2,12 +2,14 @@ package entity;
 
 import main.GamePanel;
 import main.KeyHandler;
+import object.OBJ_Heart;
 
 import javax.imageio.ImageIO;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class Player extends Entity {
@@ -15,6 +17,10 @@ public class Player extends Entity {
 
     public final int screenX;
     public final int screenY;
+    public ArrayList<Entity> inventory = new ArrayList<>();
+    public final int inventorySize = 8;
+
+    OBJ_Heart image = new OBJ_Heart(gp);
 
     public Player (GamePanel gp, KeyHandler keyH) {
         super(gp);
@@ -26,6 +32,7 @@ public class Player extends Entity {
 
         setDefaultValues();
         getPlayerSprites();
+        setItems();
 
         solidArea = new Rectangle(); // draws a square at the centre of the player
         solidArea.x = 56; // position of actual collision square
@@ -47,6 +54,10 @@ public class Player extends Entity {
         //Status
         maxLife = 10;
         life = maxLife;
+    }
+
+    public void setItems(){
+        //add inventory
     }
 
     public void update() {

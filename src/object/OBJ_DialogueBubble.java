@@ -1,5 +1,7 @@
 package object;
 
+import main.UtilityTool;
+
 import javax.imageio.ImageIO;
 import java.io.IOException;
 import java.util.Objects;
@@ -7,19 +9,19 @@ import java.util.Objects;
 public class OBJ_DialogueBubble extends SuperObject {
     public OBJ_DialogueBubble() {
         name = "Bubble";
-        spriteWidth = 50;
-        spriteHeight = 50;
 
         // Load save pedestal sprites
         try {
             spriteList.add(0, ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
-                    "/objects/chat bubbles/chatbubble1.png"), "Missing bubble sprite 0")));
+                    "/objects/chatBubbles/01.png"), "Missing bubble sprite 0")));
             spriteList.add(1, ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
-                    "/objects/chat bubbles/chatbubble2.png"), "Missing bubble pedestal sprite 1")));
+                    "/objects/chatBubbles/02.png"), "Missing bubble pedestal sprite 1")));
             spriteList.add(2, ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
-                    "/objects/chat bubbles/chatbubble3.png"), "Missing bubble pedestal sprite 2")));
+                    "/objects/chatBubbles/03.png"), "Missing bubble pedestal sprite 2")));
             spriteList.add(3, ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
-                    "/objects/chat bubbles/chatbubble3.png"), "Missing bubble pedestal sprite 3")));
+                    "/objects/chatBubbles/04.png"), "Missing bubble pedestal sprite 3")));
+
+            UtilityTool.scaleObjectList(this, spriteList, 50, 50);
         } catch (IOException e) {
             e.printStackTrace(System.out);
         }

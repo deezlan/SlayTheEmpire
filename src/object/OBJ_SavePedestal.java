@@ -10,8 +10,6 @@ public class OBJ_SavePedestal extends SuperObject {
     public OBJ_SavePedestal() {
         name = "Save Pedestal";
         message = "Saving not implemented... go away";
-//        spriteWidth = 32;
-//        spriteHeight = 96;
 
         // Load save pedestal sprites
         try {

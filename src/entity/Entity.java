@@ -7,6 +7,7 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 public class Entity {
+    String message;
     GamePanel gp;
     public int worldX, worldY, spriteWidth, spriteHeight;
     public int speed;
@@ -20,7 +21,7 @@ public class Entity {
     public boolean lookingRight;
     public int spriteCounter = 0;
     public int spriteNum = 1;
-  
+
     // entity's collision directions
     public boolean
             upCollisionOn = false,
@@ -51,6 +52,8 @@ public class Entity {
         } else {
             if (spriteCounter > 9) loopThroughSprites();
         }
+        gp.cChecker.checkObject(this,false);
+        gp.cChecker.checkPLayer(this);
     }
 
     public void draw(Graphics2D g2, int i) {

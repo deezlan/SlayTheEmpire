@@ -26,7 +26,6 @@ public class Player extends Entity {
         super(gp);
         this.gp = gp;
         this.keyH = keyH;
-
         screenX = gp.SCREEN_WIDTH/2 - (gp.TILE_SIZE/2); // added screen position
         screenY = gp.SCREEN_HEIGHT/2 - (gp.TILE_SIZE/2);
 
@@ -45,7 +44,7 @@ public class Player extends Entity {
 
     public void setDefaultValues() {
         worldX = 350; // Player spawn location x
-        worldY = 10; // player spawn location y
+        worldY = 30; // player spawn location y
         speed = 3;
         action = "idleRight";
         currentSpriteList = idleRightSpriteList;
@@ -102,6 +101,10 @@ public class Player extends Entity {
             int objIndex = gp.cChecker.checkObject(this, true);
             interactObject(objIndex);
 
+            // CHECK NPC COLLISION
+            int npcIndex = gp.cChecker.checkEntityCollision(this, gp.npcArr);
+            interactNPC(npcIndex);
+
             switch (action) {
                 case "moveUp":
                 case "moveDown":
@@ -136,6 +139,13 @@ public class Player extends Entity {
 //            gp.objArray[index] = null;
             System.out.println(gp.objArr[index].message);
         }
+    }
+
+    public void interactNPC (int index){
+        if (index != 999) {
+            System.out.println(gp.npcArr[index].message);
+        }
+
     }
 
     public void draw(Graphics2D g2) {

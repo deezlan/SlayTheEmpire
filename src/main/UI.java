@@ -98,8 +98,9 @@ public class UI {
         g2.setFont(g2.getFont().deriveFont(Font.PLAIN,32));
         dialogX += gp.TILE_SIZE;
         dialogY += gp.TILE_SIZE;
-        for(String dialogs : currentDialog.split("/n")){ // breaks long dialogues // for up to use
-            g2.drawString(currentDialog,dialogX,dialogY);
+
+        for(String line : currentDialog.split("\n")){ // breaks long dialogues // for up to use
+            g2.drawString(line,dialogX,dialogY);
             dialogY += 40;
         }
     }

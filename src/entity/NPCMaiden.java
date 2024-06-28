@@ -20,7 +20,7 @@ public class NPCMaiden extends Entity {
         dialogs[1] = "I ain't no bitch";
         dialogs[2] = "You are disturbing me";
         dialogs[3] = "Fk off";
-        dialogs[4] = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaa/naaaaaaaaaaaaaaaaaaaaaaaaaaaa/naaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/naaaaaaaaaaaaaaaaaaa";
+        dialogs[4] = "Hello my name is jeff,\nim a a good,\nintelij is stupid,\ntest est essd";
     }
 
     public void getNpcSprites() {

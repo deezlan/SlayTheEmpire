@@ -16,7 +16,7 @@ public class Entity {
             idleLeftSpriteList = new ArrayList<>(),
             moveRightSpriteList = new ArrayList<>(),
             moveLeftSpriteList = new ArrayList<>();
-//            scaledList = new ArrayList<>();
+
     public String action;
     public boolean lookingRight;
     public int spriteCounter = 0;

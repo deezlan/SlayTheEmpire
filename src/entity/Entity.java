@@ -10,17 +10,23 @@ public class Entity {
     GamePanel gp;
     public int worldX, worldY;
     public int speed;
+    boolean attacking = false;
     public ArrayList<BufferedImage>
             currentSpriteList = new ArrayList<>(),
             idleRightSpriteList = new ArrayList<>(),
             idleLeftSpriteList = new ArrayList<>(),
             moveRightSpriteList = new ArrayList<>(),
-            moveLeftSpriteList = new ArrayList<>();
-
+            moveLeftSpriteList = new ArrayList<>(),
+            weaponSpriteList = new ArrayList<>();
+//            scaledList = new ArrayList<>();
     public String action;
     public boolean lookingRight;
     public int spriteCounter = 0;
     public int spriteNum = 1;
+
+    public int weaponSpriteCounter = 0;
+    public int weaponSpriteNum = 1;
+
     public int interactionCounter = 0;
     String[] dialogs = new String[20];
     public void speak() {
@@ -50,6 +56,26 @@ public class Entity {
     public void loopThroughSprites() {
         spriteNum = (spriteNum < currentSpriteList.size()) ? spriteNum + 1 : 1;
         spriteCounter = 0;
+    }
+
+    public void loopThroughWeaponSprites() {
+        if (weaponSpriteCounter <= 5){
+            weaponSpriteNum = 0;
+        } else if (weaponSpriteCounter <= 10) {
+            weaponSpriteNum = 1;
+        } else if (weaponSpriteCounter <= 15) {
+            weaponSpriteNum = 2;
+        } else if (weaponSpriteCounter <= 20) {
+            weaponSpriteNum = 3;
+        } else if (weaponSpriteCounter <= 25) {
+            weaponSpriteNum = 4;
+        } else if (weaponSpriteCounter <= 30) {
+            weaponSpriteNum = 5;
+        } else if (weaponSpriteCounter <= 35) {
+            weaponSpriteNum = 1;
+            weaponSpriteCounter = 0;
+            attacking = false;
+        }
     }
 
     public void update() {

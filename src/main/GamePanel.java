@@ -47,8 +47,7 @@ public class GamePanel extends JPanel implements Runnable {
     public final int pauseState = 2; // NO USAGE SO FAR
     public final int dialogueState = 3; // NO USAGE SO FAR
 
-//    public final int shopState = 4;
-
+    public final int shopState = 4;
 
     public GamePanel() {
         this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
@@ -58,15 +57,14 @@ public class GamePanel extends JPanel implements Runnable {
         this.setFocusable(true);
     }
 
-    public void setupLobby() {
-        gameArea = 0;
+    public void setupGame() {
         aSetter.setObject();
         aSetter.setNPC();
         gameState = playState;
-
     }
 
     public void startGameThread() {
+        gameArea = 1;
         gameThread = new Thread(this);
         gameThread.start();
     }
@@ -107,15 +105,11 @@ public class GamePanel extends JPanel implements Runnable {
             player.update();
 
             for (SuperObject obj : objArr) {
-                if (obj != null) {
-                    obj.update();
-                }
+                if (obj != null) obj.update();
             }
 
             for (Entity npc : npcArr) {
-                if (npc != null) {
-                    npc.update();
-                }
+                if (npc != null) npc.update();
             }
         }
 

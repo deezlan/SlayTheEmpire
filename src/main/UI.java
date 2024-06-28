@@ -18,9 +18,9 @@ public class UI {
 
         //HUD Components
         SuperObject heart = new OBJ_Heart(gp);
-        fullHeart = heart.spriteList.get(2);
-        halfHeart = heart.spriteList.get(1);
-        emptyHeart = heart.spriteList.get(0);
+        fullHeart = heart.scaledList.get(2);
+        halfHeart = heart.scaledList.get(1);
+        emptyHeart = heart.scaledList.get(0);
     }
 
     public void draw(Graphics2D g2){
@@ -40,28 +40,26 @@ public class UI {
     }
 
     public void drawPlayerLife(){
-
-        int postX = gp.TILE_SIZE/2;
-        int postY = gp.TILE_SIZE/2;
+        int posX = gp.TILE_SIZE/2;
+        int posY = gp.TILE_SIZE/2;
         int i = 0;
 
         while (i < gp.player.maxLife/2){
-            g2.drawImage(emptyHeart, postX, postY, null);
+            g2.drawImage(emptyHeart, posX, posY, null);
             i++;
-            postX += gp.TILE_SIZE;
+            posX += gp.TILE_SIZE;
         }
 
-        postX = gp.TILE_SIZE/2;
+        posX = gp.TILE_SIZE/2;
         i = 0;
 
         while (i < gp.player.life){
-            g2.drawImage(halfHeart, postX, postY, null);
+            g2.drawImage (halfHeart, posX, posY, null);
             i++;
-            if (i < gp.player.life){
-                g2.drawImage(fullHeart, postX, postY, null);
-            }
+            if (i < gp.player.life)
+                g2.drawImage(fullHeart, posX, posY, null);
             i++;
-            postX += gp.TILE_SIZE;
+            posX += gp.TILE_SIZE;
         }
     }
 

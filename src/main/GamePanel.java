@@ -20,12 +20,11 @@ public class GamePanel extends JPanel implements Runnable {
     public final int MAX_SCREEN_ROW = 13;
     public final int SCREEN_WIDTH = TILE_SIZE * MAX_SCREEN_COL;
     public final int SCREEN_HEIGHT = TILE_SIZE * MAX_SCREEN_ROW;
+    public int gameArea;
 
     //World Settings
     public final int MAX_WORLD_COL = 17; //must be same as map size
     public final int MAX_WORLD_ROW = 13; //must be same as map size
-//    public final int WORLD_WIDTH = TILE_SIZE * MAX_WORLD_COL;
-//    public final int WORLD_HEIGHT = TILE_SIZE * MAX_WORLD_ROW;
 
     // FPS Settings
     final int FPS = 60;
@@ -58,6 +57,7 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     public void setupLobby() {
+        gameArea = 0;
         aSetter.setObject();
         aSetter.setNPC();
         gameState = playState;
@@ -138,12 +138,11 @@ public class GamePanel extends JPanel implements Runnable {
 
             ui.draw(g2);
 
-            for(int i = 0; i < objArr.length; i++)
-                if(objArr[i] != null) objArr[i].draw(g2,this,i);
+        for (SuperObject superObject : objArr)
+            if (superObject != null) superObject.draw(g2, this);
 
-            for (int i = 0; i < npcArr.length; i++)
-                if (npcArr[i] != null) npcArr[i].draw(g2, i);
-        }
+        for (Entity entity : npcArr)
+            if (entity != null) entity.draw(g2);
 
         g2.dispose();
     }

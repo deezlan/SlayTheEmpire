@@ -20,7 +20,6 @@ public class Player extends Entity {
         super(gp);
         this.gp = gp;
         this.keyH = keyH;
-
         screenX = gp.SCREEN_WIDTH/2 - (gp.TILE_SIZE/2); // added screen position
         screenY = gp.SCREEN_HEIGHT/2 - (gp.TILE_SIZE/2);
 
@@ -38,7 +37,7 @@ public class Player extends Entity {
 
     public void setDefaultValues() {
         worldX = 350; // Player spawn location x
-        worldY = 10; // player spawn location y
+        worldY = 30; // player spawn location y
         speed = 3;
         action = "idleRight";
         currentSpriteList = idleRightSpriteList;
@@ -58,7 +57,6 @@ public class Player extends Entity {
         if (keyH.wPressed && keyH.sPressed && keyH.dPressed) { action = "moveRight"; }
         if (keyH.aPressed && keyH.dPressed && keyH.wPressed) { action = "moveUp"; }
         if (keyH.aPressed && keyH.dPressed && keyH.sPressed) { action = "moveDown"; }
-
 
         if ((keyH.wPressed || keyH.sPressed || keyH.aPressed || keyH.dPressed) && !action.equals("stuckOppositeDirection")) {
             if (keyH.wPressed) { action = "moveUp"; }
@@ -91,6 +89,10 @@ public class Player extends Entity {
             gp.cChecker.checkObject(this, true);
             int objIndex = gp.cChecker.checkObject(this, true);
             interactObject(objIndex);
+
+            // CHECK NPC COLLISION
+            int npcIndex = gp.cChecker.checkEntityCollision(this, gp.npcArr);
+            interactNPC(npcIndex);
 
             switch (action) {
                 case "moveUp":
@@ -128,11 +130,21 @@ public class Player extends Entity {
         }
     }
 
+    public void interactNPC (int index){
+        if (index != 999) {
+            System.out.println(gp.npcArr[index].message);
+        }
+
+    }
+
     public void draw(Graphics2D g2) {
         if (spriteNum > currentSpriteList.size() - 1) spriteNum = 1;
         BufferedImage image = currentSpriteList.get(spriteNum - 1);
-
-        g2.drawImage(image, screenX, screenY, gp.TILE_SIZE*3, gp.TILE_SIZE*2, null);
+        if (gp.gameArea == 0) {
+            g2.drawImage(image, worldX, worldY, gp.TILE_SIZE*3, gp.TILE_SIZE*2, null);
+        } else {
+            g2.drawImage(image, screenX, screenY, gp.TILE_SIZE*3, gp.TILE_SIZE*2, null);
+        }
     }
 
     public void getPlayerSprites() {

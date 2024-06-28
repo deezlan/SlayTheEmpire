@@ -9,7 +9,7 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.util.ArrayList;
+//import java.util.ArrayList;
 import java.util.Objects;
 
 public class Player extends Entity {
@@ -17,7 +17,7 @@ public class Player extends Entity {
 
     public final int screenX;
     public final int screenY;
-    public ArrayList<Entity> inventory = new ArrayList<>();
+//    public ArrayList<Entity> inventory = new ArrayList<>(); tmp disable
 //    public final int inventorySize = 8; temp disable
 
     public Player (GamePanel gp, KeyHandler keyH) {
@@ -168,7 +168,7 @@ public class Player extends Entity {
         BufferedImage image = currentSpriteList.get(spriteNum - 1);
         if (weaponSpriteNum > weaponSpriteList.size()) weaponSpriteNum =1;
         BufferedImage weaponImage = weaponSpriteList.get(weaponSpriteNum);
-        if (gp.gameArea == 0) {
+        if (gp.gameArea == 1) {
             g2.drawImage(image, worldX, worldY, gp.TILE_SIZE*3, gp.TILE_SIZE*2, null);
             if (attacking){
                 g2.drawImage(weaponImage, worldX + 40, worldY, gp.TILE_SIZE*3, gp.TILE_SIZE*2, null);

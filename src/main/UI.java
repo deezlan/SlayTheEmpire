@@ -33,9 +33,7 @@ public class UI {
         g2.setFont(new Font("Microsoft YaHei", Font.PLAIN, 28));
         g2.setColor(Color.white);
         drawPlayerLife();
-//        if (gp.gameState == gp.playState) {
-//
-//        }
+
         //Pause State
         if (gp.gameState == gp.pauseState) {
             drawPauseScreen();
@@ -62,13 +60,13 @@ public class UI {
         //SLOT
         final int slotXstart = frameX + 35;
         final int slotYstart = frameY + 35;
-        int slotX = slotXstart;
-        int slotY = slotYstart;
-
-        //DRAW PLAYER INVENTORY
-        for (int i = 0; i < gp.player.inventory.size(); i++){
-            //insert weapons
-        }
+//        int slotX = slotXstart; // temporary commented out Inventory!
+//        int slotY = slotYstart;
+//
+//        //DRAW PLAYER INVENTORY
+//        for (int i = 0; i < gp.player.inventory.size(); i++){
+//            //insert weapons
+//        }
 
         //CURSOR
         int cursorX = slotXstart + (gp.TILE_SIZE * slotColMove);

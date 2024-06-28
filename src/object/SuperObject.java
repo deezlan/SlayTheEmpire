@@ -22,7 +22,7 @@ public class SuperObject {
     // Change current object sprite to next
     public void update() {
         spriteCounter++;
-      
+
         if (this.spriteList.size() > 7) {
             if (spriteCounter > 5) loopThroughSprites();
         } else {

@@ -132,7 +132,7 @@ public class Player extends Entity {
 
     public void interactNPC (int index){
         if (index != 999) {
-            System.out.println("You are hitting a NPC in the face");
+            System.out.println(gp.npcArr[index].message);
         }
 
     }

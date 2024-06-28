@@ -7,6 +7,7 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 public class Entity {
+    String message;
     GamePanel gp;
     public int worldX, worldY, spriteWidth, spriteHeight;
     public int speed;

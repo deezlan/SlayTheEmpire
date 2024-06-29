@@ -133,7 +133,7 @@ public class AssetSetter {
 
                 gp.npcArr[2] = new NPCBlacksmith(gp);
                 gp.npcArr[2].worldX = 180;
-                gp.npcArr[2].worldY = 70;
+                gp.npcArr[2].worldY = 90;
                 System.out.println("NPC Blacksmith set at (" + gp.npcArr[0].worldX + ", " + gp.npcArr[0].worldY + ")");
 
                 gp.npcArr[3] = new NPCMerchant(gp);
@@ -174,8 +174,8 @@ public class AssetSetter {
                 break;
             case 1:
                 gp.mobArr[0] = new MOBSlime(gp);
-                gp.mobArr[0].worldX = 200;
-                gp.mobArr[0].worldY = 200;
+                gp.mobArr[0].worldX = 270;
+                gp.mobArr[0].worldY = 270;
                 break;
             default:
                 gp.mobArr[0] = new MOBSlime(gp);

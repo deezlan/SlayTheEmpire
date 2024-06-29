@@ -133,7 +133,7 @@ public class CollisionChecker {
                 break;
             case "moveDownLeft": //check both corners on the right if hitting any tile
                 entityBottomRow = (entityBottomWorldY + entity.speed)/gp.TILE_SIZE;
-                entityLeftCol = (entityLeftWorldX + entity.speed)/gp.TILE_SIZE;
+                entityLeftCol = (entityLeftWorldX - entity.speed)/gp.TILE_SIZE;
                 tileNum1 = gp.tileM.mapTileNum[entityLeftCol][entityTopRow];
                 tileNum2 = gp.tileM.mapTileNum[entityLeftCol][entityBottomRow];
                 tileNum3 = gp.tileM.mapTileNum[entityRightCol][entityBottomRow];
@@ -254,6 +254,7 @@ public class CollisionChecker {
         }
         return index;
     }
+
     public int checkEntityCollision(Entity entity, Entity[] target){
         int index = 999;
 

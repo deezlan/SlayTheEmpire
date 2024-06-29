@@ -5,7 +5,6 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
-//import java.util.Random;
 
 public class Entity {
 
@@ -88,7 +87,16 @@ public class Entity {
     }
 
     public void update() {
+        upCollisionOn = false; // resets collisions off
+        downCollisionOn = false;
+        leftCollisionOn = false;
+        rightCollisionOn = false;
+        gp.cChecker.checkObject(this,false);
+        gp.cChecker.checkPLayer(this);
+        gp.cChecker.checkTile(this);
+        gp.cChecker.checkEntityCollision(this, gp.npcArr);
         setAction();
+
         boolean contactPlayer = gp.cChecker.checkPLayer(this);
 
         if(this.type == 2 && contactPlayer){
@@ -97,19 +105,38 @@ public class Entity {
                 gp.player.iframe = true;
             }
         }
-        if (!upCollisionOn && !downCollisionOn && !leftCollisionOn && !rightCollisionOn){
-            gp.cChecker.checkObject(this,false);
-            gp.cChecker.checkPLayer(this);
-            gp.cChecker.checkTile(this);
-            gp.cChecker.checkEntityCollision(this, gp.npcArr);
+        if (!upCollisionOn && !downCollisionOn && !leftCollisionOn && !rightCollisionOn) {
             switch(action) {
-                case "moveUp": worldY -= speed; break;
-                case "moveDown": worldY += speed; break;
-                case "moveRight": worldX += speed; break;
-                case "moveLeft": worldX -= speed; break;
+                case "moveUp":
+                    worldY -= speed;
+                    break;
+                case "moveDown":
+                    worldY += speed;
+                    break;
+                case "moveRight":
+                    worldX += speed;
+                    break;
+                case "moveLeft":
+                    worldX -= speed;
+                    break;
+                case "moveUpRight":
+                    worldX += speed;
+                    worldY -= speed;
+                    break;
+                case "moveDownRight":
+                    worldX += speed;
+                    worldY += speed;
+                    break;
+                case "moveUpLeft":
+                    worldX -= speed;
+                    worldY -= speed;
+                    break;
+                case "moveDownLeft":
+                    worldX -= speed;
+                    worldY += speed;
+                    break;
             }
         }
-
         spriteCounter++;
         if (this.currentSpriteList.size() > 7) {
             if (spriteCounter > 5) loopThroughSprites();

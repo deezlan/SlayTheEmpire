@@ -16,12 +16,12 @@ public class SwordSlash extends Entity{
         getAttackImage();
 
         solidArea = new Rectangle(); // draws a square at the centre of the player
-        solidArea.x = 56; // position of actual collision square
-        solidArea.y = 72;
+        solidArea.x = 0; // position of actual collision square
+        solidArea.y = 0;
         solidAreaDefaultX = solidArea.x;
         solidAreaDefaultY = solidArea.y;
-        solidArea.width = 30; // outer area of collision square
-        solidArea.height = 20;
+        solidArea.width = 100; // outer area of collision square
+        solidArea.height = 100;
 
         action = "moveUp";
     }
@@ -37,6 +37,7 @@ public class SwordSlash extends Entity{
 
         if (gp.gameArea == 1) {
             g2.drawImage(weaponImage, 0, -gp.TILE_SIZE, gp.TILE_SIZE*3, gp.TILE_SIZE*2, null);
+            g2.draw(solidArea);
         } else if (gp.gameState == 1){
             g2.drawImage(weaponImage, 0, -gp.TILE_SIZE, gp.TILE_SIZE*3, gp.TILE_SIZE*2, null);
         }
@@ -44,9 +45,16 @@ public class SwordSlash extends Entity{
         g2.setTransform(old);
     }
 
+
     public void attacking(int index){
-        worldX = gp.player.worldX;
-        worldY = gp.player.worldY;
+        double offsetX = 50; // This is the horizontal offset
+        double offsetY = 30; // This is the vertical offset
+
+        double rotatedOffsetX = offsetX * Math.sin(gp.cursor.getAngle()) - offsetY * Math.cos(gp.cursor.getAngle());
+        double rotatedOffsetY = offsetX * Math.sin(gp.cursor.getAngle()) + offsetY * Math.cos(gp.cursor.getAngle());
+
+        worldX = gp.player.worldX + (int) rotatedOffsetX;
+        worldY = gp.player.worldY + (int) rotatedOffsetY;
         weaponSpriteCounter++;
         if (weaponSpriteCounter <= 5){
             weaponSpriteNum = 0;

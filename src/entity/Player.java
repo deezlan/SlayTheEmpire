@@ -32,17 +32,17 @@ public class Player extends Entity {
         setItems();
 
         solidArea = new Rectangle(); // draws a square at the centre of the player
-        solidArea.x = 56; // position of actual collision square
-        solidArea.y = 72;
+        solidArea.x = 48; // position of actual collision square
+        solidArea.y = 50;
         solidAreaDefaultX = solidArea.x;
         solidAreaDefaultY = solidArea.y;
-        solidArea.width = 30; // outer area of collision square
-        solidArea.height = 20;
+        solidArea.width = 50; // outer area of collision square
+        solidArea.height = 35;
     }
 
     public void setDefaultValues() {
-        worldX = 350; // Player spawn location x
-        worldY = 30; // player spawn location y
+        worldX = 340; // Player spawn location x
+        worldY = 60; // player spawn location y
         speed = 3;
         action = "idleRight";
         currentSpriteList = idleRightSpriteList;

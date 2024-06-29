@@ -37,7 +37,7 @@ public class MOBSlime extends Entity {
             moveRightSpriteList.add(3, ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
                     "/Mobs/Slime/right/03_Slime_Spiked_Run.png"), "Missing slime idle right sprite 4")));
             System.out.println("NPC images loaded successfully");
-            UtilityTool.scaleEntityList(this, moveRightSpriteList, 100, 100);
+            UtilityTool.scaleMobList(this, moveRightSpriteList, 300, 300);
 
             moveLeftSpriteList.add(0, ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
                     "/Mobs/Slime/left/00_slime_run_left.png"), "Missing slime right sprite 1 ")));
@@ -48,7 +48,7 @@ public class MOBSlime extends Entity {
             moveLeftSpriteList.add(3, ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
                     "/Mobs/Slime/left/03_slime_run_left.png"), "Missing slime idle right sprite 4")));
             System.out.println("NPC images loaded successfully");
-            UtilityTool.scaleEntityList(this,moveLeftSpriteList, 100, 100);
+            UtilityTool.scaleMobList(this,moveLeftSpriteList, 300, 300);
 
             idleLeftSpriteList.add(0, ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
                     "/Mobs/Slime/idle/00_Slime_Spiked_Idle.png"), "Missing slime right sprite 1")));
@@ -59,7 +59,7 @@ public class MOBSlime extends Entity {
             idleLeftSpriteList.add(3, ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
                     "/Mobs/Slime/idle/03_Slime_Spiked_Idle.png"), "Missing slime idle right sprite 4")));
             System.out.println("NPC images loaded successfully");
-            UtilityTool.scaleEntityList(this,idleLeftSpriteList, 100, 100);
+            UtilityTool.scaleMobList(this,idleLeftSpriteList, 300, 300);
 
             idleRightSpriteList.add(0, ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
                     "/Mobs/Slime/idle/00_Slime_Spiked_Idle.png"), "Missing slime right sprite 1")));
@@ -70,36 +70,44 @@ public class MOBSlime extends Entity {
             idleRightSpriteList.add(3, ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
                     "/Mobs/Slime/idle/03_Slime_Spiked_Idle.png"), "Missing slime idle right sprite 4")));
             System.out.println("NPC images loaded successfully");
-            UtilityTool.scaleEntityList(this,idleRightSpriteList, 100, 100);
+            UtilityTool.scaleMobList(this, idleRightSpriteList, 300, 300);
 
         } catch (IOException e) {
             e.printStackTrace(System.out);
         }
     }
 
-
+    @Override
     public void setAction() {
         actionLockCounter++;
 
         if(actionLockCounter == 120){
             Random random = new Random();
-            int i = random.nextInt(100)+1;
+            int i = random.nextInt(150)+1;
 
-            if(i <= 25) {
+            if (i <= 25) {
                 action = "moveUp";
-                currentSpriteList = idleRightSpriteList;
+                currentSpriteList = moveRightSpriteList;
             }
-            if(i > 25 && i <= 50){
+            if (i > 25 && i <= 50){
                 action = "moveDown";
-                currentSpriteList = idleRightSpriteList;
+                currentSpriteList = moveLeftSpriteList;
             }
-            if(i > 50 && i <= 75) {
+            if (i > 50 && i <= 75) {
                 action = "moveLeft";
+                currentSpriteList = moveLeftSpriteList;
+            }
+            if (i > 75 && i <= 100) {
+                action = "moveRight";
+                currentSpriteList = moveRightSpriteList;
+            }
+            if (i > 100 && i <= 125) {
+                action = "idleRight";
                 currentSpriteList = idleRightSpriteList;
             }
-            if(i > 75) {
-                action = "moveRight";
-                currentSpriteList = idleRightSpriteList;
+            if (i > 125) {
+                action = "idleLeft";
+                currentSpriteList = idleLeftSpriteList;
             }
             actionLockCounter = 0;
         }

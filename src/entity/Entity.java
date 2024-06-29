@@ -57,26 +57,6 @@ public class Entity {
         spriteCounter = 0;
     }
 
-    public void loopThroughWeaponSprites() {
-        if (weaponSpriteCounter <= 5){
-            weaponSpriteNum = 0;
-        } else if (weaponSpriteCounter <= 10) {
-            weaponSpriteNum = 1;
-        } else if (weaponSpriteCounter <= 15) {
-            weaponSpriteNum = 2;
-        } else if (weaponSpriteCounter <= 20) {
-            weaponSpriteNum = 3;
-        } else if (weaponSpriteCounter <= 25) {
-            weaponSpriteNum = 4;
-        } else if (weaponSpriteCounter <= 30) {
-            weaponSpriteNum = 5;
-        } else if (weaponSpriteCounter <= 35) {
-            weaponSpriteNum = 1;
-            weaponSpriteCounter = 0;
-            attacking = false;
-        }
-    }
-
     public void update() {
         spriteCounter++;
         if (this.currentSpriteList.size() > 7) {

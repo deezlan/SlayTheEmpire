@@ -5,8 +5,7 @@ import main.KeyHandler;
 import main.UtilityTool;
 
 import javax.imageio.ImageIO;
-import java.awt.Graphics2D;
-import java.awt.Rectangle;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 //import java.util.ArrayList; temp
@@ -65,6 +64,8 @@ public class Player extends Entity {
             action = "stuckOppositeDirection";
             currentSpriteList = lookingRight ? idleRightSpriteList : idleLeftSpriteList;
         }
+
+
         if (keyH.wPressed && keyH.sPressed && keyH.aPressed) { action = "moveLeft"; }
         if (keyH.wPressed && keyH.sPressed && keyH.dPressed) { action = "moveRight"; }
         if (keyH.aPressed && keyH.dPressed && keyH.wPressed) { action = "moveUp"; }
@@ -110,6 +111,10 @@ public class Player extends Entity {
             int npcIndex = gp.cChecker.checkEntityCollision(this, gp.npcArr);
             interactNPC(npcIndex);
 
+            //CHECK MOB COLLISION
+            int mobIndex = gp.cChecker.checkEntityCollision(this, gp.mobArr);
+            interactMob(mobIndex);
+
             switch (action) {
                 case "moveUp":
                 case "moveDown":
@@ -137,11 +142,21 @@ public class Player extends Entity {
             }
         }
 
+        if(iframe){
+            iframeCounter++;
+            if(iframeCounter > 60){
+                iframe = false;
+                iframeCounter = 0;
+            }
+        }
+
         spriteCounter++;
         if (spriteCounter > 5) {
             loopThroughSprites();
         }
     }
+
+
 
     public void interactObject (int index) {
         if (index != 999) {
@@ -164,18 +179,31 @@ public class Player extends Entity {
         }
     }
 
+    public void interactMob (int index) {
+        if ( index != 999) {
+            if (!iframe){
+                life -= 1;
+                iframe = true;
+            }
+        }
+    }
+
     public void draw(Graphics2D g2) {
         if (spriteNum > currentSpriteList.size() - 1) spriteNum = 1;
         BufferedImage image = currentSpriteList.get(spriteNum - 1);
         if (weaponSpriteNum > weaponSpriteList.size()) weaponSpriteNum =1;
         BufferedImage weaponImage = weaponSpriteList.get(weaponSpriteNum);
-        if (gp.gameArea == 1) {
+        if (gp.gameArea == 0) {
             g2.drawImage(image, worldX, worldY, gp.TILE_SIZE*3, gp.TILE_SIZE*2, null);
             if (attacking){
                 g2.drawImage(weaponImage, worldX + 40, worldY, gp.TILE_SIZE*3, gp.TILE_SIZE*2, null);
             }
-        } else if (gp.gameState == 1){
+        } else if (gp.gameArea == 1){
+            if(iframe){
+                g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.3f));
+            }
             g2.drawImage(image, worldX, worldY, gp.TILE_SIZE*3, gp.TILE_SIZE*2, null);
+            g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
             if (attacking){
                 g2.drawImage(weaponImage, worldX + 40, worldY, gp.TILE_SIZE*3, gp.TILE_SIZE*2, null);
             }

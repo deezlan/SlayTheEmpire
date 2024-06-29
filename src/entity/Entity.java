@@ -7,7 +7,9 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 public class Entity {
+
     GamePanel gp;
+    public int actionLockCounter;
     public int worldX, worldY;
     public int speed;
     boolean attacking = false;
@@ -23,6 +25,10 @@ public class Entity {
     public boolean lookingRight;
     public int spriteCounter = 0;
     public int spriteNum = 1;
+    public boolean iframe = false;
+    public int iframeCounter = 0;
+    public int type; // 0 = player 1 = monster
+
 
     public int weaponSpriteCounter = 0;
     public int weaponSpriteNum = 1;
@@ -33,6 +39,8 @@ public class Entity {
         gp.ui.currentDialog = dialogs[interactionCounter];
         interactionCounter++;
     }
+
+    public void setAction(){}
 
     // entity's collision directions
     public boolean
@@ -48,6 +56,7 @@ public class Entity {
 
     public Entity(GamePanel gp) {
         this.gp = gp;
+        lookingRight = true;
     }
 
     public int solidAreaDefaultX, solidAreaDefaultY;
@@ -78,14 +87,62 @@ public class Entity {
     }
 
     public void update() {
+        upCollisionOn = false; // resets collisions off
+        downCollisionOn = false;
+        leftCollisionOn = false;
+        rightCollisionOn = false;
+        gp.cChecker.checkObject(this,false);
+        gp.cChecker.checkPLayer(this);
+        gp.cChecker.checkTile(this);
+        gp.cChecker.checkEntityCollision(this, gp.npcArr);
+        setAction();
+
+        boolean contactPlayer = gp.cChecker.checkPLayer(this);
+
+        if(this.type == 2 && contactPlayer){
+            if(!gp.player.iframe){
+                gp.player.life -= 1;
+                gp.player.iframe = true;
+            }
+        }
+        if (!upCollisionOn && !downCollisionOn && !leftCollisionOn && !rightCollisionOn) {
+            switch(action) {
+                case "moveUp":
+                    worldY -= speed;
+                    break;
+                case "moveDown":
+                    worldY += speed;
+                    break;
+                case "moveRight":
+                    worldX += speed;
+                    break;
+                case "moveLeft":
+                    worldX -= speed;
+                    break;
+                case "moveUpRight":
+                    worldX += speed;
+                    worldY -= speed;
+                    break;
+                case "moveDownRight":
+                    worldX += speed;
+                    worldY += speed;
+                    break;
+                case "moveUpLeft":
+                    worldX -= speed;
+                    worldY -= speed;
+                    break;
+                case "moveDownLeft":
+                    worldX -= speed;
+                    worldY += speed;
+                    break;
+            }
+        }
         spriteCounter++;
         if (this.currentSpriteList.size() > 7) {
             if (spriteCounter > 5) loopThroughSprites();
         } else {
             if (spriteCounter > 9) loopThroughSprites();
         }
-        gp.cChecker.checkObject(this,false);
-        gp.cChecker.checkPLayer(this);
     }
 
     public void draw(Graphics2D g2) {

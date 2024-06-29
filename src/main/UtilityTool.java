@@ -29,10 +29,33 @@ public class UtilityTool {
     }
 
     public static void scaleEntityList (Entity entity, ArrayList<BufferedImage> spriteList, int width, int height) {
-        for (BufferedImage original : spriteList) {
+        ArrayList <BufferedImage> tempList = cloneList(spriteList);
+        spriteList.clear();
+        for (BufferedImage original : tempList) {
             BufferedImage scaledSprite = scaleImage(original, width, height);
-            entity.currentSpriteList.add(scaledSprite);
+            spriteList.add(scaledSprite);
         }
+        if (entity.action.equals("idleRight")) {
+            entity.currentSpriteList = spriteList;
+        }
+    }
+
+    public static void scaleMobList (Entity entity, ArrayList<BufferedImage> spriteList, int width, int height) {
+        ArrayList <BufferedImage> tempList = cloneList(spriteList);
+        spriteList.clear();
+        for (BufferedImage original : tempList) {
+            BufferedImage scaledSprite = scaleImage(original, width, height);
+            spriteList.add(scaledSprite);
+        }
+        if (entity.action.equals("idleRight")) {
+            entity.currentSpriteList = spriteList;
+        }
+    }
+
+    public static ArrayList<BufferedImage> cloneList(ArrayList<BufferedImage> spriteList) {
+        ArrayList<BufferedImage> clonedList = new ArrayList<> (spriteList.size());
+        clonedList.addAll(spriteList);
+        return clonedList;
     }
 
     public static BufferedImage weaponSetup (String path) throws IOException {

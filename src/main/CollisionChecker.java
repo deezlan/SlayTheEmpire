@@ -133,7 +133,7 @@ public class CollisionChecker {
                 break;
             case "moveDownLeft": //check both corners on the right if hitting any tile
                 entityBottomRow = (entityBottomWorldY + entity.speed)/gp.TILE_SIZE;
-                entityLeftCol = (entityLeftWorldX + entity.speed)/gp.TILE_SIZE;
+                entityLeftCol = (entityLeftWorldX - entity.speed)/gp.TILE_SIZE;
                 tileNum1 = gp.tileM.mapTileNum[entityLeftCol][entityTopRow];
                 tileNum2 = gp.tileM.mapTileNum[entityLeftCol][entityBottomRow];
                 tileNum3 = gp.tileM.mapTileNum[entityRightCol][entityBottomRow];
@@ -254,6 +254,7 @@ public class CollisionChecker {
         }
         return index;
     }
+
     public int checkEntityCollision(Entity entity, Entity[] target){
         int index = 999;
 
@@ -341,7 +342,8 @@ public class CollisionChecker {
         }
         return index;
     }
-    public void checkPLayer(Entity entity){
+    public boolean checkPLayer(Entity entity){
+        boolean contactPlayer  = false;
         // Get entity's solid area position
         entity.solidArea.x = entity.worldX + entity.solidArea.x;
         entity.solidArea.y = entity.worldY + entity.solidArea.y;
@@ -355,24 +357,28 @@ public class CollisionChecker {
                 entity.solidArea.y -= entity.speed;
                 if (entity.solidArea.intersects(gp.player.solidArea)) {
                     entity.upCollisionOn = true;
+                    contactPlayer = true;
                 }
                 break;
             case "moveDown":
                 entity.solidArea.y += entity.speed;
                 if (entity.solidArea.intersects(gp.player.solidArea)) {
                     entity.downCollisionOn = true;
+                    contactPlayer = true;
                 }
                 break;
             case "moveLeft":
                 entity.solidArea.x -= entity.speed;
                 if (entity.solidArea.intersects(gp.player.solidArea)) {
                     entity.leftCollisionOn = true;
+                    contactPlayer = true;
                 }
                 break;
             case "moveRight":
                 entity.solidArea.x += entity.speed;
                 if (entity.solidArea.intersects(gp.player.solidArea)) {
                     entity.rightCollisionOn = true;
+                    contactPlayer = true;
                 }
                 break;
             case "moveUpRight":
@@ -381,6 +387,7 @@ public class CollisionChecker {
                 if (entity.solidArea.intersects(gp.player.solidArea)) {
                     entity.rightCollisionOn = true;
                     entity.upCollisionOn = true;
+                    contactPlayer = true;
                 }
                 break;
             case "moveDownRight":
@@ -389,6 +396,7 @@ public class CollisionChecker {
                 if (entity.solidArea.intersects(gp.player.solidArea)) {
                     entity.rightCollisionOn = true;
                     entity.downCollisionOn = true;
+                    contactPlayer = true;
                 }
                 break;
             case "moveUpLeft":
@@ -397,6 +405,8 @@ public class CollisionChecker {
                 if (entity.solidArea.intersects(gp.player.solidArea)) {
                     entity.leftCollisionOn = true;
                     entity.upCollisionOn = true;
+                    contactPlayer = true;
+
                 }
                 break;
             case "moveDownLeft":
@@ -405,13 +415,16 @@ public class CollisionChecker {
                 if (entity.solidArea.intersects(gp.player.solidArea)) {
                     entity.downCollisionOn = true;
                     entity.leftCollisionOn = true;
+                    contactPlayer = true;
                 }
                 break;
+
         }
         entity.solidArea.x = entity.solidAreaDefaultX;
         entity.solidArea.y = entity.solidAreaDefaultY;
         gp.player.solidArea.x = gp.player.solidAreaDefaultX;
         gp.player.solidArea.y = gp.player.solidAreaDefaultY;
+        return contactPlayer;
     }
 }
 

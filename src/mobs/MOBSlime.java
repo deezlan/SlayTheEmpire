@@ -18,9 +18,9 @@ public class MOBSlime extends Entity {
         maxLife = 4;
         life = maxLife;
         action = "idleRight";
-        solidArea.x = 45;
-        solidArea.y = gp.TILE_SIZE + 60;
-        solidArea.width = 42;
+        solidArea.x = 58;
+        solidArea.y = gp.TILE_SIZE + 50;
+        solidArea.width = 28;
         solidArea.height = 30;
         solidAreaDefaultX = solidArea.x;
         solidAreaDefaultY = solidArea.y;
@@ -78,12 +78,13 @@ public class MOBSlime extends Entity {
         }
     }
 
+    @Override
     public void setAction() {
         actionLockCounter++;
 
         if(actionLockCounter == 120){
             Random random = new Random();
-            int i = random.nextInt(150)+1;
+            int i = random.nextInt(250)+1;
 
             if (i <= 25) {
                 action = "moveUp";
@@ -105,9 +106,25 @@ public class MOBSlime extends Entity {
                 action = "idleRight";
                 currentSpriteList = idleRightSpriteList;
             }
-            if (i > 125) {
+            if (i > 125 && i <= 150) {
                 action = "idleLeft";
                 currentSpriteList = idleLeftSpriteList;
+            }
+            if (i > 150 && i <= 175) {
+                action = "moveUpRight";
+                currentSpriteList = moveRightSpriteList;
+            }
+            if (i > 175 && i <= 200) {
+                action = "moveDownRight";
+                currentSpriteList = moveRightSpriteList;
+            }
+            if (i > 200 && i <= 225) {
+                action = "moveUpLeft";
+                currentSpriteList = moveLeftSpriteList;
+            }
+            if (i > 225) {
+                action = "moveDownLeft";
+                currentSpriteList = moveLeftSpriteList;
             }
             actionLockCounter = 0;
         }

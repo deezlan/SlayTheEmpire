@@ -32,14 +32,12 @@ public class GamePanel extends JPanel implements Runnable {
 
     TileManager tileM = new TileManager(this);
     public KeyHandler keyH = new KeyHandler(this);
-    KeyHandler keyH = new KeyHandler();
     Cursor cursor = new Cursor(); // Initialize cursor
-    Player player = new Player(this, keyH, cursor); // Pass cursor to player
+    public Player player = new Player(this, keyH, cursor); // Pass cursor to player
 
     Thread gameThread;
 
     public AssetSetter aSetter = new AssetSetter(this);
-    public Player player = new Player(this, keyH);
     public SuperObject[] objArr= new SuperObject[10];
     public Entity[] npcArr = new Entity[10];
     public CollisionChecker cChecker = new CollisionChecker(this);

@@ -26,7 +26,6 @@ public class Player extends Entity {
         super(gp);
         this.gp = gp;
         this.keyH = keyH;
-        this.cursor = cursor;
         screenX = gp.SCREEN_WIDTH/2 - (gp.TILE_SIZE/2); // added screen position
         screenY = gp.SCREEN_HEIGHT/2 - (gp.TILE_SIZE/2);
 
@@ -145,7 +144,7 @@ public class Player extends Entity {
         if (spriteCounter > 5) {
             loopThroughSprites();
         }
-        cursor.calculateAngle((int) (x + gp.tileSize * 1.5), y + gp.tileSize);
+        cursor.calculateAngle((int) (worldX + gp.TILE_SIZE * 1.5), worldY + gp.TILE_SIZE);
     }
 
     public void interactObject (int index) {
@@ -192,10 +191,8 @@ public class Player extends Entity {
                 g2.drawImage(weaponImage, screenX + 40, screenY, gp.TILE_SIZE*3, gp.TILE_SIZE*2, null);
             }
         }
-        g2.drawImage(image, x, y, gp.tileSize*3, gp.tileSize*2, null);
-
         // draw arrow
-        cursor.draw(g2, (int) (x + gp.tileSize * 1.5), y + gp.tileSize);
+        cursor.draw(g2, (int) (worldX + gp.TILE_SIZE * 1.5), worldY + gp.TILE_SIZE);
     }
 
     public void getPlayerSprites() {

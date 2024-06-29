@@ -29,14 +29,24 @@ public class UI {
         g2.setFont(new Font("Microsoft YaHei", Font.PLAIN, 28));
         g2.setColor(Color.white);
 
-//        if (gp.gameState == gp.playState) {
-//
-//        }
+        // TITLE STATE
+        if (gp.gameState == gp.titleState) {
+            drawTitleScreen();
+        }
+        // START MENU STATE
+        if (gp.gameState == gp.startMenuState) {
+            drawStartMenu();
+        }
+        // PLAY STATE
+        if (gp.gameState == gp.playState) {
+            drawPlayerLife();
+        }
+        // PAUSE STATE
         if (gp.gameState == gp.pauseState) {
             drawPauseScreen();
         }
 
-        drawPlayerLife();
+
     }
 
     public void drawPlayerLife(){
@@ -65,13 +75,65 @@ public class UI {
 
     public void drawPauseScreen() {
 
-        g2.setFont(g2.getFont().deriveFont(Font.BOLD));
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 60F));
         String text = "GO TOUCH GRASS BITCH";
         int x = getXforCenteredText(text);
         int y = gp.SCREEN_HEIGHT/2;
 
+        // SHADOW
+        g2.setColor(Color.gray);
+        g2.drawString(text, x+5, y+5);
+        // Main PauseScreen
+        g2.setColor(Color.white);
         g2.drawString(text, x, y);
 
+    }
+
+    public void drawTitleScreen() {
+        int x;
+        int y;
+
+        g2.setColor(Color.BLACK);
+        g2.fillRect(0,0, gp.SCREEN_WIDTH, gp.SCREEN_HEIGHT);
+
+        // Title Text
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 80F));
+        String title = "Slay the Empire";
+        x = getXforCenteredText(title);
+        y = gp.SCREEN_HEIGHT/3 + 60;
+        // SHADOW + TITLE
+        g2.setColor(Color.gray);
+        g2.drawString(title, x+5, y+5);
+        g2.setColor(Color.white);
+        g2.drawString(title, x, y);
+
+        // Start Game Text
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 20F));
+        String start = "<PRESS ANY BUTTON>";
+        x = getXforCenteredText(start);
+        y += gp.TILE_SIZE*4;
+        g2.setColor(Color.white);
+        g2.drawString(start, x, y);
+
+
+    }
+
+    public void drawStartMenu() {
+
+        g2.setColor(Color.BLACK);
+        g2.fillRect(0,0, gp.SCREEN_WIDTH, gp.SCREEN_HEIGHT);
+
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 60F));
+        String text = "YO ITS THE START MANU!";
+        int x = getXforCenteredText(text);
+        int y = gp.SCREEN_HEIGHT/2;
+
+        // SHADOW
+        g2.setColor(Color.gray);
+        g2.drawString(text, x+5, y+5);
+        // Main PauseScreen
+        g2.setColor(Color.white);
+        g2.drawString(text, x, y);
     }
 
     public int getXforCenteredText(String text) {

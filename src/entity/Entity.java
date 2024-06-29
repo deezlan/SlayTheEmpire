@@ -89,11 +89,6 @@ public class Entity {
 
     public void update() {
         setAction();
-
-        gp.cChecker.checkObject(this,false);
-        gp.cChecker.checkPLayer(this);
-        gp.cChecker.checkTile(this);
-        gp.cChecker.checkEntityCollision(this, gp.npcArr);
         boolean contactPlayer = gp.cChecker.checkPLayer(this);
 
         if(this.type == 2 && contactPlayer){
@@ -102,13 +97,19 @@ public class Entity {
                 gp.player.iframe = true;
             }
         }
-        if (!upCollisionOn && !downCollisionOn && !leftCollisionOn && !rightCollisionOn)
+        if (!upCollisionOn && !downCollisionOn && !leftCollisionOn && !rightCollisionOn){
+            gp.cChecker.checkObject(this,false);
+            gp.cChecker.checkPLayer(this);
+            gp.cChecker.checkTile(this);
+            gp.cChecker.checkEntityCollision(this, gp.npcArr);
             switch(action) {
                 case "moveUp": worldY -= speed; break;
                 case "moveDown": worldY += speed; break;
-                case "moveRight": worldX -= speed; break;
-                case "moveLeft": worldX += speed; break;
+                case "moveRight": worldX += speed; break;
+                case "moveLeft": worldX -= speed; break;
             }
+        }
+
         spriteCounter++;
         if (this.currentSpriteList.size() > 7) {
             if (spriteCounter > 5) loopThroughSprites();

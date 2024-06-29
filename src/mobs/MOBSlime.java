@@ -18,7 +18,7 @@ public class MOBSlime extends Entity {
         maxLife = 4;
         life = maxLife;
         action = "idleRight";
-        solidArea.x = 7;
+        solidArea.x = 2;
         solidArea.y = gp.TILE_SIZE;
         solidArea.width = 42;
         solidArea.height = 30;

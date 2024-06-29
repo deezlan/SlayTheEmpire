@@ -31,11 +31,7 @@ public class SwordSlash extends Entity{
 
         if (weaponSpriteNum > weaponSpriteList.size()) weaponSpriteNum =1;
         BufferedImage weaponImage = weaponSpriteList.get(weaponSpriteNum);
-        if (direction.equalsIgnoreCase("idleRight")){
-            g2.translate(gp.player.worldX+50, gp.player.worldY + gp.TILE_SIZE + 10);
-        } else if (direction.equalsIgnoreCase("idleLeft")){
-            g2.translate(gp.player.worldX+70, gp.player.worldY + gp.TILE_SIZE + 10);
-        }
+        g2.translate(gp.player.worldX+60, gp.player.worldY + gp.TILE_SIZE + 10);
 
         g2.rotate(gp.cursor.getAngle());
 

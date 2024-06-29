@@ -13,11 +13,12 @@ public class MOBSlime extends Entity {
 
     public MOBSlime(GamePanel gp) {
         super(gp);
+        type = 2;
         speed = 1;
         maxLife = 4;
         life = maxLife;
         action = "idleRight";
-        solidArea.x = 2;
+        solidArea.x = 7;
         solidArea.y = gp.TILE_SIZE;
         solidArea.width = 42;
         solidArea.height = 30;
@@ -37,7 +38,7 @@ public class MOBSlime extends Entity {
             moveRightSpriteList.add(3, ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
                     "/Mobs/Slime/right/03_Slime_Spiked_Run.png"), "Missing slime idle right sprite 4")));
             System.out.println("NPC images loaded successfully");
-            UtilityTool.scaleMobList(this, moveRightSpriteList, 300, 300);
+            UtilityTool.scaleMobList(this, moveRightSpriteList, 100, 100);
 
             moveLeftSpriteList.add(0, ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
                     "/Mobs/Slime/left/00_slime_run_left.png"), "Missing slime right sprite 1 ")));
@@ -48,7 +49,7 @@ public class MOBSlime extends Entity {
             moveLeftSpriteList.add(3, ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
                     "/Mobs/Slime/left/03_slime_run_left.png"), "Missing slime idle right sprite 4")));
             System.out.println("NPC images loaded successfully");
-            UtilityTool.scaleMobList(this,moveLeftSpriteList, 300, 300);
+            UtilityTool.scaleMobList(this,moveLeftSpriteList, 100, 100);
 
             idleLeftSpriteList.add(0, ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
                     "/Mobs/Slime/idle/00_Slime_Spiked_Idle.png"), "Missing slime right sprite 1")));
@@ -59,7 +60,7 @@ public class MOBSlime extends Entity {
             idleLeftSpriteList.add(3, ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
                     "/Mobs/Slime/idle/03_Slime_Spiked_Idle.png"), "Missing slime idle right sprite 4")));
             System.out.println("NPC images loaded successfully");
-            UtilityTool.scaleMobList(this,idleLeftSpriteList, 300, 300);
+            UtilityTool.scaleMobList(this,idleLeftSpriteList, 100, 100);
 
             idleRightSpriteList.add(0, ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
                     "/Mobs/Slime/idle/00_Slime_Spiked_Idle.png"), "Missing slime right sprite 1")));
@@ -70,14 +71,13 @@ public class MOBSlime extends Entity {
             idleRightSpriteList.add(3, ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
                     "/Mobs/Slime/idle/03_Slime_Spiked_Idle.png"), "Missing slime idle right sprite 4")));
             System.out.println("NPC images loaded successfully");
-            UtilityTool.scaleMobList(this, idleRightSpriteList, 300, 300);
+            UtilityTool.scaleMobList(this, idleRightSpriteList, 100, 100);
 
         } catch (IOException e) {
             e.printStackTrace(System.out);
         }
     }
 
-    @Override
     public void setAction() {
         actionLockCounter++;
 

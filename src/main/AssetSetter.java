@@ -171,19 +171,16 @@ public class AssetSetter {
                 gp.mobArr[0] = new MOBSlime(gp);
                 gp.mobArr[0].worldX = 200;
                 gp.mobArr[0].worldY = 200;
-                System.out.println("NPC slime set at (" + gp.npcArr[0].worldX + ", " + gp.npcArr[0].worldY + ")");
                 break;
             case 1:
                 gp.mobArr[0] = new MOBSlime(gp);
                 gp.mobArr[0].worldX = 200;
                 gp.mobArr[0].worldY = 200;
-                System.out.println("NPC slime set at (" + gp.npcArr[0].worldX + ", " + gp.npcArr[0].worldY + ")");
                 break;
             default:
                 gp.mobArr[0] = new MOBSlime(gp);
                 gp.mobArr[0].worldX = 200;
                 gp.mobArr[0].worldY = 200;
-                System.out.println("NPC slime set at (" + gp.npcArr[0].worldX + ", " + gp.npcArr[0].worldY + ")");
                 break;
         }
     }

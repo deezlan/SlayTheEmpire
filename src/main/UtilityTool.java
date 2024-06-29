@@ -35,7 +35,6 @@ public class UtilityTool {
             BufferedImage scaledSprite = scaleImage(original, width, height);
             spriteList.add(scaledSprite);
         }
-
         if (entity.action.equals("idleRight")) {
             entity.currentSpriteList = spriteList;
         }

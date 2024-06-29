@@ -13,20 +13,24 @@ import java.io.IOException;
 import java.util.Objects;
 
 public class Player extends Entity {
+    GamePanel gp;
     KeyHandler keyH;
+    private Cursor cursor;
 
     public final int screenX;
     public final int screenY;
 //    public ArrayList<Entity> inventory = new ArrayList<>(); temp commented
 //    public final int inventorySize = 8; temp commented
 
-    public Player (GamePanel gp, KeyHandler keyH) {
+    public Player (GamePanel gp, KeyHandler keyH, Cursor cursor) {
         super(gp);
         this.gp = gp;
         this.keyH = keyH;
+        this.cursor = cursor;
         screenX = gp.SCREEN_WIDTH/2 - (gp.TILE_SIZE/2); // added screen position
         screenY = gp.SCREEN_HEIGHT/2 - (gp.TILE_SIZE/2);
 
+        this.cursor = cursor;
         setDefaultValues();
         getPlayerSprites();
         getPlayerAttackImage();
@@ -141,6 +145,7 @@ public class Player extends Entity {
         if (spriteCounter > 5) {
             loopThroughSprites();
         }
+        cursor.calculateAngle((int) (x + gp.tileSize * 1.5), y + gp.tileSize);
     }
 
     public void interactObject (int index) {
@@ -148,6 +153,8 @@ public class Player extends Entity {
 //            gp.objArray[index] = null;
             System.out.println(gp.objArr[index].message);
         }
+        // Update angle based on mouse position
+
     }
 
     public void interactNPC (int index) {
@@ -185,6 +192,10 @@ public class Player extends Entity {
                 g2.drawImage(weaponImage, screenX + 40, screenY, gp.TILE_SIZE*3, gp.TILE_SIZE*2, null);
             }
         }
+        g2.drawImage(image, x, y, gp.tileSize*3, gp.tileSize*2, null);
+
+        // draw arrow
+        cursor.draw(g2, (int) (x + gp.tileSize * 1.5), y + gp.tileSize);
     }
 
     public void getPlayerSprites() {
@@ -268,5 +279,6 @@ public class Player extends Entity {
     public void attacking(){
         weaponSpriteCounter++;
         loopThroughWeaponSprites();
+
     }
 }

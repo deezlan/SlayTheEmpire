@@ -1,11 +1,12 @@
 package main;
 
 import javax.swing.JPanel;
-import java.awt.Dimension;
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
+import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
 
+import entity.Cursor;
 import entity.Entity;
 import entity.Player;
 import tile.TileManager;
@@ -31,6 +32,10 @@ public class GamePanel extends JPanel implements Runnable {
 
     TileManager tileM = new TileManager(this);
     public KeyHandler keyH = new KeyHandler(this);
+    KeyHandler keyH = new KeyHandler();
+    Cursor cursor = new Cursor(); // Initialize cursor
+    Player player = new Player(this, keyH, cursor); // Pass cursor to player
+
     Thread gameThread;
 
     public AssetSetter aSetter = new AssetSetter(this);
@@ -55,6 +60,29 @@ public class GamePanel extends JPanel implements Runnable {
         this.setDoubleBuffered(true);
         this.addKeyListener(keyH);
         this.setFocusable(true);
+
+        hideCursor();
+
+        addMouseMotionListener(new MouseAdapter() {
+            @Override
+            public void mouseMoved(MouseEvent e) {
+                cursor.updateMousePosition(e.getX(), e.getY());
+            }
+        });
+    }
+
+    private void hideCursor() {
+        BufferedImage cursorImg = new BufferedImage(16,16, BufferedImage.TYPE_INT_ARGB);
+
+        java.awt.Cursor blankCursor = Toolkit.getDefaultToolkit().createCustomCursor(
+                cursorImg, new Point(0,0), "blank cursor"
+        );
+
+        this.setCursor(blankCursor);
+    }
+
+    public Cursor getPCursor() {
+        return cursor;
     }
 
     public void setupGame() {

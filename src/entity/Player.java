@@ -110,6 +110,10 @@ public class Player extends Entity {
             int npcIndex = gp.cChecker.checkEntityCollision(this, gp.npcArr);
             interactNPC(npcIndex);
 
+            //CHECK MOB COLLISION
+//            int mobIndex = gp.cChecker.checkEntityCollision(this, gp.mobArr);
+//            interactMob(mobIndex);
+
             switch (action) {
                 case "moveUp":
                 case "moveDown":
@@ -163,6 +167,10 @@ public class Player extends Entity {
                 break;
         }
     }
+
+//    public void interactMob (int index) {
+//
+//    }
 
     public void draw(Graphics2D g2) {
         if (spriteNum > currentSpriteList.size() - 1) spriteNum = 1;

@@ -37,6 +37,7 @@ public class GamePanel extends JPanel implements Runnable {
     public Player player = new Player(this, keyH);
     public SuperObject[] objArr= new SuperObject[10];
     public Entity[] npcArr = new Entity[10];
+    public Entity[] mobArr = new Entity[10];
     public CollisionChecker cChecker = new CollisionChecker(this);
     public UI ui = new UI(this);
 
@@ -60,6 +61,7 @@ public class GamePanel extends JPanel implements Runnable {
     public void setupGame() {
         aSetter.setObject();
         aSetter.setNPC();
+        aSetter.setMonster();
         gameState = playState;
     }
 
@@ -111,6 +113,10 @@ public class GamePanel extends JPanel implements Runnable {
             for (Entity npc : npcArr) {
                 if (npc != null) npc.update();
             }
+
+            for (Entity mob : mobArr) {
+                if (mob != null) mob.update();
+            }
         }
     }
 
@@ -131,6 +137,9 @@ public class GamePanel extends JPanel implements Runnable {
 
             for (Entity entity : npcArr)
                 if (entity != null) entity.draw(g2);
+
+            for (Entity mob : mobArr)
+                if (mob != null) mob.draw(g2);
 
             ui.draw(g2);
 

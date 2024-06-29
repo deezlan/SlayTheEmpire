@@ -5,9 +5,11 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+//import java.util.Random;
 
 public class Entity {
     GamePanel gp;
+    public int actionLockCounter;
     public int worldX, worldY;
     public int speed;
     boolean attacking = false;
@@ -33,6 +35,8 @@ public class Entity {
         gp.ui.currentDialog = dialogs[interactionCounter];
         interactionCounter++;
     }
+
+    public void setAction(){}
 
     // entity's collision directions
     public boolean
@@ -78,15 +82,52 @@ public class Entity {
     }
 
     public void update() {
-        spriteCounter++;
-        if (this.currentSpriteList.size() > 7) {
-            if (spriteCounter > 5) loopThroughSprites();
-        } else {
-            if (spriteCounter > 9) loopThroughSprites();
+        setAction();
+        switch (action) {
+            case "moveUp":
+                if(!upCollisionOn) {
+                    gp.cChecker.checkObject(this,false);
+                    gp.cChecker.checkPLayer(this);
+                    gp.cChecker.checkTile(this);
+                    gp.cChecker.checkEntityCollision(this, gp.npcArr);
+                    worldY -= speed;
+                }
+                break;
+            case "moveDown":
+                if (!downCollisionOn){
+                    gp.cChecker.checkObject(this,false);
+                    gp.cChecker.checkPLayer(this);
+                    gp.cChecker.checkTile(this);
+                    gp.cChecker.checkEntityCollision(this, gp.npcArr);
+                worldY += speed;
+                }
+                break;
+            case "moveLeft":
+                if (!leftCollisionOn) {
+                    gp.cChecker.checkObject(this,false);
+                    gp.cChecker.checkPLayer(this);
+                    gp.cChecker.checkTile(this);
+                    gp.cChecker.checkEntityCollision(this, gp.npcArr);
+                worldX -= speed;
+                }
+                break;
+            case "moveRight":
+                if (!rightCollisionOn){
+                    gp.cChecker.checkObject(this,false);
+                    gp.cChecker.checkPLayer(this);
+                    gp.cChecker.checkTile(this);
+                    gp.cChecker.checkEntityCollision(this, gp.npcArr);
+                worldX += speed;
+                }
+                break;
         }
-        gp.cChecker.checkObject(this,false);
-        gp.cChecker.checkPLayer(this);
-    }
+            spriteCounter++;
+            if (this.currentSpriteList.size() > 7) {
+                if (spriteCounter > 5) loopThroughSprites();
+            } else {
+                if (spriteCounter > 9) loopThroughSprites();
+            }
+        }
 
     public void draw(Graphics2D g2) {
         BufferedImage image = currentSpriteList.get(spriteNum - 1);

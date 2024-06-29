@@ -4,6 +4,7 @@ import entity.NPCMaiden;
 import entity.NPCMerchant;
 import entity.NPCMystery;
 import entity.NPCBlacksmith;
+import mobs.MOBSlime;
 import object.OBJ_DialogueBubble;
 import object.OBJ_SavePedestal;
 import object.OBJ_Shop;
@@ -57,7 +58,7 @@ public class AssetSetter {
 
                 gp.objArr[4] = new OBJ_DialogueBubble(); // Blacksmith chat bubble
                 gp.objArr[4].worldX = 230;
-                gp.objArr[4].worldY = 60;
+                gp.objArr[4].worldY = 50;
 
                 gp.objArr[5] = new OBJ_DialogueBubble(); // Merchant chat bubble
                 gp.objArr[5].worldX = 600;
@@ -132,7 +133,7 @@ public class AssetSetter {
 
                 gp.npcArr[2] = new NPCBlacksmith(gp);
                 gp.npcArr[2].worldX = 180;
-                gp.npcArr[2].worldY = 80;
+                gp.npcArr[2].worldY = 70;
                 System.out.println("NPC Blacksmith set at (" + gp.npcArr[0].worldX + ", " + gp.npcArr[0].worldY + ")");
 
                 gp.npcArr[3] = new NPCMerchant(gp);
@@ -160,6 +161,29 @@ public class AssetSetter {
                 gp.npcArr[3].worldX = 550;
                 gp.npcArr[3].worldY = 130;
                 System.out.println("NPC Merchant set at (" + gp.npcArr[0].worldX + ", " + gp.npcArr[0].worldY + ")");
+                break;
+        }
+    }
+
+    public void setMonster() {
+        switch(gp.gameArea) {
+            case 0:
+                gp.mobArr[0] = new MOBSlime(gp);
+                gp.mobArr[0].worldX = 200;
+                gp.mobArr[0].worldY = 200;
+                System.out.println("NPC slime set at (" + gp.npcArr[0].worldX + ", " + gp.npcArr[0].worldY + ")");
+                break;
+            case 1:
+                gp.mobArr[0] = new MOBSlime(gp);
+                gp.mobArr[0].worldX = 200;
+                gp.mobArr[0].worldY = 200;
+                System.out.println("NPC slime set at (" + gp.npcArr[0].worldX + ", " + gp.npcArr[0].worldY + ")");
+                break;
+            default:
+                gp.mobArr[0] = new MOBSlime(gp);
+                gp.mobArr[0].worldX = 200;
+                gp.mobArr[0].worldY = 200;
+                System.out.println("NPC slime set at (" + gp.npcArr[0].worldX + ", " + gp.npcArr[0].worldY + ")");
                 break;
         }
     }

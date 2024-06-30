@@ -130,7 +130,6 @@ public class GamePanel extends JPanel implements Runnable {
         } else if (gameState == playState) {
             tileM.draw(g2); // Draw tiles
 
-            player.draw(g2); // Draw player
 
             for (SuperObject superObject : objArr)
                 if (superObject != null) superObject.draw(g2, this);
@@ -140,6 +139,8 @@ public class GamePanel extends JPanel implements Runnable {
 
             for (Entity mob : mobArr)
                 if (mob != null) mob.draw(g2);
+
+            player.draw(g2); // Draw player
 
             ui.draw(g2);
 

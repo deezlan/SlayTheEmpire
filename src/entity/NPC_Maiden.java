@@ -5,8 +5,8 @@ import main.UtilityTool;
 
 import java.io.IOException;
 
-public class NPCMaiden extends Entity {
-    public NPCMaiden(GamePanel gp) {
+public class NPC_Maiden extends Entity {
+    public NPC_Maiden(GamePanel gp) {
         super(gp);
         action = "idleRight";
         getNpcSprites();

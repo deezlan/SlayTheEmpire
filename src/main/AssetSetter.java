@@ -1,9 +1,9 @@
 package main;
 
-import entity.NPCMaiden;
-import entity.NPCMerchant;
-import entity.NPCMystery;
-import entity.NPCBlacksmith;
+import entity.NPC_Maiden;
+import entity.NPC_Merchant;
+import entity.NPC_Mystery;
+import entity.NPC_Blacksmith;
 import mobs.MOBSlime;
 import object.OBJ_DialogueBubble;
 import object.OBJ_Obelisk;
@@ -104,65 +104,65 @@ public class AssetSetter {
     public void setNPC() {
         switch (gp.gameArea) {
             case 0:
-                gp.npcArr[0] = new NPCMaiden(gp);
+                gp.npcArr[0] = new NPC_Maiden(gp);
                 gp.npcArr[0].worldX = 370;
                 gp.npcArr[0].worldY = 240;
                 System.out.println("NPC Maiden set at (" + gp.npcArr[0].worldX + ", " + gp.npcArr[0].worldY + ")");
 
-                gp.npcArr[1] = new NPCMystery(gp);
+                gp.npcArr[1] = new NPC_Mystery(gp);
                 gp.npcArr[1].worldX = 450;
                 gp.npcArr[1].worldY = 430;
                 System.out.println("NPC Mystery set at (" + gp.npcArr[0].worldX + ", " + gp.npcArr[0].worldY + ")");
 
-                gp.npcArr[2] = new NPCBlacksmith(gp);
+                gp.npcArr[2] = new NPC_Blacksmith(gp);
                 gp.npcArr[2].worldX = 180;
                 gp.npcArr[2].worldY = 80;
                 System.out.println("NPC Blacksmith set at (" + gp.npcArr[0].worldX + ", " + gp.npcArr[0].worldY + ")");
 
-                gp.npcArr[3] = new NPCMerchant(gp);
+                gp.npcArr[3] = new NPC_Merchant(gp);
                 gp.npcArr[3].worldX = 550;
                 gp.npcArr[3].worldY = 130;
                 System.out.println("NPC Merchant set at (" + gp.npcArr[0].worldX + ", " + gp.npcArr[0].worldY + ")");
 
                 break;
             case 1:
-                gp.npcArr[0] = new NPCMaiden(gp);
+                gp.npcArr[0] = new NPC_Maiden(gp);
                 gp.npcArr[0].worldX = 370;
                 gp.npcArr[0].worldY = 240;
                 System.out.println("NPC Maiden set at (" + gp.npcArr[0].worldX + ", " + gp.npcArr[0].worldY + ")");
 
-                gp.npcArr[1] = new NPCMystery(gp);
+                gp.npcArr[1] = new NPC_Mystery(gp);
                 gp.npcArr[1].worldX = 450;
                 gp.npcArr[1].worldY = 430;
                 System.out.println("NPC Mystery set at (" + gp.npcArr[0].worldX + ", " + gp.npcArr[0].worldY + ")");
 
-                gp.npcArr[2] = new NPCBlacksmith(gp);
+                gp.npcArr[2] = new NPC_Blacksmith(gp);
                 gp.npcArr[2].worldX = 180;
                 gp.npcArr[2].worldY = 90;
                 System.out.println("NPC Blacksmith set at (" + gp.npcArr[0].worldX + ", " + gp.npcArr[0].worldY + ")");
 
-                gp.npcArr[3] = new NPCMerchant(gp);
+                gp.npcArr[3] = new NPC_Merchant(gp);
                 gp.npcArr[3].worldX = 550;
                 gp.npcArr[3].worldY = 130;
                 System.out.println("NPC Merchant set at (" + gp.npcArr[0].worldX + ", " + gp.npcArr[0].worldY + ")");
                 break;
             default:
-                gp.npcArr[0] = new NPCMaiden(gp);
+                gp.npcArr[0] = new NPC_Maiden(gp);
                 gp.npcArr[0].worldX = 370;
                 gp.npcArr[0].worldY = 240;
                 System.out.println("NPC Maiden set at (" + gp.npcArr[0].worldX + ", " + gp.npcArr[0].worldY + ")");
 
-                gp.npcArr[1] = new NPCMystery(gp);
+                gp.npcArr[1] = new NPC_Mystery(gp);
                 gp.npcArr[1].worldX = 450;
                 gp.npcArr[1].worldY = 430;
                 System.out.println("NPC Mystery set at (" + gp.npcArr[0].worldX + ", " + gp.npcArr[0].worldY + ")");
 
-                gp.npcArr[2] = new NPCBlacksmith(gp);
+                gp.npcArr[2] = new NPC_Blacksmith(gp);
                 gp.npcArr[2].worldX = 180;
                 gp.npcArr[2].worldY = 80;
                 System.out.println("NPC Blacksmith set at (" + gp.npcArr[0].worldX + ", " + gp.npcArr[0].worldY + ")");
 
-                gp.npcArr[3] = new NPCMerchant(gp);
+                gp.npcArr[3] = new NPC_Merchant(gp);
                 gp.npcArr[3].worldX = 550;
                 gp.npcArr[3].worldY = 130;
                 System.out.println("NPC Merchant set at (" + gp.npcArr[0].worldX + ", " + gp.npcArr[0].worldY + ")");

@@ -3,9 +3,7 @@ package entity;
 import main.GamePanel;
 import main.UtilityTool;
 
-import javax.imageio.ImageIO;
 import java.io.IOException;
-import java.util.Objects;
 
 public class NPCMaiden extends Entity {
     public NPCMaiden(GamePanel gp) {
@@ -24,20 +22,16 @@ public class NPCMaiden extends Entity {
     }
 
     public void getNpcSprites() {
+        String dir = "/NPCs/maiden/";
         try {
-            idleRightSpriteList.add(0, ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
-                    "/NPCs/maiden/villager_01_00.png"), "Missing Maiden idle right sprite 0")));
-            idleRightSpriteList.add(1, ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
-                    "/NPCs/maiden/villager_01_01.png"), "Missing Maiden idle right sprite 1")));
-            idleRightSpriteList.add(2, ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
-                    "/NPCs/maiden/villager_01_02.png"), "Missing Maiden idle right sprite 2")));
-            idleRightSpriteList.add(3, ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
-                    "/NPCs/maiden/villager_01_03.png"), "Missing Maiden idle right sprite 3")));
-            idleRightSpriteList.add(4, ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
-                    "/NPCs/maiden/villager_01_04.png"), "Missing Maiden idle right sprite 4")));
-            System.out.println("NPC images loaded successfully");
+            idleRightList.add(0, UtilityTool.loadSprite(dir + "00.png", "Missing Idle Right 0"));
+            idleRightList.add(1, UtilityTool.loadSprite(dir + "01.png", "Missing Idle Right 1"));
+            idleRightList.add(2, UtilityTool.loadSprite(dir + "02.png", "Missing Idle Right 2"));
+            idleRightList.add(3, UtilityTool.loadSprite(dir + "03.png", "Missing Idle Right 3"));
+            idleRightList.add(4, UtilityTool.loadSprite(dir + "04.png", "Missing Idle Right 4"));
+            System.out.println("Maiden sprites loaded successfully");
 
-            UtilityTool.scaleEntityList(this, idleRightSpriteList, 90, 90);
+            UtilityTool.scaleEntityList(this, idleRightList, 90, 90);
         } catch (IOException e) {
             e.printStackTrace(System.out);
         }

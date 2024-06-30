@@ -7,8 +7,8 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 public class SuperObject {
-    public ArrayList<BufferedImage> spriteList = new ArrayList<>();
-    public ArrayList<BufferedImage> scaledList = new ArrayList<>();
+    public ArrayList<BufferedImage> defaultList = new ArrayList<>();
+    public ArrayList<BufferedImage> interactList = new ArrayList<>();
     public String name, message;
     public boolean collision = false;
 
@@ -23,7 +23,7 @@ public class SuperObject {
     public void update() {
         spriteCounter++;
 
-        if (this.spriteList.size() > 7) {
+        if (this.defaultList.size() > 7) {
             if (spriteCounter > 5) loopThroughSprites();
         } else {
             if (spriteCounter > 9) loopThroughSprites();
@@ -31,13 +31,13 @@ public class SuperObject {
     }
 
     public void loopThroughSprites() {
-        spriteNum = (spriteNum < spriteList.size()) ? spriteNum + 1 : 1;
+        spriteNum = (spriteNum < defaultList.size()) ? spriteNum + 1 : 1;
         spriteCounter = 0;
     }
 
     // Draw latest object sprite
     public void draw(Graphics2D g2, GamePanel gp) {
-        BufferedImage image = scaledList.get(spriteNum - 1);
+        BufferedImage image = defaultList.get(spriteNum - 1);
 
         switch (gp.gameArea) {
             case 0:

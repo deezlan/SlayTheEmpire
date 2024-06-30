@@ -3,36 +3,14 @@ package entity;
 import main.GamePanel;
 import main.UtilityTool;
 
-import javax.imageio.ImageIO;
 import java.io.IOException;
-import java.util.Objects;
 
 public class NPCBlacksmith extends Entity {
     public NPCBlacksmith(GamePanel gp) {
         super(gp);
         action = "idleRight";
         getNpcSprites();
-    }
 
-
-    public void getNpcSprites() {
-        try {
-            idleRightSpriteList.add(0, ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
-                    "/NPCs/blacksmith/blacksmith_00.png"), "Missing smith idle right sprite 1")));
-            idleRightSpriteList.add(1, ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
-                    "/NPCs/blacksmith/blacksmith_01.png"), "Missing smith idle right sprite 2")));
-            idleRightSpriteList.add(2, ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
-                    "/NPCs/blacksmith/blacksmith_02.png"), "Missing smith idle right sprite 3")));
-            idleRightSpriteList.add(3, ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
-                    "/NPCs/blacksmith/blacksmith_03.png"), "Missing smith idle right sprite 4")));
-            idleRightSpriteList.add(4, ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
-                    "/NPCs/blacksmith/blacksmith_04.png"), "Missing smith idle right sprite 5")));
-            System.out.println("NPC images loaded successfully");
-
-            UtilityTool.scaleEntityList(this, idleRightSpriteList, 90, 90);
-        } catch (IOException e) {
-            e.printStackTrace(System.out);
-        }
         solidArea.x = 20;
         solidArea.y = gp.TILE_SIZE;
         solidArea.width = 48;
@@ -41,4 +19,19 @@ public class NPCBlacksmith extends Entity {
         solidAreaDefaultY = solidArea.y;
     }
 
+    public void getNpcSprites() {
+        String dir = "/NPCs/blacksmith/";
+        try {
+            idleRightList.add(0, UtilityTool.loadSprite(dir + "00.png", "Missing Idle Right 0"));
+            idleRightList.add(1, UtilityTool.loadSprite(dir + "01.png", "Missing Idle Right 1"));
+            idleRightList.add(2, UtilityTool.loadSprite(dir + "02.png", "Missing Idle Right 2"));
+            idleRightList.add(3, UtilityTool.loadSprite(dir + "03.png", "Missing Idle Right 3"));
+            idleRightList.add(4, UtilityTool.loadSprite(dir + "04.png", "Missing Idle Right 4"));
+            System.out.println("Blacksmith sprites loaded successfully");
+
+            UtilityTool.scaleEntityList(this, idleRightList, 90, 90);
+        } catch (IOException e) {
+            e.printStackTrace(System.out);
+        }
+    }
 }

@@ -22,9 +22,9 @@ public class UI {
 
         //HUD Components
         SuperObject heart = new OBJ_Heart(gp);
-        fullHeart = heart.scaledList.get(2);
-        halfHeart = heart.scaledList.get(1);
-        emptyHeart = heart.scaledList.get(0);
+        fullHeart = heart.defaultList.get(2);
+        halfHeart = heart.defaultList.get(1);
+        emptyHeart = heart.defaultList.get(0);
     }
 
     public void draw(Graphics2D g2){

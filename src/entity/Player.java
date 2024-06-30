@@ -30,6 +30,7 @@ public class Player extends Entity {
         this.cursor = cursor;
         setDefaultValues();
         getPlayerSprites();
+        getPlayerAttackImage();
 
         setItems();
 
@@ -192,7 +193,7 @@ public class Player extends Entity {
         BufferedImage image = currentActionList.get(spriteNum - 1);
 
         if (weaponSpriteNum > weaponList.size())
-            weaponSpriteNum = 1;
+            weaponSpriteNum = 0;
         BufferedImage weaponImage = weaponList.get(weaponSpriteNum);
 
         if (gp.gameArea == 0) {
@@ -200,7 +201,6 @@ public class Player extends Entity {
 
             if (attacking){
                 g2.drawImage(weaponImage, worldX + 40, worldY, null);
-                slash.draw(g2, action);
             }
         } else if (gp.gameArea == 1){
             if(iframe){
@@ -210,12 +210,10 @@ public class Player extends Entity {
             g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
             if (attacking){
                 g2.drawImage(weaponImage, worldX + 40, worldY, null);
-                slash.draw(g2);
             }
         } else {
             g2.drawImage(image, screenX, screenY, gp.TILE_SIZE*3, gp.TILE_SIZE*2, null);
             if (attacking){
-                slash.draw(g2);
             }
         }
         // draw arrow

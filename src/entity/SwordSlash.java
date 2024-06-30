@@ -27,8 +27,8 @@ public class SwordSlash extends Entity{
     public void draw (Graphics2D g2, String direction){
         AffineTransform old = g2.getTransform();
 
-        if (weaponSpriteNum > weaponSpriteList.size()) weaponSpriteNum =1;
-        BufferedImage weaponImage = weaponSpriteList.get(weaponSpriteNum);
+        if (weaponSpriteNum > weaponList.size()) weaponSpriteNum =1;
+        BufferedImage weaponImage = weaponList.get(weaponSpriteNum);
         g2.translate(gp.player.worldX+60, gp.player.worldY + gp.TILE_SIZE + 10);
         g2.rotate(gp.cursor.getAngle());
 
@@ -92,12 +92,12 @@ public class SwordSlash extends Entity{
 
     public void getAttackImage() {
         try {
-            weaponSpriteList.add(0, UtilityTool.weaponSetup("/Weapon/Sword/sword_slash_1.png"));
-            weaponSpriteList.add(1, UtilityTool.weaponSetup("/Weapon/Sword/sword_slash_2.png"));
-            weaponSpriteList.add(2, UtilityTool.weaponSetup("/Weapon/Sword/sword_slash_3.png"));
-            weaponSpriteList.add(3, UtilityTool.weaponSetup("/Weapon/Sword/sword_slash_4.png"));
-            weaponSpriteList.add(4, UtilityTool.weaponSetup("/Weapon/Sword/sword_slash_5.png"));
-            weaponSpriteList.add(5, UtilityTool.weaponSetup("/Weapon/Sword/sword_slash_6.png"));
+            weaponList.add(0, UtilityTool.loadSprite("/Weapon/Sword/00.png", "Not found weapon image"));
+            weaponList.add(1, UtilityTool.loadSprite("/Weapon/Sword/01.png", "Not found weapon image"));
+            weaponList.add(2, UtilityTool.loadSprite("/Weapon/Sword/02.png", "Not found weapon image"));
+            weaponList.add(3, UtilityTool.loadSprite("/Weapon/Sword/03.png", "Not found weapon image"));
+            weaponList.add(4, UtilityTool.loadSprite("/Weapon/Sword/04.png", "Not found weapon image"));
+            weaponList.add(5, UtilityTool.loadSprite("/Weapon/Sword/05.png", "Not found weapon image"));
         } catch (IOException e){
             e.printStackTrace(System.out);
         }

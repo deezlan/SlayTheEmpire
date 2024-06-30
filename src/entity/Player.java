@@ -4,12 +4,10 @@ import main.GamePanel;
 import main.KeyHandler;
 import main.UtilityTool;
 
-import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 //import java.util.ArrayList; temp
-import java.util.Objects;
 
 public class Player extends Entity {
     KeyHandler keyH;
@@ -45,7 +43,7 @@ public class Player extends Entity {
         worldY = 60; // player spawn location y
         speed = 3;
         action = "idleRight";
-        currentSpriteList = idleRightSpriteList;
+        currentActionList = idleRightList;
         lookingRight = true;
 
         //Status
@@ -58,11 +56,11 @@ public class Player extends Entity {
     }
 
     public void update() {
-        if (attacking) attacking();
+        if (attacking) startAttack ();
 
         if ((keyH.wPressed && keyH.sPressed) || (keyH.aPressed && keyH.dPressed)) {
             action = "stuckOppositeDirection";
-            currentSpriteList = lookingRight ? idleRightSpriteList : idleLeftSpriteList;
+            currentActionList = lookingRight ? idleRightList : idleLeftList;
         }
 
 
@@ -77,7 +75,6 @@ public class Player extends Entity {
             if (keyH.sPressed) { action = "moveDown"; }
             if (keyH.aPressed) { action = "moveLeft";}
             if (keyH.dPressed) { action = "moveRight"; }
-
             if (keyH.wPressed && keyH.dPressed) { action = "moveUpRight"; }
             if (keyH.sPressed && keyH.dPressed) { action = "moveDownRight"; }
             if (keyH.wPressed && keyH.aPressed) { action = "moveUpLeft"; }
@@ -91,9 +88,8 @@ public class Player extends Entity {
                 if (keyH.aPressed) { worldX -= speed; }
             if (!rightCollisionOn)
                 if (keyH.dPressed) { worldX += speed; }
-            if (keyH.enterPressed){
-                attacking = true;
-            }
+
+            if (keyH.enterPressed) { attacking = true; }
 
             // CHECK TILE COLLISION
             upCollisionOn = false; // resets collisions off
@@ -116,26 +112,21 @@ public class Player extends Entity {
             interactMob(mobIndex);
 
             switch (action) {
-                case "moveUp":
-                case "moveDown":
-                    currentSpriteList = lookingRight ? moveRightSpriteList : moveLeftSpriteList;
+                case "moveUp", "moveDown":
+                    currentActionList = lookingRight ? moveRightList : moveLeftList;
                     break;
-                case "moveLeft":
-                case "moveUpLeft":
-                case "moveDownLeft":
-                    currentSpriteList = moveLeftSpriteList;
+                case "moveLeft", "moveUpLeft", "moveDownLeft":
+                    currentActionList = moveLeftList;
                     lookingRight = false;
                     break;
-                case "moveRight":
-                case "moveUpRight":
-                case "moveDownRight":
-                    currentSpriteList = moveRightSpriteList;
+                case "moveRight", "moveUpRight", "moveDownRight":
+                    currentActionList = moveRightList;
                     lookingRight = true;
                     break;
             }
         } else {
             action = lookingRight ? "idleRight" : "idleLeft";
-            currentSpriteList = action.equals("idleRight") ? idleRightSpriteList : idleLeftSpriteList;
+            currentActionList = action.equals("idleRight") ? idleRightList : idleLeftList;
 
             if (keyH.enterPressed){
                 attacking = true;
@@ -156,12 +147,12 @@ public class Player extends Entity {
         }
     }
 
-
-
     public void interactObject (int index) {
         if (index != 999) {
 //            gp.objArray[index] = null;
             System.out.println(gp.objArr[index].message);
+            if (!gp.objArr[index].interactList.isEmpty())
+                gp.objArr[index].interacting = true;
         }
     }
 
@@ -189,12 +180,17 @@ public class Player extends Entity {
     }
 
     public void draw(Graphics2D g2) {
-        if (spriteNum > currentSpriteList.size() - 1) spriteNum = 1;
-        BufferedImage image = currentSpriteList.get(spriteNum - 1);
-        if (weaponSpriteNum > weaponSpriteList.size()) weaponSpriteNum =1;
-        BufferedImage weaponImage = weaponSpriteList.get(weaponSpriteNum);
+        if (spriteNum > currentActionList.size() - 1)
+            spriteNum = 1;
+        BufferedImage image = currentActionList.get(spriteNum - 1);
+
+        if (weaponSpriteNum > weaponList.size())
+            weaponSpriteNum = 1;
+        BufferedImage weaponImage = weaponList.get(weaponSpriteNum);
+
         if (gp.gameArea == 0) {
-            g2.drawImage(image, worldX, worldY, gp.TILE_SIZE*3, gp.TILE_SIZE*2, null);
+            g2.drawImage(image, worldX, worldY, null);
+
             if (attacking){
                 g2.drawImage(weaponImage, worldX + 40, worldY, gp.TILE_SIZE*3, gp.TILE_SIZE*2, null);
             }
@@ -215,86 +211,63 @@ public class Player extends Entity {
         }
     }
 
-    public void getPlayerSprites() {
-        try {
-            moveRightSpriteList.add(0, ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
-                    "/player/Warrior/run/right/Warrior_Run_Right_1.png"), "Missing right sprite 0")));
-            moveRightSpriteList.add(1, ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
-                    "/player/Warrior/run/right/Warrior_Run_Right_2.png"), "Missing right sprite 1")));
-            moveRightSpriteList.add(2, ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
-                    "/player/Warrior/run/right/Warrior_Run_Right_3.png"), "Missing right sprite 2")));
-            moveRightSpriteList.add(3, ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
-                    "/player/Warrior/run/right/Warrior_Run_Right_4.png"), "Missing right sprite 3")));
-            moveRightSpriteList.add(4, ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
-                    "/player/Warrior/run/right/Warrior_Run_Right_5.png"), "Missing right sprite 4")));
-            moveRightSpriteList.add(5, ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
-                    "/player/Warrior/run/right/Warrior_Run_Right_6.png"), "Missing right sprite 5")));
-            moveRightSpriteList.add(6, ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
-                    "/player/Warrior/run/right/Warrior_Run_Right_7.png"), "Missing right sprite 6")));
-            moveRightSpriteList.add(7,ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
-                    "/player/Warrior/run/right/Warrior_Run_Right_8.png"), "Missing right sprite 7")));
-
-            moveLeftSpriteList.add(0, ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
-                    "/player/Warrior/run/left/Warrior_Run_Left_1.png"), "Missing left sprite 0")));
-            moveLeftSpriteList.add(1, ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
-                    "/player/Warrior/run/left/Warrior_Run_Left_2.png"), "Missing left sprite 1")));
-            moveLeftSpriteList.add(2, ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
-                    "/player/Warrior/run/left/Warrior_Run_Left_3.png"), "Missing left sprite 2")));
-            moveLeftSpriteList.add(3, ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
-                    "/player/Warrior/run/left/Warrior_Run_Left_4.png"), "Missing left sprite 3")));
-            moveLeftSpriteList.add(4, ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
-                    "/player/Warrior/run/left/Warrior_Run_Left_5.png"), "Missing left sprite 4")));
-            moveLeftSpriteList.add(5, ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
-                    "/player/Warrior/run/left/Warrior_Run_Left_6.png"), "Missing left sprite 5")));
-            moveLeftSpriteList.add(6, ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
-                    "/player/Warrior/run/left/Warrior_Run_Left_7.png"), "Missing left sprite 6")));
-            moveLeftSpriteList.add(7, ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
-                    "/player/Warrior/run/left/Warrior_Run_Left_8.png"), "Missing left sprite 7")));
-
-            idleRightSpriteList.add(0, ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
-                    "/player/Warrior/idle/right/Warrior_Idle_1.png"), "Missing idle right sprite 0")));
-            idleRightSpriteList.add(1, ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
-                    "/player/Warrior/idle/right/Warrior_Idle_2.png"), "Missing idle right sprite 1")));
-            idleRightSpriteList.add(2, ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
-                    "/player/Warrior/idle/right/Warrior_Idle_3.png"), "Missing idle right sprite 2")));
-            idleRightSpriteList.add(3, ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
-                    "/player/Warrior/idle/right/Warrior_Idle_4.png"), "Missing idle right sprite 3")));
-            idleRightSpriteList.add(4, ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
-                    "/player/Warrior/idle/right/Warrior_Idle_5.png"), "Missing idle right sprite 4")));
-            idleRightSpriteList.add(5, ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
-                    "/player/Warrior/idle/right/Warrior_Idle_6.png"), "Missing idle right sprite 5")));
-
-            idleLeftSpriteList.add(0, ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
-                    "/player/Warrior/idle/left/Warrior_Idle_1.png"), "Missing idle left sprite 0")));
-            idleLeftSpriteList.add(1, ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
-                    "/player/Warrior/idle/left/Warrior_Idle_2.png"), "Missing idle left sprite 1")));
-            idleLeftSpriteList.add(2, ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
-                    "/player/Warrior/idle/left/Warrior_Idle_3.png"), "Missing idle left sprite 2")));
-            idleLeftSpriteList.add(3, ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
-                    "/player/Warrior/idle/left/Warrior_Idle_4.png"), "Missing idle left sprite 3")));
-            idleLeftSpriteList.add(4, ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
-                    "/player/Warrior/idle/left/Warrior_Idle_5.png"), "Missing idle left sprite 4")));
-            idleLeftSpriteList.add(5, ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
-                    "/player/Warrior/idle/left/Warrior_Idle_6.png"), "Missing idle left sprite 5")));
-        } catch (IOException e) {
-            e.printStackTrace(System.out);
-        }
+    public void startAttack (){
+        weaponSpriteCounter++;
+        loopThroughWeaponSprites();
     }
+
     public void getPlayerAttackImage() {
+        String dir = "/Weapon/Sword/";
         try {
-            weaponSpriteList.add(0, UtilityTool.weaponSetup("/Weapon/Sword/sword_slash_1.png"));
-            weaponSpriteList.add(1, UtilityTool.weaponSetup("/Weapon/Sword/sword_slash_2.png"));
-            weaponSpriteList.add(2, UtilityTool.weaponSetup("/Weapon/Sword/sword_slash_3.png"));
-            weaponSpriteList.add(3, UtilityTool.weaponSetup("/Weapon/Sword/sword_slash_4.png"));
-            weaponSpriteList.add(4, UtilityTool.weaponSetup("/Weapon/Sword/sword_slash_5.png"));
-            weaponSpriteList.add(5, UtilityTool.weaponSetup("/Weapon/Sword/sword_slash_6.png"));
+            weaponList.add(0, UtilityTool.loadSprite(dir + "00.png", "Missing Attack 0"));
+            weaponList.add(1, UtilityTool.loadSprite(dir + "01.png", "Missing Attack 1"));
+            weaponList.add(2, UtilityTool.loadSprite(dir + "02.png", "Missing Attack 2"));
+            weaponList.add(3, UtilityTool.loadSprite(dir + "03.png", "Missing Attack 3"));
+            weaponList.add(4, UtilityTool.loadSprite(dir + "04.png", "Missing Attack 4"));
+            weaponList.add(5, UtilityTool.loadSprite(dir + "05.png", "Missing Attack 5"));
+
+            UtilityTool.scaleEffectsList(weaponList, 48, 48);
         } catch (IOException e){
             e.printStackTrace(System.out);
         }
     }
 
-    public void attacking(){
-        weaponSpriteCounter++;
-        loopThroughWeaponSprites();
+    public void getPlayerSprites() {
+        String dir = "/player/Warrior/";
+        try {
+            moveRightList.add(0, UtilityTool.loadSprite(dir + "run/right/00.png", "Missing Run Right 0"));
+            moveRightList.add(1, UtilityTool.loadSprite(dir + "run/right/01.png", "Missing Run Right 1"));
+            moveRightList.add(2, UtilityTool.loadSprite(dir + "run/right/02.png", "Missing Run Right 2"));
+            moveRightList.add(3, UtilityTool.loadSprite(dir + "run/right/03.png", "Missing Run Right 3"));
+            moveRightList.add(4, UtilityTool.loadSprite(dir + "run/right/04.png", "Missing Run Right 4"));
+            moveRightList.add(5, UtilityTool.loadSprite(dir + "run/right/05.png", "Missing Run Right 5"));
+            moveRightList.add(6, UtilityTool.loadSprite(dir + "run/right/06.png", "Missing Run Right 6"));
+            moveRightList.add(7, UtilityTool.loadSprite(dir + "run/right/07.png", "Missing Run Right 7"));
+
+            moveLeftList.add(0, UtilityTool.loadSprite(dir + "run/left/00.png", "Missing Run Left 0"));
+            moveLeftList.add(1, UtilityTool.loadSprite(dir + "run/left/01.png", "Missing Run Left 1"));
+            moveLeftList.add(2, UtilityTool.loadSprite(dir + "run/left/02.png", "Missing Run Left 2"));
+            moveLeftList.add(3, UtilityTool.loadSprite(dir + "run/left/03.png", "Missing Run Left 3"));
+            moveLeftList.add(4, UtilityTool.loadSprite(dir + "run/left/04.png", "Missing Run Left 4"));
+            moveLeftList.add(5, UtilityTool.loadSprite(dir + "run/left/05.png", "Missing Run Left 5"));
+            moveLeftList.add(6, UtilityTool.loadSprite(dir + "run/left/06.png", "Missing Run Left 6"));
+            moveLeftList.add(7, UtilityTool.loadSprite(dir + "run/left/07.png", "Missing Run Left 7"));
+
+            idleRightList.add(0, UtilityTool.loadSprite(dir + "idle/right/00.png", "Missing Idle Right 0"));
+            idleRightList.add(1, UtilityTool.loadSprite(dir + "idle/right/01.png", "Missing Idle Right 1"));
+            idleRightList.add(2, UtilityTool.loadSprite(dir + "idle/right/02.png", "Missing Idle Right 2"));
+            idleRightList.add(3, UtilityTool.loadSprite(dir + "idle/right/03.png", "Missing Idle Right 3"));
+            idleRightList.add(4, UtilityTool.loadSprite(dir + "idle/right/04.png", "Missing Idle Right 4"));
+            idleRightList.add(5, UtilityTool.loadSprite(dir + "idle/right/05.png", "Missing Idle Right 5"));
+
+            idleLeftList.add(0, UtilityTool.loadSprite(dir + "idle/left/00.png", "Missing Idle Left 0"));
+            idleLeftList.add(1, UtilityTool.loadSprite(dir + "idle/left/00.png", "Missing Idle Left 1"));
+            idleLeftList.add(2, UtilityTool.loadSprite(dir + "idle/left/00.png", "Missing Idle Left 2"));
+            idleLeftList.add(3, UtilityTool.loadSprite(dir + "idle/left/00.png", "Missing Idle Left 3"));
+            idleLeftList.add(4, UtilityTool.loadSprite(dir + "idle/left/00.png", "Missing Idle Left 4"));
+            idleLeftList.add(5, UtilityTool.loadSprite(dir + "idle/left/00.png", "Missing Idle Left 5"));
+        } catch (IOException e) {
+            e.printStackTrace(System.out);
+        }
     }
 }

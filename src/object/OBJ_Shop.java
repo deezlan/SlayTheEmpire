@@ -3,9 +3,7 @@ package object;
 import main.GamePanel;
 import main.UtilityTool;
 
-import javax.imageio.ImageIO;
 import java.io.IOException;
-import java.util.Objects;
 
 public class OBJ_Shop extends SuperObject {
     public OBJ_Shop(GamePanel gp) {
@@ -13,20 +11,9 @@ public class OBJ_Shop extends SuperObject {
         message = "Shop closed bitch";
 
         // Load shop sprites
-        try {
-            spriteList.add(0, ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
-                    "/objects/shop/0.png"), "Missing shop sprite 0")));
-            spriteList.add(1, ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
-                    "/objects/shop/1.png"), "Missing shop sprite 1")));
-            spriteList.add(2, ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
-                    "/objects/shop/2.png"), "Missing shop sprite 2")));
-            spriteList.add(3, ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
-                    "/objects/shop/3.png"), "Missing shop sprite 3")));
+        getObjectSprites(gp);
 
-            UtilityTool.scaleObjectList(this, spriteList, (int)(gp.TILE_SIZE*3.6), (int)(gp.TILE_SIZE*2.4));
-        } catch (IOException e) {
-            e.printStackTrace(System.out);
-        }
+        // Set shop collision settings
         solidArea.x = 20;
         solidArea.y = 0;
         solidArea.width = 172;
@@ -34,5 +21,21 @@ public class OBJ_Shop extends SuperObject {
         solidAreaDefaultX = solidArea.x;
         solidAreaDefaultY = solidArea.y;
         collision = true;
+
+        System.out.println(interactList.size());
+    }
+
+    public void getObjectSprites(GamePanel gp) {
+        String dir = "/objects/shop/";
+        try {
+            defaultList.add(0, UtilityTool.loadSprite(dir + "00.png", "Missing Shop 0"));
+            defaultList.add(1, UtilityTool.loadSprite(dir + "01.png", "Missing Shop 1"));
+            defaultList.add(2, UtilityTool.loadSprite(dir + "02.png", "Missing Shop 2"));
+            defaultList.add(3, UtilityTool.loadSprite(dir + "03.png", "Missing Shop 3"));
+
+            UtilityTool.scaleObjectList(defaultList, (int)(gp.TILE_SIZE*3.6), (int)(gp.TILE_SIZE*2.4));
+        } catch (IOException e) {
+            e.printStackTrace(System.out);
+        }
     }
 }

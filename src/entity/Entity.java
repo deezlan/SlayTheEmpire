@@ -14,24 +14,24 @@ public class Entity {
     public int speed;
     boolean attacking = false;
     public ArrayList<BufferedImage>
-            currentSpriteList = new ArrayList<>(),
-            idleRightSpriteList = new ArrayList<>(),
-            idleLeftSpriteList = new ArrayList<>(),
-            moveRightSpriteList = new ArrayList<>(),
-            moveLeftSpriteList = new ArrayList<>(),
-            weaponSpriteList = new ArrayList<>();
-//            scaledList = new ArrayList<>();
+            currentActionList = new ArrayList<>(),
+            idleRightList = new ArrayList<>(),
+            idleLeftList = new ArrayList<>(),
+            moveRightList = new ArrayList<>(),
+            moveLeftList = new ArrayList<>(),
+            weaponList = new ArrayList<>();
     public String action;
     public boolean lookingRight;
-    public int spriteCounter = 0;
-    public int spriteNum = 1;
+
     public boolean iframe = false;
     public int iframeCounter = 0;
     public int type; // 0 = player 1 = monster
 
-
+    public int spriteCounter = 0;
+    public int spriteNum = 1;
     public int weaponSpriteCounter = 0;
     public int weaponSpriteNum = 1;
+
     public int interactionCounter = 0;
     String[] dialogs = new String[20];
     public void speak() {
@@ -62,7 +62,7 @@ public class Entity {
     public int solidAreaDefaultX, solidAreaDefaultY;
 
     public void loopThroughSprites() {
-        spriteNum = (spriteNum < currentSpriteList.size()) ? spriteNum + 1 : 1;
+        spriteNum = (spriteNum < currentActionList.size()) ? spriteNum + 1 : 1;
         spriteCounter = 0;
     }
 
@@ -80,7 +80,7 @@ public class Entity {
         } else if (weaponSpriteCounter <= 30) {
             weaponSpriteNum = 5;
         } else if (weaponSpriteCounter <= 35) {
-            weaponSpriteNum = 1;
+            weaponSpriteNum = 0;
             weaponSpriteCounter = 0;
             attacking = false;
         }
@@ -138,7 +138,7 @@ public class Entity {
             }
         }
         spriteCounter++;
-        if (this.currentSpriteList.size() > 7) {
+        if (this.currentActionList.size() > 7) {
             if (spriteCounter > 5) loopThroughSprites();
         } else {
             if (spriteCounter > 9) loopThroughSprites();
@@ -146,7 +146,7 @@ public class Entity {
     }
 
     public void draw(Graphics2D g2) {
-        BufferedImage image = currentSpriteList.get(spriteNum - 1);
+        BufferedImage image = currentActionList.get(spriteNum - 1);
 
         switch (gp.gameArea) {
             case 0:

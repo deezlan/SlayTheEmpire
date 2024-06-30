@@ -6,6 +6,7 @@ import entity.NPCMystery;
 import entity.NPCBlacksmith;
 import mobs.MOBSlime;
 import object.OBJ_DialogueBubble;
+import object.OBJ_Obelisk;
 import object.OBJ_SavePedestal;
 import object.OBJ_Shop;
 
@@ -50,7 +51,7 @@ public class AssetSetter {
 
                 gp.objArr[1] = new OBJ_SavePedestal();
                 gp.objArr[1].worldX = 272;
-                gp.objArr[1].worldY = 446;
+                gp.objArr[1].worldY = 446 + gp.TILE_SIZE;
 
                 gp.objArr[3] = new OBJ_DialogueBubble(); // Maiden chat bubble
                 gp.objArr[3].worldX = 410;
@@ -58,7 +59,7 @@ public class AssetSetter {
 
                 gp.objArr[4] = new OBJ_DialogueBubble(); // Blacksmith chat bubble
                 gp.objArr[4].worldX = 230;
-                gp.objArr[4].worldY = 50;
+                gp.objArr[4].worldY = 70;
 
                 gp.objArr[5] = new OBJ_DialogueBubble(); // Merchant chat bubble
                 gp.objArr[5].worldX = 600;
@@ -67,6 +68,10 @@ public class AssetSetter {
                 gp.objArr[6] = new OBJ_DialogueBubble(); // Mystery chat bubble
                 gp.objArr[6].worldX = 490;
                 gp.objArr[6].worldY = 400;
+
+                gp.objArr[7] = new OBJ_Obelisk(); // Mystery chat bubble
+                gp.objArr[7].worldX = 200;
+                gp.objArr[7].worldY = 300;
                 break;
             default:
                 gp.objArr[0] = new OBJ_Shop(gp);
@@ -173,10 +178,10 @@ public class AssetSetter {
                 gp.mobArr[0].worldY = 200;
                 break;
             case 1:
-                gp.mobArr[0] = new MOBSlime(gp);
-                gp.mobArr[0].worldX = 270;
-                gp.mobArr[0].worldY = 270;
-                break;
+//                gp.mobArr[0] = new MOBSlime(gp);
+//                gp.mobArr[0].worldX = 270;
+//                gp.mobArr[0].worldY = 270;
+//                break;
             default:
                 gp.mobArr[0] = new MOBSlime(gp);
                 gp.mobArr[0].worldX = 200;

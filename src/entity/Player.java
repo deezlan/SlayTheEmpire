@@ -255,6 +255,7 @@ public class Player extends Entity {
             e.printStackTrace(System.out);
         }
     }
+
     public void getPlayerAttackImage() {
         try {
             weaponSpriteList.add(0, UtilityTool.weaponSetup("/Weapon/Sword/sword_slash_1.png"));

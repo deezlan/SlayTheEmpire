@@ -49,7 +49,9 @@ public class GamePanel extends JPanel implements Runnable {
     public Entity[] npcArr = new Entity[10];
     public Projectile[] projectileArr = new Projectile[10];
     public CollisionChecker cChecker = new CollisionChecker(this);
+    public Projectile projectile = new Projectile(this);
     public UI ui = new UI(this);
+
 
     // Game States
     public int gameState;
@@ -152,6 +154,11 @@ public class GamePanel extends JPanel implements Runnable {
             for (Entity npc : npcArr) {
                 if (npc != null) npc.update();
             }
+
+            if (projectile != null) {
+                projectile.update();
+            }
+
         }
 
 //        if (gameState == pauseState) {
@@ -210,6 +217,11 @@ public class GamePanel extends JPanel implements Runnable {
 
             ui.draw(g2);
 
+            if (projectile != null) {
+                System.out.println("new");
+                projectile.draw(g2);
+            }
+
         } else if (gameState == dialogueState){
             tileM.draw(g2); // Draw tiles
 
@@ -221,6 +233,9 @@ public class GamePanel extends JPanel implements Runnable {
             for (Entity entity : npcArr)
                 if (entity != null) entity.draw(g2);
 
+            if (projectile != null) {
+                projectile.draw(g2);
+            }
             ui.draw(g2);
         } else if (gameState == pauseState) {
             tileM.draw(g2); // Draw tiles
@@ -232,6 +247,7 @@ public class GamePanel extends JPanel implements Runnable {
 
             for (Entity entity : npcArr)
                 if (entity != null) entity.draw(g2);
+
 
             ui.draw(g2);
         } else{

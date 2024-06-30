@@ -1,8 +1,8 @@
 package entity;
 
 import main.GamePanel;
-import java.awt.Graphics2D;
-import java.awt.Rectangle;
+
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
@@ -12,6 +12,7 @@ public class Entity {
     public int worldX, worldY;
     public int speed;
     boolean attacking = false;
+    public Projectile projectile;
     public ArrayList<BufferedImage>
             currentSpriteList = new ArrayList<>(),
             idleRightSpriteList = new ArrayList<>(),
@@ -79,6 +80,12 @@ public class Entity {
         }
         gp.cChecker.checkObject(this,false);
         gp.cChecker.checkPLayer(this);
+
+        if(projectile == null){
+            projectile = new Projectile(gp);
+        }
+        projectile.update();
+
     }
 
     public void draw(Graphics2D g2) {
@@ -102,12 +109,9 @@ public class Entity {
                     g2.drawImage(image, screenX, screenY, null);
                 }
         }
+
     }
 
-    public boolean collisionOn = false; // set collision to false
-
-    public Projectile projectile;
     public String name;
     public int attack;
-    public String direction;
 }

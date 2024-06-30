@@ -1,13 +1,17 @@
 package main;
 
+import entity.Cursor;
 import entity.NPCMaiden;
-import entity.Projectile;
 //import object.OBJ_Gun_SnowBallCannon;
+//import object.OBJ_Gun_SnowBallCannon;
+import entity.Projectile;
+import object.OBJ_Gun_SnowBallCannon;
 import object.OBJ_SavePedestal;
 import object.OBJ_Shop;
 
 public class AssetSetter {
     GamePanel gp;
+
 //    MouseHandler mouseH;
 
     public AssetSetter(GamePanel gp) {
@@ -23,11 +27,11 @@ public class AssetSetter {
         gp.objArr[1].worldX = 50;
         gp.objArr[1].worldY = 50;
 
-        if (gp.mouseH.leftClick) {
-            gp.projectileArr[0] = new Projectile(gp);
-            gp.projectileArr[0].worldX = 400;
-            gp.projectileArr[0].worldY = 300;
-        }
+
+        gp.projectileArr[0] = new OBJ_Gun_SnowBallCannon(gp);
+        gp.projectileArr[0].worldX = gp.projectile.proX;
+        gp.projectileArr[0].worldY = gp.projectile.proY;
+
     }
 
     public void setNPC() {

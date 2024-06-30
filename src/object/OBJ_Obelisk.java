@@ -12,10 +12,10 @@ public class OBJ_Obelisk extends SuperObject {
         getObjectSprites();
 
         // Set collision settings
-        solidArea.x = 0;
-        solidArea.y = 50;
-        solidArea.width = 24;
-        solidArea.height = 60;
+        solidArea.x = 48;
+        solidArea.y = 160;
+        solidArea.width = 20;
+        solidArea.height = 30;
         solidAreaDefaultX = solidArea.x;
         solidAreaDefaultY = solidArea.y;
         collision = true;
@@ -38,7 +38,7 @@ public class OBJ_Obelisk extends SuperObject {
             defaultList.add(11, UtilityTool.loadSprite(dir + "idle/11.png", "Missing Idle 11"));
             defaultList.add(12, UtilityTool.loadSprite(dir + "idle/12.png", "Missing Idle 12"));
             defaultList.add(13, UtilityTool.loadSprite(dir + "idle/13.png", "Missing Idle 13"));
-            UtilityTool.scaleObjectList(defaultList, 32, 96);
+            UtilityTool.scaleObjectList(defaultList, (int)(36*3.3), 36*4 + 70);
 
             interactList.add(0, UtilityTool.loadSprite(dir + "interact/00.png", "Missing Interact 0"));
             interactList.add(1, UtilityTool.loadSprite(dir + "interact/01.png", "Missing Interact 1"));
@@ -54,7 +54,7 @@ public class OBJ_Obelisk extends SuperObject {
             interactList.add(11, UtilityTool.loadSprite(dir + "interact/11.png", "Missing Interact 11"));
             interactList.add(12, UtilityTool.loadSprite(dir + "interact/12.png", "Missing Interact 12"));
             interactList.add(13, UtilityTool.loadSprite(dir + "interact/13.png", "Missing Interact 13"));
-            UtilityTool.scaleObjectList(interactList, 32, 96);
+            UtilityTool.scaleObjectList(interactList, (int)(36*3.3), 36*4 + 70);
         } catch (IOException e) {
             e.printStackTrace(System.out);
         }

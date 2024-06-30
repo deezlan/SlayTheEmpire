@@ -21,6 +21,8 @@ public class OBJ_Shop extends SuperObject {
         solidAreaDefaultX = solidArea.x;
         solidAreaDefaultY = solidArea.y;
         collision = true;
+
+        System.out.println(interactList.size());
     }
 
     public void getObjectSprites(GamePanel gp) {

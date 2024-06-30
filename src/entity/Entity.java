@@ -22,15 +22,16 @@ public class Entity {
             weaponList = new ArrayList<>();
     public String action;
     public boolean lookingRight;
-    public int spriteCounter = 0;
-    public int spriteNum = 1;
+
     public boolean iframe = false;
     public int iframeCounter = 0;
     public int type; // 0 = player 1 = monster
 
-
+    public int spriteCounter = 0;
+    public int spriteNum = 1;
     public int weaponSpriteCounter = 0;
     public int weaponSpriteNum = 1;
+
     public int interactionCounter = 0;
     String[] dialogs = new String[20];
     public void speak() {
@@ -79,7 +80,7 @@ public class Entity {
         } else if (weaponSpriteCounter <= 30) {
             weaponSpriteNum = 5;
         } else if (weaponSpriteCounter <= 35) {
-            weaponSpriteNum = 1;
+            weaponSpriteNum = 0;
             weaponSpriteCounter = 0;
             attacking = false;
         }

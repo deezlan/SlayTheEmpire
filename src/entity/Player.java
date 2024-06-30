@@ -56,7 +56,7 @@ public class Player extends Entity {
     }
 
     public void update() {
-        if (attacking) attacking();
+        if (attacking) startAttack ();
 
         if ((keyH.wPressed && keyH.sPressed) || (keyH.aPressed && keyH.dPressed)) {
             action = "stuckOppositeDirection";
@@ -147,12 +147,12 @@ public class Player extends Entity {
         }
     }
 
-
-
     public void interactObject (int index) {
         if (index != 999) {
 //            gp.objArray[index] = null;
             System.out.println(gp.objArr[index].message);
+            if (!gp.objArr[index].interactList.isEmpty())
+                gp.objArr[index].interacting = true;
         }
     }
 
@@ -180,10 +180,14 @@ public class Player extends Entity {
     }
 
     public void draw(Graphics2D g2) {
-        if (spriteNum > currentActionList.size() - 1) spriteNum = 1;
+        if (spriteNum > currentActionList.size() - 1)
+            spriteNum = 1;
         BufferedImage image = currentActionList.get(spriteNum - 1);
-        if (weaponSpriteNum > weaponList.size()) weaponSpriteNum = 1;
+
+        if (weaponSpriteNum > weaponList.size())
+            weaponSpriteNum = 1;
         BufferedImage weaponImage = weaponList.get(weaponSpriteNum);
+
         if (gp.gameArea == 0) {
             g2.drawImage(image, worldX, worldY, null);
 
@@ -204,6 +208,27 @@ public class Player extends Entity {
             if (attacking){
                 g2.drawImage(weaponImage, screenX + 40, screenY, gp.TILE_SIZE*3, gp.TILE_SIZE*2, null);
             }
+        }
+    }
+
+    public void startAttack (){
+        weaponSpriteCounter++;
+        loopThroughWeaponSprites();
+    }
+
+    public void getPlayerAttackImage() {
+        String dir = "/Weapon/Sword/";
+        try {
+            weaponList.add(0, UtilityTool.loadSprite(dir + "00.png", "Missing Attack 0"));
+            weaponList.add(1, UtilityTool.loadSprite(dir + "01.png", "Missing Attack 1"));
+            weaponList.add(2, UtilityTool.loadSprite(dir + "02.png", "Missing Attack 2"));
+            weaponList.add(3, UtilityTool.loadSprite(dir + "03.png", "Missing Attack 3"));
+            weaponList.add(4, UtilityTool.loadSprite(dir + "04.png", "Missing Attack 4"));
+            weaponList.add(5, UtilityTool.loadSprite(dir + "05.png", "Missing Attack 5"));
+
+            UtilityTool.scaleEffectsList(weaponList, 48, 48);
+        } catch (IOException e){
+            e.printStackTrace(System.out);
         }
     }
 
@@ -244,26 +269,5 @@ public class Player extends Entity {
         } catch (IOException e) {
             e.printStackTrace(System.out);
         }
-    }
-
-    public void getPlayerAttackImage() {
-        String dir = "/Weapon/Sword/";
-        try {
-            weaponList.add(0, UtilityTool.loadSprite(dir + "00.png", "Missing Attack 0"));
-            weaponList.add(1, UtilityTool.loadSprite(dir + "01.png", "Missing Attack 1"));
-            weaponList.add(2, UtilityTool.loadSprite(dir + "02.png", "Missing Attack 2"));
-            weaponList.add(3, UtilityTool.loadSprite(dir + "03.png", "Missing Attack 3"));
-            weaponList.add(4, UtilityTool.loadSprite(dir + "04.png", "Missing Attack 4"));
-            weaponList.add(5, UtilityTool.loadSprite(dir + "05.png", "Missing Attack 5"));
-
-            UtilityTool.scaleEffectsList(weaponList, 48, 48);
-        } catch (IOException e){
-            e.printStackTrace(System.out);
-        }
-    }
-
-    public void attacking(){
-        weaponSpriteCounter++;
-        loopThroughWeaponSprites();
     }
 }

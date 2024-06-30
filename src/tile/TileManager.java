@@ -24,10 +24,10 @@ public class TileManager {
 
         switch (gp.gameArea) {
             case 0:
-                loadMap("/tiles/lobby/test.txt");
+                loadMap("/mapTextFiles/test.txt");
                 break;
             case 1:
-                loadMap("/tiles/lobby/map.txt");
+                loadMap("/mapTextFiles/map.txt");
             default:
 //                loadMap("/tiles/lobby/map.txt");
         }

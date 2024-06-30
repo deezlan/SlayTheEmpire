@@ -10,23 +10,28 @@ import java.io.IOException;
 //import java.util.ArrayList; temp
 
 public class Player extends Entity {
+    GamePanel gp;
     KeyHandler keyH;
-
+    private final Cursor cursor;
+    public SwordSlash slash;
     public final int screenX;
     public final int screenY;
+
 //    public ArrayList<Entity> inventory = new ArrayList<>(); temp commented
 //    public final int inventorySize = 8; temp commented
 
-    public Player (GamePanel gp, KeyHandler keyH) {
+    public Player (GamePanel gp, KeyHandler keyH, Cursor cursor) {
         super(gp);
         this.gp = gp;
         this.keyH = keyH;
         screenX = gp.SCREEN_WIDTH/2 - (gp.TILE_SIZE/2); // added screen position
         screenY = gp.SCREEN_HEIGHT/2 - (gp.TILE_SIZE/2);
 
+        this.cursor = cursor;
         setDefaultValues();
         getPlayerSprites();
         getPlayerAttackImage();
+
         setItems();
 
         solidArea = new Rectangle(); // draws a square at the centre of the player
@@ -36,7 +41,12 @@ public class Player extends Entity {
         solidAreaDefaultY = solidArea.y;
         solidArea.width = 50; // outer area of collision square
         solidArea.height = 35;
+
+        SwordSlash slash1 = new SwordSlash(gp);
+        slash = slash1;
     }
+
+
 
     public void setDefaultValues() {
         worldX = 340; // Player spawn location x
@@ -142,6 +152,7 @@ public class Player extends Entity {
         if (spriteCounter > 5) {
             loopThroughSprites();
         }
+        cursor.calculateAngle((int) (worldX + gp.TILE_SIZE * 1.5), worldY + gp.TILE_SIZE);
     }
 
     public void interactObject (int index) {
@@ -182,7 +193,7 @@ public class Player extends Entity {
         BufferedImage image = currentActionList.get(spriteNum - 1);
 
         if (weaponSpriteNum > weaponList.size())
-            weaponSpriteNum = 1;
+            weaponSpriteNum = 0;
         BufferedImage weaponImage = weaponList.get(weaponSpriteNum);
 
         if (gp.gameArea == 0) {
@@ -203,9 +214,10 @@ public class Player extends Entity {
         } else {
             g2.drawImage(image, screenX, screenY, gp.TILE_SIZE*3, gp.TILE_SIZE*2, null);
             if (attacking){
-                g2.drawImage(weaponImage, screenX + 40, screenY, gp.TILE_SIZE*3, gp.TILE_SIZE*2, null);
             }
         }
+        // draw arrow
+        cursor.draw(g2, (int) (worldX + gp.TILE_SIZE * 1.5), worldY + gp.TILE_SIZE);
     }
 
     public void startAttack (){
@@ -271,4 +283,6 @@ public class Player extends Entity {
             e.printStackTrace(System.out);
         }
     }
+
+
 }

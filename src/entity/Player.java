@@ -43,7 +43,6 @@ public class Player extends Entity {
         worldY = 60; // player spawn location y
         speed = 3;
         action = "idleRight";
-        currentActionList = idleRightList;
         lookingRight = true;
 
         //Status
@@ -63,14 +62,12 @@ public class Player extends Entity {
             currentActionList = lookingRight ? idleRightList : idleLeftList;
         }
 
-
         if (keyH.wPressed && keyH.sPressed && keyH.aPressed) { action = "moveLeft"; }
         if (keyH.wPressed && keyH.sPressed && keyH.dPressed) { action = "moveRight"; }
         if (keyH.aPressed && keyH.dPressed && keyH.wPressed) { action = "moveUp"; }
         if (keyH.aPressed && keyH.dPressed && keyH.sPressed) { action = "moveDown"; }
 
         if ((keyH.wPressed || keyH.sPressed || keyH.aPressed || keyH.dPressed) && !action.equals("stuckOppositeDirection")) {
-
             if (keyH.wPressed) { action = "moveUp"; }
             if (keyH.sPressed) { action = "moveDown"; }
             if (keyH.aPressed) { action = "moveLeft";}
@@ -192,16 +189,16 @@ public class Player extends Entity {
             g2.drawImage(image, worldX, worldY, null);
 
             if (attacking){
-                g2.drawImage(weaponImage, worldX + 40, worldY, gp.TILE_SIZE*3, gp.TILE_SIZE*2, null);
+                g2.drawImage(weaponImage, worldX + 40, worldY, null);
             }
         } else if (gp.gameArea == 1){
             if(iframe){
                 g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.3f));
             }
-            g2.drawImage(image, worldX, worldY, gp.TILE_SIZE*3, gp.TILE_SIZE*2, null);
+            g2.drawImage(image, worldX, worldY, null);
             g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
             if (attacking){
-                g2.drawImage(weaponImage, worldX + 40, worldY, gp.TILE_SIZE*3, gp.TILE_SIZE*2, null);
+                g2.drawImage(weaponImage, worldX + 40, worldY, null);
             }
         } else {
             g2.drawImage(image, screenX, screenY, gp.TILE_SIZE*3, gp.TILE_SIZE*2, null);
@@ -226,7 +223,7 @@ public class Player extends Entity {
             weaponList.add(4, UtilityTool.loadSprite(dir + "04.png", "Missing Attack 4"));
             weaponList.add(5, UtilityTool.loadSprite(dir + "05.png", "Missing Attack 5"));
 
-            UtilityTool.scaleEffectsList(weaponList, 48, 48);
+            UtilityTool.scaleEffectsList(weaponList, 144, 96);
         } catch (IOException e){
             e.printStackTrace(System.out);
         }
@@ -243,6 +240,7 @@ public class Player extends Entity {
             moveRightList.add(5, UtilityTool.loadSprite(dir + "run/right/05.png", "Missing Run Right 5"));
             moveRightList.add(6, UtilityTool.loadSprite(dir + "run/right/06.png", "Missing Run Right 6"));
             moveRightList.add(7, UtilityTool.loadSprite(dir + "run/right/07.png", "Missing Run Right 7"));
+            UtilityTool.scaleEntityList(this, moveRightList, 144, 96);
 
             moveLeftList.add(0, UtilityTool.loadSprite(dir + "run/left/00.png", "Missing Run Left 0"));
             moveLeftList.add(1, UtilityTool.loadSprite(dir + "run/left/01.png", "Missing Run Left 1"));
@@ -252,6 +250,7 @@ public class Player extends Entity {
             moveLeftList.add(5, UtilityTool.loadSprite(dir + "run/left/05.png", "Missing Run Left 5"));
             moveLeftList.add(6, UtilityTool.loadSprite(dir + "run/left/06.png", "Missing Run Left 6"));
             moveLeftList.add(7, UtilityTool.loadSprite(dir + "run/left/07.png", "Missing Run Left 7"));
+            UtilityTool.scaleEntityList(this, moveLeftList, 144, 96);
 
             idleRightList.add(0, UtilityTool.loadSprite(dir + "idle/right/00.png", "Missing Idle Right 0"));
             idleRightList.add(1, UtilityTool.loadSprite(dir + "idle/right/01.png", "Missing Idle Right 1"));
@@ -259,13 +258,15 @@ public class Player extends Entity {
             idleRightList.add(3, UtilityTool.loadSprite(dir + "idle/right/03.png", "Missing Idle Right 3"));
             idleRightList.add(4, UtilityTool.loadSprite(dir + "idle/right/04.png", "Missing Idle Right 4"));
             idleRightList.add(5, UtilityTool.loadSprite(dir + "idle/right/05.png", "Missing Idle Right 5"));
+            UtilityTool.scaleEntityList(this, idleRightList, 144, 96);
 
             idleLeftList.add(0, UtilityTool.loadSprite(dir + "idle/left/00.png", "Missing Idle Left 0"));
-            idleLeftList.add(1, UtilityTool.loadSprite(dir + "idle/left/00.png", "Missing Idle Left 1"));
-            idleLeftList.add(2, UtilityTool.loadSprite(dir + "idle/left/00.png", "Missing Idle Left 2"));
-            idleLeftList.add(3, UtilityTool.loadSprite(dir + "idle/left/00.png", "Missing Idle Left 3"));
-            idleLeftList.add(4, UtilityTool.loadSprite(dir + "idle/left/00.png", "Missing Idle Left 4"));
-            idleLeftList.add(5, UtilityTool.loadSprite(dir + "idle/left/00.png", "Missing Idle Left 5"));
+            idleLeftList.add(1, UtilityTool.loadSprite(dir + "idle/left/01.png", "Missing Idle Left 1"));
+            idleLeftList.add(2, UtilityTool.loadSprite(dir + "idle/left/02.png", "Missing Idle Left 2"));
+            idleLeftList.add(3, UtilityTool.loadSprite(dir + "idle/left/03.png", "Missing Idle Left 3"));
+            idleLeftList.add(4, UtilityTool.loadSprite(dir + "idle/left/04.png", "Missing Idle Left 4"));
+            idleLeftList.add(5, UtilityTool.loadSprite(dir + "idle/left/05.png", "Missing Idle Left 5"));
+            UtilityTool.scaleEntityList(this, idleLeftList, 144, 96);
         } catch (IOException e) {
             e.printStackTrace(System.out);
         }

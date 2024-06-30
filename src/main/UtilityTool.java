@@ -37,10 +37,6 @@ public class UtilityTool {
             BufferedImage scaledSprite = scaleImage(original, width, height);
             spriteList.add(scaledSprite);
         }
-//        for (BufferedImage original : spriteList) {
-//            BufferedImage scaledSprite = scaleImage(original, width, height);
-//            spriteList.add(scaledSprite);
-//        }
     }
 
     public static void scaleEntityList (Entity entity, ArrayList<BufferedImage> spriteList, int width, int height) {

@@ -4,7 +4,7 @@ import entity.NPC_Maiden;
 import entity.NPC_Merchant;
 import entity.NPC_Mystery;
 import entity.NPC_Blacksmith;
-import mobs.MOBSlime;
+import mobs.MOB_Slime;
 import object.OBJ_DialogueBubble;
 import object.OBJ_Obelisk;
 import object.OBJ_SavePedestal;
@@ -173,17 +173,17 @@ public class AssetSetter {
     public void setMonster() {
         switch(gp.gameArea) {
             case 0:
-                gp.mobArr[0] = new MOBSlime(gp);
+                gp.mobArr[0] = new MOB_Slime(gp);
                 gp.mobArr[0].worldX = 200;
                 gp.mobArr[0].worldY = 200;
                 break;
             case 1:
-//                gp.mobArr[0] = new MOBSlime(gp);
+//                gp.mobArr[0] = new MOB_Slime(gp);
 //                gp.mobArr[0].worldX = 270;
 //                gp.mobArr[0].worldY = 270;
 //                break;
             default:
-                gp.mobArr[0] = new MOBSlime(gp);
+                gp.mobArr[0] = new MOB_Slime(gp);
                 gp.mobArr[0].worldX = 200;
                 gp.mobArr[0].worldY = 200;
                 break;

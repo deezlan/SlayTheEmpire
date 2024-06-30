@@ -81,10 +81,9 @@ public class Entity {
         gp.cChecker.checkObject(this,false);
         gp.cChecker.checkPLayer(this);
 
-        if(projectile == null){
-            projectile = new Projectile(gp);
-        }
-        projectile.update();
+//        if(projectile == null){
+//            projectile = new Projectile(gp);
+//        }
 
     }
 
@@ -109,7 +108,6 @@ public class Entity {
                     g2.drawImage(image, screenX, screenY, null);
                 }
         }
-
     }
 
     public String name;

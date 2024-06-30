@@ -3,8 +3,6 @@ package object;
 import entity.Projectile;
 import main.GamePanel;
 
-import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Objects;
 import javax.imageio.ImageIO;
@@ -13,6 +11,7 @@ public class OBJ_Gun_SnowBallCannon extends Projectile{
     GamePanel gp;
     public OBJ_Gun_SnowBallCannon(GamePanel gp) {
         super(gp);
+        this.gp = gp;
         speed = 5;
         attack = 2;
         loadImages();
@@ -44,8 +43,8 @@ public class OBJ_Gun_SnowBallCannon extends Projectile{
     }
 
 //    NOT USED YET
-//    public void update(){
-//    }
+    public void update(){
+    }
 
 
 }

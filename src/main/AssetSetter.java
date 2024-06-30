@@ -1,10 +1,6 @@
 package main;
 
-import entity.Cursor;
 import entity.NPCMaiden;
-//import object.OBJ_Gun_SnowBallCannon;
-//import object.OBJ_Gun_SnowBallCannon;
-import entity.Projectile;
 import object.OBJ_Gun_SnowBallCannon;
 import object.OBJ_SavePedestal;
 import object.OBJ_Shop;

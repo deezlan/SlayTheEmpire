@@ -17,8 +17,9 @@ public class Projectile extends Entity {
     private Graphics2D g2;
     public int proX = 100;
     public int proY = 100;
-    public int proSpeed = 5;
+    public int proSpeed = 1;
     public int proNum = 1;
+    public int proCounter;
 
     public Projectile(GamePanel gp) {
         super(gp);
@@ -26,7 +27,9 @@ public class Projectile extends Entity {
         selectedProjectile = 0;
         projectileSelect(selectedProjectile);
 
-        set(proX, proY, user);
+        snc = new OBJ_Gun_SnowBallCannon(gp);
+
+//        set(proX, proY, user);
     }
 
     public void projectileSelect (int selectedProjectile){
@@ -38,11 +41,13 @@ public class Projectile extends Entity {
     }
 
     public void update(){
+        loopThroughPro();
+        proCounter++;
         switch(selectedProjectile){
             case 0:
-                if (snc == null){
-                    snc = new OBJ_Gun_SnowBallCannon(gp);
-                }
+//                if (snc == null){
+//                    snc = new OBJ_Gun_SnowBallCannon(gp);
+//                }
                 snc.update();
                 proX -= proSpeed;
                 System.out.println("proY is now: " + proX);
@@ -52,10 +57,10 @@ public class Projectile extends Entity {
     }
 
     public void draw(Graphics2D g2) {
-        if (snc == null) {
-            snc = new OBJ_Gun_SnowBallCannon(gp);
-
-        }
+//        if (snc == null) {
+//            snc = new OBJ_Gun_SnowBallCannon(gp);
+//
+//        }
         if (proNum > 0 && proNum <= snc.spriteList.size()) {
             BufferedImage projectiles = snc.spriteList.get(proNum - 1);
             g2.drawImage(projectiles, proX, proY, null);
@@ -67,11 +72,23 @@ public class Projectile extends Entity {
     }
 
 
+//    public void set(int worldX, int worldY, Entity user){
+//        this.worldX = worldX;
+//        this.worldY = worldY;
+//        this.user = user;
+//    }
 
-    public void set(int worldX, int worldY, Entity user){
-        this.worldX = worldX;
-        this.worldY = worldY;
-        this.user = user;
+    public int getPlayerX (){
+        return gp.player.worldX;
+    }
+
+    public int getPlayerY(){
+        return gp.player.worldY;
+    }
+
+    public void loopThroughPro(){
+        proNum = (proNum < snc.spriteList.size()) ? proNum + 1 : 1;
+        proCounter = 0;
     }
 
 }

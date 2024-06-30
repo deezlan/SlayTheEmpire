@@ -9,21 +9,19 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 public class SwordSlash extends Entity{
-
     public SwordSlash(GamePanel gp) {
         super(gp);
         this.gp = gp;
         getAttackImage();
 
         solidArea = new Rectangle(); // draws a square at the centre of the player
-        solidArea.x = 0; // position of actual collision square
-        solidArea.y = 0;
-        solidAreaDefaultX = solidArea.x;
-        solidAreaDefaultY = solidArea.y;
-        solidArea.width = 100; // outer area of collision square
-        solidArea.height = 100;
-
+        solidArea.x = -28;
+        solidArea.y = -35;
+        solidArea.width = 50; // outer area of collision square
+        solidArea.height = 90;
         action = "moveUp";
+
+        speed = 0;
     }
 
     public void draw (Graphics2D g2, String direction){
@@ -32,48 +30,41 @@ public class SwordSlash extends Entity{
         if (weaponSpriteNum > weaponSpriteList.size()) weaponSpriteNum =1;
         BufferedImage weaponImage = weaponSpriteList.get(weaponSpriteNum);
         g2.translate(gp.player.worldX+60, gp.player.worldY + gp.TILE_SIZE + 10);
-
         g2.rotate(gp.cursor.getAngle());
+
 
         if (gp.gameArea == 1) {
             g2.drawImage(weaponImage, 0, -gp.TILE_SIZE, gp.TILE_SIZE*3, gp.TILE_SIZE*2, null);
-            g2.draw(solidArea);
         } else if (gp.gameState == 1){
             g2.drawImage(weaponImage, 0, -gp.TILE_SIZE, gp.TILE_SIZE*3, gp.TILE_SIZE*2, null);
         }
 
         g2.setTransform(old);
+        g2.draw(solidArea);
     }
 
 
-    public void attacking(int index){
-        double offsetX = 50; // This is the horizontal offset
-        double offsetY = 30; // This is the vertical offset
+    public void attacking(){
 
-        double rotatedOffsetX = offsetX * Math.sin(gp.cursor.getAngle()) - offsetY * Math.cos(gp.cursor.getAngle());
-        double rotatedOffsetY = offsetX * Math.sin(gp.cursor.getAngle()) + offsetY * Math.cos(gp.cursor.getAngle());
-
-        worldX = gp.player.worldX + (int) rotatedOffsetX;
-        worldY = gp.player.worldY + (int) rotatedOffsetY;
         weaponSpriteCounter++;
         if (weaponSpriteCounter <= 5){
             weaponSpriteNum = 0;
-            damageMonster(index);
+            checkHit();
         } else if (weaponSpriteCounter <= 10) {
             weaponSpriteNum = 1;
-            damageMonster(index);
+            checkHit();
         } else if (weaponSpriteCounter <= 15) {
             weaponSpriteNum = 2;
-            damageMonster(index);
+            checkHit();
         } else if (weaponSpriteCounter <= 20) {
             weaponSpriteNum = 3;
-            damageMonster(index);
+            checkHit();
         } else if (weaponSpriteCounter <= 25) {
             weaponSpriteNum = 4;
-            damageMonster(index);
+            checkHit();
         } else if (weaponSpriteCounter <= 30) {
             weaponSpriteNum = 5;
-            damageMonster(index);
+            checkHit();
         } else if (weaponSpriteCounter <= 35) {
             weaponSpriteNum = 1;
             weaponSpriteCounter = 0;
@@ -82,9 +73,18 @@ public class SwordSlash extends Entity{
 
     }
 
+    public void checkHit(){
+        worldX = gp.player.worldX;
+        worldY = gp.player.worldY;
+        int wepIndex = gp.cChecker.checkEntityCollision(this, gp.npcArr);
+        System.out.println(worldX);
+        System.out.println(worldY);
+        damageMonster(wepIndex);
+    }
+
     public void damageMonster(int index){
         if (index != 999){
-            System.out.println("Hit!");
+            System.out.println(index);
         } else {
             System.out.println("Miss");
         }

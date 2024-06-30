@@ -68,10 +68,10 @@ public class Player extends Entity {
     }
 
     public void update() {
-        int wepIndex = gp.cChecker.checkEntityCollision(slash, gp.npcArr);
+
 //        int NPChit = gp.cChecker.checkEntityCollision(slash, gp.npcArr);
 //        slash.hitNPC(wepIndex);
-        if (attacking) slash.attacking(wepIndex);
+        if (attacking) slash.attacking();
 
         if ((keyH.wPressed && keyH.sPressed) || (keyH.aPressed && keyH.dPressed)) {
             action = "stuckOppositeDirection";
@@ -104,7 +104,6 @@ public class Player extends Entity {
                 if (keyH.dPressed) { worldX += speed; }
             if (keyH.enterPressed){
                 attacking = true;
-                action = "attack";
             }
 
             // CHECK TILE COLLISION
@@ -147,7 +146,6 @@ public class Player extends Entity {
 
             if (keyH.enterPressed){
                 attacking = true;
-                action = "attack";
             }
         }
 

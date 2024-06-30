@@ -1,8 +1,8 @@
 package tile;
 
 import main.GamePanel;
+import main.UtilityTool;
 
-import javax.imageio.ImageIO;
 import java.awt.Graphics2D;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -24,10 +24,10 @@ public class TileManager {
 
         switch (gp.gameArea) {
             case 0:
-                loadMap("/tiles/lobby/test.txt");
+                loadMap("/mapTextFiles/test.txt");
                 break;
             case 1:
-                loadMap("/tiles/lobby/map.txt");
+                loadMap("/mapTextFiles/map.txt");
             default:
 //                loadMap("/tiles/lobby/map.txt");
         }
@@ -96,8 +96,6 @@ public class TileManager {
                 System.err.println("Tile or tile image is null for tile number: " + tileNum);
             }
 
-//
-
             WORLD_COL++;
             if (WORLD_COL == gp.MAX_WORLD_COL) {
                 WORLD_COL = 0;
@@ -107,125 +105,48 @@ public class TileManager {
     }
 
     public void getTileImage() {
+        String dir = "/tiles/lobby/";
         try {
             switch (gp.gameArea) {
                 case 0:
                 case 1:
                 default:
+                    for (int i = 0; i <= 25; i++) {
+                        tile[i] = new Tile();
+                        if (i < 13) tile[i].collision = true;
+                    }
+
                     // Walls
-                    tile[0] = new Tile();
-                    tile[0].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
-                            "/tiles/lobby/walls/topLeft.png"), "Missing top left wall tile"));
-                    tile[0].collision = true;
-
-                    tile[1] = new Tile();
-                    tile[1].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
-                            "/tiles/lobby/walls/topMiddle.png"), "Missing top middle wall tile"));
-                    tile[1].collision = true;
-
-                    tile[2] = new Tile();
-                    tile[2].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
-                            "/tiles/lobby/walls/hole.png"), "Missing hole wall tile"));
-                    tile[2].collision = true;
-
-                    tile[3] = new Tile();
-                    tile[3].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
-                            "/tiles/lobby/walls/door.png"), "Missing top door wall tile"));
-                    tile[3].collision = true;
-
-                    tile[4] = new Tile();
-                    tile[4].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
-                            "/tiles/lobby/walls/old.png"), "Missing old wall tile"));
-                    tile[4].collision = true;
-
-                    tile[5] = new Tile();
-                    tile[5].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
-                            "/tiles/lobby/walls/topRight.png"), "Missing top right wall tile"));
-                    tile[5].collision = true;
-
-                    tile[18] = new Tile();
-                    tile[18].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
-                            "/tiles/lobby/walls/middleLeft.png"), "Missing middle left wall tile"));
-                    tile[18].collision = true;
-
-                    tile[19] = new Tile();
-                    tile[19].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
-                            "/tiles/lobby/walls/middleRight.png"), "Missing middle right wall tile"));
-                    tile[19].collision = true;
-
-                    tile[20] = new Tile();
-                    tile[20].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
-                            "/tiles/lobby/walls/bottomLeft.png"), "Missing bottom left wall tile"));
-                    tile[20].collision = true;
-
-                    tile[21] = new Tile();
-                    tile[21].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
-                            "/tiles/lobby/walls/bottomRight.png"), "Missing bottom right wall tile"));
-                    tile[21].collision = true;
-
-                    tile[22] = new Tile();
-                    tile[22].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
-                            "/tiles/lobby/walls/bottomMiddle.png"), "Missing bottom middle wall tile"));
-                    tile[22].collision = true;
-
-                    tile[23] = new Tile();
-                    tile[23].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
-                            "/tiles/lobby/walls/stairsLeft.png"), "Missing stair left wall tile"));
-                    tile[23].collision = true;
-
-                    tile[24] = new Tile();
-                    tile[24].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
-                            "/tiles/lobby/walls/stairsRight.png"), "Missing stair right wall tile"));
-                    tile[24].collision = true;
+                    tile[0].image = UtilityTool.loadSprite(dir + "walls/topLeft.png", "Missing Top Left Wall");
+                    tile[1].image = UtilityTool.loadSprite(dir + "walls/topMiddle.png", "Missing Top Middle Wall");
+                    tile[2].image = UtilityTool.loadSprite(dir + "walls/hole.png", "Missing Hole Wall");
+                    tile[3].image = UtilityTool.loadSprite(dir + "walls/door.png", "Missing Door Wall");
+                    tile[4].image = UtilityTool.loadSprite(dir + "walls/old.png", "Missing Old Wall");
+                    tile[5].image = UtilityTool.loadSprite(dir + "walls/topRight.png", "Missing Top Right Wall");
+                    tile[6].image = UtilityTool.loadSprite(dir + "walls/middleLeft.png", "Missing Middle Left Wall");
+                    tile[7].image = UtilityTool.loadSprite(dir + "walls/middleRight.png", "Missing Middle Right Wall");
+                    tile[8].image = UtilityTool.loadSprite(dir + "walls/bottomLeft.png", "Missing Bottom Left Wall");
+                    tile[9].image = UtilityTool.loadSprite(dir + "walls/bottomRight.png", "Missing Bottom Right Wall");
+                    tile[10].image = UtilityTool.loadSprite(dir + "walls/bottomMiddle.png", "Missing Bottom Middle Wall");
+                    tile[11].image = UtilityTool.loadSprite(dir + "walls/stairsLeft.png", "Missing Left Stairs Wall tile");
+                    tile[12].image = UtilityTool.loadSprite(dir + "walls/stairsRight.png", "Missing Right Stairs Wall tile");
 
                     // Floor
-                    tile[6] = new Tile();
-                    tile[6].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
-                            "/tiles/lobby/floor/blank.png"), "Missing Blank Floor"));
+                    tile[13].image = UtilityTool.loadSprite(dir + "floor/blank.png", "Missing Blank Floor");
+                    tile[14].image = UtilityTool.loadSprite(dir + "floor/patterned.png", "Missing Patterned Floor");
+                    tile[15].image = UtilityTool.loadSprite(dir + "floor/checkered.png", "Missing Checkered Floor");
+                    tile[16].image = UtilityTool.loadSprite(dir + "floor/blankBordered.png", "Missing Blank Bordered Floor");
+                    tile[17].image = UtilityTool.loadSprite(dir + "floor/middleStairs.png", "Missing Middle Stairs");
+                    tile[18].image = UtilityTool.loadSprite(dir + "floor/leftStairs.png", "Missing Left Stair");
+                    tile[19].image = UtilityTool.loadSprite(dir + "floor/rightStairs.png", "Missing Right Stair");
+                    tile[20].image = UtilityTool.loadSprite(dir + "floor/topRight.png", "Missing Top Right Floor");
+                    tile[21].image = UtilityTool.loadSprite(dir + "floor/topLeft.png", "Missing Top Left Floor");
+                    tile[22].image = UtilityTool.loadSprite(dir + "floor/topMiddle.png", "Missing Top Middle Floor");
+                    tile[23].image = UtilityTool.loadSprite(dir + "floor/middleLeft.png", "Missing Middle Left Floor");
+                    tile[24].image = UtilityTool.loadSprite(dir + "floor/middleRight.png", "Missing Middle Right");
 
-                    tile[7] = new Tile();
-                    tile[7].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
-                            "/tiles/lobby/floor/patterned.png"), "Missing Patterned Floor"));
-
-                    tile[8] = new Tile();
-                    tile[8].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
-                            "/tiles/lobby/floor/checkered.png"), "Missing Checkered Floor"));
-
-                    tile[9] = new Tile();
-                    tile[9].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
-                            "/tiles/lobby/floor/blankBordered.png"), "Missing Border floor"));
-
-                    tile[10] = new Tile();
-                    tile[10].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
-                            "/tiles/lobby/floor/middleStairs.png"), "Missing Middle Stair"));
-
-                    tile[11] = new Tile();
-                    tile[11].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
-                            "/tiles/lobby/floor/leftStairs.png"), "Missing Left Stair"));
-
-                    tile[12] = new Tile();
-                    tile[12].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
-                            "/tiles/lobby/floor/rightStairs.png"), "Missing Right Stair"));
-
-                    tile[13] = new Tile();
-                    tile[13].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
-                            "/tiles/lobby/floor/topRight.png"), "Missing top right floor"));
-
-                    tile[14] = new Tile();
-                    tile[14].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
-                            "/tiles/lobby/floor/topLeft.png"), "Missing top left floor"));
-
-                    tile[15] = new Tile();
-                    tile[15].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
-                            "/tiles/lobby/floor/topMiddle.png"), "Missing top middle floor"));
-
-                    tile[16] = new Tile();
-                    tile[16].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
-                            "/tiles/lobby/floor/middleLeft.png"), "Missing Left Middle floor"));
-
-                    tile[17] = new Tile();
-                    tile[17].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
-                            "/tiles/lobby/floor/middleRight.png"), "Missing Right middle"));
+                    // Out of bounds
+                    tile[25].image = UtilityTool.loadSprite(dir + "outside.png", "Missing Outside");
             }
         } catch (IOException e) {
             e.printStackTrace(System.out);

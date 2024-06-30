@@ -3,9 +3,7 @@ package object;
 import main.GamePanel;
 import main.UtilityTool;
 
-import javax.imageio.ImageIO;
 import java.io.IOException;
-import java.util.Objects;
 
 public class OBJ_Heart extends SuperObject{
     GamePanel gp;
@@ -14,16 +12,18 @@ public class OBJ_Heart extends SuperObject{
         this.gp = gp;
         name = "Heart";
 
-        // Load shop sprites
-        try {
-            spriteList.add(0, ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
-                    "/objects/life/heart_blank.png"), "Missing life sprite 0")));
-            spriteList.add(1, ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
-                    "/objects/life/heart_half.png"), "Missing life sprite 1")));
-            spriteList.add(2, ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
-                    "/objects/life/heart_full.png"), "Missing life sprite 2")));
+        // Load heart sprites
+        getObjectSprites();
+    }
 
-            UtilityTool.scaleObjectList(this, spriteList, gp.TILE_SIZE, gp.TILE_SIZE);
+    public void getObjectSprites() {
+        String dir = "/objects/life/";
+        try {
+            defaultList.add(0, UtilityTool.loadSprite(dir + "heart_blank.png", "Missing Blank Heart"));
+            defaultList.add(1, UtilityTool.loadSprite(dir + "heart_half.png", "Missing Half Heart"));
+            defaultList.add(2, UtilityTool.loadSprite(dir + "heart_full.png", "Missing Full Heart"));
+
+            UtilityTool.scaleObjectList(defaultList, gp.TILE_SIZE, gp.TILE_SIZE);
         } catch (IOException e) {
             e.printStackTrace(System.out);
         }

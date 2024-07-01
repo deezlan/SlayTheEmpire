@@ -6,8 +6,7 @@ import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
-public class Entity {
-
+public abstract class Entity {
     GamePanel gp;
     public int actionLockCounter;
     public int worldX, worldY;

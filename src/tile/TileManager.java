@@ -144,6 +144,7 @@ public class TileManager {
                     tile[22].image = UtilityTool.loadSprite(dir + "floor/topMiddle.png", "Missing Top Middle Floor");
                     tile[23].image = UtilityTool.loadSprite(dir + "floor/middleLeft.png", "Missing Middle Left Floor");
                     tile[24].image = UtilityTool.loadSprite(dir + "floor/middleRight.png", "Missing Middle Right");
+//                    tile[25].image =
 
                     // Out of bounds
                     tile[25].image = UtilityTool.loadSprite(dir + "outside.png", "Missing Outside");

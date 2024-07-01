@@ -9,10 +9,11 @@ public class EventHandler {
     boolean canTouchEvent = true;
 
     public EventHandler(GamePanel gp){
-        this.gp=gp;
+        this.gp = gp;
         eventRect = new EventRect[gp.MAX_WORLD_COL][gp.MAX_WORLD_ROW];
         int col = 0;
         int row = 0;
+
         while (col < gp.MAX_WORLD_COL && row < gp.MAX_WORLD_ROW) {
 
             eventRect[col][row] = new EventRect();
@@ -29,7 +30,6 @@ public class EventHandler {
                 row++;
             }
         }
-
     }
 
     public void checkEvent() { // check tile for event;
@@ -40,16 +40,15 @@ public class EventHandler {
         if (distance > gp.TILE_SIZE){
             canTouchEvent = true;
         }
-
         //testing damage fall pit
         if(canTouchEvent) {
-            if (hit(9, 13, "down")){damagePit(9,13,gp.dialogueState);
+            if(hit(9, 2, "down")) {damagePit(9,2,gp.dialogueState);
         }
 
         }
     }
 
-    public boolean hit(int col, int row, String reqDirection){
+    public boolean hit (int col, int row, String reqDirection) {
         boolean hit = false;
         gp.player.solidArea.x = gp.player.worldX + gp.player.solidArea.x;
         gp.player.solidArea.y = gp.player.worldY + gp.player.solidArea.y;

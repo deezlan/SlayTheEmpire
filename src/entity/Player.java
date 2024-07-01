@@ -62,6 +62,8 @@ public class Player extends Entity {
     }
 
     public void update() {
+        //CHECK EVENT
+        gp.eHandler.checkEvent();
         if (attacking) {
             attackAnimation();
         } else {
@@ -74,15 +76,19 @@ public class Player extends Entity {
 
             if (keyH.wPressed && keyH.sPressed && keyH.aPressed) {
                 action = "moveLeft";
+                direction = "left";
             }
             if (keyH.wPressed && keyH.sPressed && keyH.dPressed) {
                 action = "moveRight";
+                direction = "right";
             }
             if (keyH.aPressed && keyH.dPressed && keyH.wPressed) {
                 action = "moveUp";
+                direction = "up";
             }
             if (keyH.aPressed && keyH.dPressed && keyH.sPressed) {
                 action = "moveDown";
+                direction = "down";
             }
 
             if ((keyH.wPressed || keyH.sPressed || keyH.aPressed || keyH.dPressed) && !action.equals("stuckOppositeDirection")) {
@@ -91,6 +97,7 @@ public class Player extends Entity {
                 }
                 if (keyH.sPressed) {
                     action = "moveDown";
+                    direction = "down";
                 }
                 if (keyH.aPressed) {
                     action = "moveLeft";
@@ -103,12 +110,14 @@ public class Player extends Entity {
                 }
                 if (keyH.sPressed && keyH.dPressed) {
                     action = "moveDownRight";
+                    direction = "down";
                 }
                 if (keyH.wPressed && keyH.aPressed) {
                     action = "moveUpLeft";
                 }
                 if (keyH.sPressed && keyH.aPressed) {
                     action = "moveDownLeft";
+                    direction = "down";
                 }
 
                 if (keyH.enterPressed) {
@@ -149,12 +158,13 @@ public class Player extends Entity {
                 interactNPC(npcIndex);
                 interactMerchant(npcIndex);
 
+                //CHECK EVENT
+                gp.eHandler.checkEvent();
+
                 //CHECK MOB COLLISION
                 int mobIndex = gp.cChecker.checkEntityCollision(this, gp.mobArr);
                 interactMob(mobIndex);
 
-                //CHECK EVENT
-                gp.eHandler.checkEvent();
 
                 switch (action) {
                     case "moveUp", "moveDown":
@@ -234,11 +244,12 @@ public class Player extends Entity {
     }
 
     public void interactNPC (int index) {
-            if (index != 999) {
-                gp.gameState = gp.dialogueState;
-                gp.npcArr[index].speak();
-            }
+        if (index != 999) {
+            gp.gameState = gp.dialogueState;
+            gp.npcArr[index].speak();
         }
+    }
+
 
     public void interactMerchant(int index){
         switch (index) {
@@ -252,6 +263,7 @@ public class Player extends Entity {
                 break;
         }
     }
+
 
     public void interactMob (int index) {
         if ( index != 999) {
@@ -271,20 +283,15 @@ public class Player extends Entity {
             spriteNum = 1;
         BufferedImage image = currentActionList.get(spriteNum - 1);
 
-        if (animationSpriteNum > currentAnimationList.size())
+        if (animationSpriteNum > playerRightAttackList.size())
             animationSpriteNum = 0;
-        BufferedImage animationImage = currentAnimationList.get(animationSpriteNum);
-
-        if (weaponSpriteNum > weaponList.size())
-            weaponSpriteNum = 0;
-        BufferedImage weaponImage = weaponList.get(weaponSpriteNum);
+        BufferedImage animationImage = lookingRight? playerRightAttackList.get(animationSpriteNum) : playerLeftAttackList.get(animationSpriteNum);
 
         if (gp.gameArea == 0) {
             if (!attacking){
                 g2.drawImage(image, worldX, worldY, null);
             } if (attacking){
                 g2.drawImage(animationImage, worldX, worldY,null);
-                g2.drawImage(weaponImage, worldX + 40, worldY, null);
             }
         } else if (gp.gameArea == 1){ // current game area
             if (!attacking){
@@ -298,9 +305,6 @@ public class Player extends Entity {
             }
         } else {
             g2.drawImage(image, screenX, screenY, gp.TILE_SIZE*3, gp.TILE_SIZE*2, null);
-            if (attacking){
-                g2.drawImage(weaponImage, worldX + 40, worldY, null);
-            }
         }
         // draw arrow
         cursor.draw(g2, (int) (worldX + gp.TILE_SIZE * 1.5), worldY + gp.TILE_SIZE);

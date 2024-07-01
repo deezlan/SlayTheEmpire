@@ -54,6 +54,7 @@ public class Player extends Entity {
         speed = 3;
         action = "idleRight";
         lookingRight = true;
+        direction = "right";
 
         //Status
         maxLife = 6;
@@ -65,7 +66,9 @@ public class Player extends Entity {
     }
 
     public void update() {
-        if (attacking) startAttack ();
+        if (attacking) {
+            startAttack();
+        }
 
         if ((keyH.wPressed && keyH.sPressed) || (keyH.aPressed && keyH.dPressed)) {
             action = "stuckOppositeDirection";
@@ -95,7 +98,6 @@ public class Player extends Entity {
                 if (keyH.aPressed) { worldX -= speed; }
             if (!rightCollisionOn)
                 if (keyH.dPressed) { worldX += speed; }
-
             if (keyH.enterPressed) { attacking = true; }
 
             // CHECK TILE COLLISION
@@ -113,10 +115,14 @@ public class Player extends Entity {
             // CHECK NPC COLLISION
             int npcIndex = gp.cChecker.checkEntityCollision(this, gp.npcArr);
             interactNPC(npcIndex);
+            interactMerchant(npcIndex);
 
             //CHECK MOB COLLISION
             int mobIndex = gp.cChecker.checkEntityCollision(this, gp.mobArr);
             interactMob(mobIndex);
+
+            //CHECK EVENT
+            gp.eHandler.checkEvent();
 
             switch (action) {
                 case "moveUp", "moveDown":
@@ -165,6 +171,19 @@ public class Player extends Entity {
     }
 
     public void interactNPC (int index) {
+        if (gp.keyH.ePressed) {
+            if (index != 999) {
+                    gp.gameState = gp.dialogueState;
+                    gp.npcArr[index].speak();
+            } else if (index == 2) {
+                    gp.gameState = gp.shopState;
+            } else {
+                attacking = true;
+            }
+        }
+    }
+
+    public void interactMerchant(int index){
         switch (index) {
             case 999:
                 break;
@@ -172,11 +191,13 @@ public class Player extends Entity {
                 gp.gameState = gp.shopState;
                 break;
             default:
-                gp.gameState = gp.dialogueState;
-                gp.npcArr[index].speak();
+                gp.gameState = gp.dialogueState; gp.npcArr[index].speak();
                 break;
         }
     }
+
+
+
 
     public void interactMob (int index) {
         if ( index != 999) {
@@ -214,6 +235,7 @@ public class Player extends Entity {
         } else {
             g2.drawImage(image, screenX, screenY, gp.TILE_SIZE*3, gp.TILE_SIZE*2, null);
             if (attacking){
+                g2.drawImage(weaponImage, worldX + 40, worldY, null);
             }
         }
         // draw arrow

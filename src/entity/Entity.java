@@ -4,6 +4,7 @@ import main.GamePanel;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
+//import java.nio.Buffer;
 import java.util.ArrayList;
 
 public class Entity {
@@ -19,9 +20,10 @@ public class Entity {
             idleLeftList = new ArrayList<>(),
             moveRightList = new ArrayList<>(),
             moveLeftList = new ArrayList<>(),
-            weaponList = new ArrayList<>();
+            weaponList = new ArrayList<>(); // stop here continue
     public String action;
     public boolean lookingRight;
+    public String direction;
 
     public boolean iframe = false;
     public int iframeCounter = 0;
@@ -149,10 +151,7 @@ public class Entity {
         BufferedImage image = currentActionList.get(spriteNum - 1);
 
         switch (gp.gameArea) {
-            case 0:
-                g2.drawImage(image, worldX, worldY, null);
-                break;
-            case 1:
+            case 0, 1:
                 g2.drawImage(image, worldX, worldY, null);
                 break;
             case 2:

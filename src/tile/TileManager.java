@@ -16,24 +16,27 @@ public class TileManager {
     public int[][] mapTileNum; // to check which tile the player is currently hitting
 
     public TileManager(GamePanel gp) {
-        gp.gameArea = 1;
+        gp.gameArea = 0;
         this.gp = gp;
         tile = new Tile[30];
         mapTileNum = new int[gp.MAX_WORLD_COL][gp.MAX_WORLD_ROW];
         getTileImage();
 
-        switch (gp.gameArea) {
-            case 0:
-                loadMap("/mapTextFiles/test.txt");
-                break;
-            case 1:
-                loadMap("/mapTextFiles/map.txt");
-            default:
+        loadMap("/mapTextFiles/map.txt",0);
+//        loadMap("/mapTextFiles/test.txt",1);
+//
+//        switch (gp.gameArea) {
+//            case 0:
+//                loadMap("/mapTextFiles/test.txt");
+//                break;
+//            case 1:
+//                loadMap("/mapTextFiles/map.txt");
+//            default:
 //                loadMap("/tiles/lobby/map.txt");
         }
-    }
 
-    public void loadMap(String filePath) {
+
+    public void loadMap(String filePath, int mapNo) {
         try {
             InputStream map = getClass().getResourceAsStream(filePath);
             BufferedReader mapScanner = new BufferedReader(new InputStreamReader(Objects.requireNonNull(map)));

@@ -41,7 +41,7 @@ public class TileManager {
                 loadMap("/mapTextFiles/map.txt");
                 break;
             case 1:
-                loadMap("/mapTextFiles/level2.txt");
+                loadMap("/mapTextFiles/level1.txt");
                 break;
             default:
 //                loadMap("/tiles/lobby/map.txt");

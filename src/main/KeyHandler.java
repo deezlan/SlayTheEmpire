@@ -9,9 +9,12 @@ public class KeyHandler implements KeyListener {
             wPressed,
             sPressed,
             aPressed,
-            dPressed;
+            dPressed,
+            ePressed,
+            pPressed,
+            enterPressed;
 
-    public KeyHandler(GamePanel gp) {
+    public KeyHandler(GamePanel gp){
         this.gp = gp;
     }
 
@@ -23,18 +26,53 @@ public class KeyHandler implements KeyListener {
     public void keyPressed(KeyEvent e) {
         int code = e.getKeyCode();
 
-        if (code == KeyEvent.VK_W) { wPressed = true; }
-        if (code == KeyEvent.VK_S) { sPressed = true; }
-        if (code == KeyEvent.VK_A) { aPressed = true; }
-        if (code == KeyEvent.VK_D) { dPressed = true; }
+        // PLaystate
+        if (gp.gameState == gp.playState){
+            if (code == KeyEvent.VK_W) {
+                wPressed = true;
+                if (gp.ui.slotRowMove != 0){
+                    gp.ui.slotRowMove -= 2;
+                    gp.ui.slotRow--;
+                }
+            }
+            if (code == KeyEvent.VK_S) {
+                sPressed = true;
+                if (gp.ui.slotRowMove != 6){
+                    gp.ui.slotRowMove += 2;
+                    gp.ui.slotRow++;
+                }
+            }
+            if (code == KeyEvent.VK_A) {
+                aPressed = true;
+                if (gp.ui.slotColMove != 0){
+                    gp.ui.slotColMove -= 2;
+                    gp.ui.slotCol--;
+                }
+            }
+            if (code == KeyEvent.VK_D) {
+                dPressed = true;
+                if (gp.ui.slotColMove != 2){
+                    gp.ui.slotColMove += 2;
+                    gp.ui.slotCol++;
+                }
+            }
+        }
         if (code == KeyEvent.VK_P) {
-            if(gp.gameState == gp.playState) {
-               gp.gameState = gp.pauseState;
+            pPressed = true;
+            if(gp.gameState == gp.playState){
+                gp.gameState = gp.pauseState;
             } else if (gp.gameState == gp.pauseState){
+                    gp.gameState = gp.playState;
+            }
+        }
+        if (code == KeyEvent.VK_E) {
+            ePressed = true;
+            if(gp.gameState == gp.dialogueState){
+                gp.gameState = gp.playState;
+            }  else if (gp.gameState == gp.shopState) {
                 gp.gameState = gp.playState;
             }
         }
-
         // !!!!! TEMPORARY TITLE+LOGIN+START MENU TEST !!!!!
         if (code == KeyEvent.VK_SPACE) {
             if (gp.gameState == gp.titleState){
@@ -42,6 +80,7 @@ public class KeyHandler implements KeyListener {
             }
         }
         if (code == KeyEvent.VK_ENTER) {
+            enterPressed = true;
             if (gp.gameState == gp.loginState) {
                 gp.gameState = gp.startMenuState;
             } else if (gp.gameState == gp.startMenuState) {
@@ -49,7 +88,6 @@ public class KeyHandler implements KeyListener {
             }
         }
         // !!!!! TEMPORARY TITLE+LOGIN+START MENU TEST !!!!!
-
     }
 
     @Override
@@ -60,5 +98,6 @@ public class KeyHandler implements KeyListener {
         if (code == KeyEvent.VK_S) { sPressed = false; }
         if (code == KeyEvent.VK_A) { aPressed = false; }
         if (code == KeyEvent.VK_D) { dPressed = false; }
+        if (code == KeyEvent.VK_ENTER) { enterPressed = false; }
     }
 }

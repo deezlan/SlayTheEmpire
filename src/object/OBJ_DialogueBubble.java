@@ -2,30 +2,16 @@ package object;
 
 import main.UtilityTool;
 
-import javax.imageio.ImageIO;
 import java.io.IOException;
-import java.util.Objects;
 
 public class OBJ_DialogueBubble extends SuperObject {
     public OBJ_DialogueBubble() {
         name = "Bubble";
 
         // Load save pedestal sprites
-        try {
-            spriteList.add(0, ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
-                    "/objects/chatBubbles/01.png"), "Missing bubble sprite 0")));
-            spriteList.add(1, ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
-                    "/objects/chatBubbles/02.png"), "Missing bubble pedestal sprite 1")));
-            spriteList.add(2, ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
-                    "/objects/chatBubbles/03.png"), "Missing bubble pedestal sprite 2")));
-            spriteList.add(3, ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
-                    "/objects/chatBubbles/04.png"), "Missing bubble pedestal sprite 3")));
+        getObjectSprites();
 
-            UtilityTool.scaleObjectList(this, spriteList, 50, 50);
-        } catch (IOException e) {
-            e.printStackTrace(System.out);
-        }
-
+        // Set collision settings
         solidArea.x = 0;
         solidArea.y = 50;
         solidArea.width = 24;
@@ -33,5 +19,19 @@ public class OBJ_DialogueBubble extends SuperObject {
         solidAreaDefaultX = solidArea.x;
         solidAreaDefaultY = solidArea.y;
         collision = false;
+    }
+
+    public void getObjectSprites() {
+        String dir = "/objects/chatBubbles/";
+        try {
+            defaultList.add(0, UtilityTool.loadSprite(dir + "00.png", "Missing Idle 0"));
+            defaultList.add(1, UtilityTool.loadSprite(dir + "01.png", "Missing Idle 1"));
+            defaultList.add(2, UtilityTool.loadSprite(dir + "02.png", "Missing Idle 2"));
+            defaultList.add(3, UtilityTool.loadSprite(dir + "03.png", "Missing Idle 3"));
+
+            UtilityTool.scaleObjectList(defaultList, 50, 50);
+        } catch (IOException e) {
+            e.printStackTrace(System.out);
+        }
     }
 }

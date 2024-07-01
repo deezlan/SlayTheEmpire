@@ -35,22 +35,20 @@ public class Player extends Entity {
         setItems();
 
         solidArea = new Rectangle(); // draws a square at the centre of the player
-        solidArea.x = 48; // position of actual collision square
-        solidArea.y = 50;
+        solidArea.x = 59; // position of actual collision square
+        solidArea.y = 60;
         solidAreaDefaultX = solidArea.x;
         solidAreaDefaultY = solidArea.y;
-        solidArea.width = 50; // outer area of collision square
-        solidArea.height = 35;
+        solidArea.width = 25; // outer area of collision square
+        solidArea.height = 25;
 
         SwordSlash slash1 = new SwordSlash(gp);
         slash = slash1;
     }
 
-
-
     public void setDefaultValues() {
-        worldX = 340; // Player spawn location x
-        worldY = 60; // player spawn location y
+        worldX = 350; // Player spawn location x
+        worldY = 30; // player spawn location y
         speed = 3;
         action = "idleRight";
         lookingRight = true;
@@ -140,9 +138,9 @@ public class Player extends Entity {
             }
         }
 
-        if(iframe){
+        if (iframe){
             iframeCounter++;
-            if(iframeCounter > 60){
+            if (iframeCounter > 60){
                 iframe = false;
                 iframeCounter = 0;
             }
@@ -206,7 +204,7 @@ public class Player extends Entity {
             if(iframe){
                 g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.3f));
             }
-            g2.drawImage(image, worldX, worldY, null);
+            g2.drawImage(image, screenX, screenY, null);
             g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
             if (attacking){
                 g2.drawImage(weaponImage, worldX + 40, worldY, null);
@@ -214,7 +212,9 @@ public class Player extends Entity {
         } else {
             g2.drawImage(image, screenX, screenY, gp.TILE_SIZE*3, gp.TILE_SIZE*2, null);
             if (attacking){
+                g2.drawImage(weaponImage, worldX + 40, worldY, null);
             }
+            System.out.println("Wrong case for Player draw");
         }
         // draw arrow
         cursor.draw(g2, (int) (worldX + gp.TILE_SIZE * 1.5), worldY + gp.TILE_SIZE);

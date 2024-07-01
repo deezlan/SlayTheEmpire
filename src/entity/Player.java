@@ -7,30 +7,27 @@ import main.UtilityTool;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-//import java.util.ArrayList; temp
 
 public class Player extends Entity {
     GamePanel gp;
     KeyHandler keyH;
     private final Cursor cursor;
-    public SwordSlash slash;
+//    public SwordSlash slash;
     public final int screenX;
     public final int screenY;
 
-//    public ArrayList<Entity> inventory = new ArrayList<>(); temp commented
-//    public final int inventorySize = 8; temp commented
-
-    public Player (GamePanel gp, KeyHandler keyH, Cursor cursor) {
+    public Player(GamePanel gp, KeyHandler keyH, Cursor cursor) {
         super(gp);
         this.gp = gp;
         this.keyH = keyH;
-        screenX = gp.SCREEN_WIDTH/2 - (gp.TILE_SIZE/2); // added screen position
-        screenY = gp.SCREEN_HEIGHT/2 - (gp.TILE_SIZE/2);
+        screenX = gp.SCREEN_WIDTH / 2 - (gp.TILE_SIZE / 2); // added screen position
+        screenY = gp.SCREEN_HEIGHT / 2 - (gp.TILE_SIZE / 2);
 
         this.cursor = cursor;
         setDefaultValues();
         getPlayerSprites();
         getPlayerAttackImage();
+        getPlayerAttackAnimation();
 
         setItems();
 
@@ -42,10 +39,9 @@ public class Player extends Entity {
         solidArea.width = 50; // outer area of collision square
         solidArea.height = 35;
 
-        SwordSlash slash1 = new SwordSlash(gp);
-        slash = slash1;
+//        SwordSlash slash1 = new SwordSlash(gp);
+//        slash = slash1;
     }
-
 
 
     public void setDefaultValues() {
@@ -61,104 +57,171 @@ public class Player extends Entity {
         life = maxLife;
     }
 
-    public void setItems(){
+    public void setItems() {
         //add inventory
     }
 
     public void update() {
         if (attacking) {
-            startAttack();
-        }
-
-        if ((keyH.wPressed && keyH.sPressed) || (keyH.aPressed && keyH.dPressed)) {
-            action = "stuckOppositeDirection";
-            currentActionList = lookingRight ? idleRightList : idleLeftList;
-        }
-
-        if (keyH.wPressed && keyH.sPressed && keyH.aPressed) { action = "moveLeft"; }
-        if (keyH.wPressed && keyH.sPressed && keyH.dPressed) { action = "moveRight"; }
-        if (keyH.aPressed && keyH.dPressed && keyH.wPressed) { action = "moveUp"; }
-        if (keyH.aPressed && keyH.dPressed && keyH.sPressed) { action = "moveDown"; }
-
-        if ((keyH.wPressed || keyH.sPressed || keyH.aPressed || keyH.dPressed) && !action.equals("stuckOppositeDirection")) {
-            if (keyH.wPressed) { action = "moveUp"; }
-            if (keyH.sPressed) { action = "moveDown"; }
-            if (keyH.aPressed) { action = "moveLeft";}
-            if (keyH.dPressed) { action = "moveRight"; }
-            if (keyH.wPressed && keyH.dPressed) { action = "moveUpRight"; }
-            if (keyH.sPressed && keyH.dPressed) { action = "moveDownRight"; }
-            if (keyH.wPressed && keyH.aPressed) { action = "moveUpLeft"; }
-            if (keyH.sPressed && keyH.aPressed) { action = "moveDownLeft"; }
-
-            if (!upCollisionOn)
-                if (keyH.wPressed) { worldY -= speed; }
-            if (!downCollisionOn)
-                if (keyH.sPressed) { worldY += speed; }
-            if (!leftCollisionOn)
-                if (keyH.aPressed) { worldX -= speed; }
-            if (!rightCollisionOn)
-                if (keyH.dPressed) { worldX += speed; }
-            if (keyH.enterPressed) { attacking = true; }
-
-            // CHECK TILE COLLISION
-            upCollisionOn = false; // resets collisions off
-            downCollisionOn = false;
-            leftCollisionOn = false;
-            rightCollisionOn = false;
-            gp.cChecker.checkTile(this); // pass the current tile into the checker to check if it has collision
-
-            // CHECK OBJECT COLLISION BEFORE INTERACTING
-            gp.cChecker.checkObject(this, true);
-            int objIndex = gp.cChecker.checkObject(this, true);
-            interactObject(objIndex);
-
-            // CHECK NPC COLLISION
-            int npcIndex = gp.cChecker.checkEntityCollision(this, gp.npcArr);
-            interactNPC(npcIndex);
-            interactMerchant(npcIndex);
-
-            //CHECK MOB COLLISION
-            int mobIndex = gp.cChecker.checkEntityCollision(this, gp.mobArr);
-            interactMob(mobIndex);
-
-            //CHECK EVENT
-            gp.eHandler.checkEvent();
-
-            switch (action) {
-                case "moveUp", "moveDown":
-                    currentActionList = lookingRight ? moveRightList : moveLeftList;
-                    break;
-                case "moveLeft", "moveUpLeft", "moveDownLeft":
-                    currentActionList = moveLeftList;
-                    lookingRight = false;
-                    break;
-                case "moveRight", "moveUpRight", "moveDownRight":
-                    currentActionList = moveRightList;
-                    lookingRight = true;
-                    break;
-            }
+            attackAnimation();
         } else {
-            action = lookingRight ? "idleRight" : "idleLeft";
-            currentActionList = action.equals("idleRight") ? idleRightList : idleLeftList;
 
-            if (keyH.enterPressed){
-                attacking = true;
+            if ((keyH.wPressed && keyH.sPressed) || (keyH.aPressed && keyH.dPressed)) {
+                action = "stuckOppositeDirection";
+                currentActionList = lookingRight ? idleRightList : idleLeftList;
+
             }
-        }
 
-        if(iframe){
-            iframeCounter++;
-            if(iframeCounter > 60){
-                iframe = false;
-                iframeCounter = 0;
+            if (keyH.wPressed && keyH.sPressed && keyH.aPressed) {
+                action = "moveLeft";
             }
-        }
+            if (keyH.wPressed && keyH.sPressed && keyH.dPressed) {
+                action = "moveRight";
+            }
+            if (keyH.aPressed && keyH.dPressed && keyH.wPressed) {
+                action = "moveUp";
+            }
+            if (keyH.aPressed && keyH.dPressed && keyH.sPressed) {
+                action = "moveDown";
+            }
 
-        spriteCounter++;
-        if (spriteCounter > 5) {
-            loopThroughSprites();
+            if ((keyH.wPressed || keyH.sPressed || keyH.aPressed || keyH.dPressed) && !action.equals("stuckOppositeDirection")) {
+                if (keyH.wPressed) {
+                    action = "moveUp";
+                }
+                if (keyH.sPressed) {
+                    action = "moveDown";
+                }
+                if (keyH.aPressed) {
+                    action = "moveLeft";
+                }
+                if (keyH.dPressed) {
+                    action = "moveRight";
+                }
+                if (keyH.wPressed && keyH.dPressed) {
+                    action = "moveUpRight";
+                }
+                if (keyH.sPressed && keyH.dPressed) {
+                    action = "moveDownRight";
+                }
+                if (keyH.wPressed && keyH.aPressed) {
+                    action = "moveUpLeft";
+                }
+                if (keyH.sPressed && keyH.aPressed) {
+                    action = "moveDownLeft";
+                }
+
+                if (keyH.enterPressed) {
+                    attacking = true;
+                }
+
+                if (!upCollisionOn)
+                    if (keyH.wPressed) {
+                        worldY -= speed;
+                    }
+                if (!downCollisionOn)
+                    if (keyH.sPressed) {
+                        worldY += speed;
+                    }
+                if (!leftCollisionOn)
+                    if (keyH.aPressed) {
+                        worldX -= speed;
+                    }
+                if (!rightCollisionOn)
+                    if (keyH.dPressed) {
+                        worldX += speed;
+                    }
+
+                // CHECK TILE COLLISION
+                upCollisionOn = false; // resets collisions off
+                downCollisionOn = false;
+                leftCollisionOn = false;
+                rightCollisionOn = false;
+                gp.cChecker.checkTile(this); // pass the current tile into the checker to check if it has collision
+
+                // CHECK OBJECT COLLISION BEFORE INTERACTING
+                gp.cChecker.checkObject(this, true);
+                int objIndex = gp.cChecker.checkObject(this, true);
+                interactObject(objIndex);
+
+                // CHECK NPC COLLISION
+                int npcIndex = gp.cChecker.checkEntityCollision(this, gp.npcArr);
+                interactNPC(npcIndex);
+                interactMerchant(npcIndex);
+
+                //CHECK MOB COLLISION
+                int mobIndex = gp.cChecker.checkEntityCollision(this, gp.mobArr);
+                interactMob(mobIndex);
+
+                //CHECK EVENT
+                gp.eHandler.checkEvent();
+
+                switch (action) {
+                    case "moveUp", "moveDown":
+                        currentActionList = lookingRight ? moveRightList : moveLeftList;
+                        currentAnimationList = lookingRight ? playerRightAttackList : playerLeftAttackList;
+                        break;
+                    case "moveLeft", "moveUpLeft", "moveDownLeft":
+                        currentActionList = moveLeftList;
+                        currentAnimationList = playerLeftAttackList;
+                        lookingRight = false;
+                        break;
+                    case "moveRight", "moveUpRight", "moveDownRight":
+                        currentActionList = moveRightList;
+                        currentAnimationList = playerRightAttackList;
+                        lookingRight = true;
+                        break;
+                }
+            } else {
+                action = lookingRight ? "idleRight" : "idleLeft";
+                currentActionList = action.equals("idleRight") ? idleRightList : idleLeftList;
+
+                if (keyH.enterPressed) {
+                    attacking = true;
+                }
+            }
+
+            if (iframe) {
+                iframeCounter++;
+                if (iframeCounter > 60) {
+                    iframe = false;
+                    iframeCounter = 0;
+                }
+            }
+
+            spriteCounter++;
+            if (spriteCounter > 5) {
+                loopThroughSprites();
+            }
+            cursor.calculateAngle((int) (worldX + gp.TILE_SIZE * 1.5), worldY + gp.TILE_SIZE);
         }
-        cursor.calculateAngle((int) (worldX + gp.TILE_SIZE * 1.5), worldY + gp.TILE_SIZE);
+    }
+
+    public void attackAnimation(){ // animation attack
+        animationCounter++;
+        if (animationCounter <= 5){
+            animationSpriteNum = 0;
+        } else if (animationCounter <= 10) {
+            animationSpriteNum = 1;
+        } else if (animationCounter <= 15) {
+            animationSpriteNum = 2;
+        } else if (animationCounter <= 20) {
+            animationSpriteNum = 3;
+        } else if (animationCounter <= 25) {
+            animationSpriteNum = 4;
+        } else if (animationCounter<= 30) {
+            animationSpriteNum = 5;
+        } else if (animationCounter <= 35) {
+            animationSpriteNum = 6;
+        } else if (animationCounter <= 40) {
+            animationSpriteNum = 7;
+        } else if (animationCounter <= 45) {
+            animationSpriteNum = 8;
+        }else if (animationCounter <= 50) {
+            animationSpriteNum = 1;
+            animationCounter = 0;
+            attacking = false;
+        }
     }
 
     public void interactObject (int index) {
@@ -171,17 +234,11 @@ public class Player extends Entity {
     }
 
     public void interactNPC (int index) {
-        if (gp.keyH.ePressed) {
             if (index != 999) {
-                    gp.gameState = gp.dialogueState;
-                    gp.npcArr[index].speak();
-            } else if (index == 2) {
-                    gp.gameState = gp.shopState;
-            } else {
-                attacking = true;
+                gp.gameState = gp.dialogueState;
+                gp.npcArr[index].speak();
             }
         }
-    }
 
     public void interactMerchant(int index){
         switch (index) {
@@ -196,9 +253,6 @@ public class Player extends Entity {
         }
     }
 
-
-
-
     public void interactMob (int index) {
         if ( index != 999) {
             if (!iframe){
@@ -209,28 +263,38 @@ public class Player extends Entity {
     }
 
     public void draw(Graphics2D g2) {
+
+//        int tempScreenX = screenX;
+//        int tempScreenY = screenY;
+
         if (spriteNum > currentActionList.size() - 1)
             spriteNum = 1;
         BufferedImage image = currentActionList.get(spriteNum - 1);
+
+        if (animationSpriteNum > currentAnimationList.size())
+            animationSpriteNum = 0;
+        BufferedImage animationImage = currentAnimationList.get(animationSpriteNum);
 
         if (weaponSpriteNum > weaponList.size())
             weaponSpriteNum = 0;
         BufferedImage weaponImage = weaponList.get(weaponSpriteNum);
 
         if (gp.gameArea == 0) {
-            g2.drawImage(image, worldX, worldY, null);
-
-            if (attacking){
+            if (!attacking){
+                g2.drawImage(image, worldX, worldY, null);
+            } if (attacking){
+                g2.drawImage(animationImage, worldX, worldY,null);
                 g2.drawImage(weaponImage, worldX + 40, worldY, null);
             }
-        } else if (gp.gameArea == 1){
-            if(iframe){
-                g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.3f));
-            }
-            g2.drawImage(image, worldX, worldY, null);
-            g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
-            if (attacking){
-                g2.drawImage(weaponImage, worldX + 40, worldY, null);
+        } else if (gp.gameArea == 1){ // current game area
+            if (!attacking){
+                if(iframe){
+                    g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.3f));
+                }
+                g2.drawImage(image, worldX, worldY, null);
+                g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
+            } if (attacking){
+                g2.drawImage(animationImage, worldX, worldY,null); // draw attack animation
             }
         } else {
             g2.drawImage(image, screenX, screenY, gp.TILE_SIZE*3, gp.TILE_SIZE*2, null);
@@ -240,11 +304,6 @@ public class Player extends Entity {
         }
         // draw arrow
         cursor.draw(g2, (int) (worldX + gp.TILE_SIZE * 1.5), worldY + gp.TILE_SIZE);
-    }
-
-    public void startAttack (){
-        weaponSpriteCounter++;
-        loopThroughWeaponSprites();
     }
 
     public void getPlayerAttackImage() {
@@ -258,6 +317,35 @@ public class Player extends Entity {
             weaponList.add(5, UtilityTool.loadSprite(dir + "05.png", "Missing Attack 5"));
 
             UtilityTool.scaleEffectsList(weaponList, 144, 96);
+        } catch (IOException e){
+            e.printStackTrace(System.out);
+        }
+    }
+
+    public void getPlayerAttackAnimation() {
+        String dir = "/player/Warrior/";
+        try {
+            playerRightAttackList.add(0, UtilityTool.loadSprite(dir + "Warrior_Attack_Right/Warrior_Attack_Right_0.png", "Missing RAttack Animation 0"));
+            playerRightAttackList.add(1, UtilityTool.loadSprite(dir + "Warrior_Attack_Right/Warrior_Attack_Right_1.png", "Missing RAttack Animation 1"));
+            playerRightAttackList.add(2, UtilityTool.loadSprite(dir + "Warrior_Attack_Right/Warrior_Attack_Right_2.png", "Missing RAttack Animation 2"));
+            playerRightAttackList.add(3, UtilityTool.loadSprite(dir + "Warrior_Attack_Right/Warrior_Attack_Right_3.png", "Missing RAttack Animation 3"));
+            playerRightAttackList.add(4, UtilityTool.loadSprite(dir + "Warrior_Attack_Right/Warrior_Attack_Right_4.png", "Missing RAttack Animation 4"));
+            playerRightAttackList.add(5, UtilityTool.loadSprite(dir + "Warrior_Attack_Right/Warrior_Attack_Right_5.png", "Missing RAttack Animation 5"));
+            playerRightAttackList.add(6, UtilityTool.loadSprite(dir + "Warrior_Attack_Right/Warrior_Attack_Right_6.png", "Missing RAttack Animation 6"));
+            playerRightAttackList.add(7, UtilityTool.loadSprite(dir + "Warrior_Attack_Right/Warrior_Attack_Right_7.png", "Missing RAttack Animation 7"));
+            playerRightAttackList.add(8, UtilityTool.loadSprite(dir + "Warrior_Attack_Right/Warrior_Attack_Right_8.png", "Missing RAttack Animation 8"));
+            UtilityTool.scaleEntityList(this, playerRightAttackList, 144, 96);
+
+            playerLeftAttackList.add(0, UtilityTool.loadSprite(dir + "Warrior_Attack_Left/Warrior_Attack_Left_0.png", "Missing LAttack Animation 0"));
+            playerLeftAttackList.add(1, UtilityTool.loadSprite(dir + "Warrior_Attack_Left/Warrior_Attack_Left_1.png", "Missing LAttack Animation 1"));
+            playerLeftAttackList.add(2, UtilityTool.loadSprite(dir + "Warrior_Attack_Left/Warrior_Attack_Left_2.png", "Missing LAttack Animation 2"));
+            playerLeftAttackList.add(3, UtilityTool.loadSprite(dir + "Warrior_Attack_Left/Warrior_Attack_Left_3.png", "Missing LAttack Animation 3"));
+            playerLeftAttackList.add(4, UtilityTool.loadSprite(dir + "Warrior_Attack_Left/Warrior_Attack_Left_4.png", "Missing LAttack Animation 4"));
+            playerLeftAttackList.add(5, UtilityTool.loadSprite(dir + "Warrior_Attack_Left/Warrior_Attack_Left_5.png", "Missing LAttack Animation 5"));
+            playerLeftAttackList.add(6, UtilityTool.loadSprite(dir + "Warrior_Attack_Left/Warrior_Attack_Left_6.png", "Missing LAttack Animation 6"));
+            playerLeftAttackList.add(7, UtilityTool.loadSprite(dir + "Warrior_Attack_Left/Warrior_Attack_Left_7.png", "Missing LAttack Animation 7"));
+            playerLeftAttackList.add(8, UtilityTool.loadSprite(dir + "Warrior_Attack_Left/Warrior_Attack_Left_8.png", "Missing LAttack Animation 8"));
+            UtilityTool.scaleEntityList(this, playerLeftAttackList, 144, 96);
         } catch (IOException e){
             e.printStackTrace(System.out);
         }

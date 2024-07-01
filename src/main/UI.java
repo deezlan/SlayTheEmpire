@@ -47,6 +47,10 @@ public class UI {
         if (gp.gameState == gp.shopState){
             drawInventory();
         }
+
+        if (gp.gameState == gp.deathState) {
+            drawDeathScreen();
+        }
     }
 
     public void drawInventory() {
@@ -132,6 +136,15 @@ public class UI {
             g2.drawString(line,dialogX,dialogY);
             dialogY += 40;
         }
+    }
+
+    public void drawDeathScreen() {
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD));
+        String text = "KAMU DAH MATI";
+        int x = getXforCenteredText(text);
+        int y = gp.SCREEN_HEIGHT/2;
+
+        g2.drawString(text, x, y);
     }
 
     public void drawSubWindow(int x, int y, int width,int height){

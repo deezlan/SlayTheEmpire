@@ -42,8 +42,7 @@ public class Player extends Entity {
         solidArea.width = 25; // outer area of collision square
         solidArea.height = 25;
 
-        SwordSlash slash1 = new SwordSlash(gp);
-        slash = slash1;
+        slash = new SwordSlash(gp);
     }
 
     public void setDefaultValues() {
@@ -63,6 +62,10 @@ public class Player extends Entity {
     }
 
     public void update() {
+        if (life == 0) {
+            gp.gameState = gp.deathState;
+        }
+
         if (attacking) startAttack ();
 
         if ((keyH.wPressed && keyH.sPressed) || (keyH.aPressed && keyH.dPressed)) {

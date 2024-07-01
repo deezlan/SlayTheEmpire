@@ -50,8 +50,8 @@ public class GamePanel extends JPanel implements Runnable {
     public final int playState = 1; // NO USAGE SO FAR
     public final int pauseState = 2; // NO USAGE SO FAR
     public final int dialogueState = 3; // NO USAGE SO FAR
-
     public final int shopState = 4;
+    public final int deathState = 5;
 
     public GamePanel() {
         this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
@@ -80,9 +80,9 @@ public class GamePanel extends JPanel implements Runnable {
         this.setCursor(blankCursor);
     }
 
-    public Cursor getPCursor() {
-        return cursor;
-    }
+//    public Cursor getPCursor() {
+//        return cursor;
+//    }
 
     public void setupGame() {
         aSetter.setObject();

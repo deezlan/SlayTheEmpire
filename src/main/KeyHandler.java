@@ -73,6 +73,13 @@ public class KeyHandler implements KeyListener {
                 gp.gameState = gp.playState;
             }
         }
+        //Debug
+        if (code == KeyEvent.VK_R){
+            switch(gp.currentMap){
+                case 0: gp.tileM.loadMap("/mapTextFiles/map.txt",0); break;
+                case 1: gp.tileM.loadMap("/mapTextFiles/test.txt",1); break;
+            }
+        }
         if (code == KeyEvent.VK_ENTER) {
             enterPressed = true;
         }

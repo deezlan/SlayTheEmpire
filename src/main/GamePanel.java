@@ -19,13 +19,15 @@ public class GamePanel extends JPanel implements Runnable {
     public final int TILE_SIZE = (int)(ORIGINAL_TILE_SIZE * SCALE);
     public final int MAX_SCREEN_COL = 17;
     public final int MAX_SCREEN_ROW = 13;
+//    public final int maxMap = 10;
+    public int currentMap = 0; // determine which map player is on
     public final int SCREEN_WIDTH = TILE_SIZE * MAX_SCREEN_COL;
     public final int SCREEN_HEIGHT = TILE_SIZE * MAX_SCREEN_ROW;
     public int gameArea;
 
     //World Settings
     public final int MAX_WORLD_COL = 17; //must be same as map size
-    public final int MAX_WORLD_ROW = 13; //must be same as map size
+    public final int MAX_WORLD_ROW = 14; //must be same as map size
 
     // FPS Settings
     final int FPS = 60;
@@ -41,8 +43,11 @@ public class GamePanel extends JPanel implements Runnable {
     public SuperObject[] objArr= new SuperObject[10];
     public Entity[] npcArr = new Entity[10];
     public Entity[] mobArr = new Entity[10];
+//    public interactiveTile[][] iTile = new interactiveTile[maxMap][50];
     public CollisionChecker cChecker = new CollisionChecker(this);
     public UI ui = new UI(this);
+
+    public EventHandler eHandler = new EventHandler(this);
 
     // Game States
     public int gameState;

@@ -38,7 +38,7 @@ public class TileManager {
 
         switch (gp.gameArea) {
             case 0:
-                loadMap("/mapTextFiles/map.txt");
+                loadMap("/mapTextFiles/lobby.txt");
                 break;
             case 1:
                 loadMap("/mapTextFiles/firstLevel.txt");

@@ -35,22 +35,20 @@ public class KeyHandler implements KeyListener {
             }
         }
 
-        // !!!!! TEMPORARY TITLE+START MENU TEST !!!!!
-        if (code == KeyEvent.VK_T) {
-            if(gp.gameState == gp.playState) {
-                gp.gameState = gp.titleState;
-            } else if (gp.gameState == gp.titleState){
-                gp.gameState = gp.playState;
+        // !!!!! TEMPORARY TITLE+LOGIN+START MENU TEST !!!!!
+        if (code == KeyEvent.VK_SPACE) {
+            if (gp.gameState == gp.titleState){
+                gp.gameState = gp.loginState;
             }
         }
-        if (code == KeyEvent.VK_Y) {
-            if(gp.gameState == gp.playState) {
+        if (code == KeyEvent.VK_ENTER) {
+            if (gp.gameState == gp.loginState) {
                 gp.gameState = gp.startMenuState;
-            } else if (gp.gameState == gp.startMenuState){
+            } else if (gp.gameState == gp.startMenuState) {
                 gp.gameState = gp.playState;
             }
         }
-        // !!!!! TEMPORARY TITLE+START MENU TEST !!!!!
+        // !!!!! TEMPORARY TITLE+LOGIN+START MENU TEST !!!!!
 
     }
 

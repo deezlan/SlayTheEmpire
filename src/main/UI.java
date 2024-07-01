@@ -3,15 +3,19 @@ package main;
 import object.OBJ_Heart;
 import object.SuperObject;
 
+import javax.swing.*;
 import java.awt.*;
-
 import java.awt.image.BufferedImage;
+
+
 
 public class UI {
 
     GamePanel gp;
     BufferedImage fullHeart, halfHeart, emptyHeart;
     Graphics2D g2;
+    private Image titleGif;
+
 
     public UI(GamePanel gp) {
         this.gp = gp;
@@ -21,6 +25,11 @@ public class UI {
         fullHeart = heart.scaledList.get(2);
         halfHeart = heart.scaledList.get(1);
         emptyHeart = heart.scaledList.get(0);
+
+        // INITIALIZE TITLE VIDEO
+        ImageIcon icon = new ImageIcon("res/UI/Title.gif");
+        titleGif = icon.getImage();
+
     }
 
     public void draw(Graphics2D g2){
@@ -90,32 +99,28 @@ public class UI {
     }
 
     public void drawTitleScreen() {
-        int x;
-        int y;
+        // Draw GIF Title
+        g2.drawImage(titleGif, 0, 0, gp.SCREEN_WIDTH, gp.SCREEN_HEIGHT, null);
+    }
+
+    public void drawLogin() {
 
         g2.setColor(Color.BLACK);
         g2.fillRect(0,0, gp.SCREEN_WIDTH, gp.SCREEN_HEIGHT);
 
-        // Title Text
-        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 80F));
-        String title = "Slay the Empire";
-        x = getXforCenteredText(title);
-        y = gp.SCREEN_HEIGHT/3 + 60;
-        // SHADOW + TITLE
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 60F));
+        String text = "YO ITS THE LOGIN MANU!";
+        int x = getXforCenteredText(text);
+        int y = gp.SCREEN_HEIGHT/3;
+
+
+
+        // SHADOW
         g2.setColor(Color.gray);
-        g2.drawString(title, x+5, y+5);
+        g2.drawString(text, x+5, y+5);
+        // Main PauseScreen
         g2.setColor(Color.white);
-        g2.drawString(title, x, y);
-
-        // Start Game Text
-        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 20F));
-        String start = "<PRESS ANY BUTTON>";
-        x = getXforCenteredText(start);
-        y += gp.TILE_SIZE*4;
-        g2.setColor(Color.white);
-        g2.drawString(start, x, y);
-
-
+        g2.drawString(text, x, y);
     }
 
     public void drawStartMenu() {

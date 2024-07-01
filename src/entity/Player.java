@@ -49,8 +49,8 @@ public class Player extends Entity {
 
 
     public void setDefaultValues() {
-        worldX = 340; // Player spawn location x
-        worldY = 60; // player spawn location y
+        worldX = 330; // Player spawn location x
+        worldY = 500; // player spawn location y
         speed = 3;
         action = "idleRight";
         lookingRight = true;
@@ -214,7 +214,9 @@ public class Player extends Entity {
         } else {
             g2.drawImage(image, screenX, screenY, gp.TILE_SIZE*3, gp.TILE_SIZE*2, null);
             if (attacking){
+                g2.drawImage(weaponImage, worldX + 40, worldY, null);
             }
+            System.out.println("Wrong case for Player draw");
         }
         // draw arrow
         cursor.draw(g2, (int) (worldX + gp.TILE_SIZE * 1.5), worldY + gp.TILE_SIZE);

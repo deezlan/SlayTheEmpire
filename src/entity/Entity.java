@@ -152,8 +152,8 @@ public abstract class Entity {
                 g2.drawImage(image, worldX, worldY, null);
                 break;
             case 1:
-                g2.drawImage(image, worldX, worldY, null);
-                break;
+//                g2.drawImage(image, worldX, worldY, null);
+//                break;
             case 2:
             default:
                 int screenX = worldX - gp.player.worldX + gp.player.screenX;

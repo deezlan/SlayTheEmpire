@@ -19,9 +19,7 @@ public class TileManager {
     public TileManager(GamePanel gp) {
         gp.gameArea = 1;
         this.gp = gp;
-//        tile = new Tile[38];
 
-//
         switch (gp.gameArea) {
             case 0:
                 gp.MAX_WORLD_COL = 17;
@@ -41,7 +39,7 @@ public class TileManager {
                 loadMap("/mapTextFiles/map.txt");
                 break;
             case 1:
-                loadMap("/mapTextFiles/level1.txt");
+                loadMap("/mapTextFiles/level2.txt");
                 break;
             default:
 //                loadMap("/tiles/lobby/map.txt");
@@ -94,9 +92,6 @@ public class TileManager {
                         g2.drawImage(tile[tileNum].image, worldX, worldY, gp.TILE_SIZE, gp.TILE_SIZE, null);
                         break;
                     case 1:
-                        g2.drawImage(tile[tileNum].image, worldX, worldY, gp.TILE_SIZE, gp.TILE_SIZE, null);
-                        break;
-                    default:
                         int screenX = worldX - gp.player.worldX + gp.player.screenX;
                         int screenY = worldY - gp.player.worldY + gp.player.screenY;
 
@@ -106,6 +101,9 @@ public class TileManager {
                                 worldY - gp.TILE_SIZE < gp.player.worldY + gp.player.screenY) {
                             g2.drawImage(tile[tileNum].image, screenX, screenY, gp.TILE_SIZE, gp.TILE_SIZE, null);
                         }
+                        break;
+                    default:
+                        System.out.println("Wrong case for TileManager draw");
                 }
             } else {
                 System.err.println("Tile or tile image is null for tile number: " + tileNum);
@@ -129,6 +127,7 @@ public class TileManager {
                         tile[i] = new Tile();
                         if (i < 13 || i > 25 ) tile[i].collision = true;
                     }
+                    System.out.println("Case 0 for getTileImage");
 
                     // Walls
                     tile[0].image = UtilityTool.loadSprite(dir + "00.png", "Missing Top Left Wall");
@@ -180,11 +179,11 @@ public class TileManager {
                     tile[34].collision = false;
                     break;
                 case 1:
-                    dir = "/tiles/level1/";
+                    dir = "/tiles/level2/";
                     tile = new Tile[31];
                     for (int i = 0; i <= 30; i++) {
                         tile[i] = new Tile();
-                        if (i < 26) tile[i].collision = true;
+//                        if (i < 25) tile[i].collision = true;
                     }
 
                     // Walls
@@ -221,6 +220,7 @@ public class TileManager {
                     tile[28].image = UtilityTool.loadSprite(dir + "28.png", "");
                     tile[29].image = UtilityTool.loadSprite(dir + "29.png", "");
                     tile[30].image = UtilityTool.loadSprite(dir + "30.png", "");
+                    System.out.println("Case 1 for getTileImage");
                     break;
                 default:
                     dir = "/tiles/level1/";

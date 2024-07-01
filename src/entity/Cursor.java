@@ -8,8 +8,10 @@ import java.io.IOException;
 
 public class Cursor {
     private int mouseX, mouseY;
-    private double angle;
+    public double angle;
     private BufferedImage crosshairImage;
+    public int deltaX;
+    public int deltaY;
 
     public Cursor( ) {
         try {
@@ -25,8 +27,8 @@ public class Cursor {
     }
 
     public void calculateAngle(int playerX, int playerY) {
-        int deltaX = mouseX - playerX;
-        int deltaY = mouseY - playerY;
+        deltaX = mouseX - playerX;
+        deltaY = mouseY - playerY;
         angle = Math.atan2(deltaY, deltaX);
     }
 
@@ -35,7 +37,8 @@ public class Cursor {
         drawCrosshair(g2);
     }
 
-    public void drawCrosshair(Graphics2D g2) {
+    public void
+    drawCrosshair(Graphics2D g2) {
         if (crosshairImage != null) {
             int crosshairWidth = crosshairImage.getWidth();
             int crosshairHeight = crosshairImage.getHeight();

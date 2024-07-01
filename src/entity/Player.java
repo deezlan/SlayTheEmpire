@@ -16,6 +16,7 @@ public class Player extends Entity {
     public SwordSlash slash;
     public final int screenX;
     public final int screenY;
+    public int totalCoins;
 
 //    public ArrayList<Entity> inventory = new ArrayList<>(); temp commented
 //    public final int inventorySize = 8; temp commented
@@ -55,6 +56,7 @@ public class Player extends Entity {
         //Status
         maxLife = 6;
         life = maxLife;
+        totalCoins = 0;
     }
 
     public void setItems(){

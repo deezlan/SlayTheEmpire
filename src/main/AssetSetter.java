@@ -5,6 +5,7 @@ import entity.NPC_Merchant;
 import entity.NPC_Mystery;
 import entity.NPC_Blacksmith;
 import mobs.MOB_Slime;
+import object.OBJ_Coin;
 import object.OBJ_DialogueBubble;
 //import object.OBJ_Obelisk;
 import object.OBJ_SavePedestal;
@@ -43,6 +44,10 @@ public class AssetSetter {
                 gp.objArr[6] = new OBJ_DialogueBubble(); // Mystery chat bubble
                 gp.objArr[6].worldX = 540;
                 gp.objArr[6].worldY = 418;
+
+                gp.objArr[7] = new OBJ_Coin(gp); // Mystery chat bubble
+                gp.objArr[7].worldX = 500;
+                gp.objArr[7].worldY = 500;
                 break;
             case 1, 2:
                 break;

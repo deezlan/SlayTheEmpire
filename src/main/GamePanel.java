@@ -167,7 +167,6 @@ public class GamePanel extends JPanel implements Runnable {
 //            }
             tileM.draw(g2); // Draw tiles
 
-
             for (SuperObject superObject : objArr)
                 if (superObject != null) superObject.draw(g2, this);
 
@@ -180,6 +179,7 @@ public class GamePanel extends JPanel implements Runnable {
             player.draw(g2); // Draw player
 
             ui.draw(g2);
+//            ui.drawPlayerMoney();
 
         } else {
             tileM.draw(g2); // Draw tiles

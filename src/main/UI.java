@@ -1,9 +1,13 @@
 package main;
 
+import object.OBJ_Coin;
 import object.OBJ_Heart;
 import object.SuperObject;
 
-import java.awt.*;
+import java.awt.Graphics2D;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.BasicStroke;
 import java.awt.image.BufferedImage;
 
 public class UI {
@@ -11,6 +15,8 @@ public class UI {
     GamePanel gp;
     BufferedImage fullHeart, halfHeart, emptyHeart;
     Graphics2D g2;
+    SuperObject coin = new OBJ_Coin(gp);
+
     public String currentDialog = "";
     public int slotCol = 0;
     public int slotRow = 0;
@@ -25,6 +31,8 @@ public class UI {
         fullHeart = heart.defaultList.get(2);
         halfHeart = heart.defaultList.get(1);
         emptyHeart = heart.defaultList.get(0);
+
+//        coin = new OBJ_Coin(gp);
     }
 
     public void draw(Graphics2D g2){
@@ -33,6 +41,7 @@ public class UI {
         g2.setFont(new Font("Microsoft YaHei", Font.PLAIN, 28));
         g2.setColor(Color.white);
         drawPlayerLife();
+        if (gp.gameState == gp.playState) drawPlayerMoney();
 
         //Pause State
         if (gp.gameState == gp.pauseState) {
@@ -105,6 +114,14 @@ public class UI {
             i++;
             posX += gp.TILE_SIZE;
         }
+    }
+
+    public void drawPlayerMoney() {
+        coin.spriteCounter++;
+        if (coin.spriteCounter > 4) coin.loopThroughSprites();
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 40));
+        g2.drawString ("" + gp.player.totalCoins, 38, 117);
+        g2.drawImage(coin.defaultList.get(coin.spriteNum), 78, 78, null);
     }
 
     // Draw Pause Screen

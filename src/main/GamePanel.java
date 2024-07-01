@@ -217,8 +217,7 @@ public class GamePanel extends JPanel implements Runnable {
 
             ui.draw(g2);
 
-            if (projectile != null) {
-                System.out.println("new");
+            if (projectile != null && mouseH.leftClick) {
                 projectile.draw(g2);
             }
 

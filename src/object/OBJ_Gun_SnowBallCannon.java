@@ -44,8 +44,35 @@ public class OBJ_Gun_SnowBallCannon extends Projectile{
 
 //    NOT USED YET
     public void update(){
+        proCounter++;
+        loopThroughSNCSprites();
     }
 
+    public void loopThroughSNCSprites(){
+        proNum = (proNum < spriteList.size()) ? proNum + 1 : 1;
+        if (proCounter <= 5) {
+            proNum = 1;
+        } else if (proCounter <= 10) {
+            proNum = 2;
+        } else if (proCounter <= 15) {
+            proNum = 3;
+        } else if (proCounter <= 20) {
+            proNum = 4;
+        } else if (proCounter <= 25) {
+            proNum = 5;
+        } else if (proCounter <= 30) {
+            proNum = 6;
+        } else if (proCounter <= 35) {
+            proNum = 7;
+        } else if (proCounter <= 40) {
+            proNum = 8;
+        } else if (proCounter <= 45) {
+            proNum = 9;
+        } else if (proCounter <= 55 ){
+            proNum = 1;
+            proCounter = 0;
+        }
+    }
 
 }
 

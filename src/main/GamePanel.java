@@ -92,7 +92,6 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     public void startGameThread() {
-        gameArea = 1;
         gameThread = new Thread(this);
         gameThread.start();
     }
@@ -154,6 +153,18 @@ public class GamePanel extends JPanel implements Runnable {
         if (gameState == titleState) {
             ui.draw(g2);
         } else if (gameState == playState) {
+//            switch (gameArea) {
+//                case 0:
+//                    this.player.worldX = 350;
+//                    this.player.worldY = 30;
+//                    break;
+//                case 1:
+//                    this.player.worldX = 145;
+//                    this.player.worldY = 232;
+//                    break;
+//                default:
+//                    System.out.println("Default Case GamePanel paintComponent");
+//            }
             tileM.draw(g2); // Draw tiles
 
 

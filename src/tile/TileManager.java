@@ -4,6 +4,7 @@ import main.GamePanel;
 import main.UtilityTool;
 
 import java.awt.Graphics2D;
+import java.awt.Color;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -17,17 +18,18 @@ public class TileManager {
     String dir;
 
     public TileManager(GamePanel gp) {
-        gp.gameArea = 1;
+        gp.gameArea = 0;
         this.gp = gp;
 
         switch (gp.gameArea) {
             case 0:
                 gp.MAX_WORLD_COL = 17;
                 gp.MAX_WORLD_ROW = 13;
+                gp.setBackground(Color.decode("#222034"));
                 break;
             case 1:
-                gp.MAX_WORLD_COL = 33;
-                gp.MAX_WORLD_ROW = 20;
+                gp.MAX_WORLD_COL = 31;
+                gp.MAX_WORLD_ROW = 21;
                 break;
         }
 
@@ -39,10 +41,10 @@ public class TileManager {
                 loadMap("/mapTextFiles/map.txt");
                 break;
             case 1:
-                loadMap("/mapTextFiles/level2.txt");
+                loadMap("/mapTextFiles/firstLevel.txt");
                 break;
             default:
-//                loadMap("/tiles/lobby/map.txt");
+                System.out.println("Default Case TileM Cons");
         }
     }
 
@@ -89,9 +91,11 @@ public class TileManager {
 
                 switch (gp.gameArea) {
                     case 0:
+                        gp.setBackground(Color.decode("#222034"));
                         g2.drawImage(tile[tileNum].image, worldX, worldY, gp.TILE_SIZE, gp.TILE_SIZE, null);
                         break;
                     case 1:
+                        gp.setBackground(Color.decode("#42393A"));
                         int screenX = worldX - gp.player.worldX + gp.player.screenX;
                         int screenY = worldY - gp.player.worldY + gp.player.screenY;
 
@@ -179,11 +183,11 @@ public class TileManager {
                     tile[34].collision = false;
                     break;
                 case 1:
-                    dir = "/tiles/level2/";
+                    dir = "/tiles/firstLevel/";
                     tile = new Tile[31];
                     for (int i = 0; i <= 30; i++) {
                         tile[i] = new Tile();
-//                        if (i < 25) tile[i].collision = true;
+                        if (i < 25) tile[i].collision = true;
                     }
 
                     // Walls
@@ -223,7 +227,7 @@ public class TileManager {
                     System.out.println("Case 1 for getTileImage");
                     break;
                 default:
-                    dir = "/tiles/level1/";
+                    dir = "/tiles/firstLevel/";
                     tile = new Tile[31];
                     for (int i = 0; i <= 30; i++) {
                         tile[i] = new Tile();

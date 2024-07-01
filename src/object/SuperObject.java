@@ -95,11 +95,8 @@ public class SuperObject {
         switch (gp.gameArea) {
             case 0:
                 g2.drawImage(image, worldX, worldY, null);
-                System.out.println("Wrong case for Object draw");
                 break;
-            case 1:
-//                g2.drawImage(image, worldX, worldY, null);
-            default:
+            case 1, 2:
                 int screenX = worldX - gp.player.worldX + gp.player.screenX;
                 int screenY = worldY - gp.player.worldY + gp.player.screenY;
 

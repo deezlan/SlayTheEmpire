@@ -176,16 +176,13 @@ public class Player extends Entity {
                 switch (action) {
                     case "moveUp", "moveDown":
                         currentActionList = lookingRight ? moveRightList : moveLeftList;
-                        currentAnimationList = lookingRight ? playerRightAttackList : playerLeftAttackList;
                         break;
                     case "moveLeft", "moveUpLeft", "moveDownLeft":
                         currentActionList = moveLeftList;
-                        currentAnimationList = playerLeftAttackList;
                         lookingRight = false;
                         break;
                     case "moveRight", "moveUpRight", "moveDownRight":
                         currentActionList = moveRightList;
-                        currentAnimationList = playerRightAttackList;
                         lookingRight = true;
                         break;
                 }

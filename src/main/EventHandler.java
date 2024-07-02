@@ -4,8 +4,7 @@ package main;
 public class EventHandler {
     GamePanel gp;
     EventRect[][] eventRect ;
-
-    int previousEventX, previousEventY; // prevennt event from happening again immedieatly
+    int previousEventX, previousEventY; // prevent event from happening again immedieatly
     boolean canTouchEvent = true;
 
     public EventHandler(GamePanel gp){
@@ -42,7 +41,7 @@ public class EventHandler {
         }
         //testing damage fall pit
         if(canTouchEvent) {
-            if(hit(9, 2, "down")) {damagePit(9,2,gp.dialogueState);
+            if(hit(8, 12, "down")) {enterDungeon(8,12,gp.dialogueState);
         }
 
         }
@@ -72,10 +71,18 @@ public class EventHandler {
         return hit;
     }
 
-    public void damagePit(int col, int row ,int gameState){
+    public void enterDungeon(int col, int row ,int gameState){
         gp.gameState = gameState;
-        gp.ui.currentDialog = "Damaged";
-        gp.player.life -= 1;
+        gp.ui.currentDialog = "Placeholder : Enter Dungeon";
+        canTouchEvent = false;
+        //if one time only event enable this
+//        eventRect[col][row].eventDone = true;
+    }
+
+    public void drinkWater(int col, int row ,int gameState){
+        gp.gameState = gameState;
+        gp.ui.currentDialog = "Drank Possibly Toilet Water";
+        gp.player.life += 3;
         canTouchEvent = false;
         //if one time only event enable this
 //        eventRect[col][row].eventDone = true;

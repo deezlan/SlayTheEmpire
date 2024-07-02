@@ -12,7 +12,6 @@ public class Player extends Entity {
     GamePanel gp;
     KeyHandler keyH;
     private final Cursor cursor;
-//    public SwordSlash slash;
     public final int screenX;
     public final int screenY;
     public int totalCoins;
@@ -51,6 +50,8 @@ public class Player extends Entity {
     public void setDefaultValues() {
         worldX = 350; // Player spawn location x
         worldY = 30; // player spawn location y
+//        worldX = 200; // second area spawn
+//        worldY = 200;
         speed = 3;
         action = "idleRight";
         lookingRight = true;
@@ -70,8 +71,6 @@ public class Player extends Entity {
         if (life == 0) {
             gp.gameState = gp.deathState;
         }
-        //CHECK EVENT
-        gp.eHandler.checkEvent();
         if (attacking) {
             attackAnimation();
         } else {
@@ -255,6 +254,8 @@ public class Player extends Entity {
         if (index != 999) {
             gp.gameState = gp.dialogueState;
             gp.npcArr[index].speak();
+        } if (index == 2) {
+            gp.gameState = gp.shopState;
         }
     }
 
@@ -264,7 +265,6 @@ public class Player extends Entity {
             case 999:
                 break;
             case 2:
-                gp.gameState = gp.shopState;
                 break;
             default:
                 gp.gameState = gp.dialogueState; gp.npcArr[index].speak();
@@ -283,10 +283,6 @@ public class Player extends Entity {
     }
 
     public void draw(Graphics2D g2) {
-
-//        int tempScreenX = screenX;
-//        int tempScreenY = screenY;
-
         if (spriteNum > currentActionList.size() - 1)
             spriteNum = 1;
         BufferedImage image = currentActionList.get(spriteNum - 1);
@@ -295,13 +291,7 @@ public class Player extends Entity {
             animationSpriteNum = 0;
         BufferedImage animationImage = lookingRight? playerRightAttackList.get(animationSpriteNum) : playerLeftAttackList.get(animationSpriteNum);
 
-        if (gp.gameArea == 0) {
-            if (!attacking){
-                g2.drawImage(image, worldX, worldY, null);
-            } if (attacking){
-                g2.drawImage(animationImage, worldX, worldY,null);
-            }
-        } else if (gp.gameArea == 1){ // current game area
+        if (gp.gameArea == 0) { // lobby game area
             if (!attacking){
                 if(iframe){
                     g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.3f));
@@ -309,7 +299,17 @@ public class Player extends Entity {
                 g2.drawImage(image, worldX, worldY, null);
                 g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
             } if (attacking){
-                g2.drawImage(animationImage, worldX, worldY,null); // draw attack animation
+                g2.drawImage(animationImage, worldX, worldY,null);
+            }
+        } else if (gp.gameArea == 1){
+            if (!attacking){
+                if(iframe){
+                    g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.3f));
+                }
+                g2.drawImage(image, screenX, screenY, null);
+                g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
+            } if (attacking){
+                g2.drawImage(animationImage, screenX, screenY,null); // draw attack animation
             }
         } else {
             g2.drawImage(image, screenX, screenY, gp.TILE_SIZE*3, gp.TILE_SIZE*2, null);

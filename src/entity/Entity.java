@@ -31,8 +31,8 @@ public abstract class Entity {
 
     public int spriteCounter = 0;
     public int spriteNum = 1;
-//    public int weaponSpriteCounter = 0;
-//    public int weaponSpriteNum = 1;
+//    public int weaponSpriteCounter = 0; // Ananda's old slash variables
+//    public int weaponSpriteNum = 1; // " "
 
     public int animationCounter = 0;
     public int animationSpriteNum = 0;
@@ -71,6 +71,7 @@ public abstract class Entity {
         spriteCounter = 0;
     }
 
+    // Ananda's old slash animation
 //    public void loopThroughWeaponSprites() {
 //        if (weaponSpriteCounter <= 5){
 //            weaponSpriteNum = 0;

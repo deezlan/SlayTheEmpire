@@ -3,11 +3,10 @@ package entity;
 import main.GamePanel;
 import object.OBJ_Gun_SnowBallCannon;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.sql.SQLOutput;
 import java.util.ArrayList;
-import java.util.Timer;
 
 public class Projectile extends Entity {
     Entity user;
@@ -25,7 +24,8 @@ public class Projectile extends Entity {
     public int mousePosY;
     public int dirX;
     public int dirY;
-    public double pAngle = gp.cursor.angle;
+    public Timer timer;
+
 
 
     public Projectile(GamePanel gp) {
@@ -35,6 +35,9 @@ public class Projectile extends Entity {
         projectileSelect(selectedProjectile);
         proX = getPlayerX();
         proY = getPlayerY();
+        timer = new Timer(50, e -> updatePosition());
+        timer.start();
+
     }
 
     public void projectileSelect(int selectedProjectile) {
@@ -47,7 +50,7 @@ public class Projectile extends Entity {
 
     public void update() {
 
-        angleThroughSpeed();
+
 
         switch (selectedProjectile) {
             case 0:
@@ -58,6 +61,7 @@ public class Projectile extends Entity {
                 break;
         }
 
+        updatePosition();
     }
 
     public void draw(Graphics2D g2) {
@@ -67,7 +71,7 @@ public class Projectile extends Entity {
         }
         if (proNum > 0 && proNum <= snc.spriteList.size()) {
             BufferedImage projectiles = snc.spriteList.get(snc.proNum - 1);
-            g2.drawImage(projectiles, proX, proY, null);
+            g2.drawImage(projectiles, proX, proY - 30 , null);
         } else {
             System.out.println("Invalid spriteNum: " + proNum);
         }
@@ -85,36 +89,26 @@ public class Projectile extends Entity {
 
 
 
-    public void angleThroughSpeed() {
-        if (gp.mouseH.leftClick) {
-            gp.cursor.calculateAngle(gp.player.worldX, gp.player.worldY);
-            mousePosX = gp.cursor.deltaX;
-            mousePosY = gp.cursor.deltaY;
-            dirY = (int) (pythag(mousePosX, mousePosY) * Math.sin(Math.atan2(mousePosX, mousePosY)));
-            dirX = (int) (pythag(mousePosX, mousePosY) * Math.cos(Math.atan2(mousePosX, mousePosY)));
+    private void updatePosition() {
+        // Calculate the difference in position
+        int dx = gp.cursor.deltaX;
+        int dy = gp.cursor.deltaY;
 
-            System.out.println("X: " + dirX);
-            System.out.println("Y: " + dirY);
+        System.out.println("X: " + dx);
+        System.out.println("y: " + dy);
 
-            if (Math.abs(dirX) > 1) {
-                proX += dirX / 100;
-            } else if (Math.abs(dirX) <= 1) {
-                proX -= dirX/100;
-            }
-            if (Math.abs(dirY) > 1) {
-                proY += dirY / 100;
-            } else if (Math.abs(dirY) <= 1) {
-                proY -= dirY/100;
-            }
+        if (Math.abs(dx) > 1) {
+            proX += dx / 90;
+        }
+        if (Math.abs(dy) > 1) {
+            proY += dy / 90;
+        }
 
+        if (Math.abs(dx) <= 1 && Math.abs(dy) <= 1) {
+            timer.stop();
         }
     }
 
-    public double pythag(int x, int y){
-        int c = (x*x) + (y*y);
-        double length = Math.sqrt(c);
-        return length;
-    }
 
 }
 

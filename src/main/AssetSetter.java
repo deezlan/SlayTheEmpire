@@ -5,7 +5,7 @@ import entity.NPC_Merchant;
 import entity.NPC_Mystery;
 import entity.NPC_Blacksmith;
 import mobs.MOB_Slime;
-import object.OBJ_DialogueBubble;
+import object.OBJ_ChatBubble;
 //import object.OBJ_Obelisk;
 import object.OBJ_SavePedestal;
 import object.OBJ_Shop;
@@ -20,7 +20,7 @@ public class AssetSetter {
     public void setObject() {
         switch (gp.gameArea) {
             case 0:
-                gp.objArr[0] = new OBJ_Shop(gp);
+                gp.objArr[0] = new OBJ_Shop();
                 gp.objArr[0].worldX = 540;
                 gp.objArr[0].worldY = -20;
 
@@ -28,19 +28,19 @@ public class AssetSetter {
                 gp.objArr[1].worldX = 272;
                 gp.objArr[1].worldY = 494;
 
-                gp.objArr[3] = new OBJ_DialogueBubble(); // Maiden chat bubble
+                gp.objArr[3] = new OBJ_ChatBubble(); // Maiden chat bubble
                 gp.objArr[3].worldX = 410;
                 gp.objArr[3].worldY = 220;
 
-                gp.objArr[4] = new OBJ_DialogueBubble(); // Blacksmith chat bubble
+                gp.objArr[4] = new OBJ_ChatBubble(); // Blacksmith chat bubble
                 gp.objArr[4].worldX = 140;
                 gp.objArr[4].worldY = 60;
 
-                gp.objArr[5] = new OBJ_DialogueBubble(); // Merchant chat bubble
+                gp.objArr[5] = new OBJ_ChatBubble(); // Merchant chat bubble
                 gp.objArr[5].worldX = 685;
                 gp.objArr[5].worldY = 80;
 
-                gp.objArr[6] = new OBJ_DialogueBubble(); // Mystery chat bubble
+                gp.objArr[6] = new OBJ_ChatBubble(); // Mystery chat bubble
                 gp.objArr[6].worldX = 540;
                 gp.objArr[6].worldY = 418;
                 break;

@@ -11,6 +11,14 @@ public class NPC_Mystery extends Entity {
         action = "idleRight";
         getNpcSprites();
         setDialog();
+
+        // Set collision settings
+        solidArea.x = 20;
+        solidArea.y = gp.TILE_SIZE;
+        solidArea.width = 48;
+        solidArea.height = 48;
+        solidAreaDefaultX = solidArea.x;
+        solidAreaDefaultY = solidArea.y;
     }
 
     public void setDialog() {
@@ -24,23 +32,15 @@ public class NPC_Mystery extends Entity {
     public void getNpcSprites() {
         String dir = "/NPCs/shadyguy/";
         try {
-            idleRightList.add(0, UtilityTool.loadSprite(dir + "00.png", "Missing Idle Right 0"));
-            idleRightList.add(1, UtilityTool.loadSprite(dir + "01.png", "Missing Idle Right 1"));
-            idleRightList.add(2, UtilityTool.loadSprite(dir + "02.png", "Missing Idle Right 2"));
-            idleRightList.add(3, UtilityTool.loadSprite(dir + "03.png", "Missing Idle Right 3"));
-            idleRightList.add(4, UtilityTool.loadSprite(dir + "04.png", "Missing Idle Right 4"));
+            // Load sprites
+            for (int i = 0; i <= 4; i++)
+                idleRightList.add(i, UtilityTool.loadSprite(dir + i + ".png", "Missing idleRight " + i));
             System.out.println("Shady Guy sprites loaded successfully");
-
+            // Scale sprites up
             UtilityTool.scaleEntityList(this, idleRightList, 90, 90);
         } catch (IOException e) {
             e.printStackTrace(System.out);
         }
-        solidArea.x = 20;
-        solidArea.y = gp.TILE_SIZE;
-        solidArea.width = 48;
-        solidArea.height = 48;
-        solidAreaDefaultX = solidArea.x;
-        solidAreaDefaultY = solidArea.y;
     }
     public void speak() {
         super.speak();

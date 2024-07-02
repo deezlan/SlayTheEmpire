@@ -23,6 +23,12 @@ public class GamePanel extends JPanel implements Runnable {
     public final int SCREEN_HEIGHT = TILE_SIZE * MAX_SCREEN_ROW;
     public int gameArea;
 
+
+
+    public int playerClass = 0;
+
+
+
     //World Settings
     public int MAX_WORLD_COL = 17; //must be same as map size
     public int MAX_WORLD_ROW = 14; //must be same as map size
@@ -33,7 +39,7 @@ public class GamePanel extends JPanel implements Runnable {
     TileManager tileM = new TileManager(this);
     public KeyHandler keyH = new KeyHandler(this);
     public Cursor cursor = new Cursor(); // Initialize cursor
-    public Player player = new Player(this, keyH, cursor); // Pass cursor to player
+    public Player player = new Player(this, keyH, cursor, playerClass); // Pass cursor to player
 
     Thread gameThread;
 

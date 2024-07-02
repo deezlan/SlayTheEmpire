@@ -4,11 +4,9 @@ import main.GamePanel;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
-//import java.nio.Buffer;
 import java.util.ArrayList;
 
-public class Entity {
-
+public abstract class Entity {
     GamePanel gp;
     public int actionLockCounter;
     public int worldX, worldY;
@@ -34,7 +32,7 @@ public class Entity {
 
     public int spriteCounter = 0;
     public int spriteNum = 1;
-//    public int weaponSpriteCounter = 0;
+    public int weaponSpriteCounter = 0;
     public int weaponSpriteNum = 1;
 
     public int animationCounter = 0;
@@ -74,25 +72,25 @@ public class Entity {
         spriteCounter = 0;
     }
 
-//    public void loopThroughWeaponSprites() {
-//        if (weaponSpriteCounter <= 5){
-//            weaponSpriteNum = 0;
-//        } else if (weaponSpriteCounter <= 10) {
-//            weaponSpriteNum = 1;
-//        } else if (weaponSpriteCounter <= 15) {
-//            weaponSpriteNum = 2;
-//        } else if (weaponSpriteCounter <= 20) {
-//            weaponSpriteNum = 3;
-//        } else if (weaponSpriteCounter <= 25) {
-//            weaponSpriteNum = 4;
-//        } else if (weaponSpriteCounter <= 30) {
-//            weaponSpriteNum = 5;
-//        } else if (weaponSpriteCounter <= 35) {
-//            weaponSpriteNum = 0;
-//            weaponSpriteCounter = 0;
-//            attacking = false;
-//        }
-//    }
+    public void loopThroughWeaponSprites() {
+        if (weaponSpriteCounter <= 5){
+            weaponSpriteNum = 0;
+        } else if (weaponSpriteCounter <= 10) {
+            weaponSpriteNum = 1;
+        } else if (weaponSpriteCounter <= 15) {
+            weaponSpriteNum = 2;
+        } else if (weaponSpriteCounter <= 20) {
+            weaponSpriteNum = 3;
+        } else if (weaponSpriteCounter <= 25) {
+            weaponSpriteNum = 4;
+        } else if (weaponSpriteCounter <= 30) {
+            weaponSpriteNum = 5;
+        } else if (weaponSpriteCounter <= 35) {
+            weaponSpriteNum = 0;
+            weaponSpriteCounter = 0;
+            attacking = false;
+        }
+    }
 
     public void update() {
         upCollisionOn = false; // resets collisions off
@@ -157,9 +155,12 @@ public class Entity {
         BufferedImage image = currentActionList.get(spriteNum - 1);
 
         switch (gp.gameArea) {
-            case 0, 1:
+            case 0:
                 g2.drawImage(image, worldX, worldY, null);
                 break;
+            case 1:
+//                g2.drawImage(image, worldX, worldY, null);
+//                break;
             case 2:
             default:
                 int screenX = worldX - gp.player.worldX + gp.player.screenX;

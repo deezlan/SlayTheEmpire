@@ -15,8 +15,12 @@ public class Player extends Entity {
 //    public SwordSlash slash;
     public final int screenX;
     public final int screenY;
+    public int totalCoins;
 
-    public Player(GamePanel gp, KeyHandler keyH, Cursor cursor) {
+//    public ArrayList<Entity> inventory = new ArrayList<>(); temp commented
+//    public final int inventorySize = 8; temp commented
+
+    public Player (GamePanel gp, KeyHandler keyH, Cursor cursor) {
         super(gp);
         this.gp = gp;
         this.keyH = keyH;
@@ -32,12 +36,12 @@ public class Player extends Entity {
         setItems();
 
         solidArea = new Rectangle(); // draws a square at the centre of the player
-        solidArea.x = 48; // position of actual collision square
-        solidArea.y = 50;
+        solidArea.x = 59; // position of actual collision square
+        solidArea.y = 60;
         solidAreaDefaultX = solidArea.x;
         solidAreaDefaultY = solidArea.y;
-        solidArea.width = 50; // outer area of collision square
-        solidArea.height = 35;
+        solidArea.width = 25; // outer area of collision square
+        solidArea.height = 25;
 
 //        SwordSlash slash1 = new SwordSlash(gp);
 //        slash = slash1;
@@ -45,8 +49,8 @@ public class Player extends Entity {
 
 
     public void setDefaultValues() {
-        worldX = 340; // Player spawn location x
-        worldY = 60; // player spawn location y
+        worldX = 350; // Player spawn location x
+        worldY = 30; // player spawn location y
         speed = 3;
         action = "idleRight";
         lookingRight = true;
@@ -55,6 +59,7 @@ public class Player extends Entity {
         //Status
         maxLife = 6;
         life = maxLife;
+        totalCoins = 0;
     }
 
     public void setItems() {
@@ -62,6 +67,9 @@ public class Player extends Entity {
     }
 
     public void update() {
+        if (life == 0) {
+            gp.gameState = gp.deathState;
+        }
         //CHECK EVENT
         gp.eHandler.checkEvent();
         if (attacking) {

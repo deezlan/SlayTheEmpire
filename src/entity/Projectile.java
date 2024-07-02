@@ -19,6 +19,7 @@ public class Projectile extends Entity {
 
     // Projectile Info
     int selectedProjectile;
+    boolean disappear;
 
     // Initialise projectiles
     OBJ_Gun_SnowBallCannon snc;
@@ -60,12 +61,12 @@ public class Projectile extends Entity {
                     break;
             }
         }else {
-            //PUT CODE FOR BOSSPROJECTILES
+            //PUT CODE FOR BOSS PROJECTILES
         }
 
         System.out.println(getProjectileFace());
 
-        if(!downCollisionOn){
+        if(!disappear){
             updatePosition();
         }
 
@@ -102,18 +103,22 @@ public class Projectile extends Entity {
         if (!gp.mouseH.shortGet) {
             action = getProjectileAction();
             gp.cChecker.checkTile(this);
+
+//            FOR DANIAL: remove the line below to see how when collision checker is off
+            checkCollideWall();
         }
     }
 
-    public String getProjectileFace(){
-        double angle = getProjectileAngle();
-        if ((angle >= 0 && angle <= Math.PI / 2) || (angle >= -Math.PI && angle <= -Math.PI / 2)) {
-            return "right";
-        } else {
-            return "left";
+//  boolean to see whether it has collided with tile wall or not, disappear = true if collided
+    public void checkCollideWall(){
+        if(action.equals("moveDown")){
+            disappear = downCollisionOn;
+        } else if (action.equals("moveUp")) {
+            disappear = upCollisionOn;
         }
     }
 
+    //projectile action for CollisionChecker class
     public String getProjectileAction(){
         if (getProjectileAngle() > 0){
             return "moveDown";
@@ -123,6 +128,15 @@ public class Projectile extends Entity {
 
     public double getProjectileAngle(){
         return Math.atan2(dy, dx);
+    }
+
+    //will be used to tell if i should take the image of projectile facing right or left
+    public String getProjectileFace(){
+        if (dx > 0) {
+            return "right";
+        } else {
+            return "left";
+        }
     }
 
     public int getPlayerX() {

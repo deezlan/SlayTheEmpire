@@ -16,11 +16,9 @@ public class Player extends Entity {
     private final Cursor cursor;
     public final int screenX;
     public final int screenY;
+    public String dir;
     public int totalCoins;
-    public int playerClass,
-            warrior = 0,
-            assassin = 1,
-            knight = 2;
+    public int playerClass;
 
 //    public ArrayList<Entity> inventory = new ArrayList<>(); temp commented
 //    public final int inventorySize = 8; temp commented
@@ -29,6 +27,7 @@ public class Player extends Entity {
         super(gp);
         this.gp = gp;
         this.keyH = keyH;
+        this.playerClass = playerClass;
         screenX = gp.SCREEN_WIDTH / 2 - (gp.TILE_SIZE / 2); // added screen position
         screenY = gp.SCREEN_HEIGHT / 2 - (gp.TILE_SIZE / 2);
 
@@ -219,29 +218,55 @@ public class Player extends Entity {
 
     public void attackAnimation(){ // animation attack
         animationCounter++;
-        if (animationCounter <= 5){
-            animationSpriteNum = 0;
-        } else if (animationCounter <= 10) {
-            animationSpriteNum = 1;
-        } else if (animationCounter <= 15) {
-            animationSpriteNum = 2;
-        } else if (animationCounter <= 20) {
-            animationSpriteNum = 3;
-        } else if (animationCounter <= 25) {
-            animationSpriteNum = 4;
-        } else if (animationCounter<= 30) {
-            animationSpriteNum = 5;
-        } else if (animationCounter <= 35) {
-            animationSpriteNum = 6;
-        } else if (animationCounter <= 40) {
-            animationSpriteNum = 7;
-        } else if (animationCounter <= 45) {
-            animationSpriteNum = 8;
-        }else if (animationCounter <= 50) {
-            animationSpriteNum = 1;
-            animationCounter = 0;
-            attacking = false;
+        switch (playerClass) {
+            case 0:
+                if (animationCounter <= 5){
+                    animationSpriteNum = 0;
+                } else if (animationCounter <= 10) {
+                    animationSpriteNum = 1;
+                } else if (animationCounter <= 15) {
+                    animationSpriteNum = 2;
+                } else if (animationCounter <= 20) {
+                    animationSpriteNum = 3;
+                } else if (animationCounter <= 25) {
+                    animationSpriteNum = 4;
+                } else if (animationCounter<= 30) {
+                    animationSpriteNum = 5;
+                } else if (animationCounter <= 35) {
+                    animationSpriteNum = 6;
+                } else if (animationCounter <= 40) {
+                    animationSpriteNum = 7;
+                } else if (animationCounter <= 45) {
+                    animationSpriteNum = 8;
+                }else if (animationCounter <= 50) {
+                    animationSpriteNum = 1;
+                    animationCounter = 0;
+                    attacking = false;
+                }
+                break;
+            case 1:
+                if (animationCounter <= 5){
+                    animationSpriteNum = 0;
+                } else if (animationCounter <= 10) {
+                    animationSpriteNum = 1;
+                } else if (animationCounter <= 15) {
+                    animationSpriteNum = 2;
+                } else if (animationCounter <= 20) {
+                    animationSpriteNum = 3;
+                } else if (animationCounter <= 25) {
+                    animationSpriteNum = 4;
+                } else if (animationCounter<= 30) {
+                    animationSpriteNum = 5;
+                } else if (animationCounter <= 35) {
+                    animationSpriteNum = 1;
+                    animationCounter = 0;
+                    attacking = false;
+                }
+                break;
+            case 2:
+                break;
         }
+
     }
 
     public void interactObject (int index) {
@@ -262,7 +287,6 @@ public class Player extends Entity {
         }
     }
 
-
     public void interactMerchant(int index){
         switch (index) {
             case 999:
@@ -274,7 +298,6 @@ public class Player extends Entity {
                 break;
         }
     }
-
 
     public void interactMob (int index) {
         if ( index != 999) {
@@ -341,8 +364,8 @@ public class Player extends Entity {
     public void getPlayerAttackAnimation() {
         try {
             switch (playerClass) {
-                case 0:
-                    String dir = "/player/Warrior/";
+                case 0: // WARRIOR
+                    dir = "/player/Warrior/";
                     // Load sprites for attacking
                     for (int i = 0; i <= 8; i++) {
                         playerRightAttackList.add(i, UtilityTool.loadSprite(dir + "attackRight/" + i + ".png", "Missing attackLeft " + i));
@@ -353,22 +376,29 @@ public class Player extends Entity {
                     UtilityTool.scaleEntityList(this, playerRightAttackList, 144, 96);
                     UtilityTool.scaleEntityList(this, playerLeftAttackList, 144, 96);
                     break;
-                case 1:
+                case 1: // KNIGHT
+                    dir = "/player/Knight/";
+                    // Load sprites for attacking
+                    for (int i = 0; i <= 5; i++) {
+                        playerRightAttackList.add(i, UtilityTool.loadSprite(dir + "attackRight/" + i + ".png", "Missing attackLeft " + i));
+                        playerLeftAttackList.add(i, UtilityTool.loadSprite(dir + "attackLeft/" + i + ".png", "Missing attackLeft " + i));
+                    }
+                    // Scale sprites up
+                    UtilityTool.scaleEntityList(this, playerRightAttackList, 250, 250);
+                    UtilityTool.scaleEntityList(this, playerLeftAttackList, 250, 250);
                     break;
                 case 2:
             }
         } catch (IOException e){
             e.printStackTrace(System.out);
         }
-
-
     }
 
     public void getPlayerSprites() {
         try {
             switch (playerClass) {
-                case 0:
-                    String dir = "/player/Warrior/";
+                case 0: // WARRIOR
+                    dir = "/player/Warrior/";
                     // Load sprites for movement
                     for (int i = 0; i <= 7; i++) {
                         moveRightList.add(i, UtilityTool.loadSprite(dir + "moveRight/" + i + ".png", "Missing moveRight " + i));
@@ -386,7 +416,24 @@ public class Player extends Entity {
                     UtilityTool.scaleEntityList(this, idleRightList, 144, 96);
                     UtilityTool.scaleEntityList(this, idleLeftList, 144, 96);
                     break;
-                case 1:
+                case 1: // KNIGHT
+                    dir = "/player/Knight/";
+                    // Load sprites for movement
+                    for (int i = 0; i <= 9; i++) {
+                        moveRightList.add(i, UtilityTool.loadSprite(dir + "moveRight/" + i + ".png", "Missing moveRight " + i));
+                        moveLeftList.add(i, UtilityTool.loadSprite(dir + "moveLeft/" + i + ".png", "Missing moveLeft " + i));
+                    }
+                    // Load sprites for idle
+                    for (int i = 0; i <= 9; i++) {
+                        idleRightList.add(i, UtilityTool.loadSprite(dir + "idleRight/" + i + ".png", "Missing idleRight " + i));
+                        idleLeftList.add(i, UtilityTool.loadSprite(dir + "idleLeft/" + i + ".png", "Missing idleLeft " + i));
+                    }
+                    System.out.println("Loaded Knight sprites");
+                    // Scale sprites up
+                    UtilityTool.scaleEntityList(this, moveRightList, 270, 100);
+                    UtilityTool.scaleEntityList(this, moveLeftList, 270, 100);
+                    UtilityTool.scaleEntityList(this, idleRightList, 270, 100);
+                    UtilityTool.scaleEntityList(this, idleLeftList, 270, 100);
                     break;
                 case 2:
             }

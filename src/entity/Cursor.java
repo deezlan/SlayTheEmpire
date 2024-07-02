@@ -1,5 +1,7 @@
 package entity;
 
+import main.UtilityTool;
+
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
@@ -13,9 +15,9 @@ public class Cursor {
 
     public Cursor( ) {
         try {
-            crosshairImage = ImageIO.read(getClass().getResourceAsStream("/crosshair/crosshair.png"));
+            crosshairImage = UtilityTool.loadSprite("/crosshair/crosshair.png", "Missing crosshair");
         } catch(IOException e) {
-            e.printStackTrace();
+            e.printStackTrace(System.out);
         }
     }
 

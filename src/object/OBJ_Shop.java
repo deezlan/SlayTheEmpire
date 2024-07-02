@@ -1,17 +1,16 @@
 package object;
 
-import main.GamePanel;
 import main.UtilityTool;
 
 import java.io.IOException;
 
 public class OBJ_Shop extends SuperObject {
-    public OBJ_Shop(GamePanel gp) {
+    public OBJ_Shop() {
         name = "Shop";
         message = "Shop closed bitch";
 
         // Load shop sprites
-        getObjectSprites(gp);
+        getObjectSprites();
 
         // Set shop collision settings
         solidArea.x = 20;
@@ -25,15 +24,14 @@ public class OBJ_Shop extends SuperObject {
         System.out.println(interactList.size());
     }
 
-    public void getObjectSprites(GamePanel gp) {
+    public void getObjectSprites() {
         String dir = "/objects/shop/";
         try {
-            defaultList.add(0, UtilityTool.loadSprite(dir + "00.png", "Missing Shop 0"));
-            defaultList.add(1, UtilityTool.loadSprite(dir + "01.png", "Missing Shop 1"));
-            defaultList.add(2, UtilityTool.loadSprite(dir + "02.png", "Missing Shop 2"));
-            defaultList.add(3, UtilityTool.loadSprite(dir + "03.png", "Missing Shop 3"));
-
-            UtilityTool.scaleObjectList(defaultList, (int)(gp.TILE_SIZE*3.6), (int)(gp.TILE_SIZE*2.4));
+            // Load sprites
+            for (int i = 0; i <= 3; i++)
+                defaultList.add(i, UtilityTool.loadSprite(dir + i + ".png", "Missing shop " + i));
+            // Scale sprites up
+            UtilityTool.scaleObjectList(defaultList, 173, 115);
         } catch (IOException e) {
             e.printStackTrace(System.out);
         }

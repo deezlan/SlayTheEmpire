@@ -13,7 +13,7 @@ public class OBJ_Hammer extends Entity {
         name = "Hammer";
         price = "150";
         try {
-            weaponSprite = UtilityTool.loadSprite("/Weapon/Hammer/Hammer.png", "Hammer sprite not loaded");
+            weaponSprite = UtilityTool.loadSprite("/Weapon/Hammer/12.png", "Hammer sprite not loaded");
         } catch (IOException e){
             String errorMsg = "Hammer sprite not loaded";
             throw new IOException(errorMsg, e);

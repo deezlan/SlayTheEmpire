@@ -22,12 +22,7 @@ public class GamePanel extends JPanel implements Runnable {
     public final int SCREEN_WIDTH = TILE_SIZE * MAX_SCREEN_COL;
     public final int SCREEN_HEIGHT = TILE_SIZE * MAX_SCREEN_ROW;
     public int gameArea;
-
-
-
     public int playerClass = 0;
-
-
 
     //World Settings
     public int MAX_WORLD_COL = 17; //must be same as map size

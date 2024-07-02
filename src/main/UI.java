@@ -1,9 +1,13 @@
 package main;
 
+import object.OBJ_Coin;
 import object.OBJ_Heart;
 import object.SuperObject;
 
-import java.awt.*;
+import java.awt.Graphics2D;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.BasicStroke;
 import java.awt.image.BufferedImage;
 
 public class UI {
@@ -11,6 +15,9 @@ public class UI {
     GamePanel gp;
     BufferedImage fullHeart, halfHeart, emptyHeart;
     Graphics2D g2;
+    SuperObject coin = new OBJ_Coin(gp);
+
+    public String currentDialog = "";
     public int slotCol = 0;
     public int slotRow = 0;
     public int slotColMove = 0;
@@ -21,9 +28,11 @@ public class UI {
 
         //HUD Components
         SuperObject heart = new OBJ_Heart(gp);
-        fullHeart = heart.scaledList.get(2);
-        halfHeart = heart.scaledList.get(1);
-        emptyHeart = heart.scaledList.get(0);
+        fullHeart = heart.defaultList.get(2);
+        halfHeart = heart.defaultList.get(1);
+        emptyHeart = heart.defaultList.get(0);
+
+//        coin = new OBJ_Coin(gp);
     }
 
     public void draw(Graphics2D g2){
@@ -32,9 +41,8 @@ public class UI {
         g2.setFont(new Font("Microsoft YaHei", Font.PLAIN, 28));
         g2.setColor(Color.white);
         drawPlayerLife();
-//        if (gp.gameState == gp.playState) {
-//
-//        }
+        if (gp.gameState == gp.playState) drawPlayerMoney();
+
         //Pause State
         if (gp.gameState == gp.pauseState) {
             drawPauseScreen();
@@ -47,6 +55,10 @@ public class UI {
 
         if (gp.gameState == gp.shopState){
             drawInventory();
+        }
+
+        if (gp.gameState == gp.deathState) {
+            drawDeathScreen();
         }
     }
 
@@ -61,13 +73,13 @@ public class UI {
         //SLOT
         final int slotXstart = frameX + 35;
         final int slotYstart = frameY + 35;
-        int slotX = slotXstart;
-        int slotY = slotYstart;
-
-        //DRAW PLAYER INVENTORY
-        for (int i = 0; i < gp.player.inventory.size(); i++){
-            //insert weapons
-        }
+//        int slotX = slotXstart; temp commented
+//        int slotY = slotYstart;
+//
+//        //DRAW PLAYER INVENTORY
+//        for (int i = 0; i < gp.player.inventory.size(); i++){
+//            //insert weapons
+//        }
 
         //CURSOR
         int cursorX = slotXstart + (gp.TILE_SIZE * slotColMove);
@@ -104,6 +116,14 @@ public class UI {
         }
     }
 
+    public void drawPlayerMoney() {
+        coin.spriteCounter++;
+        if (coin.spriteCounter > 4) coin.loopThroughSprites();
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 40));
+        g2.drawString ("" + gp.player.totalCoins, 38, 117);
+        g2.drawImage(coin.defaultList.get(coin.spriteNum), 78, 78, null);
+    }
+
     // Draw Pause Screen
     public void drawPauseScreen() {
 
@@ -123,12 +143,29 @@ public class UI {
         int dialogY = gp.TILE_SIZE/2;
         int dialogWidth = gp.SCREEN_WIDTH - (gp.TILE_SIZE*4);
         int dialogHeight = gp.TILE_SIZE*4;
-
         drawSubWindow(dialogX,dialogY,dialogWidth,dialogHeight);
+
+        g2.setFont(g2.getFont().deriveFont(Font.PLAIN,32));
+        dialogX += gp.TILE_SIZE;
+        dialogY += gp.TILE_SIZE;
+
+        for(String line : currentDialog.split("\n")){ // breaks long dialogues // for up to use
+            g2.drawString(line,dialogX,dialogY);
+            dialogY += 40;
+        }
+    }
+
+    public void drawDeathScreen() {
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD));
+        String text = "KAMU DAH MATI";
+        int x = getXforCenteredText(text);
+        int y = gp.SCREEN_HEIGHT/2;
+
+        g2.drawString(text, x, y);
     }
 
     public void drawSubWindow(int x, int y, int width,int height){
-        Color custom = new Color(0,0,0);
+        Color custom = new Color(0,0,0,220);
         g2.setColor(custom);
         g2.fillRoundRect(x,y,width,height,35,35);
 

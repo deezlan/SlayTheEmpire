@@ -29,15 +29,15 @@ public class GamePanel extends JPanel implements Runnable {
     public final int SCREEN_HEIGHT = TILE_SIZE * MAX_SCREEN_ROW;
     public int gameArea;
 
-    // World Settings
-    public final int MAX_WORLD_COL = 17;
-    public final int MAX_WORLD_ROW = 13;
+    //World Settings
+    public int MAX_WORLD_COL = 17; //must be same as map size
+    public int MAX_WORLD_ROW = 14; //must be same as map size
 
     // FPS Settings
     final int FPS = 60;
 
     TileManager tileM = new TileManager(this);
-    KeyHandler keyH = new KeyHandler(this);
+    public KeyHandler keyH = new KeyHandler(this);
     public Cursor cursor = new Cursor(); // Initialize cursor
     public Player player = new Player(this, keyH, cursor); // Pass cursor to player
     public MouseHandler mouseH = new MouseHandler();
@@ -45,13 +45,16 @@ public class GamePanel extends JPanel implements Runnable {
     Thread gameThread;
 
     public AssetSetter aSetter = new AssetSetter(this);
+    public Player player = new Player(this, keyH);
     public SuperObject[] objArr= new SuperObject[10];
     public Entity[] npcArr = new Entity[10];
+    public Entity[] mobArr = new Entity[10];
     public Projectile[] projectileArr = new Projectile[10];
     public CollisionChecker cChecker = new CollisionChecker(this);
     public Projectile projectile = new Projectile(this);
     public UI ui = new UI(this);
 
+    public EventHandler eHandler = new EventHandler(this);
 
     // Game States
     public int gameState;
@@ -59,8 +62,8 @@ public class GamePanel extends JPanel implements Runnable {
     public final int playState = 1; // NO USAGE SO FAR
     public final int pauseState = 2; // NO USAGE SO FAR
     public final int dialogueState = 3; // NO USAGE SO FAR
-
     public final int shopState = 4;
+    public final int deathState = 5;
 
     public GamePanel() {
         this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
@@ -100,14 +103,18 @@ public class GamePanel extends JPanel implements Runnable {
         return cursor;
     }
 
+//    public Cursor getPCursor() {
+//        return cursor;
+//    }
+
     public void setupGame() {
         aSetter.setObject();
         aSetter.setNPC();
+        aSetter.setMonster();
         gameState = playState;
     }
 
     public void startGameThread() {
-        gameArea = 1;
         gameThread = new Thread(this);
         gameThread.start();
     }
@@ -155,47 +162,15 @@ public class GamePanel extends JPanel implements Runnable {
                 if (npc != null) npc.update();
             }
 
+            for (Entity mob : mobArr) {
+                if (mob != null) mob.update();
+            }
+
             if (projectile != null) {
                 projectile.update();
             }
-
         }
-
-//        if (gameState == pauseState) {
-//            // placeholder
-//        }
     }
-
-//    public void paintComponent(Graphics g) {
-//        super.paintComponent(g);
-//        Graphics2D g2 = (Graphics2D) g;
-//
-//        // Draw tiles
-//        tileM.draw(g2);
-//
-//        // Draw player
-//        player.draw(g2);
-//
-//        // Draw objects
-//        for (SuperObject superObject : objArr) {
-//            if (superObject != null) {
-//                superObject.draw(g2, this);
-//            }
-//        }
-//
-//        // Draw NPCs
-//        for (Entity entity : npcArr) {
-//            if (entity != null) {
-//                entity.draw(g2);
-//            }
-//        }
-//
-//        // Draw UI elements
-//        ui.draw(g2);
-//
-//        g2.dispose();
-//    }
-
 
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -205,9 +180,19 @@ public class GamePanel extends JPanel implements Runnable {
         if (gameState == titleState) {
             ui.draw(g2);
         } else if (gameState == playState) {
+//            switch (gameArea) {
+//                case 0:
+//                    this.player.worldX = 350;
+//                    this.player.worldY = 30;
+//                    break;
+//                case 1:
+//                    this.player.worldX = 145;
+//                    this.player.worldY = 232;
+//                    break;
+//                default:
+//                    System.out.println("Default Case GamePanel paintComponent");
+//            }
             tileM.draw(g2); // Draw tiles
-
-            player.draw(g2); // Draw player
 
             for (SuperObject superObject : objArr)
                 if (superObject != null) superObject.draw(g2, this);
@@ -215,11 +200,16 @@ public class GamePanel extends JPanel implements Runnable {
             for (Entity entity : npcArr)
                 if (entity != null) entity.draw(g2);
 
-            ui.draw(g2);
+            for (Entity mob : mobArr)
+                if (mob != null) mob.draw(g2);
 
             if (projectile != null && mouseH.leftClick) {
                 projectile.draw(g2);
             }
+
+            player.draw(g2); // Draw player
+
+            ui.draw(g2);
 
         } else if (gameState == dialogueState){
             tileM.draw(g2); // Draw tiles
@@ -236,7 +226,7 @@ public class GamePanel extends JPanel implements Runnable {
                 projectile.draw(g2);
             }
             ui.draw(g2);
-        } else if (gameState == pauseState) {
+        } else {
             tileM.draw(g2); // Draw tiles
 
             player.draw(g2); // Draw player
@@ -247,16 +237,11 @@ public class GamePanel extends JPanel implements Runnable {
             for (Entity entity : npcArr)
                 if (entity != null) entity.draw(g2);
 
-
-            ui.draw(g2);
-        } else{
-            tileM.draw(g2); // Draw tiles
-
-            player.draw(g2); // Draw player
+            for (Entity mob : mobArr)
+                if (mob != null) mob.draw(g2);
 
             ui.draw(g2);
         }
-
         g2.dispose();
     }
 }

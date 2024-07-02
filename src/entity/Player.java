@@ -211,7 +211,7 @@ public class Player extends Entity {
             if (currentActionList.size() > 14) {
                 if (spriteCounter > 4) loopThroughSprites();
             } else if (currentActionList.size() > 7) {
-                if (spriteCounter > 5) loopThroughSprites();
+                if (spriteCounter > 6) loopThroughSprites();
             } else {
                 if (spriteCounter > 9) loopThroughSprites();
             }
@@ -433,8 +433,8 @@ public class Player extends Entity {
                     }
 
                     // Scale sprites up
-                    UtilityTool.scaleEntityList(this, playerRightAttackList, 144, 96);
-                    UtilityTool.scaleEntityList(this, playerLeftAttackList, 144, 96);
+                    UtilityTool.scaleEntityList(this, playerRightAttackList, 220, 96);
+                    UtilityTool.scaleEntityList(this, playerLeftAttackList, 220, 96);
                     break;
                 case 1: // KNIGHT
                     dir = "/player/Knight/";
@@ -454,8 +454,8 @@ public class Player extends Entity {
                         playerLeftAttackList.add(i, UtilityTool.loadSprite(dir + "attackLeft/" + i + ".png", "Missing attackLeft " + i));
                     }
                     // Scale sprites up
-                    UtilityTool.scaleEntityList(this, playerRightAttackList, 144, 96);
-                    UtilityTool.scaleEntityList(this, playerLeftAttackList, 144, 96);
+                    UtilityTool.scaleEntityList(this, playerRightAttackList, 180, 96);
+                    UtilityTool.scaleEntityList(this, playerLeftAttackList, 180, 96);
             }
         } catch (IOException e){
             e.printStackTrace(System.out);
@@ -479,10 +479,10 @@ public class Player extends Entity {
                     }
 
                     // Scale sprites up
-                    UtilityTool.scaleEntityList(this, moveRightList, 144, 96);
-                    UtilityTool.scaleEntityList(this, moveLeftList, 144, 96);
-                    UtilityTool.scaleEntityList(this, idleRightList, 144, 96);
-                    UtilityTool.scaleEntityList(this, idleLeftList, 144, 96);
+                    UtilityTool.scaleEntityList(this, moveRightList, 220, 96);
+                    UtilityTool.scaleEntityList(this, moveLeftList, 220, 96);
+                    UtilityTool.scaleEntityList(this, idleRightList, 220, 96);
+                    UtilityTool.scaleEntityList(this, idleLeftList, 220, 96);
                     break;
                 case 1: // KNIGHT
                     dir = "/player/Knight/";
@@ -517,10 +517,10 @@ public class Player extends Entity {
                     }
 
                     // Scale sprites up
-                    UtilityTool.scaleEntityList(this, moveRightList, 144, 96);
-                    UtilityTool.scaleEntityList(this, moveLeftList, 144, 96);
-                    UtilityTool.scaleEntityList(this, idleRightList, 144, 96);
-                    UtilityTool.scaleEntityList(this, idleLeftList, 144, 96);
+                    UtilityTool.scaleEntityList(this, moveRightList, 180, 96);
+                    UtilityTool.scaleEntityList(this, moveLeftList, 180, 96);
+                    UtilityTool.scaleEntityList(this, idleRightList, 180, 96);
+                    UtilityTool.scaleEntityList(this, idleLeftList, 180, 96);
                     break;
             }
         } catch (IOException e) {

@@ -34,7 +34,7 @@ public class Player extends Entity {
         this.cursor = cursor;
         setDefaultValues();
         getPlayerSprites();
-//        getPlayerAttackImage(); DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD
+//        getPlayerAttackImage(); Ananda's old slash method
         getPlayerAttackAnimation();
 
         setItems();
@@ -47,10 +47,9 @@ public class Player extends Entity {
         solidArea.width = 25; // outer area of collision square
         solidArea.height = 25;
 
-//        SwordSlash slash1 = new SwordSlash(gp);
+//        SwordSlash slash1 = new SwordSlash(gp); // Ananda's old slash variables
 //        slash = slash1;
     }
-
 
     public void setDefaultValues() {
         worldX = 350; // Player spawn location x
@@ -72,6 +71,7 @@ public class Player extends Entity {
         //add inventory
     }
 
+    @Override
     public void update() {
         if (life == 0) {
             gp.gameState = gp.deathState;
@@ -83,7 +83,6 @@ public class Player extends Entity {
             if ((keyH.wPressed && keyH.sPressed) || (keyH.aPressed && keyH.dPressed)) {
                 action = "stuckOppositeDirection";
                 currentActionList = lookingRight ? idleRightList : idleLeftList;
-
             }
 
             if (keyH.wPressed && keyH.sPressed && keyH.aPressed) {
@@ -177,7 +176,6 @@ public class Player extends Entity {
                 int mobIndex = gp.cChecker.checkEntityCollision(this, gp.mobArr);
                 interactMob(mobIndex);
 
-
                 switch (action) {
                     case "moveUp", "moveDown":
                         currentActionList = lookingRight ? moveRightList : moveLeftList;
@@ -208,9 +206,14 @@ public class Player extends Entity {
                 }
             }
 
+            // Animation speed
             spriteCounter++;
-            if (spriteCounter > 5) {
-                loopThroughSprites();
+            if (currentActionList.size() > 14) {
+                if (spriteCounter > 4) loopThroughSprites();
+            } else if (currentActionList.size() > 7) {
+                if (spriteCounter > 5) loopThroughSprites();
+            } else {
+                if (spriteCounter > 9) loopThroughSprites();
             }
             cursor.calculateAngle((int) (worldX + gp.TILE_SIZE * 1.5), worldY + gp.TILE_SIZE);
         }
@@ -230,7 +233,7 @@ public class Player extends Entity {
                     animationSpriteNum = 3;
                 } else if (animationCounter <= 25) {
                     animationSpriteNum = 4;
-                } else if (animationCounter<= 30) {
+                } else if (animationCounter <= 30) {
                     animationSpriteNum = 5;
                 } else if (animationCounter <= 35) {
                     animationSpriteNum = 6;
@@ -238,8 +241,8 @@ public class Player extends Entity {
                     animationSpriteNum = 7;
                 } else if (animationCounter <= 45) {
                     animationSpriteNum = 8;
-                }else if (animationCounter <= 50) {
-                    animationSpriteNum = 1;
+                } else if (animationCounter <= 50) {
+                    animationSpriteNum = 0;
                     animationCounter = 0;
                     attacking = false;
                 }
@@ -255,15 +258,72 @@ public class Player extends Entity {
                     animationSpriteNum = 3;
                 } else if (animationCounter <= 25) {
                     animationSpriteNum = 4;
-                } else if (animationCounter<= 30) {
+                } else if (animationCounter <= 30) {
                     animationSpriteNum = 5;
                 } else if (animationCounter <= 35) {
-                    animationSpriteNum = 1;
+                    animationSpriteNum = 0;
                     animationCounter = 0;
                     attacking = false;
                 }
                 break;
             case 2:
+                if (animationCounter <= 5){
+                    animationSpriteNum = 0;
+                } else if (animationCounter <= 10) {
+                    animationSpriteNum = 1;
+                } else if (animationCounter <= 15) {
+                    animationSpriteNum = 2;
+                } else if (animationCounter <= 20) {
+                    animationSpriteNum = 3;
+                } else if (animationCounter <= 25) {
+                    animationSpriteNum = 4;
+                } else if (animationCounter <= 30) {
+                    animationSpriteNum = 5;
+                } else if (animationCounter <= 35) {
+                    animationSpriteNum = 6;
+                } else if (animationCounter <= 40) {
+                    animationSpriteNum = 7;
+                } else if (animationCounter <= 45) {
+                    animationSpriteNum = 8;
+                } else if (animationCounter <= 50) {
+                    animationSpriteNum = 9;
+                } else if (animationCounter <= 55) {
+                    animationSpriteNum = 10;
+                } else if (animationCounter <= 60) {
+                    animationSpriteNum = 11;
+                } else if (animationCounter <= 65) {
+                    animationSpriteNum = 12;
+                } else if (animationCounter <= 70) {
+                    animationSpriteNum = 13;
+                } else if (animationCounter <= 75) {
+                    animationSpriteNum = 14;
+                } else if (animationCounter <= 80) {
+                    animationSpriteNum = 15;
+                } else if (animationCounter <= 85) {
+                    animationSpriteNum = 16;
+                } else if (animationCounter <= 90) {
+                    animationSpriteNum = 17;
+                } else if (animationCounter <= 95) {
+                    animationSpriteNum = 18;
+                } else if (animationCounter <= 100) {
+                    animationSpriteNum = 19;
+                } else if (animationCounter <= 105) {
+                    animationSpriteNum = 20;
+                } else if (animationCounter <= 110) {
+                    animationSpriteNum = 21;
+                } else if (animationCounter <= 115) {
+                    animationSpriteNum = 22;
+                } else if (animationCounter <= 120) {
+                    animationSpriteNum = 23;
+                } else if (animationCounter <= 125) {
+                    animationSpriteNum = 24;
+                } else if (animationCounter <= 130) {
+                    animationSpriteNum = 25;
+                } else if (animationCounter <= 135) {
+                    animationSpriteNum = 0;
+                    animationCounter = 0;
+                    attacking = false;
+                }
                 break;
         }
 
@@ -380,14 +440,22 @@ public class Player extends Entity {
                     dir = "/player/Knight/";
                     // Load sprites for attacking
                     for (int i = 0; i <= 5; i++) {
-                        playerRightAttackList.add(i, UtilityTool.loadSprite(dir + "attackRight/" + i + ".png", "Missing attackLeft " + i));
+                        playerRightAttackList.add(i, UtilityTool.loadSprite(dir + "attackRight/" + i + ".png", "Missing attackRight " + i));
                         playerLeftAttackList.add(i, UtilityTool.loadSprite(dir + "attackLeft/" + i + ".png", "Missing attackLeft " + i));
                     }
                     // Scale sprites up
-                    UtilityTool.scaleEntityList(this, playerRightAttackList, 250, 250);
-                    UtilityTool.scaleEntityList(this, playerLeftAttackList, 250, 250);
+                    UtilityTool.scaleEntityList(this, playerRightAttackList, 200, 96);
+                    UtilityTool.scaleEntityList(this, playerLeftAttackList, 200, 96);
                     break;
-                case 2:
+                case 2: // ASSASSIN
+                    dir = "/player/Assassin/";
+                    for (int i = 0; i <= 25; i++) {
+                        playerRightAttackList.add(i, UtilityTool.loadSprite(dir + "attackRight/" + i + ".png", "Missing attackRight " + i));
+                        playerLeftAttackList.add(i, UtilityTool.loadSprite(dir + "attackLeft/" + i + ".png", "Missing attackLeft " + i));
+                    }
+                    // Scale sprites up
+                    UtilityTool.scaleEntityList(this, playerRightAttackList, 144, 96);
+                    UtilityTool.scaleEntityList(this, playerLeftAttackList, 144, 96);
             }
         } catch (IOException e){
             e.printStackTrace(System.out);
@@ -430,12 +498,30 @@ public class Player extends Entity {
                     }
                     System.out.println("Loaded Knight sprites");
                     // Scale sprites up
-                    UtilityTool.scaleEntityList(this, moveRightList, 270, 100);
-                    UtilityTool.scaleEntityList(this, moveLeftList, 270, 100);
-                    UtilityTool.scaleEntityList(this, idleRightList, 270, 100);
-                    UtilityTool.scaleEntityList(this, idleLeftList, 270, 100);
+                    UtilityTool.scaleEntityList(this, moveRightList, 200, 96);
+                    UtilityTool.scaleEntityList(this, moveLeftList, 200, 96);
+                    UtilityTool.scaleEntityList(this, idleRightList, 200, 96);
+                    UtilityTool.scaleEntityList(this, idleLeftList, 200, 96);
                     break;
                 case 2:
+                    dir = "/player/Assassin/";
+                    // Load sprites for movement
+                    for (int i = 0; i <= 24; i++) {
+                        moveRightList.add(i, UtilityTool.loadSprite(dir + "moveRight/" + i + ".png", "Missing moveRight " + i));
+                        moveLeftList.add(i, UtilityTool.loadSprite(dir + "moveLeft/" + i + ".png", "Missing moveLeft " + i));
+                    }
+                    // Load sprites for idle
+                    for (int i = 0; i <= 17; i++) {
+                        idleRightList.add(i, UtilityTool.loadSprite(dir + "idleRight/" + i + ".png", "Missing idleRight " + i));
+                        idleLeftList.add(i, UtilityTool.loadSprite(dir + "idleLeft/" + i + ".png", "Missing idleLeft " + i));
+                    }
+
+                    // Scale sprites up
+                    UtilityTool.scaleEntityList(this, moveRightList, 144, 96);
+                    UtilityTool.scaleEntityList(this, moveLeftList, 144, 96);
+                    UtilityTool.scaleEntityList(this, idleRightList, 144, 96);
+                    UtilityTool.scaleEntityList(this, idleLeftList, 144, 96);
+                    break;
             }
         } catch (IOException e) {
             e.printStackTrace(System.out);

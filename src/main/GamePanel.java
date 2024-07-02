@@ -25,7 +25,7 @@ public class GamePanel extends JPanel implements Runnable {
 
 
 
-    public int playerClass = 0;
+    public int playerClass = 1;
 
 
 

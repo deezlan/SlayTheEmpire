@@ -45,7 +45,6 @@ public class GamePanel extends JPanel implements Runnable {
     Thread gameThread;
 
     public AssetSetter aSetter = new AssetSetter(this);
-    public Player player = new Player(this, keyH);
     public SuperObject[] objArr= new SuperObject[10];
     public Entity[] npcArr = new Entity[10];
     public Entity[] mobArr = new Entity[10];
@@ -215,6 +214,7 @@ public class GamePanel extends JPanel implements Runnable {
             tileM.draw(g2); // Draw tiles
 
             player.draw(g2); // Draw player
+
 
             for (SuperObject superObject : objArr)
                 if (superObject != null) superObject.draw(g2, this);

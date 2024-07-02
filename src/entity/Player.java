@@ -5,8 +5,7 @@ import main.KeyHandler;
 import main.UtilityTool;
 
 import javax.imageio.ImageIO;
-import java.awt.Graphics2D;
-import java.awt.Rectangle;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -15,6 +14,7 @@ import java.util.Objects;
 public class Player extends Entity {
     GamePanel gp;
     KeyHandler keyH;
+    Graphics2D g2;
     private final Cursor cursor;
     public final int screenX;
     public final int screenY;
@@ -287,6 +287,7 @@ public class Player extends Entity {
     }
 
     public void draw(Graphics2D g2) {
+        cursor.draw(g2, (int) (worldX + gp.TILE_SIZE * 1.5), worldY + gp.TILE_SIZE);
         if (spriteNum > currentActionList.size() - 1)
             spriteNum = 1;
         BufferedImage image = currentActionList.get(spriteNum - 1);
@@ -337,7 +338,7 @@ public class Player extends Entity {
             e.printStackTrace(System.out);
         }
         // draw arrow
-        cursor.draw(g2, (int) (worldX + gp.TILE_SIZE * 1.5), worldY + gp.TILE_SIZE);
+//        cursor.draw(g2, (int) (worldX + gp.TILE_SIZE * 1.5), worldY + gp.TILE_SIZE);
     }
 
     public void getPlayerAttackAnimation() {

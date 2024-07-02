@@ -1,9 +1,10 @@
 package main;
 
-import entity.NPCMaiden;
-import entity.NPCMerchant;
-import entity.NPCMystery;
-import entity.NPCBlacksmith;
+import entity.NPC_Merchant;
+import entity.NPC_Mystery;
+import entity.NPC_Blacksmith;
+import entity.NPC_Maiden;
+import mobs.MOB_Slime;
 import object.OBJ_DialogueBubble;
 import object.OBJ_SavePedestal;
 import object.OBJ_Shop;
@@ -42,6 +43,12 @@ public class AssetSetter {
                 gp.objArr[6] = new OBJ_DialogueBubble(); // Mystery chat bubble
                 gp.objArr[6].worldX = 540;
                 gp.objArr[6].worldY = 418;
+
+                if (gp.mouseH.leftClick) {
+                    gp.projectileArr[0] = new OBJ_Gun_SnowBallCannon(gp);
+                    gp.projectileArr[0].worldX = 400;
+                    gp.projectileArr[0].worldY = 300;
+                }
                 break;
             case 1, 2:
                 break;

@@ -34,8 +34,10 @@ public class Projectile extends Entity {
         projectileSelect(selectedProjectile);
         timer = new Timer(20, e -> updatePosition());
         timer.start();
-        proX = getPlayerX();
-        proY = getPlayerY();
+
+
+//        proX = getPlayerX();
+//        proY = getPlayerY();
     }
 
     public void projectileSelect(int selectedProjectile) {
@@ -47,7 +49,11 @@ public class Projectile extends Entity {
     }
 
     public void update() {
-
+        if(gp.mouseH.shortGet){
+            proX = getPlayerX();
+            proY = getPlayerY();
+            System.out.println("true");
+        }
         switch (selectedProjectile) {
             case 0:
                 if (snc == null) {
@@ -57,15 +63,15 @@ public class Projectile extends Entity {
                 break;
         }
 
-        if(iterate % 5 == 0){
-            proX = getPlayerX();
-            proY = getPlayerY();
-
-            System.out.println(proX);
-            System.out.println(proY);
-        }else{
-            iterate++;
-        }
+//        if(iterate % 15 == 0){
+//            proX = getPlayerX();
+//            proY = getPlayerY();
+//
+//            System.out.println(proX);
+//            System.out.println(proY);
+//        }else{
+//            iterate++;
+//        }
         updatePosition();
     }
 
@@ -76,12 +82,10 @@ public class Projectile extends Entity {
         }
         if (proNum > 0 && proNum <= snc.spriteList.size()) {
             BufferedImage projectiles = snc.spriteList.get(snc.proNum - 1);
-            g2.drawImage(projectiles, proX + 10, proY - 30 , gp.TILE_SIZE*2, gp.TILE_SIZE*2, null);
+            g2.drawImage(projectiles, proX + 22, proY, gp.TILE_SIZE*3/2, gp.TILE_SIZE*3/2, null);
         } else {
             System.out.println("Invalid spriteNum: " + proNum);
         }
-
-
     }
 
     public int getPlayerX() {
@@ -94,22 +98,22 @@ public class Projectile extends Entity {
 
 
     private void updatePosition() {
-        dx = gp.cursor.deltaX;
-        dy = gp.cursor.deltaY;;
+            dx = gp.cursor.deltaX;
+            dy = gp.cursor.deltaY;
 
-//        System.out.println("X: " + dx);
-//        System.out.println("y: " + dy);
+            System.out.println("X: " + dx);
+            System.out.println("y: " + dy);
 
-        if (Math.abs(dx) > 1) {
-            proX += (int) (dx / proSpeed);
-        }
-        if (Math.abs(dy) > 1) {
-            proY += (int) (dy / proSpeed);
-        }
+            if (Math.abs(dx) > 1) {
+                proX += (int) (dx / proSpeed);
+            }
+            if (Math.abs(dy) > 1) {
+                proY += (int) (dy / proSpeed);
+            }
 
-        if (Math.abs(dx) <= 1 && Math.abs(dy) <= 1) {
-            timer.stop();
-        }
+            if (Math.abs(dx) <= 1 && Math.abs(dy) <= 1) {
+                timer.stop();
+            }
     }
 
 

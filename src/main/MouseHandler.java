@@ -14,6 +14,7 @@ public class MouseHandler implements MouseListener {
 //    public MouseHandler mouseH = new MouseHandler();
 //    entity.Cursor cursor = new Cursor(); // Initialize cursor
     public boolean leftClick;
+    public boolean shortGet = true;
 
 //    public MouseHandler() {
 //        addMouseMotionListener(new MouseAdapter() {
@@ -36,6 +37,7 @@ public class MouseHandler implements MouseListener {
         if (e.getButton() == MouseEvent.BUTTON1) {
             leftClick = true;
             System.out.println("mouseclicked");
+            shortGet = false;
         }
     }
 

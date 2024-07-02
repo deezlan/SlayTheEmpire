@@ -242,7 +242,9 @@ public class Player extends Entity {
     }
 
     public void interactObject (int index) {
-        if (index != 999) {
+        if (index == 0){
+            gp.gameState = gp.shopState;
+        } else if (index != 999) {
 //            gp.objArray[index] = null;
             System.out.println(gp.objArr[index].message);
             if (!gp.objArr[index].interactList.isEmpty())

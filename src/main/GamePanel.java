@@ -25,7 +25,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     //World Settings
     public int MAX_WORLD_COL = 17; //must be same as map size
-    public int MAX_WORLD_ROW = 13; //must be same as map size
+    public int MAX_WORLD_ROW = 14; //must be same as map size
 
     // FPS Settings
     final int FPS = 60;
@@ -43,6 +43,8 @@ public class GamePanel extends JPanel implements Runnable {
     public Entity[] mobArr = new Entity[10];
     public CollisionChecker cChecker = new CollisionChecker(this);
     public UI ui = new UI(this);
+
+    public EventHandler eHandler = new EventHandler(this);
 
     // Game States
     public int gameState;

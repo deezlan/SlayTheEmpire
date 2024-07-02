@@ -14,13 +14,17 @@ public abstract class Entity {
     boolean attacking = false;
     public ArrayList<BufferedImage>
             currentActionList = new ArrayList<>(),
+            currentAnimationList = new ArrayList<>(),
             idleRightList = new ArrayList<>(),
             idleLeftList = new ArrayList<>(),
             moveRightList = new ArrayList<>(),
             moveLeftList = new ArrayList<>(),
+            playerRightAttackList = new ArrayList<>(),
+            playerLeftAttackList = new ArrayList<>(),
             weaponList = new ArrayList<>();
     public String action;
     public boolean lookingRight;
+    public String direction;
 
     public boolean iframe = false;
     public int iframeCounter = 0;
@@ -30,6 +34,9 @@ public abstract class Entity {
     public int spriteNum = 1;
     public int weaponSpriteCounter = 0;
     public int weaponSpriteNum = 1;
+
+    public int animationCounter = 0;
+    public int animationSpriteNum = 0;
 
     public int interactionCounter = 0;
     String[] dialogs = new String[20];

@@ -7,20 +7,29 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-public class UI {
+public class  UI {
 
     GamePanel gp;
     BufferedImage fullHeart, halfHeart, emptyHeart;
     Graphics2D g2;
-    private Image titleGif;
+    private final Image titleGif;
+    private final Image titleImage;
+    private final Image newGame;
+    private final Image loadGame;
+    private final Image options;
+    private final Image quit;
+
     public String currentDialog = "";
     public int slotCol = 0;
     public int slotRow = 0;
     public int slotColMove = 0;
     public int slotRowMove = 0;
+    private final LoginPanel loginPanel;
 
     public UI(GamePanel gp) {
         this.gp = gp;
+
+        loginPanel = new LoginPanel(gp);
 
         //HUD Components
         SuperObject heart = new OBJ_Heart(gp);
@@ -31,6 +40,23 @@ public class UI {
         // INITIALIZE TITLE VIDEO
         ImageIcon icon = new ImageIcon("res/UI/Title.gif");
         titleGif = icon.getImage();
+
+        // INITIALIZE TITLE
+        ImageIcon title = new ImageIcon("res/UI/Title.png");
+        titleImage = title.getImage();
+
+        // INITIALIZE START MENU UI
+        ImageIcon newgame = new ImageIcon("res/UI/newgame.png");
+        newGame = newgame.getImage();
+
+        ImageIcon load = new ImageIcon("res/UI/loadgame.png");
+        loadGame = load.getImage();
+
+        ImageIcon optionsImage = new ImageIcon("res/UI/options.png");
+        options = optionsImage.getImage();
+
+        ImageIcon quitImage = new ImageIcon("res/UI/quit.png");
+        quit = quitImage.getImage();
     }
 
     public void draw(Graphics2D g2){
@@ -43,6 +69,13 @@ public class UI {
         // TITLE STATE
         if (gp.gameState == gp.titleState) {
             drawTitleScreen();
+        }
+
+        // LOGIN MENU
+        if (gp.gameState == gp.loginState) {
+            drawLogin();
+        } else {
+            gp.loginPanel.setVisible(false);
         }
 
         // START MENU STATE
@@ -125,45 +158,107 @@ public class UI {
     }
 
     public void drawPauseScreen() {
+        // save composite
+        Composite orgComposite = g2.getComposite();
+
+        // set opacity of bg
+        float opacity = 0.8f;
+        g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, opacity));
+
+        // Draw black background
+        g2.setColor(Color.BLACK);
+        g2.fillRect(0,0, gp.SCREEN_WIDTH, gp.SCREEN_HEIGHT);
+
+        // reset composite
+        g2.setComposite(orgComposite);
 
         g2.setFont(g2.getFont().deriveFont(Font.BOLD, 60F));
-        String text = "GO TOUCH GRASS BITCH";
+        String text = "PAUSED";
         int x = getXforCenteredText(text);
         int y = gp.SCREEN_HEIGHT/2;
 
         // SHADOW
         g2.setColor(Color.gray);
-        g2.drawString(text, x+5, y+5);
+        g2.drawString(text, x+2, y+2);
         // Main PauseScreen
         g2.setColor(Color.white);
         g2.drawString(text, x, y);
 
     }
 
-    // Draw Title
+    // Calculate Image Height
+    public int calculateHeight(Image img) {
+        return img.getHeight(null);
+    }
+
+    public int calculateWidth(Image img) {
+        return img.getWidth(null);
+    }
+
+    // Draw Title GIF
     public void drawTitleScreen() {
         g2.drawImage(titleGif, 0, 0, gp.SCREEN_WIDTH, gp.SCREEN_HEIGHT, null);
     }
 
+    // DRAW TITLE IMAGE
+    public void drawTitleImage() {
+        int imageWidth = (int)(gp.SCREEN_WIDTH/1.3);
+        int imageHeight = (int) (calculateHeight(titleImage) * ((double) imageWidth / titleImage.getWidth(null)));
+        int x = (gp.SCREEN_WIDTH - imageWidth) / 2;
+        int y = (gp.SCREEN_HEIGHT - imageHeight) / 4;
+
+        g2.drawImage(titleImage, x, y, imageWidth, imageHeight, null);
+    }
+
+    // Draw LOGIN_OR_REGISTER SCREEN
+//    public void drawLoginOrRegisterScreen() {
+//
+//    }
+
     // Draw Login Screen
     public void drawLogin() {
 
+        // black background
         g2.setColor(Color.BLACK);
-        g2.fillRect(0,0, gp.SCREEN_WIDTH, gp.SCREEN_HEIGHT);
+        g2.fillRect(0, 0, gp.SCREEN_WIDTH, gp.SCREEN_HEIGHT);
 
-        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 60F));
-        String text = "YO ITS THE LOGIN MANU!";
-        int x = getXforCenteredText(text);
-        int y = gp.SCREEN_HEIGHT/3;
+        // Draw login
+        gp.loginPanel.setVisible(true);
 
+        // draw title
+        drawTitleImage();
+    }
 
+    public void drawNewGame() {
+        int imageWidth = calculateWidth(newGame);
+        int imageHeight = calculateHeight(newGame);
+        int x = (gp.SCREEN_WIDTH - imageWidth) / 2;
+        int y = (gp.SCREEN_HEIGHT - imageHeight) / 2;
+        g2.drawImage(newGame, x, y, imageWidth, imageHeight, null);
+    }
 
-        // SHADOW
-        g2.setColor(Color.gray);
-        g2.drawString(text, x+5, y+5);
-        // Main PauseScreen
-        g2.setColor(Color.white);
-        g2.drawString(text, x, y);
+    public void drawLoadGame() {
+        int imageWidth = calculateWidth(loadGame);
+        int imageHeight = calculateHeight(loadGame);
+        int x = (gp.SCREEN_WIDTH - imageWidth) / 2;
+        int y = (gp.SCREEN_HEIGHT - imageHeight) / 2 + 60;
+        g2.drawImage(loadGame, x, y, imageWidth, imageHeight, null);
+    }
+
+    public void drawOptions() {
+        int imageWidth = calculateWidth(options);
+        int imageHeight = calculateHeight(options);
+        int x = (gp.SCREEN_WIDTH - imageWidth) / 3;
+        int y = (gp.SCREEN_HEIGHT - imageHeight) / 2 + 130;
+        g2.drawImage(options, x, y, imageWidth, imageHeight, null);
+    }
+
+    public void drawQuit() {
+        int imageWidth = calculateWidth(quit);
+        int imageHeight = calculateHeight(quit);
+        int x = ((gp.SCREEN_WIDTH - imageWidth) / 2 + 110);
+        int y = (gp.SCREEN_HEIGHT - imageHeight) / 2 + 130;
+        g2.drawImage(quit, x, y, imageWidth, imageHeight, null);
     }
 
     // Draw Start Menu
@@ -172,17 +267,15 @@ public class UI {
         g2.setColor(Color.BLACK);
         g2.fillRect(0,0, gp.SCREEN_WIDTH, gp.SCREEN_HEIGHT);
 
-        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 60F));
-        String text = "YO ITS THE START MANU!";
-        int x = getXforCenteredText(text);
-        int y = gp.SCREEN_HEIGHT/2;
+        // title image
+        drawTitleImage();
+        drawNewGame();
+        drawLoadGame();
+        drawOptions();
+        drawQuit();
 
-        // SHADOW
-        g2.setColor(Color.gray);
-        g2.drawString(text, x+5, y+5);
-        // Main PauseScreen
-        g2.setColor(Color.white);
-        g2.drawString(text, x, y);
+        // Menu
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 55F));
     }
 
     //Draw dialog

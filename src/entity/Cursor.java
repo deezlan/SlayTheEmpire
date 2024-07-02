@@ -37,10 +37,10 @@ public class Cursor {
 
     public void drawCrosshair(Graphics2D g2) {
         if (crosshairImage != null) {
-            int crosshairWidth = crosshairImage.getWidth();
-            int crosshairHeight = crosshairImage.getHeight();
+            int crosshairWidth = (int)(crosshairImage.getWidth() * 1.5);
+            int crosshairHeight = (int)(crosshairImage.getHeight() * 1.5);
 
-            g2.drawImage(crosshairImage, mouseX - crosshairWidth/ 2, mouseY - crosshairHeight/2, null);
+            g2.drawImage(crosshairImage, mouseX - crosshairWidth/ 2, mouseY - crosshairHeight/2, crosshairWidth, crosshairHeight, null);
         }
     }
 
@@ -48,7 +48,7 @@ public class Cursor {
         AffineTransform old = g2.getTransform();
 
         int xOffset = 0;
-        int yOffset = 10;
+        int yOffset = 0;
         g2.translate(playerX + xOffset, playerY + yOffset);
 
         g2.rotate(angle);

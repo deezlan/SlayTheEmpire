@@ -1,6 +1,6 @@
 package main;
 
-import javax.swing.JPanel;
+import javax.swing.*;
 import java.awt.Dimension;
 import java.awt.Color;
 import java.awt.Graphics;
@@ -34,6 +34,9 @@ public class GamePanel extends JPanel implements Runnable {
     // FPS Settings
     final int FPS = 60;
 
+    // initialize login panel
+    public LoginPanel loginPanel;
+
     TileManager tileM = new TileManager(this);
     public KeyHandler keyH = new KeyHandler(this);
     public Cursor cursor = new Cursor(); // Initialize cursor
@@ -55,6 +58,9 @@ public class GamePanel extends JPanel implements Runnable {
     public final int playState = 2;
     public final int pauseState = 3;
     public final int loginState = 4;
+    public final int login_or_registerState = 7;
+    public final int registerState = 8;
+
     public final int dialogueState = 5; // NO USAGE SO FAR
     public final int shopState = 6;
 
@@ -65,6 +71,9 @@ public class GamePanel extends JPanel implements Runnable {
         this.setDoubleBuffered(true);
         this.addKeyListener(keyH);
         this.setFocusable(true);
+
+        loginPanel = new LoginPanel(this);
+        this.add(loginPanel);
 
         hideCursor();
 
@@ -94,7 +103,7 @@ public class GamePanel extends JPanel implements Runnable {
         aSetter.setObject();
         aSetter.setNPC();
         aSetter.setMonster();
-        gameState = titleState;
+        gameState = titleState; // TESTING LOGIN RIGHT NOW
     }
 
     public void startGameThread() {

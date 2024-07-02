@@ -7,7 +7,7 @@ public class Main {
         JFrame window = new JFrame();
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setResizable(false);
-        window.setTitle("Slay the Empires test merge by Danial");
+        window.setTitle("Slay the Empires totally cool branch by Jason");
 
         GamePanel gamePanel = new GamePanel();
         window.add(gamePanel);

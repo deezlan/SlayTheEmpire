@@ -26,7 +26,7 @@ public class KeyHandler implements KeyListener {
     public void keyPressed(KeyEvent e) {
         int code = e.getKeyCode();
 
-        // PLaystate
+        // Play State
         if (gp.gameState == gp.playState){
             if (code == KeyEvent.VK_W) {
                 wPressed = true;
@@ -73,10 +73,11 @@ public class KeyHandler implements KeyListener {
                 gp.gameState = gp.playState;
             }
         }
+
         // !!!!! TEMPORARY TITLE+LOGIN+START MENU TEST !!!!!
         if (code == KeyEvent.VK_SPACE) {
             if (gp.gameState == gp.titleState){
-                gp.gameState = gp.loginState;
+                gp.gameState = gp.startMenuState;
             }
         }
         if (code == KeyEvent.VK_ENTER) {

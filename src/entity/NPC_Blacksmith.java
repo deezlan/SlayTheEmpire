@@ -2,10 +2,16 @@ package entity;
 
 import main.GamePanel;
 import main.UtilityTool;
+import object.OBJ_Flamethrower;
+import object.OBJ_Hammer;
+import object.OBJ_Raygun;
+import object.OBJ_SnowballCannon;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class NPC_Blacksmith extends Entity {
+    public static ArrayList<Entity> shopItems = new ArrayList<>();
     public NPC_Blacksmith(GamePanel gp) {
         super(gp);
         action = "idleRight";
@@ -30,8 +36,21 @@ public class NPC_Blacksmith extends Entity {
             System.out.println("Blacksmith sprites loaded successfully");
 
             UtilityTool.scaleEntityList(this, idleRightList, 90, 90);
+
+            setShopItems();
         } catch (IOException e) {
             e.printStackTrace(System.out);
         }
+    }
+
+    private void setShopItems() throws IOException {
+        shopItems.add(new OBJ_SnowballCannon(gp));
+        shopItems.add(new OBJ_Raygun(gp));
+        shopItems.add(new OBJ_Flamethrower(gp));
+        shopItems.add(new OBJ_Hammer(gp));
+    }
+
+    public ArrayList<Entity> getShopItems(){
+        return shopItems;
     }
 }

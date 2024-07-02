@@ -11,6 +11,14 @@ public abstract class Entity {
     public int actionLockCounter;
     public int worldX, worldY;
     public int speed;
+    public Entity currentWeapon;
+
+    //Item Attributes
+    public int damage;
+    public BufferedImage weaponSprite;
+    public String name;
+    public String price;
+    public String description = "";
     boolean attacking = false;
     public ArrayList<BufferedImage>
             currentActionList = new ArrayList<>(),

@@ -3,22 +3,18 @@ package entity;
 import main.GamePanel;
 import main.KeyHandler;
 import main.UtilityTool;
+import object.OBJ_SnowballCannon;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-//import java.util.ArrayList; temp
 
 public class Player extends Entity {
     GamePanel gp;
     KeyHandler keyH;
     private final Cursor cursor;
-    public SwordSlash slash;
     public final int screenX;
     public final int screenY;
-
-//    public ArrayList<Entity> inventory = new ArrayList<>(); temp commented
-//    public final int inventorySize = 8; temp commented
 
     public Player (GamePanel gp, KeyHandler keyH, Cursor cursor) {
         super(gp);
@@ -41,9 +37,6 @@ public class Player extends Entity {
         solidAreaDefaultY = solidArea.y;
         solidArea.width = 50; // outer area of collision square
         solidArea.height = 35;
-
-        SwordSlash slash1 = new SwordSlash(gp);
-        slash = slash1;
     }
 
 
@@ -58,6 +51,14 @@ public class Player extends Entity {
         //Status
         maxLife = 6;
         life = maxLife;
+
+        //Start
+        try {
+            currentWeapon = new OBJ_SnowballCannon(gp);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        damage = currentWeapon.damage;
     }
 
     public void setItems(){
@@ -213,8 +214,6 @@ public class Player extends Entity {
             }
         } else {
             g2.drawImage(image, screenX, screenY, gp.TILE_SIZE*3, gp.TILE_SIZE*2, null);
-            if (attacking){
-            }
         }
         // draw arrow
         cursor.draw(g2, (int) (worldX + gp.TILE_SIZE * 1.5), worldY + gp.TILE_SIZE);

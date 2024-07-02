@@ -1,5 +1,6 @@
 package main;
 
+import entity.Entity;
 import entity.NPC_Blacksmith;
 import object.OBJ_Coin;
 import object.OBJ_Heart;
@@ -15,7 +16,7 @@ public class UI {
 
     GamePanel gp;
 
-    BufferedImage fullHeart, halfHeart, emptyHeart;
+    BufferedImage fullHeart, halfHeart, emptyHeart, hotbar;
     Graphics2D g2;
     SuperObject coin = new OBJ_Coin(gp);
 
@@ -31,6 +32,12 @@ public class UI {
         fullHeart = heart.defaultList.get(2);
         halfHeart = heart.defaultList.get(1);
         emptyHeart = heart.defaultList.get(0);
+        try {
+            hotbar = UtilityTool.loadSprite("/objects/hotbar/hotbar.png", "Cannot load hotbar");
+            hotbar = UtilityTool.scaleImage(hotbar, gp.TILE_SIZE+24, gp.TILE_SIZE+24);
+        } catch (IOException e){
+            e.printStackTrace(System.out);
+        }
 
 //        coin = new OBJ_Coin(gp);
     }
@@ -41,7 +48,10 @@ public class UI {
         g2.setFont(new Font("Microsoft YaHei", Font.PLAIN, 28));
         g2.setColor(Color.white);
         drawPlayerLife();
-        if (gp.gameState == gp.playState) drawPlayerMoney();
+        if (gp.gameState == gp.playState) {
+            drawPlayerMoney();
+            drawHotbar();
+        }
 
         //Pause State
         if (gp.gameState == gp.pauseState) {
@@ -62,11 +72,33 @@ public class UI {
         }
     }
 
+    public void drawHotbar() {
+        int frameX = gp.TILE_SIZE/2;
+        int frameY = gp.TILE_SIZE*11-5;
+        int frameWidth = (gp.TILE_SIZE + gp.TILE_SIZE/2)*3;
+        int frameHeight= gp.TILE_SIZE+gp.TILE_SIZE/2;
+
+        Color custom = new Color(0,0,0,0);
+        g2.setColor(custom);
+        g2.fillRoundRect(frameX,frameY,frameWidth,frameHeight,0,0);
+        for (int i = 0; i<3; i++){
+            g2.drawImage(hotbar, frameX+((gp.TILE_SIZE + gp.TILE_SIZE/2)*i), frameY, null);
+        }
+        int x = 0;
+        for (Entity i : gp.player.hotbarList){
+            BufferedImage image = i.weaponSprite;
+            image = UtilityTool.scaleImage(image, gp.TILE_SIZE-8, gp.TILE_SIZE-8);
+            g2.drawImage(image, frameX+16+((gp.TILE_SIZE + gp.TILE_SIZE/2)*x), frameY+16, null);
+            x++;
+        }
+
+    }
+
     public void drawShop() {
         try {
-            InputStream is = new FileInputStream("ARCADE_N.TTF");
-            Font arcade = Font.createFont(Font.TRUETYPE_FONT, is);
-            arcade = arcade.deriveFont(Font.PLAIN, 16);
+        InputStream is = new FileInputStream("ARCADE_N.TTF");
+        Font arcade = Font.createFont(Font.TRUETYPE_FONT, is);
+        arcade = arcade.deriveFont(Font.PLAIN, 16);
 
         int frameX = gp.TILE_SIZE*2;
         int frameY = gp.TILE_SIZE;

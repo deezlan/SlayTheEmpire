@@ -10,6 +10,7 @@ import java.awt.AlphaComposite;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.ArrayList;
 //import java.util.ArrayList; temp
 
 public class Player extends Entity {
@@ -19,6 +20,7 @@ public class Player extends Entity {
     public final int screenX;
     public final int screenY;
     public int totalCoins;
+    public ArrayList<Entity> hotbarList = new ArrayList<>();
     public int playerClass,
             warrior = 0,
             assassin = 1,
@@ -77,6 +79,7 @@ public class Player extends Entity {
             throw new RuntimeException(e);
         }
         damage = currentWeapon.damage;
+        hotbarList.add(currentWeapon);
     }
 
     public void setItems() {

@@ -12,6 +12,7 @@ public class OBJ_SnowballCannon extends Entity {
         super(gp);
 
         name = "Snowball Cannon";
+        description = "HADOUKEN!";
         price = "100";
         try {
             weaponSprite = UtilityTool.loadSprite("/Weapon/Snowball/SnowballCannon.png", "Cannon sprite not loaded");

@@ -264,7 +264,7 @@ public class Player extends Entity {
         switch (index) {
             case 999:
                 break;
-            case 2:
+            case 1:
                 break;
             default:
                 gp.gameState = gp.dialogueState; gp.npcArr[index].speak();

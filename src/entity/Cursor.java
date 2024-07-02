@@ -12,6 +12,7 @@ public class Cursor {
     private BufferedImage crosshairImage;
     public int deltaX;
     public int deltaY;
+    //a random line
 
     public Cursor( ) {
         try {

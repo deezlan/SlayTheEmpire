@@ -1,13 +1,11 @@
 package main;
 
+import entity.NPC_Blacksmith;
 import object.OBJ_Coin;
 import object.OBJ_Heart;
 import object.SuperObject;
 
-import java.awt.Graphics2D;
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.BasicStroke;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -93,12 +91,15 @@ public class UI {
         g2.drawString("Price", frameX + gp.TILE_SIZE*8 - 15, frameY + 30);
         //DRAW SHOP
         for (int i = 0; i < 4; i++){
-            NPC_Blacksmith bs = (NPC_Blacksmith) gp.npcArr[2];
+            NPC_Blacksmith bs = (NPC_Blacksmith) gp.npcArr[1];
             BufferedImage BI = bs.getShopItems().get(i).weaponSprite;
+            BufferedImage coinImage = coin.defaultList.get(0);
+            coinImage = UtilityTool.scaleImage(coinImage, 36, 36);
 
             g2.drawImage(BI, slotXstart + gp.TILE_SIZE/4, slotY + gp.TILE_SIZE/4, null);
             g2.drawString(bs.getShopItems().get(i).name, slotXstart + gp.TILE_SIZE + 10, slotY + 32);
-            g2.drawString(bs.getShopItems().get(i).price, slotXstart + gp.TILE_SIZE*8, slotY + 32);
+            g2.drawString(bs.getShopItems().get(i).price, slotXstart + gp.TILE_SIZE*8 - 40, slotY + 32);
+            g2.drawImage(coinImage, slotXstart + gp.TILE_SIZE*8+15, slotY+7, null);
 
             slotY += gp.TILE_SIZE;
         }
@@ -112,8 +113,8 @@ public class UI {
         g2.setStroke(new BasicStroke(3));
         g2.drawRoundRect(frameX+3, cursorY, cursorWidth+3, cursorHeight, 0, 0);
 
-        } catch (FontFormatException | IOException fn){
-            fn.printStackTrace();
+        } catch (FontFormatException | IOException e){
+            e.printStackTrace(System.out);
         }
     }
 

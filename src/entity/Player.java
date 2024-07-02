@@ -3,6 +3,7 @@ package entity;
 import main.GamePanel;
 import main.KeyHandler;
 import main.UtilityTool;
+import object.OBJ_SnowballCannon;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -13,7 +14,6 @@ public class Player extends Entity {
     GamePanel gp;
     KeyHandler keyH;
     private final Cursor cursor;
-    public SwordSlash slash;
     public final int screenX;
     public final int screenY;
     public int totalCoins;

@@ -23,15 +23,6 @@ public class NPC_Blacksmith extends Entity {
         solidArea.height = 48;
         solidAreaDefaultX = solidArea.x;
         solidAreaDefaultY = solidArea.y;
-        setDialog();
-    }
-
-    public void setDialog() {
-        dialogs[0] = "placeholder 1";
-        dialogs[1] = "placeholder 2";
-        dialogs[2] = "placeholder 3";
-        dialogs[3] = "placeholder 4";
-        dialogs[4] = "placeholder 4";
     }
 
     public void getNpcSprites() {

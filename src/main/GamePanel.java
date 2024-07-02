@@ -24,8 +24,8 @@ public class GamePanel extends JPanel implements Runnable {
     public int gameArea;
 
     //World Settings
-    public final int MAX_WORLD_COL = 17; //must be same as map size
-    public final int MAX_WORLD_ROW = 13; //must be same as map size
+    public int MAX_WORLD_COL = 17; //must be same as map size
+    public int MAX_WORLD_ROW = 14; //must be same as map size
 
     // FPS Settings
     final int FPS = 60;
@@ -44,14 +44,16 @@ public class GamePanel extends JPanel implements Runnable {
     public CollisionChecker cChecker = new CollisionChecker(this);
     public UI ui = new UI(this);
 
+    public EventHandler eHandler = new EventHandler(this);
+
     // Game States
     public int gameState;
     public final int titleState = 0;
-    public final int playState = 1;
-    public final int pauseState = 2;
-    public final int dialogueState = 3;
+    public final int playState = 1; // NO USAGE SO FAR
+    public final int pauseState = 2; // NO USAGE SO FAR
+    public final int dialogueState = 3; // NO USAGE SO FAR
     public final int shopState = 4;
-    public final int characterState = 5;
+    public final int deathState = 5;
 
     public GamePanel() {
         this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
@@ -80,9 +82,9 @@ public class GamePanel extends JPanel implements Runnable {
         this.setCursor(blankCursor);
     }
 
-    public Cursor getPCursor() {
-        return cursor;
-    }
+//    public Cursor getPCursor() {
+//        return cursor;
+//    }
 
     public void setupGame() {
         aSetter.setObject();
@@ -92,7 +94,6 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     public void startGameThread() {
-        gameArea = 1;
         gameThread = new Thread(this);
         gameThread.start();
     }
@@ -154,8 +155,19 @@ public class GamePanel extends JPanel implements Runnable {
         if (gameState == titleState) {
             ui.draw(g2);
         } else if (gameState == playState) {
+//            switch (gameArea) {
+//                case 0:
+//                    this.player.worldX = 350;
+//                    this.player.worldY = 30;
+//                    break;
+//                case 1:
+//                    this.player.worldX = 145;
+//                    this.player.worldY = 232;
+//                    break;
+//                default:
+//                    System.out.println("Default Case GamePanel paintComponent");
+//            }
             tileM.draw(g2); // Draw tiles
-
 
             for (SuperObject superObject : objArr)
                 if (superObject != null) superObject.draw(g2, this);
@@ -169,6 +181,7 @@ public class GamePanel extends JPanel implements Runnable {
             player.draw(g2); // Draw player
 
             ui.draw(g2);
+//            ui.drawPlayerMoney();
 
         } else {
             tileM.draw(g2); // Draw tiles

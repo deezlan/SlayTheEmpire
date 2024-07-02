@@ -11,10 +11,17 @@ public abstract class Entity {
     public int actionLockCounter;
     public int worldX, worldY;
     public int speed;
+    public Entity currentWeapon;
+
+    //Item Attributes
+    public int damage;
+    public BufferedImage weaponSprite;
+    public String name;
+    public String price;
+    public String description = "";
     boolean attacking = false;
     public ArrayList<BufferedImage>
             currentActionList = new ArrayList<>(),
-            currentAnimationList = new ArrayList<>(),
             idleRightList = new ArrayList<>(),
             idleLeftList = new ArrayList<>(),
             moveRightList = new ArrayList<>(),
@@ -32,8 +39,8 @@ public abstract class Entity {
 
     public int spriteCounter = 0;
     public int spriteNum = 1;
-    public int weaponSpriteCounter = 0;
-    public int weaponSpriteNum = 1;
+//    public int weaponSpriteCounter = 0; // Ananda's old slash variables
+//    public int weaponSpriteNum = 1; // " "
 
     public int animationCounter = 0;
     public int animationSpriteNum = 0;
@@ -72,25 +79,26 @@ public abstract class Entity {
         spriteCounter = 0;
     }
 
-    public void loopThroughWeaponSprites() {
-        if (weaponSpriteCounter <= 5){
-            weaponSpriteNum = 0;
-        } else if (weaponSpriteCounter <= 10) {
-            weaponSpriteNum = 1;
-        } else if (weaponSpriteCounter <= 15) {
-            weaponSpriteNum = 2;
-        } else if (weaponSpriteCounter <= 20) {
-            weaponSpriteNum = 3;
-        } else if (weaponSpriteCounter <= 25) {
-            weaponSpriteNum = 4;
-        } else if (weaponSpriteCounter <= 30) {
-            weaponSpriteNum = 5;
-        } else if (weaponSpriteCounter <= 35) {
-            weaponSpriteNum = 0;
-            weaponSpriteCounter = 0;
-            attacking = false;
-        }
-    }
+    // Ananda's old slash animation
+//    public void loopThroughWeaponSprites() {
+//        if (weaponSpriteCounter <= 5){
+//            weaponSpriteNum = 0;
+//        } else if (weaponSpriteCounter <= 10) {
+//            weaponSpriteNum = 1;
+//        } else if (weaponSpriteCounter <= 15) {
+//            weaponSpriteNum = 2;
+//        } else if (weaponSpriteCounter <= 20) {
+//            weaponSpriteNum = 3;
+//        } else if (weaponSpriteCounter <= 25) {
+//            weaponSpriteNum = 4;
+//        } else if (weaponSpriteCounter <= 30) {
+//            weaponSpriteNum = 5;
+//        } else if (weaponSpriteCounter <= 35) {
+//            weaponSpriteNum = 0;
+//            weaponSpriteCounter = 0;
+//            attacking = false;
+//        }
+//    }
 
     public void update() {
         upCollisionOn = false; // resets collisions off

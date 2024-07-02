@@ -26,7 +26,12 @@ public class UtilityTool {
     }
 
     public static BufferedImage loadSprite (String filePath, String errorMsg) throws IOException {
-        return ImageIO.read(Objects.requireNonNull(UtilityTool.class.getResourceAsStream(filePath), errorMsg));
+        try {
+            return ImageIO.read(Objects.requireNonNull(UtilityTool.class.getResourceAsStream(filePath), errorMsg));
+        } catch (IOException e) {
+            throw new IOException(errorMsg, e);
+        }
+
     }
 
     public static void scaleObjectList (ArrayList<BufferedImage> spriteList, int width, int height) {

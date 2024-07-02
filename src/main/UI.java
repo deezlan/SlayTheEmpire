@@ -1,26 +1,26 @@
 package main;
 
+import entity.NPC_Blacksmith;
 import object.OBJ_Coin;
 import object.OBJ_Heart;
 import object.SuperObject;
 
-import java.awt.Graphics2D;
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.BasicStroke;
+import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 
 public class UI {
 
     GamePanel gp;
+
     BufferedImage fullHeart, halfHeart, emptyHeart;
     Graphics2D g2;
     SuperObject coin = new OBJ_Coin(gp);
 
     public String currentDialog = "";
-    public int slotCol = 0;
     public int slotRow = 0;
-    public int slotColMove = 0;
     public int slotRowMove = 0;
 
     public UI(GamePanel gp) {
@@ -54,7 +54,7 @@ public class UI {
         }
 
         if (gp.gameState == gp.shopState){
-            drawInventory();
+            drawShop();
         }
 
         if (gp.gameState == gp.deathState) {
@@ -62,34 +62,60 @@ public class UI {
         }
     }
 
-    public void drawInventory() {
-        int frameX = gp.TILE_SIZE*3;
-        int frameY = gp.TILE_SIZE;
-        int frameWidth = (gp.TILE_SIZE*5) + 25;
-        int frameHeight= (gp.TILE_SIZE*9) + 25;
+    public void drawShop() {
+        try {
+            InputStream is = new FileInputStream("ARCADE_N.TTF");
+            Font arcade = Font.createFont(Font.TRUETYPE_FONT, is);
+            arcade = arcade.deriveFont(Font.PLAIN, 16);
 
-        drawSubWindow(frameX, frameY, frameWidth, frameHeight);
+        int frameX = gp.TILE_SIZE*2;
+        int frameY = gp.TILE_SIZE;
+        int frameWidth = (gp.TILE_SIZE*9) + 25;
+        int frameHeight= (gp.TILE_SIZE*4) + 40;
+        g2.setFont(arcade);
+
+        g2.setColor(Color.BLACK);
+        g2.fillRoundRect(frameX,frameY,frameWidth,frameHeight,0,0);
+
+        g2.setColor(Color.WHITE);
+        g2.setStroke(new BasicStroke((5)));
+        g2.drawRoundRect(frameX,frameY,frameWidth,frameHeight,0,0);
+
+        g2.setColor(Color.WHITE);
 
         //SLOT
-        final int slotXstart = frameX + 35;
-        final int slotYstart = frameY + 35;
-//        int slotX = slotXstart; temp commented
-//        int slotY = slotYstart;
-//
-//        //DRAW PLAYER INVENTORY
-//        for (int i = 0; i < gp.player.inventory.size(); i++){
-//            //insert weapons
-//        }
+        final int slotXstart = frameX + 15;
+        final int slotYstart = frameY + 38;
+        int slotY = slotYstart;
+        g2.drawString("Item", frameX + 15, frameY + 30);
+        g2.drawString("Price", frameX + gp.TILE_SIZE*8 - 15, frameY + 30);
+        //DRAW SHOP
+        for (int i = 0; i < 4; i++){
+            NPC_Blacksmith bs = (NPC_Blacksmith) gp.npcArr[1];
+            BufferedImage BI = bs.getShopItems().get(i).weaponSprite;
+            BufferedImage coinImage = coin.defaultList.get(0);
+            coinImage = UtilityTool.scaleImage(coinImage, 36, 36);
+
+            g2.drawImage(BI, slotXstart + gp.TILE_SIZE/4, slotY + gp.TILE_SIZE/4, null);
+            g2.drawString(bs.getShopItems().get(i).name, slotXstart + gp.TILE_SIZE + 10, slotY + 32);
+            g2.drawString(bs.getShopItems().get(i).price, slotXstart + gp.TILE_SIZE*8 - 40, slotY + 32);
+            g2.drawImage(coinImage, slotXstart + gp.TILE_SIZE*8+15, slotY+7, null);
+
+            slotY += gp.TILE_SIZE;
+        }
 
         //CURSOR
-        int cursorX = slotXstart + (gp.TILE_SIZE * slotColMove);
         int cursorY = slotYstart + (gp.TILE_SIZE * slotRowMove);
-        int cursorWidth = gp.TILE_SIZE*2;
-        int cursorHeight = gp.TILE_SIZE*2;
+        int cursorWidth = gp.TILE_SIZE*9+15;
+        int cursorHeight = gp.TILE_SIZE;
         //DRAW CURSOR
         g2.setColor(Color.WHITE);
         g2.setStroke(new BasicStroke(3));
-        g2.drawRoundRect(cursorX, cursorY, cursorWidth, cursorHeight, 10, 10);
+        g2.drawRoundRect(frameX+3, cursorY, cursorWidth+3, cursorHeight, 0, 0);
+
+        } catch (FontFormatException | IOException e){
+            e.printStackTrace(System.out);
+        }
     }
 
     public void drawPlayerLife(){

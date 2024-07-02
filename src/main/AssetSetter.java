@@ -44,11 +44,6 @@ public class AssetSetter {
                 gp.objArr[6].worldX = 540;
                 gp.objArr[6].worldY = 418;
 
-                if (gp.mouseH.leftClick) {
-                    gp.projectileArr[0] = new OBJ_Gun_SnowBallCannon(gp);
-                    gp.projectileArr[0].worldX = 400;
-                    gp.projectileArr[0].worldY = 300;
-                }
                 break;
             case 1, 2:
                 break;

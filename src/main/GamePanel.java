@@ -222,9 +222,6 @@ public class GamePanel extends JPanel implements Runnable {
             for (Entity entity : npcArr)
                 if (entity != null) entity.draw(g2);
 
-            if (projectile != null) {
-                projectile.draw(g2);
-            }
             ui.draw(g2);
         } else {
             tileM.draw(g2); // Draw tiles

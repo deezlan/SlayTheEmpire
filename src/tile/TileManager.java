@@ -179,8 +179,10 @@ public class TileManager {
                     // Out of bounds
                     tile[37].image = UtilityTool.loadSprite(dir + "37.png", "Missing Outside");
 
+                    tile[26].collision = false;
                     tile[33].collision = false;
                     tile[34].collision = false;
+                    tile[35].collision = false;
                     break;
                 case 1:
                     dir = "/tiles/firstLevel/";

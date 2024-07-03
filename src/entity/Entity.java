@@ -27,8 +27,8 @@ public abstract class Entity {
             moveRightList = new ArrayList<>(),
             moveLeftList = new ArrayList<>(),
             playerRightAttackList = new ArrayList<>(),
-            playerLeftAttackList = new ArrayList<>(),
-            weaponList = new ArrayList<>();
+            playerLeftAttackList = new ArrayList<>();
+//            weaponList = new ArrayList<>(); // Ananda's old slash ArrayList
     public String action;
     public boolean lookingRight;
     public String direction;
@@ -105,7 +105,7 @@ public abstract class Entity {
         downCollisionOn = false;
         leftCollisionOn = false;
         rightCollisionOn = false;
-        gp.cChecker.checkObject(this,false);
+        gp.cChecker.checkObject(this, false);
         gp.cChecker.checkPLayer(this);
         gp.cChecker.checkTile(this);
         gp.cChecker.checkEntityCollision(this, gp.npcArr);
@@ -113,14 +113,14 @@ public abstract class Entity {
 
         boolean contactPlayer = gp.cChecker.checkPLayer(this);
 
-        if(this.type == 2 && contactPlayer){
-            if(!gp.player.iframe){
+        if (this.type == 2 && contactPlayer) {
+            if (!gp.player.iframe) {
                 gp.player.life -= 1;
                 gp.player.iframe = true;
             }
         }
         if (!upCollisionOn && !downCollisionOn && !leftCollisionOn && !rightCollisionOn) {
-            switch(action) {
+            switch (action) {
                 case "moveUp":
                     worldY -= speed;
                     break;
@@ -151,8 +151,12 @@ public abstract class Entity {
                     break;
             }
         }
+
+        // Animation speed
         spriteCounter++;
-        if (this.currentActionList.size() > 7) {
+        if (this.currentActionList.size() > 14) {
+            if (spriteCounter > 4) loopThroughSprites();
+        } else if (this.currentActionList.size() > 7) {
             if (spriteCounter > 5) loopThroughSprites();
         } else {
             if (spriteCounter > 9) loopThroughSprites();

@@ -6,8 +6,6 @@ import entity.NPC_Mystery;
 import entity.NPC_Blacksmith;
 import mobs.MOB_Slime;
 import object.OBJ_ChatBubble;
-//import object.OBJ_Obelisk;
-import object.OBJ_Obelisk;
 import object.OBJ_SavePedestal;
 import object.OBJ_Shop;
 
@@ -45,9 +43,9 @@ public class AssetSetter {
                 gp.objArr[6].worldX = 540;
                 gp.objArr[6].worldY = 418;
 
-                gp.objArr[7] = new OBJ_Obelisk(gp);
-                gp.objArr[7].worldX = 200;
-                gp.objArr[7].worldY = 200;
+//                gp.objArr[7] = new OBJ_Obelisk(gp);
+//                gp.objArr[7].worldX = 200;
+//                gp.objArr[7].worldY = 200;
 
                 break;
             case 1, 2:

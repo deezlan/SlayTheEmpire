@@ -47,7 +47,7 @@ public class Player extends Entity {
     }
 
     public void setDefaultValues() {
-        worldX = 350; // Player spawn location x
+        worldX = 300; // Player spawn location x
         worldY = 30; // player spawn location y
 //        worldX = 200; // second area spawn
 //        worldY = 200;
@@ -81,6 +81,8 @@ public class Player extends Entity {
                 solidAreaDefaultY = solidArea.y;
                 solidArea.width = 40; // outer area of collision square
                 solidArea.height = 30;
+                attackArea.width = 50;
+                attackArea.height = 30;
                 break;
             case 1:
                 solidArea = new Rectangle(); // draws a square at the centre of the player
@@ -271,6 +273,34 @@ public class Player extends Entity {
                     animationSpriteNum = 1;
                 } else if (animationCounter <= 15) {
                     animationSpriteNum = 2;
+
+                    // SAVE CURRENT DATA OF PLAYER
+                    int currentWorldX = worldX;
+                    int currentWorldY = worldY;
+                    int solidAreaWidth = solidArea.width;
+                    int solidAreaHeight = solidArea.height;
+
+                    // ADJUST FOR ATTACK
+                    switch (action) {
+                        case "moveUp": worldY -= attackArea.height; break;
+                        case "moveDown": worldY += attackArea.height; break;
+                        case "moveLeft": worldX -= attackArea.width; break;
+                        case "moveRight": worldX += attackArea.width; break;
+                    }
+
+                    // ATTACK AREA BECOMES SOLID AREA
+                    solidArea.width = attackArea.width;
+                    solidArea.height = attackArea.height;
+                    // CHECK MONSTER COLLISION
+                    int monsterIndex = gp.cChecker.checkEntityCollision(this, gp.mobArr);
+                    damageMonster(monsterIndex);
+
+                    // CHANGE BACK TO ORIGINAL
+                    worldX = currentWorldX;
+                    worldY = currentWorldY;
+                    solidArea.width = solidAreaWidth;
+                    solidArea.height = solidAreaHeight;
+
                 } else if (animationCounter <= 20) {
                     animationSpriteNum = 3;
                 } else if (animationCounter <= 25) {
@@ -391,27 +421,27 @@ public class Player extends Entity {
         }
     }
 
-
-//    public void interactMerchant(int index){
-//        if (keyH.ePressed){
-//            switch (index) {
-//                case 999:
-//                    break;
-//                case 1:
-//                    gp.gameState = gp.shopState;
-//                    break;
-//                default:
-//                    gp.gameState = gp.dialogueState; gp.npcArr[index].speak();
-//                    break;
-//        }
-//    }
-//}
-
     public void interactMob (int index) {
         if ( index != 999) {
             if (!iframe){
                 life -= 1;
                 iframe = true;
+            }
+        }
+    }
+
+    public void damageMonster(int i) {
+        if (i != 999){
+            if(!gp.mobArr[i].iframe){
+                gp.mobArr[i].life -= 1;
+                gp.mobArr[i].iframe = true;
+                System.out.println("hit");
+
+                if(gp.mobArr[i].life <= 0) {
+                    gp.mobArr[i].dead = true;
+                }
+            } else {
+                System.out.println("miss");
             }
         }
     }

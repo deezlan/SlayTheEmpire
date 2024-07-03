@@ -22,8 +22,8 @@ public class GamePanel extends JPanel implements Runnable {
     public final int MAX_SCREEN_ROW = 13;
     public final int SCREEN_WIDTH = TILE_SIZE * MAX_SCREEN_COL;
     public final int SCREEN_HEIGHT = TILE_SIZE * MAX_SCREEN_ROW;
-    public int gameArea;
-    public int playerClass = 2;
+    public int gameArea = 0;
+    public int playerClass = 0; // player class here
 
     // WORLD SETTINGS
     public int MAX_WORLD_COL = 17; //must be same as map size
@@ -138,16 +138,23 @@ public class GamePanel extends JPanel implements Runnable {
         if (gameState == playState) {
             player.update();
 
-            for (Entity obj : objArr) {
-                if (obj != null) obj.update();
+            for (Entity entity : objArr) { // OBJECTS
+                if (entity != null) {entity.update();}
             }
 
-            for (Entity npc : npcArr) {
-                if (npc != null) npc.update();
+            for (Entity entity : npcArr) { // NPCS
+                if (entity != null) {entity.update();}
             }
 
-            for (Entity mob : mobArr) {
-                if (mob != null) mob.update();
+            for (int mob = 0; mob < mobArr.length; mob++) { // MOBS
+                if (mobArr[mob] != null) {
+                    if (mobArr[mob].alive && (!mobArr[mob].dead)) {
+                        mobArr[mob].update();
+                    }
+                    if (!mobArr[mob].alive){
+                        mobArr[mob] = null;
+                    }
+                }
             }
         }
     }

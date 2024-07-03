@@ -30,33 +30,33 @@ public class KeyHandler implements KeyListener {
         if (gp.gameState == gp.playState){
             if (code == KeyEvent.VK_W) {
                 wPressed = true;
+            }
+            if (code == KeyEvent.VK_S) {
+                sPressed = true;
+            }
+            if (code == KeyEvent.VK_A) {
+                aPressed = true;
+            }
+            if (code == KeyEvent.VK_D) {
+                dPressed = true;
+            }
+        }
+
+        if (gp.gameState == gp.shopState){
+            if (code == KeyEvent.VK_W) {
                 if (gp.ui.slotRowMove != 0){
-                    gp.ui.slotRowMove -= 2;
+                    gp.ui.slotRowMove -= 1;
                     gp.ui.slotRow--;
                 }
             }
             if (code == KeyEvent.VK_S) {
-                sPressed = true;
-                if (gp.ui.slotRowMove != 6){
-                    gp.ui.slotRowMove += 2;
+                if (gp.ui.slotRowMove != 3){
+                    gp.ui.slotRowMove += 1;
                     gp.ui.slotRow++;
                 }
             }
-            if (code == KeyEvent.VK_A) {
-                aPressed = true;
-                if (gp.ui.slotColMove != 0){
-                    gp.ui.slotColMove -= 2;
-                    gp.ui.slotCol--;
-                }
-            }
-            if (code == KeyEvent.VK_D) {
-                dPressed = true;
-                if (gp.ui.slotColMove != 2){
-                    gp.ui.slotColMove += 2;
-                    gp.ui.slotCol++;
-                }
-            }
         }
+
         if (code == KeyEvent.VK_P) {
             pPressed = true;
             if(gp.gameState == gp.playState){

@@ -3,12 +3,14 @@ package entity;
 import main.GamePanel;
 import main.KeyHandler;
 import main.UtilityTool;
+import object.OBJ_SnowballCannon;
 
 import java.awt.Rectangle;
 import java.awt.AlphaComposite;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+//import java.util.ArrayList; temp
 
 public class Player extends Entity {
     GamePanel gp;
@@ -65,6 +67,14 @@ public class Player extends Entity {
         maxLife = 6;
         life = maxLife;
         totalCoins = 0;
+
+        //Start
+        try {
+            currentWeapon = new OBJ_SnowballCannon(gp);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        damage = currentWeapon.damage;
     }
 
     public void setItems() {
@@ -338,11 +348,12 @@ public class Player extends Entity {
                 }
                 break;
         }
-
     }
 
     public void interactObject (int index) {
-        if (index != 999) {
+        if (index == 0){
+            gp.gameState = gp.shopState;
+        } else if (index != 999) {
 //            gp.objArray[index] = null;
             System.out.println(gp.objArr[index].message);
             if (!gp.objArr[index].interactList.isEmpty())
@@ -412,7 +423,6 @@ public class Player extends Entity {
         } else {
             g2.drawImage(image, screenX, screenY, gp.TILE_SIZE*3, gp.TILE_SIZE*2, null);
         }
-
 
         // draw arrow
         if (playerClass == 0) {
@@ -487,6 +497,8 @@ public class Player extends Entity {
         } catch (IOException e){
             e.printStackTrace(System.out);
         }
+
+
     }
 
     public void getPlayerSprites() {

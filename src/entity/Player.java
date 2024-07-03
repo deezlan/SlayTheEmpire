@@ -35,19 +35,12 @@ public class Player extends Entity {
 
         this.cursor = cursor;
         setDefaultValues();
+        setCollisionValues();
         getPlayerSprites();
 //        getPlayerAttackImage(); Ananda's old slash method
         getPlayerAttackAnimation();
 
         setItems();
-
-        solidArea = new Rectangle(); // draws a square at the centre of the player
-        solidArea.x = 59; // position of actual collision square
-        solidArea.y = 60;
-        solidAreaDefaultX = solidArea.x;
-        solidAreaDefaultY = solidArea.y;
-        solidArea.width = 25; // outer area of collision square
-        solidArea.height = 25;
 
 //        SwordSlash slash1 = new SwordSlash(gp); // Ananda's old slash variables
 //        slash = slash1;
@@ -74,6 +67,39 @@ public class Player extends Entity {
             throw new RuntimeException(e);
         }
         damage = currentWeapon.damage;
+    }
+
+    private void setCollisionValues() {
+        // Set collision settings based on character class
+
+        switch (playerClass) {
+            case 0:
+                solidArea = new Rectangle(); // draws a square at the centre of the player
+                solidArea.x = 90; // position of actual collision square
+                solidArea.y = 60;
+                solidAreaDefaultX = solidArea.x;
+                solidAreaDefaultY = solidArea.y;
+                solidArea.width = 40; // outer area of collision square
+                solidArea.height = 30;
+                break;
+            case 1:
+                solidArea = new Rectangle(); // draws a square at the centre of the player
+                solidArea.x = 75; // position of actual collision square
+                solidArea.y = 60;
+                solidAreaDefaultX = solidArea.x;
+                solidAreaDefaultY = solidArea.y;
+                solidArea.width = 50; // outer area of collision square
+                solidArea.height = 30;
+                break;
+            case 2:
+                solidArea = new Rectangle(); // draws a square at the centre of the player
+                solidArea.x = 75; // position of actual collision square
+                solidArea.y = 60;
+                solidAreaDefaultX = solidArea.x;
+                solidAreaDefaultY = solidArea.y;
+                solidArea.width = 30; // outer area of collision square
+                solidArea.height = 30;
+        }
     }
 
     public void setItems() {
@@ -223,13 +249,13 @@ public class Player extends Entity {
             // CALCULATE CENTRAL AXIS OF CURSOR
             if (playerClass == 0) {
                 // WARRIOR
-                cursor.calculateAngle((int)(worldX + gp.TILE_SIZE * 2.3), (int)(worldY + gp.TILE_SIZE + 10));
+                cursor.calculateAngle((int)(worldX + gp.TILE_SIZE * 2.3), worldY + gp.TILE_SIZE + 10);
             } else if (playerClass == 1) {
                 // KNIGHT
-                cursor.calculateAngle((int)(worldX + gp.TILE_SIZE * 2 + 5), (int)(worldY + gp.TILE_SIZE));
+                cursor.calculateAngle(worldX + gp.TILE_SIZE * 2 + 5, worldY + gp.TILE_SIZE);
             } else if (playerClass == 2) {
                 // ASSASSIN
-                cursor.calculateAngle((int)(worldX + gp.TILE_SIZE * 1.9), (int)(worldY + gp.TILE_SIZE));
+                cursor.calculateAngle((int)(worldX + gp.TILE_SIZE * 1.9), worldY + gp.TILE_SIZE);
             }
             // CALCULATE CENTRAL AXIS OF CURSOR
         }
@@ -430,7 +456,7 @@ public class Player extends Entity {
 
         } else if (playerClass == 1) {
             // KNIGHT
-            cursor.draw(g2, (int)(worldX + gp.TILE_SIZE * 2 + 5), worldY + gp.TILE_SIZE);
+            cursor.draw(g2, worldX + gp.TILE_SIZE * 2 + 5, worldY + gp.TILE_SIZE);
 
         } else if (playerClass == 2) {
             // ASSASSIN

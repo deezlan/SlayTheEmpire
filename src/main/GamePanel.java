@@ -28,7 +28,7 @@ public class GamePanel extends JPanel implements Runnable {
     public int MAX_WORLD_COL = 17; //must be same as map size
     public int MAX_WORLD_ROW = 14; //must be same as map size
 
-    // FPS Settings
+    // FPS Settingsa
     final int FPS = 60;
 
     TileManager tileM = new TileManager(this);

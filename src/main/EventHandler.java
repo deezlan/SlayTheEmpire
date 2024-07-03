@@ -45,6 +45,10 @@ public class EventHandler {
                     enterDungeon(8, 12, gp.dialogueState);
                 } else if (hit(4, 9, "moveDown")) {
                     drinkWater(4, 9, gp.dialogueState);
+                } else if (hit(3, 9, "moveDown")) {
+                    drinkWater(3, 9, gp.dialogueState);
+                } else if (hit(2, 9, "moveDown")) {
+                    drinkWater(2, 9, gp.dialogueState);
                 }
             }
         }

@@ -29,7 +29,7 @@ public abstract class Entity {
             playerRightAttackList = new ArrayList<>(),
             playerLeftAttackList = new ArrayList<>();
 //            weaponList = new ArrayList<>(); // Ananda's old slash ArrayList
-    public String action;
+    public String action = "idleRight"; //set default action
     public boolean lookingRight;
     public boolean iframe = false;
     public int iframeCounter = 0;
@@ -40,6 +40,16 @@ public abstract class Entity {
 //    public int weaponSpriteCounter = 0; // Ananda's old slash variables
 //    public int weaponSpriteNum = 1; // " "
 
+    // SuperObject Items
+    public ArrayList<BufferedImage> defaultList = new ArrayList<>();
+    public ArrayList<BufferedImage> interactList = new ArrayList<>();
+    public String message;
+    public boolean
+            interacting = false,
+            collision = false,
+            isObject;
+
+    public int interactSpriteCounter = 0, interactSpriteNum = 0;
     public int animationCounter = 0;
     public int animationSpriteNum = 0;
 
@@ -99,57 +109,60 @@ public abstract class Entity {
 //    }
 
     public void update() {
-        upCollisionOn = false; // resets collisions off
-        downCollisionOn = false;
-        leftCollisionOn = false;
-        rightCollisionOn = false;
-        gp.cChecker.checkObject(this, false);
-        gp.cChecker.checkPLayer(this);
-        gp.cChecker.checkTile(this);
-        gp.cChecker.checkEntityCollision(this, gp.npcArr);
-        setAction();
+        if (interacting) {
+            startInteract();
+        } else {
+            upCollisionOn = false; // resets collisions off
+            downCollisionOn = false;
+            leftCollisionOn = false;
+            rightCollisionOn = false;
+            gp.cChecker.checkObject(this, false);
+            gp.cChecker.checkPLayer(this);
+            gp.cChecker.checkTile(this);
+            gp.cChecker.checkEntityCollision(this, gp.npcArr);
+            setAction();
 
-        boolean contactPlayer = gp.cChecker.checkPLayer(this);
+            boolean contactPlayer = gp.cChecker.checkPLayer(this);
 
-        if (this.type == 2 && contactPlayer) {
-            if (!gp.player.iframe) {
-                gp.player.life -= 1;
-                gp.player.iframe = true;
+            if (this.type == 2 && contactPlayer) {
+                if (!gp.player.iframe) {
+                    gp.player.life -= 1;
+                    gp.player.iframe = true;
+                }
+            }
+            if (!upCollisionOn && !downCollisionOn && !leftCollisionOn && !rightCollisionOn) {
+                switch (action) {
+                    case "moveUp":
+                        worldY -= speed;
+                        break;
+                    case "moveDown":
+                        worldY += speed;
+                        break;
+                    case "moveRight":
+                        worldX += speed;
+                        break;
+                    case "moveLeft":
+                        worldX -= speed;
+                        break;
+                    case "moveUpRight":
+                        worldX += speed;
+                        worldY -= speed;
+                        break;
+                    case "moveDownRight":
+                        worldX += speed;
+                        worldY += speed;
+                        break;
+                    case "moveUpLeft":
+                        worldX -= speed;
+                        worldY -= speed;
+                        break;
+                    case "moveDownLeft":
+                        worldX -= speed;
+                        worldY += speed;
+                        break;
+                }
             }
         }
-        if (!upCollisionOn && !downCollisionOn && !leftCollisionOn && !rightCollisionOn) {
-            switch (action) {
-                case "moveUp":
-                    worldY -= speed;
-                    break;
-                case "moveDown":
-                    worldY += speed;
-                    break;
-                case "moveRight":
-                    worldX += speed;
-                    break;
-                case "moveLeft":
-                    worldX -= speed;
-                    break;
-                case "moveUpRight":
-                    worldX += speed;
-                    worldY -= speed;
-                    break;
-                case "moveDownRight":
-                    worldX += speed;
-                    worldY += speed;
-                    break;
-                case "moveUpLeft":
-                    worldX -= speed;
-                    worldY -= speed;
-                    break;
-                case "moveDownLeft":
-                    worldX -= speed;
-                    worldY += speed;
-                    break;
-            }
-        }
-
         // Animation speed
         spriteCounter++;
         if (this.currentActionList.size() > 14) {
@@ -161,9 +174,54 @@ public abstract class Entity {
         }
     }
 
-    public void draw(Graphics2D g2) {
-        BufferedImage image = currentActionList.get(spriteNum - 1);
+    public void startInteract(){
+        interactSpriteCounter++;
+        loopThroughInteractSprites();
+    }
 
+    public void loopThroughInteractSprites() {
+        if (interactSpriteCounter < 5) {
+            interactSpriteNum = 0;
+        } else if (interactSpriteCounter < 10) {
+            interactSpriteNum = 1;
+        } else if (interactSpriteCounter < 15) {
+            interactSpriteNum = 2;
+        } else if (interactSpriteCounter < 20) {
+            interactSpriteNum = 3;
+        } else if (interactSpriteCounter < 25) {
+            interactSpriteNum = 4;
+        } else if (interactSpriteCounter < 30) {
+            interactSpriteNum = 5;
+        } else if (interactSpriteCounter < 35) {
+            interactSpriteNum = 6;
+        } else if (interactSpriteCounter < 40) {
+            interactSpriteNum = 7;
+        } else if (interactSpriteCounter < 45) {
+            interactSpriteNum = 8;
+        } else if (interactSpriteCounter < 50) {
+            interactSpriteNum = 9;
+        } else if (interactSpriteCounter < 55) {
+            interactSpriteNum = 10;
+        } else if (interactSpriteCounter < 60) {
+            interactSpriteNum = 11;
+        } else if (interactSpriteCounter < 65) {
+            interactSpriteNum = 12;
+        } else if (interactSpriteCounter < 70) {
+            interactSpriteNum = 13;
+        } else if (interactSpriteCounter <= 75){
+            interactSpriteNum = 0;
+            interactSpriteCounter = 0;
+            interacting = false;
+        }
+    }
+
+    public void draw(Graphics2D g2) {
+        BufferedImage image;
+        if (interacting) {
+            image = interactList.get(interactSpriteNum);
+        } else {
+            image = currentActionList.get(spriteNum - 1);
+        }
         switch (gp.gameArea) {
             case 0:
                 g2.drawImage(image, worldX, worldY, null);
@@ -186,3 +244,4 @@ public abstract class Entity {
         }
     }
 }
+

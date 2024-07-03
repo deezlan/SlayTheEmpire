@@ -215,7 +215,19 @@ public class Player extends Entity {
             } else {
                 if (spriteCounter > 9) loopThroughSprites();
             }
-            cursor.calculateAngle((int) (worldX + gp.TILE_SIZE * 1.5), worldY + gp.TILE_SIZE);
+
+            // CALCULATE CENTRAL AXIS OF CURSOR
+            if (playerClass == 0) {
+                // WARRIOR
+                cursor.calculateAngle((int)(worldX + gp.TILE_SIZE * 2.3), (int)(worldY + gp.TILE_SIZE + 10));
+            } else if (playerClass == 1) {
+                // KNIGHT
+                cursor.calculateAngle((int)(worldX + gp.TILE_SIZE * 2 + 5), (int)(worldY + gp.TILE_SIZE));
+            } else if (playerClass == 2) {
+                // ASSASSIN
+                cursor.calculateAngle((int)(worldX + gp.TILE_SIZE * 1.9), (int)(worldY + gp.TILE_SIZE));
+            }
+            // CALCULATE CENTRAL AXIS OF CURSOR
         }
     }
 
@@ -400,8 +412,23 @@ public class Player extends Entity {
         } else {
             g2.drawImage(image, screenX, screenY, gp.TILE_SIZE*3, gp.TILE_SIZE*2, null);
         }
+
+
         // draw arrow
-        cursor.draw(g2, (int) (worldX + gp.TILE_SIZE * 1.5), worldY + gp.TILE_SIZE);
+        if (playerClass == 0) {
+            // WARRIOR
+            cursor.draw(g2, (int)(worldX + gp.TILE_SIZE * 2.3), worldY + gp.TILE_SIZE);
+
+        } else if (playerClass == 1) {
+            // KNIGHT
+            cursor.draw(g2, (int)(worldX + gp.TILE_SIZE * 2 + 5), worldY + gp.TILE_SIZE);
+
+        } else if (playerClass == 2) {
+            // ASSASSIN
+            cursor.draw(g2, (int)(worldX + gp.TILE_SIZE * 1.9), worldY + gp.TILE_SIZE);
+
+        }
+
     }
 
     // Ananda's old slash code

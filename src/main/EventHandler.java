@@ -4,7 +4,7 @@ package main;
 public class EventHandler {
     GamePanel gp;
     EventRect[][] eventRect ;
-    int previousEventX, previousEventY; // prevent event from happening again immedieatly
+    int previousEventX, previousEventY; // prevent event from happening again immediately
     boolean canTouchEvent = true;
 
     public EventHandler(GamePanel gp){
@@ -41,8 +41,11 @@ public class EventHandler {
         }
         //testing damage fall pit
             if(canTouchEvent) {// use else if to add more events
-                if(hit(8, 12, "moveDown")) {enterDungeon(8,12,gp.dialogueState);}
-                else if(hit(4,9,"moveDown")) {drinkWater(4,9, gp.dialogueState);}
+                if (hit(8, 12, "moveDown")) {
+                    enterDungeon(8, 12, gp.dialogueState);
+                } else if (hit(4, 9, "moveDown")) {
+                    drinkWater(4, 9, gp.dialogueState);
+                }
             }
         }
 

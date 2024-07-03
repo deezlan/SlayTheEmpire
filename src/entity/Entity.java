@@ -31,8 +31,6 @@ public abstract class Entity {
 //            weaponList = new ArrayList<>(); // Ananda's old slash ArrayList
     public String action;
     public boolean lookingRight;
-    public String direction;
-
     public boolean iframe = false;
     public int iframeCounter = 0;
     public int type; // 0 = player 1 = monster

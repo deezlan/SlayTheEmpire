@@ -4,7 +4,7 @@ package main;
 public class EventHandler {
     GamePanel gp;
     EventRect[][] eventRect ;
-    int previousEventX, previousEventY; // prevent event from happening again immedieatly
+    int previousEventX, previousEventY; // prevent event from happening again immediately
     boolean canTouchEvent = true;
 
     public EventHandler(GamePanel gp){
@@ -40,14 +40,16 @@ public class EventHandler {
             canTouchEvent = true;
         }
         //testing damage fall pit
-        if(canTouchEvent) {
-            if(hit(8, 12, "down")) {enterDungeon(8,12,gp.dialogueState);
+            if(canTouchEvent) {// use else if to add more events
+                if (hit(8, 12, "moveDown")) {
+                    enterDungeon(8, 12, gp.dialogueState);
+                } else if (hit(4, 9, "moveDown")) {
+                    drinkWater(4, 9, gp.dialogueState);
+                }
+            }
         }
 
-        }
-    }
-
-    public boolean hit (int col, int row, String reqDirection) {
+    public boolean hit (int col, int row, String reqAction) {
         boolean hit = false;
         gp.player.solidArea.x = gp.player.worldX + gp.player.solidArea.x;
         gp.player.solidArea.y = gp.player.worldY + gp.player.solidArea.y;
@@ -55,7 +57,7 @@ public class EventHandler {
         eventRect[col][row].y = row*gp.TILE_SIZE + eventRect[col][row].y;
 
         if(gp.player.solidArea.intersects(eventRect[col][row]) && !eventRect[col][row].eventDone){ // second half of if statement for 1 time events
-            if(gp.player.direction.contentEquals(reqDirection) || reqDirection.contentEquals("any")){
+            if(gp.player.action.contentEquals(reqAction) || reqAction.contentEquals("any")){
                 hit = true;
 
                 previousEventX = gp.player.worldX;
@@ -80,15 +82,12 @@ public class EventHandler {
     }
 
     public void drinkWater(int col, int row ,int gameState){
-        gp.gameState = gameState;
-        gp.ui.currentDialog = "Drank Possibly Toilet Water";
-        gp.player.life += 3;
-        canTouchEvent = false;
-        //if one time only event enable this
-//        eventRect[col][row].eventDone = true;
+        if(gp.keyH.ePressed){
+            gp.gameState = gameState;
+            gp.ui.currentDialog = "Drank Possibly Toilet Water";
+            gp.player.life = gp.player.maxLife;
+            canTouchEvent = false;
+        }
     }
-
-//    public void exitLobby(int gameState){ for exit lobby
-//        gp.gameState = gameState;
-//    }
 }
+

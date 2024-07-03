@@ -61,7 +61,6 @@ public class Player extends Entity {
         speed = 3;
         action = "idleRight";
         lookingRight = true;
-        direction = "right";
 
         //Status
         maxLife = 6;
@@ -97,20 +96,18 @@ public class Player extends Entity {
 
             if (keyH.wPressed && keyH.sPressed && keyH.aPressed) {
                 action = "moveLeft";
-                direction = "left";
             }
             if (keyH.wPressed && keyH.sPressed && keyH.dPressed) {
                 action = "moveRight";
-                direction = "right";
             }
             if (keyH.aPressed && keyH.dPressed && keyH.wPressed) {
                 action = "moveUp";
-                direction = "up";
             }
             if (keyH.aPressed && keyH.dPressed && keyH.sPressed) {
                 action = "moveDown";
-                direction = "down";
             }
+
+
 
             if ((keyH.wPressed || keyH.sPressed || keyH.aPressed || keyH.dPressed) && !action.equals("stuckOppositeDirection")) {
                 if (keyH.wPressed) {
@@ -118,7 +115,6 @@ public class Player extends Entity {
                 }
                 if (keyH.sPressed) {
                     action = "moveDown";
-                    direction = "down";
                 }
                 if (keyH.aPressed) {
                     action = "moveLeft";
@@ -131,14 +127,12 @@ public class Player extends Entity {
                 }
                 if (keyH.sPressed && keyH.dPressed) {
                     action = "moveDownRight";
-                    direction = "down";
                 }
                 if (keyH.wPressed && keyH.aPressed) {
                     action = "moveUpLeft";
                 }
                 if (keyH.sPressed && keyH.aPressed) {
                     action = "moveDownLeft";
-                    direction = "down";
                 }
 
                 if (keyH.enterPressed) {
@@ -177,10 +171,10 @@ public class Player extends Entity {
                 // CHECK NPC COLLISION
                 int npcIndex = gp.cChecker.checkEntityCollision(this, gp.npcArr);
                 interactNPC(npcIndex);
-                interactMerchant(npcIndex);
 
                 //CHECK EVENT
                 gp.eHandler.checkEvent();
+                gp.keyH.ePressed = false; // after player interact with tile;
 
                 //CHECK MOB COLLISION
                 int mobIndex = gp.cChecker.checkEntityCollision(this, gp.mobArr);
@@ -362,25 +356,30 @@ public class Player extends Entity {
     }
 
     public void interactNPC (int index) {
-        if (index != 999) {
-            gp.gameState = gp.dialogueState;
-            gp.npcArr[index].speak();
-        } if (index == 2) {
-            gp.gameState = gp.shopState;
+            if (index != 999) {
+                gp.gameState = gp.dialogueState;
+                gp.npcArr[index].speak();
+            }
+            if (index == 1) {
+                gp.gameState = gp.shopState;
         }
     }
 
-    public void interactMerchant(int index){
-        switch (index) {
-            case 999:
-                break;
-            case 1:
-                break;
-            default:
-                gp.gameState = gp.dialogueState; gp.npcArr[index].speak();
-                break;
-        }
-    }
+
+//    public void interactMerchant(int index){
+//        if (keyH.ePressed){
+//            switch (index) {
+//                case 999:
+//                    break;
+//                case 1:
+//                    gp.gameState = gp.shopState;
+//                    break;
+//                default:
+//                    gp.gameState = gp.dialogueState; gp.npcArr[index].speak();
+//                    break;
+//        }
+//    }
+//}
 
     public void interactMob (int index) {
         if ( index != 999) {

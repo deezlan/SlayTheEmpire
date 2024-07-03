@@ -1,5 +1,7 @@
 package entity;
 
+import main.UtilityTool;
+
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
@@ -13,9 +15,9 @@ public class Cursor {
 
     public Cursor( ) {
         try {
-            crosshairImage = ImageIO.read(getClass().getResourceAsStream("/crosshair/crosshair.png"));
+            crosshairImage = UtilityTool.loadSprite("/crosshair/crosshair.png", "Missing crosshair");
         } catch(IOException e) {
-            e.printStackTrace();
+            e.printStackTrace(System.out);
         }
     }
 
@@ -37,10 +39,10 @@ public class Cursor {
 
     public void drawCrosshair(Graphics2D g2) {
         if (crosshairImage != null) {
-            int crosshairWidth = crosshairImage.getWidth();
-            int crosshairHeight = crosshairImage.getHeight();
+            int crosshairWidth = (int)(crosshairImage.getWidth() * 1.75);
+            int crosshairHeight = (int)(crosshairImage.getHeight() * 1.75);
 
-            g2.drawImage(crosshairImage, mouseX - crosshairWidth/ 2, mouseY - crosshairHeight/2, null);
+            g2.drawImage(crosshairImage, mouseX - crosshairWidth/ 2, mouseY - crosshairHeight/2, crosshairWidth, crosshairHeight, null);
         }
     }
 
@@ -48,7 +50,7 @@ public class Cursor {
         AffineTransform old = g2.getTransform();
 
         int xOffset = 0;
-        int yOffset = 10;
+        int yOffset = 0;
         g2.translate(playerX + xOffset, playerY + yOffset);
 
         g2.rotate(angle);

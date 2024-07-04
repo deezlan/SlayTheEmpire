@@ -20,6 +20,8 @@ public abstract class Entity {
     public int iframeCounter = 0;
     public boolean alive = true;
     public boolean dead = false;
+    public boolean hpBarON = false;
+    int hpBarCounter = 0;
 
     int dyingCounter = 0;
 
@@ -69,6 +71,7 @@ public abstract class Entity {
     }
 
     public void setAction(){}
+    public void damageReaction(){}
 
     // entity's collision directions
     public boolean
@@ -263,19 +266,18 @@ public abstract class Entity {
             image = currentActionList.get(spriteNum - 1);
         }
         switch (gp.gameArea) {
-            case 0, 1:
-                if(iframe){
-                    g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.3f));
+            case 0:
+                if(iframe) {
+                    hpBarON = true;
+                    changeAlpha(g2, 0.3f);
                 }
                 if(dead){
                     dyingAnimation(g2);
                 }
                 g2.drawImage(image, worldX, worldY, null);
-                g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
+                changeAlpha(g2, 1.0f);
                 break;
-            case 2:
-                break;
-            default:
+            case 1:
                 int screenX = worldX - gp.player.worldX + gp.player.screenX;
                 int screenY = worldY - gp.player.worldY + gp.player.screenY; // Corrected worldY subtraction
 
@@ -284,15 +286,60 @@ public abstract class Entity {
                         worldY + gp.TILE_SIZE > gp.player.worldY - gp.player.screenY &&
                         worldY - gp.TILE_SIZE < gp.player.worldY + gp.player.screenY)
                 {
+                    // MONSTER HP BAR
+                    if(type == 2 && hpBarON) {
+
+                        double oneScale = (double)gp.TILE_SIZE/maxLife;
+                        double hpBarValue = oneScale*life;
+
+                        g2.setColor(new Color(35,35,35));
+                        g2.fillRect(screenX+51,screenY+51 , gp.TILE_SIZE,11);
+                        g2.setColor(new Color(255,0,30));
+                        g2.fillRect(screenX+50,screenY+50, (int)hpBarValue,9);
+
+                        hpBarCounter++;
+                        if(hpBarCounter > 600) {
+                            hpBarCounter = 0;
+                            hpBarON = false;
+                        }
+                    }
                     if(iframe){
-                        g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.3f));
+                        hpBarON = true;
+                        hpBarCounter = 0;
+                        changeAlpha(g2, 0.3f);
                     }
                     if(dead){
                         dyingAnimation(g2);
                     }
                     g2.drawImage(image, screenX, screenY, null);
-                    g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
+                    changeAlpha(g2, 1f);
                 }
+                break;
+            default:
+//                int screenX = worldX - gp.player.worldX + gp.player.screenX;
+//                int screenY = worldY - gp.player.worldY + gp.player.screenY; // Corrected worldY subtraction
+//
+//                if (worldX + gp.TILE_SIZE > gp.player.worldX - gp.player.screenX &&
+//                        worldX - gp.TILE_SIZE < gp.player.worldX + gp.player.screenX &&
+//                        worldY + gp.TILE_SIZE > gp.player.worldY - gp.player.screenY &&
+//                        worldY - gp.TILE_SIZE < gp.player.worldY + gp.player.screenY)
+//                {
+//                    // MONSTER HP BAR
+//                    if(type == 2) {
+//                        g2.setColor(new Color(35,35,35));
+//                        g2.fillRect(screenX-1,screenY-16, gp.TILE_SIZE+2,12);
+//                        g2.setColor(new Color(255,0,30));
+//                        g2.fillRect(screenX,screenY - 15, gp.TILE_SIZE,10);
+//                    }
+//                    if(iframe){
+//                        g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.3f));
+//                    }
+//                    if(dead){
+//                        dyingAnimation(g2);
+//                    }
+//                    g2.drawImage(image, screenX, screenY, null);
+//                    g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
+//                }
         }
     }
 }

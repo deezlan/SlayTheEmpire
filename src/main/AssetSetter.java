@@ -92,9 +92,9 @@ public class AssetSetter {
                 gp.mobArr[0].worldY = 200;
                 break;
             case 1:
-//                gp.mobArr[0] = new MOB_Slime(gp);
-//                gp.mobArr[0].worldX = 270;
-//                gp.mobArr[0].worldY = 270;
+                gp.mobArr[0] = new MOB_Slime(gp);
+                gp.mobArr[0].worldX = 240;
+                gp.mobArr[0].worldY = 270;
                 break;
             default:
                 System.out.println("Case Default AssetSetter Monster");

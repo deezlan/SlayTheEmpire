@@ -82,6 +82,11 @@ public class MOB_Slime extends Entity {
         }
     }
 
+    public void damageReaction() {
+        actionLockCounter = 0;
+        action = gp.player.action;
+    }
+
     public void getMobSprites() {
         String dir = "/Mobs/Slime/";
         try {

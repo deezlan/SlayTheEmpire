@@ -47,10 +47,10 @@ public class Player extends Entity {
     }
 
     public void setDefaultValues() {
-        worldX = 300; // Player spawn location x
-        worldY = 30; // player spawn location y
-//        worldX = 200; // second area spawn
-//        worldY = 200;
+//        worldX = 300; // Player spawn location x
+//        worldY = 30; // player spawn location y
+        worldX = 200; // second area spawn
+        worldY = 200;
         speed = 3;
         action = "idleRight";
         lookingRight = true;
@@ -435,6 +435,7 @@ public class Player extends Entity {
             if(!gp.mobArr[i].iframe){
                 gp.mobArr[i].life -= 1;
                 gp.mobArr[i].iframe = true;
+                gp.mobArr[i].damageReaction();
                 System.out.println("hit");
 
                 if(gp.mobArr[i].life <= 0) {
@@ -475,8 +476,8 @@ public class Player extends Entity {
             } if (attacking){
                 g2.drawImage(animationImage, screenX, screenY,null); // draw attack animation
             }
-        } else {
-            g2.drawImage(image, screenX, screenY, gp.TILE_SIZE*3, gp.TILE_SIZE*2, null);
+            } else {
+                 g2.drawImage(image, screenX, screenY, gp.TILE_SIZE*3, gp.TILE_SIZE*2, null);
         }
 
         // draw arrow

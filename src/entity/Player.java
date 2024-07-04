@@ -204,9 +204,12 @@ public class Player extends Entity {
                 gp.eHandler.checkEvent();
                 gp.keyH.ePressed = false; // after player interact with tile;
 
-                //CHECK MOB COLLISION
+                // CHECK MOB COLLISION
                 int mobIndex = gp.cChecker.checkEntityCollision(this, gp.mobArr);
                 interactMob(mobIndex);
+
+                // CHECK INTERACTIVE TILE
+                int iTileIndex = gp.cChecker.checkEntityCollision(this,gp.iTile);
 
                 switch (action) {
                     case "moveUp", "moveDown":
@@ -294,6 +297,9 @@ public class Player extends Entity {
                     // CHECK MONSTER COLLISION
                     int monsterIndex = gp.cChecker.checkEntityCollision(this, gp.mobArr);
                     damageMonster(monsterIndex);
+
+                    int iTileIndex = gp.cChecker.checkEntityCollision(this,gp.iTile);
+                    damageInteractiveTile(iTileIndex);
 
                     // CHANGE BACK TO ORIGINAL
                     worldX = currentWorldX;
@@ -444,6 +450,12 @@ public class Player extends Entity {
             } else {
                 System.out.println("miss");
             }
+        }
+    }
+
+    public void damageInteractiveTile(int i) {
+        if(i != 999 && gp.iTile[i].destructible){
+            gp.iTile[i] = null;
         }
     }
 

@@ -100,4 +100,9 @@ public class AssetSetter {
                 System.out.println("Case Default AssetSetter Monster");
         }
     }
+
+    public void setInteractiveTile() {
+        int i = 0;
+//        gp.iTile[i] = new
+    }
 }

@@ -8,6 +8,7 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Comparator;
 
+import TileInteractive.InteractiveTIle;
 import entity.Cursor;
 import entity.Entity;
 import entity.Player;
@@ -46,6 +47,7 @@ public class GamePanel extends JPanel implements Runnable {
     public Entity[] objArr= new Entity[10];
     public Entity[] npcArr = new Entity[10];
     public Entity[] mobArr = new Entity[10];
+    public InteractiveTIle[] iTile = new InteractiveTIle[50];
     public CollisionChecker cChecker = new CollisionChecker(this);
     public UI ui = new UI(this);
     public EventHandler eHandler = new EventHandler(this);
@@ -95,6 +97,7 @@ public class GamePanel extends JPanel implements Runnable {
         aSetter.setObject();
         aSetter.setNPC();
         aSetter.setMonster();
+        aSetter.setInteractiveTile();
         gameState = playState;
     }
 
@@ -156,6 +159,12 @@ public class GamePanel extends JPanel implements Runnable {
                     }
                 }
             }
+
+            for (Entity entity : iTile){
+                if(entity != null) {
+                    entity.update();
+                }
+            }
         }
     }
 
@@ -196,6 +205,13 @@ public class GamePanel extends JPanel implements Runnable {
         } else {
             tileM.draw(g2); // Draw tiles
 
+            // ADD INTERACTIVE TILES
+            for (InteractiveTIle interactiveTIle : iTile) {
+                if (interactiveTIle != null) {
+                    interactiveTIle.draw(g2);
+                }
+            }
+
             // ADD ENTITIES TO THE LIST
             entityList.add(player);
 
@@ -224,6 +240,12 @@ public class GamePanel extends JPanel implements Runnable {
             for (Entity entity : mobArr) {
                 if (entity != null) {
                     entityList.add(entity);
+                }
+            }
+
+            for (Entity entity : iTile){
+                if(entity != null) {
+                    entity.update();
                 }
             }
 

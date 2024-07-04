@@ -8,8 +8,10 @@ import java.io.IOException;
 import java.util.Random;
 
 public class MOB_Slime extends Entity {
+    GamePanel gp;
     public MOB_Slime(GamePanel gp) {
         super(gp);
+        this.gp = gp;
         type = 2;
         speed = 1;
         maxLife = 4;

@@ -5,8 +5,9 @@ import main.UtilityTool;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
-import javax.imageio.ImageIO;
+//import javax.imageio.ImageIO;
 import java.io.IOException;
+
 
 public class Cursor {
     private int mouseX, mouseY;
@@ -61,15 +62,15 @@ public class Cursor {
         g2.setTransform(old);
     }
 
-    public int getMouseX() {
-        return mouseX;
-    }
-
-    public int getMouseY() {
-        return mouseY;
-    }
-
-    public double getAngle() {
-        return angle;
-    }
+//    public int getMouseX() {
+//        return mouseX;
+//    }
+//
+//    public int getMouseY() {
+//        return mouseY;
+//    }
+//
+//    public double getAngle() {
+//        return angle;
+//    }
 }

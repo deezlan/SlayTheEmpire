@@ -1,13 +1,17 @@
 package object;
 
+import entity.Entity;
+import main.GamePanel;
 import main.UtilityTool;
 
 import java.io.IOException;
 
-public class OBJ_Obelisk extends SuperObject {
-    public OBJ_Obelisk() {
+public class OBJ_Obelisk extends Entity {
+    public OBJ_Obelisk(GamePanel gp) {
+        super(gp);
         name = "Obelisk";
         message = "teleport";
+        isObject = true;
         // Load sprites
         getObjectSprites();
 
@@ -30,7 +34,7 @@ public class OBJ_Obelisk extends SuperObject {
                 interactList.add(i, UtilityTool.loadSprite(dir + "interact/" + i + ".png", "Missing interact " + i));
             }
             // Scale sprites up
-            UtilityTool.scaleObjectList(defaultList, 119, 214);
+            UtilityTool.scaleEntityList(this, defaultList, 119, 214);
             UtilityTool.scaleObjectList(interactList, 119, 214);
         } catch (IOException e) {
             e.printStackTrace(System.out);

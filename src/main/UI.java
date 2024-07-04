@@ -18,14 +18,14 @@ public class  UI {
     private final Image loadGame;
     private final Image options;
     private final Image quit;
+    private final LoginPanel loginPanel;
 
     public String currentDialog = "";
     public int slotCol = 0;
     public int slotRow = 0;
     public int slotColMove = 0;
     public int slotRowMove = 0;
-    private final LoginPanel loginPanel;
-
+    public int commandNum = 0;
     public UI(GamePanel gp) {
         this.gp = gp;
 
@@ -235,6 +235,10 @@ public class  UI {
         int x = (gp.SCREEN_WIDTH - imageWidth) / 2;
         int y = (gp.SCREEN_HEIGHT - imageHeight) / 2;
         g2.drawImage(newGame, x, y, imageWidth, imageHeight, null);
+        if (commandNum == 0) {
+            g2.setColor(Color.WHITE);
+            g2.drawString(">", x - gp.TILE_SIZE, y);
+        }
     }
 
     public void drawLoadGame() {
@@ -243,6 +247,10 @@ public class  UI {
         int x = (gp.SCREEN_WIDTH - imageWidth) / 2;
         int y = (gp.SCREEN_HEIGHT - imageHeight) / 2 + 60;
         g2.drawImage(loadGame, x, y, imageWidth, imageHeight, null);
+        if (commandNum == 1) {
+            g2.setColor(Color.WHITE);
+            g2.drawString(">", x - gp.TILE_SIZE, y);
+        }
     }
 
     public void drawOptions() {
@@ -251,6 +259,10 @@ public class  UI {
         int x = (gp.SCREEN_WIDTH - imageWidth) / 3;
         int y = (gp.SCREEN_HEIGHT - imageHeight) / 2 + 130;
         g2.drawImage(options, x, y, imageWidth, imageHeight, null);
+        if (commandNum == 2) {
+            g2.setColor(Color.WHITE);
+            g2.drawString(">", x - gp.TILE_SIZE, y);
+        }
     }
 
     public void drawQuit() {
@@ -259,15 +271,18 @@ public class  UI {
         int x = ((gp.SCREEN_WIDTH - imageWidth) / 2 + 110);
         int y = (gp.SCREEN_HEIGHT - imageHeight) / 2 + 130;
         g2.drawImage(quit, x, y, imageWidth, imageHeight, null);
+        if (commandNum == 3) {
+            g2.setColor(Color.WHITE);
+            g2.drawString(">", x - gp.TILE_SIZE, y);
+        }
     }
 
     // Draw Start Menu
     public void drawStartMenu() {
-
         g2.setColor(Color.BLACK);
         g2.fillRect(0,0, gp.SCREEN_WIDTH, gp.SCREEN_HEIGHT);
 
-        // title image
+        // Draw Title and Buttons
         drawTitleImage();
         drawNewGame();
         drawLoadGame();

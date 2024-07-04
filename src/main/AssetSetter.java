@@ -17,84 +17,90 @@ public class AssetSetter {
     }
 
     public void setObject() {
-        switch (gp.gameArea) {
+        int mapNum = 0;
+        int i = 0;
+        switch (mapNum) {
             case 0:
-                gp.objArr[0] = new OBJ_Shop(gp);
-                gp.objArr[0].worldX = 540;
-                gp.objArr[0].worldY = -20;
+            gp.objArr[mapNum][i] = new OBJ_Shop(gp);
+            gp.objArr[mapNum][i].worldX = 540;
+            gp.objArr[mapNum][i].worldY = -20;
+            i++;
 
-                gp.objArr[1] = new OBJ_SavePedestal(gp);
-                gp.objArr[1].worldX = 272;
-                gp.objArr[1].worldY = 494;
+            gp.objArr[mapNum][i] = new OBJ_SavePedestal(gp);
+            gp.objArr[mapNum][i].worldX = 272;
+            gp.objArr[mapNum][i].worldY = 494;
+            i++;
 
-                gp.objArr[3] = new OBJ_ChatBubble(gp); // Maiden chat bubble
-                gp.objArr[3].worldX = 410;
-                gp.objArr[3].worldY = 220;
+            gp.objArr[mapNum][i] = new OBJ_ChatBubble(gp); // Maiden chat bubble
+            gp.objArr[mapNum][i].worldX = 410;
+            gp.objArr[mapNum][i].worldY = 220;
+            i++;
 
-                gp.objArr[4] = new OBJ_ChatBubble(gp); // Blacksmith chat bubble
-                gp.objArr[4].worldX = 140;
-                gp.objArr[4].worldY = 60;
+            gp.objArr[mapNum][i] = new OBJ_ChatBubble(gp); // Blacksmith chat bubble
+            gp.objArr[mapNum][i].worldX = 140;
+            gp.objArr[mapNum][i].worldY = 60;
+            i++;
 
-                gp.objArr[5] = new OBJ_ChatBubble(gp); // Merchant chat bubble
-                gp.objArr[5].worldX = 685;
-                gp.objArr[5].worldY = 80;
+            gp.objArr[mapNum][i] = new OBJ_ChatBubble(gp); // Merchant chat bubble
+            gp.objArr[mapNum][i].worldX = 685;
+            gp.objArr[mapNum][i].worldY = 80;
+            i++;
 
-                gp.objArr[6] = new OBJ_ChatBubble(gp); // Mystery chat bubble
-                gp.objArr[6].worldX = 540;
-                gp.objArr[6].worldY = 418;
-
-//                gp.objArr[7] = new OBJ_Obelisk(gp);
-//                gp.objArr[7].worldX = 200;
-//                gp.objArr[7].worldY = 200;
-
-                break;
-            case 1, 2:
-                break;
+            gp.objArr[mapNum][i] = new OBJ_ChatBubble(gp); // Mystery chat bubble
+            gp.objArr[mapNum][i].worldX = 540;
+            gp.objArr[mapNum][i].worldY = 418;
+            i++;
+            break;
+            case 1:
         }
     }
-
     public void setNPC() {
-        switch (gp.gameArea) {
+        int mapNum = 0;
+        int i = 0;
+        switch (mapNum) {
             case 0:
-                gp.npcArr[0] = new NPC_Maiden(gp);
-                gp.npcArr[0].worldX = 370;
-                gp.npcArr[0].worldY = 240;
-                System.out.println("NPC Maiden set at (" + gp.npcArr[0].worldX + ", " + gp.npcArr[0].worldY + ")");
+            gp.npcArr[mapNum][i] = new NPC_Maiden(gp);
+            gp.npcArr[mapNum][i].worldX = 370;
+            gp.npcArr[mapNum][i].worldY = 240;
+            System.out.println("NPC Maiden set at (" + gp.npcArr[mapNum][0].worldX + ", " + gp.npcArr[mapNum][0].worldY + ")");
+            i++;
 
-                gp.npcArr[1] = new NPC_Blacksmith(gp);
-                gp.npcArr[1].worldX = 90;
-                gp.npcArr[1].worldY = 80;
-                System.out.println("NPC Blacksmith set at (" + gp.npcArr[0].worldX + ", " + gp.npcArr[0].worldY + ")");
+            gp.npcArr[mapNum][i] = new NPC_Blacksmith(gp);
+            gp.npcArr[mapNum][i].worldX = 90;
+            gp.npcArr[mapNum][i].worldY = 80;
+            System.out.println("NPC Blacksmith set at (" + gp.npcArr[mapNum][0].worldX + ", " + gp.npcArr[mapNum][0].worldY + ")");
+            i++;
 
-                gp.npcArr[2] = new NPC_Merchant(gp);
-                gp.npcArr[2].worldX = 635;
-                gp.npcArr[2].worldY = 100;
-                System.out.println("NPC Merchant set at (" + gp.npcArr[0].worldX + ", " + gp.npcArr[0].worldY + ")");
+            gp.npcArr[mapNum][i] = new NPC_Merchant(gp);
+            gp.npcArr[mapNum][i].worldX = 635;
+            gp.npcArr[mapNum][i].worldY = 100;
+            System.out.println("NPC Merchant set at (" + gp.npcArr[mapNum][0].worldX + ", " + gp.npcArr[mapNum][0].worldY + ")");
+            i++;
 
-                gp.npcArr[3] = new NPC_Mystery(gp);
-                gp.npcArr[3].worldX = 500;
-                gp.npcArr[3].worldY = 448;
-                System.out.println("NPC Mystery set at (" + gp.npcArr[0].worldX + ", " + gp.npcArr[0].worldY + ")");
-                break;
+            gp.npcArr[mapNum][i] = new NPC_Mystery(gp);
+            gp.npcArr[mapNum][i].worldX = 500;
+            gp.npcArr[mapNum][i].worldY = 448;
+            System.out.println("NPC Mystery set at (" + gp.npcArr[mapNum][0].worldX + ", " + gp.npcArr[mapNum][0].worldY + ")");
+            i++;
+            break;
             case 1:
-                System.out.println("Case 1 AssetSetter");
-                break;
-            default:
-                System.out.println("Default case AssetSetter NPC");
         }
     }
-
     public void setMonster() {
-        switch(gp.gameArea) {
+        int mapNum = 0;
+        int i = 0;
+        switch(mapNum) {
             case 0:
-                gp.mobArr[0] = new MOB_Slime(gp);
-                gp.mobArr[0].worldX = 200;
-                gp.mobArr[0].worldY = 200;
+                gp.mobArr[mapNum][i] = new MOB_Slime(gp);
+                gp.mobArr[mapNum][i].worldX = 200;
+                gp.mobArr[mapNum][i].worldY = 200;
+                i++;
                 break;
             case 1:
-                gp.mobArr[0] = new MOB_Slime(gp);
-                gp.mobArr[0].worldX = 240;
-                gp.mobArr[0].worldY = 270;
+                gp.mobArr[mapNum][i] = new MOB_Slime(gp);
+                gp.mobArr[mapNum][i].worldX = 240;
+                gp.mobArr[mapNum][i].worldY = 270;
+                i++;
                 break;
             default:
                 System.out.println("Case Default AssetSetter Monster");
@@ -102,6 +108,7 @@ public class AssetSetter {
     }
 
     public void setInteractiveTile() {
+        int mapNum = 0;
         int i = 0;
 //        gp.iTile[i] = new
     }

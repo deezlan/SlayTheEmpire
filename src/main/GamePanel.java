@@ -21,6 +21,8 @@ public class GamePanel extends JPanel implements Runnable {
     public final int TILE_SIZE = (int)(ORIGINAL_TILE_SIZE * SCALE);
     public final int MAX_SCREEN_COL = 17;
     public final int MAX_SCREEN_ROW = 13;
+    public final int maxMap = 10;
+    public int currentMap = 0;
     public final int SCREEN_WIDTH = TILE_SIZE * MAX_SCREEN_COL;
     public final int SCREEN_HEIGHT = TILE_SIZE * MAX_SCREEN_ROW;
     public int gameArea = 0; // GAME AREA
@@ -44,10 +46,10 @@ public class GamePanel extends JPanel implements Runnable {
 
     // ENTITY AND OBJECTS
     public AssetSetter aSetter = new AssetSetter(this);
-    public Entity[] objArr= new Entity[10];
-    public Entity[] npcArr = new Entity[10];
-    public Entity[] mobArr = new Entity[10];
-    public InteractiveTIle[] iTile = new InteractiveTIle[50];
+    public Entity[][] objArr= new Entity[maxMap][10];
+    public Entity[][] npcArr = new Entity[maxMap][10];
+    public Entity[][] mobArr = new Entity[maxMap][10];
+    public InteractiveTIle[][] iTile = new InteractiveTIle[maxMap][50];
     public CollisionChecker cChecker = new CollisionChecker(this);
     public UI ui = new UI(this);
     public EventHandler eHandler = new EventHandler(this);
@@ -141,28 +143,32 @@ public class GamePanel extends JPanel implements Runnable {
         if (gameState == playState) {
             player.update();
 
-            for (Entity entity : objArr) { // OBJECTS
-                if (entity != null) {entity.update();}
+            for (int i = 0; i < objArr[1].length; i++){ // OBJECT
+                if(objArr[currentMap][i] != null){
+                    objArr[currentMap][i].update();
+                }
             }
 
-            for (Entity entity : npcArr) { // NPCS
-                if (entity != null) {entity.update();}
+            for (int i = 0; i < npcArr[1].length; i++){ // NPCs
+                if(npcArr[currentMap][i] != null){
+                    npcArr[currentMap][i].update();
+                }
             }
 
-            for (int mob = 0; mob < mobArr.length; mob++) { // MOBS
-                if (mobArr[mob] != null) {
-                    if (mobArr[mob].alive && (!mobArr[mob].dead)) {
-                        mobArr[mob].update();
+            for (int mob = 0; mob < mobArr[1].length; mob++) { // MOBS
+                if (mobArr[currentMap][mob] != null) {
+                    if (mobArr[currentMap][mob].alive && (!mobArr[currentMap][mob].dead)) {
+                        mobArr[currentMap][mob].update();
                     }
-                    if (!mobArr[mob].alive){
-                        mobArr[mob] = null;
+                    if (!mobArr[currentMap][mob].alive){
+                        mobArr[currentMap][mob] = null;
                     }
                 }
             }
 
-            for (Entity entity : iTile){
-                if(entity != null) {
-                    entity.update();
+            for (int i = 0; i < iTile[1].length; i++){ // INTERACTIVE TILES
+                if(iTile[currentMap][i] != null){
+                    iTile[currentMap][i].update();
                 }
             }
         }
@@ -175,84 +181,36 @@ public class GamePanel extends JPanel implements Runnable {
         // Title Screen
         if (gameState == titleState) {
             ui.draw(g2);
-//        } else if (gameState == playState) {
-//               switch (gameArea) {
-//                    case 0:
-//                       this.player.worldX = 350;
-//                       this.player.worldY = 30;
-//                       break;
-//                   case 1:
-//                       this.player.worldX = 145;
-//                       this.player.worldY = 232;break;
-//                   default:System.out.println("Default Case GamePanel paintComponent");
-//              }
-//            tileM.draw(g2); // Draw tiles
-//
-//            for (Entity object : objArr)
-//                if (object != null) object.draw(g2);
-//
-//            for (Entity entity : npcArr)
-//                if (entity != null) entity.draw(g2);
-//
-//            for (Entity mob : mobArr)
-//                if (mob != null) mob.draw(g2);
-//
-//            player.draw(g2); // Draw player
-//
-//            ui.draw(g2);
-//            ui.drawPlayerMoney();
-
         } else {
             tileM.draw(g2); // Draw tiles
 
             // ADD INTERACTIVE TILES
-            for (InteractiveTIle interactiveTIle : iTile) {
-                if (interactiveTIle != null) {
-                    interactiveTIle.draw(g2);
+            for (int i = 0; i < iTile[1].length; i++){ // INTERACTIVE TILES
+                if(iTile[currentMap][i] != null){
+                    iTile[currentMap][i].draw(g2);
                 }
             }
 
             // ADD ENTITIES TO THE LIST
             entityList.add(player);
 
-            for (Entity entity : npcArr) {
-                if (entity != null) {
-                    entityList.add(entity);
+            for (int i = 0; i < npcArr[1].length; i++){ // NPCs
+                if(npcArr[currentMap][i] != null){
+                    entityList.add(npcArr[currentMap][i]);
                 }
             }
 
-//            for (Entity NPC : npcArr)
-//                if (NPC != null) {
-//                    entityList.add(npcArr[NPC]);
-//                }
-
-            for (Entity entity : objArr) {
-                if (entity != null) {
-                    entityList.add(entity);
+            for (int i = 0; i < objArr[1].length; i++){ // OBJECT
+                if(objArr[currentMap][i] != null){
+                    entityList.add(objArr[currentMap][i]);
                 }
             }
 
-//            for (Entity object : objArr)
-//                if (object != null){
-//                    entityList.add(objArr[object]);
-//                }
-
-            for (Entity entity : mobArr) {
-                if (entity != null) {
-                    entityList.add(entity);
+            for (int i = 0; i < mobArr[1].length; i++){ // MOBS
+                if(mobArr[currentMap][i] != null){
+                    entityList.add(mobArr[currentMap][i]);
                 }
             }
-
-            for (Entity entity : iTile){
-                if(entity != null) {
-                    entity.update();
-                }
-            }
-
-//            for (Entity mob : mobArr)
-//                if (mob != null) {
-//                    entityList.add(mobArr[mob]);
-//                }
 
             // SORT
             entityList.sort(Comparator.comparingInt(e -> e.worldY));

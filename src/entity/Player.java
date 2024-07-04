@@ -411,16 +411,16 @@ public class Player extends Entity {
             gp.gameState = gp.shopState;
         } else if (index != 999) {
 //            gp.objArray[index] = null;
-            System.out.println(gp.objArr[index].message);
-            if (!gp.objArr[index].interactList.isEmpty())
-                gp.objArr[index].interacting = true;
+            System.out.println(gp.objArr[gp.currentMap][index].message);
+            if (!gp.objArr[gp.currentMap][index].interactList.isEmpty())
+                gp.objArr[gp.currentMap][index].interacting = true;
         }
     }
 
     public void interactNPC (int index) {
             if (index != 999) {
                 gp.gameState = gp.dialogueState;
-                gp.npcArr[index].speak();
+                gp.npcArr[gp.currentMap][index].speak();
             }
             if (index == 1) {
                 gp.gameState = gp.shopState;
@@ -438,14 +438,14 @@ public class Player extends Entity {
 
     public void damageMonster(int i) {
         if (i != 999){
-            if(!gp.mobArr[i].iframe){
-                gp.mobArr[i].life -= 1;
-                gp.mobArr[i].iframe = true;
-                gp.mobArr[i].damageReaction();
+            if(!gp.mobArr[gp.currentMap][i].iframe){
+                gp.mobArr[gp.currentMap][i].life -= 1;
+                gp.mobArr[gp.currentMap][i].iframe = true;
+                gp.mobArr[gp.currentMap][i].damageReaction();
                 System.out.println("hit");
 
-                if(gp.mobArr[i].life <= 0) {
-                    gp.mobArr[i].dead = true;
+                if(gp.mobArr[gp.currentMap][i].life <= 0) {
+                    gp.mobArr[gp.currentMap][i].dead = true;
                 }
             } else {
                 System.out.println("miss");
@@ -454,7 +454,7 @@ public class Player extends Entity {
     }
 
     public void damageInteractiveTile(int i) {
-        if(i != 999 && gp.iTile[i].destructible){
+        if(i != 999 && gp.iTile[gp.currentMap][i].destructible){
             gp.iTile[i] = null;
         }
     }

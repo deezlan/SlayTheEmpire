@@ -43,6 +43,12 @@ public class KeyHandler implements KeyListener {
             if (code == KeyEvent.VK_E){
                 ePressed = true;
             }
+            if (code == KeyEvent.VK_R){
+                switch(gp.currentMap) {
+                    case 0: gp.tileM.loadMap("/mapTextFiles/firstLevel.txt",0); break;
+                    case 1: gp.tileM.loadMap("/mapTextFiles/firstLevel.txt",1); break;
+                }
+            }
         }
 
         if (gp.gameState == gp.shopState){

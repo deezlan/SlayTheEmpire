@@ -92,7 +92,7 @@ public class UI {
         g2.drawString("Price", frameX + gp.TILE_SIZE*8 - 15, frameY + 30);
         //DRAW SHOP
         for (int i = 0; i < 4; i++){
-            NPC_Blacksmith bs = (NPC_Blacksmith) gp.npcArr[1];
+            NPC_Blacksmith bs = (NPC_Blacksmith) gp.npcArr[gp.currentMap][1];
             BufferedImage BI = bs.getShopItems().get(i).weaponSprite;
             BufferedImage coinImage = coin.defaultList.get(0);
             coinImage = UtilityTool.scaleImage(coinImage, 36, 36);

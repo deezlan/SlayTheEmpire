@@ -47,10 +47,8 @@ public class Player extends Entity {
     }
 
     public void setDefaultValues() {
-//        worldX = 300; // Player spawn location x
-//        worldY = 30; // player spawn location y
-        worldX = 200; // second area spawn
-        worldY = 200;
+        worldX = 590; // Player spawn location x
+        worldY = 100; // player spawn location y
         speed = 3;
         action = "idleRight";
         lookingRight = true;

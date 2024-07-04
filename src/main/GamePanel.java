@@ -19,8 +19,8 @@ public class GamePanel extends JPanel implements Runnable {
     final int ORIGINAL_TILE_SIZE = 16;
     final double SCALE = 3;
     public final int TILE_SIZE = (int)(ORIGINAL_TILE_SIZE * SCALE);
-    public final int MAX_SCREEN_COL = 17;
-    public final int MAX_SCREEN_ROW = 13;
+    public final int MAX_SCREEN_COL = 30; // for center
+    public final int MAX_SCREEN_ROW = 20;
     public final int maxMap = 10;
     public int currentMap = 0;
     public final int SCREEN_WIDTH = TILE_SIZE * MAX_SCREEN_COL;
@@ -29,8 +29,8 @@ public class GamePanel extends JPanel implements Runnable {
     public int playerClass = 0; // player class here
 
     // WORLD SETTINGS
-    public int MAX_WORLD_COL = 17; //must be same as map size
-    public int MAX_WORLD_ROW = 14; //must be same as map size
+    public int MAX_WORLD_COL = 31; //must be same as map size
+    public int MAX_WORLD_ROW = 20; //must be same as map size
 
     // FPS SETTINGS
     final int FPS = 60;
@@ -90,10 +90,6 @@ public class GamePanel extends JPanel implements Runnable {
 
         this.setCursor(blankCursor);
     }
-
-//    public Cursor getPCursor() {
-//        return cursor;
-//    }
 
     public void setupGame() {
         aSetter.setObject();

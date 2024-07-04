@@ -21,23 +21,25 @@ public class TileManager {
     public TileManager(GamePanel gp) {
         gp.currentMap = 0;
         this.gp = gp;
+        gp.MAX_WORLD_COL = 30;
+        gp.MAX_WORLD_ROW = 20;
 
-        switch (gp.currentMap) {
-            case 0:
-                gp.MAX_WORLD_COL = 17;
-                gp.MAX_WORLD_ROW = 13;
-                gp.setBackground(Color.decode("#222034"));
-                break;
-            case 1:
-                gp.MAX_WORLD_COL = 31;
-                gp.MAX_WORLD_ROW = 21;
-                break;
-        }
+//        switch (gp.currentMap) {
+//            case 0:
+//                gp.MAX_WORLD_COL = 17;
+//                gp.MAX_WORLD_ROW = 13;
+//                gp.setBackground(Color.decode("#222034"));
+//                break;
+//            case 1:
+//                gp.MAX_WORLD_COL = 31;
+//                gp.MAX_WORLD_ROW = 21;
+//                break;
+//        }
 
         mapTileNum = new int[gp.maxMap][gp.MAX_WORLD_COL][gp.MAX_WORLD_ROW];
 
         getTileImage();
-        loadMap("/mapTextFiles/lobby.txt",0);
+        loadMap("/mapTextFiles/LobbyTest.txt",0);
         loadMap("/mapTextFiles/firstLevel.txt",1);
     }
 

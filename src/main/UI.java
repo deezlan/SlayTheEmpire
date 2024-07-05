@@ -18,24 +18,32 @@ public class  UI {
     private final Image loadGame;
     private final Image options;
     private final Image quit;
+    private final Image loginDefault, loginUsername, loginPassword,
+            blankField, invalidLogin, invalidUsername, usernameTaken;
 
     public String currentDialog = "";
     public int slotCol = 0;
     public int slotRow = 0;
     public int slotColMove = 0;
     public int slotRowMove = 0;
-    private final LoginPanel loginPanel;
+
+    // Login variables
+    public String username = "", password = "", passwordHidden = "";
+    public boolean hasBlankField = false,
+            isInvalidUsername = false,
+            isInvalidLogin = false,
+            validLogin = false;
 
     public UI(GamePanel gp) {
         this.gp = gp;
 
-        loginPanel = new LoginPanel(gp);
-
-        //HUD Components
+        // HUD Components
         SuperObject heart = new OBJ_Heart(gp);
         fullHeart = heart.defaultList.get(2);
         halfHeart = heart.defaultList.get(1);
         emptyHeart = heart.defaultList.get(0);
+
+        // Login variables initializations
 
         // INITIALIZE TITLE VIDEO
         ImageIcon icon = new ImageIcon("res/UI/Title.gif");
@@ -45,24 +53,28 @@ public class  UI {
         ImageIcon title = new ImageIcon("res/UI/Title.png");
         titleImage = title.getImage();
 
+        // INITIALIZE LOGIN SCREEN
+        loginDefault = new ImageIcon("res/UI/loginDefault.png").getImage();
+        loginUsername = new ImageIcon("res/UI/loginUsername.png").getImage();
+        loginPassword = new ImageIcon("res/UI/loginPassword.png").getImage();
+        blankField = new ImageIcon("res/UI/blankField.png").getImage();
+        invalidLogin = new ImageIcon("res/UI/invalidLogin.png").getImage();
+        invalidUsername = new ImageIcon("res/UI/invalidUsername.png").getImage();
+        usernameTaken = new ImageIcon("res/UI/usernameTaken.png").getImage();
+
         // INITIALIZE START MENU UI
-        ImageIcon newgame = new ImageIcon("res/UI/newgame.png");
-        newGame = newgame.getImage();
+        newGame = new ImageIcon("res/UI/newGame.png").getImage();
 
-        ImageIcon load = new ImageIcon("res/UI/loadgame.png");
-        loadGame = load.getImage();
+        loadGame = new ImageIcon("res/UI/loadGame.png").getImage();
 
-        ImageIcon optionsImage = new ImageIcon("res/UI/options.png");
-        options = optionsImage.getImage();
+        options = new ImageIcon("res/UI/options.png").getImage();
 
-        ImageIcon quitImage = new ImageIcon("res/UI/quit.png");
-        quit = quitImage.getImage();
+        quit = new ImageIcon("res/UI/quit.png").getImage();
     }
 
     public void draw(Graphics2D g2){
-
         this.g2 = g2;
-        g2.setFont(new Font("Microsoft YaHei", Font.PLAIN, 28));
+        g2.setFont(new Font("Microsoft YaHei", Font.PLAIN, 26));
         g2.setColor(Color.white);
         drawPlayerLife();
 
@@ -73,7 +85,8 @@ public class  UI {
 
         // LOGIN MENU
         if (gp.gameState == gp.loginState) {
-            drawLogin();
+            g2.setFont(new Font("Microsoft YaHei", Font.PLAIN, 18));
+            drawLoginScreen();
         } else {
             gp.loginPanel.setVisible(false);
         }
@@ -174,7 +187,7 @@ public class  UI {
 
         g2.setFont(g2.getFont().deriveFont(Font.BOLD, 60F));
         String text = "PAUSED";
-        int x = getXforCenteredText(text);
+        int x = getXForCenteredText(text);
         int y = gp.SCREEN_HEIGHT/2;
 
         // SHADOW
@@ -186,15 +199,6 @@ public class  UI {
 
     }
 
-    // Calculate Image Height
-    public int calculateHeight(Image img) {
-        return img.getHeight(null);
-    }
-
-    public int calculateWidth(Image img) {
-        return img.getWidth(null);
-    }
-
     // Draw Title GIF
     public void drawTitleScreen() {
         g2.drawImage(titleGif, 0, 0, gp.SCREEN_WIDTH, gp.SCREEN_HEIGHT, null);
@@ -203,62 +207,135 @@ public class  UI {
     // DRAW TITLE IMAGE
     public void drawTitleImage() {
         int imageWidth = (int)(gp.SCREEN_WIDTH/1.3);
-        int imageHeight = (int) (calculateHeight(titleImage) * ((double) imageWidth / titleImage.getWidth(null)));
+        int imageHeight = (int) (titleImage.getHeight(null) * ((double) imageWidth / titleImage.getWidth(null)));
         int x = (gp.SCREEN_WIDTH - imageWidth) / 2;
         int y = (gp.SCREEN_HEIGHT - imageHeight) / 4;
 
         g2.drawImage(titleImage, x, y, imageWidth, imageHeight, null);
     }
 
-    // Draw LOGIN_OR_REGISTER SCREEN
-//    public void drawLoginOrRegisterScreen() {
-//
-//    }
-
     // Draw Login Screen
-    public void drawLogin() {
+    public void drawLoginScreen() {
+        if (gp.onUsername) {
+            g2.drawImage(loginUsername, 0, 0, loginDefault.getWidth(null), loginDefault.getHeight(null), null);
+        } else if (gp.onPassword) {
+            g2.drawImage(loginPassword, 0, 0, loginDefault.getWidth(null), loginDefault.getHeight(null), null);
+        } else {
+            g2.drawImage(loginDefault, 0, 0, loginDefault.getWidth(null), loginDefault.getHeight(null), null);
+        }
+        if (hasBlankField)
+            g2.drawImage(blankField, 320, 480, 250, 20, null);
+        if (isInvalidUsername)
+            g2.drawImage(invalidUsername, 320, 480, 250, 20, null);
+        if (isInvalidLogin)
+            g2.drawImage(invalidLogin, 320, 480, 250, 20, null);
+        if (validLogin)
+            System.out.println("Login successful! JACOB'S LADDER");
 
-        // black background
+        validLogin = false;
+
+        Rectangle nameRect = new Rectangle(264, 264, 288, 29);
+        Rectangle passRect = new Rectangle(264, 331, 288, 28);
+        Rectangle registerRect = new Rectangle(345, 380, 130, 28);
+        Rectangle loginRect = new Rectangle(365, 425, 90, 28);
+
+        g2.draw(nameRect);
+        g2.draw(passRect);
+
         g2.setColor(Color.BLACK);
-        g2.fillRect(0, 0, gp.SCREEN_WIDTH, gp.SCREEN_HEIGHT);
+        g2.draw(registerRect);
+        g2.draw(loginRect);
 
-        // Draw login
-        gp.loginPanel.setVisible(true);
 
-        // draw title
-        drawTitleImage();
+        g2.setColor(Color.WHITE);
+        g2.drawString(username, 275, 285);
+//        g2.drawString(password, 275, 351);  // ENABLE TO VIEW PASSWORD DATA
+        g2.drawString(passwordHidden, 275, 355); // ENABLE TO HIDE PASSWORD DATA
+
+        if (gp.mouseH.leftClicked) {
+            if (nameRect.contains(gp.cursor.getMouseX(), gp.cursor.getMouseY())) {
+                System.out.println("I am within username.");
+                gp.onUsername = true;
+                gp.onPassword = false;
+            } else if (passRect.contains(gp.cursor.getMouseX(), gp.cursor.getMouseY())) {
+                System.out.println("I am within password.");
+                gp.onUsername = false;
+                gp.onPassword = true;
+            } else {
+                gp.onUsername = false;
+                gp.onPassword = false;
+            }
+
+            // Execute user registration
+            if (registerRect.contains(gp.cursor.getMouseX(), gp.cursor.getMouseY())) {
+
+            }
+            // Execute user login
+            if (loginRect.contains(gp.cursor.getMouseX(), gp.cursor.getMouseY())) {
+                System.out.println("Clicked on login.");
+                checkLogin();
+                System.out.println(isInvalidUsername);
+            }
+
+            gp.mouseH.clearMouseClick();
+        }
+
+        g2.setColor(Color.WHITE);
+        g2.setStroke(new BasicStroke(3f));
+        if (registerRect.contains(gp.cursor.getMouseX(), gp.cursor.getMouseY())) {
+            g2.drawRect(355, 410, 110, 0);
+        } else if (loginRect.contains(gp.cursor.getMouseX(), gp.cursor.getMouseY())) {
+            g2.drawRect(375, 455, 72, 0);
+        }
+    }
+
+    public void checkLogin () {
+        if (username.isEmpty() || password.isEmpty()) {
+            hasBlankField = true;
+        } else if (UtilityTool.containsIllegals(username)) {
+            System.out.println("Has illegal");
+            hasBlankField = false;
+            isInvalidUsername = true;
+        } else if (!username.isEmpty() && !password.equals("bunny")) {
+            hasBlankField = false;
+            isInvalidUsername = false;
+            isInvalidLogin = true;
+        } else if (username.equals("jacob") && password.equals("bunny")) {
+            hasBlankField = false;
+            isInvalidUsername = false;
+            isInvalidLogin = false;
+            validLogin = true;
+        }
+        System.out.println(username);
+        System.out.println(!UtilityTool.containsIllegals(username));
+    }
+
+    public void checkRegister () {
+
     }
 
     public void drawNewGame() {
-        int imageWidth = calculateWidth(newGame);
-        int imageHeight = calculateHeight(newGame);
-        int x = (gp.SCREEN_WIDTH - imageWidth) / 2;
-        int y = (gp.SCREEN_HEIGHT - imageHeight) / 2;
-        g2.drawImage(newGame, x, y, imageWidth, imageHeight, null);
+        int x = (gp.SCREEN_WIDTH - newGame.getWidth(null)) / 2;
+        int y = (gp.SCREEN_HEIGHT - newGame.getHeight(null)) / 2;
+        g2.drawImage(newGame, x, y, newGame.getWidth(null), newGame.getHeight(null), null);
     }
 
     public void drawLoadGame() {
-        int imageWidth = calculateWidth(loadGame);
-        int imageHeight = calculateHeight(loadGame);
-        int x = (gp.SCREEN_WIDTH - imageWidth) / 2;
-        int y = (gp.SCREEN_HEIGHT - imageHeight) / 2 + 60;
-        g2.drawImage(loadGame, x, y, imageWidth, imageHeight, null);
+        int x = (gp.SCREEN_WIDTH - loadGame.getWidth(null)) / 2;
+        int y = (gp.SCREEN_HEIGHT - loadGame.getHeight(null)) / 2 + 60;
+        g2.drawImage(loadGame, x, y, loadGame.getWidth(null), loadGame.getHeight(null), null);
     }
 
     public void drawOptions() {
-        int imageWidth = calculateWidth(options);
-        int imageHeight = calculateHeight(options);
-        int x = (gp.SCREEN_WIDTH - imageWidth) / 3;
-        int y = (gp.SCREEN_HEIGHT - imageHeight) / 2 + 130;
-        g2.drawImage(options, x, y, imageWidth, imageHeight, null);
+        int x = (gp.SCREEN_WIDTH - options.getWidth(null)) / 3;
+        int y = (gp.SCREEN_HEIGHT - options.getHeight(null)) / 2 + 130;
+        g2.drawImage(options, x, y, options.getWidth(null), options.getHeight(null), null);
     }
 
     public void drawQuit() {
-        int imageWidth = calculateWidth(quit);
-        int imageHeight = calculateHeight(quit);
-        int x = ((gp.SCREEN_WIDTH - imageWidth) / 2 + 110);
-        int y = (gp.SCREEN_HEIGHT - imageHeight) / 2 + 130;
-        g2.drawImage(quit, x, y, imageWidth, imageHeight, null);
+        int x = ((gp.SCREEN_WIDTH - quit.getWidth(null)) / 2 + 110);
+        int y = (gp.SCREEN_HEIGHT - quit.getHeight(null)) / 2 + 130;
+        g2.drawImage(quit, x, y, quit.getWidth(null), quit.getHeight(null), null);
     }
 
     // Draw Start Menu
@@ -308,7 +385,7 @@ public class  UI {
         g2.drawRoundRect(x+5,y+5,width-10,height-10,25,25);
     }
 
-    public int getXforCenteredText(String text) {
+    public int getXForCenteredText(String text) {
         int length = (int)g2.getFontMetrics().getStringBounds(text, g2).getWidth();
         return gp.SCREEN_WIDTH/2 - length/2;
     }

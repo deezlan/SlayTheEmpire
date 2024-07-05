@@ -42,6 +42,14 @@ public class GamePanel extends JPanel implements Runnable {
     public Cursor cursor = new Cursor(); // Initialize cursor
     public Player player = new Player(this, keyH, cursor); // Pass cursor to player
 
+
+
+
+    public MouseHandler mouseH = new MouseHandler();
+    public boolean
+            onUsername = false,
+            onPassword = false;
+
     Thread gameThread;
 
     public AssetSetter aSetter = new AssetSetter(this);
@@ -72,15 +80,24 @@ public class GamePanel extends JPanel implements Runnable {
         this.addKeyListener(keyH);
         this.setFocusable(true);
 
-        loginPanel = new LoginPanel(this);
-        this.add(loginPanel);
-
-        hideCursor();
+//        hideCursor();
 
         addMouseMotionListener(new MouseAdapter() {
             @Override
             public void mouseMoved(MouseEvent e) {
                 cursor.updateMousePosition(e.getX(), e.getY());
+            }
+        });
+
+        addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                mouseH.mouseClicked(e);
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                mouseH.mouseEntered(e);
             }
         });
     }
@@ -100,10 +117,10 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     public void setupGame() {
-        aSetter.setObject();
-        aSetter.setNPC();
-        aSetter.setMonster();
-        gameState = titleState; // TESTING LOGIN RIGHT NOW
+//        aSetter.setObject();
+//        aSetter.setNPC();
+//        aSetter.setMonster();
+        gameState = loginState; // TESTING LOGIN RIGHT NOW
     }
 
     public void startGameThread() {

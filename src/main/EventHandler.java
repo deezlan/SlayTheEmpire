@@ -46,9 +46,9 @@ public class EventHandler {
         }
         //testing damage fall pit
             if(canTouchEvent) {// use else if to add more events
-                if (hit(0,15, 15, "any")) {
+                if (hit(0,14, 15, "any")) {
                     enterDungeon(1,8,8);
-                } else if (hit(0,11, 12, "any")) {
+                } else if (hit(0,15, 16, "any")) {
                     drinkWater(gp.dialogueState);
                 } else if (hit(0,10, 12, "any")) {
                     drinkWater(gp.dialogueState);

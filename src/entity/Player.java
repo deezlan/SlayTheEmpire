@@ -30,8 +30,8 @@ public class Player extends Entity {
         this.gp = gp;
         this.keyH = keyH;
         this.playerClass = playerClass;
-        screenX = gp.SCREEN_WIDTH / 2 - (gp.TILE_SIZE / 2); // added screen position
-        screenY = gp.SCREEN_HEIGHT / 2 - (gp.TILE_SIZE / 2);
+        screenX = (gp.SCREEN_WIDTH/2) - (gp.TILE_SIZE/2); // added screen position
+        screenY = (gp.SCREEN_HEIGHT/2) - (gp.TILE_SIZE/2);
 
         this.cursor = cursor;
         setDefaultValues();
@@ -47,8 +47,8 @@ public class Player extends Entity {
     }
 
     public void setDefaultValues() {
-        worldX = 590; // Player spawn location x
-        worldY = 100; // player spawn location y
+        worldX = gp.TILE_SIZE * 12; // Player spawn location x
+        worldY = gp.TILE_SIZE * 5; // player spawn location y
         speed = 3;
         action = "idleRight";
         lookingRight = true;

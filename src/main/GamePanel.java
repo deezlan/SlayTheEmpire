@@ -29,8 +29,10 @@ public class GamePanel extends JPanel implements Runnable {
     public int playerClass = 0; // player class here
 
     // WORLD SETTINGS
-    public int MAX_WORLD_COL = 30; //must be same as map size
-    public int MAX_WORLD_ROW = 20; //must be same as map size
+    public int MAX_WORLD_COL = 50; //must be same as map size
+    public int MAX_WORLD_ROW = 50; //must be same as map size
+    public final int WORLD_WIDTH = TILE_SIZE * MAX_WORLD_COL;
+    public final int WORLD_HEIGHT = TILE_SIZE * MAX_WORLD_ROW;
 
     // FPS SETTINGS
     final int FPS = 60;

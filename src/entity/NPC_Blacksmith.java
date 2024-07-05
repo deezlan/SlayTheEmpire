@@ -58,6 +58,31 @@ public class NPC_Blacksmith extends Entity {
         shopItems.add(new OBJ_Hammer(gp));
     }
 
+    public void buy(){
+        if (gp.player.ownedWeapon.contains(gp.ui.slotRow) & !gp.player.hotbarList.contains(shopItems.get(gp.ui.slotRow))){
+            if (gp.player.hotbarList.size() < 3){
+                gp.player.hotbarList.add(0, shopItems.get(gp.ui.slotRow));
+            } else{
+                gp.player.hotbarList.remove(2);
+                gp.player.hotbarList.add(0, shopItems.get(gp.ui.slotRow));
+            }
+        } else if (gp.player.hotbarList.contains(shopItems.get(gp.ui.slotRow))) {
+
+        } else {
+            if (gp.player.hotbarList.size() < 3){
+                gp.player.totalCoins -= shopItems.get(gp.ui.slotRow).price;
+                gp.player.hotbarList.add(0, shopItems.get(gp.ui.slotRow));
+                gp.player.ownedWeapon.add(gp.ui.slotRow);
+            } else {
+                gp.player.totalCoins -= shopItems.get(gp.ui.slotRow).price;
+                gp.player.hotbarList.remove(2);
+                gp.player.hotbarList.add(0, shopItems.get(gp.ui.slotRow));
+                gp.player.ownedWeapon.add(gp.ui.slotRow);
+            }
+        }
+
+    }
+
     public ArrayList<Entity> getShopItems(){
         return shopItems;
     }

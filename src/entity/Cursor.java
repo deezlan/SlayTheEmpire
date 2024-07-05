@@ -10,12 +10,13 @@ public class Cursor {
     private int mouseX, mouseY;
     private double angle;
     private BufferedImage crosshairImage;
+    public int deltaX, deltaY, arrowX, arrowY;
 
     public Cursor( ) {
         try {
             crosshairImage = ImageIO.read(getClass().getResourceAsStream("/crosshair/crosshair.png"));
         } catch(IOException e) {
-            e.printStackTrace();
+            e.printStackTrace(System.out);
         }
     }
 
@@ -25,8 +26,8 @@ public class Cursor {
     }
 
     public void calculateAngle(int playerX, int playerY) {
-        int deltaX = mouseX - playerX;
-        int deltaY = mouseY - playerY;
+        deltaX = mouseX - playerX;
+        deltaY = mouseY - playerY;
         angle = Math.atan2(deltaY, deltaX);
     }
 
@@ -49,6 +50,8 @@ public class Cursor {
 
         int xOffset = 0;
         int yOffset = 10;
+        arrowX = playerX + xOffset;
+        arrowY = playerY + yOffset;
         g2.translate(playerX + xOffset, playerY + yOffset);
 
         g2.rotate(angle);

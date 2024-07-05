@@ -1,5 +1,7 @@
 package main;
 
+import entity.NPC_Blacksmith;
+
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
@@ -12,7 +14,11 @@ public class KeyHandler implements KeyListener {
             dPressed,
             ePressed,
             pPressed,
-            enterPressed;
+            enterPressed,
+            shotKeyPressed,
+            onePressed,
+            twoPressed,
+            threePressed;
 
     public KeyHandler(GamePanel gp){
         this.gp = gp;
@@ -40,6 +46,18 @@ public class KeyHandler implements KeyListener {
             if (code == KeyEvent.VK_D) {
                 dPressed = true;
             }
+            if (code == KeyEvent.VK_F) {
+                shotKeyPressed = true;
+            }
+            if (code == KeyEvent.VK_1){
+                onePressed = true;
+            }
+            if (code == KeyEvent.VK_2){
+                twoPressed = true;
+            }
+            if (code == KeyEvent.VK_3){
+                threePressed = true;
+            }
         }
 
         if (gp.gameState == gp.shopState){
@@ -48,6 +66,15 @@ public class KeyHandler implements KeyListener {
                     gp.ui.slotRowMove -= 1;
                     gp.ui.slotRow--;
                 }
+            }
+            if (code == KeyEvent.VK_ENTER){
+                NPC_Blacksmith bs = (NPC_Blacksmith) gp.npcArr[1];
+                if (gp.player.totalCoins < bs.getShopItems().get(gp.ui.slotRow).price){
+                    //Do nothing
+                } else {
+                    bs.buy();
+                }
+                gp.gameState = gp.playState;
             }
             if (code == KeyEvent.VK_S) {
                 if (gp.ui.slotRowMove != 3){
@@ -94,5 +121,9 @@ public class KeyHandler implements KeyListener {
         if (code == KeyEvent.VK_A) { aPressed = false; }
         if (code == KeyEvent.VK_D) { dPressed = false; }
         if (code == KeyEvent.VK_ENTER) { enterPressed = false; }
+        if (code == KeyEvent.VK_F) { shotKeyPressed = false; }
+        if (code == KeyEvent.VK_1){ onePressed = false; }
+        if (code == KeyEvent.VK_2){ twoPressed = false; }
+        if (code == KeyEvent.VK_3){ threePressed = false; }
     }
 }

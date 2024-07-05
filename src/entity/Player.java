@@ -3,7 +3,6 @@ package entity;
 import main.GamePanel;
 import main.KeyHandler;
 import main.UtilityTool;
-import object.OBJ_SnowballCannon;
 
 import java.awt.Rectangle;
 import java.awt.AlphaComposite;
@@ -21,6 +20,8 @@ public class Player extends Entity {
     public final int screenY;
     public int totalCoins;
     public ArrayList<Entity> hotbarList = new ArrayList<>();
+    public ArrayList<Integer> ownedWeapon = new ArrayList<>();
+    public Entity currentWeapon = null;
     public int playerClass,
             warrior = 0,
             assassin = 1,
@@ -70,16 +71,9 @@ public class Player extends Entity {
         //Status
         maxLife = 6;
         life = maxLife;
-        totalCoins = 0;
-
+        totalCoins = 500;
         //Start
-        try {
-            currentWeapon = new OBJ_SnowballCannon(gp);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        damage = currentWeapon.damage;
-        hotbarList.add(currentWeapon);
+        damage = 0;
     }
 
     public void setItems() {
@@ -227,6 +221,41 @@ public class Player extends Entity {
                 loopThroughSprites();
             }
             cursor.calculateAngle((int) (worldX + gp.TILE_SIZE * 1.5), worldY + gp.TILE_SIZE);
+        }
+
+        if (gp.keyH.shotKeyPressed){
+            if (currentWeapon == null){
+                attacking = true;
+            } else {
+                projectile.set(worldX, worldY, action, true, this);
+
+                gp.projectileList.add(projectile);
+            }
+        }
+
+        if (gp.keyH.onePressed){
+            if (hotbarList.get(0) != null){
+                currentWeapon = hotbarList.get(0);
+                projectile = currentWeapon.projectile;
+                System.out.println("Current Weapon is: " + currentWeapon.projectile);
+                System.out.println(projectile);
+            } else {
+                System.out.println("No weapon");
+            }
+        }
+        if (gp.keyH.twoPressed){
+            if (hotbarList.get(1) != null){
+                currentWeapon = hotbarList.get(1);
+            } else {
+                System.out.println("No weapon");
+            }
+        }
+        if (gp.keyH.threePressed){
+            if (hotbarList.get(2) != null){
+                currentWeapon = hotbarList.get(2);
+            } else {
+                System.out.println("No weapon");
+            }
         }
     }
 

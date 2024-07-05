@@ -5,6 +5,7 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 import entity.Cursor;
 import entity.Entity;
@@ -47,6 +48,7 @@ public class GamePanel extends JPanel implements Runnable {
     public SuperObject[] objArr= new SuperObject[10];
     public Entity[] npcArr = new Entity[10];
     public Entity[] mobArr = new Entity[10];
+    public ArrayList<Entity> projectileList = new ArrayList<>();
     public CollisionChecker cChecker = new CollisionChecker(this);
     public UI ui = new UI(this);
 
@@ -150,6 +152,16 @@ public class GamePanel extends JPanel implements Runnable {
             for (Entity mob : mobArr) {
                 if (mob != null) mob.update();
             }
+            for (int i = 0; i < projectileList.size(); i++){
+                if (projectileList.get(i) != null){
+                    if (projectileList.get(i).alive){
+                        projectileList.get(i).update();
+                    }
+                    if (!projectileList.get(i).alive){
+                        projectileList.remove(i);
+                    }
+                }
+            }
         }
     }
 
@@ -183,6 +195,9 @@ public class GamePanel extends JPanel implements Runnable {
 
             for (Entity mob : mobArr)
                 if (mob != null) mob.draw(g2);
+
+            for (Entity proj : projectileList)
+                if (proj != null) proj.draw(g2);
 
             player.draw(g2); // Draw player
 

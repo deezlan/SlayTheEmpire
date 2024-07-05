@@ -11,13 +11,15 @@ public abstract class Entity {
     public int actionLockCounter;
     public int worldX, worldY;
     public int speed;
-    public Entity currentWeapon;
+
+    public Projectile projectile;
+    public boolean alive;
 
     //Item Attributes
     public int damage;
     public BufferedImage weaponSprite;
     public String name;
-    public String price;
+    public int price;
     public String description = "";
     boolean attacking = false;
     public ArrayList<BufferedImage>
@@ -27,8 +29,7 @@ public abstract class Entity {
             moveRightList = new ArrayList<>(),
             moveLeftList = new ArrayList<>(),
             playerRightAttackList = new ArrayList<>(),
-            playerLeftAttackList = new ArrayList<>(),
-            weaponList = new ArrayList<>();
+            playerLeftAttackList = new ArrayList<>();
     public String action;
     public boolean lookingRight;
     public String direction;

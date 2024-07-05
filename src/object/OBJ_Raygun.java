@@ -13,7 +13,7 @@ public class OBJ_Raygun extends Entity {
 
         name = "Raygun";
         description = "Craigslist KAMEKAMEHA!";
-        price = "200";
+        price = 200;
         try {
             weaponSprite = UtilityTool.loadSprite("/Weapon/Raygun/Raygun.png", "Raygun sprite not loaded");
         } catch (IOException e){

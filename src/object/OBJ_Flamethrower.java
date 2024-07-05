@@ -12,7 +12,7 @@ public class OBJ_Flamethrower extends Entity {
 
         name = "Flamethrower";
         description = "Burn? Burn!";
-        price = "250";
+        price = 250;
         try {
             weaponSprite = UtilityTool.loadSprite("/Weapon/Flamethrower/Flamethrower.png", "Flamethrower sprite not loaded");
         } catch (IOException e){

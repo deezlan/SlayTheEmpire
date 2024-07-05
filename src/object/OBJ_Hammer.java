@@ -11,7 +11,8 @@ public class OBJ_Hammer extends Entity {
         super(gp);
 
         name = "Hammer";
-        price = "150";
+        description = "MAN SEE MAN SMASH!";
+        price = 150;
         try {
             weaponSprite = UtilityTool.loadSprite("/Weapon/Hammer/12.png", "Hammer sprite not loaded");
         } catch (IOException e){

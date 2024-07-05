@@ -323,7 +323,7 @@ public class CollisionChecker {
                                 index = i;
                         }
                         break;
-                    case "moveDownLeft":
+                    case "moveDownLeft", "idleRight", "idleLeft":
                         entity.solidArea.y += entity.speed;
                         entity.solidArea.x += entity.speed;
                         if (entity.solidArea.intersects(target[gp.currentMap][i].solidArea)) {

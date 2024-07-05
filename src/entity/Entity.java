@@ -11,7 +11,18 @@ public abstract class Entity {
     public int actionLockCounter;
     public int worldX, worldY;
     public int speed;
-    public Entity currentWeapon;
+
+    public Projectile projectile;
+
+    // HIT DETECTION
+    boolean attacking = false;
+    public Rectangle attackArea = new Rectangle(0,0,0,0);
+    public boolean iframe = false;
+    public int iframeCounter = 0;
+    public boolean alive = true;
+    public boolean dead = false;
+
+    int dyingCounter = 0;
 
     // HIT DETECTION
     boolean attacking = false;
@@ -29,7 +40,7 @@ public abstract class Entity {
     public int damage;
     public BufferedImage weaponSprite;
     public String name;
-    public String price;
+    public int price;
     public String description = "";
     public ArrayList<BufferedImage>
             currentActionList = new ArrayList<>(),
@@ -39,8 +50,7 @@ public abstract class Entity {
             moveLeftList = new ArrayList<>(),
             playerRightAttackList = new ArrayList<>(),
             playerLeftAttackList = new ArrayList<>();
-//            weaponList = new ArrayList<>(); // Ananda's old slash ArrayList
-    public String action = "idleRight"; //set default action
+    public String action = "idleRight";
     public boolean lookingRight;
     public int type; // 0 = player 1 = monster
 
@@ -343,4 +353,5 @@ public abstract class Entity {
 //                }
         }
     }
+
 

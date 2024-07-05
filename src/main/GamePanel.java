@@ -49,6 +49,7 @@ public class GamePanel extends JPanel implements Runnable {
     public Entity[][] objArr= new Entity[maxMap][10];
     public Entity[][] npcArr = new Entity[maxMap][10];
     public Entity[][] mobArr = new Entity[maxMap][10];
+    public ArrayList<Entity> projectileList = new ArrayList<>();
     public InteractiveTIle[][] iTile = new InteractiveTIle[maxMap][50];
     public CollisionChecker cChecker = new CollisionChecker(this);
     public UI ui = new UI(this);
@@ -167,6 +168,17 @@ public class GamePanel extends JPanel implements Runnable {
                     iTile[currentMap][i].update();
                 }
             }
+
+            for (int i = 0; i < projectileList.size(); i++){
+                if (projectileList.get(i) != null){
+                    if (projectileList.get(i).alive){
+                        projectileList.get(i).update();
+                    }
+                    if (!projectileList.get(i).alive){
+                        projectileList.remove(i);
+                    }
+                }
+            }
         }
     }
 
@@ -233,6 +245,9 @@ public class GamePanel extends JPanel implements Runnable {
             for (Entity entity : entityList) {
                 entity.draw(g2);
             }
+
+            for (Entity proj : projectileList)
+                if (proj != null) proj.draw(g2);
 
             // EMPTY ENTITY LIST
             for (int i = 0; i < entityList.size(); i++){

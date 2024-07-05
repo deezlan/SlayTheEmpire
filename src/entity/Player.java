@@ -27,7 +27,7 @@ public class Player extends Entity {
             warrior = 0,
             assassin = 1,
             knight = 2;
-    public int playerClass;
+//    public int playerClass;
 
 //    public ArrayList<Entity> inventory = new ArrayList<>(); temp commented
 //    public final int inventorySize = 8; temp commented

@@ -13,7 +13,6 @@ public abstract class Entity {
     public int speed;
 
     public Projectile projectile;
-    public boolean alive;
 
     // HIT DETECTION
     boolean attacking = false;

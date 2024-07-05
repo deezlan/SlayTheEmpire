@@ -12,9 +12,10 @@ public class Projectile extends Entity{
     public Projectile(GamePanel gp) {
         super(gp);
     }
+    String direction;
 
     public void set(int worldX, int worldY, String direction, boolean alive, Entity user){
-        this.worldX = worldX+30;
+        this.worldX = worldX+80;
         this.worldY = worldY+30;
         this.direction = direction;
         this.alive = alive;

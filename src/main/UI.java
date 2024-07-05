@@ -18,8 +18,8 @@ public class  UI {
     private final Image loadGame;
     private final Image options;
     private final Image quit;
-    private final Image loginDefault, loginUsername, loginPassword,
-            blankField, invalidLogin, invalidUsername, usernameTaken;
+    private final Image loginDefault, typeUsername, typePassword,
+            blankErr, usernameErr, loginErr, usernameTakenErr;
 
     public String currentDialog = "";
     public int slotCol = 0;
@@ -32,6 +32,7 @@ public class  UI {
     public boolean hasBlankField = false,
             isInvalidUsername = false,
             isInvalidLogin = false,
+            usernameTaken = false,
             validLogin = false;
 
     public UI(GamePanel gp) {
@@ -55,12 +56,12 @@ public class  UI {
 
         // INITIALIZE LOGIN SCREEN
         loginDefault = new ImageIcon("res/UI/loginDefault.png").getImage();
-        loginUsername = new ImageIcon("res/UI/loginUsername.png").getImage();
-        loginPassword = new ImageIcon("res/UI/loginPassword.png").getImage();
-        blankField = new ImageIcon("res/UI/blankField.png").getImage();
-        invalidLogin = new ImageIcon("res/UI/invalidLogin.png").getImage();
-        invalidUsername = new ImageIcon("res/UI/invalidUsername.png").getImage();
-        usernameTaken = new ImageIcon("res/UI/usernameTaken.png").getImage();
+        typeUsername = new ImageIcon("res/UI/loginUsername.png").getImage();
+        typePassword = new ImageIcon("res/UI/loginPassword.png").getImage();
+        blankErr = new ImageIcon("res/UI/blankField.png").getImage();
+        loginErr = new ImageIcon("res/UI/invalidLogin.png").getImage();
+        usernameErr = new ImageIcon("res/UI/invalidUsername.png").getImage();
+        usernameTakenErr = new ImageIcon("res/UI/usernameTaken.png").getImage();
 
         // INITIALIZE START MENU UI
         newGame = new ImageIcon("res/UI/newGame.png").getImage();
@@ -217,20 +218,12 @@ public class  UI {
     // Draw Login Screen
     public void drawLoginScreen() {
         if (gp.onUsername) {
-            g2.drawImage(loginUsername, 0, 0, loginDefault.getWidth(null), loginDefault.getHeight(null), null);
+            g2.drawImage(typeUsername, 0, 0, loginDefault.getWidth(null), loginDefault.getHeight(null), null);
         } else if (gp.onPassword) {
-            g2.drawImage(loginPassword, 0, 0, loginDefault.getWidth(null), loginDefault.getHeight(null), null);
+            g2.drawImage(typePassword, 0, 0, loginDefault.getWidth(null), loginDefault.getHeight(null), null);
         } else {
             g2.drawImage(loginDefault, 0, 0, loginDefault.getWidth(null), loginDefault.getHeight(null), null);
         }
-        if (hasBlankField)
-            g2.drawImage(blankField, 320, 480, 250, 20, null);
-        if (isInvalidUsername)
-            g2.drawImage(invalidUsername, 320, 480, 250, 20, null);
-        if (isInvalidLogin)
-            g2.drawImage(invalidLogin, 320, 480, 250, 20, null);
-        if (validLogin)
-            System.out.println("Login successful! JACOB'S LADDER");
 
         validLogin = false;
 
@@ -266,19 +259,31 @@ public class  UI {
                 gp.onPassword = false;
             }
 
-            // Execute user registration
-            if (registerRect.contains(gp.cursor.getMouseX(), gp.cursor.getMouseY())) {
+            hasBlankField = false;
+            isInvalidUsername = false;
+            isInvalidLogin = false;
+            usernameTaken = false;
 
-            }
-            // Execute user login
-            if (loginRect.contains(gp.cursor.getMouseX(), gp.cursor.getMouseY())) {
-                System.out.println("Clicked on login.");
+            // Execute user registration on Register button click
+            if (registerRect.contains(gp.cursor.getMouseX(), gp.cursor.getMouseY()))
+                checkRegister();
+            // Execute user login on Login button click
+            if (loginRect.contains(gp.cursor.getMouseX(), gp.cursor.getMouseY()))
                 checkLogin();
-                System.out.println(isInvalidUsername);
-            }
 
             gp.mouseH.clearMouseClick();
         }
+
+        if (hasBlankField)
+            g2.drawImage(blankErr, 320, 480, 250, 20, null);
+        if (isInvalidUsername && !username.isEmpty())
+            g2.drawImage(usernameErr, 320, 480, 250, 20, null);
+        if (isInvalidLogin)
+            g2.drawImage(loginErr, 320, 480, 250, 20, null);
+        if (usernameTaken)
+            g2.drawImage(usernameTakenErr, 320, 480, 250, 20, null);
+        if (validLogin)
+            System.out.println("Login successful! JACOB'S LADDER");
 
         g2.setColor(Color.WHITE);
         g2.setStroke(new BasicStroke(3f));
@@ -292,26 +297,24 @@ public class  UI {
     public void checkLogin () {
         if (username.isEmpty() || password.isEmpty()) {
             hasBlankField = true;
-        } else if (UtilityTool.containsIllegals(username)) {
+        } else if (!username.matches("[a-zA-Z0-9.\\-_]{0,}")) {
             System.out.println("Has illegal");
-            hasBlankField = false;
             isInvalidUsername = true;
-        } else if (!username.isEmpty() && !password.equals("bunny")) {
-            hasBlankField = false;
-            isInvalidUsername = false;
+        } else if (!password.equals("bunny")) {
             isInvalidLogin = true;
         } else if (username.equals("jacob") && password.equals("bunny")) {
-            hasBlankField = false;
-            isInvalidUsername = false;
-            isInvalidLogin = false;
             validLogin = true;
         }
-        System.out.println(username);
-        System.out.println(!UtilityTool.containsIllegals(username));
     }
 
     public void checkRegister () {
-
+        if (username.isEmpty() || password.isEmpty()) {
+            hasBlankField = true;
+        } else if (!username.matches("[a-zA-Z0-9.\\-_]{0,}")) {
+            isInvalidUsername = true;
+        } else if (username.equals("Zaky")) {
+            usernameTaken = true;
+        }
     }
 
     public void drawNewGame() {

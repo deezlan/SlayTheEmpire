@@ -8,8 +8,6 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Objects;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class UtilityTool {
     public static BufferedImage scaleImage (BufferedImage original, int width, int height){
@@ -63,11 +61,5 @@ public class UtilityTool {
             BufferedImage scaledSprite = scaleImage(original, width, height);
             spriteList.add(scaledSprite);
         }
-    }
-
-    public static boolean containsIllegals(String toExamine) {
-        Pattern pattern = Pattern.compile("^[a-zA-Z0-9]+([._]?[a-zA-Z0-9]+)*$");
-        Matcher matcher = pattern.matcher(toExamine);
-        return !matcher.find();
     }
 }

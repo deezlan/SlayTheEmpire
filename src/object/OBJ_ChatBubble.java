@@ -1,11 +1,14 @@
 package object;
 
+import entity.Entity;
+import main.GamePanel;
 import main.UtilityTool;
 
 import java.io.IOException;
 
-public class OBJ_ChatBubble extends SuperObject {
-    public OBJ_ChatBubble() {
+public class OBJ_ChatBubble extends Entity {
+    public OBJ_ChatBubble(GamePanel gp) {
+        super(gp);
         name = "Bubble";
 
         // Load save pedestal sprites
@@ -28,7 +31,7 @@ public class OBJ_ChatBubble extends SuperObject {
             for (int i = 0; i <= 3; i++)
                 defaultList.add(i, UtilityTool.loadSprite(dir + i + ".png", "Missing chatBubble " + i));
             // Scale sprites up
-            UtilityTool.scaleObjectList(defaultList, 50, 50);
+            UtilityTool.scaleEntityList(this,defaultList, 50, 50);
         } catch (IOException e) {
             e.printStackTrace(System.out);
         }

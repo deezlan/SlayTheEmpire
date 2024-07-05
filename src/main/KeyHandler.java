@@ -2,6 +2,7 @@ package main;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.Optional;
 
 public class KeyHandler implements KeyListener {
     GamePanel gp;
@@ -13,6 +14,7 @@ public class KeyHandler implements KeyListener {
             ePressed,
             pPressed,
             enterPressed;
+
 
     public KeyHandler(GamePanel gp){
         this.gp = gp;
@@ -62,6 +64,38 @@ public class KeyHandler implements KeyListener {
             }
         }
 
+
+
+        // Start Menu State
+        if (gp.gameState == gp.startMenuState){
+            if (code == KeyEvent.VK_W){
+                gp.ui.commandNum--;
+            }
+            if (code == KeyEvent.VK_S){
+                gp.ui.commandNum++;
+            }
+
+            if (code == KeyEvent.VK_SPACE) {
+                if (gp.ui.commandNum == 0) {
+                    // GO TO CHAR SELECTION
+                    gp.gameState = gp.characterSelectionState;
+                }
+                if (gp.ui.commandNum == 1) {
+                    // LOAD GAME
+                    System.out.println("My name is Yoshikage Kira. I'm 33 years old. My house is in the northeast section of Morioh, where all the villas are, and I am not married. I work as an employee for the Kame Yu department stores, and I get home every day by 8 PM at the latest. \n I don't smoke, but I occasionally drink. I'm in bed by 11 PM, and make sure I get eight hours of sleep, no matter what. After having a glass of warm milk and doing about twenty minutes of stretches before going to bed, I usually have no problems sleeping until morning. \n Just like a baby, I wake up without any fatigue or stress in the morning. I was told there were no issues at my last check-up. I'm trying to explain that I'm a person who wishes to live a very quiet life. I take care not to trouble myself with any enemies, like winning and losing, that would cause me to lose sleep at night. \n That is how I deal with society, and I know that is what brings me happiness. Although, if I were to fight I wouldn't lose to anyone.");
+                }
+                if (gp.ui.commandNum == 2) {
+                    // GO TO OPTIONS
+                    gp.gameState = gp.optionState;
+                }
+                if (gp.ui.commandNum == 3) {
+                    // EXIT GAME
+                    System.exit(0);
+                }
+            }
+        }
+
+
         // Play State
         if (gp.gameState == gp.playState){
             if (code == KeyEvent.VK_W) {
@@ -93,6 +127,8 @@ public class KeyHandler implements KeyListener {
                 }
             }
         }
+
+        // PAUSING
         if (code == KeyEvent.VK_P) {
             pPressed = true;
             if(gp.gameState == gp.playState){
@@ -101,6 +137,8 @@ public class KeyHandler implements KeyListener {
                     gp.gameState = gp.playState;
             }
         }
+
+        // MOVING THROUGH DIALOGUE
         if (code == KeyEvent.VK_E) {
             ePressed = true;
             if(gp.gameState == gp.dialogueState){
@@ -120,11 +158,10 @@ public class KeyHandler implements KeyListener {
             enterPressed = true;
             if (gp.gameState == gp.loginState) {
                 gp.gameState = gp.startMenuState;
-            } else if (gp.gameState == gp.startMenuState) {
-                gp.gameState = gp.playState;
             }
         }
         // !!!!! TEMPORARY TITLE+LOGIN+START MENU TEST !!!!!
+
     }
 
     @Override

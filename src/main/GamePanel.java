@@ -66,11 +66,13 @@ public class GamePanel extends JPanel implements Runnable {
     public final int playState = 2;
     public final int pauseState = 3;
     public final int loginState = 4;
-    public final int login_or_registerState = 7;
-    public final int registerState = 8;
-
     public final int dialogueState = 5; // NO USAGE SO FAR
     public final int shopState = 6;
+    public final int registerState = 8;
+    public final int characterSelectionState = 9;
+    public final int optionState = 10;
+
+
 
 
     public GamePanel() {
@@ -120,7 +122,7 @@ public class GamePanel extends JPanel implements Runnable {
 //        aSetter.setObject();
 //        aSetter.setNPC();
 //        aSetter.setMonster();
-        gameState = loginState; // TESTING LOGIN RIGHT NOW
+        gameState = titleState; // TESTING LOGIN RIGHT NOW
     }
 
     public void startGameThread() {

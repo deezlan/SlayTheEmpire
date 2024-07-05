@@ -10,7 +10,7 @@ import object.OBJ_Obelisk;
 import object.OBJ_SavePedestal;
 import object.OBJ_Shop;
 
-public class AssetSetter {
+public class  AssetSetter {
     GamePanel gp;
 
     public AssetSetter(GamePanel gp) {

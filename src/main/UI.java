@@ -6,12 +6,15 @@ import object.SuperObject;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.io.InputStream;
 
 public class  UI {
 
     GamePanel gp;
     BufferedImage fullHeart, halfHeart, emptyHeart;
     Graphics2D g2;
+    Font maruMonica;
     private final Image titleGif;
     private final Image titleImage;
     private final Image newGame;
@@ -39,13 +42,19 @@ public class  UI {
     public UI(GamePanel gp) {
         this.gp = gp;
 
-        // HUD Components
+        //HUD Components
         SuperObject heart = new OBJ_Heart(gp);
         fullHeart = heart.defaultList.get(2);
         halfHeart = heart.defaultList.get(1);
         emptyHeart = heart.defaultList.get(0);
 
-        // Login variables initializations
+        // FONT initialization
+        try {
+            InputStream is = getClass().getResourceAsStream("res/font/x12y16pxMaruMonica.ttf");
+            maruMonica = Font.createFont(Font.TRUETYPE_FONT, is);
+        } catch (FontFormatException | IOException e) {
+            e.printStackTrace();
+        }
 
         // INITIALIZE TITLE VIDEO
         ImageIcon icon = new ImageIcon("res/UI/Title.gif");
@@ -77,8 +86,7 @@ public class  UI {
     public void draw(Graphics2D g2){
 
         this.g2 = g2;
-        g2.setFont(new Font("Microsoft YaHei", Font.PLAIN, 28));
-        g2.setColor(Color.white);
+        g2.setFont(maruMonica);
         drawPlayerLife();
 
         // TITLE STATE
@@ -86,12 +94,14 @@ public class  UI {
             drawTitleScreen();
         }
 
+        // CHAR SELECTION SCREEN
+        if (gp.gameState == gp.characterSelectionState) {
+            drawCharacterSelection();
+        }
+
         // LOGIN MENU
         if (gp.gameState == gp.loginState) {
-            g2.setFont(new Font("Microsoft YaHei", Font.PLAIN, 18));
             drawLoginScreen();
-        } else {
-            gp.loginPanel.setVisible(false);
         }
 
         // START MENU STATE
@@ -202,6 +212,15 @@ public class  UI {
 
     }
 
+    // Calculate Image Height
+    public int calculateHeight(Image img) {
+        return img.getHeight(null);
+    }
+
+    public int calculateWidth(Image img) {
+        return img.getWidth(null);
+    }
+
     // Draw Title GIF
     public void drawTitleScreen() {
         g2.drawImage(titleGif, 0, 0, gp.SCREEN_WIDTH, gp.SCREEN_HEIGHT, null);
@@ -219,6 +238,8 @@ public class  UI {
 
     // Draw Login Screen
     public void drawLoginScreen() {
+        g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 18F));
+
         if (gp.onUsername) {
             g2.drawImage(typeUsername, 0, 0, loginDefault.getWidth(null), loginDefault.getHeight(null), null);
         } else if (gp.onPassword) {
@@ -323,9 +344,15 @@ public class  UI {
         int x = (gp.SCREEN_WIDTH - newGame.getWidth(null)) / 2;
         int y = (gp.SCREEN_HEIGHT - newGame.getHeight(null)) / 2;
         g2.drawImage(newGame, x, y, newGame.getWidth(null), newGame.getHeight(null), null);
+        g2.drawImage(newGame, x, y, newGame.getWidth(null), newGame.getHeight(null), null);
+
         if (commandNum == 0) {
             g2.setColor(Color.WHITE);
-            g2.drawString(">", x - gp.TILE_SIZE, y);
+            g2.setFont(g2.getFont().deriveFont(Font.BOLD, 50F));
+
+            g2.drawString(">", (int) (x - gp.TILE_SIZE*0.4), y + 40);
+            g2.drawString("<", (x + newGame.getWidth(null)), y + 40);
+
         }
     }
 
@@ -335,7 +362,12 @@ public class  UI {
         g2.drawImage(loadGame, x, y, loadGame.getWidth(null), loadGame.getHeight(null), null);
         if (commandNum == 1) {
             g2.setColor(Color.WHITE);
-            g2.drawString(">", x - gp.TILE_SIZE, y);
+            g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 50F));
+
+
+            g2.drawString(">", (int) (x - gp.TILE_SIZE*0.4), y + 40);
+            g2.drawString("<", x + (loadGame.getWidth(null)), y + 40);
+
         }
     }
 
@@ -345,7 +377,12 @@ public class  UI {
         g2.drawImage(options, x, y, options.getWidth(null), options.getHeight(null), null);
         if (commandNum == 2) {
             g2.setColor(Color.WHITE);
-            g2.drawString(">", x - gp.TILE_SIZE, y);
+            g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 50F));
+
+
+            g2.drawString(">", (int) (x - gp.TILE_SIZE*0.4), y + 35);
+            g2.drawString("<", x + (options.getWidth(null)), y + 35);
+
         }
     }
 
@@ -355,7 +392,12 @@ public class  UI {
         g2.drawImage(quit, x, y, quit.getWidth(null), quit.getHeight(null), null);
         if (commandNum == 3) {
             g2.setColor(Color.WHITE);
-            g2.drawString(">", x - gp.TILE_SIZE, y);
+            g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 50F));
+
+
+            g2.drawString(">", (int) (x - gp.TILE_SIZE*0.4), y + 35);
+            g2.drawString("<", x + (quit.getWidth(null)), y + 35);
+
         }
     }
 
@@ -363,6 +405,7 @@ public class  UI {
     public void drawStartMenu() {
         g2.setColor(Color.BLACK);
         g2.fillRect(0,0, gp.SCREEN_WIDTH, gp.SCREEN_HEIGHT);
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 40F));
 
         // Draw Title and Buttons
         drawTitleImage();
@@ -370,9 +413,39 @@ public class  UI {
         drawLoadGame();
         drawOptions();
         drawQuit();
+    }
 
-        // Menu
-        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 55F));
+    // CHARACTER SELECTION SCREEN
+    public void drawCharacterSelection() {
+        g2.setColor(Color.BLACK);
+        g2.fillRect(0,0, gp.SCREEN_WIDTH, gp.SCREEN_HEIGHT);
+
+        g2.setColor(Color.WHITE);
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 50F));
+
+        String text = "Select Your Class";
+        int x = getXForCenteredText(text);
+        int y = gp.TILE_SIZE*3;
+        g2.drawString(text, x, y);
+
+        text = "Warrior";
+        x = getXForCenteredText(text)/2;
+        y = gp.TILE_SIZE*12;
+        g2.drawString(text, x, y);
+
+
+        text = "Knight";
+        x = getXForCenteredText(text)/2;
+        y = gp.TILE_SIZE*12;
+        g2.drawString(text, x, y);
+
+
+        text = "Assassin";
+        x = getXForCenteredText(text)/2;
+        y = gp.TILE_SIZE*12;
+        g2.drawString(text, x, y);
+
+
     }
 
     //Draw dialog
@@ -384,7 +457,7 @@ public class  UI {
         int dialogHeight = gp.TILE_SIZE*4;
         drawSubWindow(dialogX,dialogY,dialogWidth,dialogHeight);
 
-        g2.setFont(g2.getFont().deriveFont(Font.PLAIN,32));
+        g2.setFont(g2.getFont().deriveFont(Font.PLAIN,32F));
         dialogX += gp.TILE_SIZE;
         dialogY += gp.TILE_SIZE;
 

@@ -1,6 +1,5 @@
 package main;
 
-
 public class EventHandler {
     GamePanel gp;
     EventRect[][][] eventRect ;
@@ -87,7 +86,7 @@ public class EventHandler {
 
     public void enterDungeon(int map, int col, int row){
         gp.currentMap = map;
-        gp.tileM.getTileImage();
+        gp.setMapColor();
         gp.player.worldX = gp.TILE_SIZE * col;
         gp.player.worldY = gp.TILE_SIZE * row;
         previousEventX = gp.player.worldX;

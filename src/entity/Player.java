@@ -252,15 +252,14 @@ public class Player extends Entity {
             // CALCULATE CENTRAL AXIS OF CURSOR
             if (playerClass == 0) {
                 // WARRIOR
-                cursor.calculateAngle((int)(worldX + gp.TILE_SIZE * 2.3), worldY + gp.TILE_SIZE + 10);
+                cursor.calculateAngle((int)(screenX + gp.TILE_SIZE * 2.3), screenY + gp.TILE_SIZE + 10);
             } else if (playerClass == 1) {
                 // KNIGHT
-                cursor.calculateAngle(worldX + gp.TILE_SIZE * 2 + 5, worldY + gp.TILE_SIZE);
+                cursor.calculateAngle(screenX + gp.TILE_SIZE * 2 + 5, screenY + gp.TILE_SIZE);
             } else if (playerClass == 2) {
                 // ASSASSIN
-                cursor.calculateAngle((int)(worldX + gp.TILE_SIZE * 1.9), worldY + gp.TILE_SIZE);
+                cursor.calculateAngle((int)(screenX + gp.TILE_SIZE * 1.9), screenY + gp.TILE_SIZE);
             }
-            // CALCULATE CENTRAL AXIS OF CURSOR
         }
     }
 
@@ -466,34 +465,43 @@ public class Player extends Entity {
             animationSpriteNum = 0;
         BufferedImage animationImage = lookingRight? playerRightAttackList.get(animationSpriteNum) : playerLeftAttackList.get(animationSpriteNum);
 
-        if (gp.gameArea == 0) { // lobby game area
-            if (!attacking){
-                if(iframe){
-                    g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.3f));
-                }
-                g2.drawImage(image, worldX, worldY, null);
-                g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
-            } if (attacking){
-                g2.drawImage(animationImage, worldX, worldY,null);
+        if (!attacking){
+            if(iframe){
+                g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.3f));
             }
-        } else if (gp.gameArea == 1){
-            if (!attacking){
-                if(iframe){
-                    g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.3f));
-                }
-                g2.drawImage(image, screenX, screenY, null);
-                g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
-            } if (attacking){
-                g2.drawImage(animationImage, screenX, screenY,null); // draw attack animation
-            }
-            } else {
-                 g2.drawImage(image, screenX, screenY, gp.TILE_SIZE*3, gp.TILE_SIZE*2, null);
+            g2.drawImage(image, screenX, screenY, null);
+            g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
+        } if (attacking){
+            g2.drawImage(animationImage, screenX, screenY,null); // draw attack animation
         }
+//        if (gp.gameArea == 0) { // OLD PLAYER DRAW CODE
+//            if (!attacking){
+//                if(iframe){
+//                    g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.3f));
+//                }
+//                g2.drawImage(image, worldX, worldY, null);
+//                g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
+//            } if (attacking){
+//                g2.drawImage(animationImage, worldX, worldY,null);
+//            }
+//        } else if (gp.gameArea == 1){
+//            if (!attacking){
+//                if(iframe){
+//                    g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.3f));
+//                }
+//                g2.drawImage(image, screenX, screenY, null);
+//                g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
+//            } if (attacking){
+//                g2.drawImage(animationImage, screenX, screenY,null); // draw attack animation
+//            }
+//            } else {
+//                 g2.drawImage(image, screenX, screenY, gp.TILE_SIZE*3, gp.TILE_SIZE*2, null);
+//        }
 
         // draw arrow
         if (playerClass == 0) {
             // WARRIOR
-            cursor.draw(g2, (int)(worldX + gp.TILE_SIZE * 2.3), worldY + gp.TILE_SIZE);
+            cursor.draw(g2, (int)(screenX + gp.TILE_SIZE * 2.3), screenY + gp.TILE_SIZE);
 
         } else if (playerClass == 1) {
             // KNIGHT

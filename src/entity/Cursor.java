@@ -9,12 +9,12 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 
-public class Cursor {
+public class Cursor{
     private int mouseX, mouseY;
     private double angle;
     private BufferedImage crosshairImage;
 
-    public Cursor( ) {
+    public Cursor() {
         try {
             crosshairImage = UtilityTool.loadSprite("/crosshair/crosshair.png", "Missing crosshair");
         } catch(IOException e) {

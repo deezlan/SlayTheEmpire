@@ -19,8 +19,8 @@ public class AssetSetter {
     public void setObject() {
         int mapNum = 0;
         int i = 0;
-        switch (mapNum) {
-            case 0:
+
+            // MAP 0
             gp.objArr[mapNum][i] = new OBJ_Shop(gp);
             gp.objArr[mapNum][i].worldX = 840;
             gp.objArr[mapNum][i].worldY = 100;
@@ -50,15 +50,14 @@ public class AssetSetter {
             gp.objArr[mapNum][i].worldX = 845;
             gp.objArr[mapNum][i].worldY = 520;
             i++;
-            break;
-            case 1:
-        }
+
+            // MAP 1
     }
     public void setNPC() {
         int mapNum = 0;
         int i = 0;
-        switch (mapNum) {
-            case 0:
+
+            // MAP 0
             gp.npcArr[mapNum][i] = new NPC_Maiden(gp);
             gp.npcArr[mapNum][i].worldX = 655;
             gp.npcArr[mapNum][i].worldY = 340;
@@ -82,30 +81,26 @@ public class AssetSetter {
             gp.npcArr[mapNum][i].worldY = 540;
             System.out.println("NPC Mystery set at (" + gp.npcArr[mapNum][0].worldX + ", " + gp.npcArr[mapNum][0].worldY + ")");
             i++;
-            break;
-            case 1:
-        }
+
+            // MAP 1
     }
     public void setMonster() {
         int mapNum = 0;
         int i = 0;
-        switch(mapNum) {
-            case 0:
+                // MAP 0
                 gp.mobArr[mapNum][i] = new MOB_Slime(gp);
                 gp.mobArr[mapNum][i].worldX = 400;
                 gp.mobArr[mapNum][i].worldY = 400;
                 i++;
-                break;
-            case 1:
+
+                // MAP 1
+                mapNum = 1;
                 gp.mobArr[mapNum][i] = new MOB_Slime(gp);
                 gp.mobArr[mapNum][i].worldX = 240;
                 gp.mobArr[mapNum][i].worldY = 270;
                 i++;
-                break;
-            default:
-                System.out.println("Case Default AssetSetter Monster");
+
         }
-    }
 
     public void setInteractiveTile() {
         int mapNum = 0;

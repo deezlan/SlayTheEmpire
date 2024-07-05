@@ -12,7 +12,8 @@ public class KeyHandler implements KeyListener {
             dPressed,
             ePressed,
             pPressed,
-            enterPressed;
+            enterPressed,
+            showDebug = false; // DEBUG
 
     public KeyHandler(GamePanel gp){
         this.gp = gp;
@@ -91,6 +92,16 @@ public class KeyHandler implements KeyListener {
 //        }
         if (code == KeyEvent.VK_ENTER) {
             enterPressed = true;
+        }
+
+        // DEBUG
+        if (code == KeyEvent.VK_T){
+            if(!showDebug){
+                showDebug = true;
+            }
+            else if (showDebug){
+                showDebug = false;
+            }
         }
     }
 

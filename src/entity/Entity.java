@@ -21,20 +21,9 @@ public abstract class Entity {
     public int iframeCounter = 0;
     public boolean alive = true;
     public boolean dead = false;
-
     int dyingCounter = 0;
-
-    // HIT DETECTION
-    boolean attacking = false;
-    public Rectangle attackArea = new Rectangle(0,0,0,0);
-    public boolean iframe = false;
-    public int iframeCounter = 0;
-    public boolean alive = true;
-    public boolean dead = false;
     public boolean hpBarON = false;
     int hpBarCounter = 0;
-
-    int dyingCounter = 0;
 
     //Item Attributes
     public int damage;

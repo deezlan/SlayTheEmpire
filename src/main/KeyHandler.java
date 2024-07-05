@@ -78,7 +78,7 @@ public class KeyHandler implements KeyListener {
                 }
             }
             if (code == KeyEvent.VK_ENTER){
-                NPC_Blacksmith bs = (NPC_Blacksmith) gp.npcArr[1];
+                NPC_Blacksmith bs = (NPC_Blacksmith) gp.npcArr[gp.currentMap][1];
                 if (gp.player.totalCoins < bs.getShopItems().get(gp.ui.slotRow).price){
                     //Do nothing
                 } else {

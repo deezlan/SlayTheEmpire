@@ -4,6 +4,7 @@ import entity.NPC_Maiden;
 import entity.NPC_Merchant;
 import entity.NPC_Mystery;
 import entity.NPC_Blacksmith;
+import mobs.MOB_RobotGuardian;
 import mobs.MOB_Slime;
 import object.OBJ_ChatBubble;
 import object.OBJ_SavePedestal;
@@ -49,7 +50,6 @@ public class AssetSetter {
             gp.objArr[mapNum][i] = new OBJ_ChatBubble(gp); // Mystery chat bubble
             gp.objArr[mapNum][i].worldX = 845;
             gp.objArr[mapNum][i].worldY = 520;
-            i++;
 
             // MAP 1
     }
@@ -80,7 +80,6 @@ public class AssetSetter {
             gp.npcArr[mapNum][i].worldX = 800;
             gp.npcArr[mapNum][i].worldY = 540;
             System.out.println("NPC Mystery set at (" + gp.npcArr[mapNum][0].worldX + ", " + gp.npcArr[mapNum][0].worldY + ")");
-            i++;
 
             // MAP 1
     }
@@ -99,12 +98,16 @@ public class AssetSetter {
                 gp.mobArr[mapNum][i].worldX = 240;
                 gp.mobArr[mapNum][i].worldY = 270;
                 i++;
+                gp.mobArr[mapNum][i] = new MOB_RobotGuardian(gp);
+                gp.mobArr[mapNum][i].worldX = 300;
+                gp.mobArr[mapNum][i].worldY = 270;
+
 
         }
 
     public void setInteractiveTile() {
-        int mapNum = 0;
-        int i = 0;
+//        int mapNum = 0;
+//        int i = 0;
 //        gp.iTile[i] = new
     }
 }

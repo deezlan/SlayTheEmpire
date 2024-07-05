@@ -27,7 +27,7 @@ public class TileManager {
 
         getTileImage();
         loadMap("/mapTextFiles/LobbyTest.txt",0);
-        loadMap("/mapTextFiles/TestLevel.txt",1);
+        loadMap("/mapTextFiles/smalRoom.txt",1);
     }
 
 
@@ -198,7 +198,13 @@ public class TileManager {
             tile[67].image = UtilityTool.loadSprite(dir + "firstLevel/29.png", "Cracked tiles");
             tile[68].image = UtilityTool.loadSprite(dir + "firstLevel/30.png", "Chisel Cracked Tile");
 
+            // COLLISION CORRECTION
             tile[38].collision = false;
+            tile[64].collision = false;
+            tile[65].collision = false;
+            tile[66].collision = false;
+            tile[67].collision = false;
+            tile[68].collision = false;
 //                case 1:
 //                    dir = "/tiles/firstLevel/";
 //                    tile = new Tile[31];

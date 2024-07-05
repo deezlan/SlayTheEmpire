@@ -47,8 +47,8 @@ public class Player extends Entity {
     }
 
     public void setDefaultValues() {
-        worldX = gp.TILE_SIZE * 12; // Player spawn location x
-        worldY = gp.TILE_SIZE * 5; // player spawn location y
+        worldX = 588; // Player spawn location x
+        worldY = 147; // player spawn location y
         speed = 3;
         action = "idleRight";
         lookingRight = true;

@@ -18,6 +18,7 @@ public class Player extends Entity {
     private final Cursor cursor;
     public final int screenX;
     public final int screenY;
+    public String dir;
     public int totalCoins;
     public ArrayList<Entity> hotbarList = new ArrayList<>();
     public ArrayList<Integer> ownedWeapon = new ArrayList<>();
@@ -26,6 +27,7 @@ public class Player extends Entity {
             warrior = 0,
             assassin = 1,
             knight = 2;
+    public int playerClass;
 
 //    public ArrayList<Entity> inventory = new ArrayList<>(); temp commented
 //    public final int inventorySize = 8; temp commented
@@ -34,39 +36,31 @@ public class Player extends Entity {
         super(gp);
         this.gp = gp;
         this.keyH = keyH;
+        this.playerClass = playerClass;
         screenX = gp.SCREEN_WIDTH / 2 - (gp.TILE_SIZE / 2); // added screen position
         screenY = gp.SCREEN_HEIGHT / 2 - (gp.TILE_SIZE / 2);
 
         this.cursor = cursor;
         setDefaultValues();
+        setCollisionValues();
         getPlayerSprites();
-//        getPlayerAttackImage();
+//        getPlayerAttackImage(); Ananda's old slash method
         getPlayerAttackAnimation();
 
         setItems();
 
-        solidArea = new Rectangle(); // draws a square at the centre of the player
-        solidArea.x = 59; // position of actual collision square
-        solidArea.y = 60;
-        solidAreaDefaultX = solidArea.x;
-        solidAreaDefaultY = solidArea.y;
-        solidArea.width = 25; // outer area of collision square
-        solidArea.height = 25;
-
-//        SwordSlash slash1 = new SwordSlash(gp);
+//        SwordSlash slash1 = new SwordSlash(gp); // Ananda's old slash variables
 //        slash = slash1;
     }
 
-
     public void setDefaultValues() {
-        worldX = 350; // Player spawn location x
+        worldX = 300; // Player spawn location x
         worldY = 30; // player spawn location y
 //        worldX = 200; // second area spawn
 //        worldY = 200;
         speed = 3;
         action = "idleRight";
         lookingRight = true;
-        direction = "right";
 
         //Status
         maxLife = 6;
@@ -76,10 +70,46 @@ public class Player extends Entity {
         damage = 0;
     }
 
+    private void setCollisionValues() {
+        // Set collision settings based on character class
+
+        switch (playerClass) {
+            case 0:
+                solidArea = new Rectangle(); // draws a square at the centre of the player
+                solidArea.x = 90; // position of actual collision square
+                solidArea.y = 60;
+                solidAreaDefaultX = solidArea.x;
+                solidAreaDefaultY = solidArea.y;
+                solidArea.width = 40; // outer area of collision square
+                solidArea.height = 30;
+                attackArea.width = 50;
+                attackArea.height = 30;
+                break;
+            case 1:
+                solidArea = new Rectangle(); // draws a square at the centre of the player
+                solidArea.x = 75; // position of actual collision square
+                solidArea.y = 60;
+                solidAreaDefaultX = solidArea.x;
+                solidAreaDefaultY = solidArea.y;
+                solidArea.width = 50; // outer area of collision square
+                solidArea.height = 30;
+                break;
+            case 2:
+                solidArea = new Rectangle(); // draws a square at the centre of the player
+                solidArea.x = 75; // position of actual collision square
+                solidArea.y = 60;
+                solidAreaDefaultX = solidArea.x;
+                solidAreaDefaultY = solidArea.y;
+                solidArea.width = 30; // outer area of collision square
+                solidArea.height = 30;
+        }
+    }
+
     public void setItems() {
         //add inventory
     }
 
+    @Override
     public void update() {
         if (life == 0) {
             gp.gameState = gp.deathState;
@@ -91,25 +121,22 @@ public class Player extends Entity {
             if ((keyH.wPressed && keyH.sPressed) || (keyH.aPressed && keyH.dPressed)) {
                 action = "stuckOppositeDirection";
                 currentActionList = lookingRight ? idleRightList : idleLeftList;
-
             }
 
             if (keyH.wPressed && keyH.sPressed && keyH.aPressed) {
                 action = "moveLeft";
-                direction = "left";
             }
             if (keyH.wPressed && keyH.sPressed && keyH.dPressed) {
                 action = "moveRight";
-                direction = "right";
             }
             if (keyH.aPressed && keyH.dPressed && keyH.wPressed) {
                 action = "moveUp";
-                direction = "up";
             }
             if (keyH.aPressed && keyH.dPressed && keyH.sPressed) {
                 action = "moveDown";
-                direction = "down";
             }
+
+
 
             if ((keyH.wPressed || keyH.sPressed || keyH.aPressed || keyH.dPressed) && !action.equals("stuckOppositeDirection")) {
                 if (keyH.wPressed) {
@@ -117,7 +144,6 @@ public class Player extends Entity {
                 }
                 if (keyH.sPressed) {
                     action = "moveDown";
-                    direction = "down";
                 }
                 if (keyH.aPressed) {
                     action = "moveLeft";
@@ -130,14 +156,12 @@ public class Player extends Entity {
                 }
                 if (keyH.sPressed && keyH.dPressed) {
                     action = "moveDownRight";
-                    direction = "down";
                 }
                 if (keyH.wPressed && keyH.aPressed) {
                     action = "moveUpLeft";
                 }
                 if (keyH.sPressed && keyH.aPressed) {
                     action = "moveDownLeft";
-                    direction = "down";
                 }
 
                 if (keyH.enterPressed) {
@@ -176,15 +200,14 @@ public class Player extends Entity {
                 // CHECK NPC COLLISION
                 int npcIndex = gp.cChecker.checkEntityCollision(this, gp.npcArr);
                 interactNPC(npcIndex);
-                interactMerchant(npcIndex);
 
                 //CHECK EVENT
                 gp.eHandler.checkEvent();
+                gp.keyH.ePressed = false; // after player interact with tile;
 
                 //CHECK MOB COLLISION
                 int mobIndex = gp.cChecker.checkEntityCollision(this, gp.mobArr);
                 interactMob(mobIndex);
-
 
                 switch (action) {
                     case "moveUp", "moveDown":
@@ -216,11 +239,28 @@ public class Player extends Entity {
                 }
             }
 
+            // Animation speed
             spriteCounter++;
-            if (spriteCounter > 5) {
-                loopThroughSprites();
+            if (currentActionList.size() > 14) {
+                if (spriteCounter > 4) loopThroughSprites();
+            } else if (currentActionList.size() > 7) {
+                if (spriteCounter > 6) loopThroughSprites();
+            } else {
+                if (spriteCounter > 9) loopThroughSprites();
             }
-            cursor.calculateAngle((int) (worldX + gp.TILE_SIZE * 1.5), worldY + gp.TILE_SIZE);
+
+            // CALCULATE CENTRAL AXIS OF CURSOR
+            if (playerClass == 0) {
+                // WARRIOR
+                cursor.calculateAngle((int)(worldX + gp.TILE_SIZE * 2.3), worldY + gp.TILE_SIZE + 10);
+            } else if (playerClass == 1) {
+                // KNIGHT
+                cursor.calculateAngle(worldX + gp.TILE_SIZE * 2 + 5, worldY + gp.TILE_SIZE);
+            } else if (playerClass == 2) {
+                // ASSASSIN
+                cursor.calculateAngle((int)(worldX + gp.TILE_SIZE * 1.9), worldY + gp.TILE_SIZE);
+            }
+            // CALCULATE CENTRAL AXIS OF CURSOR
         }
 
         if (gp.keyH.shotKeyPressed){
@@ -261,28 +301,138 @@ public class Player extends Entity {
 
     public void attackAnimation(){ // animation attack
         animationCounter++;
-        if (animationCounter <= 5){
-            animationSpriteNum = 0;
-        } else if (animationCounter <= 10) {
-            animationSpriteNum = 1;
-        } else if (animationCounter <= 15) {
-            animationSpriteNum = 2;
-        } else if (animationCounter <= 20) {
-            animationSpriteNum = 3;
-        } else if (animationCounter <= 25) {
-            animationSpriteNum = 4;
-        } else if (animationCounter<= 30) {
-            animationSpriteNum = 5;
-        } else if (animationCounter <= 35) {
-            animationSpriteNum = 6;
-        } else if (animationCounter <= 40) {
-            animationSpriteNum = 7;
-        } else if (animationCounter <= 45) {
-            animationSpriteNum = 8;
-        }else if (animationCounter <= 50) {
-            animationSpriteNum = 1;
-            animationCounter = 0;
-            attacking = false;
+        switch (playerClass) {
+            case 0:
+                if (animationCounter <= 5){
+                    animationSpriteNum = 0;
+                } else if (animationCounter <= 10) {
+                    animationSpriteNum = 1;
+                } else if (animationCounter <= 15) {
+                    animationSpriteNum = 2;
+
+                    // SAVE CURRENT DATA OF PLAYER
+                    int currentWorldX = worldX;
+                    int currentWorldY = worldY;
+                    int solidAreaWidth = solidArea.width;
+                    int solidAreaHeight = solidArea.height;
+
+                    // ADJUST FOR ATTACK
+                    switch (action) {
+                        case "moveUp": worldY -= attackArea.height; break;
+                        case "moveDown": worldY += attackArea.height; break;
+                        case "moveLeft": worldX -= attackArea.width; break;
+                        case "moveRight": worldX += attackArea.width; break;
+                    }
+
+                    // ATTACK AREA BECOMES SOLID AREA
+                    solidArea.width = attackArea.width;
+                    solidArea.height = attackArea.height;
+                    // CHECK MONSTER COLLISION
+                    int monsterIndex = gp.cChecker.checkEntityCollision(this, gp.mobArr);
+                    damageMonster(monsterIndex);
+
+                    // CHANGE BACK TO ORIGINAL
+                    worldX = currentWorldX;
+                    worldY = currentWorldY;
+                    solidArea.width = solidAreaWidth;
+                    solidArea.height = solidAreaHeight;
+
+                } else if (animationCounter <= 20) {
+                    animationSpriteNum = 3;
+                } else if (animationCounter <= 25) {
+                    animationSpriteNum = 4;
+                } else if (animationCounter <= 30) {
+                    animationSpriteNum = 5;
+                } else if (animationCounter <= 35) {
+                    animationSpriteNum = 6;
+                } else if (animationCounter <= 40) {
+                    animationSpriteNum = 7;
+                } else if (animationCounter <= 45) {
+                    animationSpriteNum = 8;
+                } else if (animationCounter <= 50) {
+                    animationSpriteNum = 0;
+                    animationCounter = 0;
+                    attacking = false;
+                }
+                break;
+            case 1:
+                if (animationCounter <= 5){
+                    animationSpriteNum = 0;
+                } else if (animationCounter <= 10) {
+                    animationSpriteNum = 1;
+                } else if (animationCounter <= 15) {
+                    animationSpriteNum = 2;
+                } else if (animationCounter <= 20) {
+                    animationSpriteNum = 3;
+                } else if (animationCounter <= 25) {
+                    animationSpriteNum = 4;
+                } else if (animationCounter <= 30) {
+                    animationSpriteNum = 5;
+                } else if (animationCounter <= 35) {
+                    animationSpriteNum = 0;
+                    animationCounter = 0;
+                    attacking = false;
+                }
+                break;
+            case 2:
+                if (animationCounter <= 5){
+                    animationSpriteNum = 0;
+                } else if (animationCounter <= 10) {
+                    animationSpriteNum = 1;
+                } else if (animationCounter <= 15) {
+                    animationSpriteNum = 2;
+                } else if (animationCounter <= 20) {
+                    animationSpriteNum = 3;
+                } else if (animationCounter <= 25) {
+                    animationSpriteNum = 4;
+                } else if (animationCounter <= 30) {
+                    animationSpriteNum = 5;
+                } else if (animationCounter <= 35) {
+                    animationSpriteNum = 6;
+                } else if (animationCounter <= 40) {
+                    animationSpriteNum = 7;
+                } else if (animationCounter <= 45) {
+                    animationSpriteNum = 8;
+                } else if (animationCounter <= 50) {
+                    animationSpriteNum = 9;
+                } else if (animationCounter <= 55) {
+                    animationSpriteNum = 10;
+                } else if (animationCounter <= 60) {
+                    animationSpriteNum = 11;
+                } else if (animationCounter <= 65) {
+                    animationSpriteNum = 12;
+                } else if (animationCounter <= 70) {
+                    animationSpriteNum = 13;
+                } else if (animationCounter <= 75) {
+                    animationSpriteNum = 14;
+                } else if (animationCounter <= 80) {
+                    animationSpriteNum = 15;
+                } else if (animationCounter <= 85) {
+                    animationSpriteNum = 16;
+                } else if (animationCounter <= 90) {
+                    animationSpriteNum = 17;
+                } else if (animationCounter <= 95) {
+                    animationSpriteNum = 18;
+                } else if (animationCounter <= 100) {
+                    animationSpriteNum = 19;
+                } else if (animationCounter <= 105) {
+                    animationSpriteNum = 20;
+                } else if (animationCounter <= 110) {
+                    animationSpriteNum = 21;
+                } else if (animationCounter <= 115) {
+                    animationSpriteNum = 22;
+                } else if (animationCounter <= 120) {
+                    animationSpriteNum = 23;
+                } else if (animationCounter <= 125) {
+                    animationSpriteNum = 24;
+                } else if (animationCounter <= 130) {
+                    animationSpriteNum = 25;
+                } else if (animationCounter <= 135) {
+                    animationSpriteNum = 0;
+                    animationCounter = 0;
+                    attacking = false;
+                }
+                break;
         }
     }
 
@@ -298,33 +448,36 @@ public class Player extends Entity {
     }
 
     public void interactNPC (int index) {
-        if (index != 999) {
-            gp.gameState = gp.dialogueState;
-            gp.npcArr[index].speak();
-        } if (index == 2) {
-            gp.gameState = gp.shopState;
+            if (index != 999) {
+                gp.gameState = gp.dialogueState;
+                gp.npcArr[index].speak();
+            }
+            if (index == 1) {
+                gp.gameState = gp.shopState;
         }
     }
-
-
-    public void interactMerchant(int index){
-        switch (index) {
-            case 999:
-                break;
-            case 1:
-                break;
-            default:
-                gp.gameState = gp.dialogueState; gp.npcArr[index].speak();
-                break;
-        }
-    }
-
 
     public void interactMob (int index) {
         if ( index != 999) {
             if (!iframe){
                 life -= 1;
                 iframe = true;
+            }
+        }
+    }
+
+    public void damageMonster(int i) {
+        if (i != 999){
+            if(!gp.mobArr[i].iframe){
+                gp.mobArr[i].life -= 1;
+                gp.mobArr[i].iframe = true;
+                System.out.println("hit");
+
+                if(gp.mobArr[i].life <= 0) {
+                    gp.mobArr[i].dead = true;
+                }
+            } else {
+                System.out.println("miss");
             }
         }
     }
@@ -361,8 +514,22 @@ public class Player extends Entity {
         } else {
             g2.drawImage(image, screenX, screenY, gp.TILE_SIZE*3, gp.TILE_SIZE*2, null);
         }
+
         // draw arrow
-        cursor.draw(g2, (int) (worldX + gp.TILE_SIZE * 1.5), worldY + gp.TILE_SIZE);
+        if (playerClass == 0) {
+            // WARRIOR
+            cursor.draw(g2, (int)(worldX + gp.TILE_SIZE * 2.3), worldY + gp.TILE_SIZE);
+
+        } else if (playerClass == 1) {
+            // KNIGHT
+            cursor.draw(g2, worldX + gp.TILE_SIZE * 2 + 5, worldY + gp.TILE_SIZE);
+
+        } else if (playerClass == 2) {
+            // ASSASSIN
+            cursor.draw(g2, (int)(worldX + gp.TILE_SIZE * 1.9), worldY + gp.TILE_SIZE);
+
+        }
+
     }
 
     // Ananda's old slash code
@@ -385,8 +552,8 @@ public class Player extends Entity {
     public void getPlayerAttackAnimation() {
         try {
             switch (playerClass) {
-                case 0:
-                    String dir = "/player/Warrior/";
+                case 0: // WARRIOR
+                    dir = "/player/Warrior/";
                     // Load sprites for attacking
                     for (int i = 0; i <= 8; i++) {
                         playerRightAttackList.add(i, UtilityTool.loadSprite(dir + "attackRight/" + i + ".png", "Missing attackLeft " + i));
@@ -394,12 +561,29 @@ public class Player extends Entity {
                     }
 
                     // Scale sprites up
-                    UtilityTool.scaleEntityList(this, playerRightAttackList, 144, 96);
-                    UtilityTool.scaleEntityList(this, playerLeftAttackList, 144, 96);
+                    UtilityTool.scaleEntityList(this, playerRightAttackList, 220, 96);
+                    UtilityTool.scaleEntityList(this, playerLeftAttackList, 220, 96);
                     break;
-                case 1:
+                case 1: // KNIGHT
+                    dir = "/player/Knight/";
+                    // Load sprites for attacking
+                    for (int i = 0; i <= 5; i++) {
+                        playerRightAttackList.add(i, UtilityTool.loadSprite(dir + "attackRight/" + i + ".png", "Missing attackRight " + i));
+                        playerLeftAttackList.add(i, UtilityTool.loadSprite(dir + "attackLeft/" + i + ".png", "Missing attackLeft " + i));
+                    }
+                    // Scale sprites up
+                    UtilityTool.scaleEntityList(this, playerRightAttackList, 200, 96);
+                    UtilityTool.scaleEntityList(this, playerLeftAttackList, 200, 96);
                     break;
-                case 2:
+                case 2: // ASSASSIN
+                    dir = "/player/Assassin/";
+                    for (int i = 0; i <= 25; i++) {
+                        playerRightAttackList.add(i, UtilityTool.loadSprite(dir + "attackRight/" + i + ".png", "Missing attackRight " + i));
+                        playerLeftAttackList.add(i, UtilityTool.loadSprite(dir + "attackLeft/" + i + ".png", "Missing attackLeft " + i));
+                    }
+                    // Scale sprites up
+                    UtilityTool.scaleEntityList(this, playerRightAttackList, 180, 96);
+                    UtilityTool.scaleEntityList(this, playerLeftAttackList, 180, 96);
             }
         } catch (IOException e){
             e.printStackTrace(System.out);
@@ -411,8 +595,8 @@ public class Player extends Entity {
     public void getPlayerSprites() {
         try {
             switch (playerClass) {
-                case 0:
-                    String dir = "/player/Warrior/";
+                case 0: // WARRIOR
+                    dir = "/player/Warrior/";
                     // Load sprites for movement
                     for (int i = 0; i <= 7; i++) {
                         moveRightList.add(i, UtilityTool.loadSprite(dir + "moveRight/" + i + ".png", "Missing moveRight " + i));
@@ -425,14 +609,49 @@ public class Player extends Entity {
                     }
 
                     // Scale sprites up
-                    UtilityTool.scaleEntityList(this, moveRightList, 144, 96);
-                    UtilityTool.scaleEntityList(this, moveLeftList, 144, 96);
-                    UtilityTool.scaleEntityList(this, idleRightList, 144, 96);
-                    UtilityTool.scaleEntityList(this, idleLeftList, 144, 96);
+                    UtilityTool.scaleEntityList(this, moveRightList, 220, 96);
+                    UtilityTool.scaleEntityList(this, moveLeftList, 220, 96);
+                    UtilityTool.scaleEntityList(this, idleRightList, 220, 96);
+                    UtilityTool.scaleEntityList(this, idleLeftList, 220, 96);
                     break;
-                case 1:
+                case 1: // KNIGHT
+                    dir = "/player/Knight/";
+                    // Load sprites for movement
+                    for (int i = 0; i <= 9; i++) {
+                        moveRightList.add(i, UtilityTool.loadSprite(dir + "moveRight/" + i + ".png", "Missing moveRight " + i));
+                        moveLeftList.add(i, UtilityTool.loadSprite(dir + "moveLeft/" + i + ".png", "Missing moveLeft " + i));
+                    }
+                    // Load sprites for idle
+                    for (int i = 0; i <= 9; i++) {
+                        idleRightList.add(i, UtilityTool.loadSprite(dir + "idleRight/" + i + ".png", "Missing idleRight " + i));
+                        idleLeftList.add(i, UtilityTool.loadSprite(dir + "idleLeft/" + i + ".png", "Missing idleLeft " + i));
+                    }
+                    System.out.println("Loaded Knight sprites");
+                    // Scale sprites up
+                    UtilityTool.scaleEntityList(this, moveRightList, 200, 96);
+                    UtilityTool.scaleEntityList(this, moveLeftList, 200, 96);
+                    UtilityTool.scaleEntityList(this, idleRightList, 200, 96);
+                    UtilityTool.scaleEntityList(this, idleLeftList, 200, 96);
                     break;
                 case 2:
+                    dir = "/player/Assassin/";
+                    // Load sprites for movement
+                    for (int i = 0; i <= 24; i++) {
+                        moveRightList.add(i, UtilityTool.loadSprite(dir + "moveRight/" + i + ".png", "Missing moveRight " + i));
+                        moveLeftList.add(i, UtilityTool.loadSprite(dir + "moveLeft/" + i + ".png", "Missing moveLeft " + i));
+                    }
+                    // Load sprites for idle
+                    for (int i = 0; i <= 17; i++) {
+                        idleRightList.add(i, UtilityTool.loadSprite(dir + "idleRight/" + i + ".png", "Missing idleRight " + i));
+                        idleLeftList.add(i, UtilityTool.loadSprite(dir + "idleLeft/" + i + ".png", "Missing idleLeft " + i));
+                    }
+
+                    // Scale sprites up
+                    UtilityTool.scaleEntityList(this, moveRightList, 180, 96);
+                    UtilityTool.scaleEntityList(this, moveLeftList, 180, 96);
+                    UtilityTool.scaleEntityList(this, idleRightList, 180, 96);
+                    UtilityTool.scaleEntityList(this, idleLeftList, 180, 96);
+                    break;
             }
         } catch (IOException e) {
             e.printStackTrace(System.out);

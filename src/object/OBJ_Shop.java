@@ -1,13 +1,17 @@
 package object;
 
+import entity.Entity;
+import main.GamePanel;
 import main.UtilityTool;
 
 import java.io.IOException;
 
-public class OBJ_Shop extends SuperObject {
-    public OBJ_Shop() {
+public class OBJ_Shop extends Entity {
+    public OBJ_Shop(GamePanel gp) {
+        super(gp);
         name = "Shop";
         message = "Shop closed bitch";
+        isObject = true;
 
         // Load shop sprites
         getObjectSprites();
@@ -31,7 +35,7 @@ public class OBJ_Shop extends SuperObject {
             for (int i = 0; i <= 3; i++)
                 defaultList.add(i, UtilityTool.loadSprite(dir + i + ".png", "Missing shop " + i));
             // Scale sprites up
-            UtilityTool.scaleObjectList(defaultList, 173, 115);
+            UtilityTool.scaleEntityList(this,defaultList, 173, 115);
         } catch (IOException e) {
             e.printStackTrace(System.out);
         }

@@ -4,7 +4,7 @@ import entity.Entity;
 import entity.NPC_Blacksmith;
 import object.OBJ_Coin;
 import object.OBJ_Heart;
-import object.SuperObject;
+//import object.SuperObject;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -18,7 +18,7 @@ public class UI {
 
     BufferedImage fullHeart, halfHeart, emptyHeart, hotbar;
     Graphics2D g2;
-    SuperObject coin = new OBJ_Coin(gp);
+    Entity coin = new OBJ_Coin(gp);
 
     public String currentDialog = "";
     public int slotRow = 0;
@@ -28,7 +28,7 @@ public class UI {
         this.gp = gp;
 
         //HUD Components
-        SuperObject heart = new OBJ_Heart(gp);
+        Entity heart = new OBJ_Heart(gp);
         fullHeart = heart.defaultList.get(2);
         halfHeart = heart.defaultList.get(1);
         emptyHeart = heart.defaultList.get(0);
@@ -229,7 +229,7 @@ public class UI {
         if (coin.spriteCounter > 4) coin.loopThroughSprites();
         g2.setFont(g2.getFont().deriveFont(Font.BOLD, 40));
         g2.drawString ("" + gp.player.totalCoins, 38, 117);
-        g2.drawImage(coin.defaultList.get(coin.spriteNum), 78, 78, null);
+        g2.drawImage(coin.defaultList.get(coin.spriteNum - 1), 78, 78, null);
     }
 
     // Draw Pause Screen

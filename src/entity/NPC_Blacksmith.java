@@ -25,6 +25,7 @@ public class NPC_Blacksmith extends Entity {
         solidArea.height = 48;
         solidAreaDefaultX = solidArea.x;
         solidAreaDefaultY = solidArea.y;
+        setDialog();
     }
 
     public void setDialog() {
@@ -34,6 +35,8 @@ public class NPC_Blacksmith extends Entity {
         dialogs[3] = "placeholder 4";
         dialogs[4] = "placeholder 4";
     }
+
+
 
     public void getNpcSprites() {
         String dir = "/NPCs/blacksmith/";

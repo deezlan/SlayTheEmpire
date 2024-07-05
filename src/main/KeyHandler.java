@@ -32,7 +32,7 @@ public class KeyHandler implements KeyListener {
     public void keyPressed(KeyEvent e) {
         int code = e.getKeyCode();
 
-        // PLaystate
+        // PLayState
         if (gp.gameState == gp.playState){
             if (code == KeyEvent.VK_W) {
                 wPressed = true;
@@ -45,6 +45,9 @@ public class KeyHandler implements KeyListener {
             }
             if (code == KeyEvent.VK_D) {
                 dPressed = true;
+            }
+            if (code == KeyEvent.VK_E){
+                ePressed = true;
             }
             if (code == KeyEvent.VK_F) {
                 shotKeyPressed = true;
@@ -83,7 +86,7 @@ public class KeyHandler implements KeyListener {
                 }
             }
         }
-
+        //Pause State
         if (code == KeyEvent.VK_P) {
             pPressed = true;
             if(gp.gameState == gp.playState){

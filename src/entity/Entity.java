@@ -281,9 +281,9 @@ public abstract class Entity {
         int screenX = worldX - gp.player.worldX + gp.player.screenX;
         int screenY = worldY - gp.player.worldY + gp.player.screenY; // Corrected worldY subtraction
 
-        if (worldX + gp.TILE_SIZE > gp.player.worldX - gp.player.screenX &&
-                worldX - gp.TILE_SIZE < gp.player.worldX + gp.player.screenX &&
-                worldY + gp.TILE_SIZE > gp.player.worldY - gp.player.screenY &&
+        if (worldX + gp.TILE_SIZE > gp.player.worldX - gp.player.screenX - 48*4 &&
+                worldX - gp.TILE_SIZE < gp.player.worldX + gp.player.screenX + 48*4 &&
+                worldY + gp.TILE_SIZE > gp.player.worldY - gp.player.screenY - 48*2 &&
                 worldY - gp.TILE_SIZE < gp.player.worldY + gp.player.screenY)
         {
             // MONSTER HP BAR

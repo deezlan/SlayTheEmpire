@@ -30,7 +30,7 @@ public class Player extends Entity {
         this.gp = gp;
         this.keyH = keyH;
         this.playerClass = playerClass;
-        screenX = (gp.SCREEN_WIDTH/2) - (gp.TILE_SIZE/2); // added screen position
+        screenX = (gp.SCREEN_WIDTH/2) - (gp.TILE_SIZE/2) - 48*2; // added screen position
         screenY = (gp.SCREEN_HEIGHT/2) - (gp.TILE_SIZE/2);
 
         this.cursor = cursor;
@@ -207,7 +207,7 @@ public class Player extends Entity {
                 interactMob(mobIndex);
 
                 // CHECK INTERACTIVE TILE
-                int iTileIndex = gp.cChecker.checkEntityCollision(this,gp.iTile);
+//                int iTileIndex = gp.cChecker.checkEntityCollision(this,gp.iTile);
 
                 switch (action) {
                     case "moveUp", "moveDown":

@@ -26,6 +26,7 @@ public class  UI {
     public int slotRow = 0;
     public int slotColMove = 0;
     public int slotRowMove = 0;
+    public int commandNum = 0;
 
     // Login variables
     public String username = "", password = "", passwordHidden = "";
@@ -74,8 +75,9 @@ public class  UI {
     }
 
     public void draw(Graphics2D g2){
+
         this.g2 = g2;
-        g2.setFont(new Font("Microsoft YaHei", Font.PLAIN, 26));
+        g2.setFont(new Font("Microsoft YaHei", Font.PLAIN, 28));
         g2.setColor(Color.white);
         drawPlayerLife();
 
@@ -321,33 +323,48 @@ public class  UI {
         int x = (gp.SCREEN_WIDTH - newGame.getWidth(null)) / 2;
         int y = (gp.SCREEN_HEIGHT - newGame.getHeight(null)) / 2;
         g2.drawImage(newGame, x, y, newGame.getWidth(null), newGame.getHeight(null), null);
+        if (commandNum == 0) {
+            g2.setColor(Color.WHITE);
+            g2.drawString(">", x - gp.TILE_SIZE, y);
+        }
     }
 
     public void drawLoadGame() {
         int x = (gp.SCREEN_WIDTH - loadGame.getWidth(null)) / 2;
         int y = (gp.SCREEN_HEIGHT - loadGame.getHeight(null)) / 2 + 60;
         g2.drawImage(loadGame, x, y, loadGame.getWidth(null), loadGame.getHeight(null), null);
+        if (commandNum == 1) {
+            g2.setColor(Color.WHITE);
+            g2.drawString(">", x - gp.TILE_SIZE, y);
+        }
     }
 
     public void drawOptions() {
         int x = (gp.SCREEN_WIDTH - options.getWidth(null)) / 3;
         int y = (gp.SCREEN_HEIGHT - options.getHeight(null)) / 2 + 130;
         g2.drawImage(options, x, y, options.getWidth(null), options.getHeight(null), null);
+        if (commandNum == 2) {
+            g2.setColor(Color.WHITE);
+            g2.drawString(">", x - gp.TILE_SIZE, y);
+        }
     }
 
     public void drawQuit() {
         int x = ((gp.SCREEN_WIDTH - quit.getWidth(null)) / 2 + 110);
         int y = (gp.SCREEN_HEIGHT - quit.getHeight(null)) / 2 + 130;
         g2.drawImage(quit, x, y, quit.getWidth(null), quit.getHeight(null), null);
+        if (commandNum == 3) {
+            g2.setColor(Color.WHITE);
+            g2.drawString(">", x - gp.TILE_SIZE, y);
+        }
     }
 
     // Draw Start Menu
     public void drawStartMenu() {
-
         g2.setColor(Color.BLACK);
         g2.fillRect(0,0, gp.SCREEN_WIDTH, gp.SCREEN_HEIGHT);
 
-        // title image
+        // Draw Title and Buttons
         drawTitleImage();
         drawNewGame();
         drawLoadGame();

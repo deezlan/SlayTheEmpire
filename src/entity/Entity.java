@@ -12,6 +12,33 @@ public abstract class Entity {
     public int worldX, worldY;
     public Projectile projectile;
 
+    // ENTITY ATTRIBUTES
+    public int defaultSpeed;
+    public int speed;
+    public boolean lookingRight;
+    public int type; // 0 = player 1 = monster
+    public int mobNum = 0; // FOR HP BAR
+    public int maxLife;
+    public int life;
+    public int solidAreaDefaultX, solidAreaDefaultY;
+    public ArrayList<BufferedImage>
+            currentActionList = new ArrayList<>(),
+            idleRightList = new ArrayList<>(),
+            idleLeftList = new ArrayList<>(),
+            moveRightList = new ArrayList<>(),
+            moveLeftList = new ArrayList<>(),
+            playerRightAttackList = new ArrayList<>(),
+            playerLeftAttackList = new ArrayList<>();
+
+    String[] dialogs = new String[20];
+    public void speak() {
+        if (dialogs[interactionCounter] == null) interactionCounter = 0;
+        gp.ui.currentDialog = dialogs[interactionCounter];
+        interactionCounter++;
+    }
+    public void setAction(){}
+    public void damageReaction(){}
+
     // HIT DETECTION
     boolean attacking = false;
     public Rectangle attackArea = new Rectangle(0,0,0,0);
@@ -21,16 +48,13 @@ public abstract class Entity {
     public boolean dead = false;
     public boolean hpBarON = false;
 
-    public int mobNum = 0;
+    // KNOCK-BACK
     public Entity attacker;
     public String knockBackDirection;
+    public boolean knockBack = false;
 
     // TRACKING
     public boolean onPath = false;
-
-    // PLAYER ATTRIBUTES
-    public int defaultSpeed;
-    public int speed;
 
     // ITEM ATTRIBUTES
     public int damage;
@@ -38,30 +62,18 @@ public abstract class Entity {
     public String name;
     public int price;
     public String description = "";
-    public ArrayList<BufferedImage>
-            currentActionList = new ArrayList<>(),
-            idleRightList = new ArrayList<>(),
-            idleLeftList = new ArrayList<>(),
-            moveRightList = new ArrayList<>(),
-            moveLeftList = new ArrayList<>(),
-            playerRightAttackList = new ArrayList<>(),
-            playerLeftAttackList = new ArrayList<>();
-    public String action = "idleRight";
-    public boolean lookingRight;
-    public int type; // 0 = player 1 = monster
-    public int spriteNum = 1;
-//    public int weaponSpriteCounter = 0; // Ananda's old slash variables
-//    public int weaponSpriteNum = 1; // " "
 
-    // SuperObject Items
+    public String action = "idleRight";
+    public int spriteNum = 1;
+
+    // OBJECTS
     public ArrayList<BufferedImage> defaultList = new ArrayList<>();
     public ArrayList<BufferedImage> interactList = new ArrayList<>();
     public String message;
     public boolean
             interacting = false,
             collision = false,
-            isObject,
-            knockBack = false;
+            isObject;
 
     // COUNTERS
     public int interactSpriteCounter = 0, interactSpriteNum = 0;
@@ -72,25 +84,9 @@ public abstract class Entity {
     int dyingCounter = 0;
     int hpBarCounter = 0;
     int knockBackCounter = 0;
-    String[] dialogs = new String[20];
-    public void speak() {
-        if (dialogs[interactionCounter] == null) interactionCounter = 0;
-        gp.ui.currentDialog = dialogs[interactionCounter];
-        interactionCounter++;
-    }
 
-    public void setAction(){}
-    public void damageReaction(){}
-
-    // entity's collision directions
-    public boolean
-            upCollisionOn = false,
-            downCollisionOn = false,
-            leftCollisionOn = false,
-            rightCollisionOn = false;
-
-    public int maxLife;
-    public int life;
+    // ENTITY COLLISION DIRECTION
+    public boolean upCollisionOn = false, downCollisionOn = false, leftCollisionOn = false, rightCollisionOn = false;
 
     public Rectangle solidArea = new Rectangle(0, 0, 48, 48); // draw area around entities
 
@@ -98,8 +94,6 @@ public abstract class Entity {
         this.gp = gp;
         lookingRight = true;
     }
-
-    public int solidAreaDefaultX, solidAreaDefaultY;
 
     public void loopThroughSprites() {
         spriteNum = (spriteNum < currentActionList.size()) ? spriteNum + 1 : 1;
@@ -369,11 +363,11 @@ public abstract class Entity {
     public void draw(Graphics2D g2) {
         BufferedImage image;
         if (!alive) {
-            return; // Do not draw if the entity is not alive
+            return;
         }
         if (interacting) {image = interactList.get(interactSpriteNum);} else {image = currentActionList.get(spriteNum - 1);}
         int screenX = worldX - gp.player.worldX + gp.player.screenX;
-        int screenY = worldY - gp.player.worldY + gp.player.screenY; // Corrected worldY subtraction
+        int screenY = worldY - gp.player.worldY + gp.player.screenY;
 
         if (worldX + gp.TILE_SIZE > gp.player.worldX - gp.player.screenX - 48*4 && // added values due to player sprite not centered
                 worldX - gp.TILE_SIZE < gp.player.worldX + gp.player.screenX + 48*4 &&

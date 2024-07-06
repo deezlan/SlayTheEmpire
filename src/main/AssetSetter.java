@@ -1,9 +1,6 @@
 package main;
 
-import entity.NPC_Maiden;
-import entity.NPC_Merchant;
-import entity.NPC_Mystery;
-import entity.NPC_Blacksmith;
+import entity.*;
 import mobs.*;
 import object.OBJ_ChatBubble;
 import object.OBJ_SavePedestal;
@@ -79,6 +76,7 @@ public class AssetSetter {
             gp.npcArr[mapNum][i].worldX = 800;
             gp.npcArr[mapNum][i].worldY = 540;
             System.out.println("NPC Mystery set at (" + gp.npcArr[mapNum][0].worldX + ", " + gp.npcArr[mapNum][0].worldY + ")");
+            i++;
 
             // MAP 1
     }
@@ -102,14 +100,15 @@ public class AssetSetter {
 //                gp.mobArr[mapNum][i].worldY = 270;
 //                i++;
 
-                gp.mobArr[mapNum][i] = new MOB_Canine(gp);
-                gp.mobArr[mapNum][i].worldX = 500;
-                gp.mobArr[mapNum][i].worldY = 300;
-                i++;
-//                gp.mobArr[mapNum][i] = new MOB_Slime(gp);
-//                gp.mobArr[mapNum][i].worldX = 400;
-//                gp.mobArr[mapNum][i].worldY = 400;
+//                gp.mobArr[mapNum][i] = new MOB_Canine(gp);
+//                gp.mobArr[mapNum][i].worldX = 500;
+//                gp.mobArr[mapNum][i].worldY = 300;
 //                i++;
+
+                gp.mobArr[mapNum][i] = new MOB_Slime(gp);
+                gp.mobArr[mapNum][i].worldX = 800;
+                gp.mobArr[mapNum][i].worldY = 400;
+                i++;
 //
 //                gp.mobArr[mapNum][i] = new MOB_Goblin(gp);
 //                gp.mobArr[mapNum][i].worldX = 400;
@@ -132,15 +131,17 @@ public class AssetSetter {
 //                i++;
 
                 // MAP 1
-                mapNum = 1;
+//                mapNum = 1;
 //                gp.mobArr[mapNum][i] = new MOB_Slime(gp);
-//                gp.mobArr[mapNum][i].worldX = 240;
+//                gp.mobArr[mapNum][i].worldX = 500;
 //                gp.mobArr[mapNum][i].worldY = 270;
 //                i++;
-                gp.mobArr[mapNum][i] = new MOB_RobotGuardian(gp);
-                gp.mobArr[mapNum][i].worldX = 300;
-                gp.mobArr[mapNum][i].worldY = 270;
-                i++;
+
+//                gp.mobArr[mapNum][i] = new MOB_RobotGuardian(gp);
+//                gp.mobArr[mapNum][i].worldX = 300;
+//                gp.mobArr[mapNum][i].worldY = 270;
+//                i++;
+
 //                gp.mobArr[mapNum][i] = new MOB_ArmoredGuardian(gp);
 //                gp.mobArr[mapNum][i].worldX = 350;
 //                gp.mobArr[mapNum][i].worldY = 270;

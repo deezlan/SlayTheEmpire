@@ -10,8 +10,6 @@ public abstract class Entity {
     GamePanel gp;
     public int actionLockCounter;
     public int worldX, worldY;
-    public int speed;
-
     public Projectile projectile;
 
     // HIT DETECTION
@@ -21,13 +19,20 @@ public abstract class Entity {
     public int iframeCounter = 0;
     public boolean alive = true;
     public boolean dead = false;
-    int dyingCounter = 0;
     public boolean hpBarON = false;
-    int hpBarCounter = 0;
 
     public int mobNum = 0;
 
-    //Item Attributes
+//    public boolean knockBack = false;
+
+    // TRACKING
+    public boolean onPath = false;
+
+    // PLAYER ATTRIBUTES
+    public int defaultSpeed;
+    public int speed;
+
+    // ITEM ATTRIBUTES
     public int damage;
     public BufferedImage weaponSprite;
     public String name;
@@ -44,8 +49,6 @@ public abstract class Entity {
     public String action = "idleRight";
     public boolean lookingRight;
     public int type; // 0 = player 1 = monster
-
-    public int spriteCounter = 0;
     public int spriteNum = 1;
 //    public int weaponSpriteCounter = 0; // Ananda's old slash variables
 //    public int weaponSpriteNum = 1; // " "
@@ -57,13 +60,18 @@ public abstract class Entity {
     public boolean
             interacting = false,
             collision = false,
-            isObject;
+            isObject,
+            knockBack = false;
 
+    // COUNTERS
     public int interactSpriteCounter = 0, interactSpriteNum = 0;
     public int animationCounter = 0;
     public int animationSpriteNum = 0;
-
+    public int spriteCounter = 0;
     public int interactionCounter = 0;
+    int dyingCounter = 0;
+    int hpBarCounter = 0;
+    int knockBackCounter = 0;
     String[] dialogs = new String[20];
     public void speak() {
         if (dialogs[interactionCounter] == null) interactionCounter = 0;
@@ -98,49 +106,32 @@ public abstract class Entity {
         spriteCounter = 0;
     }
 
-    // Ananda's old slash animation
-//    public void loopThroughWeaponSprites() {
-//        if (weaponSpriteCounter <= 5){
-//            weaponSpriteNum = 0;
-//        } else if (weaponSpriteCounter <= 10) {
-//            weaponSpriteNum = 1;
-//        } else if (weaponSpriteCounter <= 15) {
-//            weaponSpriteNum = 2;
-//        } else if (weaponSpriteCounter <= 20) {
-//            weaponSpriteNum = 3;
-//        } else if (weaponSpriteCounter <= 25) {
-//            weaponSpriteNum = 4;
-//        } else if (weaponSpriteCounter <= 30) {
-//            weaponSpriteNum = 5;
-//        } else if (weaponSpriteCounter <= 35) {
-//            weaponSpriteNum = 0;
-//            weaponSpriteCounter = 0;
-//            attacking = false;
-//        }
-//    }
+    public void checkCollision() {
+        upCollisionOn = false; // resets collisions off
+        downCollisionOn = false;
+        leftCollisionOn = false;
+        rightCollisionOn = false;
+        gp.cChecker.checkObject(this, false);
+        gp.cChecker.checkPLayer(this);
+        gp.cChecker.checkTile(this);
+        gp.cChecker.checkEntityCollision(this, gp.npcArr);
+        boolean contactPlayer = gp.cChecker.checkPLayer(this);
+
+        if (this.type == 2 && contactPlayer) {
+            if (!gp.player.iframe) {
+                gp.player.life -= 1;
+                gp.player.iframe = true;
+            }
+        }
+    }
 
     public void update() {
         if (interacting) {
             startInteract();
         } else {
-            upCollisionOn = false; // resets collisions off
-            downCollisionOn = false;
-            leftCollisionOn = false;
-            rightCollisionOn = false;
-            gp.cChecker.checkObject(this, false);
-            gp.cChecker.checkPLayer(this);
-            gp.cChecker.checkTile(this);
-            gp.cChecker.checkEntityCollision(this, gp.npcArr);
             setAction();
+            checkCollision();
 
-            boolean contactPlayer = gp.cChecker.checkPLayer(this);
-
-            if (this.type == 2 && contactPlayer) {
-                if (!gp.player.iframe) {
-                    gp.player.life -= 1;
-                    gp.player.iframe = true;
-                }
-            }
             if (!upCollisionOn && !downCollisionOn && !leftCollisionOn && !rightCollisionOn) {
                 switch (action) {
                     case "moveUp":
@@ -173,7 +164,6 @@ public abstract class Entity {
                         break;
                 }
             }
-
             if (iframe) {
                 iframeCounter++;
                 if (iframeCounter > 30) {
@@ -261,24 +251,7 @@ public abstract class Entity {
         if (!alive) {
             return; // Do not draw if the entity is not alive
         }
-        if (interacting) {
-            image = interactList.get(interactSpriteNum);
-        } else {
-            image = currentActionList.get(spriteNum - 1);
-        }
-//        switch (gp.gameArea) {
-//            case 0:
-//                if(iframe) {
-//                    hpBarON = true;
-//                    changeAlpha(g2, 0.3f);
-//                }
-//                if(dead){
-//                    dyingAnimation(g2);
-//                }
-//                g2.drawImage(image, worldX, worldY, null);
-//                changeAlpha(g2, 1.0f);
-//                break;
-//            case 1:
+        if (interacting) {image = interactList.get(interactSpriteNum);} else {image = currentActionList.get(spriteNum - 1);}
         int screenX = worldX - gp.player.worldX + gp.player.screenX;
         int screenY = worldY - gp.player.worldY + gp.player.screenY; // Corrected worldY subtraction
 
@@ -346,7 +319,6 @@ public abstract class Entity {
                     g2.fillRect(screenX+20,screenY + 90, (int)hpBarValue,9);
                 }
 
-
                 hpBarCounter++;
                 if(hpBarCounter > 600) {
                     hpBarCounter = 0;
@@ -361,37 +333,76 @@ public abstract class Entity {
             if(dead){
                 dyingAnimation(g2);
             }
+
             g2.drawImage(image, screenX, screenY, null);
             changeAlpha(g2, 1f);
         }
-//                break;
-//            default:
+    }
+        public void searchPath(int goalCol, int goalRow) {
 
-//                int screenX = worldX - gp.player.worldX + gp.player.screenX;
-//                int screenY = worldY - gp.player.worldY + gp.player.screenY; // Corrected worldY subtraction
-//
-//                if (worldX + gp.TILE_SIZE > gp.player.worldX - gp.player.screenX &&
-//                        worldX - gp.TILE_SIZE < gp.player.worldX + gp.player.screenX &&
-//                        worldY + gp.TILE_SIZE > gp.player.worldY - gp.player.screenY &&
-//                        worldY - gp.TILE_SIZE < gp.player.worldY + gp.player.screenY)
-//                {
-//                    // MONSTER HP BAR
-//                    if(type == 2) {
-//                        g2.setColor(new Color(35,35,35));
-//                        g2.fillRect(screenX-1,screenY-16, gp.TILE_SIZE+2,12);
-//                        g2.setColor(new Color(255,0,30));
-//                        g2.fillRect(screenX,screenY - 15, gp.TILE_SIZE,10);
-//                    }
-//                    if(iframe){
-//                        g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.3f));
-//                    }
-//                    if(dead){
-//                        dyingAnimation(g2);
-//                    }
-//                    g2.drawImage(image, screenX, screenY, null);
-//                    g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
-//                }
+        int startCol = (worldX + solidArea.x)/gp.TILE_SIZE;
+        int startRow = (worldY + solidArea.y)/gp.TILE_SIZE;
+
+        gp.pFinder.setNodes(startCol,startRow,goalCol,goalRow);
+
+        if (gp.pFinder.search()) {
+            // NEXT WORLD X & Y
+            int nextX = gp.pFinder.pathList.get(0).col * gp.TILE_SIZE;
+            int nextY = gp.pFinder.pathList.get(0).row * gp.TILE_SIZE;
+
+            // ENTITY SOLIDAREA POSITION
+            int enLeftX = worldX + solidArea.x;
+            int enRightX = worldX + solidArea.x + solidArea.width;
+            int enTopY = worldY + solidArea.y;
+            int enBottomY = worldY + solidArea.y + solidArea.height;
+
+            if(enTopY > nextY && enLeftX >= nextX && enRightX < nextX + gp.TILE_SIZE){
+                action = "moveUp";
+            } else if (enTopY < nextY && enLeftX >= nextX && enRightX < nextX + gp.TILE_SIZE){
+                action = "moveDown";
+            } else if (enTopY >= nextY && enBottomY < nextY + gp.TILE_SIZE){
+                if (enLeftX > nextX){
+                    action = "moveLeft";
+                }
+                if(enLeftX < nextX){
+                    action = "moveRight";
+                }
+            }
+            else if (enTopY > nextY && enLeftX > nextX){
+                action = "moveUp";
+                checkCollision();
+                if(upCollisionOn && downCollisionOn && leftCollisionOn && rightCollisionOn){ // check
+                    action = "moveLeft";
+                }
+            }
+            else if (enTopY > nextY && enLeftX < nextX){
+                action = "moveUp";
+                if(upCollisionOn && downCollisionOn && leftCollisionOn && rightCollisionOn){ // check
+                    action = "moveRight";
+                }
+            }
+            else if (enTopY < nextY && enLeftX > nextX){
+                action = "moveDown";
+                checkCollision(); // check
+                if(upCollisionOn && downCollisionOn && leftCollisionOn && rightCollisionOn){
+                    action = "moveLeft";
+                }
+            }
+            else if (enTopY < nextY && enLeftX < nextX){
+                action = "moveDown";
+                checkCollision(); // check
+                if(upCollisionOn && downCollisionOn && leftCollisionOn && rightCollisionOn){
+                    action = "moveRight";
+                }
+            }
+            // IF REACH GOAL STOP
+//            int nextCol = gp.pFinder.pathList.get(0).col;
+//            int nextRow = gp.pFinder.pathList.get(0).row;
+//            if(nextCol == goalCol && nextRow == goalRow) {
+//                onPath = false;
+            }
         }
     }
+
 
 

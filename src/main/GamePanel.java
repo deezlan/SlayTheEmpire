@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 
 import TileInteractive.InteractiveTIle;
+import ai.Pathfinder;
 import entity.Cursor;
 import entity.Entity;
 import entity.Player;
@@ -34,7 +35,7 @@ public class GamePanel extends JPanel implements Runnable {
     // FPS SETTINGS
     final int FPS = 60;
 
-    TileManager tileM = new TileManager(this);
+    public TileManager tileM = new TileManager(this);
     public KeyHandler keyH = new KeyHandler(this);
 
     // CURSOR SETTINGS
@@ -54,6 +55,9 @@ public class GamePanel extends JPanel implements Runnable {
     public UI ui = new UI(this);
     public EventHandler eHandler = new EventHandler(this);
     ArrayList<Entity> entityList = new ArrayList<>();
+
+    // PATHFINDER
+    public Pathfinder pFinder = new Pathfinder(this);
 
     // GAME STATES
     public int gameState;

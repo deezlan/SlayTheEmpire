@@ -4,7 +4,7 @@ package tile;
 import main.GamePanel;
 import main.UtilityTool;
 
-import java.awt.Graphics2D;
+import java.awt.*;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -15,6 +15,7 @@ public class TileManager {
     GamePanel gp;
     public Tile[] tile;
     public int[][][] mapTileNum; // to check which tile the player is currently hitting
+    boolean drawPath = true;
     String dir;
 
     public TileManager(GamePanel gp) {
@@ -73,8 +74,8 @@ public class TileManager {
                 int worldX = WORLD_COL * gp.TILE_SIZE;
                 int worldY = WORLD_ROW * gp.TILE_SIZE;
 
-                switch (gp.currentMap) {
-                    case 0, 1:
+//                switch (gp.currentMap) {
+//                    case 0, 1:
                         int screenX = worldX - gp.player.worldX + gp.player.screenX;
                         int screenY = worldY - gp.player.worldY + gp.player.screenY;
 
@@ -84,13 +85,13 @@ public class TileManager {
                                 worldY - gp.TILE_SIZE < gp.player.worldY + gp.player.screenY + 48*2) {
                             g2.drawImage(tile[tileNum].image, screenX, screenY, gp.TILE_SIZE, gp.TILE_SIZE, null);
                         }
-                        break;
-//                    gp.setBackground(Color.decode("#222034")); // NO LOCK ON PLAYER
-//                    g2.drawImage(tile[tileNum].image, worldX, worldY, gp.TILE_SIZE, gp.TILE_SIZE, null);
-//                    break;
-                    default:
-                        System.out.println("Wrong case for TileManager draw");
-                }
+//                        break;
+////                    gp.setBackground(Color.decode("#222034")); // NO LOCK ON PLAYER
+////                    g2.drawImage(tile[tileNum].image, worldX, worldY, gp.TILE_SIZE, gp.TILE_SIZE, null);
+////                    break;
+//                    default:
+//                        System.out.println("Wrong case for TileManager draw");
+//                }
             } else {
                 System.err.println("Tile or tile image is null for tile number: " + tileNum);
             }
@@ -99,6 +100,18 @@ public class TileManager {
             if (WORLD_COL == gp.MAX_WORLD_COL) {
                 WORLD_COL = 0;
                 WORLD_ROW++;
+            }
+        }
+        if(drawPath){ // for viewing the move path of entities
+            g2.setColor(new Color(255,0,0,70));
+
+            for(int i = 0; i < gp.pFinder.pathList.size(); i++){
+                int worldX = gp.pFinder.pathList.get(i).col * gp.TILE_SIZE;
+                int worldY = gp.pFinder.pathList.get(i).row * gp.TILE_SIZE;
+                int screenX = worldX - gp.player.worldX + gp.player.screenX;
+                int screenY = worldY - gp.player.worldY + gp.player.screenY;
+
+                g2.fillRect(screenX,screenY,gp.TILE_SIZE,gp.TILE_SIZE);
             }
         }
     }

@@ -49,19 +49,15 @@ public class Player extends Entity {
         setDefaultValues();
         setCollisionValues();
         getPlayerSprites();
-//        getPlayerAttackImage(); Ananda's old slash method
         getPlayerAttackAnimation();
-
         setItems();
-
-//        SwordSlash slash1 = new SwordSlash(gp); // Ananda's old slash variables
-//        slash = slash1;
     }
 
     public void setDefaultValues() {
         worldX = 588; // Player spawn location x
         worldY = 147; // player spawn location y
-        speed = 3;
+        speed = 4;
+        defaultSpeed = 4;
         action = "idleRight";
         lookingRight = true;
 
@@ -138,8 +134,6 @@ public class Player extends Entity {
             if (keyH.aPressed && keyH.dPressed && keyH.sPressed) {
                 action = "moveDown";
             }
-
-
 
             if ((keyH.wPressed || keyH.sPressed || keyH.aPressed || keyH.dPressed) && !action.equals("stuckOppositeDirection")) {
                 if (keyH.wPressed) {

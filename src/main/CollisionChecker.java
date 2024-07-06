@@ -21,7 +21,13 @@ public class CollisionChecker {
 
         int tileNum1, tileNum2, tileNum3; //only need to check three tiles
 
-        switch (entity.action){
+        // Temp Direction for knockback
+        String action = entity.action;
+        if(entity.knockBack){
+            action = entity.knockBackDirection;
+        }
+
+        switch (action){
             case "moveUp": // check if top corners of the square hitting any tiles
                 entityTopRow = (entityTopWorldY - entity.speed)/gp.TILE_SIZE;
                 tileNum1 = gp.tileM.mapTileNum[gp.currentMap][entityLeftCol][entityTopRow];
@@ -257,6 +263,12 @@ public class CollisionChecker {
 
     public int checkEntityCollision(Entity entity, Entity[][] target){
         int index = 999;
+
+        String action = entity.action;
+        if(entity.knockBack){
+            action = entity.knockBackDirection;
+        }
+
         for (int i = 0; i < target[1].length; i++) {
             if (target[gp.currentMap][i] != null) {
                 // Get entity's solid area position
@@ -267,7 +279,7 @@ public class CollisionChecker {
                 target[gp.currentMap][i].solidArea.x = target[gp.currentMap][i].worldX + target[gp.currentMap][i].solidArea.x;
                 target[gp.currentMap][i].solidArea.y = target[gp.currentMap][i].worldY + target[gp.currentMap][i].solidArea.y;
 
-                switch (entity.action) {
+                switch (action) {
                     case "moveUp":
                         entity.solidArea.y -= entity.speed;
                         if (entity.solidArea.intersects(target[gp.currentMap][i].solidArea)) {

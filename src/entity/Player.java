@@ -328,7 +328,7 @@ public class Player extends Entity {
                     solidArea.height = attackArea.height;
                     // CHECK MONSTER COLLISION
                     int monsterIndex = gp.cChecker.checkEntityCollision(this, gp.mobArr);
-                    damageMonster(monsterIndex);
+                    damageMonster(monsterIndex, this);
 
                     int iTileIndex = gp.cChecker.checkEntityCollision(this,gp.iTile);
                     damageInteractiveTile(iTileIndex);
@@ -468,11 +468,11 @@ public class Player extends Entity {
         }
     }
 
-    public void damageMonster(int i) {
+    public void damageMonster(int i, Entity attacker) {
         if (i != 999){
 
             if(!gp.mobArr[gp.currentMap][i].iframe){
-                knockBack(gp.mobArr[gp.currentMap][i]);
+                knockBack(gp.mobArr[gp.currentMap][i],attacker);
                 gp.mobArr[gp.currentMap][i].life -= 1;
                 gp.mobArr[gp.currentMap][i].iframe = true;
                 gp.mobArr[gp.currentMap][i].damageReaction();
@@ -487,10 +487,11 @@ public class Player extends Entity {
         }
     }
 
-    public void knockBack(Entity entity){
-        entity.action = action;
-        entity.speed += 10;
-        entity.knockBack = true;
+    public void knockBack(Entity target,Entity attacker){
+        this.attacker = attacker;
+        target.knockBackDirection = attacker.action;
+        target.speed += 10;
+        target.knockBack = true;
     }
 
     public void damageInteractiveTile(int i) {

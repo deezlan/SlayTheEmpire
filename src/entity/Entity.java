@@ -22,8 +22,8 @@ public abstract class Entity {
     public boolean hpBarON = false;
 
     public int mobNum = 0;
-
-//    public boolean knockBack = false;
+    public Entity attacker;
+    public String knockBackDirection;
 
     // TRACKING
     public boolean onPath = false;
@@ -136,7 +136,7 @@ public abstract class Entity {
                     knockBack = false;
                     speed = defaultSpeed;
                 } else if (!upCollisionOn && !downCollisionOn && !leftCollisionOn && !rightCollisionOn){
-                    switch (gp.player.action){
+                    switch (knockBackDirection){
                         case "moveUp":
                             worldY -= speed;
                             break;

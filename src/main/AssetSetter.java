@@ -4,8 +4,7 @@ import entity.NPC_Maiden;
 import entity.NPC_Merchant;
 import entity.NPC_Mystery;
 import entity.NPC_Blacksmith;
-import mobs.MOB_RobotGuardian;
-import mobs.MOB_Slime;
+import mobs.*;
 import object.OBJ_ChatBubble;
 import object.OBJ_SavePedestal;
 import object.OBJ_Shop;
@@ -87,22 +86,65 @@ public class AssetSetter {
         int mapNum = 0;
         int i = 0;
                 // MAP 0
-                gp.mobArr[mapNum][i] = new MOB_Slime(gp);
-                gp.mobArr[mapNum][i].worldX = 400;
-                gp.mobArr[mapNum][i].worldY = 400;
+
+//                gp.mobArr[mapNum][i] = new MOB_ArmoredGuardian(gp);
+//                gp.mobArr[mapNum][i].worldX = 350;
+//                gp.mobArr[mapNum][i].worldY = 270;
+//                i++;
+//
+//                gp.mobArr[mapNum][i] = new MOB_FlyingEye(gp);
+//                gp.mobArr[mapNum][i].worldX = 400;
+//                gp.mobArr[mapNum][i].worldY = 270;
+//                i++;
+//
+//                gp.mobArr[mapNum][i] = new MOB_Mushroom(gp);
+//                gp.mobArr[mapNum][i].worldX = 450;
+//                gp.mobArr[mapNum][i].worldY = 270;
+//                i++;
+
+                gp.mobArr[mapNum][i] = new MOB_Canine(gp);
+                gp.mobArr[mapNum][i].worldX = 500;
+                gp.mobArr[mapNum][i].worldY = 300;
                 i++;
+//                gp.mobArr[mapNum][i] = new MOB_Slime(gp);
+//                gp.mobArr[mapNum][i].worldX = 400;
+//                gp.mobArr[mapNum][i].worldY = 400;
+//                i++;
+//
+//                gp.mobArr[mapNum][i] = new MOB_Goblin(gp);
+//                gp.mobArr[mapNum][i].worldX = 400;
+//                gp.mobArr[mapNum][i].worldY = 300;
+//                i++;
+//
+//                gp.mobArr[mapNum][i] = new MOB_Skellington(gp);
+//                gp.mobArr[mapNum][i].worldX = 700;
+//                gp.mobArr[mapNum][i].worldY = 300;
+//                i++;
+//
+//                gp.mobArr[mapNum][i] = new MOB_Ramses(gp);
+//                gp.mobArr[mapNum][i].worldX = 700;
+//                gp.mobArr[mapNum][i].worldY = 400;
+//                i++;
+
+//                gp.mobArr[mapNum][i] = new MOB_CrystalGuardian(gp);
+//                gp.mobArr[mapNum][i].worldX = 600;
+//                gp.mobArr[mapNum][i].worldY = 500;
+//                i++;
 
                 // MAP 1
                 mapNum = 1;
-                gp.mobArr[mapNum][i] = new MOB_Slime(gp);
-                gp.mobArr[mapNum][i].worldX = 240;
-                gp.mobArr[mapNum][i].worldY = 270;
-                i++;
+//                gp.mobArr[mapNum][i] = new MOB_Slime(gp);
+//                gp.mobArr[mapNum][i].worldX = 240;
+//                gp.mobArr[mapNum][i].worldY = 270;
+//                i++;
                 gp.mobArr[mapNum][i] = new MOB_RobotGuardian(gp);
                 gp.mobArr[mapNum][i].worldX = 300;
                 gp.mobArr[mapNum][i].worldY = 270;
-
-
+                i++;
+//                gp.mobArr[mapNum][i] = new MOB_ArmoredGuardian(gp);
+//                gp.mobArr[mapNum][i].worldX = 350;
+//                gp.mobArr[mapNum][i].worldY = 270;
+//                i++;
         }
 
     public void setInteractiveTile() {

@@ -261,7 +261,7 @@ public class Player extends Entity {
                 cursor.calculateAngle((int)(screenX + gp.TILE_SIZE * 2.3), screenY + gp.TILE_SIZE + 10);
             } else if (playerClass == 1) {
                 // KNIGHT
-                cursor.calculateAngle(screenX + gp.TILE_SIZE * 2 + 5, screenY + gp.TILE_SIZE);
+                cursor.calculateAngle((screenX + gp.TILE_SIZE * 2 + 5), screenY + gp.TILE_SIZE);
             } else if (playerClass == 2) {
                 // ASSASSIN
                 cursor.calculateAngle((int)(screenX + gp.TILE_SIZE * 1.9), screenY + gp.TILE_SIZE);

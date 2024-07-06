@@ -17,12 +17,13 @@ public class MOB_RobotGuardian extends Entity {
         maxLife = 6;
         life = maxLife;
         action = "idleRight";
+        mobNum = 3;
 
         // Load mob sprites
         getMobSprites();
 
         // Set collision settings
-        solidArea.x = 58;
+        solidArea.x = 70;
         solidArea.y = gp.TILE_SIZE + 50;
         solidArea.width = 28;
         solidArea.height = 30;
@@ -97,10 +98,10 @@ public class MOB_RobotGuardian extends Entity {
                 idleRightList.add(i, UtilityTool.loadSprite(dir + "idleRight/" + i + ".png", "Missing idleRight " + i));
             }
 
-            UtilityTool.scaleEntityList(this, moveRightList, 150, 150);
-            UtilityTool.scaleEntityList(this,moveLeftList, 150, 150);
-            UtilityTool.scaleEntityList(this,idleLeftList, 150, 150);
-            UtilityTool.scaleEntityList(this, idleRightList, 150, 150);
+            UtilityTool.scaleEntityList(this, moveRightList, 200, 200);
+            UtilityTool.scaleEntityList(this,moveLeftList, 200, 200);
+            UtilityTool.scaleEntityList(this,idleLeftList, 200, 200);
+            UtilityTool.scaleEntityList(this, idleRightList, 200, 200);
 
             System.out.println("Robot Guardian sprites loaded successfully");
         } catch (IOException e) {

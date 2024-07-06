@@ -25,6 +25,8 @@ public abstract class Entity {
     public boolean hpBarON = false;
     int hpBarCounter = 0;
 
+    public int mobNum = 0;
+
     //Item Attributes
     public int damage;
     public BufferedImage weaponSprite;
@@ -287,14 +289,63 @@ public abstract class Entity {
         {
             // MONSTER HP BAR
             if(type == 2 && hpBarON) {
-
                 double oneScale = (double)gp.TILE_SIZE/maxLife;
                 double hpBarValue = oneScale*life;
+                if (mobNum == 1){ // SLIME
+                    g2.setColor(new Color(35,35,35));
+                    g2.fillRect(screenX+51,screenY+121 , gp.TILE_SIZE,10);
+                    g2.setColor(new Color(255,0,30));
+                    g2.fillRect(screenX+50,screenY + 120, (int)hpBarValue,9);
+                }
+                if (mobNum == 2){ // SKELLINGTON
+                    g2.setColor(new Color(35,35,35));
+                    g2.fillRect(screenX+51,screenY+141 , gp.TILE_SIZE,10);
+                    g2.setColor(new Color(255,0,30));
+                    g2.fillRect(screenX+50,screenY + 140, (int)hpBarValue,9);
+                }
+                if (mobNum == 3){ // ROBOT GUARDIAN
+                    g2.setColor(new Color(35,35,35));
+                    g2.fillRect(screenX+81,screenY+161 , gp.TILE_SIZE,10);
+                    g2.setColor(new Color(255,0,30));
+                    g2.fillRect(screenX+80,screenY + 160, (int)hpBarValue,9);
+                }
+                if (mobNum == 4){ // RAMSES
+                    g2.setColor(new Color(35,35,35));
+                    g2.fillRect(screenX+61,screenY+121 , gp.TILE_SIZE,10);
+                    g2.setColor(new Color(255,0,30));
+                    g2.fillRect(screenX+60,screenY + 120, (int)hpBarValue,9);
+                }
+                if (mobNum == 5){ // GOBLIN
+                    g2.setColor(new Color(35,35,35));
+                    g2.fillRect(screenX+61,screenY+131 , gp.TILE_SIZE,10);
+                    g2.setColor(new Color(255,0,30));
+                    g2.fillRect(screenX+60,screenY + 130, (int)hpBarValue,9);
+                }
+                if (mobNum == 7){ // ARMORED GUARDIAN
+                    g2.setColor(new Color(35,35,35));
+                    g2.fillRect(screenX+51,screenY+121 , gp.TILE_SIZE,10);
+                    g2.setColor(new Color(255,0,30));
+                    g2.fillRect(screenX+50,screenY + 120, (int)hpBarValue,9);
+                }
+                if (mobNum == 8){ // FLYING EYE
+                    g2.setColor(new Color(35,35,35));
+                    g2.fillRect(screenX+141,screenY+191 , gp.TILE_SIZE,10);
+                    g2.setColor(new Color(255,0,30));
+                    g2.fillRect(screenX+140,screenY + 190, (int)hpBarValue,9);
+                }
+                if (mobNum == 9){ // MUSHROOM
+                    g2.setColor(new Color(35,35,35));
+                    g2.fillRect(screenX+126,screenY+211 , gp.TILE_SIZE,10);
+                    g2.setColor(new Color(255,0,30));
+                    g2.fillRect(screenX+125,screenY + 210, (int)hpBarValue,9);
+                }
+                if (mobNum == 10){ // CANINE
+                    g2.setColor(new Color(35,35,35));
+                    g2.fillRect(screenX+21,screenY+91 , gp.TILE_SIZE,10);
+                    g2.setColor(new Color(255,0,30));
+                    g2.fillRect(screenX+20,screenY + 90, (int)hpBarValue,9);
+                }
 
-                g2.setColor(new Color(35,35,35));
-                g2.fillRect(screenX+51,screenY+51 , gp.TILE_SIZE,11);
-                g2.setColor(new Color(255,0,30));
-                g2.fillRect(screenX+50,screenY+50, (int)hpBarValue,9);
 
                 hpBarCounter++;
                 if(hpBarCounter > 600) {

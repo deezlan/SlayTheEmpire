@@ -17,6 +17,7 @@ public class MOB_Slime extends Entity {
         maxLife = 4;
         life = maxLife;
         action = "idleRight";
+        mobNum = 1;
 
         // Load mob sprites
         getMobSprites();

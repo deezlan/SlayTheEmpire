@@ -56,8 +56,8 @@ public class Player extends Entity {
     public void setDefaultValues() {
         worldX = 588; // Player spawn location x
         worldY = 147; // player spawn location y
-        speed = 4;
         defaultSpeed = 4;
+        speed = defaultSpeed;
         action = "idleRight";
         lookingRight = true;
 

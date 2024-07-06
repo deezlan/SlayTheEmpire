@@ -13,8 +13,8 @@ public class MOB_Slime extends Entity {
         super(gp);
         this.gp = gp;
         type = 2;
-        speed = 1;
         defaultSpeed = 1;
+        speed = defaultSpeed;
         maxLife = 4;
         life = maxLife;
         action = "idleRight";

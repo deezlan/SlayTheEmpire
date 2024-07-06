@@ -76,8 +76,6 @@ public class AssetSetter {
             gp.npcArr[mapNum][i].worldX = 800;
             gp.npcArr[mapNum][i].worldY = 540;
             System.out.println("NPC Mystery set at (" + gp.npcArr[mapNum][0].worldX + ", " + gp.npcArr[mapNum][0].worldY + ")");
-            i++;
-
             // MAP 1
     }
     public void setMonster() {
@@ -131,11 +129,10 @@ public class AssetSetter {
 //                i++;
 
                 // MAP 1
-//                mapNum = 1;
-//                gp.mobArr[mapNum][i] = new MOB_Slime(gp);
-//                gp.mobArr[mapNum][i].worldX = 500;
-//                gp.mobArr[mapNum][i].worldY = 270;
-//                i++;
+                mapNum = 1;
+                gp.mobArr[mapNum][i] = new MOB_Slime(gp);
+                gp.mobArr[mapNum][i].worldX = 500;
+                gp.mobArr[mapNum][i].worldY = 270;
 
 //                gp.mobArr[mapNum][i] = new MOB_RobotGuardian(gp);
 //                gp.mobArr[mapNum][i].worldX = 300;

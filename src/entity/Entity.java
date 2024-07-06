@@ -245,6 +245,79 @@ public abstract class Entity {
         g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alphaValue));
     }
 
+    public void searchPath(int goalCol, int goalRow) {
+
+        int startCol = (worldX + solidArea.x)/gp.TILE_SIZE;
+        int startRow = (worldY + solidArea.y)/gp.TILE_SIZE;
+
+        gp.pFinder.setNodes(startCol,startRow,goalCol,goalRow);
+
+        if (gp.pFinder.search()) {
+            // NEXT WORLD X & Y
+            int nextX = gp.pFinder.pathList.get(0).col * gp.TILE_SIZE;
+            int nextY = gp.pFinder.pathList.get(0).row * gp.TILE_SIZE;
+
+            // ENTITY SOLID AREA POSITION
+            int enLeftX = worldX + solidArea.x;
+            int enRightX = worldX + solidArea.x + solidArea.width;
+            int enTopY = worldY + solidArea.y;
+            int enBottomY = worldY + solidArea.y + solidArea.height;
+
+            if(enTopY > nextY && enLeftX >= nextX && enRightX < nextX + gp.TILE_SIZE){
+                action = "moveUp";
+                currentActionList = moveRightList;
+            } else if (enTopY < nextY && enLeftX >= nextX && enRightX < nextX + gp.TILE_SIZE){
+                action = "moveDown";
+                currentActionList = moveLeftList;
+            } else if (enTopY >= nextY && enBottomY < nextY + gp.TILE_SIZE){
+                if (enLeftX > nextX){
+                    action = "moveLeft";
+                    currentActionList = moveLeftList;
+                }
+                if(enLeftX < nextX){
+                    action = "moveRight";
+                    currentActionList = moveRightList;
+                }
+            }
+            else if (enTopY > nextY && enLeftX > nextX){
+                action = "moveUp";
+                checkCollision();
+                if(upCollisionOn && downCollisionOn && leftCollisionOn && rightCollisionOn){ // check
+                    action = "moveLeft";
+                    currentActionList = moveLeftList;
+                }
+            }
+            else if (enTopY > nextY && enLeftX < nextX){
+                action = "moveUp";
+                if(upCollisionOn && downCollisionOn && leftCollisionOn && rightCollisionOn){ // check
+                    action = "moveRight";
+                    currentActionList = moveRightList;
+                }
+            }
+            else if (enTopY < nextY && enLeftX > nextX){
+                action = "moveDown";
+                checkCollision(); // check
+                if(upCollisionOn && downCollisionOn && leftCollisionOn && rightCollisionOn){
+                    action = "moveLeft";
+                    currentActionList = moveLeftList;
+                }
+            }
+            else if (enTopY < nextY && enLeftX < nextX){
+                action = "moveDown";
+                checkCollision(); // check
+                if(upCollisionOn && downCollisionOn && leftCollisionOn && rightCollisionOn){
+                    action = "moveRight";
+                    currentActionList = moveRightList;
+                }
+            }
+            // IF REACH GOAL STOP
+//            int nextCol = gp.pFinder.pathList.get(0).col;
+//            int nextRow = gp.pFinder.pathList.get(0).row;
+//            if(nextCol == goalCol && nextRow == goalRow) {
+//                onPath = false;
+        }
+    }
+
 
     public void draw(Graphics2D g2) {
         BufferedImage image;
@@ -338,71 +411,7 @@ public abstract class Entity {
             changeAlpha(g2, 1f);
         }
     }
-        public void searchPath(int goalCol, int goalRow) {
-
-        int startCol = (worldX + solidArea.x)/gp.TILE_SIZE;
-        int startRow = (worldY + solidArea.y)/gp.TILE_SIZE;
-
-        gp.pFinder.setNodes(startCol,startRow,goalCol,goalRow);
-
-        if (gp.pFinder.search()) {
-            // NEXT WORLD X & Y
-            int nextX = gp.pFinder.pathList.get(0).col * gp.TILE_SIZE;
-            int nextY = gp.pFinder.pathList.get(0).row * gp.TILE_SIZE;
-
-            // ENTITY SOLIDAREA POSITION
-            int enLeftX = worldX + solidArea.x;
-            int enRightX = worldX + solidArea.x + solidArea.width;
-            int enTopY = worldY + solidArea.y;
-            int enBottomY = worldY + solidArea.y + solidArea.height;
-
-            if(enTopY > nextY && enLeftX >= nextX && enRightX < nextX + gp.TILE_SIZE){
-                action = "moveUp";
-            } else if (enTopY < nextY && enLeftX >= nextX && enRightX < nextX + gp.TILE_SIZE){
-                action = "moveDown";
-            } else if (enTopY >= nextY && enBottomY < nextY + gp.TILE_SIZE){
-                if (enLeftX > nextX){
-                    action = "moveLeft";
-                }
-                if(enLeftX < nextX){
-                    action = "moveRight";
-                }
-            }
-            else if (enTopY > nextY && enLeftX > nextX){
-                action = "moveUp";
-                checkCollision();
-                if(upCollisionOn && downCollisionOn && leftCollisionOn && rightCollisionOn){ // check
-                    action = "moveLeft";
-                }
-            }
-            else if (enTopY > nextY && enLeftX < nextX){
-                action = "moveUp";
-                if(upCollisionOn && downCollisionOn && leftCollisionOn && rightCollisionOn){ // check
-                    action = "moveRight";
-                }
-            }
-            else if (enTopY < nextY && enLeftX > nextX){
-                action = "moveDown";
-                checkCollision(); // check
-                if(upCollisionOn && downCollisionOn && leftCollisionOn && rightCollisionOn){
-                    action = "moveLeft";
-                }
-            }
-            else if (enTopY < nextY && enLeftX < nextX){
-                action = "moveDown";
-                checkCollision(); // check
-                if(upCollisionOn && downCollisionOn && leftCollisionOn && rightCollisionOn){
-                    action = "moveRight";
-                }
-            }
-            // IF REACH GOAL STOP
-//            int nextCol = gp.pFinder.pathList.get(0).col;
-//            int nextRow = gp.pFinder.pathList.get(0).row;
-//            if(nextCol == goalCol && nextRow == goalRow) {
-//                onPath = false;
-            }
-        }
-    }
+}
 
 
 

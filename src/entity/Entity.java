@@ -129,41 +129,88 @@ public abstract class Entity {
         if (interacting) {
             startInteract();
         } else {
-            setAction();
-            checkCollision();
+            if (knockBack) {
+                checkCollision();
+                if(upCollisionOn && downCollisionOn && leftCollisionOn && rightCollisionOn) {
+                    knockBackCounter = 0;
+                    knockBack = false;
+                    speed = defaultSpeed;
+                } else if (!upCollisionOn && !downCollisionOn && !leftCollisionOn && !rightCollisionOn){
+                    switch (gp.player.action){
+                        case "moveUp":
+                            worldY -= speed;
+                            break;
+                        case "moveDown":
+                            worldY += speed;
+                            break;
+                        case "moveRight":
+                            worldX += speed;
+                            break;
+                        case "moveLeft":
+                            worldX -= speed;
+                            break;
+                        case "moveUpRight":
+                            worldX += speed;
+                            worldY -= speed;
+                            break;
+                        case "moveDownRight":
+                            worldX += speed;
+                            worldY += speed;
+                            break;
+                        case "moveUpLeft":
+                            worldX -= speed;
+                            worldY -= speed;
+                            break;
+                        case "moveDownLeft":
+                            worldX -= speed;
+                            worldY += speed;
+                            break;
+                    }
+                }
+                knockBackCounter++;
+                if(knockBackCounter == 10){
+                    knockBackCounter = 0;
+                    knockBack = false;
+                    speed = defaultSpeed;
+                }
+            } else {
+                setAction();
+                checkCollision();
 
-            if (!upCollisionOn && !downCollisionOn && !leftCollisionOn && !rightCollisionOn) {
-                switch (action) {
-                    case "moveUp":
-                        worldY -= speed;
-                        break;
-                    case "moveDown":
-                        worldY += speed;
-                        break;
-                    case "moveRight":
-                        worldX += speed;
-                        break;
-                    case "moveLeft":
-                        worldX -= speed;
-                        break;
-                    case "moveUpRight":
-                        worldX += speed;
-                        worldY -= speed;
-                        break;
-                    case "moveDownRight":
-                        worldX += speed;
-                        worldY += speed;
-                        break;
-                    case "moveUpLeft":
-                        worldX -= speed;
-                        worldY -= speed;
-                        break;
-                    case "moveDownLeft":
-                        worldX -= speed;
-                        worldY += speed;
-                        break;
+                if (!upCollisionOn && !downCollisionOn && !leftCollisionOn && !rightCollisionOn) {
+                    switch (action) {
+                        case "moveUp":
+                            worldY -= speed;
+                            break;
+                        case "moveDown":
+                            worldY += speed;
+                            break;
+                        case "moveRight":
+                            worldX += speed;
+                            break;
+                        case "moveLeft":
+                            worldX -= speed;
+                            break;
+                        case "moveUpRight":
+                            worldX += speed;
+                            worldY -= speed;
+                            break;
+                        case "moveDownRight":
+                            worldX += speed;
+                            worldY += speed;
+                            break;
+                        case "moveUpLeft":
+                            worldX -= speed;
+                            worldY -= speed;
+                            break;
+                        case "moveDownLeft":
+                            worldX -= speed;
+                            worldY += speed;
+                            break;
+                    }
                 }
             }
+
             if (iframe) {
                 iframeCounter++;
                 if (iframeCounter > 30) {

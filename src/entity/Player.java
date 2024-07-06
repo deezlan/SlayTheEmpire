@@ -470,7 +470,9 @@ public class Player extends Entity {
 
     public void damageMonster(int i) {
         if (i != 999){
+
             if(!gp.mobArr[gp.currentMap][i].iframe){
+                knockBack(gp.mobArr[gp.currentMap][i]);
                 gp.mobArr[gp.currentMap][i].life -= 1;
                 gp.mobArr[gp.currentMap][i].iframe = true;
                 gp.mobArr[gp.currentMap][i].damageReaction();
@@ -483,6 +485,12 @@ public class Player extends Entity {
                 System.out.println("miss");
             }
         }
+    }
+
+    public void knockBack(Entity entity){
+        entity.action = action;
+        entity.speed += 10;
+        entity.knockBack = true;
     }
 
     public void damageInteractiveTile(int i) {

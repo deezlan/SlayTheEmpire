@@ -14,7 +14,7 @@ public class  UI {
     GamePanel gp;
     BufferedImage fullHeart, halfHeart, emptyHeart;
     Graphics2D g2;
-    Font maruMonica;
+    Font defaultFont;
     private final Image titleGif;
     private final Image titleImage;
     private final Image newGame;
@@ -50,11 +50,18 @@ public class  UI {
 
         // FONT initialization
         try {
-            InputStream is = getClass().getResourceAsStream("res/font/x12y16pxMaruMonica.ttf");
-            maruMonica = Font.createFont(Font.TRUETYPE_FONT, is);
+            InputStream is = getClass().getResourceAsStream("res/font/Purisa Bold.ttf");
+            if (is == null) {
+                System.out.println("Font file not found");
+                defaultFont = new Font("Cambria", Font.PLAIN, 12);  // Fallback font
+            } else {
+                defaultFont = Font.createFont(Font.TRUETYPE_FONT, is);
+            }
         } catch (FontFormatException | IOException e) {
             e.printStackTrace();
         }
+
+
 
         // INITIALIZE TITLE VIDEO
         ImageIcon icon = new ImageIcon("res/UI/Title.gif");
@@ -86,7 +93,7 @@ public class  UI {
     public void draw(Graphics2D g2){
 
         this.g2 = g2;
-        g2.setFont(maruMonica);
+        g2.setFont(defaultFont);
         drawPlayerLife();
 
         // TITLE STATE
@@ -421,29 +428,48 @@ public class  UI {
         g2.fillRect(0,0, gp.SCREEN_WIDTH, gp.SCREEN_HEIGHT);
 
         g2.setColor(Color.WHITE);
-        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 50F));
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 40F));
 
         String text = "Select Your Class";
         int x = getXForCenteredText(text);
         int y = gp.TILE_SIZE*3;
         g2.drawString(text, x, y);
 
-        text = "Warrior";
-        x = getXForCenteredText(text)/2;
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 30F));
+        String text1 = "Warrior";
+        x = getXForCenteredText(text)/3;
         y = gp.TILE_SIZE*12;
-        g2.drawString(text, x, y);
+        if (commandNum == 0) {
+            g2.setColor(Color.WHITE);
+            g2.drawString(text1, x, y);
+        } else {
+            g2.setColor(Color.GRAY);
+            g2.drawString(text1, x, y);
+        }
 
 
-        text = "Knight";
-        x = getXForCenteredText(text)/2;
+        String text2 = "Knight";
+        x += (int) (getXForCenteredText(text)/1.1);
         y = gp.TILE_SIZE*12;
-        g2.drawString(text, x, y);
+        if (commandNum == 1) {
+            g2.setColor(Color.WHITE);
+            g2.drawString(text2, x, y);
+        } else {
+            g2.setColor(Color.GRAY);
+            g2.drawString(text2, x, y);
+        }
 
 
-        text = "Assassin";
-        x = getXForCenteredText(text)/2;
+        String text3 = "Assassin";
+        x += (int) (getXForCenteredText(text) / 1.1);
         y = gp.TILE_SIZE*12;
-        g2.drawString(text, x, y);
+        if (commandNum == 2) {
+            g2.setColor(Color.WHITE);
+            g2.drawString(text3, x, y);
+        } else {
+            g2.setColor(Color.GRAY);
+            g2.drawString(text3, x, y);
+        }
 
 
     }

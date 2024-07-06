@@ -95,6 +95,34 @@ public class KeyHandler implements KeyListener {
             }
         }
 
+        // Character Selection
+        if (gp.gameState == gp.characterSelectionState) {
+            if (code == KeyEvent.VK_SPACE) {
+                if (gp.ui.commandNum == 0) {
+                    // CHANGE CLASS TO WARRIOR
+                    gp.gameState = gp.playState;
+                } else if (gp.ui.commandNum == 1) {
+                    // CHANGE CLASS TO KNIGHT
+                    gp.gameState = gp.playState;
+                } else if (gp.ui.commandNum == 2) {
+                    // CHANGE CLASS TO ASSASSIN
+                    gp.gameState = gp.playState;
+                }
+            }
+
+            if (code == KeyEvent.VK_W){
+                gp.ui.commandNum--;
+            }
+            if (code == KeyEvent.VK_S){
+                gp.ui.commandNum++;
+            }
+
+            if (gp.ui.commandNum < 0) {
+                gp.ui.commandNum = 0;
+            } else if (gp.ui.commandNum > 2) {
+                gp.ui.commandNum = 2;
+            }
+        }
 
         // Play State
         if (gp.gameState == gp.playState){

@@ -11,16 +11,19 @@ public class MOB_Slime extends Entity {
     public MOB_Slime(GamePanel gp) {
         super(gp);
         this.gp = gp;
-        type = 2;
+        type = 1;
         defaultSpeed = 1;
         speed = defaultSpeed;
         maxLife = 4;
         life = maxLife;
+        attack = 5;
+        lookingRight = true;
         action = "idleRight";
         mobNum = 1;
 
         // Load mob sprites
         getMobSprites();
+        getAttackAnimation();
 
         // Set collision settings
         solidArea.x = 58;
@@ -45,12 +48,31 @@ public class MOB_Slime extends Entity {
             // GET RANDOM DIRECTION
             getRandomDirection();
             }
-        }
 
+        // CHECK ATTACK ON PLAYER
+        if(!attacking){
+            checkMobAttack(30,gp.TILE_SIZE*4,gp.TILE_SIZE*4);
+        }
+    }
 
     public void damageReaction() {
         actionLockCounter = 0;
         onPath = true;
+    }
+
+    public void getAttackAnimation() {
+        String dir = "/Mobs/Slime/";
+        try {
+            for (int i = 0; i < 4; i++) {
+                mobRightAttackList.add(i, UtilityTool.loadSprite(dir + "attack/" + i + ".png", "Missing Attack Animation " + i));
+                mobLeftAttackList.add(i, UtilityTool.loadSprite(dir + "attack/" + i + ".png", "Missing Attack Animation " + i));
+                UtilityTool.scaleEntityList(this, mobLeftAttackList, 150, 150);
+                UtilityTool.scaleEntityList(this, mobRightAttackList, 150, 150);
+                System.out.println("ATTACK is LOADED!");
+            }
+        } catch (IOException e){
+            e.printStackTrace(System.out);
+        }
     }
 
     public void getMobSprites() {

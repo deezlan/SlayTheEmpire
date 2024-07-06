@@ -91,7 +91,7 @@ public class MOB_Skellington extends Entity {
     public void getMobSprites() {
         String dir = "/Mobs/Skellington/";
         try {
-            for (int i = 0; i <= 3; i++) {
+            for (int i = 0; i <= 8; i++) {
                 moveRightList.add(i, UtilityTool.loadSprite(dir + "moveRight/" + i + ".png", "Missing moveRight " + i));
                 moveLeftList.add(i, UtilityTool.loadSprite(dir + "moveLeft/" + i + ".png", "Missing moveLeft " + i));
                 idleLeftList.add(i, UtilityTool.loadSprite(dir + "idle/" + i + ".png", "Missing idleLeft " + i));

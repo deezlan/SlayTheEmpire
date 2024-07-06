@@ -19,6 +19,7 @@ public abstract class Entity {
     public boolean lookingRight;
     public int type; // 0 = player 1 = monster
     public int mobNum = 0; // FOR HP BAR
+    public int attack;
     public int maxLife;
     public int life;
     public int solidAreaDefaultX, solidAreaDefaultY;
@@ -29,7 +30,9 @@ public abstract class Entity {
             moveRightList = new ArrayList<>(),
             moveLeftList = new ArrayList<>(),
             playerRightAttackList = new ArrayList<>(),
-            playerLeftAttackList = new ArrayList<>();
+            playerLeftAttackList = new ArrayList<>(),
+            mobRightAttackList = new ArrayList<>(),
+            mobLeftAttackList = new ArrayList<>();
 
     String[] dialogs = new String[20];
     public void speak() {
@@ -41,7 +44,7 @@ public abstract class Entity {
     public void damageReaction(){}
 
     // HIT DETECTION
-    boolean attacking = false;
+    public boolean attacking = false;
     public Rectangle attackArea = new Rectangle(0,0,0,0);
     public boolean iframe = false;
     public int iframeCounter = 0;
@@ -127,7 +130,7 @@ public abstract class Entity {
         gp.cChecker.checkEntityCollision(this, gp.npcArr);
         boolean contactPlayer = gp.cChecker.checkPLayer(this);
 
-        if (this.type == 2 && contactPlayer) {
+        if (this.type == 1 && contactPlayer) {
             if (!gp.player.iframe) {
                 gp.player.life -= 1;
                 gp.player.iframe = true;
@@ -183,6 +186,9 @@ public abstract class Entity {
                     knockBack = false;
                     speed = defaultSpeed;
                 }
+                else if(attacking){
+                    attackAnimation();
+                }
             } else {
                 setAction();
                 checkCollision();
@@ -219,6 +225,15 @@ public abstract class Entity {
                             break;
                     }
                 }
+                // Animation speed
+                spriteCounter++;
+                if (this.currentActionList.size() > 14) {
+                    if (spriteCounter > 4) loopThroughSprites();
+                } else if (this.currentActionList.size() > 7) {
+                    if (spriteCounter > 6) loopThroughSprites();
+                } else {
+                    if (spriteCounter > 9) loopThroughSprites();
+                }
             }
 
             if (iframe) {
@@ -228,15 +243,6 @@ public abstract class Entity {
                     iframeCounter = 0;
                 }
             }
-        }
-        // Animation speed
-        spriteCounter++;
-        if (this.currentActionList.size() > 14) {
-            if (spriteCounter > 4) loopThroughSprites();
-        } else if (this.currentActionList.size() > 7) {
-            if (spriteCounter > 6) loopThroughSprites();
-        } else {
-            if (spriteCounter > 9) loopThroughSprites();
         }
     }
 
@@ -306,6 +312,118 @@ public abstract class Entity {
                 currentActionList = moveLeftList;
             }
             actionLockCounter = 0;
+        }
+    }
+
+    public void attackAnimation(){ // animation attack
+        animationCounter++;
+        if (animationCounter <= 5){
+            animationSpriteNum = 0;
+        } else if (animationCounter <= 25) {
+            animationSpriteNum = 1;
+        } else if (animationCounter <= 30) {
+            animationSpriteNum = 2;
+
+            // SAVE CURRENT DATA OF PLAYER
+            int currentWorldX = worldX;
+            int currentWorldY = worldY;
+            int solidAreaWidth = solidArea.width;
+            int solidAreaHeight = solidArea.height;
+
+            // ADJUST FOR ATTACK
+            switch (action) {
+                case "moveUp": worldY -= attackArea.height; break;
+                case "moveDown": worldY += attackArea.height; break;
+                case "moveLeft": worldX -= attackArea.width; break;
+                case "moveRight": worldX += attackArea.width; break;
+            }
+
+            // ATTACK AREA BECOMES SOLID AREA
+            solidArea.width = attackArea.width;
+            solidArea.height = attackArea.height;
+            if(type == 1) {
+                if(gp.cChecker.checkPLayer(this)){
+                    damagePlayer(attack);
+                }
+            } else { // FOR PLAYER
+                // CHECK MONSTER COLLISION
+                int monsterIndex = gp.cChecker.checkEntityCollision(this, gp.mobArr);
+                gp.player.damageMonster(monsterIndex, this);
+
+                int iTileIndex = gp.cChecker.checkEntityCollision(this,gp.iTile);
+                gp.player.damageInteractiveTile(iTileIndex);
+            }
+            // CHANGE BACK TO ORIGINAL
+            worldX = currentWorldX;
+            worldY = currentWorldY;
+            solidArea.width = solidAreaWidth;
+            solidArea.height = solidAreaHeight;
+
+//        } else if (animationCounter <= 20) {
+//            animationSpriteNum = 3;
+//        } else if (animationCounter <= 25) {
+//            animationSpriteNum = 4;
+//        } else if (animationCounter <= 30) {
+//            animationSpriteNum = 5;
+//        } else if (animationCounter <= 35) {
+//            animationSpriteNum = 6;
+//        } else if (animationCounter <= 40) {
+//            animationSpriteNum = 7;
+        } else if (animationCounter <= 40) {
+            animationSpriteNum = 3;
+        } else if (animationCounter <= 45) {
+            animationSpriteNum = 0;
+            animationCounter = 0;
+            attacking = false;
+        }
+    }
+
+    public void checkMobAttack(int rate, int straight, int horizontal){
+        boolean targetInRange = false;
+        int xDis = getXdistance(gp.player);
+        int yDis = getYdistance(gp.player);
+
+        switch(action){
+            case "moveUp":
+                if(gp.player.worldY < worldY && yDis < straight && xDis < horizontal) {
+                    targetInRange = true;
+                }
+                break;
+            case "moveDown":
+                if(gp.player.worldY > worldY && yDis < straight && xDis < horizontal) {
+                    targetInRange = true;
+                }
+                break;
+            case "moveRight":
+                if(gp.player.worldX > worldX && xDis < straight && yDis < horizontal) {
+                    targetInRange = true;
+                }
+                break;
+            case "moveLeft":
+                if(gp.player.worldX < worldX && xDis < straight && yDis < horizontal) {
+                    targetInRange = true;
+                }
+                break;
+        }
+        if(targetInRange){
+            // CHECK ATTACK HAPPENS
+            int i = new Random().nextInt(rate);
+            if(i == 0){
+                attacking = true;
+                spriteNum = 1;
+                spriteCounter = 0;
+            }
+        }
+    }
+
+    public void damagePlayer(int attack) {
+        if(!gp.player.iframe){
+            int damage = attack;
+            if(damage < 0) {
+                damage = 0;
+            }
+            gp.player.life -= damage;
+            gp.player.iframe = true;
         }
     }
 
@@ -444,9 +562,9 @@ public abstract class Entity {
         }
     }
 
-
     public void draw(Graphics2D g2) {
         BufferedImage image;
+
         if (!alive) {
             return;
         }
@@ -533,11 +651,18 @@ public abstract class Entity {
                 dyingAnimation(g2);
             }
 
-            g2.drawImage(image, screenX, screenY, null);
-            changeAlpha(g2, 1f);
+//            if(attacking){
+//                if (animationSpriteNum > mobRightAttackList.size())
+//                    animationSpriteNum = 0;
+//                BufferedImage animationImage = lookingRight? mobLeftAttackList.get(animationSpriteNum) : mobRightAttackList.get(animationSpriteNum);
+//                g2.drawImage(animationImage,screenX,screenY,null);
+//            }if(!attacking){
+                g2.drawImage(image, screenX, screenY, null);
+                changeAlpha(g2, 1f);
+            }
         }
     }
-}
+
 
 
 

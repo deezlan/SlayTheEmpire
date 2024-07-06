@@ -10,7 +10,6 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
-//import java.util.ArrayList; temp
 
 public class Player extends Entity {
     GamePanel gp;
@@ -24,7 +23,6 @@ public class Player extends Entity {
     public ArrayList<Integer> ownedWeapon = new ArrayList<>();
     public Entity currentWeapon = null;
     public int playerClass;
-//    public int playerClass;
 
 //    public ArrayList<Entity> inventory = new ArrayList<>(); temp commented
 //    public final int inventorySize = 8; temp commented
@@ -35,13 +33,13 @@ public class Player extends Entity {
         this.keyH = keyH;
         this.playerClass = playerClass;
         if (playerClass == 0) {
-            screenX = (gp.SCREEN_WIDTH/2) - (gp.TILE_SIZE/2) - 90; // added screen position
+            screenX = (gp.SCREEN_WIDTH/2) - (gp.TILE_SIZE/2) - 90; // CENTERED PLAYER 0 POSITION
             screenY = (gp.SCREEN_HEIGHT/2) - 72;
         } else if (playerClass == 1) {
-            screenX = (gp.SCREEN_WIDTH/2) - (gp.TILE_SIZE/2) - 72; // added screen position
+            screenX = (gp.SCREEN_WIDTH/2) - (gp.TILE_SIZE/2) - 72; // CENTERED PLAYER 1 POSITION
             screenY = (gp.SCREEN_HEIGHT/2) - 72;
         } else {
-            screenX = (gp.SCREEN_WIDTH/2) - (gp.TILE_SIZE/2) - 48; // added screen position
+            screenX = (gp.SCREEN_WIDTH/2) - (gp.TILE_SIZE/2) - 48; // CENTERED PLAYER 2 POSITION
             screenY = (gp.SCREEN_HEIGHT/2) - 72;
         }
 
@@ -54,24 +52,22 @@ public class Player extends Entity {
     }
 
     public void setDefaultValues() {
-        worldX = 588; // Player spawn location x
-        worldY = 147; // player spawn location y
-        defaultSpeed = 4;
+        worldX = 588; // PLAYER SPAWN X
+        worldY = 147; // PLAYER SPAWN Y
+        defaultSpeed = 3;
         speed = defaultSpeed;
         action = "idleRight";
         lookingRight = true;
 
-        //Status
+        // ATTRIBUTES
         maxLife = 6;
         life = maxLife;
         totalCoins = 500;
-        //Start
         damage = 0;
     }
 
     private void setCollisionValues() {
         // Set collision settings based on character class
-
         switch (playerClass) {
             case 0:
                 solidArea = new Rectangle(); // draws a square at the centre of the player
@@ -183,11 +179,11 @@ public class Player extends Entity {
                     }
 
                 // CHECK TILE COLLISION
-                upCollisionOn = false; // resets collisions off
+                upCollisionOn = false;
                 downCollisionOn = false;
                 leftCollisionOn = false;
                 rightCollisionOn = false;
-                gp.cChecker.checkTile(this); // pass the current tile into the checker to check if it has collision
+                gp.cChecker.checkTile(this);
 
                 // CHECK OBJECT COLLISION BEFORE INTERACTING
                 gp.cChecker.checkObject(this, true);
@@ -200,14 +196,11 @@ public class Player extends Entity {
 
                 //CHECK EVENT
                 gp.eHandler.checkEvent();
-                gp.keyH.ePressed = false; // after player interact with tile;
+                gp.keyH.ePressed = false;
 
                 // CHECK MOB COLLISION
                 int mobIndex = gp.cChecker.checkEntityCollision(this, gp.mobArr);
                 interactMob(mobIndex);
-
-                // CHECK INTERACTIVE TILE
-//                int iTileIndex = gp.cChecker.checkEntityCollision(this,gp.iTile);
 
                 switch (action) {
                     case "moveUp", "moveDown":
@@ -518,30 +511,6 @@ public class Player extends Entity {
         } if (attacking){
             g2.drawImage(animationImage, screenX, screenY,null); // draw attack animation
         }
-//        if (gp.gameArea == 0) { // OLD PLAYER DRAW CODE
-//            if (!attacking){
-//                if(iframe){
-//                    g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.3f));
-//                }
-//                g2.drawImage(image, worldX, worldY, null);
-//                g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
-//            } if (attacking){
-//                g2.drawImage(animationImage, worldX, worldY,null);
-//            }
-//        } else if (gp.gameArea == 1){
-//            if (!attacking){
-//                if(iframe){
-//                    g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.3f));
-//                }
-//                g2.drawImage(image, screenX, screenY, null);
-//                g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
-//            } if (attacking){
-//                g2.drawImage(animationImage, screenX, screenY,null); // draw attack animation
-//            }
-//            } else {
-//                 g2.drawImage(image, screenX, screenY, gp.TILE_SIZE*3, gp.TILE_SIZE*2, null);
-//        }
-
         // Draw arrow
         if (playerClass == 0) {
             // WARRIOR
@@ -556,23 +525,6 @@ public class Player extends Entity {
             cursor.draw(g2, (int)(screenX + gp.TILE_SIZE * 1.86), screenY + gp.TILE_SIZE);
         }
     }
-
-    // Ananda's old slash code
-//    public void getPlayerAttackImage() {
-//        String dir = "/Weapon/Sword/";
-//        try {
-//            weaponList.add(0, UtilityTool.loadSprite(dir + "00.png", "Missing Attack 0"));
-//            weaponList.add(1, UtilityTool.loadSprite(dir + "01.png", "Missing Attack 1"));
-//            weaponList.add(2, UtilityTool.loadSprite(dir + "02.png", "Missing Attack 2"));
-//            weaponList.add(3, UtilityTool.loadSprite(dir + "03.png", "Missing Attack 3"));
-//            weaponList.add(4, UtilityTool.loadSprite(dir + "04.png", "Missing Attack 4"));
-//            weaponList.add(5, UtilityTool.loadSprite(dir + "05.png", "Missing Attack 5"));
-//
-//            UtilityTool.scaleEffectsList(weaponList, 144, 96);
-//        } catch (IOException e){
-//            e.printStackTrace(System.out);
-//        }
-//    }
 
     public void getPlayerAttackAnimation() {
         try {
@@ -613,8 +565,6 @@ public class Player extends Entity {
         } catch (IOException e){
             e.printStackTrace(System.out);
         }
-
-
     }
 
     public void getPlayerSprites() {

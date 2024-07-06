@@ -17,32 +17,32 @@ import tile.TileManager;
 
 public class GamePanel extends JPanel implements Runnable {
     // SCREEN SETTINGS
+    Thread gameThread;
     final int ORIGINAL_TILE_SIZE = 16;
     final double SCALE = 3;
     public final int TILE_SIZE = (int)(ORIGINAL_TILE_SIZE * SCALE);
     public final int MAX_SCREEN_COL = 17;
     public final int MAX_SCREEN_ROW = 13;
-    public final int maxMap = 10;
-    public int currentMap = 0;
     public final int SCREEN_WIDTH = TILE_SIZE * MAX_SCREEN_COL;
     public final int SCREEN_HEIGHT = TILE_SIZE * MAX_SCREEN_ROW;
-    public int playerClass = 0; // player class here
 
     // WORLD SETTINGS
     public int MAX_WORLD_COL = 50; //must be same as map size
     public int MAX_WORLD_ROW = 50; //must be same as map size
+    public int currentMap = 0;
+    public final int maxMap = 10;
+    public TileManager tileM = new TileManager(this);
+
+    // PLAYER SETTINGS
+    public int playerClass = 0;
+    public KeyHandler keyH = new KeyHandler(this);
 
     // FPS SETTINGS
     final int FPS = 60;
 
-    public TileManager tileM = new TileManager(this);
-    public KeyHandler keyH = new KeyHandler(this);
-
     // CURSOR SETTINGS
     public Cursor cursor = new Cursor(); // Initialize cursor
     public Player player = new Player(this, keyH, cursor, playerClass); // Pass cursor to player
-
-    Thread gameThread;
 
     // ENTITY AND OBJECTS
     public AssetSetter aSetter = new AssetSetter(this);

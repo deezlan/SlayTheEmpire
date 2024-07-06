@@ -5,6 +5,7 @@ import main.GamePanel;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.Random;
 
 public abstract class Entity {
     GamePanel gp;
@@ -55,6 +56,21 @@ public abstract class Entity {
 
     // TRACKING
     public boolean onPath = false;
+    public int getXdistance(Entity target){
+        return Math.abs(worldX - target.worldX);
+    }
+    public int getYdistance(Entity target){
+        return Math.abs(worldY - target.worldY);
+    }
+    public int getTileDistance(Entity target){
+        return (getXdistance(target) + getYdistance(target))/gp.TILE_SIZE;
+    }
+    public int getGoalCol(Entity target) {
+        return (target.worldX + target.solidArea.x)/gp.TILE_SIZE;
+    }
+    public int getGoalRow(Entity target) {
+        return (target.worldY + target.solidArea.y)/gp.TILE_SIZE;
+    }
 
     // ITEM ATTRIBUTES
     public int damage;
@@ -221,6 +237,75 @@ public abstract class Entity {
             if (spriteCounter > 6) loopThroughSprites();
         } else {
             if (spriteCounter > 9) loopThroughSprites();
+        }
+    }
+
+    public void checkStartChase(Entity target, int distance, int rate) {
+        if(getTileDistance(target) < distance){
+            int i = new Random().nextInt(rate);
+            if(i == 0){
+                onPath = true;
+            }
+        }
+    }
+
+    public void checkStopChase(Entity target, int distance, int rate) {
+        if(getTileDistance(target) > distance){
+            int i = new Random().nextInt(rate);
+            if(i == 0){
+                onPath = false;
+            }
+        }
+    }
+
+    public void getRandomDirection() {
+        actionLockCounter++;
+        // GET A RANDOM DIRECTION
+        if(actionLockCounter == 120){
+            Random random = new Random();
+            int i = random.nextInt(250)+1;
+
+            if (i <= 25) {
+                action = "moveUp";
+                currentActionList = moveRightList;
+            }
+            if (i > 25 && i <= 50){
+                action = "moveDown";
+                currentActionList = moveLeftList;
+            }
+            if (i > 50 && i <= 75) {
+                action = "moveLeft";
+                currentActionList = moveLeftList;
+            }
+            if (i > 75 && i <= 100) {
+                action = "moveRight";
+                currentActionList = moveRightList;
+            }
+            if (i > 100 && i <= 125) {
+                action = "idleRight";
+                currentActionList = idleRightList;
+            }
+            if (i > 125 && i <= 150) {
+                action = "idleLeft";
+                currentActionList = idleLeftList;
+            }
+            if (i > 150 && i <= 175) {
+                action = "moveUpRight";
+                currentActionList = moveRightList;
+            }
+            if (i > 175 && i <= 200) {
+                action = "moveDownRight";
+                currentActionList = moveRightList;
+            }
+            if (i > 200 && i <= 225) {
+                action = "moveUpLeft";
+                currentActionList = moveLeftList;
+            }
+            if (i > 225) {
+                action = "moveDownLeft";
+                currentActionList = moveLeftList;
+            }
+            actionLockCounter = 0;
         }
     }
 

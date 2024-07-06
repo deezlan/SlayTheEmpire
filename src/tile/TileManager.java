@@ -81,7 +81,7 @@ public class TileManager {
                         if (worldX + gp.TILE_SIZE  > gp.player.worldX - gp.player.screenX - 48*4 &&
                                 worldX - gp.TILE_SIZE < gp.player.worldX + gp.player.screenX + 48*4 &&
                                 worldY + gp.TILE_SIZE > gp.player.worldY - gp.player.screenY &&
-                                worldY - gp.TILE_SIZE < gp.player.worldY + gp.player.screenY) {
+                                worldY - gp.TILE_SIZE < gp.player.worldY + gp.player.screenY + 48*2) {
                             g2.drawImage(tile[tileNum].image, screenX, screenY, gp.TILE_SIZE, gp.TILE_SIZE, null);
                         }
                         break;

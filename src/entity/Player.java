@@ -23,10 +23,7 @@ public class Player extends Entity {
     public ArrayList<Entity> hotbarList = new ArrayList<>();
     public ArrayList<Integer> ownedWeapon = new ArrayList<>();
     public Entity currentWeapon = null;
-    public int playerClass,
-            warrior = 0,
-            assassin = 1,
-            knight = 2;
+    public int playerClass;
 //    public int playerClass;
 
 //    public ArrayList<Entity> inventory = new ArrayList<>(); temp commented
@@ -37,8 +34,16 @@ public class Player extends Entity {
         this.gp = gp;
         this.keyH = keyH;
         this.playerClass = playerClass;
-        screenX = (gp.SCREEN_WIDTH/2) - (gp.TILE_SIZE/2) - 48*2; // added screen position
-        screenY = (gp.SCREEN_HEIGHT/2) - (gp.TILE_SIZE/2);
+        if (playerClass == 0) {
+            screenX = (gp.SCREEN_WIDTH/2) - (gp.TILE_SIZE/2) - 90; // added screen position
+            screenY = (gp.SCREEN_HEIGHT/2) - 72;
+        } else if (playerClass == 1) {
+            screenX = (gp.SCREEN_WIDTH/2) - (gp.TILE_SIZE/2) - 72; // added screen position
+            screenY = (gp.SCREEN_HEIGHT/2) - 72;
+        } else {
+            screenX = (gp.SCREEN_WIDTH/2) - (gp.TILE_SIZE/2) - 48; // added screen position
+            screenY = (gp.SCREEN_HEIGHT/2) - 72;
+        }
 
         this.cursor = cursor;
         setDefaultValues();
@@ -534,21 +539,19 @@ public class Player extends Entity {
 //                 g2.drawImage(image, screenX, screenY, gp.TILE_SIZE*3, gp.TILE_SIZE*2, null);
 //        }
 
-        // draw arrow
+        // Draw arrow
         if (playerClass == 0) {
             // WARRIOR
             cursor.draw(g2, (int)(screenX + gp.TILE_SIZE * 2.3), screenY + gp.TILE_SIZE);
-
         } else if (playerClass == 1) {
             // KNIGHT
-            cursor.draw(g2, worldX + gp.TILE_SIZE * 2 + 5, worldY + gp.TILE_SIZE);
-
+//            cursor.draw(g2, worldX + gp.TILE_SIZE * 2 + 5, worldY + gp.TILE_SIZE); // For fixed camera
+            cursor.draw(g2, (int)(screenX + gp.TILE_SIZE * 2.09), screenY + gp.TILE_SIZE);
         } else if (playerClass == 2) {
             // ASSASSIN
-            cursor.draw(g2, (int)(worldX + gp.TILE_SIZE * 1.9), worldY + gp.TILE_SIZE);
-
+//            cursor.draw(g2, (int)(worldX + gp.TILE_SIZE * 1.9), worldY + gp.TILE_SIZE); // For fixed camera
+            cursor.draw(g2, (int)(screenX + gp.TILE_SIZE * 1.86), screenY + gp.TILE_SIZE);
         }
-
     }
 
     // Ananda's old slash code

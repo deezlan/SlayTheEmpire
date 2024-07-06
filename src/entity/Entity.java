@@ -185,7 +185,7 @@ public abstract class Entity {
         if (this.currentActionList.size() > 14) {
             if (spriteCounter > 4) loopThroughSprites();
         } else if (this.currentActionList.size() > 7) {
-            if (spriteCounter > 5) loopThroughSprites();
+            if (spriteCounter > 6) loopThroughSprites();
         } else {
             if (spriteCounter > 9) loopThroughSprites();
         }
@@ -283,7 +283,7 @@ public abstract class Entity {
         if (worldX + gp.TILE_SIZE > gp.player.worldX - gp.player.screenX - 48*4 && // added values due to player sprite not centered
                 worldX - gp.TILE_SIZE < gp.player.worldX + gp.player.screenX + 48*4 &&
                 worldY + gp.TILE_SIZE > gp.player.worldY - gp.player.screenY - 48*2 &&
-                worldY - gp.TILE_SIZE < gp.player.worldY + gp.player.screenY)
+                worldY - gp.TILE_SIZE < gp.player.worldY + gp.player.screenY + 48*2)
         {
             // MONSTER HP BAR
             if(type == 2 && hpBarON) {

@@ -23,10 +23,7 @@ public class Player extends Entity {
     public ArrayList<Entity> hotbarList = new ArrayList<>();
     public ArrayList<Integer> ownedWeapon = new ArrayList<>();
     public Entity currentWeapon = null;
-    public int playerClass,
-            warrior = 0,
-            assassin = 1,
-            knight = 2;
+    public int playerClass;
 //    public int playerClass;
 
 //    public ArrayList<Entity> inventory = new ArrayList<>(); temp commented

@@ -1,12 +1,15 @@
 package main;
 
 import entity.NPC_Blacksmith;
+import entity.Player;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 public class KeyHandler implements KeyListener {
     GamePanel gp;
+    Player player;
+
     public boolean
             wPressed,
             sPressed,
@@ -68,7 +71,7 @@ public class KeyHandler implements KeyListener {
             }
         }
 
-        // Start Menu State
+        // START MENU STATE
         if (gp.gameState == gp.startMenuState){
             if (code == KeyEvent.VK_W){
                 gp.ui.commandNum--;
@@ -97,17 +100,20 @@ public class KeyHandler implements KeyListener {
             }
         }
 
-        // Character Selection
-        if (gp.gameState == gp.characterSelectionState) {
+        // CHARACTER SELECTION STATE
+        else if (gp.gameState == gp.characterSelectionState) {
             if (code == KeyEvent.VK_SPACE) {
                 if (gp.ui.commandNum == 0) {
                     // CHANGE CLASS TO WARRIOR
+                    gp.player = player = new Player(gp, gp.keyH, gp.cursor, 0);
                     gp.gameState = gp.playState;
                 } else if (gp.ui.commandNum == 1) {
                     // CHANGE CLASS TO KNIGHT
+                    gp.player = player = new Player(gp, gp.keyH, gp.cursor, 1);
                     gp.gameState = gp.playState;
                 } else if (gp.ui.commandNum == 2) {
                     // CHANGE CLASS TO ASSASSIN
+                    gp.player = player = new Player(gp, gp.keyH, gp.cursor, 2);
                     gp.gameState = gp.playState;
                 }
             }
@@ -126,7 +132,7 @@ public class KeyHandler implements KeyListener {
             }
         }
 
-        // Play State
+        // PLAY STATE
         if (gp.gameState == gp.playState){
             if (code == KeyEvent.VK_W) {
                 wPressed = true;
@@ -178,7 +184,7 @@ public class KeyHandler implements KeyListener {
                 }
             }
         }
-        //Pause State
+        // PAUSE STATE
         if (code == KeyEvent.VK_P) {
             pPressed = true;
             if(gp.gameState == gp.playState){

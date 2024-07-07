@@ -1,17 +1,16 @@
 package main;
 
-import object.SuperObject;
-
 import entity.Entity;
 import entity.NPC_Blacksmith;
 import object.OBJ_Coin;
 import object.OBJ_Heart;
-import object.SuperObject;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 
 public class UI {
 
@@ -28,7 +27,7 @@ public class UI {
     private final Image quit;
     private final Image loginDefault, typeUsername, typePassword,
             blankErr, usernameErr, loginErr, usernameTakenErr;
-    Entity coin = new OBJ_Coin(gp);
+    Entity coin;
     public String currentDialog = "";
     public int slotRow = 0;
     public int slotRowMove = 0;
@@ -57,7 +56,7 @@ public class UI {
             e.printStackTrace(System.out);
         }
 
-//        coin = new OBJ_Coin(gp);
+        coin = new OBJ_Coin(gp);
 
         // FONT initialization
         try {
@@ -69,10 +68,8 @@ public class UI {
                 defaultFont = Font.createFont(Font.TRUETYPE_FONT, is);
             }
         } catch (FontFormatException | IOException e) {
-            e.printStackTrace();
+            e.printStackTrace(System.out);
         }
-
-
 
         // INITIALIZE TITLE VIDEO
         ImageIcon icon = new ImageIcon("res/UI/Title.gif");
@@ -93,11 +90,8 @@ public class UI {
 
         // INITIALIZE START MENU UI
         newGame = new ImageIcon("res/UI/newGame.png").getImage();
-
         loadGame = new ImageIcon("res/UI/loadGame.png").getImage();
-
         options = new ImageIcon("res/UI/options.png").getImage();
-
         quit = new ImageIcon("res/UI/quit.png").getImage();
     }
 
@@ -105,11 +99,15 @@ public class UI {
 
         this.g2 = g2;
         g2.setFont(defaultFont);
-        drawPlayerLife();
 
         // TITLE STATE
         if (gp.gameState == gp.titleState) {
             drawTitleScreen();
+        }
+
+        // START MENU STATE
+        if (gp.gameState == gp.startMenuState) {
+            drawStartMenu();
         }
 
         // CHAR SELECTION SCREEN
@@ -122,31 +120,29 @@ public class UI {
             drawLoginScreen();
         }
 
-        // START MENU STATE
-        if (gp.gameState == gp.startMenuState) {
-            drawStartMenu();
-        }
-
         // PLAY STATE
         if (gp.gameState == gp.playState) {
             drawPlayerMoney();
             drawHotbar();
+            drawPlayerLife();
         }
 
-        //Pause State
+        // PAUSE STATE
         if (gp.gameState == gp.pauseState) {
             drawPauseScreen();
         }
 
-        //Dialog State
+        // DIALOGUE STATE
         if(gp.gameState == gp.dialogueState){
             drawDialogScreen();
         }
 
+        // SHOP STATE
         if (gp.gameState == gp.shopState){
             drawShop();
         }
 
+        // DEATH STATE
         if (gp.gameState == gp.deathState) {
             drawDeathScreen();
         }
@@ -446,7 +442,7 @@ public class UI {
             isInvalidUsername = true;
         } else if (!password.equals("bunny")) {
             isInvalidLogin = true;
-        } else if (username.equals("jacob") && password.equals("bunny")) {
+        } else if (username.equals("jacob")) {
             validLogin = true;
         }
     }

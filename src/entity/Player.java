@@ -593,6 +593,7 @@ public class Player extends Entity {
         try {
             switch (playerClass) {
                 case 0: // WARRIOR
+                    System.out.println("Player is a Warrior");
                     dir = "/player/Warrior/";
                     // Load sprites for movement
                     for (int i = 0; i <= 7; i++) {
@@ -612,6 +613,7 @@ public class Player extends Entity {
                     UtilityTool.scaleEntityList(this, idleLeftList, 220, 96);
                     break;
                 case 1: // KNIGHT
+                    System.out.println("Player is a Knight");
                     dir = "/player/Knight/";
                     // Load sprites for movement
                     for (int i = 0; i <= 9; i++) {
@@ -631,6 +633,7 @@ public class Player extends Entity {
                     UtilityTool.scaleEntityList(this, idleLeftList, 200, 96);
                     break;
                 case 2:
+                    System.out.println("Player is an Assassin");
                     dir = "/player/Assassin/";
                     // Load sprites for movement
                     for (int i = 0; i <= 24; i++) {

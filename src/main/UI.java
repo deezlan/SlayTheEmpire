@@ -25,6 +25,7 @@ public class UI {
     private final Image loadGame;
     private final Image options;
     private final Image quit;
+    private final Image warriorGif, knightGif, assassinGif;
     private final Image loginDefault, typeUsername, typePassword,
             blankErr, usernameErr, loginErr, usernameTakenErr;
     Entity coin;
@@ -71,13 +72,14 @@ public class UI {
             e.printStackTrace(System.out);
         }
 
+
+
         // INITIALIZE TITLE VIDEO
         ImageIcon icon = new ImageIcon("res/UI/Title.gif");
         titleGif = icon.getImage();
 
         // INITIALIZE TITLE
-        ImageIcon title = new ImageIcon("res/UI/Title.png");
-        titleImage = title.getImage();
+        titleImage = new ImageIcon("res/UI/Title.png").getImage();
 
         // INITIALIZE LOGIN SCREEN
         loginDefault = new ImageIcon("res/UI/loginDefault.png").getImage();
@@ -93,6 +95,14 @@ public class UI {
         loadGame = new ImageIcon("res/UI/loadGame.png").getImage();
         options = new ImageIcon("res/UI/options.png").getImage();
         quit = new ImageIcon("res/UI/quit.png").getImage();
+
+        // INITIALIZE PLAYER PREVIEW
+        ImageIcon warrior = new ImageIcon("res/player/WarriorIdle.gif");
+        warriorGif = warrior.getImage();
+        ImageIcon knight = new ImageIcon("res/player/KnightIdle.gif");
+        knightGif = knight.getImage();
+        ImageIcon assassin = new ImageIcon("res/player/AssassinIdle.gif");
+        assassinGif = assassin.getImage();
     }
 
     public void draw(Graphics2D g2){
@@ -314,7 +324,7 @@ public class UI {
         Composite orgComposite = g2.getComposite();
 
         // set opacity of bg
-        float opacity = 0.8f;
+        float opacity = 0.5f;
         g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, opacity));
 
         // Draw black background
@@ -440,10 +450,11 @@ public class UI {
         } else if (!username.matches("[a-zA-Z0-9.\\-_]{0,}")) {
             System.out.println("Has illegal");
             isInvalidUsername = true;
-        } else if (!password.equals("bunny")) {
+        } else if (!password.equals("123")) {
             isInvalidLogin = true;
-        } else if (username.equals("jacob")) {
+        } else if (username.equals("123")) {
             validLogin = true;
+            gp.gameState = gp.characterSelectionState;
         }
     }
 
@@ -549,9 +560,13 @@ public class UI {
         String text1 = "Warrior";
         x = getXForCenteredText(text)/3;
         y = gp.TILE_SIZE*12;
+
+        int gifX = (int) (gp.SCREEN_WIDTH/1.5);
+        int gifY = gp.SCREEN_HEIGHT/2;
         if (commandNum == 0) {
             g2.setColor(Color.WHITE);
             g2.drawString(text1, x, y);
+            g2.drawImage(warriorGif, (gp.SCREEN_WIDTH - gifX)/2, (gp.SCREEN_HEIGHT - gifY)/2 + 30, gifX, gifY, null);
         } else {
             g2.setColor(Color.GRAY);
             g2.drawString(text1, x, y);
@@ -562,6 +577,7 @@ public class UI {
         if (commandNum == 1) {
             g2.setColor(Color.WHITE);
             g2.drawString(text2, x, y);
+            g2.drawImage(knightGif, (gp.SCREEN_WIDTH - gifX)/2, (gp.SCREEN_HEIGHT - gifY)/2  + 30, gifX, gifY, null);
         } else {
             g2.setColor(Color.GRAY);
             g2.drawString(text2, x, y);
@@ -572,6 +588,8 @@ public class UI {
         if (commandNum == 2) {
             g2.setColor(Color.WHITE);
             g2.drawString(text3, x, y);
+            g2.drawImage(assassinGif, (gp.SCREEN_WIDTH - gifX)/2, (gp.SCREEN_HEIGHT - gifY)/2  + 30, gifX, gifY, null);
+
         } else {
             g2.setColor(Color.GRAY);
             g2.drawString(text3, x, y);

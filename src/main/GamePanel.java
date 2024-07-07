@@ -79,9 +79,9 @@ public class GamePanel extends JPanel implements Runnable {
         this.setBackground(Color.decode("#222034"));
         this.setDoubleBuffered(true);
         this.addKeyListener(keyH);
-        this.setFocusable(true);
+        this.setFocusable(true); // pass the player instance variable to the KeyHandler constructor
 
-        hideCursor();
+//        hideCursor();
 
         addMouseMotionListener(new MouseAdapter() {
             @Override
@@ -228,7 +228,7 @@ public class GamePanel extends JPanel implements Runnable {
 //            ui.draw(g2);
 //            ui.drawPlayerMoney();
 
-        } else if (gameState == playState){
+        } else if (gameState == playState || gameState == dialogueState || gameState == pauseState){
             tileM.draw(g2); // Draw tiles
 
             // ADD ENTITIES TO THE LIST

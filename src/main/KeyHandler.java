@@ -1,10 +1,10 @@
 package main;
 
 import entity.NPC_Blacksmith;
-import entity.Player;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import entity.Player;
 
 public class KeyHandler implements KeyListener {
     GamePanel gp;
@@ -81,8 +81,8 @@ public class KeyHandler implements KeyListener {
 
             if (code == KeyEvent.VK_SPACE) {
                 if (gp.ui.commandNum == 0) {
-                    // GO TO CHAR SELECTION
-                    gp.gameState = gp.characterSelectionState;
+                    // GO TO LOGIN
+                    gp.gameState = gp.loginState;
                 }
                 if (gp.ui.commandNum == 1) {
                     // LOAD GAME
@@ -98,8 +98,13 @@ public class KeyHandler implements KeyListener {
                 }
             }
         }
-
-        // CHARACTER SELECTION STATE
+        // LOGIN
+        else if (gp.gameState == gp.loginState){
+//            if (validLogin) {
+//                System.out.println("Login Successful.");
+//            }
+        }
+        // CHARACTER SELECTION
         else if (gp.gameState == gp.characterSelectionState) {
             if (code == KeyEvent.VK_SPACE) {
                 if (gp.ui.commandNum == 0) {
@@ -117,10 +122,10 @@ public class KeyHandler implements KeyListener {
                 }
             }
 
-            if (code == KeyEvent.VK_W){
+            if (code == KeyEvent.VK_A){
                 gp.ui.commandNum--;
             }
-            if (code == KeyEvent.VK_S){
+            if (code == KeyEvent.VK_D){
                 gp.ui.commandNum++;
             }
 

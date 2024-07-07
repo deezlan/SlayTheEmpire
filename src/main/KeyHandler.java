@@ -8,7 +8,6 @@ import java.awt.event.KeyListener;
 
 public class KeyHandler implements KeyListener {
     GamePanel gp;
-    Player player;
 
     public boolean
             wPressed,
@@ -105,15 +104,15 @@ public class KeyHandler implements KeyListener {
             if (code == KeyEvent.VK_SPACE) {
                 if (gp.ui.commandNum == 0) {
                     // CHANGE CLASS TO WARRIOR
-                    gp.player = player = new Player(gp, gp.keyH, gp.cursor, 0);
+                    gp.player = new Player(gp, gp.keyH, gp.cursor, 0);
                     gp.gameState = gp.playState;
                 } else if (gp.ui.commandNum == 1) {
                     // CHANGE CLASS TO KNIGHT
-                    gp.player = player = new Player(gp, gp.keyH, gp.cursor, 1);
+                    gp.player = new Player(gp, gp.keyH, gp.cursor, 1);
                     gp.gameState = gp.playState;
                 } else if (gp.ui.commandNum == 2) {
                     // CHANGE CLASS TO ASSASSIN
-                    gp.player = player = new Player(gp, gp.keyH, gp.cursor, 2);
+                    gp.player = new Player(gp, gp.keyH, gp.cursor, 2);
                     gp.gameState = gp.playState;
                 }
             }

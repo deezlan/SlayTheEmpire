@@ -344,15 +344,19 @@ public abstract class Entity {
             switch (action) {
                 case "moveUp":
                     worldY -= attackArea.height;
+                    currentActionList = mobRightAttackList;
                     break;
                 case "moveDown":
                     worldY += attackArea.height;
+                    currentActionList = mobLeftAttackList;
                     break;
                 case "moveLeft":
                     worldX -= attackArea.width;
+                    currentActionList = mobLeftAttackList;
                     break;
                 case "moveRight":
                     worldX += attackArea.width;
+                    currentActionList = mobRightAttackList;
                     break;
             }
 
@@ -689,9 +693,9 @@ public abstract class Entity {
                 changeAlpha(g2, 1f);
             }
             if (attacking) {
-                if (animationSpriteNum > mobRightAttackList.size())
+                if (animationSpriteNum >= currentActionList.size() - 1)
                     animationSpriteNum = 0;
-                BufferedImage animationImage = lookingRight ? mobRightAttackList.get(animationSpriteNum) : mobLeftAttackList.get(animationSpriteNum);
+                BufferedImage animationImage = currentActionList.get(animationSpriteNum);
                 g2.drawImage(animationImage, screenX, screenY, null);
             }
         }

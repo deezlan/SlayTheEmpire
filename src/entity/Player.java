@@ -107,7 +107,7 @@ public class Player extends Entity {
 
     @Override
     public void update() {
-        if (life == 0) {
+        if (life <= 0) {
             gp.gameState = gp.deathState;
         }
         if (attacking) {

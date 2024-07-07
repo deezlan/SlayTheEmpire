@@ -107,7 +107,7 @@ public class AssetSetter {
                 gp.mobArr[mapNum][i].worldX = 800;
                 gp.mobArr[mapNum][i].worldY = 400;
                 i++;
-//
+
 //                gp.mobArr[mapNum][i] = new MOB_Goblin(gp);
 //                gp.mobArr[mapNum][i].worldX = 400;
 //                gp.mobArr[mapNum][i].worldY = 300;

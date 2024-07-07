@@ -69,8 +69,8 @@ public class MOB_Mushroom extends Entity {
         try {
             // Load sprites for attacking
             for (int i = 0; i <= 7; i++) {
-                mobRightAttackList.add(i, UtilityTool.loadSprite(dir + "attack/" + i + ".png", "Missing attackLeft " + i));
-                mobLeftAttackList.add(i, UtilityTool.loadSprite(dir + "attack/" + i + ".png", "Missing attackLeft " + i));
+                mobRightAttackList.add(i, UtilityTool.loadSprite(dir + "attackRight/" + i + ".png", "Missing attackRight " + i));
+                mobLeftAttackList.add(i, UtilityTool.loadSprite(dir + "attackLeft/" + i + ".png", "Missing attackLeft " + i));
             }
 
             // Scale sprites up

@@ -12,6 +12,7 @@ public class Cursor {
     private int mouseX, mouseY;
     private double angle;
     private BufferedImage crosshairImage;
+    public int deltaX, deltaY, arrowX, arrowY;
 
     public Cursor( ) {
         try {
@@ -27,8 +28,8 @@ public class Cursor {
     }
 
     public void calculateAngle(int playerX, int playerY) {
-        int deltaX = mouseX - playerX;
-        int deltaY = mouseY - playerY;
+        deltaX = mouseX - playerX;
+        deltaY = mouseY - playerY;
         angle = Math.atan2(deltaY, deltaX);
     }
 
@@ -39,8 +40,8 @@ public class Cursor {
 
     public void drawCrosshair(Graphics2D g2) {
         if (crosshairImage != null) {
-            int crosshairWidth = (int)(crosshairImage.getWidth()*1.5);
-            int crosshairHeight = (int)(crosshairImage.getHeight()*1.5);
+            int crosshairWidth = (int)(crosshairImage.getWidth() * 1.75);
+            int crosshairHeight = (int)(crosshairImage.getHeight() * 1.75);
 
             g2.drawImage(crosshairImage, mouseX - crosshairWidth/ 2, mouseY - crosshairHeight/2, crosshairWidth, crosshairHeight, null);
         }
@@ -61,15 +62,15 @@ public class Cursor {
         g2.setTransform(old);
     }
 
-    public int getMouseX() {
-        return mouseX;
-    }
-
-    public int getMouseY() {
-        return mouseY;
-    }
-
-    public double getAngle() {
-        return angle;
-    }
+//    public int getMouseX() {
+//        return mouseX;
+//    }
+//
+//    public int getMouseY() {
+//        return mouseY;
+//    }
+//
+//    public double getAngle() {
+//        return angle;
+//    }
 }

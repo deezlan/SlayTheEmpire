@@ -1,13 +1,17 @@
 package object;
 
+import entity.Entity;
+import main.GamePanel;
 import main.UtilityTool;
 
 import java.io.IOException;
 
-public class OBJ_SavePedestal extends SuperObject {
-    public OBJ_SavePedestal() {
+public class OBJ_SavePedestal extends Entity {
+    public OBJ_SavePedestal(GamePanel gp) {
+        super(gp);
         name = "Save Pedestal";
         message = "Saving not implemented... go away";
+        isObject = true;
 
         // Load save pedestal sprites
         getObjectSprites();
@@ -25,16 +29,11 @@ public class OBJ_SavePedestal extends SuperObject {
     public void getObjectSprites() {
         String dir = "/objects/savePedestal/";
         try {
-            defaultList.add(0, UtilityTool.loadSprite(dir + "00.png", "Missing Idle 0"));
-            defaultList.add(1, UtilityTool.loadSprite(dir + "01.png", "Missing Idle 1"));
-            defaultList.add(2, UtilityTool.loadSprite(dir + "02.png", "Missing Idle 2"));
-            defaultList.add(3, UtilityTool.loadSprite(dir + "03.png", "Missing Idle 3"));
-            defaultList.add(4, UtilityTool.loadSprite(dir + "04.png", "Missing Idle 4"));
-            defaultList.add(5, UtilityTool.loadSprite(dir + "05.png", "Missing Idle 5"));
-            defaultList.add(6, UtilityTool.loadSprite(dir + "06.png", "Missing Idle 6"));
-            defaultList.add(7, UtilityTool.loadSprite(dir + "07.png", "Missing Idle 7"));
-
-            UtilityTool.scaleObjectList(defaultList, 32, 96);
+            // Load sprites
+            for (int i = 0; i <= 7; i++)
+                defaultList.add(i, UtilityTool.loadSprite(dir + i + ".png", "Missing savePedestal " + i));
+            // Scale sprites up
+            UtilityTool.scaleEntityList(this,defaultList, 32, 96);
         } catch (IOException e) {
             e.printStackTrace(System.out);
         }

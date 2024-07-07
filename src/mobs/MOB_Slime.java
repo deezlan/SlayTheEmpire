@@ -8,8 +8,10 @@ import java.io.IOException;
 import java.util.Random;
 
 public class MOB_Slime extends Entity {
+    GamePanel gp;
     public MOB_Slime(GamePanel gp) {
         super(gp);
+        this.gp = gp;
         type = 2;
         speed = 1;
         maxLife = 4;
@@ -83,28 +85,16 @@ public class MOB_Slime extends Entity {
     public void getMobSprites() {
         String dir = "/Mobs/Slime/";
         try {
-            moveRightList.add(0, UtilityTool.loadSprite(dir + "right/00.png", "Missing Move Right 0"));
-            moveRightList.add(1, UtilityTool.loadSprite(dir + "right/01.png", "Missing Move Right 1"));
-            moveRightList.add(2, UtilityTool.loadSprite(dir + "right/02.png", "Missing Move Right 2"));
-            moveRightList.add(3, UtilityTool.loadSprite(dir + "right/03.png", "Missing Move Right 3"));
+            for (int i = 0; i <= 3; i++) {
+                moveRightList.add(i, UtilityTool.loadSprite(dir + "moveRight/" + i + ".png", "Missing moveRight " + i));
+                moveLeftList.add(i, UtilityTool.loadSprite(dir + "moveLeft/" + i + ".png", "Missing moveLeft " + i));
+                idleLeftList.add(i, UtilityTool.loadSprite(dir + "idleLeft/" + i + ".png", "Missing idleLeft " + i));
+                idleRightList.add(i, UtilityTool.loadSprite(dir + "idleRight/" + i + ".png", "Missing idleRight " + i));
+            }
+
             UtilityTool.scaleEntityList(this, moveRightList, 150, 150);
-
-            moveLeftList.add(0, UtilityTool.loadSprite(dir + "left/00.png", "Missing Move Left 0"));
-            moveLeftList.add(1, UtilityTool.loadSprite(dir + "left/01.png", "Missing Move Left 1"));
-            moveLeftList.add(2, UtilityTool.loadSprite(dir + "left/02.png", "Missing Move Left 2"));
-            moveLeftList.add(3, UtilityTool.loadSprite(dir + "left/03.png", "Missing Move Left 3"));
             UtilityTool.scaleEntityList(this,moveLeftList, 150, 150);
-
-            idleLeftList.add(0, UtilityTool.loadSprite(dir + "idleLeft/00.png", "Missing Idle Left 0"));
-            idleLeftList.add(1, UtilityTool.loadSprite(dir + "idleLeft/01.png", "Missing Idle Left 1"));
-            idleLeftList.add(2, UtilityTool.loadSprite(dir + "idleLeft/02.png", "Missing Idle Left 2"));
-            idleLeftList.add(3, UtilityTool.loadSprite(dir + "idleLeft/03.png", "Missing Idle Left 3"));
             UtilityTool.scaleEntityList(this,idleLeftList, 150, 150);
-
-            idleRightList.add(0, UtilityTool.loadSprite(dir + "idleRight/00.png", "Missing Idle Right 0"));
-            idleRightList.add(1, UtilityTool.loadSprite(dir + "idleRight/01.png", "Missing Idle Right 1"));
-            idleRightList.add(2, UtilityTool.loadSprite(dir + "idleRight/02.png", "Missing Idle Right 2"));
-            idleRightList.add(3, UtilityTool.loadSprite(dir + "idleRight/03.png", "Missing Idle Right 3"));
             UtilityTool.scaleEntityList(this, idleRightList, 150, 150);
 
             System.out.println("Slime sprites loaded successfully");

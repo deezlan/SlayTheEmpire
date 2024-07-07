@@ -4,12 +4,7 @@ import entity.Entity;
 import main.GamePanel;
 import main.UtilityTool;
 import object.OBJ_Energyball;
-import object.OBJ_Projectile;
-
-import javax.print.attribute.standard.RequestingUserName;
 import java.io.IOException;
-import java.util.Random;
-
 public class MOB_ArmoredGuardian extends Entity {
     GamePanel gp;
     public MOB_ArmoredGuardian(GamePanel gp) {
@@ -46,16 +41,18 @@ public class MOB_ArmoredGuardian extends Entity {
             // SEARCH DIRECTION TO GO
             searchPath(getGoalCol(gp.player),getGoalRow(gp.player));
 
-            checkShoot(200,20);
+            checkShoot(200,10);
         } else {
             // CHECK IF START CHASING
             checkStartChase(gp.player, 5 , 100);
             // GET RANDOM DIRECTION
             getRandomDirection();
+
+            checkShoot(200,0);
         }
         // CHECK ATTACK ON PLAYER
         if(!attacking){
-            checkMobAttack(30,gp.TILE_SIZE*4,gp.TILE_SIZE*3);
+            checkMobAttack(30,gp.TILE_SIZE*3,gp.TILE_SIZE*2);
         }
     }
 

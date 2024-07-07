@@ -30,10 +30,10 @@ public class OBJ_Energyball extends Projectile {
                 projectileUp.add(i, UtilityTool.loadSprite(dir + "up/" + i + ".png", "Missing up Energy " + i));
                 projectileDown.add(i, UtilityTool.loadSprite(dir + "down/" + i + ".png", "Missing down Energy " + i));
             }
-            UtilityTool.scaleEntityList(this, projectileRight, 48, 48);
-            UtilityTool.scaleEntityList(this,projectileLeft, 48, 48);
-            UtilityTool.scaleEntityList(this,projectileUp, 48, 48);
-            UtilityTool.scaleEntityList(this, projectileDown, 48, 48);
+            UtilityTool.scaleEntityList(this, projectileRight, 100, 100);
+            UtilityTool.scaleEntityList(this,projectileLeft, 100, 100);
+            UtilityTool.scaleEntityList(this,projectileUp, 100, 100);
+            UtilityTool.scaleEntityList(this, projectileDown, 100, 100);
 
             System.out.println("Energy BAll loaded successfully");
         } catch (IOException e){

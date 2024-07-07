@@ -43,10 +43,10 @@ public class Projectile extends Entity{
             boolean contactPlayer = gp.cChecker.checkPLayer(this);
 
             switch (action) {
-                case "moveUp": worldY -= speed; break;
-                case "moveDown": worldY += speed; break;
-                case "moveLeft": worldX -= speed; break;
-                case "moveRight": worldX += speed; break;
+                case "moveUp": worldY -= speed; currentActionList = projectileUp; break;
+                case "moveDown": worldY += speed; currentActionList = projectileDown; break;
+                case "moveLeft": worldX -= speed; currentActionList = projectileLeft; break;
+                case "moveRight": worldX += speed; currentActionList = projectileRight; break;
             }
 
             if(!gp.player.iframe && contactPlayer){

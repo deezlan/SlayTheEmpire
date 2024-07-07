@@ -621,7 +621,7 @@ public class UI {
     public void drawDeathScreen() {
         g2.setFont(g2.getFont().deriveFont(Font.BOLD));
         String text = "KAMU DAH MATI";
-        int x = getXforCenteredText(text);
+        int x = getXForCenteredText(text);
         int y = gp.SCREEN_HEIGHT/2;
 
         g2.drawString(text, x, y);

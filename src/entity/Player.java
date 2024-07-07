@@ -9,7 +9,6 @@ import java.awt.AlphaComposite;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.security.Key;
 import java.util.ArrayList;
 //import java.util.ArrayList; temp
 
@@ -25,10 +24,6 @@ public class Player extends Entity {
     public ArrayList<Integer> ownedWeapon = new ArrayList<>();
     public Entity currentWeapon = null;
     public int playerClass;
-    public static int warrior = 0,
-            assassin = 1,
-            knight = 2;
-
 //    public int playerClass;
 
 //    public ArrayList<Entity> inventory = new ArrayList<>(); temp commented
@@ -38,7 +33,7 @@ public class Player extends Entity {
         super(gp);
         this.gp = gp;
         this.keyH = keyH;
-        this.playerClass = KeyHandler.playerClass;
+        this.playerClass = playerClass;
         screenX = gp.SCREEN_WIDTH / 2 - (gp.TILE_SIZE / 2); // added screen position
         screenY = gp.SCREEN_HEIGHT / 2 - (gp.TILE_SIZE / 2);
 
@@ -53,10 +48,6 @@ public class Player extends Entity {
 
 //        SwordSlash slash1 = new SwordSlash(gp); // Ananda's old slash variables
 //        slash = slash1;
-    }
-
-    public void setPlayerClass(int playerClass) {
-        this.playerClass = playerClass;
     }
 
     public void setDefaultValues() {
@@ -208,7 +199,7 @@ public class Player extends Entity {
                 interactNPC(npcIndex);
 
                 //CHECK EVENT
-//                gp.eHandler.checkEvent();
+                gp.eHandler.checkEvent();
                 gp.keyH.ePressed = false; // after player interact with tile;
 
                 //CHECK MOB COLLISION

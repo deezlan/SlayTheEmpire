@@ -9,7 +9,6 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
-import java.beans.EventHandler;
 import java.util.ArrayList;
 import java.util.Comparator;
 
@@ -17,7 +16,6 @@ import entity.Cursor;
 import entity.Entity;
 import entity.Player;
 import tile.TileManager;
-
 
 public class GamePanel extends JPanel implements Runnable {
     // SCREEN SETTINGS
@@ -29,7 +27,6 @@ public class GamePanel extends JPanel implements Runnable {
     public final int SCREEN_WIDTH = TILE_SIZE * MAX_SCREEN_COL;
     public final int SCREEN_HEIGHT = TILE_SIZE * MAX_SCREEN_ROW;
     public int gameArea = 0;
-    public int playerClass; // player class here
 
     // WORLD SETTINGS
     public int MAX_WORLD_COL = 17; //must be same as map size
@@ -38,15 +35,13 @@ public class GamePanel extends JPanel implements Runnable {
     // FPS SETTINGS
     final int FPS = 60;
 
-    // initialize login panel
-    public LoginPanel loginPanel;
-
     TileManager tileM = new TileManager(this);
     public KeyHandler keyH = new KeyHandler(this);
 
     // CURSOR SETTINGS
     public Cursor cursor = new Cursor(); // Initialize cursor
-    public Player player = new Player(this, keyH, cursor, playerClass); // Pass cursor to player
+//    public Player player = new Player(this, keyH, cursor, playerClass); // Pass cursor to player
+    public Player player;
 
     public MouseHandler mouseH = new MouseHandler();
     public boolean
@@ -56,14 +51,14 @@ public class GamePanel extends JPanel implements Runnable {
     Thread gameThread;
 
     // ENTITY AND OBJECTS
-    public AssetSetter aSetter = new AssetSetter(this);
+//    public AssetSetter aSetter = new AssetSetter(this);
     public Entity[] objArr= new Entity[10];
     public Entity[] npcArr = new Entity[10];
     public Entity[] mobArr = new Entity[10];
     public ArrayList<Entity> projectileList = new ArrayList<>();
     public CollisionChecker cChecker = new CollisionChecker(this);
     public UI ui = new UI(this);
-//    public EventHandler eHandler = new EventHandler(this);
+    public EventHandler eHandler = new EventHandler(this);
     ArrayList<Entity> entityList = new ArrayList<>();
 
     // GAME STATES
@@ -79,9 +74,6 @@ public class GamePanel extends JPanel implements Runnable {
     public final int characterSelectionState = 9;
     public final int optionState = 10;
     public final int deathState = 11;
-
-
-
 
     public GamePanel() {
         this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
@@ -127,9 +119,9 @@ public class GamePanel extends JPanel implements Runnable {
 //    }
 
     public void setupGame() {
-        aSetter.setObject();
-        aSetter.setNPC();
-        aSetter.setMonster();
+//        aSetter.setObject();
+//        aSetter.setNPC();
+//        aSetter.setMonster();
         gameState = titleState; // TESTING LOGIN RIGHT NOW
     }
 
@@ -169,7 +161,6 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     public void update() {
-
         if (gameState == playState) {
             hideCursor(); // HIDE CURSOR
             player.update();
@@ -196,8 +187,7 @@ public class GamePanel extends JPanel implements Runnable {
                 if (projectileList.get(i) != null){
                     if (projectileList.get(i).alive){
                         projectileList.get(i).update();
-                    }
-                    if (!projectileList.get(i).alive){
+                    } else {
                         projectileList.remove(i);
                     }
                 }
@@ -239,7 +229,7 @@ public class GamePanel extends JPanel implements Runnable {
 //            ui.draw(g2);
 //            ui.drawPlayerMoney();
 
-        } else {
+        } else if (gameState == playState){
             tileM.draw(g2); // Draw tiles
 
             // ADD ENTITIES TO THE LIST
@@ -289,9 +279,13 @@ public class GamePanel extends JPanel implements Runnable {
             }
 
             // EMPTY ENTITY LIST
-            for (int i = 0; i < entityList.size(); i++){
-                entityList.remove(i);
-            }
+//            for (int i = 0; i < entityList.size(); i++){
+//                entityList.remove(i);
+//            }
+            entityList.clear();
+
+            ui.draw(g2);
+        } else {
             ui.draw(g2);
         }
         g2.dispose();

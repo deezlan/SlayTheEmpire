@@ -1,17 +1,17 @@
 package main;
 
-import object.SuperObject;
-
 import entity.Entity;
 import entity.NPC_Blacksmith;
 import object.OBJ_Coin;
 import object.OBJ_Heart;
-import object.SuperObject;
+//import object.SuperObject;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 
 public class UI {
 

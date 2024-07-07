@@ -55,19 +55,6 @@ public class Projectile extends Entity{
                 alive = false;
             }
 
-            life--;
-            if(life <= 0) {
-                alive = false;
-            }
-
-            spriteCounter++;
-            if (currentActionList.size() > 14) {
-                if (spriteCounter > 4) loopThroughSprites();
-            } else if (currentActionList.size() > 7) {
-                if (spriteCounter > 6) loopThroughSprites();
-            } else {
-                if (spriteCounter > 9) loopThroughSprites();
-            }
         }
 //        if (user != gp.player){
 //

@@ -40,7 +40,6 @@ public class GamePanel extends JPanel implements Runnable {
 
     // CURSOR SETTINGS
     public Cursor cursor = new Cursor(); // Initialize cursor
-//    public Player player = new Player(this, keyH, cursor, playerClass); // Pass cursor to player
     public Player player;
 
     public MouseHandler mouseH = new MouseHandler();
@@ -51,7 +50,7 @@ public class GamePanel extends JPanel implements Runnable {
     Thread gameThread;
 
     // ENTITY AND OBJECTS
-//    public AssetSetter aSetter = new AssetSetter(this);
+    public AssetSetter aSetter = new AssetSetter(this);
     public Entity[] objArr= new Entity[10];
     public Entity[] npcArr = new Entity[10];
     public Entity[] mobArr = new Entity[10];
@@ -119,9 +118,9 @@ public class GamePanel extends JPanel implements Runnable {
 //    }
 
     public void setupGame() {
-//        aSetter.setObject();
-//        aSetter.setNPC();
-//        aSetter.setMonster();
+        aSetter.setObject();
+        aSetter.setNPC();
+        aSetter.setMonster();
         gameState = titleState; // TESTING LOGIN RIGHT NOW
     }
 

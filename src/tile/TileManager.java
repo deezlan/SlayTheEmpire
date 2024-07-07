@@ -29,9 +29,8 @@ public class TileManager {
         getTileImage();
         loadMap("/mapTextFiles/LobbyTest.txt",0);
         loadMap("/mapTextFiles/smalRoom.txt",1);
+        loadMap("/mapTextFiles/secondLevel.txt", 2);
     }
-
-
 
     public void loadMap(String filePath, int map) {
         try {
@@ -124,35 +123,36 @@ public class TileManager {
                 tile[i] = new Tile();
                 if (i < 13 || i > 25 ) tile[i].collision = true;
             }
+
             // LOBBY WALLS
-            tile[0].image = UtilityTool.loadSprite(dir + "lobby/00.png", "Missing Top Left Wall");
-            tile[1].image = UtilityTool.loadSprite(dir + "lobby/01.png", "Missing Top Middle Wall");
-            tile[2].image = UtilityTool.loadSprite(dir + "lobby/02.png", "Missing Hole Wall");
-            tile[3].image = UtilityTool.loadSprite(dir + "lobby/03.png", "Missing Door Wall");
-            tile[4].image = UtilityTool.loadSprite(dir + "lobby/04.png", "Missing Old Wall");
-            tile[5].image = UtilityTool.loadSprite(dir + "lobby/05.png", "Missing Top Right Wall");
-            tile[6].image = UtilityTool.loadSprite(dir + "lobby/06.png", "Missing Middle Left Wall");
-            tile[7].image = UtilityTool.loadSprite(dir + "lobby/07.png", "Missing Middle Right Wall");
-            tile[8].image = UtilityTool.loadSprite(dir + "lobby/08.png", "Missing Bottom Left Wall");
-            tile[9].image = UtilityTool.loadSprite(dir + "lobby/09.png", "Missing Bottom Right Wall");
-            tile[10].image = UtilityTool.loadSprite(dir + "lobby/10.png", "Missing Bottom Middle Wall");
-            tile[11].image = UtilityTool.loadSprite(dir + "lobby/11.png", "Missing Left Stairs Wall tile");
-            tile[12].image = UtilityTool.loadSprite(dir + "lobby/12.png", "Missing Right Stairs Wall tile");
+            tile[0].image = UtilityTool.loadSprite(dir + "lobby/00.png", "Top Left Wall");
+            tile[1].image = UtilityTool.loadSprite(dir + "lobby/01.png", "Top Middle Wall");
+            tile[2].image = UtilityTool.loadSprite(dir + "lobby/02.png", "Hole Wall");
+            tile[3].image = UtilityTool.loadSprite(dir + "lobby/03.png", "Door Wall");
+            tile[4].image = UtilityTool.loadSprite(dir + "lobby/04.png", "Old Wall");
+            tile[5].image = UtilityTool.loadSprite(dir + "lobby/05.png", "Top Right Wall");
+            tile[6].image = UtilityTool.loadSprite(dir + "lobby/06.png", "Middle Left Wall");
+            tile[7].image = UtilityTool.loadSprite(dir + "lobby/07.png", "Middle Right Wall");
+            tile[8].image = UtilityTool.loadSprite(dir + "lobby/08.png", "Bottom Left Wall");
+            tile[9].image = UtilityTool.loadSprite(dir + "lobby/09.png", "Bottom Right Wall");
+            tile[10].image = UtilityTool.loadSprite(dir + "lobby/10.png", "Bottom Middle Wall");
+            tile[11].image = UtilityTool.loadSprite(dir + "lobby/11.png", "Left Stairs Wall tile");
+            tile[12].image = UtilityTool.loadSprite(dir + "lobby/12.png", "Right Stairs Wall tile");
 
             // LOBBY FLOOR
-            tile[13].image = UtilityTool.loadSprite(dir + "lobby/13.png", "Missing Blank Floor");
-            tile[14].image = UtilityTool.loadSprite(dir + "lobby/14.png", "Missing Patterned Floor");
-            tile[15].image = UtilityTool.loadSprite(dir + "lobby/15.png", "Missing Checkered Floor");
-            tile[16].image = UtilityTool.loadSprite(dir + "lobby/16.png", "Missing Blank Bordered Floor");
-            tile[17].image = UtilityTool.loadSprite(dir + "lobby/17.png", "Missing Middle Stairs");
-            tile[18].image = UtilityTool.loadSprite(dir + "lobby/18.png", "Missing Left Stair");
-            tile[19].image = UtilityTool.loadSprite(dir + "lobby/19.png", "Missing Right Stair");
-            tile[20].image = UtilityTool.loadSprite(dir + "lobby/20.png", "Missing Top Right Floor");
-            tile[21].image = UtilityTool.loadSprite(dir + "lobby/21.png", "Missing Top Left Floor");
-            tile[22].image = UtilityTool.loadSprite(dir + "lobby/22.png", "Missing Top Middle Floor");
-            tile[23].image = UtilityTool.loadSprite(dir + "lobby/23.png", "Missing Middle Left Floor");
-            tile[24].image = UtilityTool.loadSprite(dir + "lobby/24.png", "Missing Middle Right");
-            tile[25].image = UtilityTool.loadSprite(dir + "lobby/25.png", "Missing Blank Cracked");
+            tile[13].image = UtilityTool.loadSprite(dir + "lobby/13.png", "Blank Floor");
+            tile[14].image = UtilityTool.loadSprite(dir + "lobby/14.png", "Patterned Floor");
+            tile[15].image = UtilityTool.loadSprite(dir + "lobby/15.png", "Checkered Floor");
+            tile[16].image = UtilityTool.loadSprite(dir + "lobby/16.png", "Blank Bordered Floor");
+            tile[17].image = UtilityTool.loadSprite(dir + "lobby/17.png", "Middle Stairs");
+            tile[18].image = UtilityTool.loadSprite(dir + "lobby/18.png", "Left Stair");
+            tile[19].image = UtilityTool.loadSprite(dir + "lobby/19.png", "Right Stair");
+            tile[20].image = UtilityTool.loadSprite(dir + "lobby/20.png", "Top Right Floor");
+            tile[21].image = UtilityTool.loadSprite(dir + "lobby/21.png", "Top Left Floor");
+            tile[22].image = UtilityTool.loadSprite(dir + "lobby/22.png", "Top Middle Floor");
+            tile[23].image = UtilityTool.loadSprite(dir + "lobby/23.png", "Middle Left Floor");
+            tile[24].image = UtilityTool.loadSprite(dir + "lobby/24.png", "Middle Right");
+            tile[25].image = UtilityTool.loadSprite(dir + "lobby/25.png", "Blank Cracked");
 
             // LOBBY WATER
             tile[26].image = UtilityTool.loadSprite(dir + "lobby/26.png", "");
@@ -168,7 +168,7 @@ public class TileManager {
             tile[36].image = UtilityTool.loadSprite(dir + "lobby/36.png", "");
 
             // LOBBY OUT OF BOUNDS
-            tile[37].image = UtilityTool.loadSprite(dir + "lobby/37.png", "Missing Outside");
+            tile[37].image = UtilityTool.loadSprite(dir + "lobby/37.png", "Lobby Out of Bounds");
 
             // COLLISION CORRECTION
             tile[26].collision = false;
@@ -202,7 +202,7 @@ public class TileManager {
             tile[60].image = UtilityTool.loadSprite(dir + "firstLevel/22.png", "Left U");
             tile[61].image = UtilityTool.loadSprite(dir + "firstLevel/23.png", "Right U");
             tile[62].image = UtilityTool.loadSprite(dir + "firstLevel/24.png", "");
-            tile[63].image = UtilityTool.loadSprite(dir + "firstLevel/25.png", "Parrellel Line");
+            tile[63].image = UtilityTool.loadSprite(dir + "firstLevel/25.png", "Parallel Line");
 
             // FIRST LEVEL FLOOR
             tile[64].image = UtilityTool.loadSprite(dir + "firstLevel/26.png", "Chisel Tile");
@@ -218,6 +218,91 @@ public class TileManager {
             tile[66].collision = false;
             tile[67].collision = false;
             tile[68].collision = false;
+
+            // SECOND LEVEL WALL
+            tile[69].image = UtilityTool.loadSprite(dir + "secondLevel/00.png", "Out of Bounds");
+            tile[70].image = UtilityTool.loadSprite(dir + "secondLevel/01.png", "Top Left Wall");
+            tile[71].image = UtilityTool.loadSprite(dir + "secondLevel/02.png", "Top Wall Shadowed");
+            tile[72].image = UtilityTool.loadSprite(dir + "secondLevel/03.png", "Top Wall");
+            tile[73].image = UtilityTool.loadSprite(dir + "secondLevel/04.png", "Top Wall 2");
+            tile[74].image = UtilityTool.loadSprite(dir + "secondLevel/05.png", "Top Right Wall");
+            tile[75].image = UtilityTool.loadSprite(dir + "secondLevel/06.png", "Left Wall");
+            tile[76].image = UtilityTool.loadSprite(dir + "secondLevel/07.png", "Right Wall");
+            tile[77].image = UtilityTool.loadSprite(dir + "secondLevel/08.png", "Top Wall Bottom Shadowed");
+            tile[78].image = UtilityTool.loadSprite(dir + "secondLevel/09.png", "Top Wall Bottom");
+            tile[79].image = UtilityTool.loadSprite(dir + "secondLevel/10.png", "Top Left Corner Wall");
+            tile[80].image = UtilityTool.loadSprite(dir + "secondLevel/11.png", "Bottom Left Corner Wall");
+            tile[81].image = UtilityTool.loadSprite(dir + "secondLevel/12.png", "Bottom Wall");
+            tile[82].image = UtilityTool.loadSprite(dir + "secondLevel/13.png", "Bottom Wall 2");
+            tile[83].image = UtilityTool.loadSprite(dir + "secondLevel/14.png", "Bottom Wall 3");
+            tile[84].image = UtilityTool.loadSprite(dir + "secondLevel/15.png", "Bottom Wall 4");
+            tile[85].image = UtilityTool.loadSprite(dir + "secondLevel/16.png", "Left Wall 2");
+            tile[86].image = UtilityTool.loadSprite(dir + "secondLevel/17.png", "Right Wall 2");
+            tile[87].image = UtilityTool.loadSprite(dir + "secondLevel/18.png", "Bottom Right Corner Wall");
+            tile[88].image = UtilityTool.loadSprite(dir + "secondLevel/19.png", "Window Wall 1");
+            tile[89].image = UtilityTool.loadSprite(dir + "secondLevel/20.png", "Window Wall 2");
+            tile[90].image = UtilityTool.loadSprite(dir + "secondLevel/21.png", "L Wall");
+            tile[91].image = UtilityTool.loadSprite(dir + "secondLevel/22.png", "L Wall 2");
+            tile[92].image = UtilityTool.loadSprite(dir + "secondLevel/23.png", "Left Wall 3");
+            tile[93].image = UtilityTool.loadSprite(dir + "secondLevel/24.png", "Right Wall 3");
+            tile[94].image = UtilityTool.loadSprite(dir + "secondLevel/25.png", "L Wall 3");
+            tile[95].image = UtilityTool.loadSprite(dir + "secondLevel/26.png", "L Wall 4");
+            tile[96].image = UtilityTool.loadSprite(dir + "secondLevel/27.png", "Top Border");
+            tile[97].image = UtilityTool.loadSprite(dir + "secondLevel/28.png", "Top Border 2");
+            tile[98].image = UtilityTool.loadSprite(dir + "secondLevel/29.png", "Top Border 3");
+
+            // SECOND LEVEL FLOOR
+            tile[99].image = UtilityTool.loadSprite(dir + "secondLevel/30.png", "Missing ");
+            tile[100].image = UtilityTool.loadSprite(dir + "secondLevel/31.png", "Missing ");
+            tile[101].image = UtilityTool.loadSprite(dir + "secondLevel/32.png", "Missing ");
+            tile[102].image = UtilityTool.loadSprite(dir + "secondLevel/33.png", "Missing ");
+            tile[103].image = UtilityTool.loadSprite(dir + "secondLevel/34.png", "Missing ");
+            tile[104].image = UtilityTool.loadSprite(dir + "secondLevel/35.png", "Missing ");
+            tile[105].image = UtilityTool.loadSprite(dir + "secondLevel/36.png", "Missing ");
+            tile[106].image = UtilityTool.loadSprite(dir + "secondLevel/37.png", "Missing ");
+            tile[107].image = UtilityTool.loadSprite(dir + "secondLevel/38.png", "Missing ");
+            tile[108].image = UtilityTool.loadSprite(dir + "secondLevel/39.png", "Missing ");
+            tile[109].image = UtilityTool.loadSprite(dir + "secondLevel/40.png", "Missing ");
+            tile[110].image = UtilityTool.loadSprite(dir + "secondLevel/41.png", "Missing ");
+            tile[111].image = UtilityTool.loadSprite(dir + "secondLevel/42.png", "Missing ");
+            tile[112].image = UtilityTool.loadSprite(dir + "secondLevel/43.png", "Missing ");
+            tile[113].image = UtilityTool.loadSprite(dir + "secondLevel/44.png", "Missing ");
+            tile[114].image = UtilityTool.loadSprite(dir + "secondLevel/45.png", "Missing ");
+            tile[115].image = UtilityTool.loadSprite(dir + "secondLevel/46.png", "Missing ");
+            tile[116].image = UtilityTool.loadSprite(dir + "secondLevel/47.png", "Missing ");
+            tile[117].image = UtilityTool.loadSprite(dir + "secondLevel/48.png", "Missing ");
+            tile[118].image = UtilityTool.loadSprite(dir + "secondLevel/49.png", "Missing ");
+            tile[119].image = UtilityTool.loadSprite(dir + "secondLevel/50.png", "Missing ");
+            tile[120].image = UtilityTool.loadSprite(dir + "secondLevel/51.png", "Missing ");
+            tile[121].image = UtilityTool.loadSprite(dir + "secondLevel/52.png", "Missing ");
+            tile[122].image = UtilityTool.loadSprite(dir + "secondLevel/53.png", "Missing ");
+            tile[123].image = UtilityTool.loadSprite(dir + "secondLevel/54.png", "Missing ");
+            tile[124].image = UtilityTool.loadSprite(dir + "secondLevel/55.png", "Missing ");
+            tile[125].image = UtilityTool.loadSprite(dir + "secondLevel/56.png", "Missing ");
+            tile[126].image = UtilityTool.loadSprite(dir + "secondLevel/57.png", "Missing ");
+            tile[127].image = UtilityTool.loadSprite(dir + "secondLevel/58.png", "Missing ");
+            tile[128].image = UtilityTool.loadSprite(dir + "secondLevel/59.png", "Missing ");
+            tile[129].image = UtilityTool.loadSprite(dir + "secondLevel/60.png", "Missing ");
+            tile[130].image = UtilityTool.loadSprite(dir + "secondLevel/61.png", "Missing ");
+            tile[131].image = UtilityTool.loadSprite(dir + "secondLevel/62.png", "Missing ");
+            tile[132].image = UtilityTool.loadSprite(dir + "secondLevel/63.png", "Missing ");
+            tile[133].image = UtilityTool.loadSprite(dir + "secondLevel/64.png", "Missing ");
+            tile[134].image = UtilityTool.loadSprite(dir + "secondLevel/65.png", "Missing ");
+            tile[135].image = UtilityTool.loadSprite(dir + "secondLevel/66.png", "Missing ");
+            tile[136].image = UtilityTool.loadSprite(dir + "secondLevel/67.png", "Missing ");
+            tile[137].image = UtilityTool.loadSprite(dir + "secondLevel/68.png", "Missing ");
+            tile[138].image = UtilityTool.loadSprite(dir + "secondLevel/69.png", "Missing ");
+            tile[139].image = UtilityTool.loadSprite(dir + "secondLevel/70.png", "Missing ");
+            tile[140].image = UtilityTool.loadSprite(dir + "secondLevel/71.png", "Missing ");
+            tile[141].image = UtilityTool.loadSprite(dir + "secondLevel/72.png", "Missing ");
+            tile[142].image = UtilityTool.loadSprite(dir + "secondLevel/73.png", "Missing ");
+            tile[143].image = UtilityTool.loadSprite(dir + "secondLevel/74.png", "Missing ");
+            tile[144].image = UtilityTool.loadSprite(dir + "secondLevel/75.png", "Missing ");
+            tile[145].image = UtilityTool.loadSprite(dir + "secondLevel/76.png", "Missing ");
+            tile[146].image = UtilityTool.loadSprite(dir + "secondLevel/77.png", "Missing ");
+            tile[147].image = UtilityTool.loadSprite(dir + "secondLevel/78.png", "Missing ");
+            tile[148].image = UtilityTool.loadSprite(dir + "secondLevel/79.png", "Missing ");
+
 //                case 1:
 //                    dir = "/tiles/firstLevel/";
 //                    tile = new Tile[31];

@@ -5,9 +5,12 @@ import entity.NPC_Blacksmith;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.Optional;
+import entity.Player;
 
 public class KeyHandler implements KeyListener {
+    public static int playerClass;
     GamePanel gp;
+    Player player;
     public boolean
             wPressed,
             sPressed,
@@ -23,6 +26,7 @@ public class KeyHandler implements KeyListener {
 
     public KeyHandler(GamePanel gp){
         this.gp = gp;
+        this.player = player;
     }
 
     @Override
@@ -97,25 +101,36 @@ public class KeyHandler implements KeyListener {
                 }
             }
         }
+
         // Character Selection
         else if (gp.gameState == gp.characterSelectionState) {
             if (code == KeyEvent.VK_SPACE) {
                 if (gp.ui.commandNum == 0) {
                     // CHANGE CLASS TO WARRIOR
                     gp.gameState = gp.playState;
+                    player.setPlayerClass(0);
+                    System.out.println("Class changed to Warrior");
+
                 } else if (gp.ui.commandNum == 1) {
                     // CHANGE CLASS TO KNIGHT
                     gp.gameState = gp.playState;
+                    player.setPlayerClass(1);
+
+                    System.out.println("Class changed to Knight");
                 } else if (gp.ui.commandNum == 2) {
                     // CHANGE CLASS TO ASSASSIN
                     gp.gameState = gp.playState;
+                    player.setPlayerClass(2);
+
+                    System.out.println("Class changed to Assassin");
+
                 }
             }
 
-            if (code == KeyEvent.VK_W){
+            if (code == KeyEvent.VK_A){
                 gp.ui.commandNum--;
             }
-            if (code == KeyEvent.VK_S){
+            if (code == KeyEvent.VK_D){
                 gp.ui.commandNum++;
             }
 

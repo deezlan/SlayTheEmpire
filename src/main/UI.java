@@ -1,12 +1,9 @@
 package main;
 
-import object.SuperObject;
-
 import entity.Entity;
 import entity.NPC_Blacksmith;
 import object.OBJ_Coin;
 import object.OBJ_Heart;
-import object.SuperObject;
 
 import javax.swing.*;
 import java.awt.*;

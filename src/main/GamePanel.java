@@ -17,7 +17,7 @@ import entity.Cursor;
 import entity.Entity;
 import entity.Player;
 import tile.TileManager;
-import object.SuperObject;
+
 
 public class GamePanel extends JPanel implements Runnable {
     // SCREEN SETTINGS
@@ -29,7 +29,7 @@ public class GamePanel extends JPanel implements Runnable {
     public final int SCREEN_WIDTH = TILE_SIZE * MAX_SCREEN_COL;
     public final int SCREEN_HEIGHT = TILE_SIZE * MAX_SCREEN_ROW;
     public int gameArea = 0;
-    public int playerClass = 0; // player class here
+    public int playerClass; // player class here
 
     // WORLD SETTINGS
     public int MAX_WORLD_COL = 17; //must be same as map size
@@ -63,7 +63,7 @@ public class GamePanel extends JPanel implements Runnable {
     public ArrayList<Entity> projectileList = new ArrayList<>();
     public CollisionChecker cChecker = new CollisionChecker(this);
     public UI ui = new UI(this);
-    public EventHandler eHandler = new EventHandler(this);
+//    public EventHandler eHandler = new EventHandler(this);
     ArrayList<Entity> entityList = new ArrayList<>();
 
     // GAME STATES

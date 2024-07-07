@@ -1,14 +1,16 @@
 package object;
 
+import entity.Entity;
 import main.GamePanel;
 import main.UtilityTool;
 
 import java.io.IOException;
 
-public class OBJ_Heart extends SuperObject{
+public class OBJ_Heart extends Entity {
     GamePanel gp;
 
     public OBJ_Heart(GamePanel gp) {
+        super(gp);
         this.gp = gp;
         name = "Heart";
 
@@ -23,7 +25,7 @@ public class OBJ_Heart extends SuperObject{
             defaultList.add(1, UtilityTool.loadSprite(dir + "heart_half.png", "Missing Half Heart"));
             defaultList.add(2, UtilityTool.loadSprite(dir + "heart_full.png", "Missing Full Heart"));
 
-            UtilityTool.scaleObjectList(defaultList, gp.TILE_SIZE, gp.TILE_SIZE);
+            UtilityTool.scaleEntityList(this,defaultList, gp.TILE_SIZE, gp.TILE_SIZE);
         } catch (IOException e) {
             e.printStackTrace(System.out);
         }

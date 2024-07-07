@@ -1,5 +1,7 @@
 package main;
 
+import entity.NPC_Blacksmith;
+
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.Optional;
@@ -13,8 +15,11 @@ public class KeyHandler implements KeyListener {
             dPressed,
             ePressed,
             pPressed,
-            enterPressed;
-
+            enterPressed,
+            shotKeyPressed,
+            onePressed,
+            twoPressed,
+            threePressed;
 
     public KeyHandler(GamePanel gp){
         this.gp = gp;
@@ -125,35 +130,57 @@ public class KeyHandler implements KeyListener {
         if (gp.gameState == gp.playState){
             if (code == KeyEvent.VK_W) {
                 wPressed = true;
-                if (gp.ui.slotRowMove != 0){
-                    gp.ui.slotRowMove -= 2;
-                    gp.ui.slotRow--;
-                }
             }
             if (code == KeyEvent.VK_S) {
                 sPressed = true;
-                if (gp.ui.slotRowMove != 6){
-                    gp.ui.slotRowMove += 2;
-                    gp.ui.slotRow++;
-                }
             }
             if (code == KeyEvent.VK_A) {
                 aPressed = true;
-                if (gp.ui.slotColMove != 0){
-                    gp.ui.slotColMove -= 2;
-                    gp.ui.slotCol--;
-                }
             }
             if (code == KeyEvent.VK_D) {
                 dPressed = true;
-                if (gp.ui.slotColMove != 2){
-                    gp.ui.slotColMove += 2;
-                    gp.ui.slotCol++;
-                }
+            }
+            if (code == KeyEvent.VK_E){
+                ePressed = true;
+            }
+            if (code == KeyEvent.VK_F) {
+                shotKeyPressed = true;
+            }
+            if (code == KeyEvent.VK_1){
+                onePressed = true;
+            }
+            if (code == KeyEvent.VK_2){
+                twoPressed = true;
+            }
+            if (code == KeyEvent.VK_3){
+                threePressed = true;
             }
         }
 
-        // PAUSING
+        if (gp.gameState == gp.shopState){
+            if (code == KeyEvent.VK_W) {
+                if (gp.ui.slotRowMove != 0){
+                    gp.ui.slotRowMove -= 1;
+                    gp.ui.slotRow--;
+                }
+            }
+            if (code == KeyEvent.VK_ENTER){
+                NPC_Blacksmith bs = (NPC_Blacksmith) gp.npcArr[1];
+                if (gp.player.totalCoins < bs.getShopItems().get(gp.ui.slotRow).price){
+                    //Do nothing
+                } else {
+                    bs.buy();
+                }
+                gp.gameState = gp.playState;
+            }
+            if (code == KeyEvent.VK_S) {
+                if (gp.ui.slotRowMove != 3){
+                    gp.ui.slotRowMove += 1;
+                    gp.ui.slotRow++;
+                }
+            }
+        }
+        //Pause State
         if (code == KeyEvent.VK_P) {
             pPressed = true;
             if(gp.gameState == gp.playState){
@@ -172,6 +199,13 @@ public class KeyHandler implements KeyListener {
                 gp.gameState = gp.playState;
             }
         }
+        //Debug
+//        if (code == KeyEvent.VK_R){
+//            switch(gp.currentMap){
+//                case 0: gp.tileM.loadMap("/mapTextFiles/map.txt"); break;
+//                case 1: gp.tileM.loadMap("/mapTextFiles/test.txt"); break;
+//            }
+//        }
 
         // !!!!! TEMPORARY TITLE+LOGIN+START MENU TEST !!!!!
         if (code == KeyEvent.VK_SPACE) {
@@ -198,5 +232,9 @@ public class KeyHandler implements KeyListener {
         if (code == KeyEvent.VK_A) { aPressed = false; }
         if (code == KeyEvent.VK_D) { dPressed = false; }
         if (code == KeyEvent.VK_ENTER) { enterPressed = false; }
+        if (code == KeyEvent.VK_F) { shotKeyPressed = false; }
+        if (code == KeyEvent.VK_1){ onePressed = false; }
+        if (code == KeyEvent.VK_2){ twoPressed = false; }
+        if (code == KeyEvent.VK_3){ threePressed = false; }
     }
 }

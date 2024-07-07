@@ -3,7 +3,10 @@ package mobs;
 import entity.Entity;
 import main.GamePanel;
 import main.UtilityTool;
+import object.OBJ_Energyball;
+import object.OBJ_Projectile;
 
+import javax.print.attribute.standard.RequestingUserName;
 import java.io.IOException;
 import java.util.Random;
 
@@ -12,15 +15,18 @@ public class MOB_ArmoredGuardian extends Entity {
     public MOB_ArmoredGuardian(GamePanel gp) {
         super(gp);
         this.gp = gp;
-        type = 2;
-        speed = 1;
+        type = 1;
+        defaultSpeed = 2;
+        speed = defaultSpeed;
         maxLife = 4;
         life = maxLife;
         action = "idleRight";
         mobNum = 7;
+        projectile = new OBJ_Energyball(gp);
 
         // Load mob sprites
         getMobSprites();
+        getAttackAnimation();
 
         // Set collision settings
         solidArea.x = 58;
@@ -33,53 +39,23 @@ public class MOB_ArmoredGuardian extends Entity {
 
     @Override
     public void setAction() {
-        actionLockCounter++;
 
-        if(actionLockCounter == 120){
-            Random random = new Random();
-            int i = random.nextInt(250)+1;
+        if(onPath) {
+            // CHECK IF STOP CHASING
+            checkStopChase(gp.player, 15, 100);
+            // SEARCH DIRECTION TO GO
+            searchPath(getGoalCol(gp.player),getGoalRow(gp.player));
 
-            if (i <= 25) {
-                action = "moveUp";
-                currentActionList = moveRightList;
-            }
-            if (i > 25 && i <= 50){
-                action = "moveDown";
-                currentActionList = moveLeftList;
-            }
-            if (i > 50 && i <= 75) {
-                action = "moveLeft";
-                currentActionList = moveLeftList;
-            }
-            if (i > 75 && i <= 100) {
-                action = "moveRight";
-                currentActionList = moveRightList;
-            }
-            if (i > 100 && i <= 125) {
-                action = "idleRight";
-                currentActionList = idleRightList;
-            }
-            if (i > 125 && i <= 150) {
-                action = "idleLeft";
-                currentActionList = idleLeftList;
-            }
-            if (i > 150 && i <= 175) {
-                action = "moveUpRight";
-                currentActionList = moveRightList;
-            }
-            if (i > 175 && i <= 200) {
-                action = "moveDownRight";
-                currentActionList = moveRightList;
-            }
-            if (i > 200 && i <= 225) {
-                action = "moveUpLeft";
-                currentActionList = moveLeftList;
-            }
-            if (i > 225) {
-                action = "moveDownLeft";
-                currentActionList = moveLeftList;
-            }
-            actionLockCounter = 0;
+            checkShoot(200,30);
+        } else {
+            // CHECK IF START CHASING
+            checkStartChase(gp.player, 5 , 100);
+            // GET RANDOM DIRECTION
+            getRandomDirection();
+        }
+        // CHECK ATTACK ON PLAYER
+        if(!attacking){
+            checkMobAttack(30,gp.TILE_SIZE*3,gp.TILE_SIZE*2);
         }
     }
 
@@ -108,4 +84,21 @@ public class MOB_ArmoredGuardian extends Entity {
             e.printStackTrace(System.out);
         }
     }
+
+    public void getAttackAnimation() {
+        String dir = "/Mobs/ArmoredGuardian/";
+        try {
+            for (int i = 0; i < 4; i++) {
+                mobRightAttackList.add(i, UtilityTool.loadSprite(dir + "idleRight/" + i + ".png", "Missing Guardian Attack Animation " + i));
+                mobLeftAttackList.add(i, UtilityTool.loadSprite(dir + "idleLeft/" + i + ".png", "Missing  Guardian Attack Animation " + i));
+                UtilityTool.scaleEntityList(this, mobLeftAttackList, 150, 150);
+                UtilityTool.scaleEntityList(this, mobRightAttackList, 150, 150);
+                System.out.println("ATTACK is LOADED!");
+            }
+        } catch (IOException e){
+            e.printStackTrace(System.out);
+        }
+    }
 }
+
+

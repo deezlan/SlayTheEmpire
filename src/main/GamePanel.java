@@ -49,7 +49,7 @@ public class GamePanel extends JPanel implements Runnable {
     public Entity[][] objArr= new Entity[maxMap][10];
     public Entity[][] npcArr = new Entity[maxMap][10];
     public Entity[][] mobArr = new Entity[maxMap][10];
-    public ArrayList<Entity> projectileList = new ArrayList<>();
+    public Entity[][] projectileList = new Entity[maxMap][50];
     public InteractiveTIle[][] iTile = new InteractiveTIle[maxMap][50];
     public CollisionChecker cChecker = new CollisionChecker(this);
     public UI ui = new UI(this);
@@ -172,13 +172,13 @@ public class GamePanel extends JPanel implements Runnable {
                 }
             }
 
-            for (int i = 0; i < projectileList.size(); i++){
-                if (projectileList.get(i) != null){
-                    if (projectileList.get(i).alive){
-                        projectileList.get(i).update();
+            for (int i = 0; i < projectileList[1].length; i++){
+                if (projectileList[currentMap][i] != null){
+                    if (projectileList[currentMap][i].alive){
+                        projectileList[currentMap][i].update();
                     }
-                    if (!projectileList.get(i).alive){
-                        projectileList.remove(i);
+                    if (!projectileList[currentMap][i].alive){
+                        projectileList[currentMap][i]=null;
                     }
                 }
             }
@@ -241,6 +241,12 @@ public class GamePanel extends JPanel implements Runnable {
                 }
             }
 
+            for (int i = 0; i < projectileList[1].length; i++){ // PROJECTILES
+                if(projectileList[currentMap][i] != null){
+                    entityList.add(projectileList[currentMap][i]);
+                }
+            }
+
             // SORT
             entityList.sort(Comparator.comparingInt(e -> e.worldY));
 
@@ -248,9 +254,6 @@ public class GamePanel extends JPanel implements Runnable {
             for (Entity entity : entityList) {
                 entity.draw(g2);
             }
-
-            for (Entity proj : projectileList)
-                if (proj != null) proj.draw(g2);
 
             // EMPTY ENTITY LIST
             for (int i = 0; i < entityList.size(); i++){

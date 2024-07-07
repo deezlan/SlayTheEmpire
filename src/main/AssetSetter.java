@@ -83,10 +83,10 @@ public class AssetSetter {
         int i = 0;
                 // MAP 0
 
-//                gp.mobArr[mapNum][i] = new MOB_ArmoredGuardian(gp);
-//                gp.mobArr[mapNum][i].worldX = 350;
-//                gp.mobArr[mapNum][i].worldY = 270;
-//                i++;
+                gp.mobArr[mapNum][i] = new MOB_ArmoredGuardian(gp);
+                gp.mobArr[mapNum][i].worldX = 350;
+                gp.mobArr[mapNum][i].worldY = 270;
+                i++;
 //
 //                gp.mobArr[mapNum][i] = new MOB_FlyingEye(gp);
 //                gp.mobArr[mapNum][i].worldX = 400;
@@ -103,10 +103,10 @@ public class AssetSetter {
 //                gp.mobArr[mapNum][i].worldY = 300;
 //                i++;
 
-                gp.mobArr[mapNum][i] = new MOB_Slime(gp);
-                gp.mobArr[mapNum][i].worldX = 800;
-                gp.mobArr[mapNum][i].worldY = 400;
-                i++;
+//                gp.mobArr[mapNum][i] = new MOB_Slime(gp);
+//                gp.mobArr[mapNum][i].worldX = 800;
+//                gp.mobArr[mapNum][i].worldY = 400;
+//                i++;
 
 //                gp.mobArr[mapNum][i] = new MOB_Goblin(gp);
 //                gp.mobArr[mapNum][i].worldX = 400;

@@ -44,6 +44,7 @@ public class MOB_Slime extends Entity {
             checkStopChase(gp.player, 15, 100);
             // SEARCH DIRECTION TO GO
             searchPath(getGoalCol(gp.player),getGoalRow(gp.player));
+            checkShoot(200,30);
         } else {
             // CHECK IF START CHASING
             checkStartChase(gp.player, 5 , 100);

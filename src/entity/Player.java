@@ -64,7 +64,7 @@ public class Player extends Entity {
         maxLife = 6;
         life = maxLife;
         totalCoins = 500;
-        damage = 0;
+        damage = 1;
     }
 
     private void setCollisionValues() {
@@ -256,13 +256,18 @@ public class Player extends Entity {
             }
         }
 
-        if (gp.keyH.shotKeyPressed){
+        if (gp.keyH.shotKeyPressed && shotAvailableCounter == 30){
             if (currentWeapon == null){
                 attacking = true;
             } else {
                 projectile.set(worldX, worldY, action, true, this);
-
-                gp.projectileList.add(projectile);
+                shotAvailableCounter = 0; // ADDED COOL-DOWN
+                for (int i = 0; i < gp.projectileList[1].length; i++) {
+                    if(gp.projectileList[gp.currentMap][i] == null){
+                        gp.projectileList[gp.currentMap][i] = projectile;
+                        break;
+                    }
+                }
             }
         }
 
@@ -289,6 +294,10 @@ public class Player extends Entity {
             } else {
                 System.out.println("No weapon");
             }
+        }
+
+        if(shotAvailableCounter < 30){
+            shotAvailableCounter++;
         }
     }
 
@@ -322,7 +331,7 @@ public class Player extends Entity {
                     solidArea.height = attackArea.height;
                     // CHECK MONSTER COLLISION
                     int monsterIndex = gp.cChecker.checkEntityCollision(this, gp.mobArr);
-                    damageMonster(monsterIndex, this);
+                    damageMonster(monsterIndex, damage,this);
 
                     int iTileIndex = gp.cChecker.checkEntityCollision(this,gp.iTile);
                     damageInteractiveTile(iTileIndex);
@@ -454,20 +463,19 @@ public class Player extends Entity {
     }
 
     public void interactMob (int index) {
-        if ( index != 999) {
-            if (!iframe){
+        if (index != 999) {
+            if (!iframe && !gp.mobArr[gp.currentMap][index].dead){
                 life -= 1;
                 iframe = true;
             }
         }
     }
 
-    public void damageMonster(int i, Entity attacker) {
+    public void damageMonster(int i, int attack, Entity attacker) {
         if (i != 999){
-
             if(!gp.mobArr[gp.currentMap][i].iframe){
                 knockBack(gp.mobArr[gp.currentMap][i],attacker);
-                gp.mobArr[gp.currentMap][i].life -= 1;
+                gp.mobArr[gp.currentMap][i].life -= attack;
                 gp.mobArr[gp.currentMap][i].iframe = true;
                 gp.mobArr[gp.currentMap][i].damageReaction();
                 System.out.println("hit");

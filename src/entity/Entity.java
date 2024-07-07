@@ -32,7 +32,11 @@ public abstract class Entity {
             playerRightAttackList = new ArrayList<>(),
             playerLeftAttackList = new ArrayList<>(),
             mobRightAttackList = new ArrayList<>(),
-            mobLeftAttackList = new ArrayList<>();
+            mobLeftAttackList = new ArrayList<>(),
+            projectileRight = new ArrayList<>(),
+            projectileLeft = new ArrayList<>(),
+            projectileUp = new ArrayList<>(),
+            projectileDown = new ArrayList<>();
 
     String[] dialogs = new String[20];
 
@@ -56,6 +60,9 @@ public abstract class Entity {
     public boolean alive = true;
     public boolean dead = false;
     public boolean hpBarON = false;
+
+    // PROJECTILES
+    public int shotAvailableCounter = 0;
 
     // KNOCK-BACK
     public Entity attacker;
@@ -325,6 +332,21 @@ public abstract class Entity {
         }
     }
 
+    public void checkShoot(int rate, int shotInterval) {
+        int i = new Random().nextInt(rate);
+        if(i == 0 && !projectile.alive && shotAvailableCounter == shotInterval){
+            projectile.set(worldX, worldY, action,true,this);
+            for (int ii = 0; ii < gp.projectileList[1].length; i++) {
+                if(gp.projectileList[gp.currentMap][ii] == null){
+                    gp.projectileList[gp.currentMap][ii] = projectile;
+                    break;
+                }
+            }
+            shotAvailableCounter = 0;
+        }
+
+    }
+
     public void attackAnimation() { // animation attack
         animationCounter++;
         if (animationCounter <= 5) {
@@ -370,7 +392,7 @@ public abstract class Entity {
             } else { // FOR PLAYER
                 // CHECK MONSTER COLLISION
                 int monsterIndex = gp.cChecker.checkEntityCollision(this, gp.mobArr);
-                gp.player.damageMonster(monsterIndex, this);
+                gp.player.damageMonster(monsterIndex, attack,this);
 
                 int iTileIndex = gp.cChecker.checkEntityCollision(this, gp.iTile);
                 gp.player.damageInteractiveTile(iTileIndex);
@@ -518,7 +540,6 @@ public abstract class Entity {
             changeAlpha(g2, 1f);
         }
         if (dyingCounter > 40) {
-            dead = true;
             alive = false;
         }
     }

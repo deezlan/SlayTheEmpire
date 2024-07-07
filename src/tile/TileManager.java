@@ -118,8 +118,8 @@ public class TileManager {
     public void getTileImage() {
         try {
             dir = "/tiles/";
-            tile = new Tile[71];
-            for (int i = 0; i <= 70; i++) {
+            tile = new Tile[200];
+            for (int i = 0; i <= 149; i++) {
                 tile[i] = new Tile();
                 if (i < 13 || i > 25 ) tile[i].collision = true;
             }

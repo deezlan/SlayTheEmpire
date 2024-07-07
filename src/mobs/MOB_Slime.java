@@ -16,7 +16,7 @@ public class MOB_Slime extends Entity {
         speed = defaultSpeed;
         maxLife = 4;
         life = maxLife;
-        attack = 5;
+        attack = 1;
         lookingRight = true;
         action = "idleRight";
         mobNum = 1;
@@ -32,6 +32,8 @@ public class MOB_Slime extends Entity {
         solidArea.height = 30;
         solidAreaDefaultX = solidArea.x;
         solidAreaDefaultY = solidArea.y;
+        attackArea.width = 50;
+        attackArea.height = 30;
     }
 
     @Override
@@ -48,10 +50,9 @@ public class MOB_Slime extends Entity {
             // GET RANDOM DIRECTION
             getRandomDirection();
             }
-
         // CHECK ATTACK ON PLAYER
         if(!attacking){
-            checkMobAttack(30,gp.TILE_SIZE*4,gp.TILE_SIZE*4);
+            checkMobAttack(30,gp.TILE_SIZE*3,gp.TILE_SIZE*2);
         }
     }
 

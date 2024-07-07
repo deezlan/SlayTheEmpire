@@ -58,6 +58,7 @@ public class Player extends Entity {
         speed = defaultSpeed;
         action = "idleRight";
         lookingRight = true;
+        type = 0;
 
         // ATTRIBUTES
         maxLife = 6;

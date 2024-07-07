@@ -35,17 +35,22 @@ public abstract class Entity {
             mobLeftAttackList = new ArrayList<>();
 
     String[] dialogs = new String[20];
+
     public void speak() {
         if (dialogs[interactionCounter] == null) interactionCounter = 0;
         gp.ui.currentDialog = dialogs[interactionCounter];
         interactionCounter++;
     }
-    public void setAction(){}
-    public void damageReaction(){}
+
+    public void setAction() {
+    }
+
+    public void damageReaction() {
+    }
 
     // HIT DETECTION
     public boolean attacking = false;
-    public Rectangle attackArea = new Rectangle(0,0,0,0);
+    public Rectangle attackArea = new Rectangle(0, 0, 0, 0);
     public boolean iframe = false;
     public int iframeCounter = 0;
     public boolean alive = true;
@@ -59,20 +64,25 @@ public abstract class Entity {
 
     // TRACKING
     public boolean onPath = false;
-    public int getXdistance(Entity target){
+
+    public int getXdistance(Entity target) {
         return Math.abs(worldX - target.worldX);
     }
-    public int getYdistance(Entity target){
+
+    public int getYdistance(Entity target) {
         return Math.abs(worldY - target.worldY);
     }
-    public int getTileDistance(Entity target){
-        return (getXdistance(target) + getYdistance(target))/gp.TILE_SIZE;
+
+    public int getTileDistance(Entity target) {
+        return (getXdistance(target) + getYdistance(target)) / gp.TILE_SIZE;
     }
+
     public int getGoalCol(Entity target) {
-        return (target.worldX + target.solidArea.x)/gp.TILE_SIZE;
+        return (target.worldX + target.solidArea.x) / gp.TILE_SIZE;
     }
+
     public int getGoalRow(Entity target) {
-        return (target.worldY + target.solidArea.y)/gp.TILE_SIZE;
+        return (target.worldY + target.solidArea.y) / gp.TILE_SIZE;
     }
 
     // ITEM ATTRIBUTES
@@ -144,12 +154,12 @@ public abstract class Entity {
         } else {
             if (knockBack) {
                 checkCollision();
-                if(upCollisionOn && downCollisionOn && leftCollisionOn && rightCollisionOn) {
+                if (upCollisionOn && downCollisionOn && leftCollisionOn && rightCollisionOn) {
                     knockBackCounter = 0;
                     knockBack = false;
                     speed = defaultSpeed;
-                } else if (!upCollisionOn && !downCollisionOn && !leftCollisionOn && !rightCollisionOn){
-                    switch (knockBackDirection){
+                } else if (!upCollisionOn && !downCollisionOn && !leftCollisionOn && !rightCollisionOn) {
+                    switch (knockBackDirection) {
                         case "moveUp":
                             worldY -= speed;
                             break;
@@ -180,15 +190,15 @@ public abstract class Entity {
                             break;
                     }
                 }
+
                 knockBackCounter++;
-                if(knockBackCounter == 10){
+                if (knockBackCounter == 10) {
                     knockBackCounter = 0;
                     knockBack = false;
                     speed = defaultSpeed;
                 }
-                else if(attacking){
-                    attackAnimation();
-                }
+            } else if (attacking) {
+                attackAnimation();
             } else {
                 setAction();
                 checkCollision();
@@ -247,18 +257,18 @@ public abstract class Entity {
     }
 
     public void checkStartChase(Entity target, int distance, int rate) {
-        if(getTileDistance(target) < distance){
+        if (getTileDistance(target) < distance) {
             int i = new Random().nextInt(rate);
-            if(i == 0){
+            if (i == 0) {
                 onPath = true;
             }
         }
     }
 
     public void checkStopChase(Entity target, int distance, int rate) {
-        if(getTileDistance(target) > distance){
+        if (getTileDistance(target) > distance) {
             int i = new Random().nextInt(rate);
-            if(i == 0){
+            if (i == 0) {
                 onPath = false;
             }
         }
@@ -267,15 +277,15 @@ public abstract class Entity {
     public void getRandomDirection() {
         actionLockCounter++;
         // GET A RANDOM DIRECTION
-        if(actionLockCounter == 120){
+        if (actionLockCounter == 120) {
             Random random = new Random();
-            int i = random.nextInt(250)+1;
+            int i = random.nextInt(250) + 1;
 
             if (i <= 25) {
                 action = "moveUp";
                 currentActionList = moveRightList;
             }
-            if (i > 25 && i <= 50){
+            if (i > 25 && i <= 50) {
                 action = "moveDown";
                 currentActionList = moveLeftList;
             }
@@ -315,16 +325,16 @@ public abstract class Entity {
         }
     }
 
-    public void attackAnimation(){ // animation attack
+    public void attackAnimation() { // animation attack
         animationCounter++;
-        if (animationCounter <= 5){
+        if (animationCounter <= 5) {
             animationSpriteNum = 0;
-        } else if (animationCounter <= 25) {
+        } else if (animationCounter <= 10) {
             animationSpriteNum = 1;
-        } else if (animationCounter <= 30) {
+        } else if (animationCounter <= 15) {
             animationSpriteNum = 2;
 
-            // SAVE CURRENT DATA OF PLAYER
+            // SAVE CURRENT DATA OF ENTITY
             int currentWorldX = worldX;
             int currentWorldY = worldY;
             int solidAreaWidth = solidArea.width;
@@ -332,17 +342,25 @@ public abstract class Entity {
 
             // ADJUST FOR ATTACK
             switch (action) {
-                case "moveUp": worldY -= attackArea.height; break;
-                case "moveDown": worldY += attackArea.height; break;
-                case "moveLeft": worldX -= attackArea.width; break;
-                case "moveRight": worldX += attackArea.width; break;
+                case "moveUp":
+                    worldY -= attackArea.height;
+                    break;
+                case "moveDown":
+                    worldY += attackArea.height;
+                    break;
+                case "moveLeft":
+                    worldX -= attackArea.width;
+                    break;
+                case "moveRight":
+                    worldX += attackArea.width;
+                    break;
             }
 
             // ATTACK AREA BECOMES SOLID AREA
             solidArea.width = attackArea.width;
             solidArea.height = attackArea.height;
-            if(type == 1) {
-                if(gp.cChecker.checkPLayer(this)){
+            if (type == 1) {
+                if (gp.cChecker.checkPLayer(this)) {
                     damagePlayer(attack);
                 }
             } else { // FOR PLAYER
@@ -350,7 +368,7 @@ public abstract class Entity {
                 int monsterIndex = gp.cChecker.checkEntityCollision(this, gp.mobArr);
                 gp.player.damageMonster(monsterIndex, this);
 
-                int iTileIndex = gp.cChecker.checkEntityCollision(this,gp.iTile);
+                int iTileIndex = gp.cChecker.checkEntityCollision(this, gp.iTile);
                 gp.player.damageInteractiveTile(iTileIndex);
             }
             // CHANGE BACK TO ORIGINAL
@@ -359,67 +377,67 @@ public abstract class Entity {
             solidArea.width = solidAreaWidth;
             solidArea.height = solidAreaHeight;
 
-//        } else if (animationCounter <= 20) {
-//            animationSpriteNum = 3;
-//        } else if (animationCounter <= 25) {
-//            animationSpriteNum = 4;
-//        } else if (animationCounter <= 30) {
-//            animationSpriteNum = 5;
-//        } else if (animationCounter <= 35) {
-//            animationSpriteNum = 6;
-//        } else if (animationCounter <= 40) {
-//            animationSpriteNum = 7;
-        } else if (animationCounter <= 40) {
+        } else if (animationCounter <= 20) {
             animationSpriteNum = 3;
+        } else if (animationCounter <= 25) {
+            animationSpriteNum = 4;
+        } else if (animationCounter <= 30) {
+            animationSpriteNum = 5;
+        } else if (animationCounter <= 35) {
+            animationSpriteNum = 6;
+        } else if (animationCounter <= 40) {
+            animationSpriteNum = 7;
         } else if (animationCounter <= 45) {
+            animationSpriteNum = 8;
+        } else if (animationCounter <= 50) {
             animationSpriteNum = 0;
             animationCounter = 0;
             attacking = false;
         }
     }
 
-    public void checkMobAttack(int rate, int straight, int horizontal){
+    public void checkMobAttack(int rate, int straight, int horizontal) {
         boolean targetInRange = false;
         int xDis = getXdistance(gp.player);
         int yDis = getYdistance(gp.player);
 
-        switch(action){
+        switch (action) {
             case "moveUp":
-                if(gp.player.worldY < worldY && yDis < straight && xDis < horizontal) {
+                if (gp.player.worldY < worldY && yDis < straight && xDis < horizontal) {
                     targetInRange = true;
                 }
                 break;
             case "moveDown":
-                if(gp.player.worldY > worldY && yDis < straight && xDis < horizontal) {
-                    targetInRange = true;
-                }
-                break;
-            case "moveRight":
-                if(gp.player.worldX > worldX && xDis < straight && yDis < horizontal) {
+                if (gp.player.worldY > worldY && yDis < straight && xDis < horizontal) {
                     targetInRange = true;
                 }
                 break;
             case "moveLeft":
-                if(gp.player.worldX < worldX && xDis < straight && yDis < horizontal) {
+                if (gp.player.worldX < worldX && xDis < straight && yDis < horizontal) {
+                    targetInRange = true;
+                }
+                break;
+            case "moveRight":
+                if (gp.player.worldX > worldX && xDis < straight && yDis < horizontal) {
                     targetInRange = true;
                 }
                 break;
         }
-        if(targetInRange){
-            // CHECK ATTACK HAPPENS
+        if (targetInRange) {
+//          CHECK ATTACK HAPPENS
             int i = new Random().nextInt(rate);
-            if(i == 0){
-                attacking = true;
-                spriteNum = 1;
-                spriteCounter = 0;
-            }
+            if (i == 0) {
+            attacking = true;
+            spriteNum = 1;
+            spriteCounter = 0;
         }
     }
+}
 
     public void damagePlayer(int attack) {
-        if(!gp.player.iframe){
+        if (!gp.player.iframe) {
             int damage = attack;
-            if(damage < 0) {
+            if (damage < 0) {
                 damage = 0;
             }
             gp.player.life -= damage;
@@ -427,7 +445,7 @@ public abstract class Entity {
         }
     }
 
-    public void startInteract(){
+    public void startInteract() {
         interactSpriteCounter++;
         loopThroughInteractSprites();
     }
@@ -461,7 +479,7 @@ public abstract class Entity {
             interactSpriteNum = 12;
         } else if (interactSpriteCounter < 70) {
             interactSpriteNum = 13;
-        } else if (interactSpriteCounter <= 75){
+        } else if (interactSpriteCounter <= 75) {
             interactSpriteNum = 0;
             interactSpriteCounter = 0;
             interacting = false;
@@ -471,14 +489,30 @@ public abstract class Entity {
     public void dyingAnimation(Graphics2D g2) { // BLINKING EFFECT
         dyingCounter++;
 
-        if (dyingCounter <= 5){changeAlpha(g2,0f);}
-        if (dyingCounter > 5 && dyingCounter <= 10){changeAlpha(g2,1f);}
-        if (dyingCounter > 10 && dyingCounter <= 15){changeAlpha(g2,0f);}
-        if (dyingCounter > 15 && dyingCounter <= 20){changeAlpha(g2,1f);}
-        if (dyingCounter > 20 && dyingCounter <= 25){changeAlpha(g2,0f);}
-        if (dyingCounter > 25 && dyingCounter <= 30){changeAlpha(g2,1f);}
-        if (dyingCounter > 30 && dyingCounter <= 35){changeAlpha(g2,0f);}
-        if (dyingCounter > 35 && dyingCounter <= 40){changeAlpha(g2,1f);}
+        if (dyingCounter <= 5) {
+            changeAlpha(g2, 0f);
+        }
+        if (dyingCounter > 5 && dyingCounter <= 10) {
+            changeAlpha(g2, 1f);
+        }
+        if (dyingCounter > 10 && dyingCounter <= 15) {
+            changeAlpha(g2, 0f);
+        }
+        if (dyingCounter > 15 && dyingCounter <= 20) {
+            changeAlpha(g2, 1f);
+        }
+        if (dyingCounter > 20 && dyingCounter <= 25) {
+            changeAlpha(g2, 0f);
+        }
+        if (dyingCounter > 25 && dyingCounter <= 30) {
+            changeAlpha(g2, 1f);
+        }
+        if (dyingCounter > 30 && dyingCounter <= 35) {
+            changeAlpha(g2, 0f);
+        }
+        if (dyingCounter > 35 && dyingCounter <= 40) {
+            changeAlpha(g2, 1f);
+        }
         if (dyingCounter > 40) {
             dead = true;
             alive = false;
@@ -491,10 +525,10 @@ public abstract class Entity {
 
     public void searchPath(int goalCol, int goalRow) {
 
-        int startCol = (worldX + solidArea.x)/gp.TILE_SIZE;
-        int startRow = (worldY + solidArea.y)/gp.TILE_SIZE;
+        int startCol = (worldX + solidArea.x) / gp.TILE_SIZE;
+        int startRow = (worldY + solidArea.y) / gp.TILE_SIZE;
 
-        gp.pFinder.setNodes(startCol,startRow,goalCol,goalRow);
+        gp.pFinder.setNodes(startCol, startRow, goalCol, goalRow);
 
         if (gp.pFinder.search()) {
             // NEXT WORLD X & Y
@@ -507,49 +541,45 @@ public abstract class Entity {
             int enTopY = worldY + solidArea.y;
             int enBottomY = worldY + solidArea.y + solidArea.height;
 
-            if(enTopY > nextY && enLeftX >= nextX && enRightX < nextX + gp.TILE_SIZE){
+            if (enTopY > nextY && enLeftX >= nextX && enRightX < nextX + gp.TILE_SIZE) {
                 action = "moveUp";
                 currentActionList = moveRightList;
-            } else if (enTopY < nextY && enLeftX >= nextX && enRightX < nextX + gp.TILE_SIZE){
+            } else if (enTopY < nextY && enLeftX >= nextX && enRightX < nextX + gp.TILE_SIZE) {
                 action = "moveDown";
                 currentActionList = moveLeftList;
-            } else if (enTopY >= nextY && enBottomY < nextY + gp.TILE_SIZE){
-                if (enLeftX > nextX){
+            } else if (enTopY >= nextY && enBottomY < nextY + gp.TILE_SIZE) {
+                if (enLeftX > nextX) {
                     action = "moveLeft";
                     currentActionList = moveLeftList;
                 }
-                if(enLeftX < nextX){
+                if (enLeftX < nextX) {
                     action = "moveRight";
                     currentActionList = moveRightList;
                 }
-            }
-            else if (enTopY > nextY && enLeftX > nextX){
+            } else if (enTopY > nextY && enLeftX > nextX) {
                 action = "moveUp";
                 checkCollision();
-                if(upCollisionOn && downCollisionOn && leftCollisionOn && rightCollisionOn){ // check
+                if (upCollisionOn && downCollisionOn && leftCollisionOn && rightCollisionOn) { // check
                     action = "moveLeft";
                     currentActionList = moveLeftList;
                 }
-            }
-            else if (enTopY > nextY && enLeftX < nextX){
+            } else if (enTopY > nextY && enLeftX < nextX) {
                 action = "moveUp";
-                if(upCollisionOn && downCollisionOn && leftCollisionOn && rightCollisionOn){ // check
+                if (upCollisionOn && downCollisionOn && leftCollisionOn && rightCollisionOn) { // check
                     action = "moveRight";
                     currentActionList = moveRightList;
                 }
-            }
-            else if (enTopY < nextY && enLeftX > nextX){
+            } else if (enTopY < nextY && enLeftX > nextX) {
                 action = "moveDown";
                 checkCollision(); // check
-                if(upCollisionOn && downCollisionOn && leftCollisionOn && rightCollisionOn){
+                if (upCollisionOn && downCollisionOn && leftCollisionOn && rightCollisionOn) {
                     action = "moveLeft";
                     currentActionList = moveLeftList;
                 }
-            }
-            else if (enTopY < nextY && enLeftX < nextX){
+            } else if (enTopY < nextY && enLeftX < nextX) {
                 action = "moveDown";
                 checkCollision(); // check
-                if(upCollisionOn && downCollisionOn && leftCollisionOn && rightCollisionOn){
+                if (upCollisionOn && downCollisionOn && leftCollisionOn && rightCollisionOn) {
                     action = "moveRight";
                     currentActionList = moveRightList;
                 }
@@ -568,101 +598,105 @@ public abstract class Entity {
         if (!alive) {
             return;
         }
-        if (interacting) {image = interactList.get(interactSpriteNum);} else {image = currentActionList.get(spriteNum - 1);}
+        if (interacting) {
+            image = interactList.get(interactSpriteNum);
+        } else {
+            image = currentActionList.get(spriteNum - 1);
+        }
         int screenX = worldX - gp.player.worldX + gp.player.screenX;
         int screenY = worldY - gp.player.worldY + gp.player.screenY;
 
-        if (worldX + gp.TILE_SIZE > gp.player.worldX - gp.player.screenX - 48*4 && // added values due to player sprite not centered
-                worldX - gp.TILE_SIZE < gp.player.worldX + gp.player.screenX + 48*4 &&
-                worldY + gp.TILE_SIZE > gp.player.worldY - gp.player.screenY - 48*2 &&
-                worldY - gp.TILE_SIZE < gp.player.worldY + gp.player.screenY + 48*2)
-        {
+        if (worldX + gp.TILE_SIZE > gp.player.worldX - gp.player.screenX - 48 * 4 && // added values due to player sprite not centered
+                worldX - gp.TILE_SIZE < gp.player.worldX + gp.player.screenX + 48 * 4 &&
+                worldY + gp.TILE_SIZE > gp.player.worldY - gp.player.screenY - 48 * 2 &&
+                worldY - gp.TILE_SIZE < gp.player.worldY + gp.player.screenY + 48 * 2) {
             // MONSTER HP BAR
-            if(type == 2 && hpBarON) {
-                double oneScale = (double)gp.TILE_SIZE/maxLife;
-                double hpBarValue = oneScale*life;
-                if (mobNum == 1){ // SLIME
-                    g2.setColor(new Color(35,35,35));
-                    g2.fillRect(screenX+51,screenY+121 , gp.TILE_SIZE,10);
-                    g2.setColor(new Color(255,0,30));
-                    g2.fillRect(screenX+50,screenY + 120, (int)hpBarValue,9);
+            if (type == 1 && hpBarON) {
+                double oneScale = (double) gp.TILE_SIZE / maxLife;
+                double hpBarValue = oneScale * life;
+                if (mobNum == 1) { // SLIME
+                    g2.setColor(new Color(35, 35, 35));
+                    g2.fillRect(screenX + 51, screenY + 121, gp.TILE_SIZE, 10);
+                    g2.setColor(new Color(255, 0, 30));
+                    g2.fillRect(screenX + 50, screenY + 120, (int) hpBarValue, 9);
                 }
-                if (mobNum == 2){ // SKELLINGTON
-                    g2.setColor(new Color(35,35,35));
-                    g2.fillRect(screenX+51,screenY+141 , gp.TILE_SIZE,10);
-                    g2.setColor(new Color(255,0,30));
-                    g2.fillRect(screenX+50,screenY + 140, (int)hpBarValue,9);
+                if (mobNum == 2) { // SKELLINGTON
+                    g2.setColor(new Color(35, 35, 35));
+                    g2.fillRect(screenX + 51, screenY + 141, gp.TILE_SIZE, 10);
+                    g2.setColor(new Color(255, 0, 30));
+                    g2.fillRect(screenX + 50, screenY + 140, (int) hpBarValue, 9);
                 }
-                if (mobNum == 3){ // ROBOT GUARDIAN
-                    g2.setColor(new Color(35,35,35));
-                    g2.fillRect(screenX+81,screenY+161 , gp.TILE_SIZE,10);
-                    g2.setColor(new Color(255,0,30));
-                    g2.fillRect(screenX+80,screenY + 160, (int)hpBarValue,9);
+                if (mobNum == 3) { // ROBOT GUARDIAN
+                    g2.setColor(new Color(35, 35, 35));
+                    g2.fillRect(screenX + 81, screenY + 161, gp.TILE_SIZE, 10);
+                    g2.setColor(new Color(255, 0, 30));
+                    g2.fillRect(screenX + 80, screenY + 160, (int) hpBarValue, 9);
                 }
-                if (mobNum == 4){ // RAMSES
-                    g2.setColor(new Color(35,35,35));
-                    g2.fillRect(screenX+61,screenY+121 , gp.TILE_SIZE,10);
-                    g2.setColor(new Color(255,0,30));
-                    g2.fillRect(screenX+60,screenY + 120, (int)hpBarValue,9);
+                if (mobNum == 4) { // RAMSES
+                    g2.setColor(new Color(35, 35, 35));
+                    g2.fillRect(screenX + 61, screenY + 121, gp.TILE_SIZE, 10);
+                    g2.setColor(new Color(255, 0, 30));
+                    g2.fillRect(screenX + 60, screenY + 120, (int) hpBarValue, 9);
                 }
-                if (mobNum == 5){ // GOBLIN
-                    g2.setColor(new Color(35,35,35));
-                    g2.fillRect(screenX+61,screenY+131 , gp.TILE_SIZE,10);
-                    g2.setColor(new Color(255,0,30));
-                    g2.fillRect(screenX+60,screenY + 130, (int)hpBarValue,9);
+                if (mobNum == 5) { // GOBLIN
+                    g2.setColor(new Color(35, 35, 35));
+                    g2.fillRect(screenX + 61, screenY + 131, gp.TILE_SIZE, 10);
+                    g2.setColor(new Color(255, 0, 30));
+                    g2.fillRect(screenX + 60, screenY + 130, (int) hpBarValue, 9);
                 }
-                if (mobNum == 7){ // ARMORED GUARDIAN
-                    g2.setColor(new Color(35,35,35));
-                    g2.fillRect(screenX+51,screenY+121 , gp.TILE_SIZE,10);
-                    g2.setColor(new Color(255,0,30));
-                    g2.fillRect(screenX+50,screenY + 120, (int)hpBarValue,9);
+                if (mobNum == 7) { // ARMORED GUARDIAN
+                    g2.setColor(new Color(35, 35, 35));
+                    g2.fillRect(screenX + 51, screenY + 121, gp.TILE_SIZE, 10);
+                    g2.setColor(new Color(255, 0, 30));
+                    g2.fillRect(screenX + 50, screenY + 120, (int) hpBarValue, 9);
                 }
-                if (mobNum == 8){ // FLYING EYE
-                    g2.setColor(new Color(35,35,35));
-                    g2.fillRect(screenX+141,screenY+191 , gp.TILE_SIZE,10);
-                    g2.setColor(new Color(255,0,30));
-                    g2.fillRect(screenX+140,screenY + 190, (int)hpBarValue,9);
+                if (mobNum == 8) { // FLYING EYE
+                    g2.setColor(new Color(35, 35, 35));
+                    g2.fillRect(screenX + 141, screenY + 191, gp.TILE_SIZE, 10);
+                    g2.setColor(new Color(255, 0, 30));
+                    g2.fillRect(screenX + 140, screenY + 190, (int) hpBarValue, 9);
                 }
-                if (mobNum == 9){ // MUSHROOM
-                    g2.setColor(new Color(35,35,35));
-                    g2.fillRect(screenX+126,screenY+211 , gp.TILE_SIZE,10);
-                    g2.setColor(new Color(255,0,30));
-                    g2.fillRect(screenX+125,screenY + 210, (int)hpBarValue,9);
+                if (mobNum == 9) { // MUSHROOM
+                    g2.setColor(new Color(35, 35, 35));
+                    g2.fillRect(screenX + 126, screenY + 211, gp.TILE_SIZE, 10);
+                    g2.setColor(new Color(255, 0, 30));
+                    g2.fillRect(screenX + 125, screenY + 210, (int) hpBarValue, 9);
                 }
-                if (mobNum == 10){ // CANINE
-                    g2.setColor(new Color(35,35,35));
-                    g2.fillRect(screenX+21,screenY+91 , gp.TILE_SIZE,10);
-                    g2.setColor(new Color(255,0,30));
-                    g2.fillRect(screenX+20,screenY + 90, (int)hpBarValue,9);
+                if (mobNum == 10) { // CANINE
+                    g2.setColor(new Color(35, 35, 35));
+                    g2.fillRect(screenX + 21, screenY + 91, gp.TILE_SIZE, 10);
+                    g2.setColor(new Color(255, 0, 30));
+                    g2.fillRect(screenX + 20, screenY + 90, (int) hpBarValue, 9);
                 }
 
                 hpBarCounter++;
-                if(hpBarCounter > 600) {
+                if (hpBarCounter > 600) {
                     hpBarCounter = 0;
                     hpBarON = false;
                 }
             }
-            if(iframe){
+            if (iframe) {
                 hpBarON = true;
                 hpBarCounter = 0;
                 changeAlpha(g2, 0.3f);
             }
-            if(dead){
+            if (dead) {
                 dyingAnimation(g2);
             }
 
-//            if(attacking){
-//                if (animationSpriteNum > mobRightAttackList.size())
-//                    animationSpriteNum = 0;
-//                BufferedImage animationImage = lookingRight? mobLeftAttackList.get(animationSpriteNum) : mobRightAttackList.get(animationSpriteNum);
-//                g2.drawImage(animationImage,screenX,screenY,null);
-//            }if(!attacking){
+            if (!attacking) {
                 g2.drawImage(image, screenX, screenY, null);
                 changeAlpha(g2, 1f);
             }
+            if (attacking) {
+                if (animationSpriteNum > mobRightAttackList.size())
+                    animationSpriteNum = 0;
+                BufferedImage animationImage = lookingRight ? mobRightAttackList.get(animationSpriteNum) : mobLeftAttackList.get(animationSpriteNum);
+                g2.drawImage(animationImage, screenX, screenY, null);
+            }
         }
     }
-
+}
 
 
 

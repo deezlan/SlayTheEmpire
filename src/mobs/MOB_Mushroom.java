@@ -4,6 +4,7 @@ import entity.Entity;
 import main.GamePanel;
 import main.UtilityTool;
 
+import java.awt.*;
 import java.io.IOException;
 import java.util.Random;
 
@@ -12,88 +13,82 @@ public class MOB_Mushroom extends Entity {
     public MOB_Mushroom(GamePanel gp) {
         super(gp);
         this.gp = gp;
-        type = 2;
-        speed = 1;
+        type = 1;
+        defaultSpeed = 1;
+        speed = defaultSpeed;
+        attack = 2;
         maxLife = 4;
         life = maxLife;
+        lookingRight = true;
         action = "idleRight";
         mobNum = 9;
 
         // Load mob sprites
         getMobSprites();
+        getAttackAnimation();
 
         // Set collision settings
+        solidArea = new Rectangle();
         solidArea.x = 150;
         solidArea.y = 170;
         solidArea.width = 28;
         solidArea.height = 30;
+        attackArea.width = 100;
+        attackArea.height = 100;
         solidAreaDefaultX = solidArea.x;
         solidAreaDefaultY = solidArea.y;
     }
 
     @Override
     public void setAction() {
-        actionLockCounter++;
 
-        if(actionLockCounter == 120){
-            Random random = new Random();
-            int i = random.nextInt(250)+1;
-
-            if (i <= 25) {
-                action = "moveUp";
-                currentActionList = moveRightList;
-            }
-            if (i > 25 && i <= 50){
-                action = "moveDown";
-                currentActionList = moveLeftList;
-            }
-            if (i > 50 && i <= 75) {
-                action = "moveLeft";
-                currentActionList = moveLeftList;
-            }
-            if (i > 75 && i <= 100) {
-                action = "moveRight";
-                currentActionList = moveRightList;
-            }
-            if (i > 100 && i <= 125) {
-                action = "idleRight";
-                currentActionList = idleRightList;
-            }
-            if (i > 125 && i <= 150) {
-                action = "idleLeft";
-                currentActionList = idleLeftList;
-            }
-            if (i > 150 && i <= 175) {
-                action = "moveUpRight";
-                currentActionList = moveRightList;
-            }
-            if (i > 175 && i <= 200) {
-                action = "moveDownRight";
-                currentActionList = moveRightList;
-            }
-            if (i > 200 && i <= 225) {
-                action = "moveUpLeft";
-                currentActionList = moveLeftList;
-            }
-            if (i > 225) {
-                action = "moveDownLeft";
-                currentActionList = moveLeftList;
-            }
-            actionLockCounter = 0;
+        if(onPath) {
+            // CHECK IF STOP CHASING
+            checkStopChase(gp.player, 15, 100);
+            // SEARCH DIRECTION TO GO
+            searchPath(getGoalCol(gp.player),getGoalRow(gp.player));
+        } else {
+            // CHECK IF START CHASING
+            checkStartChase(gp.player, 5 , 100);
+            // GET RANDOM DIRECTION
+            getRandomDirection();
+        }
+        // CHECK ATTACK ON PLAYER
+        if(!attacking){
+            checkMobAttack(30,gp.TILE_SIZE*4,gp.TILE_SIZE*3);
         }
     }
 
     public void damageReaction() {
         actionLockCounter = 0;
-        action = gp.player.action;
+        onPath = true;
+    }
+
+    public void getAttackAnimation() {
+        String dir = "/Mobs/Mushroom/";
+        try {
+            // Load sprites for attacking
+            for (int i = 0; i <= 7; i++) {
+                mobRightAttackList.add(i, UtilityTool.loadSprite(dir + "attack/" + i + ".png", "Missing attackLeft " + i));
+                mobLeftAttackList.add(i, UtilityTool.loadSprite(dir + "attack/" + i + ".png", "Missing attackLeft " + i));
+            }
+
+            // Scale sprites up
+            UtilityTool.scaleEntityList(this, mobRightAttackList, 300, 300);
+            UtilityTool.scaleEntityList(this, mobLeftAttackList, 300, 300);
+        } catch (IOException e){
+            e.printStackTrace(System.out);
+        }
     }
 
     public void getMobSprites() {
         String dir = "/Mobs/Mushroom/";
         try {
-            for (int i = 0; i <= 3; i++) {
+            for (int i = 0; i <= 7; i++) {
                 moveRightList.add(i, UtilityTool.loadSprite(dir + "moveRight/" + i + ".png", "Missing moveRight " + i));
                 moveLeftList.add(i, UtilityTool.loadSprite(dir + "moveLeft/" + i + ".png", "Missing moveLeft " + i));
+            }
+            for (int i = 0; i <= 3; i++) {
                 idleLeftList.add(i, UtilityTool.loadSprite(dir + "idleLeft/" + i + ".png", "Missing idleLeft " + i));
                 idleRightList.add(i, UtilityTool.loadSprite(dir + "idleRight/" + i + ".png", "Missing idleRight " + i));
             }

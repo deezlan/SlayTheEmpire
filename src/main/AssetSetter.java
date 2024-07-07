@@ -129,10 +129,10 @@ public class AssetSetter {
 //                i++;
 
                 // MAP 1
-                mapNum = 1;
-                gp.mobArr[mapNum][i] = new MOB_Slime(gp);
-                gp.mobArr[mapNum][i].worldX = 500;
-                gp.mobArr[mapNum][i].worldY = 270;
+//                mapNum = 1;
+//                gp.mobArr[mapNum][i] = new MOB_Slime(gp);
+//                gp.mobArr[mapNum][i].worldX = 500;
+//                gp.mobArr[mapNum][i].worldY = 270;
 
 //                gp.mobArr[mapNum][i] = new MOB_RobotGuardian(gp);
 //                gp.mobArr[mapNum][i].worldX = 300;

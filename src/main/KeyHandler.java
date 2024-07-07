@@ -4,7 +4,6 @@ import entity.NPC_Blacksmith;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.util.Optional;
 
 public class KeyHandler implements KeyListener {
     GamePanel gp;
@@ -97,8 +96,9 @@ public class KeyHandler implements KeyListener {
                 }
             }
         }
+
         // Character Selection
-        else if (gp.gameState == gp.characterSelectionState) {
+        if (gp.gameState == gp.characterSelectionState) {
             if (code == KeyEvent.VK_SPACE) {
                 if (gp.ui.commandNum == 0) {
                     // CHANGE CLASS TO WARRIOR
@@ -166,11 +166,9 @@ public class KeyHandler implements KeyListener {
             }
             if (code == KeyEvent.VK_ENTER){
                 NPC_Blacksmith bs = (NPC_Blacksmith) gp.npcArr[1];
-                if (gp.player.totalCoins < bs.getShopItems().get(gp.ui.slotRow).price){
-                    //Do nothing
-                } else {
+                if (!(gp.player.totalCoins < bs.getShopItems().get(gp.ui.slotRow).price))
                     bs.buy();
-                }
+
                 gp.gameState = gp.playState;
             }
             if (code == KeyEvent.VK_S) {
@@ -220,7 +218,6 @@ public class KeyHandler implements KeyListener {
             }
         }
         // !!!!! TEMPORARY TITLE+LOGIN+START MENU TEST !!!!!
-
     }
 
     @Override

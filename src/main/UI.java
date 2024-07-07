@@ -12,8 +12,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
 
 public class UI {
 
@@ -344,15 +342,6 @@ public class UI {
 
     }
 
-    // Calculate Image Height
-    public int calculateHeight(Image img) {
-        return img.getHeight(null);
-    }
-
-    public int calculateWidth(Image img) {
-        return img.getWidth(null);
-    }
-
     // Draw Title GIF
     public void drawTitleScreen() {
         g2.drawImage(titleGif, 0, 0, gp.SCREEN_WIDTH, gp.SCREEN_HEIGHT, null);
@@ -572,10 +561,8 @@ public class UI {
             g2.drawString(text1, x, y);
         }
 
-
         String text2 = "Knight";
         x += (int) (getXForCenteredText(text)/1.1);
-        y = gp.TILE_SIZE*12;
         if (commandNum == 1) {
             g2.setColor(Color.WHITE);
             g2.drawString(text2, x, y);
@@ -584,10 +571,8 @@ public class UI {
             g2.drawString(text2, x, y);
         }
 
-
         String text3 = "Assassin";
         x += (int) (getXForCenteredText(text) / 1.1);
-        y = gp.TILE_SIZE*12;
         if (commandNum == 2) {
             g2.setColor(Color.WHITE);
             g2.drawString(text3, x, y);
@@ -595,8 +580,6 @@ public class UI {
             g2.setColor(Color.GRAY);
             g2.drawString(text3, x, y);
         }
-
-
     }
 
     //Draw dialog

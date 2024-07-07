@@ -170,6 +170,10 @@ public class  AssetSetter {
         }
     }
 
+    public void setClasses() {
+
+    }
+
     public void setMonster() {
         switch(gp.gameArea) {
             case 0:

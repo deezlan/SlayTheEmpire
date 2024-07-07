@@ -64,8 +64,6 @@ public class KeyHandler implements KeyListener {
             }
         }
 
-
-
         // Start Menu State
         if (gp.gameState == gp.startMenuState){
             if (code == KeyEvent.VK_W){
@@ -94,9 +92,8 @@ public class KeyHandler implements KeyListener {
                 }
             }
         }
-
         // Character Selection
-        if (gp.gameState == gp.characterSelectionState) {
+        else if (gp.gameState == gp.characterSelectionState) {
             if (code == KeyEvent.VK_SPACE) {
                 if (gp.ui.commandNum == 0) {
                     // CHANGE CLASS TO WARRIOR

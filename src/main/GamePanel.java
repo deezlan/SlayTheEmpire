@@ -119,9 +119,9 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     public void setupGame() {
-//        aSetter.setObject();
-//        aSetter.setNPC();
-//        aSetter.setMonster();
+        aSetter.setObject();
+        aSetter.setNPC();
+        aSetter.setMonster();
         gameState = titleState; // TESTING LOGIN RIGHT NOW
     }
 
@@ -164,6 +164,7 @@ public class GamePanel extends JPanel implements Runnable {
     public void update() {
 
         if (gameState == playState) {
+            hideCursor(); // HIDE CURSOR
             player.update();
 
         for (SuperObject obj : objArr) {

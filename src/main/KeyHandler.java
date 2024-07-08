@@ -35,6 +35,7 @@ public class KeyHandler implements KeyListener {
             ePressed,
             pPressed,
             enterPressed,
+            showDebug = false, // DEBUG
             shotKeyPressed,
             onePressed,
             twoPressed,
@@ -190,6 +191,12 @@ public class KeyHandler implements KeyListener {
             if (code == KeyEvent.VK_E){
                 ePressed = true;
             }
+            if (code == KeyEvent.VK_R){
+                switch(gp.currentMap) {
+                    case 0: gp.tileM.loadMap("/mapTextFiles/firstLevel.txt",0); break;
+                    case 1: gp.tileM.loadMap("/mapTextFiles/firstLevel.txt",1); break;
+                }
+            }
             if (code == KeyEvent.VK_F) {
                 shotKeyPressed = true;
             }
@@ -213,10 +220,12 @@ public class KeyHandler implements KeyListener {
                 }
             }
             if (code == KeyEvent.VK_ENTER){
-                NPC_Blacksmith bs = (NPC_Blacksmith) gp.npcArr[1];
-                if (!(gp.player.totalCoins < bs.getShopItems().get(gp.ui.slotRow).price))
+                NPC_Blacksmith bs = (NPC_Blacksmith) gp.npcArr[gp.currentMap][1];
+                if (gp.player.totalCoins < bs.getShopItems().get(gp.ui.slotRow).price){
+                    //Do nothing
+                } else {
                     bs.buy();
-
+                }
                 gp.gameState = gp.playState;
             }
             if (code == KeyEvent.VK_S) {
@@ -237,25 +246,21 @@ public class KeyHandler implements KeyListener {
             }
         }
 
-
         // **KEY HANDLING**
-
         // MOVING THROUGH DIALOGUE
         if (code == KeyEvent.VK_E) {
             ePressed = true;
-            if(gp.gameState == gp.dialogueState){
+//            if(gp.gameState == gp.dialogueState){
+//                gp.gameState = gp.playState;
+            if (gp.gameState == gp.shopState) {
                 gp.gameState = gp.playState;
-            }  else if (gp.gameState == gp.shopState) {
+            } else if (gp.gameState == gp.deathState){
                 gp.gameState = gp.playState;
+                gp.currentMap = 0;
+                gp.setMapColor();
+                gp.retry();
             }
         }
-        //Debug
-//        if (code == KeyEvent.VK_R){
-//            switch(gp.currentMap){
-//                case 0: gp.tileM.loadMap("/mapTextFiles/map.txt"); break;
-//                case 1: gp.tileM.loadMap("/mapTextFiles/test.txt"); break;
-//            }
-//        }
 
         // !!!!! TEMPORARY TITLE+LOGIN+START MENU TEST !!!!!
         if (code == KeyEvent.VK_SPACE) {
@@ -270,6 +275,16 @@ public class KeyHandler implements KeyListener {
             }
         }
         // !!!!! TEMPORARY TITLE+LOGIN+START MENU TEST !!!!!
+
+        // DEBUG
+        if (code == KeyEvent.VK_T){
+            if(!showDebug){
+                showDebug = true;
+            }
+            else if (showDebug){
+                showDebug = false;
+            }
+        }
     }
 
     @Override

@@ -4,6 +4,7 @@ import entity.Entity;
 import entity.NPC_Blacksmith;
 import object.OBJ_Coin;
 import object.OBJ_Heart;
+//import object.SuperObject;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,6 +19,7 @@ import java.io.InputStream;
 public class UI {
 
     KeyHandler keyH;
+    public Entity npc;
     GamePanel gp;
     BufferedImage fullHeart, halfHeart, emptyHeart, hotbar;
     Graphics2D g2;
@@ -35,6 +37,9 @@ public class UI {
     public String currentDialog = "";
     public int slotRow = 0;
     public int slotRowMove = 0;
+    int counter = 0;
+    int charIndex = 0;
+    String combinedText = "";
     public int commandNum = 0;
 
     // Login variables
@@ -163,6 +168,10 @@ public class UI {
         if (gp.gameState == gp.deathState) {
             drawDeathScreen();
         }
+
+        if(gp.gameState == gp.transitionState){
+            drawTransition();
+        }
     }
 
     public void drawHotbar() {
@@ -189,7 +198,7 @@ public class UI {
 
     public void drawShop() {
         try {
-        NPC_Blacksmith bs = (NPC_Blacksmith) gp.npcArr[1];
+        NPC_Blacksmith bs = (NPC_Blacksmith) gp.npcArr[gp.currentMap][1];
         InputStream is = new FileInputStream("ARCADE_N.TTF");
         Font arcade = Font.createFont(Font.TRUETYPE_FONT, is);
         arcade = arcade.deriveFont(Font.PLAIN, 16);
@@ -322,7 +331,7 @@ public class UI {
         if (coin.spriteCounter > 4) coin.loopThroughSprites();
         g2.setFont(g2.getFont().deriveFont(Font.BOLD, 40));
         g2.drawString ("" + gp.player.totalCoins, 38, 117);
-        g2.drawImage(coin.defaultList.get(coin.spriteNum - 1), 78, 78, null);
+        g2.drawImage(coin.defaultList.get(coin.spriteNum - 1), 118, 78, null);
     }
 
     // Draw Pause Screen
@@ -616,6 +625,32 @@ public class UI {
         dialogX += gp.TILE_SIZE;
         dialogY += gp.TILE_SIZE;
 
+        if(npc.dialogs[npc.dialogueSet][npc.dialogueIndex] != null){
+//            currentDialog = npc.dialogs[npc.dialogueSet][npc.dialogueIndex];
+            char[] characters = npc.dialogs[npc.dialogueSet][npc.dialogueIndex].toCharArray(); // DISABLE IF YOU WANT ALL TEXT TO DISPLAY
+            if(charIndex < characters.length){
+                String s = String.valueOf(characters[charIndex]);
+                combinedText = combinedText + s;
+                currentDialog = combinedText;
+                charIndex++;
+            }
+
+
+            if(gp.keyH.ePressed){
+                charIndex = 0;
+                combinedText = "";
+                if(gp.gameState == gp.dialogueState){
+                    npc.dialogueIndex++;
+                    gp.keyH.ePressed = false;
+                }
+            }
+        } else {
+            npc.dialogueIndex = 0;
+            if(gp.gameState == gp.dialogueState){
+                gp.gameState = gp.playState;
+            }
+        }
+
         for(String line : currentDialog.split("\n")){ // breaks long dialogues // for up to use
             g2.drawString(line,dialogX,dialogY);
             dialogY += 40;
@@ -623,12 +658,39 @@ public class UI {
     }
 
     public void drawDeathScreen() {
-        g2.setFont(g2.getFont().deriveFont(Font.BOLD));
-        String text = "KAMU DAH MATI";
-        int x = getXForCenteredText(text);
-        int y = gp.SCREEN_HEIGHT/2;
+        g2.setColor(new Color(0,0,0,150));
+        g2.fillRect(0,0, gp.SCREEN_WIDTH , gp.SCREEN_HEIGHT);
+        int x;
+        int y;
+        String text;
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 50f));
+        text = "KAMU DAH MATI";
 
-        g2.drawString(text, x, y);
+        // SHADOW
+        g2.setColor(Color.BLACK);
+        x = getXForCenteredText(text);
+        y = gp.TILE_SIZE*4;
+        g2.drawString(text,x,y);
+        // MAIN MESSAGE
+        g2.setColor(Color.white);
+        g2.drawString(text, x-4,y-4);
+
+        // RETRY
+        g2.setFont(g2.getFont().deriveFont(40f));
+        text = "Retry";
+        x = getXForCenteredText(text);
+        y += gp.TILE_SIZE*4;
+        g2.drawString(text,x,y);
+
+        // BACK TO TITLE SCREEN
+        text = "Quit";
+        x = getXForCenteredText(text);
+        y += 45;
+        g2.drawString(text,x,y);
+//        int x = getXforCenteredText(text);
+//        int y = gp.SCREEN_HEIGHT/2;
+//
+//        g2.drawString(text, x, y);
     }
 
     public void drawSubWindow(int x, int y, int width,int height){
@@ -645,5 +707,22 @@ public class UI {
     public int getXForCenteredText(String text) {
         int length = (int)g2.getFontMetrics().getStringBounds(text, g2).getWidth();
         return gp.SCREEN_WIDTH/2 - length/2;
+    }
+    //  DRAWS TRANSITION EVENT WHEN ENTERING OR EXITING
+    public void drawTransition() {
+        counter++;
+        g2.setColor(new Color(0,0,0,counter*5));
+        g2.fillRect(0,0,gp.SCREEN_WIDTH,gp.SCREEN_HEIGHT);
+
+        if(counter == 50){
+            counter = 0;
+            gp.gameState = gp.playState;
+            gp.currentMap = gp.eHandler.tempMap;
+            gp.setMapColor();
+            gp.player.worldX = gp.TILE_SIZE * gp.eHandler.tempCol;
+            gp.player.worldY = gp.TILE_SIZE * gp.eHandler.tempRow;
+            gp.eHandler.previousEventX = gp.player.worldX;
+            gp.eHandler.previousEventY = gp.player.worldY;
+        }
     }
 }

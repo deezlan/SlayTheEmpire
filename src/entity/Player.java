@@ -1,6 +1,5 @@
 package entity;
 
-import main.EventHandler;
 import main.GamePanel;
 import main.KeyHandler;
 import main.UtilityTool;
@@ -522,13 +521,21 @@ public class Player extends Entity {
             animationSpriteNum = 0;
         BufferedImage animationImage = lookingRight? playerRightAttackList.get(animationSpriteNum) : playerLeftAttackList.get(animationSpriteNum);
 
-        if (!attacking){
-            if(iframe){
-                g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.3f));
-            }
-            g2.drawImage(image, screenX, screenY, null);
-            g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
-        } if (attacking){
+        if(iframe){
+            g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.3f));
+        }
+        g2.drawImage(image, screenX, screenY, null);
+        g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
+
+//        if (!attacking){
+//            if(iframe){
+//                g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.3f));
+//            }
+//            g2.drawImage(image, screenX, screenY, null);
+//            g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
+//        }  /// MADE UI FLASH
+
+        if (attacking){
             g2.drawImage(animationImage, screenX, screenY,null); // draw attack animation
         }
         // Draw arrow

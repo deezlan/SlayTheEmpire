@@ -18,7 +18,7 @@ public class UI {
 
     BufferedImage fullHeart, halfHeart, emptyHeart, hotbar;
     Graphics2D g2;
-    Entity coin = new OBJ_Coin(gp);
+    Entity coin;
 
     public String currentDialog = "";
     public int slotRow = 0;
@@ -42,7 +42,7 @@ public class UI {
             e.printStackTrace(System.out);
         }
 
-//        coin = new OBJ_Coin(gp);
+        coin = new OBJ_Coin(gp);
     }
 
     public void draw(Graphics2D g2){
@@ -50,10 +50,10 @@ public class UI {
         this.g2 = g2;
         g2.setFont(new Font("Microsoft YaHei", Font.PLAIN, 28));
         g2.setColor(Color.white);
-        drawPlayerLife();
         if (gp.gameState == gp.playState) {
             drawPlayerMoney();
             drawHotbar();
+            drawPlayerLife();
         }
 
         //Pause State
@@ -160,11 +160,11 @@ public class UI {
         drawSubWindow(descX, descY, descWidth, descHeight);
 
         g2.setColor(Color.BLACK);
-        g2.fillRoundRect(descX,descY,descWidth,descHeight,0,0);
+        g2.fillRoundRect(descX, descY, descWidth, descHeight, 0, 0);
 
         g2.setColor(Color.WHITE);
         g2.setStroke(new BasicStroke((5)));
-        g2.drawRoundRect(descX,descY,descWidth,descHeight,0,0);
+        g2.drawRoundRect(descX, descY, descWidth, descHeight, 0, 0);
         //DRAW DESC TEXT
         int textX = descX + 20;
         int textY= descY + gp.TILE_SIZE;

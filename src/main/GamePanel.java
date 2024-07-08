@@ -82,6 +82,7 @@ public class GamePanel extends JPanel implements Runnable {
     public final int characterSelectionState = 9;
     public final int optionState = 10;
     public final int deathState = 11;
+    public final int transitionState = 12;
 
     public GamePanel() {
         this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
@@ -126,9 +127,10 @@ public class GamePanel extends JPanel implements Runnable {
         aSetter.setObject();
         aSetter.setNPC();
         aSetter.setMonster();
+        aSetter.setInteractiveTile();
         gameState = titleState; // TESTING LOGIN RIGHT NOW
         keyH.playMusic(0);
-        aSetter.setInteractiveTile();
+
     }
 
     public void retry() {

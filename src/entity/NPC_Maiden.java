@@ -19,14 +19,16 @@ public class NPC_Maiden extends Entity {
         solidArea.height = 48;
         solidAreaDefaultX = solidArea.x;
         solidAreaDefaultY = solidArea.y;
+
+        dialogueSet = -1;
     }
 
     public void setDialog() {
-        dialogs[0] = "I'm Cleaning";
-        dialogs[1] = "I ain't no bitch";
-        dialogs[2] = "You are disturbing me";
-        dialogs[3] = "Fk off";
-        dialogs[4] = "Hello my name is jeff,\nim a a good,\nintelij is stupid,\ntest est essd";
+        dialogs[0][0] = "I'm Cleaning";
+        dialogs[0][1] = "I ain't no bitch";
+        dialogs[1][0] = "You are disturbing me";
+        dialogs[1][1] = "Fk off";
+        dialogs[2][0] = "Hello my name is jeff,\nim a a good,\nintelij is stupid,\ntest est essd";
     }
 
     public void getNpcSprites() {
@@ -44,6 +46,11 @@ public class NPC_Maiden extends Entity {
     }
 
     public void speak() {
-        super.speak();
+        startDialogue(this,dialogueSet);
+        dialogueSet++;
+
+        if(dialogs[dialogueSet][0] == null){
+            dialogueSet--;
+        }
     }
 }

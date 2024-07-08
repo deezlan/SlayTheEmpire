@@ -1,14 +1,18 @@
 package main;
 
+import entity.Entity;
+
 public class EventHandler {
     GamePanel gp;
     EventRect[][][] eventRect ;
+    Entity eventMaster;
     int previousEventX, previousEventY; // prevent event from happening again immediately
     int tempMap, tempCol, tempRow;
     boolean canTouchEvent = true;
 
     public EventHandler(GamePanel gp){
         this.gp = gp;
+        eventMaster = new Entity(gp);
         eventRect = new EventRect[gp.maxMap][gp.MAX_WORLD_COL][gp.MAX_WORLD_ROW];
         int map = 0;
         int col = 0;
@@ -35,17 +39,22 @@ public class EventHandler {
                 }
             }
         }
+        setDialogue();
     }
 
+    public void setDialogue() {
+        eventMaster.dialogs[0][0] = "Drank Possibly Toilet Water";
+        eventMaster.dialogs[0][1] = "Why does it taste like pee";
+    }
     public void checkEvent() { // check tile for event;
         // check tile if player i one tile away from the tile
         int xDistance = Math.abs(gp.player.worldX - previousEventX);
         int yDistance = Math.abs(gp.player.worldY - previousEventY);
         int distance = Math.max(xDistance, yDistance);
+
         if (distance > gp.TILE_SIZE){
             canTouchEvent = true;
         }
-        //testing damage fall pit
             if(canTouchEvent) {// use else if to add more events
                 if (hit(0,14, 15, "any")) {
                     enterDungeon(1,8,8);
@@ -100,6 +109,7 @@ public class EventHandler {
         if(gp.keyH.ePressed){
             gp.gameState = gameState;
             gp.ui.currentDialog = "Drank Possibly Toilet Water";
+            eventMaster.startDialogue(eventMaster,0);
             gp.player.life = gp.player.maxLife;
             canTouchEvent = false;
         }

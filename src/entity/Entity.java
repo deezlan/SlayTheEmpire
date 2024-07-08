@@ -7,7 +7,7 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Random;
 
-public abstract class Entity {
+public class Entity {
     GamePanel gp;
     public int actionLockCounter;
     public int worldX, worldY;
@@ -22,14 +22,7 @@ public abstract class Entity {
     public int attack;
     public int maxLife;
     public int life;
-
-
-
-
-    public int damageSprite; // HEREEEEEEEE
-
-
-
+    public int damageSprite;
 
     public int solidAreaDefaultX, solidAreaDefaultY;
     public ArrayList<BufferedImage>
@@ -47,17 +40,19 @@ public abstract class Entity {
             projectileUp = new ArrayList<>(),
             projectileDown = new ArrayList<>();
 
-    String[] dialogs = new String[20];
+    public String[][] dialogs = new String[20][20];
+    public int dialogueSet = 0;
+    public int dialogueIndex = 0;
 
-    public void speak() {
-        if (dialogs[interactionCounter] == null) interactionCounter = 0;
-        gp.ui.currentDialog = dialogs[interactionCounter];
-        interactionCounter++;
+    public void speak() {}
+
+    public void setAction() {}
+
+    public void startDialogue(Entity entity, int setNum) {
+        gp.gameState = gp.dialogueState;
+        gp.ui.npc = entity;
+        dialogueSet = setNum;
     }
-
-    public void setAction() {
-    }
-
     public void damageReaction() {
     }
 
@@ -292,6 +287,10 @@ public abstract class Entity {
                 onPath = false;
             }
         }
+    }
+
+    public void resetCounter() {
+
     }
 
     public void getRandomDirection() {

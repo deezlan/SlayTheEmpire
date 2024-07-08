@@ -1,5 +1,6 @@
 package entity;
 
+import main.EventHandler;
 import main.GamePanel;
 import main.KeyHandler;
 import main.UtilityTool;
@@ -108,7 +109,7 @@ public class Player extends Entity {
     @Override
     public void update() {
         if (life <= 0) {
-            gp.gameState = gp.deathState;
+           gp.gameState = gp.deathState;
         }
         if (attacking) {
             attackAnimation();
@@ -454,7 +455,6 @@ public class Player extends Entity {
 
     public void interactNPC (int index) {
             if (index != 999) {
-                gp.gameState = gp.dialogueState;
                 gp.npcArr[gp.currentMap][index].speak();
             }
             if (index == 1) {

@@ -109,7 +109,7 @@ public class Player extends Entity {
     @Override
     public void update() {
         if (life <= 0) {
-           gp.gameState = gp.deathState;
+            gp.gameState = gp.deathState;
         }
         if (attacking) {
             attackAnimation();
@@ -300,6 +300,17 @@ public class Player extends Entity {
         if(shotAvailableCounter < 30){
             shotAvailableCounter++;
         }
+    }
+
+    public void setDefaultPosition() {
+        worldX = 588; // PLAYER SPAWN X
+        worldY = 147;
+        action = "idleRight";
+    }
+
+    public void restoreLife() {
+        life = maxLife;
+        iframe = false;
     }
 
     public void attackAnimation(){ // animation attack

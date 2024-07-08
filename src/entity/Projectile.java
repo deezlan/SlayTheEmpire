@@ -25,13 +25,12 @@ public class Projectile extends Entity{
     }
 
     public void update(){
-        dx = gp.cursor.deltaX;
-        dy = gp.cursor.deltaY;
-
         speedX = (int) (dx / speed);
         speedY = (int) (dy / speed);
 
         if (user == gp.player){
+            dx = gp.cursor.deltaX;
+            dy = gp.cursor.deltaY;
             int monsterIndex = gp.cChecker.checkEntityCollision(this, gp.mobArr);
             if (monsterIndex != 999) {
                 System.out.println("HIT!");

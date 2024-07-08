@@ -104,6 +104,22 @@ public class GamePanel extends JPanel implements Runnable {
         gameState = playState;
     }
 
+    public void retry() {
+        player.setDefaultPosition();
+        player.restoreLife();
+        aSetter.setMonster();
+        aSetter.setNPC();
+    }
+
+    public void restart() {
+        player.setDefaultValues();
+        player.setDefaultPosition();
+        aSetter.setObject();
+        aSetter.setNPC();
+        aSetter.setMonster();
+        aSetter.setInteractiveTile();
+    }
+
     public void startGameThread() {
         gameThread = new Thread(this);
         gameThread.start();
@@ -189,7 +205,7 @@ public class GamePanel extends JPanel implements Runnable {
     public void setMapColor () {
         switch (currentMap) {
             case 0:
-                setBackground(Color.decode("#222034"));
+                setBackground(Color.decode("#181425"));
                 break;
             case 1:
                 setBackground(Color.decode("#42393a"));
@@ -260,6 +276,7 @@ public class GamePanel extends JPanel implements Runnable {
             for (int i = 0; i < entityList.size(); i++){
                 entityList.remove(i);
             }
+
             ui.draw(g2);
 
             // DEBUG

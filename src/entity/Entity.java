@@ -11,7 +11,6 @@ public class Entity {
     GamePanel gp;
     public int actionLockCounter;
     public int worldX, worldY;
-    public Projectile projectile;
 
     // ENTITY ATTRIBUTES
     public int defaultSpeed;
@@ -67,6 +66,7 @@ public class Entity {
 
     // PROJECTILES
     public int shotAvailableCounter = 0;
+    public Projectile projectile;
 
     // KNOCK-BACK
     public Entity attacker;
@@ -346,15 +346,15 @@ public class Entity {
 
     public void checkShoot(int rate, int xOffset, int yOffset, int shotInterval) {
         int i = new Random().nextInt(rate);
+        shotAvailableCounter = 0;
         if(i == 0 && !projectile.alive && shotAvailableCounter == shotInterval){
             projectile.set(worldX + (xOffset), worldY + (yOffset), action,true,this);
-            for (int ii = 0; ii < gp.projectileList[1].length; i++) {
+            for (int ii = 0; ii < gp.projectileList[1].length; ii++) {
                 if(gp.projectileList[gp.currentMap][ii] == null){
                     gp.projectileList[gp.currentMap][ii] = projectile;
                     break;
                 }
             }
-            shotAvailableCounter = 0;
         }
     }
 
@@ -728,8 +728,7 @@ public class Entity {
             if (dead) {
                 dyingAnimation(g2);
             }
-
-            if (!attacking) {
+            if(!attacking){
                 g2.drawImage(image, screenX, screenY, null);
                 changeAlpha(g2, 1f);
             }

@@ -77,9 +77,9 @@ public class Player extends Entity {
                 solidAreaDefaultX = solidArea.x;
                 solidAreaDefaultY = solidArea.y;
                 solidArea.width = 40; // outer area of collision square
-                solidArea.height = 30;
-                attackArea.width = 50;
-                attackArea.height = 30;
+                solidArea.height = 20;
+                attackArea.width = gp.TILE_SIZE*2;
+                attackArea.height = gp.TILE_SIZE*3;
                 break;
             case 1:
                 solidArea = new Rectangle(); // draws a square at the centre of the player

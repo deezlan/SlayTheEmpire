@@ -25,6 +25,7 @@ public abstract class Entity {
     public int solidAreaDefaultX, solidAreaDefaultY;
     public ArrayList<BufferedImage>
             currentActionList = new ArrayList<>(),
+            mobActionList = new ArrayList<>(),
             idleRightList = new ArrayList<>(),
             idleLeftList = new ArrayList<>(),
             moveRightList = new ArrayList<>(),
@@ -244,12 +245,16 @@ public abstract class Entity {
                 }
                 // Animation speed
                 spriteCounter++;
-                if (this.currentActionList.size() > 14) {
+                if (this.currentActionList.size() > 28) {
                     if (spriteCounter > 4) loopThroughSprites();
-                } else if (this.currentActionList.size() > 7) {
+                } else if (this.currentActionList.size() > 21) {
                     if (spriteCounter > 6) loopThroughSprites();
-                } else {
+                } else if (this.currentActionList.size() > 14) {
                     if (spriteCounter > 9) loopThroughSprites();
+                }  else if (this.currentActionList.size() > 7) {
+                    if (spriteCounter > 11) loopThroughSprites();
+                } else {
+                    if(spriteCounter > 13) loopThroughSprites();
                 }
             }
 
@@ -332,11 +337,10 @@ public abstract class Entity {
         }
     }
 
-    public void checkShoot(int rate, int shotInterval) {
+    public void checkShoot(int rate, int xOffset, int yOffset, int shotInterval) {
         int i = new Random().nextInt(rate);
-        System.out.println(shotAvailableCounter);
         if(i == 0 && !projectile.alive && shotAvailableCounter == shotInterval){
-            projectile.set(worldX, worldY + 50, action,true,this);
+            projectile.set(worldX + (xOffset), worldY + (yOffset), action,true,this);
             for (int ii = 0; ii < gp.projectileList[1].length; i++) {
                 if(gp.projectileList[gp.currentMap][ii] == null){
                     gp.projectileList[gp.currentMap][ii] = projectile;
@@ -665,9 +669,15 @@ public abstract class Entity {
                 }
                 if (mobNum == 5) { // GOBLIN
                     g2.setColor(new Color(35, 35, 35));
-                    g2.fillRect(screenX + 61, screenY + 131, gp.TILE_SIZE, 10);
+                    g2.fillRect(screenX + 81, screenY + 141, gp.TILE_SIZE, 10);
                     g2.setColor(new Color(255, 0, 30));
-                    g2.fillRect(screenX + 60, screenY + 130, (int) hpBarValue, 9);
+                    g2.fillRect(screenX + 80, screenY + 140, (int) hpBarValue, 9);
+                }
+                if (mobNum == 6) { // SKELETON KNIGHT
+                    g2.setColor(new Color(35, 35, 35));
+                    g2.fillRect(screenX + 101, screenY + 141, gp.TILE_SIZE, 10);
+                    g2.setColor(new Color(255, 0, 30));
+                    g2.fillRect(screenX + 100, screenY + 140, (int) hpBarValue, 9);
                 }
                 if (mobNum == 7) { // ARMORED GUARDIAN
                     g2.setColor(new Color(35, 35, 35));

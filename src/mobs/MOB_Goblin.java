@@ -12,8 +12,10 @@ public class MOB_Goblin extends Entity {
     public MOB_Goblin(GamePanel gp) {
         super(gp);
         this.gp = gp;
-        type = 2;
-        speed = 1;
+        type = 1;
+        defaultSpeed = 1;
+        attack = 1;
+        speed = defaultSpeed;
         maxLife = 4;
         life = maxLife;
         action = "idleRight";
@@ -23,85 +25,62 @@ public class MOB_Goblin extends Entity {
         getMobSprites();
 
         // Set collision settings
-        solidArea.x = 58;
-        solidArea.y = gp.TILE_SIZE + 50;
+        solidArea.x = 98;
+        solidArea.y = 120;
         solidArea.width = 28;
         solidArea.height = 30;
+        attackArea.width = 50;
+        attackArea.height = 50;
         solidAreaDefaultX = solidArea.x;
         solidAreaDefaultY = solidArea.y;
     }
 
     @Override
     public void setAction() {
-        actionLockCounter++;
 
-        if(actionLockCounter == 120){
-            Random random = new Random();
-            int i = random.nextInt(250)+1;
-
-            if (i <= 25) {
-                action = "moveUp";
-                currentActionList = moveRightList;
-            }
-            if (i > 25 && i <= 50){
-                action = "moveDown";
-                currentActionList = moveLeftList;
-            }
-            if (i > 50 && i <= 75) {
-                action = "moveLeft";
-                currentActionList = moveLeftList;
-            }
-            if (i > 75 && i <= 100) {
-                action = "moveRight";
-                currentActionList = moveRightList;
-            }
-            if (i > 100 && i <= 125) {
-                action = "idleRight";
-                currentActionList = idleRightList;
-            }
-            if (i > 125 && i <= 150) {
-                action = "idleLeft";
-                currentActionList = idleLeftList;
-            }
-            if (i > 150 && i <= 175) {
-                action = "moveUpRight";
-                currentActionList = moveRightList;
-            }
-            if (i > 175 && i <= 200) {
-                action = "moveDownRight";
-                currentActionList = moveRightList;
-            }
-            if (i > 200 && i <= 225) {
-                action = "moveUpLeft";
-                currentActionList = moveLeftList;
-            }
-            if (i > 225) {
-                action = "moveDownLeft";
-                currentActionList = moveLeftList;
-            }
-            actionLockCounter = 0;
+        if(onPath) {
+            // CHECK IF STOP CHASING
+            checkStopChase(gp.player, 15, 100);
+            // SEARCH DIRECTION TO GO
+            searchPath(getGoalCol(gp.player),getGoalRow(gp.player));
+        } else {
+            // CHECK IF START CHASING
+            checkStartChase(gp.player, 5 , 100);
+            // GET RANDOM DIRECTION
+            getRandomDirection();
+        }
+        // CHECK ATTACK ON PLAYER
+        if(!attacking){
+            checkMobAttack(30,gp.TILE_SIZE*2,gp.TILE_SIZE*2); // CHANGE ATTACK RANGE
         }
     }
 
     public void damageReaction() {
         actionLockCounter = 0;
-        action = gp.player.action;
+        onPath = true;
     }
 
     public void getMobSprites() {
         String dir = "/Mobs/Goblin/";
         try {
-            for (int i = 0; i <= 3; i++) {
+            for (int i = 0; i <= 7; i++) {
                 moveRightList.add(i, UtilityTool.loadSprite(dir + "moveRight/" + i + ".png", "Missing moveRight " + i));
                 moveLeftList.add(i, UtilityTool.loadSprite(dir + "moveLeft/" + i + ".png", "Missing moveLeft " + i));
+                mobLeftAttackList.add(i, UtilityTool.loadSprite(dir + "attackLeft/" + i + ".png", "Missing idleLeft " + i));
+                mobRightAttackList.add(i, UtilityTool.loadSprite(dir + "attackRight/" + i + ".png", "Missing idleRight " + i));
+            }
+
+            for (int i = 0; i <= 3; i++) {
                 idleLeftList.add(i, UtilityTool.loadSprite(dir + "idleLeft/" + i + ".png", "Missing idleLeft " + i));
                 idleRightList.add(i, UtilityTool.loadSprite(dir + "idleRight/" + i + ".png", "Missing idleRight " + i));
             }
 
-            UtilityTool.scaleEntityList(this, moveRightList, 180, 180);
-            UtilityTool.scaleEntityList(this,moveLeftList, 180, 180);
-            UtilityTool.scaleEntityList(this,idleLeftList, 180, 180);
-            UtilityTool.scaleEntityList(this, idleRightList, 180, 180);
+            UtilityTool.scaleEntityList(this, moveRightList, 200, 200);
+            UtilityTool.scaleEntityList(this,moveLeftList, 200, 200);
+            UtilityTool.scaleEntityList(this, mobLeftAttackList, 200, 180);
+            UtilityTool.scaleEntityList(this,mobRightAttackList, 200, 200);
+            UtilityTool.scaleEntityList(this,idleLeftList, 200, 200);
+            UtilityTool.scaleEntityList(this, idleRightList, 200, 200);
 
             System.out.println("Goblin sprites loaded successfully");
         } catch (IOException e) {

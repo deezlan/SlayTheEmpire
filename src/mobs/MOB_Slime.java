@@ -23,7 +23,6 @@ public class MOB_Slime extends Entity {
 
         // Load mob sprites
         getMobSprites();
-        getAttackAnimation();
 
         // Set collision settings
         solidArea.x = 58;
@@ -44,7 +43,6 @@ public class MOB_Slime extends Entity {
             checkStopChase(gp.player, 15, 100);
             // SEARCH DIRECTION TO GO
             searchPath(getGoalCol(gp.player),getGoalRow(gp.player));
-            checkShoot(200,30);
         } else {
             // CHECK IF START CHASING
             checkStartChase(gp.player, 5 , 100);
@@ -53,28 +51,13 @@ public class MOB_Slime extends Entity {
             }
         // CHECK ATTACK ON PLAYER
         if(!attacking){
-            checkMobAttack(30,gp.TILE_SIZE*3,gp.TILE_SIZE*2);
+            checkMobAttack(30,gp.TILE_SIZE*2,gp.TILE_SIZE*2);
         }
     }
 
     public void damageReaction() {
         actionLockCounter = 0;
         onPath = true;
-    }
-
-    public void getAttackAnimation() {
-        String dir = "/Mobs/Slime/";
-        try {
-            for (int i = 0; i < 4; i++) {
-                mobRightAttackList.add(i, UtilityTool.loadSprite(dir + "attack/" + i + ".png", "Missing Attack Animation " + i));
-                mobLeftAttackList.add(i, UtilityTool.loadSprite(dir + "attack/" + i + ".png", "Missing Attack Animation " + i));
-                UtilityTool.scaleEntityList(this, mobLeftAttackList, 150, 150);
-                UtilityTool.scaleEntityList(this, mobRightAttackList, 150, 150);
-                System.out.println("ATTACK is LOADED!");
-            }
-        } catch (IOException e){
-            e.printStackTrace(System.out);
-        }
     }
 
     public void getMobSprites() {
@@ -87,10 +70,18 @@ public class MOB_Slime extends Entity {
                 idleRightList.add(i, UtilityTool.loadSprite(dir + "idleRight/" + i + ".png", "Missing idleRight " + i));
             }
 
+            for (int i = 0; i < 4; i++) {
+                mobRightAttackList.add(i, UtilityTool.loadSprite(dir + "attack/" + i + ".png", "Missing Attack Animation " + i));
+                mobLeftAttackList.add(i, UtilityTool.loadSprite(dir + "attack/" + i + ".png", "Missing Attack Animation " + i));
+                System.out.println("ATTACK is LOADED!");
+            }
+
             UtilityTool.scaleEntityList(this, moveRightList, 150, 150);
             UtilityTool.scaleEntityList(this,moveLeftList, 150, 150);
             UtilityTool.scaleEntityList(this,idleLeftList, 150, 150);
             UtilityTool.scaleEntityList(this, idleRightList, 150, 150);
+            UtilityTool.scaleEntityList(this, mobLeftAttackList, 150, 150);
+            UtilityTool.scaleEntityList(this, mobRightAttackList, 150, 150);
 
             System.out.println("Slime sprites loaded successfully");
         } catch (IOException e) {

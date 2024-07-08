@@ -75,13 +75,12 @@ public class Projectile extends Entity{
         }
 
         spriteCounter++;
-        if (spriteCounter > 12){
-            if (spriteNum == 1){
-                spriteNum = 2;
-            } else if (spriteNum == 2) {
-                spriteNum = 1;
-            }
-            spriteCounter = 0;
+        if (currentActionList.size() > 14) {
+            if (spriteCounter > 4) loopThroughSprites();
+        } else if (currentActionList.size() > 7) {
+            if (spriteCounter > 6) loopThroughSprites();
+        } else {
+            if (spriteCounter > 9) loopThroughSprites();
         }
     }
 }

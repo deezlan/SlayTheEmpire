@@ -96,7 +96,7 @@ public class UI {
 
     public void drawShop() {
         try {
-        NPC_Blacksmith bs = (NPC_Blacksmith) gp.npcArr[1];
+        NPC_Blacksmith bs = (NPC_Blacksmith) gp.npcArr[gp.currentMap][1];
         InputStream is = new FileInputStream("ARCADE_N.TTF");
         Font arcade = Font.createFont(Font.TRUETYPE_FONT, is);
         arcade = arcade.deriveFont(Font.PLAIN, 16);

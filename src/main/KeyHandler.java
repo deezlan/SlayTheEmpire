@@ -15,6 +15,7 @@ public class KeyHandler implements KeyListener {
             ePressed,
             pPressed,
             enterPressed,
+            showDebug = false, // DEBUG
             shotKeyPressed,
             onePressed,
             twoPressed,
@@ -49,6 +50,12 @@ public class KeyHandler implements KeyListener {
             if (code == KeyEvent.VK_E){
                 ePressed = true;
             }
+            if (code == KeyEvent.VK_R){
+                switch(gp.currentMap) {
+                    case 0: gp.tileM.loadMap("/mapTextFiles/firstLevel.txt",0); break;
+                    case 1: gp.tileM.loadMap("/mapTextFiles/firstLevel.txt",1); break;
+                }
+            }
             if (code == KeyEvent.VK_F) {
                 shotKeyPressed = true;
             }
@@ -71,7 +78,7 @@ public class KeyHandler implements KeyListener {
                 }
             }
             if (code == KeyEvent.VK_ENTER){
-                NPC_Blacksmith bs = (NPC_Blacksmith) gp.npcArr[1];
+                NPC_Blacksmith bs = (NPC_Blacksmith) gp.npcArr[gp.currentMap][1];
                 if (gp.player.totalCoins < bs.getShopItems().get(gp.ui.slotRow).price){
                     //Do nothing
                 } else {
@@ -112,6 +119,16 @@ public class KeyHandler implements KeyListener {
 //        }
         if (code == KeyEvent.VK_ENTER) {
             enterPressed = true;
+        }
+
+        // DEBUG
+        if (code == KeyEvent.VK_T){
+            if(!showDebug){
+                showDebug = true;
+            }
+            else if (showDebug){
+                showDebug = false;
+            }
         }
     }
 

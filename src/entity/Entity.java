@@ -686,9 +686,9 @@ public abstract class Entity {
                 }
                 if (mobNum == 6) { // SKELETON KNIGHT
                     g2.setColor(new Color(35, 35, 35));
-                    g2.fillRect(screenX + 101, screenY + 141, gp.TILE_SIZE, 10);
+                    g2.fillRect(screenX + 81, screenY + 141, gp.TILE_SIZE, 10);
                     g2.setColor(new Color(255, 0, 30));
-                    g2.fillRect(screenX + 100, screenY + 140, (int) hpBarValue, 9);
+                    g2.fillRect(screenX + 80, screenY + 140, (int) hpBarValue, 9);
                 }
                 if (mobNum == 7) { // ARMORED GUARDIAN
                     g2.setColor(new Color(35, 35, 35));
@@ -698,9 +698,9 @@ public abstract class Entity {
                 }
                 if (mobNum == 8) { // FLYING EYE
                     g2.setColor(new Color(35, 35, 35));
-                    g2.fillRect(screenX + 141, screenY + 191, gp.TILE_SIZE, 10);
+                    g2.fillRect(screenX + 121, screenY + 191, gp.TILE_SIZE, 10);
                     g2.setColor(new Color(255, 0, 30));
-                    g2.fillRect(screenX + 140, screenY + 190, (int) hpBarValue, 9);
+                    g2.fillRect(screenX + 120, screenY + 190, (int) hpBarValue, 9);
                 }
                 if (mobNum == 9) { // MUSHROOM
                     g2.setColor(new Color(35, 35, 35));

@@ -334,8 +334,9 @@ public abstract class Entity {
 
     public void checkShoot(int rate, int shotInterval) {
         int i = new Random().nextInt(rate);
+        System.out.println(shotAvailableCounter);
         if(i == 0 && !projectile.alive && shotAvailableCounter == shotInterval){
-            projectile.set(worldX, worldY, action,true,this);
+            projectile.set(worldX, worldY + 50, action,true,this);
             for (int ii = 0; ii < gp.projectileList[1].length; i++) {
                 if(gp.projectileList[gp.currentMap][ii] == null){
                     gp.projectileList[gp.currentMap][ii] = projectile;
@@ -344,7 +345,6 @@ public abstract class Entity {
             }
             shotAvailableCounter = 0;
         }
-
     }
 
     public void attackAnimation() { // animation attack

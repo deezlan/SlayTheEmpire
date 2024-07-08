@@ -41,18 +41,17 @@ public class MOB_ArmoredGuardian extends Entity {
             // SEARCH DIRECTION TO GO
             searchPath(getGoalCol(gp.player),getGoalRow(gp.player));
 
-            checkShoot(200,10);
+            checkShoot(200,0);
         } else {
             // CHECK IF START CHASING
             checkStartChase(gp.player, 5 , 100);
             // GET RANDOM DIRECTION
             getRandomDirection();
-
-            checkShoot(200,0);
         }
         // CHECK ATTACK ON PLAYER
         if(!attacking){
-            checkMobAttack(30,gp.TILE_SIZE*3,gp.TILE_SIZE*2);
+            checkMobAttack(30,gp.TILE_SIZE*5,gp.TILE_SIZE*2);
+            checkShoot(200,0);
         }
     }
 

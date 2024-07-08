@@ -23,6 +23,7 @@ public class UI {
     public String currentDialog = "";
     public int slotRow = 0;
     public int slotRowMove = 0;
+    int counter = 0;
 
     public UI(GamePanel gp) {
         this.gp = gp;
@@ -69,6 +70,10 @@ public class UI {
 
         if (gp.gameState == gp.deathState) {
             drawDeathScreen();
+        }
+
+        if(gp.gameState == gp.transitionState){
+            drawTransition();
         }
     }
 
@@ -229,7 +234,7 @@ public class UI {
         if (coin.spriteCounter > 4) coin.loopThroughSprites();
         g2.setFont(g2.getFont().deriveFont(Font.BOLD, 40));
         g2.drawString ("" + gp.player.totalCoins, 38, 117);
-        g2.drawImage(coin.defaultList.get(coin.spriteNum - 1), 78, 78, null);
+        g2.drawImage(coin.defaultList.get(coin.spriteNum - 1), 118, 78, null);
     }
 
     // Draw Pause Screen
@@ -286,5 +291,22 @@ public class UI {
     public int getXforCenteredText(String text) {
         int length = (int)g2.getFontMetrics().getStringBounds(text, g2).getWidth();
         return gp.SCREEN_WIDTH/2 - length/2;
+    }
+    //  DRAWS TRANSITION EVENT WHEN ENTERING OR EXITING
+    public void drawTransition() {
+        counter++;
+        g2.setColor(new Color(0,0,0,counter*5));
+        g2.fillRect(0,0,gp.SCREEN_WIDTH,gp.SCREEN_HEIGHT);
+
+        if(counter == 50){
+            counter = 0;
+            gp.gameState = gp.playState;
+            gp.currentMap = gp.eHandler.tempMap;
+            gp.setMapColor();
+            gp.player.worldX = gp.TILE_SIZE * gp.eHandler.tempCol;
+            gp.player.worldY = gp.TILE_SIZE * gp.eHandler.tempRow;
+            gp.eHandler.previousEventX = gp.player.worldX;
+            gp.eHandler.previousEventY = gp.player.worldY;
+        }
     }
 }

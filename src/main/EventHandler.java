@@ -4,6 +4,7 @@ public class EventHandler {
     GamePanel gp;
     EventRect[][][] eventRect ;
     int previousEventX, previousEventY; // prevent event from happening again immediately
+    int tempMap, tempCol, tempRow;
     boolean canTouchEvent = true;
 
     public EventHandler(GamePanel gp){
@@ -85,12 +86,10 @@ public class EventHandler {
     }
 
     public void enterDungeon(int map, int col, int row){
-        gp.currentMap = map;
-        gp.setMapColor();
-        gp.player.worldX = gp.TILE_SIZE * col;
-        gp.player.worldY = gp.TILE_SIZE * row;
-        previousEventX = gp.player.worldX;
-        previousEventY = gp.player.worldY;
+        gp.gameState = gp.transitionState;
+        tempMap = map;
+        tempCol = col;
+        tempRow = row;
         canTouchEvent = false;
 
         //if one time only event enable this

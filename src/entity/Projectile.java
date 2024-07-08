@@ -35,8 +35,26 @@ public class Projectile extends Entity{
             int monsterIndex = gp.cChecker.checkEntityCollision(this, gp.mobArr);
             if (monsterIndex != 999) {
                 System.out.println("HIT!");
+                gp.player.damageMonster(monsterIndex, damage,this);
                 alive = false;
             }
+        }
+        if(user != gp.player) {
+            boolean contactPlayer = gp.cChecker.checkPLayer(this);
+
+            switch (action) {
+                case "moveUp": worldY -= speed; currentActionList = projectileUp; break;
+                case "moveDown": worldY += speed; currentActionList = projectileDown; break;
+                case "moveLeft": worldX -= speed; currentActionList = projectileLeft; break;
+                case "moveRight": worldX += speed; currentActionList = projectileRight; break;
+            }
+
+            if(!gp.player.iframe && contactPlayer){
+                System.out.println("HIT PLAYER!");
+                damagePlayer(damage);
+                alive = false;
+            }
+
         }
 //        if (user != gp.player){
 //
@@ -57,13 +75,12 @@ public class Projectile extends Entity{
         }
 
         spriteCounter++;
-        if (spriteCounter > 12){
-            if (spriteNum == 1){
-                spriteNum = 2;
-            } else if (spriteNum == 2) {
-                spriteNum = 1;
-            }
-            spriteCounter = 0;
+        if (currentActionList.size() > 14) {
+            if (spriteCounter > 4) loopThroughSprites();
+        } else if (currentActionList.size() > 7) {
+            if (spriteCounter > 6) loopThroughSprites();
+        } else {
+            if (spriteCounter > 9) loopThroughSprites();
         }
     }
 }

@@ -17,15 +17,16 @@ public class OBJ_Projectile extends Projectile {
         maxLife = 210;
         life = maxLife;
         damage = 2;
+        alive = false;
         getImage();
     }
 
     public void getImage(){
         try {
-            weaponSprite = UtilityTool.loadSprite("/objects/fireball/fireball_right_1.png", "fireball not found");
+            weaponSprite = UtilityTool.loadSprite("/Projectile/fireball/fireball_right_1.png", "fireball not found");
             weaponSprite = UtilityTool.scaleImage(weaponSprite, gp.TILE_SIZE, gp.TILE_SIZE);
             currentActionList.add(weaponSprite);
-            weaponSprite = UtilityTool.loadSprite("/objects/fireball/fireball_right_2.png", "fireball not found");
+            weaponSprite = UtilityTool.loadSprite("/Projectile/fireball/fireball_right_2.png", "fireball not found");
             weaponSprite = UtilityTool.scaleImage(weaponSprite, gp.TILE_SIZE, gp.TILE_SIZE);
             currentActionList.add(weaponSprite);
         } catch (IOException e){

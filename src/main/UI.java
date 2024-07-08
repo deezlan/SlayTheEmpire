@@ -269,12 +269,39 @@ public class UI {
     }
 
     public void drawDeathScreen() {
-        g2.setFont(g2.getFont().deriveFont(Font.BOLD));
-        String text = "KAMU DAH MATI";
-        int x = getXforCenteredText(text);
-        int y = gp.SCREEN_HEIGHT/2;
+        g2.setColor(new Color(0,0,0,150));
+        g2.fillRect(0,0, gp.SCREEN_WIDTH , gp.SCREEN_HEIGHT);
+        int x;
+        int y;
+        String text;
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 50f));
+        text = "KAMU DAH MATI";
 
-        g2.drawString(text, x, y);
+        // SHADOW
+        g2.setColor(Color.BLACK);
+        x = getXforCenteredText(text);
+        y = gp.TILE_SIZE*4;
+        g2.drawString(text,x,y);
+        // MAIN MESSAGE
+        g2.setColor(Color.white);
+        g2.drawString(text, x-4,y-4);
+
+        // RETRY
+        g2.setFont(g2.getFont().deriveFont(40f));
+        text = "Retry";
+        x = getXforCenteredText(text);
+        y += gp.TILE_SIZE*4;
+        g2.drawString(text,x,y);
+
+        // BACK TO TITLE SCREEN
+        text = "Quit";
+        x = getXforCenteredText(text);
+        y += 45;
+        g2.drawString(text,x,y);
+//        int x = getXforCenteredText(text);
+//        int y = gp.SCREEN_HEIGHT/2;
+//
+//        g2.drawString(text, x, y);
     }
 
     public void drawSubWindow(int x, int y, int width,int height){

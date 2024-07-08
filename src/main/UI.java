@@ -8,17 +8,20 @@ import object.OBJ_Heart;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.awt.Font;
+import java.awt.GraphicsEnvironment;
 import java.io.InputStream;
 
 public class UI {
 
+    KeyHandler keyH;
     GamePanel gp;
-
     BufferedImage fullHeart, halfHeart, emptyHeart, hotbar;
     Graphics2D g2;
-    Font defaultFont;
+    Font gameFont;
     private final Image titleGif;
     private final Image titleImage;
     private final Image newGame;
@@ -61,13 +64,11 @@ public class UI {
 
         // FONT initialization
         try {
-            InputStream is = getClass().getResourceAsStream("res/font/Purisa Bold.ttf");
-            if (is == null) {
-                System.out.println("Font file not found");
-                defaultFont = new Font("Cambria", Font.PLAIN, 12);  // Fallback font
-            } else {
-                defaultFont = Font.createFont(Font.TRUETYPE_FONT, is);
-            }
+            GraphicsEnvironment font = GraphicsEnvironment.getLocalGraphicsEnvironment();
+            Font gameFont = loadFont("res/font/x12y16pxMaruMonica.ttf");
+            font.registerFont(gameFont);
+            this.gameFont = gameFont.deriveFont(Font.PLAIN, 13F);
+
         } catch (FontFormatException | IOException e) {
             e.printStackTrace(System.out);
         }
@@ -105,10 +106,16 @@ public class UI {
         assassinGif = assassin.getImage();
     }
 
+    private Font loadFont(String fontPath) throws FontFormatException, IOException {
+        File fontFile = new File(fontPath);
+        return Font.createFont(Font.TRUETYPE_FONT, new FileInputStream(fontFile));
+    }
+
+
     public void draw(Graphics2D g2){
 
         this.g2 = g2;
-        g2.setFont(defaultFont);
+        g2.setFont(gameFont);
 
         // TITLE STATE
         if (gp.gameState == gp.titleState) {

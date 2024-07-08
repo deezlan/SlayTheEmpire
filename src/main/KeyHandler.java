@@ -8,6 +8,24 @@ import entity.Player;
 
 public class KeyHandler implements KeyListener {
     GamePanel gp;
+    Sound sound = new Sound();
+    boolean musicPlaying = false; // check if music is already playing
+
+    // PLAY MUSIC
+    public void playMusic(int i) {
+        sound.setFile(i);
+        sound.play();
+        sound.loop();
+    }
+    // STOP MUSIC
+    public void stopMusic() {
+        sound.stop();
+    }
+    // PLAY SOUND EFFECT
+    public void playSE(int i) {
+        sound.setFile(i);
+        sound.play();
+    }
 
     public boolean
             wPressed,
@@ -34,6 +52,7 @@ public class KeyHandler implements KeyListener {
     public void keyPressed(KeyEvent e) {
         int code = e.getKeyCode();
 
+        // **GAME STATES**
         if (gp.gameState == gp.loginState) {
             if (gp.onUsername) {
                 if (e.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
@@ -74,12 +93,21 @@ public class KeyHandler implements KeyListener {
         if (gp.gameState == gp.startMenuState){
             if (code == KeyEvent.VK_W){
                 gp.ui.commandNum--;
+                playSE(1);
             }
             if (code == KeyEvent.VK_S){
                 gp.ui.commandNum++;
+                playSE(1);
+            }
+            if (gp.ui.commandNum < 0) {
+                gp.ui.commandNum = 0;
+            } else if (gp.ui.commandNum > 3) {
+                gp.ui.commandNum = 3;
             }
 
             if (code == KeyEvent.VK_SPACE) {
+                // SELECT SOUND EFFECT
+                playSE(2);
                 if (gp.ui.commandNum == 0) {
                     // GO TO LOGIN
                     gp.gameState = gp.loginState;
@@ -107,6 +135,8 @@ public class KeyHandler implements KeyListener {
         // CHARACTER SELECTION
         else if (gp.gameState == gp.characterSelectionState) {
             if (code == KeyEvent.VK_SPACE) {
+                // SELECT SOUND EFFECT
+                playSE(2);
                 if (gp.ui.commandNum == 0) {
                     // CHANGE CLASS TO WARRIOR
                     gp.player = new Player(gp, gp.keyH, gp.cursor, 0);
@@ -124,9 +154,11 @@ public class KeyHandler implements KeyListener {
 
             if (code == KeyEvent.VK_A){
                 gp.ui.commandNum--;
+                playSE(1);
             }
             if (code == KeyEvent.VK_D){
                 gp.ui.commandNum++;
+                playSE(1);
             }
 
             if (gp.ui.commandNum < 0) {
@@ -138,6 +170,11 @@ public class KeyHandler implements KeyListener {
 
         // PLAY STATE
         if (gp.gameState == gp.playState){
+            if (!musicPlaying) {
+                sound.stopAll();
+                playMusic(5);
+                musicPlaying = true;
+            }
             if (code == KeyEvent.VK_W) {
                 wPressed = true;
             }
@@ -167,6 +204,7 @@ public class KeyHandler implements KeyListener {
             }
         }
 
+        // SHOP STATE
         if (gp.gameState == gp.shopState){
             if (code == KeyEvent.VK_W) {
                 if (gp.ui.slotRowMove != 0){
@@ -188,6 +226,7 @@ public class KeyHandler implements KeyListener {
                 }
             }
         }
+
         // PAUSE STATE
         if (code == KeyEvent.VK_P) {
             pPressed = true;
@@ -197,6 +236,9 @@ public class KeyHandler implements KeyListener {
                     gp.gameState = gp.playState;
             }
         }
+
+
+        // **KEY HANDLING**
 
         // MOVING THROUGH DIALOGUE
         if (code == KeyEvent.VK_E) {

@@ -40,6 +40,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     // CURSOR SETTINGS
     public Cursor cursor = new Cursor(); // Initialize cursor
+    Sound sound = new Sound();
     public Player player;
 
     public MouseHandler mouseH = new MouseHandler();
@@ -122,6 +123,8 @@ public class GamePanel extends JPanel implements Runnable {
         aSetter.setNPC();
         aSetter.setMonster();
         gameState = titleState; // TESTING LOGIN RIGHT NOW
+        keyH.playMusic(0);
+
     }
 
     public void startGameThread() {
@@ -289,4 +292,5 @@ public class GamePanel extends JPanel implements Runnable {
         }
         g2.dispose();
     }
+
 }

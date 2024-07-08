@@ -19,6 +19,7 @@ public class MOB_SkeletonKnight extends Entity {
         life = maxLife;
         action = "idleRight";
         mobNum = 6;
+        damageSprite = 6; // HERE EXAMPLE NUMBER
 
         // Load mob sprites
         getMobSprites();

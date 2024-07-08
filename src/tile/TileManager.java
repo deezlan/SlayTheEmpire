@@ -29,7 +29,7 @@ public class TileManager {
         getTileImage();
         loadMap("/mapTextFiles/LobbyTest.txt",0);
         loadMap("/mapTextFiles/smalRoom.txt",1);
-        loadMap("/mapTextFiles/secondLevel.txt", 2);
+//        loadMap("/mapTextFiles/secondLevel.txt", 2);
     }
 
     public void loadMap(String filePath, int map) {

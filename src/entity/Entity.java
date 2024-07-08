@@ -22,10 +22,18 @@ public abstract class Entity {
     public int attack;
     public int maxLife;
     public int life;
+
+
+
+
+    public int damageSprite; // HEREEEEEEEE
+
+
+
+
     public int solidAreaDefaultX, solidAreaDefaultY;
     public ArrayList<BufferedImage>
             currentActionList = new ArrayList<>(),
-            mobActionList = new ArrayList<>(),
             idleRightList = new ArrayList<>(),
             idleLeftList = new ArrayList<>(),
             moveRightList = new ArrayList<>(),
@@ -352,14 +360,16 @@ public abstract class Entity {
     }
 
     public void attackAnimation() { // animation attack
-        animationCounter++;
-        if (animationCounter <= 5) {
-            animationSpriteNum = 0;
-        } else if (animationCounter <= 10) {
-            animationSpriteNum = 1;
-        } else if (animationCounter <= 15) {
-            animationSpriteNum = 2;
+        switch (action) {
+            case "moveUp", "moveDown":
+                currentActionList = lookingRight ? mobRightAttackList : mobLeftAttackList; break;
+            case "moveLeft":
+                currentActionList = mobLeftAttackList; break;
+            case "moveRight":
+                currentActionList = mobRightAttackList; break;
+        }
 
+        if (animationSpriteNum == damageSprite) {
             // SAVE CURRENT DATA OF ENTITY
             int currentWorldX = worldX;
             int currentWorldY = worldY;
@@ -369,30 +379,21 @@ public abstract class Entity {
             // ADJUST FOR ATTACK
             switch (action) {
                 case "moveUp":
-                    worldY -= attackArea.height;
-                    currentActionList = mobRightAttackList;
-                    break;
+                    worldY -= attackArea.height; break;
                 case "moveDown":
-                    worldY += attackArea.height;
-                    currentActionList = mobLeftAttackList;
-                    break;
+                    worldY += attackArea.height; break;
                 case "moveLeft":
-                    worldX -= attackArea.width;
-                    currentActionList = mobLeftAttackList;
-                    break;
+                    worldX -= attackArea.width; break;
                 case "moveRight":
-                    worldX += attackArea.width;
-                    currentActionList = mobRightAttackList;
-                    break;
+                    worldX += attackArea.width; break;
             }
 
             // ATTACK AREA BECOMES SOLID AREA
             solidArea.width = attackArea.width;
             solidArea.height = attackArea.height;
             if (type == 1) {
-                if (gp.cChecker.checkPLayer(this)) {
+                if (gp.cChecker.checkPLayer(this))
                     damagePlayer(attack);
-                }
             } else { // FOR PLAYER
                 // CHECK MONSTER COLLISION
                 int monsterIndex = gp.cChecker.checkEntityCollision(this, gp.mobArr);
@@ -401,12 +402,21 @@ public abstract class Entity {
                 int iTileIndex = gp.cChecker.checkEntityCollision(this, gp.iTile);
                 gp.player.damageInteractiveTile(iTileIndex);
             }
+
             // CHANGE BACK TO ORIGINAL
             worldX = currentWorldX;
             worldY = currentWorldY;
             solidArea.width = solidAreaWidth;
             solidArea.height = solidAreaHeight;
+        }
 
+        animationCounter++;
+        if (animationCounter <= 5) {
+            animationSpriteNum = 0;
+        } else if (animationCounter <= 10) {
+            animationSpriteNum = 1;
+        } else if (animationCounter <= 15) {
+            animationSpriteNum = 2;
         } else if (animationCounter <= 20) {
             animationSpriteNum = 3;
         } else if (animationCounter <= 25) {
@@ -453,13 +463,14 @@ public abstract class Entity {
                 }
                 break;
         }
+
         if (targetInRange) {
 //          CHECK ATTACK HAPPENS
             int i = new Random().nextInt(rate);
             if (i == 0) {
-            attacking = true;
-            spriteNum = 1;
-            spriteCounter = 0;
+                attacking = true;
+                spriteNum = 1;
+                spriteCounter = 0;
         }
     }
 }

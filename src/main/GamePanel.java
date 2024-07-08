@@ -28,6 +28,7 @@ public class GamePanel extends JPanel implements Runnable {
     // WORLD SETTINGS
     public int MAX_WORLD_COL = 17; //must be same as map size
     public int MAX_WORLD_ROW = 14; //must be same as map size
+    public double testDelta = 0;
 
     // FPS SETTINGS
     final int FPS = 60;
@@ -116,6 +117,7 @@ public class GamePanel extends JPanel implements Runnable {
         while (gameThread != null) {
             currentTime = System.nanoTime();
             delta += (currentTime - lastTime) / drawInterval;
+            testDelta += (currentTime - lastTime) / drawInterval;
             timer += (currentTime - lastTime);
             lastTime = currentTime;
 

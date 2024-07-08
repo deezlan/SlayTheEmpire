@@ -7,12 +7,11 @@ public class Projectile extends Entity{
     Entity user;
     double dx;
     double dy;
-    double speedX;
-    double speedY;
     public Projectile(GamePanel gp) {
         super(gp);
     }
     String direction;
+    int delta;
 
     public void set(int worldX, int worldY, String direction, boolean alive, Entity user){
         this.worldX = worldX+80;
@@ -25,11 +24,13 @@ public class Projectile extends Entity{
     }
 
     public void update(){
+        delta++;
         dx = gp.cursor.deltaX;
         dy = gp.cursor.deltaY;
-
-        speedX = (int) (dx / speed);
-        speedY = (int) (dy / speed);
+        if (Math.sqrt(dx*dx + dy*dy) < 200){
+            dx *= 3;
+            dy *= 3;
+        }
 
         if (user == gp.player){
             int monsterIndex = gp.cChecker.checkEntityCollision(this, gp.mobArr);
@@ -38,18 +39,11 @@ public class Projectile extends Entity{
                 alive = false;
             }
         }
-//        if (user != gp.player){
-//
-//        }
-//        switch (direction){
-//            case "moveUp": worldY -= speed;
-//                System.out.println("working"); break;
-//            case "moveDown": worldY += speed; break;
-//            case "moveLeft": worldX -= speed; break;
-//            case "moveRight": worldX += speed; break;
-//        }
-        worldY += (int) (speedY/5);
-        worldX += (int) (speedX/5);
+        if (delta >= 10){
+            worldX += (int) (dx/20);
+            worldY += (int) (dy/20);
+            delta = 0;
+        }
 
         life--;
         if (life <= 0){

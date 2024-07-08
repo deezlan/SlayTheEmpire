@@ -20,6 +20,7 @@ public class MOB_RobotGuardian extends Entity {
         life = maxLife;
         action = "idleRight";
         mobNum = 3;
+        damageSprite = 7;
 
         // Load mob sprites
         getMobSprites();

@@ -20,6 +20,7 @@ public class MOB_Canine extends Entity {
         life = maxLife;
         action = "idleRight";
         mobNum = 10;
+        damageSprite = 3;
 
         // Load mob sprites
         getMobSprites();

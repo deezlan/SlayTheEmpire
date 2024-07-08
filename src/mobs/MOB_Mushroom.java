@@ -22,6 +22,7 @@ public class MOB_Mushroom extends Entity {
         lookingRight = true;
         action = "idleRight";
         mobNum = 9;
+        damageSprite = 8;
 
         // Load mob sprites
         getMobSprites();

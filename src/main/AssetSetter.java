@@ -54,28 +54,28 @@ public class AssetSetter {
         int i = 0;
 
 //            // MAP 0
-//            gp.npcArr[mapNum][i] = new NPC_Maiden(gp);
-//            gp.npcArr[mapNum][i].worldX = 655;
-//            gp.npcArr[mapNum][i].worldY = 340;
-//            System.out.println("NPC Maiden set at (" + gp.npcArr[mapNum][0].worldX + ", " + gp.npcArr[mapNum][0].worldY + ")");
-//            i++;
-//
-//            gp.npcArr[mapNum][i] = new NPC_Blacksmith(gp);
-//            gp.npcArr[mapNum][i].worldX = 380;
-//            gp.npcArr[mapNum][i].worldY = 120;
-//            System.out.println("NPC Blacksmith set at (" + gp.npcArr[mapNum][0].worldX + ", " + gp.npcArr[mapNum][0].worldY + ")");
-//            i++;
-//
-//            gp.npcArr[mapNum][i] = new NPC_Merchant(gp);
-//            gp.npcArr[mapNum][i].worldX = 920;
-//            gp.npcArr[mapNum][i].worldY = 180;
-//            System.out.println("NPC Merchant set at (" + gp.npcArr[mapNum][0].worldX + ", " + gp.npcArr[mapNum][0].worldY + ")");
-//            i++;
-//
-//            gp.npcArr[mapNum][i] = new NPC_Mystery(gp);
-//            gp.npcArr[mapNum][i].worldX = 800;
-//            gp.npcArr[mapNum][i].worldY = 540;
-//            System.out.println("NPC Mystery set at (" + gp.npcArr[mapNum][0].worldX + ", " + gp.npcArr[mapNum][0].worldY + ")");
+            gp.npcArr[mapNum][i] = new NPC_Maiden(gp);
+            gp.npcArr[mapNum][i].worldX = 655;
+            gp.npcArr[mapNum][i].worldY = 340;
+            System.out.println("NPC Maiden set at (" + gp.npcArr[mapNum][0].worldX + ", " + gp.npcArr[mapNum][0].worldY + ")");
+            i++;
+
+            gp.npcArr[mapNum][i] = new NPC_Blacksmith(gp);
+            gp.npcArr[mapNum][i].worldX = 380;
+            gp.npcArr[mapNum][i].worldY = 120;
+            System.out.println("NPC Blacksmith set at (" + gp.npcArr[mapNum][0].worldX + ", " + gp.npcArr[mapNum][0].worldY + ")");
+            i++;
+
+            gp.npcArr[mapNum][i] = new NPC_Merchant(gp);
+            gp.npcArr[mapNum][i].worldX = 920;
+            gp.npcArr[mapNum][i].worldY = 180;
+            System.out.println("NPC Merchant set at (" + gp.npcArr[mapNum][0].worldX + ", " + gp.npcArr[mapNum][0].worldY + ")");
+            i++;
+
+            gp.npcArr[mapNum][i] = new NPC_Mystery(gp);
+            gp.npcArr[mapNum][i].worldX = 800;
+            gp.npcArr[mapNum][i].worldY = 540;
+            System.out.println("NPC Mystery set at (" + gp.npcArr[mapNum][0].worldX + ", " + gp.npcArr[mapNum][0].worldY + ")");
             // MAP 1
     }
     public void setMonster() {
@@ -83,10 +83,10 @@ public class AssetSetter {
         int i = 0;
                 // MAP 0
 //
-                gp.mobArr[mapNum][i] = new MOB_SkeletonKnight(gp);
-                gp.mobArr[mapNum][i].worldX = 350;
-                gp.mobArr[mapNum][i].worldY = 270;
-                i++;
+//                gp.mobArr[mapNum][i] = new MOB_SkeletonKnight(gp);
+//                gp.mobArr[mapNum][i].worldX = 350;
+//                gp.mobArr[mapNum][i].worldY = 270;
+//                i++;
 
 //                gp.mobArr[mapNum][i] = new MOB_ArmoredGuardian(gp);
 //                gp.mobArr[mapNum][i].worldX = 350;
@@ -131,7 +131,7 @@ public class AssetSetter {
 //                gp.mobArr[mapNum][i] = new MOB_RobotGuardian(gp);
 //                gp.mobArr[mapNum][i].worldX = 400;
 //                gp.mobArr[mapNum][i].worldY = 270;
-                i++;
+//                    i++;
 
                 // MAP 1
 //                mapNum = 1;

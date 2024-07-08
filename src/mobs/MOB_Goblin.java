@@ -20,6 +20,7 @@ public class MOB_Goblin extends Entity {
         life = maxLife;
         action = "idleRight";
         mobNum = 5;
+        damageSprite = 4;
 
         // Load mob sprites
         getMobSprites();

@@ -20,6 +20,7 @@ public class MOB_Slime extends Entity {
         lookingRight = true;
         action = "idleRight";
         mobNum = 1;
+        damageSprite = 2;
 
         // Load mob sprites
         getMobSprites();

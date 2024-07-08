@@ -20,6 +20,7 @@ public class MOB_Skellington extends Entity {
         life = maxLife;
         action = "idleRight";
         mobNum = 2;
+        damageSprite = 7;
 
         // Load mob sprites
         getMobSprites();

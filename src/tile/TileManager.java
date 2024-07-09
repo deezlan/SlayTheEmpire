@@ -21,8 +21,6 @@ public class TileManager {
     public TileManager(GamePanel gp) {
         gp.currentMap = 0;
         this.gp = gp;
-        gp.MAX_WORLD_COL = 50;
-        gp.MAX_WORLD_ROW = 50;
 
         mapTileNum = new int[gp.maxMap][gp.MAX_WORLD_COL][gp.MAX_WORLD_ROW];
 

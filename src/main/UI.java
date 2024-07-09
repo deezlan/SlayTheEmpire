@@ -221,10 +221,10 @@ public class UI {
         posX = gp.TILE_SIZE/2;
         i = 0;
 
-        while (i < gp.player.life){
+        while (i < gp.player.currentLife){
             g2.drawImage (halfHeart, posX, posY, null);
             i++;
-            if (i < gp.player.life)
+            if (i < gp.player.currentLife)
                 g2.drawImage(fullHeart, posX, posY, null);
             i++;
             posX += gp.TILE_SIZE;
@@ -236,7 +236,9 @@ public class UI {
         if (coin.spriteCounter > 4) coin.loopThroughSprites();
         g2.setFont(g2.getFont().deriveFont(Font.BOLD, 40));
         g2.drawString ("" + gp.player.totalCoins, 38, 117);
-        g2.drawImage(coin.defaultList.get(coin.spriteNum - 1), 118, 78, null);
+        if (coin.spriteNum == coin.defaultList.size() - 1)
+            coin.spriteNum = 0;
+        g2.drawImage(coin.defaultList.get(coin.spriteNum), 118, 78, null);
     }
 
     // Draw Pause Screen

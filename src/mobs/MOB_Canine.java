@@ -18,7 +18,7 @@ public class MOB_Canine extends Entity {
         speed = defaultSpeed;
         attack = 1;
         maxLife = 4;
-        life = maxLife;
+        currentLife = maxLife;
         action = "idleRight";
         mobNum = 10;
         damageSprite = 3;
@@ -57,7 +57,7 @@ public class MOB_Canine extends Entity {
         }
         // CHECK ATTACK ON PLAYER
         if(!attacking){
-            checkMobAttack(30,gp.TILE_SIZE*2,gp.TILE_SIZE*2); // CHANGE ATTACK RANGE
+            checkWithinAttackRange(30,gp.TILE_SIZE*2,gp.TILE_SIZE*2); // CHANGE ATTACK RANGE
         }
     }
 

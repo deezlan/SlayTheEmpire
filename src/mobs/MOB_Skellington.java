@@ -18,7 +18,7 @@ public class MOB_Skellington extends Entity {
         attack = 1;
         speed = defaultSpeed;
         maxLife = 8;
-        life = maxLife;
+        currentLife = maxLife;
         action = "idleRight";
         mobNum = 2;
         damageSprite = 7;
@@ -53,7 +53,7 @@ public class MOB_Skellington extends Entity {
         }
         // CHECK ATTACK ON PLAYER
         if(!attacking){
-            checkMobAttack(30,gp.TILE_SIZE*2,gp.TILE_SIZE*2); // CHANGE ATTACK RANGE
+            checkWithinAttackRange(30,gp.TILE_SIZE*2,gp.TILE_SIZE*2); // CHANGE ATTACK RANGE
         }
     }
 

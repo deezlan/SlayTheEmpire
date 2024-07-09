@@ -112,7 +112,7 @@ public class EventHandler {
             gp.gameState = gameState;
             gp.ui.currentDialog = "Drank Possibly Toilet Water";
             eventMaster.startDialogue(eventMaster,0);
-            gp.player.life = gp.player.maxLife;
+            gp.player.currentLife = gp.player.maxLife;
             canTouchEvent = false;
         }
     }

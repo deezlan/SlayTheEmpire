@@ -18,7 +18,7 @@ public class MOB_Ramses extends Entity {
         speed = defaultSpeed;
         damage = 1;
         maxLife = 4;
-        life = maxLife;
+        currentLife = maxLife;
         action = "idleRight";
         mobNum = 4;
 

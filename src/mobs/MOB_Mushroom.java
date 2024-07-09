@@ -19,7 +19,7 @@ public class MOB_Mushroom extends Entity {
         speed = defaultSpeed;
         attack = 1;
         maxLife = 4;
-        life = maxLife;
+        currentLife = maxLife;
         lookingRight = true;
         action = "idleRight";
         mobNum = 9;
@@ -60,7 +60,7 @@ public class MOB_Mushroom extends Entity {
         }
         // CHECK ATTACK ON PLAYER
         if(!attacking){
-            checkMobAttack(30,gp.TILE_SIZE*3,gp.TILE_SIZE*3);
+            checkWithinAttackRange(30,gp.TILE_SIZE*3,gp.TILE_SIZE*3);
         }
     }
 

@@ -5,18 +5,22 @@ import main.GamePanel;
 import main.UtilityTool;
 
 import java.io.IOException;
-import java.util.Random;
 
 public class MOB_Slime extends Entity {
     GamePanel gp;
     public MOB_Slime(GamePanel gp) {
         super(gp);
         this.gp = gp;
-        type = 2;
-        speed = 1;
+        type = 1;
+        defaultSpeed = 1;
+        speed = defaultSpeed;
         maxLife = 4;
         life = maxLife;
+        attack = 1;
+        lookingRight = true;
         action = "idleRight";
+        mobNum = 1;
+        damageSprite = 2;
 
         // Load mob sprites
         getMobSprites();
@@ -28,58 +32,33 @@ public class MOB_Slime extends Entity {
         solidArea.height = 30;
         solidAreaDefaultX = solidArea.x;
         solidAreaDefaultY = solidArea.y;
+        attackArea.width = 50;
+        attackArea.height = 30;
     }
 
     @Override
     public void setAction() {
-        actionLockCounter++;
 
-        if(actionLockCounter == 120){
-            Random random = new Random();
-            int i = random.nextInt(250)+1;
-
-            if (i <= 25) {
-                action = "moveUp";
-                currentActionList = moveRightList;
+        if(onPath) {
+            // CHECK IF STOP CHASING
+            checkStopChase(gp.player, 15, 100);
+            // SEARCH DIRECTION TO GO
+            searchPath(getGoalCol(gp.player),getGoalRow(gp.player));
+        } else {
+            // CHECK IF START CHASING
+            checkStartChase(gp.player, 5 , 100);
+            // GET RANDOM DIRECTION
+            getRandomDirection();
             }
-            if (i > 25 && i <= 50){
-                action = "moveDown";
-                currentActionList = moveLeftList;
-            }
-            if (i > 50 && i <= 75) {
-                action = "moveLeft";
-                currentActionList = moveLeftList;
-            }
-            if (i > 75 && i <= 100) {
-                action = "moveRight";
-                currentActionList = moveRightList;
-            }
-            if (i > 100 && i <= 125) {
-                action = "idleRight";
-                currentActionList = idleRightList;
-            }
-            if (i > 125 && i <= 150) {
-                action = "idleLeft";
-                currentActionList = idleLeftList;
-            }
-            if (i > 150 && i <= 175) {
-                action = "moveUpRight";
-                currentActionList = moveRightList;
-            }
-            if (i > 175 && i <= 200) {
-                action = "moveDownRight";
-                currentActionList = moveRightList;
-            }
-            if (i > 200 && i <= 225) {
-                action = "moveUpLeft";
-                currentActionList = moveLeftList;
-            }
-            if (i > 225) {
-                action = "moveDownLeft";
-                currentActionList = moveLeftList;
-            }
-            actionLockCounter = 0;
+        // CHECK ATTACK ON PLAYER
+        if(!attacking){
+            checkMobAttack(30,gp.TILE_SIZE*2,gp.TILE_SIZE*2);
         }
+    }
+
+    public void damageReaction() {
+        actionLockCounter = 0;
+        onPath = true;
     }
 
     public void getMobSprites() {
@@ -92,10 +71,18 @@ public class MOB_Slime extends Entity {
                 idleRightList.add(i, UtilityTool.loadSprite(dir + "idleRight/" + i + ".png", "Missing idleRight " + i));
             }
 
+            for (int i = 0; i < 4; i++) {
+                mobRightAttackList.add(i, UtilityTool.loadSprite(dir + "attack/" + i + ".png", "Missing Attack Animation " + i));
+                mobLeftAttackList.add(i, UtilityTool.loadSprite(dir + "attack/" + i + ".png", "Missing Attack Animation " + i));
+                System.out.println("ATTACK is LOADED!");
+            }
+
             UtilityTool.scaleEntityList(this, moveRightList, 150, 150);
             UtilityTool.scaleEntityList(this,moveLeftList, 150, 150);
             UtilityTool.scaleEntityList(this,idleLeftList, 150, 150);
             UtilityTool.scaleEntityList(this, idleRightList, 150, 150);
+            UtilityTool.scaleEntityList(this, mobLeftAttackList, 150, 150);
+            UtilityTool.scaleEntityList(this, mobRightAttackList, 150, 150);
 
             System.out.println("Slime sprites loaded successfully");
         } catch (IOException e) {

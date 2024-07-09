@@ -9,29 +9,37 @@ import object.OBJ_Heart;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.awt.Font;
+import java.awt.GraphicsEnvironment;
 import java.io.InputStream;
 
 public class UI {
 
+    KeyHandler keyH;
+    public Entity npc;
     GamePanel gp;
-
     BufferedImage fullHeart, halfHeart, emptyHeart, hotbar;
     Graphics2D g2;
-    Font defaultFont;
+    Font gameFont;
     private final Image titleGif;
     private final Image titleImage;
     private final Image newGame;
     private final Image loadGame;
     private final Image options;
     private final Image quit;
+    private final Image warriorGif, knightGif, assassinGif;
     private final Image loginDefault, typeUsername, typePassword,
             blankErr, usernameErr, loginErr, usernameTakenErr;
-    Entity coin = new OBJ_Coin(gp);
+    Entity coin;
     public String currentDialog = "";
     public int slotRow = 0;
     public int slotRowMove = 0;
+    int counter = 0;
+    int charIndex = 0;
+    String combinedText = "";
     public int commandNum = 0;
 
     // Login variables
@@ -57,19 +65,17 @@ public class UI {
             e.printStackTrace(System.out);
         }
 
-//        coin = new OBJ_Coin(gp);
+        coin = new OBJ_Coin(gp);
 
         // FONT initialization
         try {
-            InputStream is = getClass().getResourceAsStream("res/font/Purisa Bold.ttf");
-            if (is == null) {
-                System.out.println("Font file not found");
-                defaultFont = new Font("Cambria", Font.PLAIN, 12);  // Fallback font
-            } else {
-                defaultFont = Font.createFont(Font.TRUETYPE_FONT, is);
-            }
+            GraphicsEnvironment font = GraphicsEnvironment.getLocalGraphicsEnvironment();
+            Font gameFont = loadFont("res/font/x12y16pxMaruMonica.ttf");
+            font.registerFont(gameFont);
+            this.gameFont = gameFont.deriveFont(Font.PLAIN, 13F);
+
         } catch (FontFormatException | IOException e) {
-            e.printStackTrace();
+            e.printStackTrace(System.out);
         }
 
 
@@ -79,8 +85,7 @@ public class UI {
         titleGif = icon.getImage();
 
         // INITIALIZE TITLE
-        ImageIcon title = new ImageIcon("res/UI/Title.png");
-        titleImage = title.getImage();
+        titleImage = new ImageIcon("res/UI/Title.png").getImage();
 
         // INITIALIZE LOGIN SCREEN
         loginDefault = new ImageIcon("res/UI/loginDefault.png").getImage();
@@ -93,23 +98,38 @@ public class UI {
 
         // INITIALIZE START MENU UI
         newGame = new ImageIcon("res/UI/newGame.png").getImage();
-
         loadGame = new ImageIcon("res/UI/loadGame.png").getImage();
-
         options = new ImageIcon("res/UI/options.png").getImage();
-
         quit = new ImageIcon("res/UI/quit.png").getImage();
+
+        // INITIALIZE PLAYER PREVIEW
+        ImageIcon warrior = new ImageIcon("res/player/WarriorIdle.gif");
+        warriorGif = warrior.getImage();
+        ImageIcon knight = new ImageIcon("res/player/KnightIdle.gif");
+        knightGif = knight.getImage();
+        ImageIcon assassin = new ImageIcon("res/player/AssassinIdle.gif");
+        assassinGif = assassin.getImage();
     }
+
+    private Font loadFont(String fontPath) throws FontFormatException, IOException {
+        File fontFile = new File(fontPath);
+        return Font.createFont(Font.TRUETYPE_FONT, new FileInputStream(fontFile));
+    }
+
 
     public void draw(Graphics2D g2){
 
         this.g2 = g2;
-        g2.setFont(defaultFont);
-        drawPlayerLife();
+        g2.setFont(gameFont);
 
         // TITLE STATE
         if (gp.gameState == gp.titleState) {
             drawTitleScreen();
+        }
+
+        // START MENU STATE
+        if (gp.gameState == gp.startMenuState) {
+            drawStartMenu();
         }
 
         // CHAR SELECTION SCREEN
@@ -122,33 +142,35 @@ public class UI {
             drawLoginScreen();
         }
 
-        // START MENU STATE
-        if (gp.gameState == gp.startMenuState) {
-            drawStartMenu();
-        }
-
         // PLAY STATE
         if (gp.gameState == gp.playState) {
             drawPlayerMoney();
             drawHotbar();
+            drawPlayerLife();
         }
 
-        //Pause State
+        // PAUSE STATE
         if (gp.gameState == gp.pauseState) {
             drawPauseScreen();
         }
 
-        //Dialog State
+        // DIALOGUE STATE
         if(gp.gameState == gp.dialogueState){
             drawDialogScreen();
         }
 
+        // SHOP STATE
         if (gp.gameState == gp.shopState){
             drawShop();
         }
 
+        // DEATH STATE
         if (gp.gameState == gp.deathState) {
             drawDeathScreen();
+        }
+
+        if(gp.gameState == gp.transitionState){
+            drawTransition();
         }
     }
 
@@ -176,7 +198,7 @@ public class UI {
 
     public void drawShop() {
         try {
-        NPC_Blacksmith bs = (NPC_Blacksmith) gp.npcArr[1];
+        NPC_Blacksmith bs = (NPC_Blacksmith) gp.npcArr[gp.currentMap][1];
         InputStream is = new FileInputStream("ARCADE_N.TTF");
         Font arcade = Font.createFont(Font.TRUETYPE_FONT, is);
         arcade = arcade.deriveFont(Font.PLAIN, 16);
@@ -309,7 +331,7 @@ public class UI {
         if (coin.spriteCounter > 4) coin.loopThroughSprites();
         g2.setFont(g2.getFont().deriveFont(Font.BOLD, 40));
         g2.drawString ("" + gp.player.totalCoins, 38, 117);
-        g2.drawImage(coin.defaultList.get(coin.spriteNum - 1), 78, 78, null);
+        g2.drawImage(coin.defaultList.get(coin.spriteNum - 1), 118, 78, null);
     }
 
     // Draw Pause Screen
@@ -318,7 +340,7 @@ public class UI {
         Composite orgComposite = g2.getComposite();
 
         // set opacity of bg
-        float opacity = 0.8f;
+        float opacity = 0.5f;
         g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, opacity));
 
         // Draw black background
@@ -444,10 +466,11 @@ public class UI {
         } else if (!username.matches("[a-zA-Z0-9.\\-_]{0,}")) {
             System.out.println("Has illegal");
             isInvalidUsername = true;
-        } else if (!password.equals("bunny")) {
+        } else if (!password.equals("123")) {
             isInvalidLogin = true;
-        } else if (username.equals("jacob") && password.equals("bunny")) {
+        } else if (username.equals("123")) {
             validLogin = true;
+            gp.gameState = gp.characterSelectionState;
         }
     }
 
@@ -553,9 +576,13 @@ public class UI {
         String text1 = "Warrior";
         x = getXForCenteredText(text)/3;
         y = gp.TILE_SIZE*12;
+
+        int gifX = (int) (gp.SCREEN_WIDTH/1.5);
+        int gifY = gp.SCREEN_HEIGHT/2;
         if (commandNum == 0) {
             g2.setColor(Color.WHITE);
             g2.drawString(text1, x, y);
+            g2.drawImage(warriorGif, (gp.SCREEN_WIDTH - gifX)/2, (gp.SCREEN_HEIGHT - gifY)/2 + 30, gifX, gifY, null);
         } else {
             g2.setColor(Color.GRAY);
             g2.drawString(text1, x, y);
@@ -566,6 +593,7 @@ public class UI {
         if (commandNum == 1) {
             g2.setColor(Color.WHITE);
             g2.drawString(text2, x, y);
+            g2.drawImage(knightGif, (gp.SCREEN_WIDTH - gifX)/2, (gp.SCREEN_HEIGHT - gifY)/2  + 30, gifX, gifY, null);
         } else {
             g2.setColor(Color.GRAY);
             g2.drawString(text2, x, y);
@@ -576,6 +604,8 @@ public class UI {
         if (commandNum == 2) {
             g2.setColor(Color.WHITE);
             g2.drawString(text3, x, y);
+            g2.drawImage(assassinGif, (gp.SCREEN_WIDTH - gifX)/2, (gp.SCREEN_HEIGHT - gifY)/2  + 30, gifX, gifY, null);
+
         } else {
             g2.setColor(Color.GRAY);
             g2.drawString(text3, x, y);
@@ -595,6 +625,32 @@ public class UI {
         dialogX += gp.TILE_SIZE;
         dialogY += gp.TILE_SIZE;
 
+        if(npc.dialogs[npc.dialogueSet][npc.dialogueIndex] != null){
+//            currentDialog = npc.dialogs[npc.dialogueSet][npc.dialogueIndex];
+            char[] characters = npc.dialogs[npc.dialogueSet][npc.dialogueIndex].toCharArray(); // DISABLE IF YOU WANT ALL TEXT TO DISPLAY
+            if(charIndex < characters.length){
+                String s = String.valueOf(characters[charIndex]);
+                combinedText = combinedText + s;
+                currentDialog = combinedText;
+                charIndex++;
+            }
+
+
+            if(gp.keyH.ePressed){
+                charIndex = 0;
+                combinedText = "";
+                if(gp.gameState == gp.dialogueState){
+                    npc.dialogueIndex++;
+                    gp.keyH.ePressed = false;
+                }
+            }
+        } else {
+            npc.dialogueIndex = 0;
+            if(gp.gameState == gp.dialogueState){
+                gp.gameState = gp.playState;
+            }
+        }
+
         for(String line : currentDialog.split("\n")){ // breaks long dialogues // for up to use
             g2.drawString(line,dialogX,dialogY);
             dialogY += 40;
@@ -602,12 +658,39 @@ public class UI {
     }
 
     public void drawDeathScreen() {
-        g2.setFont(g2.getFont().deriveFont(Font.BOLD));
-        String text = "KAMU DAH MATI";
-        int x = getXForCenteredText(text);
-        int y = gp.SCREEN_HEIGHT/2;
+        g2.setColor(new Color(0,0,0,150));
+        g2.fillRect(0,0, gp.SCREEN_WIDTH , gp.SCREEN_HEIGHT);
+        int x;
+        int y;
+        String text;
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 50f));
+        text = "KAMU DAH MATI";
 
-        g2.drawString(text, x, y);
+        // SHADOW
+        g2.setColor(Color.BLACK);
+        x = getXForCenteredText(text);
+        y = gp.TILE_SIZE*4;
+        g2.drawString(text,x,y);
+        // MAIN MESSAGE
+        g2.setColor(Color.white);
+        g2.drawString(text, x-4,y-4);
+
+        // RETRY
+        g2.setFont(g2.getFont().deriveFont(40f));
+        text = "Retry";
+        x = getXForCenteredText(text);
+        y += gp.TILE_SIZE*4;
+        g2.drawString(text,x,y);
+
+        // BACK TO TITLE SCREEN
+        text = "Quit";
+        x = getXForCenteredText(text);
+        y += 45;
+        g2.drawString(text,x,y);
+//        int x = getXforCenteredText(text);
+//        int y = gp.SCREEN_HEIGHT/2;
+//
+//        g2.drawString(text, x, y);
     }
 
     public void drawSubWindow(int x, int y, int width,int height){
@@ -624,5 +707,22 @@ public class UI {
     public int getXForCenteredText(String text) {
         int length = (int)g2.getFontMetrics().getStringBounds(text, g2).getWidth();
         return gp.SCREEN_WIDTH/2 - length/2;
+    }
+    //  DRAWS TRANSITION EVENT WHEN ENTERING OR EXITING
+    public void drawTransition() {
+        counter++;
+        g2.setColor(new Color(0,0,0,counter*5));
+        g2.fillRect(0,0,gp.SCREEN_WIDTH,gp.SCREEN_HEIGHT);
+
+        if(counter == 50){
+            counter = 0;
+            gp.gameState = gp.playState;
+            gp.currentMap = gp.eHandler.tempMap;
+            gp.setMapColor();
+            gp.player.worldX = gp.TILE_SIZE * gp.eHandler.tempCol;
+            gp.player.worldY = gp.TILE_SIZE * gp.eHandler.tempRow;
+            gp.eHandler.previousEventX = gp.player.worldX;
+            gp.eHandler.previousEventY = gp.player.worldY;
+        }
     }
 }

@@ -1,6 +1,7 @@
 package object;
 
 import entity.Entity;
+import entity.Projectile;
 import main.GamePanel;
 import main.UtilityTool;
 
@@ -27,6 +28,6 @@ public class OBJ_SnowballCannon extends Entity {
         System.out.println("Projectile initialized in Snowball Cannon: " + this.projectile);
 
         weaponSprite = UtilityTool.scaleImage(weaponSprite, 30, 30);
-        damage = 1;
+        damage = 2;
     }
 }

@@ -9,15 +9,15 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
-import java.beans.EventHandler;
-import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.ArrayList;
 
+import data.SaveLoad;
+import main.EventHandler;
 import entity.Cursor;
 import entity.Entity;
 import entity.Player;
 import tile.TileManager;
-import object.SuperObject;
 
 public class GamePanel extends JPanel implements Runnable {
     // SCREEN SETTINGS
@@ -65,6 +65,7 @@ public class GamePanel extends JPanel implements Runnable {
     public UI ui = new UI(this);
     public EventHandler eHandler = new EventHandler(this);
     ArrayList<Entity> entityList = new ArrayList<>();
+    SaveLoad saveLoad = new SaveLoad(this);
 
     // GAME STATES
     public int gameState;

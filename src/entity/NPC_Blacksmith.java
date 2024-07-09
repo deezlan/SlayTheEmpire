@@ -15,6 +15,7 @@ public class NPC_Blacksmith extends Entity {
     public NPC_Blacksmith(GamePanel gp) {
         super(gp);
         action = "idleRight";
+        type = type_npc;
         getNpcSprites();
         setDialog();
 
@@ -29,11 +30,11 @@ public class NPC_Blacksmith extends Entity {
     }
 
     public void setDialog() {
-        dialogs[0] = "placeholder 1";
-        dialogs[1] = "placeholder 2";
-        dialogs[2] = "placeholder 3";
-        dialogs[3] = "placeholder 4";
-        dialogs[4] = "placeholder 4";
+        dialogs[0][0] = "placeholder 1";
+        dialogs[0][1] = "placeholder 2";
+        dialogs[0][2] = "placeholder 3";
+        dialogs[0][3] = "placeholder 4";
+        dialogs[0][4] = "placeholder 4";
     }
 
 

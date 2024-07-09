@@ -1,13 +1,18 @@
 package main;
 
+import entity.Entity;
+
 public class EventHandler {
     GamePanel gp;
     EventRect[][][] eventRect ;
+    Entity eventMaster;
     int previousEventX, previousEventY; // prevent event from happening again immediately
+    int tempMap, tempCol, tempRow;
     boolean canTouchEvent = true;
 
     public EventHandler(GamePanel gp){
         this.gp = gp;
+        eventMaster = new Entity(gp);
         eventRect = new EventRect[gp.maxMap][gp.MAX_WORLD_COL][gp.MAX_WORLD_ROW];
         int map = 0;
         int col = 0;
@@ -17,9 +22,9 @@ public class EventHandler {
 
             eventRect[map][col][row] = new EventRect();
             eventRect[map][col][row].x = 23;
-            eventRect[map][col][row].y = 23;
-            eventRect[map][col][row].width = 2;
-            eventRect[map][col][row].height = 2;
+            eventRect[map][col][row].y = -10;
+            eventRect[map][col][row].width = 80;
+            eventRect[map][col][row].height = 40;
             eventRect[map][col][row].eventRectDefaultX = eventRect[map][col][row].x;
             eventRect[map][col][row].eventRectDefaultY = eventRect[map][col][row].y;
 
@@ -34,25 +39,32 @@ public class EventHandler {
                 }
             }
         }
+        setDialogue();
     }
 
+    public void setDialogue() {
+        eventMaster.dialogs[0][0] = "Drank Possibly Toilet Water";
+        eventMaster.dialogs[0][1] = "Why does it taste like pee";
+    }
     public void checkEvent() { // check tile for event;
         // check tile if player i one tile away from the tile
         int xDistance = Math.abs(gp.player.worldX - previousEventX);
         int yDistance = Math.abs(gp.player.worldY - previousEventY);
         int distance = Math.max(xDistance, yDistance);
+
         if (distance > gp.TILE_SIZE){
             canTouchEvent = true;
         }
-        //testing damage fall pit
             if(canTouchEvent) {// use else if to add more events
-                if (hit(0,14, 15, "any")) {
+                if (hit(0,8, 12, "any")) {
                     enterDungeon(1,8,8);
-                } else if (hit(0,15, 16, "any")) {
+                } else if (hit(0,4, 10, "moveDown")) {
                     drinkWater(gp.dialogueState);
-                } else if (hit(0,10, 12, "any")) {
+                } else if (hit(0,3, 10, "any")) {
                     drinkWater(gp.dialogueState);
-                } else if (hit(0,9, 12, "any")) {
+                } else if (hit(0,2, 10, "any")) {
+                    drinkWater(gp.dialogueState);
+                }else if (hit(0,13, 10, "any")) {
                     drinkWater(gp.dialogueState);
                 }
             }
@@ -85,12 +97,10 @@ public class EventHandler {
     }
 
     public void enterDungeon(int map, int col, int row){
-        gp.currentMap = map;
-        gp.setMapColor();
-        gp.player.worldX = gp.TILE_SIZE * col;
-        gp.player.worldY = gp.TILE_SIZE * row;
-        previousEventX = gp.player.worldX;
-        previousEventY = gp.player.worldY;
+        gp.gameState = gp.transitionState;
+        tempMap = map;
+        tempCol = col;
+        tempRow = row;
         canTouchEvent = false;
 
         //if one time only event enable this
@@ -101,7 +111,8 @@ public class EventHandler {
         if(gp.keyH.ePressed){
             gp.gameState = gameState;
             gp.ui.currentDialog = "Drank Possibly Toilet Water";
-            gp.player.life = gp.player.maxLife;
+            eventMaster.startDialogue(eventMaster,0);
+            gp.player.currentLife = gp.player.maxLife;
             canTouchEvent = false;
         }
     }

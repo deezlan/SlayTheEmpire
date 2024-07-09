@@ -104,19 +104,13 @@ public class KeyHandler implements KeyListener {
         }
         if (code == KeyEvent.VK_E) {
             ePressed = true;
-            if(gp.gameState == gp.dialogueState){
-                gp.gameState = gp.playState;
-            }  else if (gp.gameState == gp.shopState) {
+//            if(gp.gameState == gp.dialogueState){
+//                gp.gameState = gp.playState;
+            if (gp.gameState == gp.shopState) {
                 gp.gameState = gp.playState;
             }
         }
-        //Debug
-//        if (code == KeyEvent.VK_R){
-//            switch(gp.currentMap){
-//                case 0: gp.tileM.loadMap("/mapTextFiles/map.txt"); break;
-//                case 1: gp.tileM.loadMap("/mapTextFiles/test.txt"); break;
-//            }
-//        }
+
         if (code == KeyEvent.VK_ENTER) {
             enterPressed = true;
         }

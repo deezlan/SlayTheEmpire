@@ -23,6 +23,8 @@ public class UI {
     GamePanel gp;
     BufferedImage fullHeart, halfHeart, emptyHeart, hotbar;
     Graphics2D g2;
+    Entity coin;
+
     Font gameFont;
     private final Image titleGif;
     private final Image titleImage;
@@ -33,7 +35,7 @@ public class UI {
     private final Image warriorGif, knightGif, assassinGif;
     private final Image loginDefault, typeUsername, typePassword,
             blankErr, usernameErr, loginErr, usernameTakenErr;
-    Entity coin;
+
     public String currentDialog = "";
     public int slotRow = 0;
     public int slotRowMove = 0;
@@ -120,6 +122,8 @@ public class UI {
     public void draw(Graphics2D g2){
 
         this.g2 = g2;
+        g2.setFont(new Font("Microsoft YaHei", Font.PLAIN, 28));
+        g2.setColor(Color.white);
         g2.setFont(gameFont);
 
         // TITLE STATE
@@ -149,22 +153,20 @@ public class UI {
             drawPlayerLife();
         }
 
-        // PAUSE STATE
+        //Pause State
         if (gp.gameState == gp.pauseState) {
             drawPauseScreen();
         }
 
-        // DIALOGUE STATE
+        //Dialog State
         if(gp.gameState == gp.dialogueState){
             drawDialogScreen();
         }
 
-        // SHOP STATE
         if (gp.gameState == gp.shopState){
             drawShop();
         }
 
-        // DEATH STATE
         if (gp.gameState == gp.deathState) {
             drawDeathScreen();
         }
@@ -255,11 +257,11 @@ public class UI {
         drawSubWindow(descX, descY, descWidth, descHeight);
 
         g2.setColor(Color.BLACK);
-        g2.fillRoundRect(descX,descY,descWidth,descHeight,0,0);
+        g2.fillRoundRect(descX, descY, descWidth, descHeight, 0, 0);
 
         g2.setColor(Color.WHITE);
         g2.setStroke(new BasicStroke((5)));
-        g2.drawRoundRect(descX,descY,descWidth,descHeight,0,0);
+        g2.drawRoundRect(descX, descY, descWidth, descHeight, 0, 0);
         //DRAW DESC TEXT
         int textX = descX + 20;
         int textY= descY + gp.TILE_SIZE;
@@ -687,6 +689,10 @@ public class UI {
         x = getXForCenteredText(text);
         y += 45;
         g2.drawString(text,x,y);
+
+        if(gp.keyH.ePressed){
+            drawDeathTransition();
+        }
 //        int x = getXforCenteredText(text);
 //        int y = gp.SCREEN_HEIGHT/2;
 //
@@ -723,6 +729,20 @@ public class UI {
             gp.player.worldY = gp.TILE_SIZE * gp.eHandler.tempRow;
             gp.eHandler.previousEventX = gp.player.worldX;
             gp.eHandler.previousEventY = gp.player.worldY;
+        }
+    }
+
+    public void drawDeathTransition() {
+        counter++;
+        g2.setColor(new Color(0,0,0,counter*5));
+        g2.fillRect(0,0,gp.SCREEN_WIDTH,gp.SCREEN_HEIGHT);
+
+        if(counter == 50){
+            counter = 0;
+            gp.gameState = gp.playState;
+            gp.currentMap = 0;
+            gp.setMapColor();
+            gp.retry();
         }
     }
 }

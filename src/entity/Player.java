@@ -522,27 +522,64 @@ public class Player extends Entity {
             animationSpriteNum = 0;
         BufferedImage animationImage = lookingRight? playerRightAttackList.get(animationSpriteNum) : playerLeftAttackList.get(animationSpriteNum);
 
-        if (!attacking){
+        if (gp.currentMap == 0) {
             if(iframe){
                 g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.3f));
             }
-            g2.drawImage(image, screenX, screenY, null);
+
+            if (attacking){
+                g2.drawImage(animationImage, worldX, worldY,null); // draw attack animation
+            } else {
+                g2.drawImage(image, worldX, worldY, null);
+            }
+
             g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
-        } if (attacking){
-            g2.drawImage(animationImage, screenX, screenY,null); // draw attack animation
+        } else if (gp.currentMap == 1){
+            if(iframe){
+                g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.3f));
+            }
+
+            if (attacking){
+                g2.drawImage(animationImage, screenX, screenY,null); // draw attack animation
+            } else {
+                g2.drawImage(image, screenX, screenY, null);
+            }
+
+            g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
         }
+
+//        if (!attacking){
+//            if(iframe){
+//                g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.3f));
+//            }
+//            g2.drawImage(image, screenX, screenY, null);
+//            g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
+//        }  /// MADE UI FLASH
         // Draw arrow
-        if (playerClass == 0) {
-            // WARRIOR
-            cursor.draw(g2, (int)(screenX + gp.TILE_SIZE * 2.3), screenY + gp.TILE_SIZE);
-        } else if (playerClass == 1) {
-            // KNIGHT
+        if (gp.currentMap == 0){
+            if (playerClass == 0) {
+                // WARRIOR
+                cursor.draw(g2, (int)(worldX + gp.TILE_SIZE * 2.3), worldY + gp.TILE_SIZE);
+            } else if (playerClass == 1) {
+                // KNIGHT
+                cursor.draw(g2, worldX + gp.TILE_SIZE * 2 + 5, worldY + gp.TILE_SIZE); // For fixed camera
+            } else if (playerClass == 2) {
+                // ASSASSIN
+                cursor.draw(g2, (int)(worldX + gp.TILE_SIZE * 1.9), worldY + gp.TILE_SIZE); // For fixed camera
+            }
+        } else if (gp.currentMap == 1) {
+            if (playerClass == 0) {
+                // WARRIOR
+                cursor.draw(g2, (int)(screenX + gp.TILE_SIZE * 2.3), screenY + gp.TILE_SIZE);
+            } else if (playerClass == 1) {
+                // KNIGHT
 //            cursor.draw(g2, worldX + gp.TILE_SIZE * 2 + 5, worldY + gp.TILE_SIZE); // For fixed camera
-            cursor.draw(g2, (int)(screenX + gp.TILE_SIZE * 2.09), screenY + gp.TILE_SIZE);
-        } else if (playerClass == 2) {
-            // ASSASSIN
+                cursor.draw(g2, (int)(screenX + gp.TILE_SIZE * 2.09), screenY + gp.TILE_SIZE);
+            } else if (playerClass == 2) {
+                // ASSASSIN
 //            cursor.draw(g2, (int)(worldX + gp.TILE_SIZE * 1.9), worldY + gp.TILE_SIZE); // For fixed camera
-            cursor.draw(g2, (int)(screenX + gp.TILE_SIZE * 1.86), screenY + gp.TILE_SIZE);
+                cursor.draw(g2, (int)(screenX + gp.TILE_SIZE * 1.86), screenY + gp.TILE_SIZE);
+            }
         }
     }
 

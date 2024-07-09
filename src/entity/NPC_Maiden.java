@@ -26,9 +26,12 @@ public class NPC_Maiden extends Entity {
     public void setDialog() {
         dialogs[0][0] = "I'm Cleaning";
         dialogs[0][1] = "I ain't no bitch";
+
         dialogs[1][0] = "You are disturbing me";
         dialogs[1][1] = "Fk off";
+
         dialogs[2][0] = "Hello my name is jeff,\nim a a good,\nintelij is stupid,\ntest est essd";
+        dialogs[2][1] = "You are a bitch";
     }
 
     public void getNpcSprites() {
@@ -50,7 +53,7 @@ public class NPC_Maiden extends Entity {
         dialogueSet++;
 
         if(dialogs[dialogueSet][0] == null){
-            dialogueSet--;
+            dialogueSet = 0;
         }
     }
 }

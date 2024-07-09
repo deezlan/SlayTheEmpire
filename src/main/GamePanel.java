@@ -314,19 +314,19 @@ public class GamePanel extends JPanel implements Runnable {
 
             // DEBUG
             if(keyH.showDebug){
-            long drawEnd = System.nanoTime();
-            long passed = drawEnd - drawStart;
+                long drawEnd = System.nanoTime();
+                long passed = drawEnd - drawStart;
 
-            g2.setFont(new Font("Arial",Font.PLAIN,20));
-            g2.setColor(Color.white);
-            int x = 10;
-            int y = 400;
-            int lineHeight = 20;
-            g2.drawString("WorldX: "+ player.worldX , x , y); y += lineHeight;
-            g2.drawString("WorldY: "+ player.worldY , x , y); y += lineHeight;
-            g2.drawString("Col: " + (player.worldX + player.solidArea.x)/TILE_SIZE, x, y); y += lineHeight;
-            g2.drawString("Row: " + (player.worldY + player.solidArea.y)/TILE_SIZE, x, y); y += lineHeight;
-            g2.drawString("Draw Time: " + passed, x, y);
+                g2.setFont(new Font("Arial",Font.PLAIN,20));
+                g2.setColor(Color.white);
+                int x = 10;
+                int y = 400;
+                int lineHeight = 20;
+                g2.drawString("WorldX: "+ player.worldX , x , y); y += lineHeight;
+                g2.drawString("WorldY: "+ player.worldY , x , y); y += lineHeight;
+                g2.drawString("Col: " + (player.worldX + player.solidArea.x)/TILE_SIZE, x, y); y += lineHeight;
+                g2.drawString("Row: " + (player.worldY + player.solidArea.y)/TILE_SIZE, x, y); y += lineHeight;
+                g2.drawString("Draw Time: " + passed, x, y);
             }
         }
         g2.dispose();

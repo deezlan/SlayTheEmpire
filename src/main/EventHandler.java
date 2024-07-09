@@ -56,13 +56,15 @@ public class EventHandler {
             canTouchEvent = true;
         }
             if(canTouchEvent) {// use else if to add more events
-                if (hit(0,14, 15, "any")) {
+                if (hit(0,8, 12, "any")) {
                     enterDungeon(1,8,8);
-                } else if (hit(0,15, 16, "any")) {
+                } else if (hit(0,4, 9, "any")) {
                     drinkWater(gp.dialogueState);
-                } else if (hit(0,10, 12, "any")) {
+                } else if (hit(0,3, 9, "any")) {
                     drinkWater(gp.dialogueState);
-                } else if (hit(0,9, 12, "any")) {
+                } else if (hit(0,2, 9, "any")) {
+                    drinkWater(gp.dialogueState);
+                }else if (hit(0,13, 9, "any")) {
                     drinkWater(gp.dialogueState);
                 }
             }

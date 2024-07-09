@@ -21,14 +21,17 @@ public class TileManager {
     public TileManager(GamePanel gp) {
         gp.currentMap = 0;
         this.gp = gp;
-        gp.MAX_WORLD_COL = 30;
-        gp.MAX_WORLD_ROW = 20;
+        gp.MAX_WORLD_COL = 50;
+        gp.MAX_WORLD_ROW = 50;
 
         mapTileNum = new int[gp.maxMap][gp.MAX_WORLD_COL][gp.MAX_WORLD_ROW];
 
         getTileImage();
         loadMap("/mapTextFiles/LobbyTest.txt",0);
-        loadMap("/mapTextFiles/smalRoom.txt",1);
+//        loadMap("/mapTextFiles/smalRoom.txt",1);
+//        loadMap("/mapTextFiles/levelOne.txt",1);
+        loadMap("/mapTextFiles/levelTwo.txt",1);
+
 //        loadMap("/mapTextFiles/secondLevel.txt", 2);
     }
 
@@ -306,92 +309,13 @@ public class TileManager {
             tile[146].image = UtilityTool.loadSprite(dir + "secondLevel/146.png", "Missing ");
             tile[147].image = UtilityTool.loadSprite(dir + "secondLevel/147.png", "Missing ");
             tile[148].image = UtilityTool.loadSprite(dir + "secondLevel/148.png", "Missing ");
+            tile[149].image = UtilityTool.loadSprite(dir + "secondLevel/149.png", "Missing ");
 
-//                case 1:
-//                    dir = "/tiles/firstLevel/";
-//                    tile = new Tile[31];
-//                    for (int i = 0; i <= 30; i++) {
-//                        tile[i] = new Tile();
-//                        if (i < 25) tile[i].collision = true;
-//                    }
-//
-//                    // Walls
-//                    tile[0].image = UtilityTool.loadSprite(dir + "00.png", "");
-//                    tile[1].image = UtilityTool.loadSprite(dir + "01.png", "");
-//                    tile[2].image = UtilityTool.loadSprite(dir + "02.png", "");
-//                    tile[3].image = UtilityTool.loadSprite(dir + "03.png", "");
-//                    tile[4].image = UtilityTool.loadSprite(dir + "04.png", "");
-//                    tile[5].image = UtilityTool.loadSprite(dir + "05.png", "");
-//                    tile[6].image = UtilityTool.loadSprite(dir + "06.png", "");
-//                    tile[7].image = UtilityTool.loadSprite(dir + "07.png", "");
-//                    tile[8].image = UtilityTool.loadSprite(dir + "08.png", "");
-//                    tile[9].image = UtilityTool.loadSprite(dir + "09.png", "");
-//                    tile[10].image = UtilityTool.loadSprite(dir + "10.png", "");
-//                    tile[11].image = UtilityTool.loadSprite(dir + "11.png", "");
-//                    tile[12].image = UtilityTool.loadSprite(dir + "12.png", "");
-//                    tile[13].image = UtilityTool.loadSprite(dir + "13.png", "");
-//                    tile[14].image = UtilityTool.loadSprite(dir + "14.png", "");
-//                    tile[15].image = UtilityTool.loadSprite(dir + "15.png", "");
-//                    tile[16].image = UtilityTool.loadSprite(dir + "16.png", "");
-//                    tile[17].image = UtilityTool.loadSprite(dir + "17.png", "");
-//                    tile[18].image = UtilityTool.loadSprite(dir + "18.png", "");
-//                    tile[19].image = UtilityTool.loadSprite(dir + "19.png", "");
-//                    tile[20].image = UtilityTool.loadSprite(dir + "20.png", "");
-//                    tile[21].image = UtilityTool.loadSprite(dir + "21.png", "");
-//                    tile[22].image = UtilityTool.loadSprite(dir + "22.png", "");
-//                    tile[23].image = UtilityTool.loadSprite(dir + "23.png", "");
-//                    tile[24].image = UtilityTool.loadSprite(dir + "24.png", "");
-//                    tile[25].image = UtilityTool.loadSprite(dir + "25.png", "");
-//
-//                    // Floor
-//                    tile[26].image = UtilityTool.loadSprite(dir + "26.png", "");
-//                    tile[27].image = UtilityTool.loadSprite(dir + "27.png", "");
-//                    tile[28].image = UtilityTool.loadSprite(dir + "28.png", "");
-//                    tile[29].image = UtilityTool.loadSprite(dir + "29.png", "");
-//                    tile[30].image = UtilityTool.loadSprite(dir + "30.png", "");
-//                    System.out.println("Case 1 for getTileImage");
-//                    break;
-//                default:
-//                    dir = "/tiles/firstLevel/";
-//                    tile = new Tile[31];
-//                    for (int i = 0; i <= 30; i++) {
-//                        tile[i] = new Tile();
-//                        if (i < 26) tile[i].collision = true;
-//                    }
-//
-//                    tile[0].image = UtilityTool.loadSprite(dir + "00.png", "");
-//                    tile[1].image = UtilityTool.loadSprite(dir + "01.png", "");
-//                    tile[2].image = UtilityTool.loadSprite(dir + "02.png", "");
-//                    tile[3].image = UtilityTool.loadSprite(dir + "03.png", "");
-//                    tile[4].image = UtilityTool.loadSprite(dir + "04.png", "");
-//                    tile[5].image = UtilityTool.loadSprite(dir + "05.png", "");
-//                    tile[6].image = UtilityTool.loadSprite(dir + "06.png", "");
-//                    tile[7].image = UtilityTool.loadSprite(dir + "07.png", "");
-//                    tile[8].image = UtilityTool.loadSprite(dir + "08.png", "");
-//                    tile[9].image = UtilityTool.loadSprite(dir + "09.png", "");
-//                    tile[10].image = UtilityTool.loadSprite(dir + "10.png", "");
-//                    tile[11].image = UtilityTool.loadSprite(dir + "11.png", "");
-//                    tile[12].image = UtilityTool.loadSprite(dir + "12.png", "");
-//                    tile[13].image = UtilityTool.loadSprite(dir + "13.png", "");
-//                    tile[14].image = UtilityTool.loadSprite(dir + "14.png", "");
-//                    tile[15].image = UtilityTool.loadSprite(dir + "15.png", "");
-//                    tile[16].image = UtilityTool.loadSprite(dir + "16.png", "");
-//                    tile[17].image = UtilityTool.loadSprite(dir + "17.png", "");
-//                    tile[18].image = UtilityTool.loadSprite(dir + "18.png", "");
-//                    tile[19].image = UtilityTool.loadSprite(dir + "19.png", "");
-//                    tile[20].image = UtilityTool.loadSprite(dir + "20.png", "");
-//                    tile[21].image = UtilityTool.loadSprite(dir + "21.png", "");
-//                    tile[22].image = UtilityTool.loadSprite(dir + "22.png", "");
-//                    tile[23].image = UtilityTool.loadSprite(dir + "23.png", "");
-//                    tile[24].image = UtilityTool.loadSprite(dir + "24.png", "");
-//                    tile[25].image = UtilityTool.loadSprite(dir + "25.png", "");
-//
-//                    // Floor
-//                    tile[26].image = UtilityTool.loadSprite(dir + "26.png", "");
-//                    tile[27].image = UtilityTool.loadSprite(dir + "27.png", "");
-//                    tile[28].image = UtilityTool.loadSprite(dir + "28.png", "");
-//                    tile[29].image = UtilityTool.loadSprite(dir + "29.png", "");
-//                    tile[30].image = UtilityTool.loadSprite(dir + "30.png", "");
+            tile[69].collision = false;
+
+            for (int i = 99; i <= 149; i++) {
+                tile[i].collision = false;
+            }
         } catch (IOException e) {
             e.printStackTrace(System.out);
         }

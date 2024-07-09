@@ -18,8 +18,7 @@ public class Sound {
         soundURL[1] = new File("res/sound/cursor.wav");
         soundURL[2] = new File("res/sound/select.wav");
         soundURL[3] = new File("res/sound/dialogue.wav");
-        soundURL[4] = new File("res/sound/07_human_atk_sword_1.wav");
-        soundURL[5] = new File("res/sound/lobbyMusic.wav");
+        soundURL[4] = new File("res/sound/lobbyMusic.wav");
 
     }
 

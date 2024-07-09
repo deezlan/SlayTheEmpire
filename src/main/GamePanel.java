@@ -9,7 +9,6 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
-import java.beans.EventHandler;
 import java.util.ArrayList;
 import java.util.Comparator;
 
@@ -68,7 +67,7 @@ public class GamePanel extends JPanel implements Runnable {
     public UI ui = new UI(this);
     public EventHandler eHandler = new EventHandler(this);
     ArrayList<Entity> entityList = new ArrayList<>();
-    SaveLoad saveLoad = new SaveLoad(this);
+    public SaveLoad saveLoad = new SaveLoad(this);
 
     // PATHFINDER
     public Pathfinder pFinder = new Pathfinder(this);
@@ -87,6 +86,7 @@ public class GamePanel extends JPanel implements Runnable {
     public final int optionState = 10;
     public final int deathState = 11;
     public final int transitionState = 12;
+    public final int savePageState = 13;
 
     public GamePanel() {
         this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));

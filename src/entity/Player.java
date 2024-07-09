@@ -461,7 +461,10 @@ public class Player extends Entity {
             System.out.println(gp.objArr[gp.currentMap][index].message);
             if (!gp.objArr[gp.currentMap][index].interactList.isEmpty())
                 gp.objArr[gp.currentMap][index].interacting = true;
+        }else if(index == 1){
+            gp.saveLoad.save();
         }
+
     }
 
     public void interactNPC (int index) {

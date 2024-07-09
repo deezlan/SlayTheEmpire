@@ -35,6 +35,13 @@ public class UI {
     private final Image warriorGif, knightGif, assassinGif;
     private final Image loginDefault, typeUsername, typePassword,
             blankErr, usernameErr, loginErr, usernameTakenErr;
+    private final Image file1;
+    private final Image file2;
+    private final Image file3;
+    private final Image emptySaveButton;
+    private final Image saveNotFound;
+    private final Image saveFound;
+    private final Image saveFileBackground;
 
     public String currentDialog = "";
     public int slotRow = 0;
@@ -104,6 +111,15 @@ public class UI {
         options = new ImageIcon("res/UI/options.png").getImage();
         quit = new ImageIcon("res/UI/quit.png").getImage();
 
+        //INITIALIZE SAVE MENU UI
+        file1 = new ImageIcon("res/UI/file1.png").getImage();
+        file2 = new ImageIcon("res/UI/file2.png").getImage();
+        file3 = new ImageIcon("res/UI/file3.png").getImage();
+        saveFileBackground = new ImageIcon("res/UI/saveFileBackground.png").getImage();
+        emptySaveButton = new ImageIcon("res/UI/emptyFile.png").getImage();
+        saveFound = new ImageIcon("res/UI/saveFound.png").getImage();
+        saveNotFound = new ImageIcon("res/UI/saveNotFound.png").getImage();
+
         // INITIALIZE PLAYER PREVIEW
         ImageIcon warrior = new ImageIcon("res/player/WarriorIdle.gif");
         warriorGif = warrior.getImage();
@@ -139,6 +155,10 @@ public class UI {
         // CHAR SELECTION SCREEN
         if (gp.gameState == gp.characterSelectionState) {
             drawCharacterSelection();
+        }
+
+        if(gp.gameState == gp.savePageState){
+            drawSavePage();
         }
 
         // LOGIN MENU
@@ -379,6 +399,17 @@ public class UI {
         int y = (gp.SCREEN_HEIGHT - imageHeight) / 4;
 
         g2.drawImage(titleImage, x, y, imageWidth, imageHeight, null);
+    }
+
+    // DRAW SAVE PAGE
+    public void drawSavePage(){
+        int imageWidth = (int)(gp.SCREEN_WIDTH/1.0000000002);
+        int imageHeight = (int)(saveFileBackground.getHeight(null)*((double) imageWidth / saveFileBackground.getWidth(null)));
+        int x = (gp.SCREEN_WIDTH - imageWidth) / 2;
+        int y = (gp.SCREEN_HEIGHT - imageHeight) / 2;
+
+        g2.drawImage(saveFileBackground, x , y, imageWidth, imageHeight, null);
+
     }
 
     // Draw Login Screen

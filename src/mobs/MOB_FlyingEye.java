@@ -3,6 +3,7 @@ package mobs;
 import entity.Entity;
 import main.GamePanel;
 import main.UtilityTool;
+import object.OBJ_PickUpCoin;
 import object.OBJ_Rock;
 
 import java.io.IOException;
@@ -13,7 +14,7 @@ public class MOB_FlyingEye extends Entity {
     public MOB_FlyingEye(GamePanel gp) {
         super(gp);
         this.gp = gp;
-        type = 1;
+        type = type_mob;
         defaultSpeed = 1;
         speed = defaultSpeed;
         maxLife = 4;
@@ -32,6 +33,10 @@ public class MOB_FlyingEye extends Entity {
         solidArea.height = 30;
         solidAreaDefaultX = solidArea.x;
         solidAreaDefaultY = solidArea.y;
+    }
+
+    public void checkDrop() {
+        dropItem(new OBJ_PickUpCoin(gp));
     }
 
     @Override

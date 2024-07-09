@@ -3,6 +3,7 @@ package mobs;
 import entity.Entity;
 import main.GamePanel;
 import main.UtilityTool;
+import object.OBJ_PickUpCoin;
 
 import java.io.IOException;
 import java.util.Random;
@@ -12,7 +13,7 @@ public class MOB_RobotGuardian extends Entity {
     public MOB_RobotGuardian(GamePanel gp) {
         super(gp);
         this.gp = gp;
-        type = 1;
+        type = type_mob;
         defaultSpeed = 1;
         speed = defaultSpeed;
         attack = 1;
@@ -54,6 +55,10 @@ public class MOB_RobotGuardian extends Entity {
         if(!attacking){
             checkMobAttack(30,gp.TILE_SIZE*2,gp.TILE_SIZE*2); // CHANGE ATTACK RANGE
         }
+    }
+
+    public void checkDrop() {
+        dropItem(new OBJ_PickUpCoin(gp));
     }
 
     public void damageReaction() {

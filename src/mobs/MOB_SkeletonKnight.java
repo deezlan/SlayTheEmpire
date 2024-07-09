@@ -3,6 +3,7 @@ package mobs;
 import entity.Entity;
 import main.GamePanel;
 import main.UtilityTool;
+import object.OBJ_PickUpCoin;
 
 import java.io.IOException;
 
@@ -11,7 +12,7 @@ public class MOB_SkeletonKnight extends Entity {
     public MOB_SkeletonKnight(GamePanel gp) {
         super(gp);
         this.gp = gp;
-        type = 1;
+        type = type_mob;
         defaultSpeed = 1;
         attack = 1;
         speed = defaultSpeed;
@@ -33,6 +34,10 @@ public class MOB_SkeletonKnight extends Entity {
         attackArea.height = 50;
         solidAreaDefaultX = solidArea.x;
         solidAreaDefaultY = solidArea.y;
+    }
+
+    public void checkDrop() {
+        dropItem(new OBJ_PickUpCoin(gp));
     }
 
     @Override

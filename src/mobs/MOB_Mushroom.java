@@ -3,6 +3,7 @@ package mobs;
 import entity.Entity;
 import main.GamePanel;
 import main.UtilityTool;
+import object.OBJ_PickUpCoin;
 
 import java.awt.*;
 import java.io.IOException;
@@ -13,7 +14,7 @@ public class MOB_Mushroom extends Entity {
     public MOB_Mushroom(GamePanel gp) {
         super(gp);
         this.gp = gp;
-        type = 1;
+        type = type_mob;
         defaultSpeed = 1;
         speed = defaultSpeed;
         attack = 1;
@@ -37,6 +38,10 @@ public class MOB_Mushroom extends Entity {
         solidArea.height = 40;
         attackArea.width = gp.TILE_SIZE*2;
         attackArea.height = gp.TILE_SIZE*2;
+    }
+
+    public void checkDrop() {
+        dropItem(new OBJ_PickUpCoin(gp));
     }
 
     @Override

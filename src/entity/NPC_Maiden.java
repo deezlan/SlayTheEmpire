@@ -9,6 +9,7 @@ public class NPC_Maiden extends Entity {
     public NPC_Maiden(GamePanel gp) {
         super(gp);
         action = "idleRight";
+        type = type_npc;
         getNpcSprites();
         setDialog();
 

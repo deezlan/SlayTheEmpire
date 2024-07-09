@@ -46,9 +46,9 @@ public class GamePanel extends JPanel implements Runnable {
 
     // ENTITY AND OBJECTS
     public AssetSetter aSetter = new AssetSetter(this);
-    public Entity[][] objArr= new Entity[maxMap][10];
+    public Entity[][] objArr= new Entity[maxMap][30];
     public Entity[][] npcArr = new Entity[maxMap][10];
-    public Entity[][] mobArr = new Entity[maxMap][10];
+    public Entity[][] mobArr = new Entity[maxMap][20];
     public Entity[][] projectileList = new Entity[maxMap][50];
     public InteractiveTIle[][] iTile = new InteractiveTIle[maxMap][50];
     public CollisionChecker cChecker = new CollisionChecker(this);
@@ -178,6 +178,7 @@ public class GamePanel extends JPanel implements Runnable {
                         mobArr[currentMap][mob].update();
                     }
                     if (!mobArr[currentMap][mob].alive){
+                        mobArr[currentMap][mob].checkDrop();
                         mobArr[currentMap][mob] = null;
                     }
                 }

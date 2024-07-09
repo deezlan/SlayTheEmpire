@@ -4,13 +4,15 @@ import entity.Entity;
 import main.GamePanel;
 import main.UtilityTool;
 import object.OBJ_Energyball;
+import object.OBJ_PickUpCoin;
+
 import java.io.IOException;
 public class MOB_ArmoredGuardian extends Entity {
     GamePanel gp;
     public MOB_ArmoredGuardian(GamePanel gp) {
         super(gp);
         this.gp = gp;
-        type = 1;
+        type = type_mob;
         defaultSpeed = 1;
         speed = defaultSpeed;
         maxLife = 4;
@@ -29,6 +31,10 @@ public class MOB_ArmoredGuardian extends Entity {
         solidArea.height = 30;
         solidAreaDefaultX = solidArea.x;
         solidAreaDefaultY = solidArea.y;
+    }
+
+    public void checkDrop() {
+        dropItem(new OBJ_PickUpCoin(gp));
     }
 
     @Override

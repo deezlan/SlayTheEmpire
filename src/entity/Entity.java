@@ -16,7 +16,6 @@ public class Entity {
     public int defaultSpeed;
     public int speed;
     public boolean lookingRight;
-    public int type; // 0 = player 1 = monster
     public int mobNum = 0; // FOR HP BAR
     public int attack;
     public int maxLife;
@@ -67,6 +66,14 @@ public class Entity {
     // PROJECTILES
     public int shotAvailableCounter = 0;
     public Projectile projectile;
+
+    // TYPE
+    public int type;
+    public final int type_player = 0;
+    public final int type_mob = 1;
+    public final int type_npc = 2;
+    public final int type_consumable = 3;
+    public final int type_pickup = 4;
 
     // KNOCK-BACK
     public Entity attacker;
@@ -154,6 +161,19 @@ public class Entity {
             if (!gp.player.iframe) {
                 gp.player.life -= 1;
                 gp.player.iframe = true;
+            }
+        }
+    }
+
+    public void use(Entity entity) {}
+    public void checkDrop() {}
+    public void dropItem(Entity droppedItem) {
+        for(int i = 0; i < gp.objArr.length; i++){
+            if(gp.objArr[gp.currentMap][i] == null){
+                gp.objArr[gp.currentMap][i] = droppedItem;
+                gp.objArr[gp.currentMap][i].worldX = worldX + gp.TILE_SIZE*2;
+                gp.objArr[gp.currentMap][i].worldY = worldY + gp.TILE_SIZE*2;
+                break;
             }
         }
     }
@@ -631,6 +651,7 @@ public class Entity {
         if (!alive) {
             return;
         }
+
         if (interacting) {
             image = interactList.get(interactSpriteNum);
         } else {
@@ -665,7 +686,7 @@ public class Entity {
                     worldY + gp.TILE_SIZE > gp.player.worldY - gp.player.screenY - 48 * 2 &&
                     worldY - gp.TILE_SIZE < gp.player.worldY + gp.player.screenY + 48 * 2) {
                 // MONSTER HP BAR
-                if (type == 1 && hpBarON) {
+                if (type == type_mob && hpBarON) {
                     double oneScale = (double) gp.TILE_SIZE / maxLife;
                     double hpBarValue = oneScale * life;
                     if (mobNum == 1) { // SLIME

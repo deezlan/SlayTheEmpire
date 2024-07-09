@@ -3,6 +3,7 @@ package mobs;
 import entity.Entity;
 import main.GamePanel;
 import main.UtilityTool;
+import object.OBJ_PickUpCoin;
 
 import java.io.IOException;
 import java.util.Random;
@@ -12,7 +13,7 @@ public class MOB_Ramses extends Entity {
     public MOB_Ramses(GamePanel gp) {
         super(gp);
         this.gp = gp;
-        type = 1;
+        type = type_mob;
         defaultSpeed = 1;
         speed = defaultSpeed;
         damage = 1;
@@ -31,6 +32,10 @@ public class MOB_Ramses extends Entity {
         solidArea.height = 30;
         solidAreaDefaultX = solidArea.x;
         solidAreaDefaultY = solidArea.y;
+    }
+
+    public void checkDrop() {
+        dropItem(new OBJ_PickUpCoin(gp));
     }
 
     @Override

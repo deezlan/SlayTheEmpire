@@ -52,13 +52,13 @@ public class Player extends Entity {
     }
 
     public void setDefaultValues() {
-        worldX = 588; // PLAYER SPAWN X
-        worldY = 147; // PLAYER SPAWN Y
+        worldX = 303; // PLAYER SPAWN X
+        worldY = 9; // PLAYER SPAWN Y
         defaultSpeed = 3;
         speed = defaultSpeed;
         action = "idleRight";
         lookingRight = true;
-        type = 0;
+        type = type_player;
 
         // ATTRIBUTES
         maxLife = 6;
@@ -109,6 +109,8 @@ public class Player extends Entity {
     public void update() {
         if (life <= 0) {
             gp.gameState = gp.deathState;
+        } else if (life > maxLife) {
+            life = maxLife;
         }
         if (attacking) {
             attackAnimation();
@@ -453,13 +455,17 @@ public class Player extends Entity {
     }
 
     public void interactObject (int index) {
-        if (index == 0){
-            gp.gameState = gp.shopState;
-        } else if (index != 999) {
-//            gp.objArray[index] = null;
+        if (index != 999) {
+            if (gp.objArr[gp.currentMap][index].type == type_pickup) {
+                gp.objArr[gp.currentMap][index].use(this);
+                gp.objArr[gp.currentMap][index] = null;
+            } else if (index == 0){
+                gp.gameState = gp.shopState;
+            } else {
             System.out.println(gp.objArr[gp.currentMap][index].message);
             if (!gp.objArr[gp.currentMap][index].interactList.isEmpty())
                 gp.objArr[gp.currentMap][index].interacting = true;
+            }
         }
     }
 

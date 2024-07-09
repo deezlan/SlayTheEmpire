@@ -15,6 +15,7 @@ public class NPC_Blacksmith extends Entity {
     public NPC_Blacksmith(GamePanel gp) {
         super(gp);
         action = "idleRight";
+        type = type_npc;
         getNpcSprites();
         setDialog();
 

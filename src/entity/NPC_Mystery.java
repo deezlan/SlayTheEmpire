@@ -9,6 +9,7 @@ public class NPC_Mystery extends Entity {
     public NPC_Mystery(GamePanel gp){
         super(gp);
         action = "idleRight";
+        type = type_npc;
         getNpcSprites();
         setDialog();
 

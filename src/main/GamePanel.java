@@ -247,10 +247,9 @@ public class GamePanel extends JPanel implements Runnable {
         Graphics2D g2 = (Graphics2D)g;
 
         // Title Screen
-        if (gameState == titleState) {
+        if (gameState != playState){
             ui.draw(g2);
         } else {
-
             // DEBUG
             long drawStart = 0;
             if(keyH.showDebug){
@@ -258,6 +257,7 @@ public class GamePanel extends JPanel implements Runnable {
             }
 
             tileM.draw(g2); // Draw tiles
+            ui.draw(g2);
 
             // ADD INTERACTIVE TILES
             for (int i = 0; i < iTile[1].length; i++){ // INTERACTIVE TILES

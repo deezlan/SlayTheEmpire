@@ -173,7 +173,7 @@ public class KeyHandler implements KeyListener {
         if (gp.gameState == gp.playState){
             if (!musicPlaying) {
                 sound.stopAll();
-                playMusic(5);
+                playMusic(4);
                 musicPlaying = true;
             }
             if (code == KeyEvent.VK_W) {

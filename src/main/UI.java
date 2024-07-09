@@ -469,6 +469,8 @@ public class UI {
         } else if (!password.equals("123")) {
             isInvalidLogin = true;
         } else if (username.equals("123")) {
+            
+
             validLogin = true;
             gp.gameState = gp.characterSelectionState;
         }
@@ -488,7 +490,7 @@ public class UI {
         int x = (gp.SCREEN_WIDTH - newGame.getWidth(null)) / 2;
         int y = (gp.SCREEN_HEIGHT - newGame.getHeight(null)) / 2;
         g2.drawImage(newGame, x, y, newGame.getWidth(null), newGame.getHeight(null), null);
-        g2.drawImage(newGame, x, y, newGame.getWidth(null), newGame.getHeight(null), null);
+
 
         if (commandNum == 0) {
             g2.setColor(Color.WHITE);
@@ -506,11 +508,11 @@ public class UI {
         g2.drawImage(loadGame, x, y, loadGame.getWidth(null), loadGame.getHeight(null), null);
         if (commandNum == 1) {
             g2.setColor(Color.WHITE);
-            g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 50F));
+            g2.setFont(g2.getFont().deriveFont(Font.BOLD, 50F));
 
 
-            g2.drawString(">", (int) (x - gp.TILE_SIZE*0.4), y + 40);
-            g2.drawString("<", x + (loadGame.getWidth(null)), y + 40);
+            g2.drawString(">", (int) (x - gp.TILE_SIZE*0.4), y + 42);
+            g2.drawString("<", x + (loadGame.getWidth(null)), y + 42);
 
         }
     }
@@ -521,11 +523,11 @@ public class UI {
         g2.drawImage(options, x, y, options.getWidth(null), options.getHeight(null), null);
         if (commandNum == 2) {
             g2.setColor(Color.WHITE);
-            g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 50F));
+            g2.setFont(g2.getFont().deriveFont(Font.BOLD, 50F));
 
 
-            g2.drawString(">", (int) (x - gp.TILE_SIZE*0.4), y + 35);
-            g2.drawString("<", x + (options.getWidth(null)), y + 35);
+            g2.drawString(">", (int) (x - gp.TILE_SIZE*0.4), y + 36);
+            g2.drawString("<", x + (options.getWidth(null)), y + 36);
 
         }
     }
@@ -536,11 +538,10 @@ public class UI {
         g2.drawImage(quit, x, y, quit.getWidth(null), quit.getHeight(null), null);
         if (commandNum == 3) {
             g2.setColor(Color.WHITE);
-            g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 50F));
+            g2.setFont(g2.getFont().deriveFont(Font.BOLD, 50F));
 
-
-            g2.drawString(">", (int) (x - gp.TILE_SIZE*0.4), y + 35);
-            g2.drawString("<", x + (quit.getWidth(null)), y + 35);
+            g2.drawString(">", (int) (x - gp.TILE_SIZE*0.4), y + 36);
+            g2.drawString("<", x + (quit.getWidth(null)), y + 36);
 
         }
     }

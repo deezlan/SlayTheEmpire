@@ -247,9 +247,7 @@ public class GamePanel extends JPanel implements Runnable {
         Graphics2D g2 = (Graphics2D)g;
 
         // Title Screen
-        if (gameState != playState){
-            ui.draw(g2);
-        } else {
+        if (gameState == playState || gameState == shopState || gameState == dialogueState) {
             // DEBUG
             long drawStart = 0;
             if(keyH.showDebug){
@@ -324,6 +322,8 @@ public class GamePanel extends JPanel implements Runnable {
             g2.drawString("Row: " + (player.worldY + player.solidArea.y)/TILE_SIZE, x, y); y += lineHeight;
             g2.drawString("Draw Time: " + passed, x, y);
             }
+        } else {
+            ui.draw(g2);
         }
         g2.dispose();
     }

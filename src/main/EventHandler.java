@@ -22,9 +22,9 @@ public class EventHandler {
 
             eventRect[map][col][row] = new EventRect();
             eventRect[map][col][row].x = 23;
-            eventRect[map][col][row].y = 23;
-            eventRect[map][col][row].width = 2;
-            eventRect[map][col][row].height = 2;
+            eventRect[map][col][row].y = -10;
+            eventRect[map][col][row].width = 80;
+            eventRect[map][col][row].height = 40;
             eventRect[map][col][row].eventRectDefaultX = eventRect[map][col][row].x;
             eventRect[map][col][row].eventRectDefaultY = eventRect[map][col][row].y;
 
@@ -58,13 +58,13 @@ public class EventHandler {
             if(canTouchEvent) {// use else if to add more events
                 if (hit(0,8, 12, "any")) {
                     enterDungeon(1,8,8);
-                } else if (hit(0,4, 9, "any")) {
+                } else if (hit(0,4, 10, "moveDown")) {
                     drinkWater(gp.dialogueState);
-                } else if (hit(0,3, 9, "any")) {
+                } else if (hit(0,3, 10, "any")) {
                     drinkWater(gp.dialogueState);
-                } else if (hit(0,2, 9, "any")) {
+                } else if (hit(0,2, 10, "any")) {
                     drinkWater(gp.dialogueState);
-                }else if (hit(0,13, 9, "any")) {
+                }else if (hit(0,13, 10, "any")) {
                     drinkWater(gp.dialogueState);
                 }
             }

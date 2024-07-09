@@ -80,12 +80,12 @@ public class AssetSetter {
     public void setMonster() {
         int mapNum;
         int i = 0;
-                // MAP 0
-                mapNum = 0;
-                gp.mobArr[mapNum][i] = new MOB_SkeletonKnight(gp);
-                gp.mobArr[mapNum][i].worldX = 350;
-                gp.mobArr[mapNum][i].worldY = 270;
-                i++;
+                // MAP 1
+//                mapNum = 1;
+//                gp.mobArr[mapNum][i] = new MOB_SkeletonKnight(gp);
+//                gp.mobArr[mapNum][i].worldX = 350;
+//                gp.mobArr[mapNum][i].worldY = 270;
+//                i++;
 
 //                gp.mobArr[mapNum][i] = new MOB_ArmoredGuardian(gp);
 //                gp.mobArr[mapNum][i].worldX = 350;
@@ -132,17 +132,18 @@ public class AssetSetter {
 //                gp.mobArr[mapNum][i].worldY = 270;
 //                    i++;
 
-                // MAP 1
-//                mapNum = 1;
+                // MAP 2
+//                mapNum = 2;
 //                gp.mobArr[mapNum][i] = new MOB_Slime(gp);
-//                gp.mobArr[mapNum][i].worldX = 500;
+//                gp.mobArr[mapNum][i].worldX = 450;
 //                gp.mobArr[mapNum][i].worldY = 270;
-
+//                i++;
+//
 //                gp.mobArr[mapNum][i] = new MOB_RobotGuardian(gp);
 //                gp.mobArr[mapNum][i].worldX = 300;
 //                gp.mobArr[mapNum][i].worldY = 270;
 //                i++;
-
+//
 //                gp.mobArr[mapNum][i] = new MOB_ArmoredGuardian(gp);
 //                gp.mobArr[mapNum][i].worldX = 350;
 //                gp.mobArr[mapNum][i].worldY = 270;

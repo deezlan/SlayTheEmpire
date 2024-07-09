@@ -20,12 +20,12 @@ public class AssetSetter {
             // MAP 0
             gp.objArr[mapNum][i] = new OBJ_Shop(gp);
             gp.objArr[mapNum][i].worldX = 516;
-            gp.objArr[mapNum][i].worldY = 20;
+            gp.objArr[mapNum][i].worldY = -10;
             i++;
 
             gp.objArr[mapNum][i] = new OBJ_SavePedestal(gp);
-            gp.objArr[mapNum][i].worldX = 275;
-            gp.objArr[mapNum][i].worldY = 480;
+            gp.objArr[mapNum][i].worldX = 272;
+            gp.objArr[mapNum][i].worldY = 490 ;
             i++;
 
             gp.objArr[mapNum][i] = new OBJ_ChatBubble(gp); // Maiden chat bubble
@@ -34,8 +34,8 @@ public class AssetSetter {
             i++;
 
             gp.objArr[mapNum][i] = new OBJ_ChatBubble(gp); // Blacksmith chat bubble
-            gp.objArr[mapNum][i].worldX = 170;
-            gp.objArr[mapNum][i].worldY = 60;
+            gp.objArr[mapNum][i].worldX = 134;
+            gp.objArr[mapNum][i].worldY = 108;
             i++;
 
             gp.objArr[mapNum][i] = new OBJ_ChatBubble(gp); // Merchant chat bubble
@@ -60,8 +60,8 @@ public class AssetSetter {
             i++;
 
             gp.npcArr[mapNum][i] = new NPC_Blacksmith(gp);
-            gp.npcArr[mapNum][i].worldX = 125;
-            gp.npcArr[mapNum][i].worldY = 80;
+            gp.npcArr[mapNum][i].worldX = 85;
+            gp.npcArr[mapNum][i].worldY = 128;
             System.out.println("NPC Blacksmith set at (" + gp.npcArr[mapNum][0].worldX + ", " + gp.npcArr[mapNum][0].worldY + ")");
             i++;
 

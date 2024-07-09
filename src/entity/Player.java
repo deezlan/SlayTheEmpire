@@ -524,7 +524,13 @@ public class Player extends Entity {
         if(iframe){
             g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.3f));
         }
-        g2.drawImage(image, screenX, screenY, null);
+
+        if (attacking){
+            g2.drawImage(animationImage, screenX, screenY,null); // draw attack animation
+        } else {
+            g2.drawImage(image, screenX, screenY, null);
+        }
+
         g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
 
 //        if (!attacking){
@@ -534,10 +540,6 @@ public class Player extends Entity {
 //            g2.drawImage(image, screenX, screenY, null);
 //            g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
 //        }  /// MADE UI FLASH
-
-        if (attacking){
-            g2.drawImage(animationImage, screenX, screenY,null); // draw attack animation
-        }
         // Draw arrow
         if (playerClass == 0) {
             // WARRIOR

@@ -108,11 +108,6 @@ public class KeyHandler implements KeyListener {
 //                gp.gameState = gp.playState;
             if (gp.gameState == gp.shopState) {
                 gp.gameState = gp.playState;
-            } else if (gp.gameState == gp.deathState){
-                gp.gameState = gp.playState;
-                gp.currentMap = 0;
-                gp.setMapColor();
-                gp.retry();
             }
         }
 

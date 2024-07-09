@@ -326,6 +326,10 @@ public class UI {
         x = getXforCenteredText(text);
         y += 45;
         g2.drawString(text,x,y);
+
+        if(gp.keyH.ePressed){
+            drawDeathTransition();
+        }
 //        int x = getXforCenteredText(text);
 //        int y = gp.SCREEN_HEIGHT/2;
 //
@@ -362,6 +366,20 @@ public class UI {
             gp.player.worldY = gp.TILE_SIZE * gp.eHandler.tempRow;
             gp.eHandler.previousEventX = gp.player.worldX;
             gp.eHandler.previousEventY = gp.player.worldY;
+        }
+    }
+
+    public void drawDeathTransition() {
+        counter++;
+        g2.setColor(new Color(0,0,0,counter*5));
+        g2.fillRect(0,0,gp.SCREEN_WIDTH,gp.SCREEN_HEIGHT);
+
+        if(counter == 50){
+            counter = 0;
+            gp.gameState = gp.playState;
+            gp.currentMap = 0;
+            gp.setMapColor();
+            gp.retry();
         }
     }
 }

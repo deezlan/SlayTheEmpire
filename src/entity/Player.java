@@ -304,8 +304,8 @@ public class Player extends Entity {
     }
 
     public void setDefaultPosition() {
-        worldX = 588; // PLAYER SPAWN X
-        worldY = 147;
+        worldX = 303; // PLAYER SPAWN X
+        worldY = 9; // PLAYER SPAWN Y
         action = "idleRight";
     }
 

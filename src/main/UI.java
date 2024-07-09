@@ -316,15 +316,9 @@ public class UI {
 
         // RETRY
         g2.setFont(g2.getFont().deriveFont(40f));
-        text = "Retry";
+        text = "PRESS E TO RETRY";
         x = getXforCenteredText(text);
         y += gp.TILE_SIZE*4;
-        g2.drawString(text,x,y);
-
-        // BACK TO TITLE SCREEN
-        text = "Quit";
-        x = getXforCenteredText(text);
-        y += 45;
         g2.drawString(text,x,y);
 
         if(gp.keyH.ePressed){

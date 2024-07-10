@@ -682,7 +682,7 @@ public class UI {
         // RETRY
         g2.setFont(g2.getFont().deriveFont(40f));
         text = "PRESS E TO RETRY";
-        x = getXforCenteredText(text);
+        x = getXForCenteredText(text);
         y += gp.TILE_SIZE*4;
         g2.drawString(text,x,y);
 

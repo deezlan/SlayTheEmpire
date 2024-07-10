@@ -139,7 +139,6 @@ public class GamePanel extends JPanel implements Runnable {
         aSetter.setInteractiveTile();
         gameState = titleState; // TESTING LOGIN RIGHT NOW
         keyH.playMusic(0);
-
     }
 
     public void retry() {

@@ -19,6 +19,12 @@ public class Sound {
         soundURL[2] = new File("res/sound/select.wav");
         soundURL[3] = new File("res/sound/dialogue.wav");
         soundURL[4] = new File("res/sound/lobbyMusic.wav");
+        soundURL[5] = new File("res/sound/Stage1_Regular.wav");
+        soundURL[6] = new File("res/sound/Stage1_Battle.wav");
+        soundURL[7] = new File("res/sound/Stage2_Regular.wav");
+        soundURL[8] = new File("res/sound/Stage2_Battle.wav");
+        soundURL[9] = new File("res/sound/Boss.wav");
+        soundURL[10] = new File("res/sound/Victory.wav");
 
     }
 
@@ -32,7 +38,7 @@ public class Sound {
 
         } catch(Exception e) {
             e.printStackTrace(System.out);
-            System.out.println("What the fuck ti doesn't work");
+            System.out.println("What the audio doesn't work");
         }
     }
     public void play() {

@@ -143,6 +143,11 @@ public class UI {
             drawLoginScreen();
         }
 
+        if (gp.gameState == gp.optionState) {
+            drawTitleImage();
+            drawOptions();
+        }
+
         // PLAY STATE
         if (gp.gameState == gp.playState) {
             drawPlayerMoney();
@@ -489,7 +494,7 @@ public class UI {
         }
     }
 
-    public void drawNewGame() {
+    public void drawNewGameButton() {
         int x = (gp.SCREEN_WIDTH - newGame.getWidth(null)) / 2;
         int y = (gp.SCREEN_HEIGHT - newGame.getHeight(null)) / 2;
         g2.drawImage(newGame, x, y, newGame.getWidth(null), newGame.getHeight(null), null);
@@ -505,7 +510,7 @@ public class UI {
         }
     }
 
-    public void drawLoadGame() {
+    public void drawLoadButton() {
         int x = (gp.SCREEN_WIDTH - loadGame.getWidth(null)) / 2;
         int y = (gp.SCREEN_HEIGHT - loadGame.getHeight(null)) / 2 + 60;
         g2.drawImage(loadGame, x, y, loadGame.getWidth(null), loadGame.getHeight(null), null);
@@ -520,7 +525,7 @@ public class UI {
         }
     }
 
-    public void drawOptions() {
+    public void drawOptionButton() {
         int x = (gp.SCREEN_WIDTH - options.getWidth(null)) / 3;
         int y = (gp.SCREEN_HEIGHT - options.getHeight(null)) / 2 + 130;
         g2.drawImage(options, x, y, options.getWidth(null), options.getHeight(null), null);
@@ -535,7 +540,7 @@ public class UI {
         }
     }
 
-    public void drawQuit() {
+    public void drawQuitButton() {
         int x = ((gp.SCREEN_WIDTH - quit.getWidth(null)) / 2 + 110);
         int y = (gp.SCREEN_HEIGHT - quit.getHeight(null)) / 2 + 130;
         g2.drawImage(quit, x, y, quit.getWidth(null), quit.getHeight(null), null);
@@ -557,10 +562,10 @@ public class UI {
 
         // Draw Title and Buttons
         drawTitleImage();
-        drawNewGame();
-        drawLoadGame();
-        drawOptions();
-        drawQuit();
+        drawNewGameButton();
+        drawLoadButton();
+        drawOptionButton();
+        drawQuitButton();
     }
 
     // CHARACTER SELECTION SCREEN
@@ -740,5 +745,18 @@ public class UI {
             gp.setMapColor();
             gp.retry();
         }
+    }
+
+    public void drawOptions() {
+        g2.setColor(Color.WHITE);
+        g2.setFont((g2.getFont().deriveFont(30F)));
+
+        // SUB WINDOW
+        int frameX = gp.TILE_SIZE*6;
+        int frameY = gp.TILE_SIZE;
+        int frameWidth = gp.TILE_SIZE*8;
+        int frameHeight = gp.TILE_SIZE*10;
+
+        drawSubWindow(frameX, frameY, frameWidth, frameHeight);
     }
 }

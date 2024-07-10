@@ -39,7 +39,8 @@ public class KeyHandler implements KeyListener {
             shotKeyPressed,
             onePressed,
             twoPressed,
-            threePressed;
+            threePressed,
+            escapePressed;
 
     public KeyHandler(GamePanel gp){
         this.gp = gp;
@@ -211,6 +212,15 @@ public class KeyHandler implements KeyListener {
             }
         }
 
+        // OPTION STATE
+        if (code == KeyEvent.VK_ESCAPE){
+            if (gp.gameState == gp.playState) {
+                gp.gameState = gp.optionState;
+            } else if (gp.gameState == gp.optionState) {
+                gp.gameState = gp.playState;
+            }
+        }
+
         // SHOP STATE
         if (gp.gameState == gp.shopState){
             if (code == KeyEvent.VK_W) {
@@ -260,6 +270,7 @@ public class KeyHandler implements KeyListener {
         // !!!!! TEMPORARY TITLE+LOGIN+START MENU TEST !!!!!
         if (code == KeyEvent.VK_SPACE) {
             if (gp.gameState == gp.titleState){
+                playSE(2);
                 gp.gameState = gp.startMenuState;
             }
         }
@@ -276,7 +287,7 @@ public class KeyHandler implements KeyListener {
             if(!showDebug){
                 showDebug = true;
             }
-            else if (showDebug){
+            else {
                 showDebug = false;
             }
         }
@@ -295,5 +306,8 @@ public class KeyHandler implements KeyListener {
         if (code == KeyEvent.VK_1){ onePressed = false; }
         if (code == KeyEvent.VK_2){ twoPressed = false; }
         if (code == KeyEvent.VK_3){ threePressed = false; }
+        if (code == KeyEvent.VK_ESCAPE) {
+            escapePressed = false;
+        }
     }
 }

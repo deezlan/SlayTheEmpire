@@ -55,24 +55,27 @@ public class EventHandler {
         if (distance > gp.TILE_SIZE){
             canTouchEvent = true;
         }
-            if(canTouchEvent) {// use else if to add more events
-                if (hit(0,8, 12, "any")) {
-                    enterDungeon(1,8,8);
-                } else if (hit(0,4, 10, "moveDown")) {
-                    drinkWater(gp.dialogueState);
-                } else if (hit(0,3, 10, "any")) {
-                    drinkWater(gp.dialogueState);
-                } else if (hit(0,2, 10, "any")) {
-                    drinkWater(gp.dialogueState);
-                }else if (hit(0,13, 10, "any")) {
-                    drinkWater(gp.dialogueState);
-                } else if (hit(0,8, 4, "any")) {
-                    gp.objArr[gp.currentMap][6].locking = true;
-                    gp.objArr[gp.currentMap][6].runNormalSprites();
-                    eventRect[gp.currentMap][8][4].eventDone = true;
-                }
+
+        if(canTouchEvent) {// use else if to add more events
+            if (hit(0,8, 12, "any")) {
+                enterDungeon(1,8,8);
+            } else if (hit(0,4, 10, "moveDown")) {
+                drinkWater(gp.dialogueState);
+            } else if (hit(0,3, 10, "any")) {
+                drinkWater(gp.dialogueState);
+            } else if (hit(0,2, 10, "any")) {
+                drinkWater(gp.dialogueState);
+            }else if (hit(0,13, 10, "any")) {
+                drinkWater(gp.dialogueState);
+            } else if (hit(0,8, 4, "any")) {
+                gp.objArr[gp.currentMap][6].locking = true;
+                eventRect[gp.currentMap][8][4].eventDone = true;
+            } else if (hit(0,11, 4, "any")) {
+                gp.objArr[gp.currentMap][6].unlocking = true;
+                eventRect[gp.currentMap][8][4].eventDone = true;
             }
         }
+    }
 
     public boolean hit (int map,int col, int row, String reqAction) {
         boolean hit = false;

@@ -232,18 +232,21 @@ public class Player extends Entity {
             } else if (index == 0){
                 gp.gameState = gp.shopState;
             } else {
-            System.out.println(gp.objArr[gp.currentMap][index].message);
-            if (!gp.objArr[gp.currentMap][index].interactList.isEmpty())
-                gp.objArr[gp.currentMap][index].interacting = true;
+                if (!gp.objArr[gp.currentMap][index].message.isEmpty())
+                    System.out.println(gp.objArr[gp.currentMap][index].message);
+                if (!gp.objArr[gp.currentMap][index].interactList.isEmpty()) {
+                    if (gp.objArr[gp.currentMap][index].type != type_block)
+                        gp.objArr[gp.currentMap][index].interacting = true;
+                }
             }
         }
     }
     public void interactNPC (int index) {
-            if (index != 999) {
-                gp.npcArr[gp.currentMap][index].speak();
-            }
-            if (index == 1) {
-                gp.gameState = gp.shopState;
+        if (index != 999) {
+            gp.npcArr[gp.currentMap][index].speak();
+        }
+        if (index == 1) {
+            gp.gameState = gp.shopState;
         }
     }
     public void interactMob (int index) {

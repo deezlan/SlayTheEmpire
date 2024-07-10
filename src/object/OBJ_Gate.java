@@ -11,10 +11,8 @@ public class OBJ_Gate extends Entity {
         super(gp);
         name = "Gate";
         message = "";
-//        isObject = true;
 
         type = type_block;
-        interactable = false;
         locked = false;
 
         // Load save pedestal sprites
@@ -27,6 +25,40 @@ public class OBJ_Gate extends Entity {
         solidArea.height = 48;
         solidAreaDefaultX = solidArea.x;
         solidAreaDefaultY = solidArea.y;
+    }
+
+    @Override
+    public void runLockAnimation() {
+        collision = true;
+        spriteCounter++;
+        if (spriteNum < currentList.size() && spriteCounter%5 == 0) {
+            spriteNum++;
+        }
+        if (spriteNum >= currentList.size() - 1) {
+            spriteNum = 0;
+            spriteCounter = 0;
+            locking = false;
+            locked = true;
+            unlocking = false;
+            interacting = false;
+        }
+    }
+
+    @Override
+    public void runUnlockingAnimation() {
+        interactSpriteCounter++;
+        if (interactSpriteNum < interactList.size() && interactSpriteCounter%5 == 0) {
+            interactSpriteNum++;
+        }
+        if (interactSpriteNum >= interactList.size() - 1) {
+            interactSpriteNum = 0;
+            interactSpriteCounter = 0;
+            unlocking = false;
+            locked = false;
+            locking = false;
+            interacting = false;
+            collision = false;
+        }
     }
 
     public void getObjectSprites() {

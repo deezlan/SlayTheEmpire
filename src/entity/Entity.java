@@ -24,8 +24,7 @@ public class Entity {
             type_npc = 2,
             type_consumable = 3,
             type_pickup = 4,
-            type_interactable_object = 5,
-            type_block = 6;
+            type_block = 5;
 
     // PLAYER & MOB ATTRIBUTES
     public int
@@ -77,10 +76,6 @@ public class Entity {
             defaultList = new ArrayList<>(),
             interactList = new ArrayList<>(),
 
-            // GATE ANIMATION LIST
-            lockingList = new ArrayList<>(),
-            unlockingList = new ArrayList<>(),
-
             // PROJECTILE ANIMATION LIST
             projectileRight = new ArrayList<>(),
             projectileLeft = new ArrayList<>(),
@@ -127,12 +122,10 @@ public class Entity {
     public String description = "";
 
     // OBJECTS ATTRIBUTES
-    public String message;
+    public String message = "";
     public boolean
-            interactable = true,
             interacting = false,
-            collision = false,
-            isObject;
+            collision = false;
 
     // COUNTERS
     public int
@@ -422,48 +415,6 @@ public class Entity {
         }
     }
 
-    // OBJECT METHODS
-    public void runNormalSprites() {
-        spriteCounter++;
-        if (type == type_block) {
-            if (spriteNum < defaultList.size() && spriteCounter%5 == 0) {
-                spriteNum++;
-            }
-            if (spriteNum >= defaultList.size() - 1) {
-                spriteNum = 0;
-                spriteCounter = 0;
-                locked = true;
-                locking = false;
-                interacting = false;
-            }
-        } else {
-            if (spriteNum < currentList.size() && spriteCounter%5 == 0) {
-                spriteNum++;
-            }
-            if (spriteNum >= currentList.size() - 1) {
-                spriteNum = 0;
-                spriteCounter = 0;
-                interacting = false;
-            }
-        }
-    }
-    public void runInteractSprites() {
-        interactSpriteCounter++;
-        if (interactSpriteNum < interactList.size() && interactSpriteCounter%5 == 0) {
-            interactSpriteNum++;
-        }
-        if (interactSpriteNum >= interactList.size() - 1) {
-            interactSpriteNum = 0;
-            interactSpriteCounter = 0;
-            if (type == type_block) {
-                locked = true;
-                locking = false;
-            }
-            else
-                interacting = false;
-        }
-    }
-
     // PLAYER & MOB METHODS
     public void checkCollision() {
         upCollisionOn = false; // resets collisions off
@@ -550,16 +501,31 @@ public class Entity {
         runAttackAnimation();
     }
 
+    // OBJECT METHODS
+    public void runInteractSprites() {
+        interactSpriteCounter++;
+        if (interactSpriteNum < interactList.size() && interactSpriteCounter%5 == 0) {
+            interactSpriteNum++;
+        }
+        if (interactSpriteNum >= interactList.size() - 1) {
+            interactSpriteNum = 0;
+            interactSpriteCounter = 0;
+            interacting = false;
+        }
+    }
+
+    // GATE METHODS
+    public void runLockAnimation() {}
+    public void runUnlockingAnimation() {}
+
     // GAME LOOP METHODS
     public void update() {
-        if (interacting && type != type_block) {
+        if (interacting) {
             runInteractSprites();
-        } else if (type == type_block) {
-            if (locking) {
-                runNormalSprites();
-//                runInteractSprites();
-                System.out.println("locking true");
-            }
+        }
+        if (type == type_block) {
+            if (locking) runLockAnimation();
+            if (unlocking) runUnlockingAnimation();
         } else {
             if (knockBack) {
                 checkCollision();
@@ -656,24 +622,21 @@ public class Entity {
     }
     public void draw(Graphics2D g2) {
         BufferedImage image;
-        if (spriteNum == currentList.size() - 1) spriteNum = 0;
+        if (spriteNum >= currentList.size() - 1) spriteNum = 0;
 
         if (interacting)
             image = interactList.get(interactSpriteNum);
-        else
-            image = currentList.get(spriteNum);
-
-        if (type == type_block){
-            if (locking)
-                image = currentList.get(spriteNum);
-            if (unlocking)
-                image = interactList.get(interactSpriteNum);
-            if (locked && !unlocking)
+        else if (type == type_block) {
+            if (locked && !unlocking) // LOCKED
                 image = defaultList.get(6);
-            if (!locked) {
-//                System.out.println("cake");
+            else if (locked) // UNLOCKING
+                image = interactList.get(interactSpriteNum);
+            else if (!locking) // UNLOCKED
                 image = defaultList.get(0);
-            }
+            else // LOCKING
+                image = defaultList.get(spriteNum);
+        } else {
+            image = currentList.get(spriteNum);
         }
 
         if(gp.currentMap == 0) {

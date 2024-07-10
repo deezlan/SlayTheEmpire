@@ -11,7 +11,6 @@ public class OBJ_Obelisk extends Entity {
         super(gp);
         name = "Obelisk";
         message = "teleport";
-//        isObject = true;
         // Load sprites
         getObjectSprites();
 

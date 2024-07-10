@@ -43,7 +43,9 @@ public class Entity {
             solidAreaDefaultX, solidAreaDefaultY;
     public Rectangle solidArea = new Rectangle(0, 0, 48, 48); // draw area around entities
     public String action = "idleRight"; // DEFAULT ACTION
-    public boolean inRage = false;
+    public boolean
+            inRage = false,
+            boss;
 
     // PLAYER & MOB COLLISION DIRECTION
     public boolean
@@ -419,7 +421,6 @@ public class Entity {
             }
         }
     }
-
 
     // OBJECT METHODS
     public void loopThroughInteractSprites() {

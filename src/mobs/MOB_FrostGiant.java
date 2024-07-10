@@ -15,6 +15,7 @@ public class MOB_FrostGiant extends Entity {
         this.gp = gp;
         name = monName;
         type = type_mob;
+        boss = true;
         defaultSpeed = 1;
         speed = defaultSpeed;
         attack = 1;

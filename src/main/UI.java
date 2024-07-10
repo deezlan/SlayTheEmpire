@@ -25,6 +25,8 @@ public class UI {
     Graphics2D g2;
     Entity coin;
     Font gameFont;
+
+    // IMAGE AND GIFS
     private final Image titleGif;
     private final Image titleImage;
     private final Image newGame;
@@ -34,6 +36,7 @@ public class UI {
     private final Image warriorGif, knightGif, assassinGif;
     private final Image loginDefault, typeUsername, typePassword,
             blankErr, usernameErr, loginErr, usernameTakenErr;
+
     public String currentDialog = "";
     public int slotRow = 0;
     public int slotRowMove = 0;
@@ -41,6 +44,7 @@ public class UI {
     int charIndex = 0;
     String combinedText = "";
     public int commandNum = 0;
+    int subState = 0;
 
     // Login variables
     public String username = "", password = "", passwordHidden = "";
@@ -144,7 +148,6 @@ public class UI {
         }
 
         if (gp.gameState == gp.optionState) {
-            drawTitleImage();
             drawOptions();
         }
 
@@ -752,11 +755,76 @@ public class UI {
         g2.setFont((g2.getFont().deriveFont(30F)));
 
         // SUB WINDOW
-        int frameX = gp.TILE_SIZE*6;
+        int frameX = (int) (gp.TILE_SIZE*4.5);
         int frameY = gp.TILE_SIZE;
         int frameWidth = gp.TILE_SIZE*8;
         int frameHeight = gp.TILE_SIZE*10;
 
         drawSubWindow(frameX, frameY, frameWidth, frameHeight);
+
+        switch(subState) {
+            case 0: options_top(frameX, frameY); break;
+            case 1: break;
+            case 2: break;
+
+        }
+    }
+
+    public void options_top(int frameX, int frameY) {
+        int x, y;
+
+        // TITLE
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 40f));
+        String text = "Options";
+        x = getXForCenteredText(text);
+        y = frameY + gp.TILE_SIZE;
+        g2.drawString(text,x,y);
+
+
+        // VOLUME
+        g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 40f));
+        text = "Volume";
+        x = frameX + gp.TILE_SIZE;
+        y += (int) (gp.TILE_SIZE*1.2);
+        g2.drawString(text,x,y);
+        if (commandNum == 0) {
+            g2.drawString(">", x-25, y);
+        }
+
+        // CONTROL
+        text = "Controls";
+        y += (int) (gp.TILE_SIZE*1.2);
+        g2.drawString(text,x,y);
+        if (commandNum == 1) {
+            g2.drawString(">", x-25, y);
+        }
+
+        // END GAME
+        text = "End Game";
+        y += (int) (gp.TILE_SIZE*1.2);
+        g2.drawString(text,x,y);
+        if (commandNum == 2) {
+            g2.drawString(">", x-25, y);
+        }
+
+        // BACK
+        text = "Back";
+        y += (int) (gp.TILE_SIZE*3.5);
+        g2.drawString(text,x,y);
+        if (commandNum == 3) {
+            g2.drawString(">", x-25, y);
+        }
+
+        // VOLUME BAR
+        x = frameX + gp.TILE_SIZE*6;
+        y = (int) (frameY + gp.TILE_SIZE*2.2f);
+        switch (gp.sound.volumeScale) {
+            case 0: g2.drawString("0%", x, y); break;
+            case 1: g2.drawString("20%", x, y);break;
+            case 2: g2.drawString("40%", x, y);break;
+            case 3: g2.drawString("60%", x, y);break;
+            case 4: g2.drawString("80%", x, y);break;
+            case 5: g2.drawString("100%", x, y);break;
+        }
     }
 }

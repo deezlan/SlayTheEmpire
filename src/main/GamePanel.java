@@ -132,6 +132,12 @@ public class GamePanel extends JPanel implements Runnable {
         this.setCursor(blankCursor);
     }
 
+    private void showCursor() {
+        java.awt.Cursor defaultCursor = java.awt.Cursor.getDefaultCursor();
+        this.setCursor(defaultCursor);
+    }
+
+
     public void setupGame() {
         aSetter.setObject();
         aSetter.setNPC();
@@ -257,8 +263,12 @@ public class GamePanel extends JPanel implements Runnable {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D)g;
 
+        if (gameState == optionState){
+            showCursor();
+        }
+
         // Title Screen
-        if (gameState == playState || gameState == shopState || gameState == dialogueState) {
+        if (gameState == playState || gameState == shopState || gameState == dialogueState || gameState == pauseState || gameState == optionState) {
             // DEBUG
             long drawStart = 0;
             if(keyH.showDebug){

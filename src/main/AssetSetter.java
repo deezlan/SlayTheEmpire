@@ -3,6 +3,7 @@ package main;
 import entity.*;
 import mobs.*;
 import object.OBJ_ChatBubble;
+import object.OBJ_Obelisk;
 import object.OBJ_SavePedestal;
 import object.OBJ_Shop;
 
@@ -19,33 +20,38 @@ public class AssetSetter {
 
             // MAP 0
             gp.objArr[mapNum][i] = new OBJ_Shop(gp);
-            gp.objArr[mapNum][i].worldX = 840;
-            gp.objArr[mapNum][i].worldY = 100;
+            gp.objArr[mapNum][i].worldX = 516;
+            gp.objArr[mapNum][i].worldY = -10;
             i++;
 
             gp.objArr[mapNum][i] = new OBJ_SavePedestal(gp);
-            gp.objArr[mapNum][i].worldX = 562;
-            gp.objArr[mapNum][i].worldY = 592;
+            gp.objArr[mapNum][i].worldX = 272;
+            gp.objArr[mapNum][i].worldY = 490 ;
             i++;
 
             gp.objArr[mapNum][i] = new OBJ_ChatBubble(gp); // Maiden chat bubble
-            gp.objArr[mapNum][i].worldX = 700;
-            gp.objArr[mapNum][i].worldY = 328;
+            gp.objArr[mapNum][i].worldX = 410;
+            gp.objArr[mapNum][i].worldY = 230;
             i++;
 
             gp.objArr[mapNum][i] = new OBJ_ChatBubble(gp); // Blacksmith chat bubble
-            gp.objArr[mapNum][i].worldX = 430;
-            gp.objArr[mapNum][i].worldY = 100;
+            gp.objArr[mapNum][i].worldX = 134;
+            gp.objArr[mapNum][i].worldY = 108;
             i++;
 
             gp.objArr[mapNum][i] = new OBJ_ChatBubble(gp); // Merchant chat bubble
-            gp.objArr[mapNum][i].worldX = 970;
-            gp.objArr[mapNum][i].worldY = 160;
+            gp.objArr[mapNum][i].worldX = 640;
+            gp.objArr[mapNum][i].worldY = 80;
             i++;
 
             gp.objArr[mapNum][i] = new OBJ_ChatBubble(gp); // Mystery chat bubble
-            gp.objArr[mapNum][i].worldX = 845;
-            gp.objArr[mapNum][i].worldY = 520;
+            gp.objArr[mapNum][i].worldX = 540;
+            gp.objArr[mapNum][i].worldY = 410;
+            i++;
+
+//            gp.objArr[mapNum][i] = new OBJ_Obelisk(gp);
+//            gp.objArr[mapNum][i].worldX = 400;
+//            gp.objArr[mapNum][i].worldY = 300;
 
             // MAP 1
     }
@@ -55,34 +61,34 @@ public class AssetSetter {
 
 //            // MAP 0
             gp.npcArr[mapNum][i] = new NPC_Maiden(gp);
-            gp.npcArr[mapNum][i].worldX = 655;
-            gp.npcArr[mapNum][i].worldY = 340;
+            gp.npcArr[mapNum][i].worldX = 368;
+            gp.npcArr[mapNum][i].worldY = 250;
             System.out.println("NPC Maiden set at (" + gp.npcArr[mapNum][0].worldX + ", " + gp.npcArr[mapNum][0].worldY + ")");
             i++;
 
             gp.npcArr[mapNum][i] = new NPC_Blacksmith(gp);
-            gp.npcArr[mapNum][i].worldX = 380;
-            gp.npcArr[mapNum][i].worldY = 120;
+            gp.npcArr[mapNum][i].worldX = 85;
+            gp.npcArr[mapNum][i].worldY = 128;
             System.out.println("NPC Blacksmith set at (" + gp.npcArr[mapNum][0].worldX + ", " + gp.npcArr[mapNum][0].worldY + ")");
             i++;
 
             gp.npcArr[mapNum][i] = new NPC_Merchant(gp);
-            gp.npcArr[mapNum][i].worldX = 920;
-            gp.npcArr[mapNum][i].worldY = 180;
+            gp.npcArr[mapNum][i].worldX = 600;
+            gp.npcArr[mapNum][i].worldY = 100;
             System.out.println("NPC Merchant set at (" + gp.npcArr[mapNum][0].worldX + ", " + gp.npcArr[mapNum][0].worldY + ")");
             i++;
 
             gp.npcArr[mapNum][i] = new NPC_Mystery(gp);
-            gp.npcArr[mapNum][i].worldX = 800;
-            gp.npcArr[mapNum][i].worldY = 540;
+            gp.npcArr[mapNum][i].worldX = 500;
+            gp.npcArr[mapNum][i].worldY = 440;
             System.out.println("NPC Mystery set at (" + gp.npcArr[mapNum][0].worldX + ", " + gp.npcArr[mapNum][0].worldY + ")");
             // MAP 1
     }
     public void setMonster() {
-        int mapNum = 0;
+        int mapNum;
         int i = 0;
-                // MAP 0
-//
+                // MAP 1
+                mapNum = 2;
 //                gp.mobArr[mapNum][i] = new MOB_SkeletonKnight(gp);
 //                gp.mobArr[mapNum][i].worldX = 350;
 //                gp.mobArr[mapNum][i].worldY = 270;
@@ -92,6 +98,11 @@ public class AssetSetter {
 //                gp.mobArr[mapNum][i].worldX = 350;
 //                gp.mobArr[mapNum][i].worldY = 270;
 //                i++;
+//
+                gp.mobArr[mapNum][i] = new MOB_ArmoredGuardian(gp);
+                gp.mobArr[mapNum][i].worldX = 374;
+                gp.mobArr[mapNum][i].worldY = 1503;
+                i++;
 //
 //                gp.mobArr[mapNum][i] = new MOB_FlyingEye(gp);
 //                gp.mobArr[mapNum][i].worldX = 400;
@@ -133,17 +144,18 @@ public class AssetSetter {
 //                gp.mobArr[mapNum][i].worldY = 270;
 //                    i++;
 
-                // MAP 1
-                mapNum = 1;
+                // MAP 2
+//                mapNum = 2;
 //                gp.mobArr[mapNum][i] = new MOB_Slime(gp);
-//                gp.mobArr[mapNum][i].worldX = 500;
+//                gp.mobArr[mapNum][i].worldX = 450;
 //                gp.mobArr[mapNum][i].worldY = 270;
-
-                gp.mobArr[mapNum][i] = new MOB_RobotGuardian(gp);
-                gp.mobArr[mapNum][i].worldX = 300;
-                gp.mobArr[mapNum][i].worldY = 270;
-                i++;
-
+//                i++;
+//
+//                gp.mobArr[mapNum][i] = new MOB_RobotGuardian(gp);
+//                gp.mobArr[mapNum][i].worldX = 300;
+//                gp.mobArr[mapNum][i].worldY = 270;
+//                i++;
+//
 //                gp.mobArr[mapNum][i] = new MOB_ArmoredGuardian(gp);
 //                gp.mobArr[mapNum][i].worldX = 350;
 //                gp.mobArr[mapNum][i].worldY = 270;

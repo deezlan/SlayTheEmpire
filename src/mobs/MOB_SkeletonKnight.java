@@ -3,6 +3,7 @@ package mobs;
 import entity.Entity;
 import main.GamePanel;
 import main.UtilityTool;
+import object.OBJ_PickUpCoin;
 
 import java.io.IOException;
 
@@ -11,12 +12,12 @@ public class MOB_SkeletonKnight extends Entity {
     public MOB_SkeletonKnight(GamePanel gp) {
         super(gp);
         this.gp = gp;
-        type = 1;
+        type = type_mob;
         defaultSpeed = 1;
         attack = 1;
         speed = defaultSpeed;
         maxLife = 4;
-        life = maxLife;
+        currentLife = maxLife;
         action = "idleRight";
         mobNum = 6;
         damageSprite = 6; // HERE EXAMPLE NUMBER
@@ -35,6 +36,10 @@ public class MOB_SkeletonKnight extends Entity {
         solidAreaDefaultY = solidArea.y;
     }
 
+    public void checkDrop() {
+        dropItem(new OBJ_PickUpCoin(gp));
+    }
+
     @Override
     public void setAction() {
 
@@ -51,7 +56,7 @@ public class MOB_SkeletonKnight extends Entity {
         }
         // CHECK ATTACK ON PLAYER
         if(!attacking){
-            checkMobAttack(30,gp.TILE_SIZE*2,gp.TILE_SIZE*2); // CHANGE ATTACK RANGE
+            checkWithinAttackRange(30,gp.TILE_SIZE*2,gp.TILE_SIZE*2); // CHANGE ATTACK RANGE
         }
     }
 

@@ -23,6 +23,7 @@ public class UI {
     GamePanel gp;
     BufferedImage fullHeart, halfHeart, emptyHeart, hotbar;
     Graphics2D g2;
+    Entity coin;
     Font gameFont;
     private final Image titleGif;
     private final Image titleImage;
@@ -33,7 +34,6 @@ public class UI {
     private final Image warriorGif, knightGif, assassinGif;
     private final Image loginDefault, typeUsername, typePassword,
             blankErr, usernameErr, loginErr, usernameTakenErr;
-    Entity coin;
     public String currentDialog = "";
     public int slotRow = 0;
     public int slotRowMove = 0;
@@ -64,6 +64,7 @@ public class UI {
         } catch (IOException e){
             e.printStackTrace(System.out);
         }
+
 
         coin = new OBJ_Coin(gp);
 
@@ -255,11 +256,11 @@ public class UI {
         drawSubWindow(descX, descY, descWidth, descHeight);
 
         g2.setColor(Color.BLACK);
-        g2.fillRoundRect(descX,descY,descWidth,descHeight,0,0);
+        g2.fillRoundRect(descX, descY, descWidth, descHeight, 0, 0);
 
         g2.setColor(Color.WHITE);
         g2.setStroke(new BasicStroke((5)));
-        g2.drawRoundRect(descX,descY,descWidth,descHeight,0,0);
+        g2.drawRoundRect(descX, descY, descWidth, descHeight, 0, 0);
         //DRAW DESC TEXT
         int textX = descX + 20;
         int textY= descY + gp.TILE_SIZE;
@@ -316,10 +317,10 @@ public class UI {
         posX = gp.TILE_SIZE/2;
         i = 0;
 
-        while (i < gp.player.life){
+        while (i < gp.player.currentLife){
             g2.drawImage (halfHeart, posX, posY, null);
             i++;
-            if (i < gp.player.life)
+            if (i < gp.player.currentLife)
                 g2.drawImage(fullHeart, posX, posY, null);
             i++;
             posX += gp.TILE_SIZE;
@@ -331,7 +332,9 @@ public class UI {
         if (coin.spriteCounter > 4) coin.loopThroughSprites();
         g2.setFont(g2.getFont().deriveFont(Font.BOLD, 40));
         g2.drawString ("" + gp.player.totalCoins, 38, 117);
-        g2.drawImage(coin.defaultList.get(coin.spriteNum - 1), 118, 78, null);
+        if (coin.spriteNum == coin.defaultList.size() - 1)
+            coin.spriteNum = 0;
+        g2.drawImage(coin.defaultList.get(coin.spriteNum), 118, 78, null);
     }
 
     // Draw Pause Screen
@@ -469,7 +472,7 @@ public class UI {
         } else if (!password.equals("123")) {
             isInvalidLogin = true;
         } else if (username.equals("123")) {
-            
+
 
             validLogin = true;
             gp.gameState = gp.characterSelectionState;
@@ -678,16 +681,14 @@ public class UI {
 
         // RETRY
         g2.setFont(g2.getFont().deriveFont(40f));
-        text = "Retry";
-        x = getXForCenteredText(text);
+        text = "PRESS E TO RETRY";
+        x = getXforCenteredText(text);
         y += gp.TILE_SIZE*4;
         g2.drawString(text,x,y);
 
-        // BACK TO TITLE SCREEN
-        text = "Quit";
-        x = getXForCenteredText(text);
-        y += 45;
-        g2.drawString(text,x,y);
+        if(gp.keyH.ePressed){
+            drawDeathTransition();
+        }
 //        int x = getXforCenteredText(text);
 //        int y = gp.SCREEN_HEIGHT/2;
 //
@@ -724,6 +725,20 @@ public class UI {
             gp.player.worldY = gp.TILE_SIZE * gp.eHandler.tempRow;
             gp.eHandler.previousEventX = gp.player.worldX;
             gp.eHandler.previousEventY = gp.player.worldY;
+        }
+    }
+
+    public void drawDeathTransition() {
+        counter++;
+        g2.setColor(new Color(0,0,0,counter*5));
+        g2.fillRect(0,0,gp.SCREEN_WIDTH,gp.SCREEN_HEIGHT);
+
+        if(counter == 50){
+            counter = 0;
+            gp.gameState = gp.playState;
+            gp.currentMap = 0;
+            gp.setMapColor();
+            gp.retry();
         }
     }
 }

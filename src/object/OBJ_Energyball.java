@@ -15,7 +15,7 @@ public class OBJ_Energyball extends Projectile {
         name = "Energy Ball";
         speed = 8;
         maxLife = 80;
-        life = maxLife;
+        currentLife = maxLife;
         damage = 1;
         alive = false;
         getImage();

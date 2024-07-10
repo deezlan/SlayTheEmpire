@@ -4,7 +4,7 @@ import main.GamePanel;
 
 import java.util.ArrayList;
 
-public class Pathfinder {
+public class Pathfinder { // USING A* ALGORITHM
 
     GamePanel gp;
     Node [][] node;

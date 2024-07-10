@@ -22,9 +22,9 @@ public class EventHandler {
 
             eventRect[map][col][row] = new EventRect();
             eventRect[map][col][row].x = 23;
-            eventRect[map][col][row].y = 23;
-            eventRect[map][col][row].width = 2;
-            eventRect[map][col][row].height = 2;
+            eventRect[map][col][row].y = -10;
+            eventRect[map][col][row].width = 80;
+            eventRect[map][col][row].height = 40;
             eventRect[map][col][row].eventRectDefaultX = eventRect[map][col][row].x;
             eventRect[map][col][row].eventRectDefaultY = eventRect[map][col][row].y;
 
@@ -56,13 +56,17 @@ public class EventHandler {
             canTouchEvent = true;
         }
             if(canTouchEvent) {// use else if to add more events
-                if (hit(0,14, 15, "any")) {
+                if (hit(0,8, 12, "any")) { // FIRST LEVEL
                     enterDungeon(1,8,8);
-                } else if (hit(0,15, 16, "any")) {
+                } else if (hit(1,0, 7, "any")) { // SECOND LEVEL
+                    enterDungeon(2,9,11);
+                } else if (hit(0,4, 10, "any")) {
                     drinkWater(gp.dialogueState);
-                } else if (hit(0,10, 12, "any")) {
+                } else if (hit(0,3, 10, "any")) {
                     drinkWater(gp.dialogueState);
-                } else if (hit(0,9, 12, "any")) {
+                } else if (hit(0,2, 10, "any")) {
+                    drinkWater(gp.dialogueState);
+                } else if (hit(0,13, 10, "any")) {
                     drinkWater(gp.dialogueState);
                 }
             }
@@ -110,7 +114,7 @@ public class EventHandler {
             gp.gameState = gameState;
             gp.ui.currentDialog = "Drank Possibly Toilet Water";
             eventMaster.startDialogue(eventMaster,0);
-            gp.player.life = gp.player.maxLife;
+            gp.player.currentLife = gp.player.maxLife;
             canTouchEvent = false;
         }
     }

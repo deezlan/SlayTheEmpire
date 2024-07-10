@@ -3,6 +3,7 @@ package main;
 import entity.*;
 import mobs.*;
 import object.OBJ_ChatBubble;
+import object.OBJ_Gate;
 import object.OBJ_SavePedestal;
 import object.OBJ_Shop;
 
@@ -46,6 +47,11 @@ public class AssetSetter {
             gp.objArr[mapNum][i] = new OBJ_ChatBubble(gp); // Mystery chat bubble
             gp.objArr[mapNum][i].worldX = 540;
             gp.objArr[mapNum][i].worldY = 410;
+            i++;
+
+            gp.objArr[mapNum][i] = new OBJ_Gate(gp); // Mystery chat bubble
+            gp.objArr[mapNum][i].worldX = 540;
+            gp.objArr[mapNum][i].worldY = 350;
             // MAP 1
     }
     public void setNPC() {
@@ -127,10 +133,10 @@ public class AssetSetter {
 //                gp.mobArr[mapNum][i].worldY = 400;
 //                i++;
 
-                gp.mobArr[mapNum][i] = new MOB_RobotGuardian(gp);
-                gp.mobArr[mapNum][i].worldX = 400;
-                gp.mobArr[mapNum][i].worldY = 270;
-                    i++;
+//                gp.mobArr[mapNum][i] = new MOB_RobotGuardian(gp);
+//                gp.mobArr[mapNum][i].worldX = 400;
+//                gp.mobArr[mapNum][i].worldY = 270;
+//                    i++;
 
                 // MAP 2
 //                mapNum = 2;

@@ -355,11 +355,11 @@ public class Player extends Entity {
             // Animation speed
             spriteCounter++;
             if (currentList.size() > 14) {
-                if (spriteCounter > 4) loopThroughSprites();
+                if (spriteCounter > 4) runCurrentListAnimation();
             } else if (currentList.size() > 7) {
-                if (spriteCounter > 6) loopThroughSprites();
+                if (spriteCounter > 6) runCurrentListAnimation();
             } else {
-                if (spriteCounter > 9) loopThroughSprites();
+                if (spriteCounter > 9) runCurrentListAnimation();
             }
 
             // CALCULATE CENTRAL AXIS OF CURSOR

@@ -18,12 +18,14 @@ public class Entity {
 
     // ENTITY TYPE
     public int type;
-    public final int type_player = 0;
-    public final int type_mob = 1;
-    public final int type_npc = 2;
-    public final int type_consumable = 3;
-    public final int type_pickup = 4;
-    public final int type_block = 5;
+    public final int
+            type_player = 0,
+            type_mob = 1,
+            type_npc = 2,
+            type_consumable = 3,
+            type_pickup = 4,
+            type_interactable_object = 5,
+            type_block = 6;
 
     // PLAYER & MOB ATTRIBUTES
     public int
@@ -71,9 +73,13 @@ public class Entity {
             mobRightAttackList = new ArrayList<>(),
             mobLeftAttackList = new ArrayList<>(),
 
-            // OBJECT ANIMATION LIST
+            // INTERACTABLE OBJECT ANIMATION LIST
             defaultList = new ArrayList<>(),
             interactList = new ArrayList<>(),
+
+            // GATE ANIMATION LIST
+            lockingList = new ArrayList<>(),
+            unlockingList = new ArrayList<>(),
 
             // PROJECTILE ANIMATION LIST
             projectileRight = new ArrayList<>(),
@@ -108,7 +114,10 @@ public class Entity {
     public Projectile projectile;
 
     // GATE BLOCKING
-    public boolean locked = false;
+    public boolean
+            locked = false,
+            locking = false,
+            unlocking = false;
 
     // ITEM ATTRIBUTES
     public int damage;
@@ -120,6 +129,7 @@ public class Entity {
     // OBJECTS ATTRIBUTES
     public String message;
     public boolean
+            interactable = true,
             interacting = false,
             collision = false,
             isObject;
@@ -413,7 +423,31 @@ public class Entity {
     }
 
     // OBJECT METHODS
-    public void loopThroughInteractSprites() {
+    public void runNormalSprites() {
+        spriteCounter++;
+        if (type == type_block) {
+            if (spriteNum < defaultList.size() && spriteCounter%5 == 0) {
+                spriteNum++;
+            }
+            if (spriteNum >= defaultList.size() - 1) {
+                spriteNum = 0;
+                spriteCounter = 0;
+                locked = true;
+                locking = false;
+                interacting = false;
+            }
+        } else {
+            if (spriteNum < currentList.size() && spriteCounter%5 == 0) {
+                spriteNum++;
+            }
+            if (spriteNum >= currentList.size() - 1) {
+                spriteNum = 0;
+                spriteCounter = 0;
+                interacting = false;
+            }
+        }
+    }
+    public void runInteractSprites() {
         interactSpriteCounter++;
         if (interactSpriteNum < interactList.size() && interactSpriteCounter%5 == 0) {
             interactSpriteNum++;
@@ -421,44 +455,13 @@ public class Entity {
         if (interactSpriteNum >= interactList.size() - 1) {
             interactSpriteNum = 0;
             interactSpriteCounter = 0;
-            interacting = false;
+            if (type == type_block) {
+                locked = true;
+                locking = false;
+            }
+            else
+                interacting = false;
         }
-//        if (interactSpriteCounter < 5) {
-//            interactSpriteNum = 0;
-//        } else if (interactSpriteCounter < 10) {
-//            interactSpriteNum = 1;
-//        } else if (interactSpriteCounter < 15) {
-//            interactSpriteNum = 2;
-//        } else if (interactSpriteCounter < 20) {
-//            interactSpriteNum = 3;
-//        } else if (interactSpriteCounter < 25) {
-//            interactSpriteNum = 4;
-//        } else if (interactSpriteCounter < 30) {
-//            interactSpriteNum = 5;
-//        } else if (interactSpriteCounter < 35) {
-//            interactSpriteNum = 6;
-//        } else if (interactSpriteCounter < 40) {
-//            interactSpriteNum = 7;
-//        } else if (interactSpriteCounter < 45) {
-//            interactSpriteNum = 8;
-//        } else if (interactSpriteCounter < 50) {
-//            interactSpriteNum = 9;
-//        } else if (interactSpriteCounter < 55) {
-//            interactSpriteNum = 10;
-//        } else if (interactSpriteCounter < 60) {
-//            interactSpriteNum = 11;
-//        } else if (interactSpriteCounter < 65) {
-//            interactSpriteNum = 12;
-//        } else if (interactSpriteCounter < 70) {
-//            interactSpriteNum = 13;
-//        } else if (interactSpriteCounter <= 75) {
-//            interactSpriteNum = 0;
-//            interactSpriteCounter = 0;
-//            interacting = false;
-//        }
-    }
-    public void startInteract() {
-        loopThroughInteractSprites();
     }
 
     // PLAYER & MOB METHODS
@@ -480,7 +483,7 @@ public class Entity {
             }
         }
     }
-    public void loopThroughSprites() {
+    public void runCurrentListAnimation() {
         spriteNum = (spriteNum >= currentList.size()) ? 0 : spriteNum + 1;
         spriteCounter = 0;
     }
@@ -549,8 +552,14 @@ public class Entity {
 
     // GAME LOOP METHODS
     public void update() {
-        if (interacting) {
-            startInteract();
+        if (interacting && type != type_block) {
+            runInteractSprites();
+        } else if (type == type_block) {
+            if (locking) {
+                runNormalSprites();
+//                runInteractSprites();
+                System.out.println("locking true");
+            }
         } else {
             if (knockBack) {
                 checkCollision();
@@ -624,15 +633,15 @@ public class Entity {
                 // Animation speed
                 spriteCounter++;
                 if (this.currentList.size() > 28) {
-                    if (spriteCounter > 4) loopThroughSprites();
+                    if (spriteCounter > 4) runCurrentListAnimation();
                 } else if (this.currentList.size() > 21) {
-                    if (spriteCounter > 6) loopThroughSprites();
+                    if (spriteCounter > 6) runCurrentListAnimation();
                 } else if (this.currentList.size() > 14) {
-                    if (spriteCounter > 9) loopThroughSprites();
+                    if (spriteCounter > 9) runCurrentListAnimation();
                 }  else if (this.currentList.size() > 7) {
-                    if (spriteCounter > 11) loopThroughSprites();
+                    if (spriteCounter > 11) runCurrentListAnimation();
                 } else {
-                    if(spriteCounter > 13) loopThroughSprites();
+                    if(spriteCounter > 13) runCurrentListAnimation();
                 }
             }
 
@@ -647,18 +656,24 @@ public class Entity {
     }
     public void draw(Graphics2D g2) {
         BufferedImage image;
+        if (spriteNum == currentList.size() - 1) spriteNum = 0;
 
-        if (spriteNum == currentList.size() - 1)
-            spriteNum = 0;
-
-        if (!alive) {
-            return;
-        }
-
-        if (interacting) {
+        if (interacting)
             image = interactList.get(interactSpriteNum);
-        } else {
+        else
             image = currentList.get(spriteNum);
+
+        if (type == type_block){
+            if (locking)
+                image = currentList.get(spriteNum);
+            if (unlocking)
+                image = interactList.get(interactSpriteNum);
+            if (locked && !unlocking)
+                image = defaultList.get(6);
+            if (!locked) {
+//                System.out.println("cake");
+                image = defaultList.get(0);
+            }
         }
 
         if(gp.currentMap == 0) {
@@ -667,13 +682,14 @@ public class Entity {
                 hpBarCounter = 0;
                 UtilityTool.changeAlpha(g2, 0.3f);
             }
-            if (dead) {
-                dyingAnimation(g2);
-            }
+
+            if (dead) dyingAnimation(g2);
+
             if(!attacking){
                 g2.drawImage(image, worldX, worldY, null);
                 UtilityTool.changeAlpha(g2, 1f);
             }
+
             if (attacking) {
                 if (animationSpriteNum >= currentList.size() - 1)
                     animationSpriteNum = 0;

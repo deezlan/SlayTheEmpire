@@ -11,7 +11,7 @@ public class OBJ_SavePedestal extends Entity {
         super(gp);
         name = "Save Pedestal";
         message = "Saving not implemented... go away";
-        isObject = true;
+//        isObject = true;
 
         // Load save pedestal sprites
         getObjectSprites();

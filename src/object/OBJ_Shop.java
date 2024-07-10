@@ -11,7 +11,7 @@ public class OBJ_Shop extends Entity {
         super(gp);
         name = "Shop";
         message = "Shop closed bitch";
-        isObject = true;
+//        isObject = true;
 
         // Load shop sprites
         getObjectSprites();

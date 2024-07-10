@@ -66,6 +66,10 @@ public class EventHandler {
                     drinkWater(gp.dialogueState);
                 }else if (hit(0,13, 10, "any")) {
                     drinkWater(gp.dialogueState);
+                } else if (hit(0,8, 4, "any")) {
+                    gp.objArr[gp.currentMap][6].locking = true;
+                    gp.objArr[gp.currentMap][6].runNormalSprites();
+                    eventRect[gp.currentMap][8][4].eventDone = true;
                 }
             }
         }

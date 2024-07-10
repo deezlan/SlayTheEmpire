@@ -11,9 +11,10 @@ public class OBJ_Gate extends Entity {
         super(gp);
         name = "Gate";
         message = "";
-        isObject = true;
+//        isObject = true;
 
         type = type_block;
+        interactable = false;
         locked = false;
 
         // Load save pedestal sprites
@@ -29,13 +30,14 @@ public class OBJ_Gate extends Entity {
     }
 
     public void getObjectSprites() {
-        String dir = "/objects/gate/";
+        String dir = "/objects/lockingGate/";
         try {
             // Load sprites
-            for (int i = 0; i <= 6; i++) {
-                defaultList.add(i, UtilityTool.loadSprite(dir + "unlock/" + i + ".png", "Missing savePedestal " + i));
-                interactList.add(i, UtilityTool.loadSprite(dir + "lock/" + i + ".png", "Missing savePedestal " + i));
-            }
+            for (int i = 0; i <= 6; i++)
+                defaultList.add(i, UtilityTool.loadSprite(dir + i + ".png", "Missing lockingGate " + i));
+
+            for (int i = 6; i >= 0; i--)
+                interactList.add(UtilityTool.loadSprite(dir + i + ".png", "Missing lockingGate " + i));
 
             // Scale sprites up
             UtilityTool.scaleEntityList(this, defaultList, 48, 48);

@@ -7,36 +7,53 @@ import java.io.*;
 
 public class SaveLoad {
 
+    public boolean isloadPage;
+    public boolean slotCheck[];
     GamePanel gp;
+    File saveFiles[];
 
-    public SaveLoad(GamePanel gp){
+
+    public SaveLoad(GamePanel gp, int numberOfSaveSlots){
         this.gp = gp;
+        this.saveFiles = new File[numberOfSaveSlots];
+        this.slotCheck = new boolean[numberOfSaveSlots];
+
+        for (int i = 0; i < numberOfSaveSlots; i++) {
+            this.saveFiles[i] = new File("save" + (i + 1) + ".dat");
+            this.slotCheck[i] = false;
+        }
     }
 
-    public void save(){
-        try{
-            ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(new File("save.dat")));
-            DataStorage ds = new DataStorage();
+    public void save(int slot){
+        if (slot < 0 || slot >= saveFiles.length) {
+            System.out.println("Invalid save slot.");
+            return;
+        }
 
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(saveFiles[slot]))) {
+            DataStorage ds = new DataStorage();
             ds.maxLife = gp.player.maxLife;
             ds.life = gp.player.life;
             ds.coin = gp.player.totalCoins;
             ds.playerClass = gp.player.playerClass;
 
-            //Write the DataStorage object
+            // Write the DataStorage object
             oos.writeObject(ds);
 
         }catch(Exception e){
             System.out.println("Save Exception!");
         }
     }
-    public void load(){
 
-        try{
-            ObjectInputStream ois = new ObjectInputStream(new FileInputStream(new File("save.dat")));
+    public void load(int slot){
+        if(!isSaveFileEmpty(slot)){
+            System.out.println("saveFile empty!");
+            return;
+        }
 
-            //Write the DataStorage object
-            DataStorage ds  = (DataStorage)ois.readObject();
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(saveFiles[slot]))) {
+            // Read the DataStorage object
+            DataStorage ds = (DataStorage) ois.readObject();
 
             gp.player.maxLife = ds.maxLife;
             gp.player.life = ds.life;
@@ -48,4 +65,18 @@ public class SaveLoad {
         }
 
     }
+    public boolean isSaveFileEmpty(int slot) {
+        if (slot < 0 || slot >= saveFiles.length) {
+            System.out.println("Invalid slot number.");
+            return true;
+        }
+
+        File saveFile = saveFiles[slot];
+        boolean saveEmpty = !saveFile.exists() || saveFile.length() == 0;
+        if (!saveEmpty){
+            slotCheck[slot] = true;
+        }
+        return saveEmpty;
+    }
+
 }

@@ -456,13 +456,13 @@ public class Player extends Entity {
     public void interactObject (int index) {
         if (index == 0){
             gp.gameState = gp.shopState;
-        } else if (index != 999) {
+        } else if(index == 1){
+            gp.gameState = gp.savePageState;
+        }else if (index != 999) {
 //            gp.objArray[index] = null;
             System.out.println(gp.objArr[gp.currentMap][index].message);
             if (!gp.objArr[gp.currentMap][index].interactList.isEmpty())
                 gp.objArr[gp.currentMap][index].interacting = true;
-        }else if(index == 1){
-            gp.saveLoad.save();
         }
 
     }

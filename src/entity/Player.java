@@ -123,6 +123,7 @@ public class Player extends Entity {
         //add inventory
     }
     public void setDefaultPosition() {
+        gp.currentMap = 0;
         worldX = 303; // PLAYER SPAWN X
         worldY = 9; // PLAYER SPAWN Y
         action = "idleRight";
@@ -258,10 +259,15 @@ public class Player extends Entity {
     // GAME LOOP METHODS
     @Override
     public void update() {
-        if (currentLife <= 0)
-            gp.gameState = gp.deathState;
-        else if (currentLife > maxLife)
+        if(!keyH.godModeOn){
+            if (currentLife <= 0){
+                gp.gameState = gp.deathState;
+            }
+        }
+
+        if (currentLife > maxLife){
             currentLife = maxLife;
+        }
 
         if (attacking)
             startAttack();
@@ -418,6 +424,7 @@ public class Player extends Entity {
         if(shotAvailableCounter < 30){
             shotAvailableCounter++;
         }
+
     }
     public void draw(Graphics2D g2) {
         if (spriteNum > currentList.size() - 1)
@@ -468,6 +475,7 @@ public class Player extends Entity {
                     // ASSASSIN
                     cursor.draw(g2, (int)(worldX + gp.TILE_SIZE * 1.9), worldY + gp.TILE_SIZE); // For fixed camera
                 }
+                break;
             case 1,2:
                 if (playerClass == 0) {
                     // WARRIOR
@@ -481,6 +489,7 @@ public class Player extends Entity {
 //            cursor.draw(g2, (int)(worldX + gp.TILE_SIZE * 1.9), worldY + gp.TILE_SIZE); // For fixed camera
                     cursor.draw(g2, (int)(screenX + gp.TILE_SIZE * 1.86), screenY + gp.TILE_SIZE);
                 }
+                break;
         }
     }
 

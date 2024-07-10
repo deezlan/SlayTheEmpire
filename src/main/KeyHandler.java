@@ -19,7 +19,8 @@ public class KeyHandler implements KeyListener {
             shotKeyPressed,
             onePressed,
             twoPressed,
-            threePressed;
+            threePressed,
+            godModeOn;
 
     public KeyHandler(GamePanel gp){
         this.gp = gp;
@@ -108,6 +109,15 @@ public class KeyHandler implements KeyListener {
 //                gp.gameState = gp.playState;
             if (gp.gameState == gp.shopState) {
                 gp.gameState = gp.playState;
+            }
+        }
+
+        if (code == KeyEvent.VK_G){
+            if(!godModeOn){
+                godModeOn = true;
+            }
+            else if (godModeOn){
+                godModeOn = false;
             }
         }
 

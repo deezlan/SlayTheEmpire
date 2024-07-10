@@ -43,6 +43,7 @@ public class Entity {
             solidAreaDefaultX, solidAreaDefaultY;
     public Rectangle solidArea = new Rectangle(0, 0, 48, 48); // draw area around entities
     public String action = "idleRight"; // DEFAULT ACTION
+    public boolean inRage = false;
 
     // PLAYER & MOB COLLISION DIRECTION
     public boolean
@@ -245,9 +246,9 @@ public class Entity {
 
             // ENTITY SOLID AREA POSITION
             int enLeftX = worldX + solidArea.x;
-            int enRightX = worldX + solidArea.x + solidArea.width;
+            int enRightX = worldX + solidArea.x; // ADD + solidArea.weight
             int enTopY = worldY + solidArea.y;
-            int enBottomY = worldY + solidArea.y + solidArea.height;
+            int enBottomY = worldY + solidArea.y; // ADD + solidArea.height
 
             if (enTopY > nextY && enLeftX >= nextX && enRightX < nextX + gp.TILE_SIZE) {
                 action = "moveUp";
@@ -267,27 +268,28 @@ public class Entity {
             } else if (enTopY > nextY && enLeftX > nextX) {
                 action = "moveUp";
                 checkCollision();
-                if (upCollisionOn && downCollisionOn && leftCollisionOn && rightCollisionOn) { // check
+                if (upCollisionOn && downCollisionOn && rightCollisionOn && leftCollisionOn) { // check
                     action = "moveLeft";
                     currentList = moveLeftList;
                 }
             } else if (enTopY > nextY && enLeftX < nextX) {
                 action = "moveUp";
-                if (upCollisionOn && downCollisionOn && leftCollisionOn && rightCollisionOn) { // check
+                checkCollision();
+                if (upCollisionOn && downCollisionOn && rightCollisionOn && leftCollisionOn) { // check
                     action = "moveRight";
                     currentList = moveRightList;
                 }
             } else if (enTopY < nextY && enLeftX > nextX) {
                 action = "moveDown";
                 checkCollision(); // check
-                if (upCollisionOn && downCollisionOn && leftCollisionOn && rightCollisionOn) {
+                if (upCollisionOn && downCollisionOn && rightCollisionOn && leftCollisionOn) {
                     action = "moveLeft";
                     currentList = moveLeftList;
                 }
             } else if (enTopY < nextY && enLeftX < nextX) {
                 action = "moveDown";
                 checkCollision(); // check
-                if (upCollisionOn && downCollisionOn && leftCollisionOn && rightCollisionOn) {
+                if (upCollisionOn && downCollisionOn && rightCollisionOn && leftCollisionOn) {
                     action = "moveRight";
                     currentList = moveRightList;
                 }
@@ -417,6 +419,7 @@ public class Entity {
             }
         }
     }
+
 
     // OBJECT METHODS
     public void loopThroughInteractSprites() {
@@ -651,12 +654,11 @@ public class Entity {
             }
         }
     }
-
     public boolean inCamera() {
         boolean inCamera = false;
-        if (worldX + gp.TILE_SIZE > gp.player.worldX - gp.player.screenX - 48 * 4 && // added values due to player sprite not centered
+        if (worldX + gp.TILE_SIZE*5 > gp.player.worldX - gp.player.screenX - 48 * 4 && // added values due to player sprite not centered
                 worldX - gp.TILE_SIZE < gp.player.worldX + gp.player.screenX + 48 * 4 &&
-                worldY + gp.TILE_SIZE > gp.player.worldY - gp.player.screenY - 48 * 2 &&
+                worldY + gp.TILE_SIZE*5 > gp.player.worldY - gp.player.screenY - 48 * 2 &&
                 worldY - gp.TILE_SIZE < gp.player.worldY + gp.player.screenY + 48 * 2) {
             inCamera = true;
         }

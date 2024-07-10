@@ -89,6 +89,11 @@ public class AssetSetter {
         int i = 0;
                 // MAP 1
                 mapNum = 1;
+                gp.mobArr[mapNum][i] = new MOB_FrostGiant(gp);
+                gp.mobArr[mapNum][i].worldX = 400;
+                gp.mobArr[mapNum][i].worldY = 180;
+                i++;
+
 //                gp.mobArr[mapNum][i] = new MOB_SkeletonKnight(gp);
 //                gp.mobArr[mapNum][i].worldX = 350;
 //                gp.mobArr[mapNum][i].worldY = 270;
@@ -145,11 +150,11 @@ public class AssetSetter {
 //                    i++;
 
                 // MAP 2
-//                mapNum = 2;
-//                gp.mobArr[mapNum][i] = new MOB_Slime(gp);
-//                gp.mobArr[mapNum][i].worldX = 450;
-//                gp.mobArr[mapNum][i].worldY = 270;
-//                i++;
+                mapNum = 2;
+                gp.mobArr[mapNum][i] = new MOB_Slime(gp);
+                gp.mobArr[mapNum][i].worldX = 378;
+                gp.mobArr[mapNum][i].worldY = 1470;
+                i++;
 //
 //                gp.mobArr[mapNum][i] = new MOB_RobotGuardian(gp);
 //                gp.mobArr[mapNum][i].worldX = 300;
@@ -157,8 +162,8 @@ public class AssetSetter {
 //                i++;
 //
 //                gp.mobArr[mapNum][i] = new MOB_ArmoredGuardian(gp);
-//                gp.mobArr[mapNum][i].worldX = 350;
-//                gp.mobArr[mapNum][i].worldY = 270;
+//                gp.mobArr[mapNum][i].worldX = 378;
+//                gp.mobArr[mapNum][i].worldY = 1470;
 //                i++;
         }
 

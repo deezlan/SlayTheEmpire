@@ -24,7 +24,8 @@ public class Entity {
             type_npc = 2,
             type_consumable = 3,
             type_pickup = 4,
-            type_block = 5;
+            type_block = 5,
+            type_shop = 6;
 
     // PLAYER & MOB ATTRIBUTES
     public int

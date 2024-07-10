@@ -68,11 +68,20 @@ public class EventHandler {
             }else if (hit(0,13, 10, "any")) {
                 drinkWater(gp.dialogueState);
             } else if (hit(0,8, 4, "any")) {
-                gp.objArr[gp.currentMap][6].locking = true;
-                eventRect[gp.currentMap][8][4].eventDone = true;
+                gp.objArr[0][6].locking = true;
+                eventRect[0][8][4].eventDone = true;
             } else if (hit(0,11, 4, "any")) {
-                gp.objArr[gp.currentMap][6].unlocking = true;
-                eventRect[gp.currentMap][8][4].eventDone = true;
+                gp.objArr[0][6].unlocking = true;
+                eventRect[0][8][4].eventDone = true;
+            } else if (
+                    hit(1,7, 40, "any") ||
+                    hit(1,8, 41, "any") ||
+                    hit(1,8, 42, "any") ||
+                    hit(1,7, 43, "any")
+            ) {
+                gp.objArr[1][0].locking = true;
+                gp.objArr[1][1].locking = true;
+                eventRect[1][8][4].eventDone = true;
             }
         }
     }

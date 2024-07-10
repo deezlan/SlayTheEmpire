@@ -229,7 +229,7 @@ public class Player extends Entity {
             if (gp.objArr[gp.currentMap][index].type == type_pickup) {
                 gp.objArr[gp.currentMap][index].use(this);
                 gp.objArr[gp.currentMap][index] = null;
-            } else if (index == 0){
+            } else if (type == type_shop){
                 gp.gameState = gp.shopState;
             } else {
                 if (!gp.objArr[gp.currentMap][index].message.isEmpty())

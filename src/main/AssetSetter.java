@@ -17,7 +17,6 @@ public class AssetSetter {
     public void setObject() {
         int mapNum = 0;
         int i = 0;
-
             // MAP 0
             gp.objArr[mapNum][i] = new OBJ_Shop(gp);
             gp.objArr[mapNum][i].worldX = 516;
@@ -52,13 +51,25 @@ public class AssetSetter {
             gp.objArr[mapNum][i] = new OBJ_Gate(gp); // Mystery chat bubble
             gp.objArr[mapNum][i].worldX = 540;
             gp.objArr[mapNum][i].worldY = 350;
-            // MAP 1
+
+        // MAP 1
+        mapNum = 1;
+        i = 0;
+            gp.objArr[mapNum][i] = new OBJ_Gate(gp); // Mystery chat bubble
+            gp.objArr[mapNum][i].worldX = 288;
+            gp.objArr[mapNum][i].worldY = 1968;
+            i++;
+
+            gp.objArr[mapNum][i] = new OBJ_Gate(gp); // Mystery chat bubble
+            gp.objArr[mapNum][i].worldX = 288;
+            gp.objArr[mapNum][i].worldY = 2016;
+            i++;
     }
     public void setNPC() {
         int mapNum = 0;
         int i = 0;
 
-//            // MAP 0
+            // MAP 0
             gp.npcArr[mapNum][i] = new NPC_Maiden(gp);
             gp.npcArr[mapNum][i].worldX = 368;
             gp.npcArr[mapNum][i].worldY = 250;
@@ -133,9 +144,9 @@ public class AssetSetter {
 //                gp.mobArr[mapNum][i].worldY = 400;
 //                i++;
 
-//                gp.mobArr[mapNum][i] = new MOB_RobotGuardian(gp);
-//                gp.mobArr[mapNum][i].worldX = 400;
-//                gp.mobArr[mapNum][i].worldY = 270;
+                gp.mobArr[mapNum][i] = new MOB_RobotGuardian(gp);
+                gp.mobArr[mapNum][i].worldX = 400;
+                gp.mobArr[mapNum][i].worldY = 270;
 //                    i++;
 
                 // MAP 2

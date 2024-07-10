@@ -88,15 +88,20 @@ public class AssetSetter {
         int mapNum;
         int i = 0;
                 // MAP 1
-                mapNum = 1;
+                mapNum = 2;
 //                gp.mobArr[mapNum][i] = new MOB_SkeletonKnight(gp);
 //                gp.mobArr[mapNum][i].worldX = 350;
 //                gp.mobArr[mapNum][i].worldY = 270;
 //                i++;
 
+//                gp.mobArr[mapNum][i] = new MOB_ArmoredGuardian(gp);
+//                gp.mobArr[mapNum][i].worldX = 350;
+//                gp.mobArr[mapNum][i].worldY = 270;
+//                i++;
+//
                 gp.mobArr[mapNum][i] = new MOB_ArmoredGuardian(gp);
-                gp.mobArr[mapNum][i].worldX = 350;
-                gp.mobArr[mapNum][i].worldY = 270;
+                gp.mobArr[mapNum][i].worldX = 374;
+                gp.mobArr[mapNum][i].worldY = 1503;
                 i++;
 //
 //                gp.mobArr[mapNum][i] = new MOB_FlyingEye(gp);

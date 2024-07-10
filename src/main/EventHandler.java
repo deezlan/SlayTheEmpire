@@ -21,10 +21,10 @@ public class EventHandler {
         while (map < gp.maxMap && col < gp.MAX_WORLD_COL && row < gp.MAX_WORLD_ROW) {
 
             eventRect[map][col][row] = new EventRect();
-            eventRect[map][col][row].x = 23;
-            eventRect[map][col][row].y = -10;
-            eventRect[map][col][row].width = 80;
-            eventRect[map][col][row].height = 40;
+            eventRect[map][col][row].x = 0;
+            eventRect[map][col][row].y = -24;
+            eventRect[map][col][row].width = 48;
+            eventRect[map][col][row].height = 48;
             eventRect[map][col][row].eventRectDefaultX = eventRect[map][col][row].x;
             eventRect[map][col][row].eventRectDefaultY = eventRect[map][col][row].y;
 
@@ -57,13 +57,13 @@ public class EventHandler {
         }
 
         if(canTouchEvent) {// use else if to add more events
-            if (hit(0,8, 12, "any")) {
-                enterDungeon(1,8,8);
+            if (hit(0,8, 13, "any")) {
+                enterDungeon(1,2, 41);
             } else if (hit(0,4, 10, "moveDown")) {
                 drinkWater(gp.dialogueState);
             } else if (hit(0,3, 10, "any")) {
                 drinkWater(gp.dialogueState);
-            } else if (hit(0,2, 10, "any")) {
+            } else if (hit(0,2, 9, "any")) {
                 drinkWater(gp.dialogueState);
             }else if (hit(0,13, 10, "any")) {
                 drinkWater(gp.dialogueState);
@@ -80,7 +80,7 @@ public class EventHandler {
     public boolean hit (int map,int col, int row, String reqAction) {
         boolean hit = false;
 
-        if(map == gp.currentMap) {
+        if (map == gp.currentMap) {
             gp.player.solidArea.x = gp.player.worldX + gp.player.solidArea.x;
             gp.player.solidArea.y = gp.player.worldY + gp.player.solidArea.y;
             eventRect[map][col][row].x = col * gp.TILE_SIZE + eventRect[map][col][row].x;

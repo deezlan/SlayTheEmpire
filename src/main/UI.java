@@ -357,9 +357,9 @@ public class UI {
             counter = 0;
             gp.gameState = gp.playState;
             gp.currentMap = gp.eHandler.tempMap;
+            gp.player.worldX = gp.TILE_SIZE * gp.eHandler.tempCol - gp.player.solidArea.x + 30;
+            gp.player.worldY = gp.TILE_SIZE * gp.eHandler.tempRow - gp.player.solidArea.y + 25;
             gp.setMapColor();
-            gp.player.worldX = gp.TILE_SIZE * gp.eHandler.tempCol;
-            gp.player.worldY = gp.TILE_SIZE * gp.eHandler.tempRow;
             gp.eHandler.previousEventX = gp.player.worldX;
             gp.eHandler.previousEventY = gp.player.worldY;
         }

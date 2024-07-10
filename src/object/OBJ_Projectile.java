@@ -22,11 +22,14 @@ public class OBJ_Projectile extends Projectile {
     }
 
     public void getImage(){
+        String dir = "/Projectile/fireball/";
         try {
-            projectileRight.add(UtilityTool.loadSprite("/Projectile/fireball/fireball_right_1.png","Fire ball not found"));
-            projectileUp.add(UtilityTool.loadSprite("/Projectile/fireball/fireball_right_1.png","Fire ball not found"));
-            projectileDown.add(UtilityTool.loadSprite("/Projectile/fireball/fireball_right_1.png","Fire ball not found"));
-            projectileLeft.add(UtilityTool.loadSprite("/Projectile/fireball/fireball_right_1.png","Fire ball not found"));
+            for (int i = 0; i <= 1; i++) {
+                projectileRight.add(i, UtilityTool.loadSprite(dir + "right/" + i + ".png", "Missing Right Fireball " + i));
+                projectileLeft.add(i, UtilityTool.loadSprite(dir + "left/" + i + ".png", "Missing left Fireball " + i));
+                projectileUp.add(i, UtilityTool.loadSprite(dir + "up/" + i + ".png", "Missing up Fireball " + i));
+                projectileDown.add(i, UtilityTool.loadSprite(dir + "down/" + i + ".png", "Missing down Fireball " + i));
+            }
             UtilityTool.scaleEntityList(this, projectileRight, gp.TILE_SIZE, gp.TILE_SIZE);
             UtilityTool.scaleEntityList(this,projectileLeft, gp.TILE_SIZE, gp.TILE_SIZE);
             UtilityTool.scaleEntityList(this,projectileUp, gp.TILE_SIZE, gp.TILE_SIZE);

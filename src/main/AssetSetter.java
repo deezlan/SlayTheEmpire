@@ -3,6 +3,7 @@ package main;
 import entity.*;
 import mobs.*;
 import object.OBJ_ChatBubble;
+import object.OBJ_Obelisk;
 import object.OBJ_SavePedestal;
 import object.OBJ_Shop;
 
@@ -46,6 +47,12 @@ public class AssetSetter {
             gp.objArr[mapNum][i] = new OBJ_ChatBubble(gp); // Mystery chat bubble
             gp.objArr[mapNum][i].worldX = 540;
             gp.objArr[mapNum][i].worldY = 410;
+            i++;
+
+//            gp.objArr[mapNum][i] = new OBJ_Obelisk(gp);
+//            gp.objArr[mapNum][i].worldX = 400;
+//            gp.objArr[mapNum][i].worldY = 300;
+
             // MAP 1
     }
     public void setNPC() {
@@ -81,16 +88,16 @@ public class AssetSetter {
         int mapNum;
         int i = 0;
                 // MAP 1
-                mapNum = 0;
+                mapNum = 1;
 //                gp.mobArr[mapNum][i] = new MOB_SkeletonKnight(gp);
 //                gp.mobArr[mapNum][i].worldX = 350;
 //                gp.mobArr[mapNum][i].worldY = 270;
 //                i++;
 
-//                gp.mobArr[mapNum][i] = new MOB_ArmoredGuardian(gp);
-//                gp.mobArr[mapNum][i].worldX = 350;
-//                gp.mobArr[mapNum][i].worldY = 270;
-//                i++;
+                gp.mobArr[mapNum][i] = new MOB_ArmoredGuardian(gp);
+                gp.mobArr[mapNum][i].worldX = 350;
+                gp.mobArr[mapNum][i].worldY = 270;
+                i++;
 //
 //                gp.mobArr[mapNum][i] = new MOB_FlyingEye(gp);
 //                gp.mobArr[mapNum][i].worldX = 400;
@@ -127,10 +134,10 @@ public class AssetSetter {
 //                gp.mobArr[mapNum][i].worldY = 400;
 //                i++;
 
-                gp.mobArr[mapNum][i] = new MOB_RobotGuardian(gp);
-                gp.mobArr[mapNum][i].worldX = 400;
-                gp.mobArr[mapNum][i].worldY = 270;
-                    i++;
+//                gp.mobArr[mapNum][i] = new MOB_RobotGuardian(gp);
+//                gp.mobArr[mapNum][i].worldX = 400;
+//                gp.mobArr[mapNum][i].worldY = 270;
+//                    i++;
 
                 // MAP 2
 //                mapNum = 2;

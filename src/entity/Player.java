@@ -450,19 +450,19 @@ public class Player extends Entity {
                 g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
                 break;
             case 1,2:
-                if(iframe){
-                    g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.3f));
-                }
+                if(drawing){
+                    if(iframe){
+                        g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.3f));
+                    }
 
-                if (attacking){
-                    g2.drawImage(animationImage, screenX, screenY,null); // draw attack animation
-                } else {
-                    if(drawing){
+                    if (attacking){
+                        g2.drawImage(animationImage, screenX, screenY,null); // draw attack animation
+                    } else {
                         g2.drawImage(image, screenX, screenY, null); // STOPPED HERE NEED TO FIND DRAW TEMP SCREEN
                     }
+                    g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
+                    break;
                 }
-                g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
-                break;
         }
         // Draw arrow
         switch (gp.currentMap){

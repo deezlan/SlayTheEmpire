@@ -279,7 +279,7 @@ public class UI {
             if(gp.keyH.ePressed){
                 charIndex = 0;
                 combinedText = "";
-                if(gp.gameState==gp.dialogueState || gp.gameState == gp.cutsceneState){
+                if(gp.gameState == gp.dialogueState || gp.gameState == gp.cutsceneState){
                     npc.dialogueIndex++;
                     gp.keyH.ePressed = false;
                 }

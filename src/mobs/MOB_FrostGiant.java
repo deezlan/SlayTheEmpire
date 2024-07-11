@@ -39,12 +39,9 @@ public class MOB_FrostGiant extends Entity {
         attackArea.height = 140;
         solidAreaDefaultX = solidArea.x;
         solidAreaDefaultY = solidArea.y;
+        dialogueSet = 0;
     }
 
-    public void setDialog() {
-        dialogs[0][0] = "HOW DARE YOU ENTER MY DUNGEON";
-        dialogs[0][1] = "YOU WILL PAY... WITH ICE!";
-    }
 
     @Override
     public void setAction() {
@@ -72,12 +69,21 @@ public class MOB_FrostGiant extends Entity {
     }
 
     public void checkDrop() {
+        gp.bossBattleOn = false;
         dropItem(new OBJ_PickUpCoin(gp));
     }
 
     public void damageReaction() {
         actionLockCounter = 0;
         onPath = true;
+    }
+
+    public void setDialog() {
+        dialogs[0][0] = "HOW DARE YOU ENTER MY DUNGEON";
+        dialogs[0][1] = "YOU WILL PAY... WITH ICE!";
+
+        dialogs[1][0] = "HOW DARE YOU ENTER MY DUNGEON";
+        dialogs[1][1] = "YOU WILL PAY... WITH ICE!";
     }
 
     public void getMobSprites() {

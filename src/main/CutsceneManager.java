@@ -1,5 +1,6 @@
 package main;
 
+import entity.Player;
 import entity.PlayerDummy;
 import mobs.MOB_FrostGiant;
 import object.OBJ_Gate;
@@ -36,6 +37,8 @@ public class CutsceneManager {
             gp.bossBattleOn = true;
 //            for (int i = 0; i < gp.objArr[1].length; i++){
 //                if(gp.objArr[gp.currentMap][i] == null){
+//                    gp.objArr[gp.currentMap][i] = new OBJ_Pillar(gp);
+//                    gp.objArr[gp.currentMap][i].worldX = gp.TILE_SIZE*23;
 //                    gp.objArr[gp.currentMap][i].tempScene = true;
 //                    break;
 //                }
@@ -54,7 +57,7 @@ public class CutsceneManager {
         }
         if(scenePhase == 1){
             gp.player.worldY -= 2;
-            if(gp.player.worldY < gp.TILE_SIZE*5){
+            if(gp.player.worldY < gp.TILE_SIZE*4){
                 scenePhase++;
             }
         }
@@ -68,8 +71,21 @@ public class CutsceneManager {
                 }
             }
         }
-        if(scenePhase == 3) {
-            gp.ui.drawDialogScreen();
+        if(scenePhase == 3) gp.ui.drawDialogScreen();
+
+        if(scenePhase == 4) {
+            for(int i = 0; i < gp.npcArr[1].length; i++){
+                if(gp.npcArr[gp.currentMap][i] != null && (gp.npcArr[gp.currentMap][i].name.equals(PlayerDummy.npcName))){
+                    gp.player.worldX = gp.npcArr[gp.currentMap][i].worldX;
+                    gp.player.worldY = gp.npcArr[gp.currentMap][i].worldY;
+                    gp.npcArr[gp.currentMap][i] = null;
+                    break;
+                }
+            }
+            gp.player.drawing = true;
+            sceneNum = NA;
+            scenePhase = 0;
+            gp.gameState = gp.playState;
         }
     }
 }

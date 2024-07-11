@@ -7,7 +7,7 @@ public class Main {
         JFrame window = new JFrame();
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setResizable(false);
-        window.setTitle("Slay the Empires test merge by Danial");
+        window.setTitle("Slay the Empire");
 
         GamePanel gamePanel = new GamePanel();
         window.add(gamePanel);
@@ -15,7 +15,7 @@ public class Main {
         window.setLocationRelativeTo(null);
         window.setVisible(true);
 
-        gamePanel.setupLobby();
+        gamePanel.setupGame();
         gamePanel.startGameThread();
     }
 }

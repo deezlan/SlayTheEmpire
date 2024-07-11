@@ -1,35 +1,42 @@
 package object;
 
-import javax.imageio.ImageIO;
-import java.io.IOException;
-import java.util.Objects;
+import entity.Entity;
+import main.GamePanel;
+import main.UtilityTool;
 
-public class OBJ_Shop extends SuperObject {
-    public OBJ_Shop() {
+import java.io.IOException;
+
+public class OBJ_Shop extends Entity {
+    public OBJ_Shop(GamePanel gp) {
+        super(gp);
         name = "Shop";
         message = "Shop closed bitch";
-        spriteWidth = 198;
-        spriteHeight = 128;
-
+        type = type_shop;
         // Load shop sprites
-        try {
-            spriteList.add(0, ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
-                    "/objects/shop/0.png"), "Missing shop sprite 0")));
-            spriteList.add(1, ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
-                    "/objects/shop/1.png"), "Missing shop sprite 1")));
-            spriteList.add(2, ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
-                    "/objects/shop/2.png"), "Missing shop sprite 2")));
-            spriteList.add(3, ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
-                    "/objects/shop/3.png"), "Missing shop sprite 3")));
-        } catch (IOException e) {
-            e.printStackTrace(System.out);
-        }
+        getObjectSprites();
+
+        // Set shop collision settings
         solidArea.x = 20;
         solidArea.y = 0;
         solidArea.width = 172;
-        solidArea.height = 118;
+        solidArea.height = 130;
         solidAreaDefaultX = solidArea.x;
         solidAreaDefaultY = solidArea.y;
         collision = true;
+
+        System.out.println(interactList.size());
+    }
+
+    public void getObjectSprites() {
+        String dir = "/objects/shop/";
+        try {
+            // Load sprites
+            for (int i = 0; i <= 3; i++)
+                defaultList.add(i, UtilityTool.loadSprite(dir + i + ".png", "Missing shop " + i));
+            // Scale sprites up
+            UtilityTool.scaleEntityList(this,defaultList, 173, 115);
+        } catch (IOException e) {
+            e.printStackTrace(System.out);
+        }
     }
 }

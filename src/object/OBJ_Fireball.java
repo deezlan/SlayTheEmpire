@@ -14,8 +14,8 @@ public class OBJ_Fireball extends Projectile {
 
         name = "Fireball";
         speed = 10;
-        maxLife = 100;
-        life = maxLife;
+        maxLife = 80;
+        currentLife = maxLife;
         damage = 2;
         alive = false;
         getImage();
@@ -25,12 +25,20 @@ public class OBJ_Fireball extends Projectile {
 
     public void getImage(){
         try {
-            weaponSprite = UtilityTool.loadSprite("/Projectile/fireball/fireball_right_1.png", "fireball not found");
-            weaponSprite = UtilityTool.scaleImage(weaponSprite, gp.TILE_SIZE, gp.TILE_SIZE);
-            currentActionList.add(weaponSprite);
-            weaponSprite = UtilityTool.loadSprite("/Projectile/fireball/fireball_right_2.png", "fireball not found");
-            weaponSprite = UtilityTool.scaleImage(weaponSprite, gp.TILE_SIZE, gp.TILE_SIZE);
-            currentActionList.add(weaponSprite);
+            projectileRight.add(UtilityTool.loadSprite("/Projectile/fireball/fireball_right_1.png","Fire ball not found"));
+            projectileUp.add(UtilityTool.loadSprite("/Projectile/fireball/fireball_right_1.png","Fire ball not found"));
+            projectileDown.add(UtilityTool.loadSprite("/Projectile/fireball/fireball_right_1.png","Fire ball not found"));
+            projectileLeft.add(UtilityTool.loadSprite("/Projectile/fireball/fireball_right_1.png","Fire ball not found"));
+            UtilityTool.scaleEntityList(this, projectileRight, gp.TILE_SIZE, gp.TILE_SIZE);
+            UtilityTool.scaleEntityList(this,projectileLeft, gp.TILE_SIZE, gp.TILE_SIZE);
+            UtilityTool.scaleEntityList(this,projectileUp, gp.TILE_SIZE, gp.TILE_SIZE);
+            UtilityTool.scaleEntityList(this, projectileDown, gp.TILE_SIZE, gp.TILE_SIZE);
+//            weaponSprite = UtilityTool.loadSprite("/Projectile/fireball/fireball_right_1.png", "fireball not found");
+//            weaponSprite = UtilityTool.scaleImage(weaponSprite, gp.TILE_SIZE, gp.TILE_SIZE);
+//            currentActionList.add(weaponSprite);
+//            weaponSprite = UtilityTool.loadSprite("/Projectile/fireball/fireball_right_2.png", "fireball not found");
+//            weaponSprite = UtilityTool.scaleImage(weaponSprite, gp.TILE_SIZE, gp.TILE_SIZE);
+//            currentActionList.add(weaponSprite);
         } catch (IOException e){
             e.printStackTrace(System.out);
         }

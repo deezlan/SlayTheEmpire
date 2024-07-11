@@ -2,8 +2,8 @@ package entity;
 
 import main.GamePanel;
 public class Projectile extends Entity{
-
     Entity user;
+    double dx, dy, speedX, speedY;
     double dx;
     double dy;
     public Projectile(GamePanel gp) {
@@ -19,13 +19,16 @@ public class Projectile extends Entity{
         this.direction = direction;
         this.alive = alive;
         this.user = user;
-        this.life = this.maxLife;
+        this.currentLife = this.maxLife;
         this.dx = mouseX;
         this.dy = mouseY;
         action = "moveUp";
+        this.action = direction;
     }
 
     public void update(){
+        speedX = (int) (dx / speed);
+        speedY = (int) (dy / speed);
 
         if (user == gp.player){
             if (gp.player.currentWeapon.name.equalsIgnoreCase("fireball cannon")){
@@ -97,17 +100,23 @@ public class Projectile extends Entity{
                     System.out.println("HIT!");
                     gp.player.damageMonster(monsterIndex, damage,this);
                 }
+            dx = gp.cursor.deltaX;
+            dy = gp.cursor.deltaY;
+            int monsterIndex = gp.cChecker.checkEntityCollision(this, gp.mobArr);
+            if (monsterIndex != 999) {
+                System.out.println("HIT!");
+                gp.player.damageMonster(monsterIndex, damage,this);
+                alive = false;
             }
-
         }
         if(user != gp.player) {
             boolean contactPlayer = gp.cChecker.checkPLayer(this);
 
             switch (action) {
-                case "moveUp": worldY -= speed; currentActionList = projectileUp; break;
-                case "moveDown": worldY += speed; currentActionList = projectileDown; break;
-                case "moveLeft": worldX -= speed; currentActionList = projectileLeft; break;
-                case "moveRight": worldX += speed; currentActionList = projectileRight; break;
+                case "moveUp": worldY -= speed; currentList = projectileUp; break;
+                case "moveDown": worldY += speed; currentList = projectileDown; break;
+                case "moveLeft": worldX -= speed; currentList = projectileLeft; break;
+                case "moveRight": worldX += speed; currentList = projectileRight; break;
             }
 
             if(!gp.player.iframe && contactPlayer){
@@ -119,15 +128,15 @@ public class Projectile extends Entity{
         }
 
 
-        life--;
-        if (life <= 0){
+        currentLife--;
+        if (currentLife <= 0){
             alive = false;
         }
 
         spriteCounter++;
-        if (currentActionList.size() > 14) {
+        if (currentList.size() > 14) {
             if (spriteCounter > 4) loopThroughSprites();
-        } else if (currentActionList.size() > 7) {
+        } else if (currentList.size() > 7) {
             if (spriteCounter > 6) loopThroughSprites();
         } else {
             if (spriteCounter > 9) loopThroughSprites();

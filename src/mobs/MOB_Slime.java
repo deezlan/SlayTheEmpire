@@ -3,6 +3,7 @@ package mobs;
 import entity.Entity;
 import main.GamePanel;
 import main.UtilityTool;
+import object.OBJ_PickUpCoin;
 
 import java.io.IOException;
 
@@ -11,15 +12,16 @@ public class MOB_Slime extends Entity {
     public MOB_Slime(GamePanel gp) {
         super(gp);
         this.gp = gp;
-        type = 1;
+        type = type_mob;
         defaultSpeed = 1;
         speed = defaultSpeed;
         maxLife = 4;
-        life = maxLife;
+        currentLife = maxLife;
         attack = 1;
         lookingRight = true;
         action = "idleRight";
         mobNum = 1;
+        damageSprite = 2;
 
         // Load mob sprites
         getMobSprites();
@@ -33,6 +35,10 @@ public class MOB_Slime extends Entity {
         solidAreaDefaultY = solidArea.y;
         attackArea.width = 50;
         attackArea.height = 30;
+    }
+
+    public void checkDrop() {
+        dropItem(new OBJ_PickUpCoin(gp));
     }
 
     @Override
@@ -51,7 +57,7 @@ public class MOB_Slime extends Entity {
             }
         // CHECK ATTACK ON PLAYER
         if(!attacking){
-            checkMobAttack(30,gp.TILE_SIZE*2,gp.TILE_SIZE*2);
+            checkWithinAttackRange(30,gp.TILE_SIZE*2,gp.TILE_SIZE*2);
         }
     }
 

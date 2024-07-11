@@ -15,7 +15,7 @@ public class OBJ_Rock extends Projectile {
         name = "Rock";
         speed = 5;
         maxLife = 80;
-        life = maxLife;
+        currentLife = maxLife;
         damage = 1;
         alive = false;
         getImage();

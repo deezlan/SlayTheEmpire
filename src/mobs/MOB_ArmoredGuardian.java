@@ -4,17 +4,19 @@ import entity.Entity;
 import main.GamePanel;
 import main.UtilityTool;
 import object.OBJ_Energyball;
+import object.OBJ_PickUpCoin;
+
 import java.io.IOException;
 public class MOB_ArmoredGuardian extends Entity {
     GamePanel gp;
     public MOB_ArmoredGuardian(GamePanel gp) {
         super(gp);
         this.gp = gp;
-        type = 1;
+        type = type_mob;
         defaultSpeed = 1;
         speed = defaultSpeed;
         maxLife = 4;
-        life = maxLife;
+        currentLife = maxLife;
         action = "idleRight";
         mobNum = 7;
         projectile1 = new OBJ_Energyball(gp);
@@ -29,6 +31,10 @@ public class MOB_ArmoredGuardian extends Entity {
         solidArea.height = 30;
         solidAreaDefaultX = solidArea.x;
         solidAreaDefaultY = solidArea.y;
+    }
+
+    public void checkDrop() {
+        dropItem(new OBJ_PickUpCoin(gp));
     }
 
     @Override
@@ -49,7 +55,7 @@ public class MOB_ArmoredGuardian extends Entity {
         }
         // CHECK ATTACK ON PLAYER
         if(!attacking){
-            checkMobAttack(30,gp.TILE_SIZE*5,gp.TILE_SIZE*2);
+            checkWithinAttackRange(30,gp.TILE_SIZE*4,gp.TILE_SIZE*2);
             checkShoot(200,0,50,0);
         }
     }

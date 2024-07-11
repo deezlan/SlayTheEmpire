@@ -3,6 +3,7 @@ package mobs;
 import entity.Entity;
 import main.GamePanel;
 import main.UtilityTool;
+import object.OBJ_PickUpCoin;
 import object.OBJ_Rock;
 
 import java.io.IOException;
@@ -12,11 +13,11 @@ public class MOB_FlyingEye extends Entity {
     public MOB_FlyingEye(GamePanel gp) {
         super(gp);
         this.gp = gp;
-        type = 1;
+        type = type_mob;
         defaultSpeed = 1;
         speed = defaultSpeed;
         maxLife = 4;
-        life = maxLife;
+        currentLife = maxLife;
         action = "idleRight";
         mobNum = 8;
         projectile1 = new OBJ_Rock(gp);
@@ -31,6 +32,10 @@ public class MOB_FlyingEye extends Entity {
         solidArea.height = 30;
         solidAreaDefaultX = solidArea.x;
         solidAreaDefaultY = solidArea.y;
+    }
+
+    public void checkDrop() {
+        dropItem(new OBJ_PickUpCoin(gp));
     }
 
     @Override
@@ -51,7 +56,7 @@ public class MOB_FlyingEye extends Entity {
         }
         // CHECK ATTACK ON PLAYER
         if(!attacking){
-            checkMobAttack(30,gp.TILE_SIZE*5,gp.TILE_SIZE*2); // CHANGE ATTACK RANGE
+            checkWithinAttackRange(30,gp.TILE_SIZE*5,gp.TILE_SIZE*2); // CHANGE ATTACK RANGE
             checkShoot(200,0,100,0);
         }
     }

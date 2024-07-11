@@ -28,8 +28,6 @@ public class GamePanel extends JPanel implements Runnable {
             MAX_SCREEN_ROW = 13,
             SCREEN_WIDTH = TILE_SIZE * MAX_SCREEN_COL,
             SCREEN_HEIGHT = TILE_SIZE * MAX_SCREEN_ROW;
-    BufferedImage tempScreen;
-    Graphics2D g2;
 
     // WORLD SETTINGS
     public int currentMap = 0;
@@ -47,7 +45,7 @@ public class GamePanel extends JPanel implements Runnable {
     private final int FPS = 60;
 
     // PLAYER SETTINGS
-    public Cursor cursor = new Cursor(); // Initialize cursor
+    public Cursor cursor = new Cursor(this); // Initialize cursor
     public Player player = new Player(this, keyH, cursor, playerClass);
     public UI ui = new UI(this);
 
@@ -80,8 +78,7 @@ public class GamePanel extends JPanel implements Runnable {
             dialogueState = 3,
             shopState = 4,
             deathState = 5,
-            transitionState = 6,
-            cutsceneState = 11;
+            transitionState = 6;
 
     public GamePanel() {
         this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
@@ -125,18 +122,16 @@ public class GamePanel extends JPanel implements Runnable {
         player.restoreLife();
         aSetter.setMonster();
         aSetter.setNPC();
-        removeTempEntity();
-        bossBattleOn = false;
     }
 
-//    public void restart() {
-//        player.setDefaultValues();
-//        player.setDefaultPosition();
-//        aSetter.setObject();
-//        aSetter.setNPC();
-//        aSetter.setMonster();
-//        aSetter.setInteractiveTile();
-//    }
+    public void restart() {
+        player.setDefaultValues();
+        player.setDefaultPosition();
+        aSetter.setObject();
+        aSetter.setNPC();
+        aSetter.setMonster();
+        aSetter.setInteractiveTile();
+    }
 
     // MAP SETTINGS
     public void setMapColor () {
@@ -144,8 +139,9 @@ public class GamePanel extends JPanel implements Runnable {
             case 0:
                 setBackground(Color.decode("#181425"));
                 break;
-            case 1,2:
+            case 1:
                 setBackground(Color.decode("#42393a"));
+//                setBackground(Color.decode("#000000"));
                 break;
         }
     }
@@ -233,17 +229,6 @@ public class GamePanel extends JPanel implements Runnable {
             }
         }
     }
-
-    public void removeTempEntity() {
-        for(int mapNum = 0; mapNum < maxMap; mapNum++){
-            for(int i = 0; i < objArr[i].length; i++) {
-                if(objArr[mapNum][i] != null && objArr[mapNum][i].tempScene){
-                    objArr[mapNum][i] = null;
-                }
-            }
-        }
-    }
-
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D)g;
@@ -324,9 +309,8 @@ public class GamePanel extends JPanel implements Runnable {
                 int lineHeight = 20;
                 g2.drawString("WorldX: "+ player.worldX , x , y); y += lineHeight;
                 g2.drawString("WorldY: "+ player.worldY , x , y); y += lineHeight;
-                g2.drawString("Col: " + ((player.worldX + player.solidArea.x)/TILE_SIZE), x, y); y += lineHeight;
-                g2.drawString("Row: " + ((player.worldY + player.solidArea.y)/TILE_SIZE), x, y); y += lineHeight;
-                g2.drawString("GodMode: " + keyH.godModeOn,x,y); y += lineHeight;
+                g2.drawString("Col: " + (player.worldX + player.solidArea.x)/TILE_SIZE, x, y); y += lineHeight;
+                g2.drawString("Row: " + (player.worldY + player.solidArea.y)/TILE_SIZE, x, y); y += lineHeight;
                 g2.drawString("Draw Time: " + passed, x, y);
             }
         }

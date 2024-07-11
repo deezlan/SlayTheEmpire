@@ -7,14 +7,14 @@ import main.UtilityTool;
 
 import java.io.IOException;
 
-public class OBJ_SnowballCannon extends Entity {
+public class OBJ_FireballCannon extends Entity {
     GamePanel gp;
 
-    public OBJ_SnowballCannon(GamePanel gp) throws IOException {
+    public OBJ_FireballCannon(GamePanel gp) throws IOException {
         super(gp);
         this.gp = gp;
 
-        name = "Snowball Cannon";
+        name = "Fireball Cannon";
         description = "HADOUKEN!";
         price = 100;
         try {
@@ -24,8 +24,8 @@ public class OBJ_SnowballCannon extends Entity {
             throw new IOException(errorMsg, e);
         }
 
-        projectile = new OBJ_Projectile(gp);
-        System.out.println("Projectile initialized in Snowball Cannon: " + this.projectile);
+        projectile1 = new OBJ_Fireball(gp);
+        System.out.println("Projectile initialized in Snowball Cannon: " + this.projectile1);
 
         weaponSprite = UtilityTool.scaleImage(weaponSprite, 30, 30);
         damage = 2;

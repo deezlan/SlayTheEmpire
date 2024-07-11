@@ -234,7 +234,7 @@ public class UI {
 
     public void drawPlayerMoney() {
         coin.spriteCounter++;
-        if (coin.spriteCounter > 4) coin.loopThroughSprites();
+        if (coin.spriteCounter > 4) coin.runCurrentListAnimation();
         g2.setFont(g2.getFont().deriveFont(Font.BOLD, 40));
         g2.drawString ("" + gp.player.totalCoins, 38, 117);
         if (coin.spriteNum == coin.defaultList.size() - 1)
@@ -266,6 +266,32 @@ public class UI {
         g2.setFont(g2.getFont().deriveFont(Font.PLAIN,32));
         dialogX += gp.TILE_SIZE;
         dialogY += gp.TILE_SIZE;
+
+        if(npc.dialogs[npc.dialogueSet][npc.dialogueIndex] != null){
+//            currentDialog = npc.dialogs[npc.dialogueSet][npc.dialogueIndex];
+            char[] characters = npc.dialogs[npc.dialogueSet][npc.dialogueIndex].toCharArray(); // DISABLE IF YOU WANT ALL TEXT TO DISPLAY
+            if(charIndex < characters.length){
+                String s = String.valueOf(characters[charIndex]);
+                combinedText = combinedText + s;
+                currentDialog = combinedText;
+                charIndex++;
+            }
+
+
+            if(gp.keyH.ePressed){
+                charIndex = 0;
+                combinedText = "";
+                if(gp.gameState == gp.dialogueState){
+                    npc.dialogueIndex++;
+                    gp.keyH.ePressed = false;
+                }
+            }
+        } else {
+            npc.dialogueIndex = 0;
+            if(gp.gameState == gp.dialogueState){
+                gp.gameState = gp.playState;
+            }
+        }
 
         if(npc.dialogs[npc.dialogueSet][npc.dialogueIndex] != null){
 //            currentDialog = npc.dialogs[npc.dialogueSet][npc.dialogueIndex];

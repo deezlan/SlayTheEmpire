@@ -72,39 +72,49 @@ public class TileManager {
             if (tileNum >= 0 && tileNum < tile.length && tile[tileNum] != null && tile[tileNum].image != null) {
                 int worldX = WORLD_COL * gp.TILE_SIZE;
                 int worldY = WORLD_ROW * gp.TILE_SIZE;
-
-                switch (gp.currentMap){ // SWITCH IT TO SWITCH CASE FOR LESS REDUNDANCY
-                    case 0:
-                        g2.drawImage(tile[tileNum].image, worldX, worldY, gp.TILE_SIZE, gp.TILE_SIZE, null);
-                        break;
-                    case 1, 2:
-                        int screenX = worldX - gp.player.worldX + gp.player.screenX;
-                        int screenY = worldY - gp.player.worldY + gp.player.screenY;
-                        if (worldX + gp.TILE_SIZE  > gp.player.worldX - gp.player.screenX - 48*4 &&
-                                worldX - gp.TILE_SIZE < gp.player.worldX + gp.player.screenX + 48*4 &&
-                                worldY + gp.TILE_SIZE > gp.player.worldY - gp.player.screenY &&
-                                worldY - gp.TILE_SIZE < gp.player.worldY + gp.player.screenY + 48*2) {
-                            g2.drawImage(tile[tileNum].image, screenX, screenY, gp.TILE_SIZE, gp.TILE_SIZE, null);
-                        }
-                        break;
-                }
-                WORLD_COL++;
-                if (WORLD_COL == gp.MAX_WORLD_COL) {
-                    WORLD_COL = 0;
-                    WORLD_ROW++;
-                }
-            }
-            if(drawPath){ // for viewing the move path of entities
-                g2.setColor(new Color(255,0,0,70));
-
-                for(int i = 0; i < gp.pFinder.pathList.size(); i++){
-                    int worldX = gp.pFinder.pathList.get(i).col * gp.TILE_SIZE;
-                    int worldY = gp.pFinder.pathList.get(i).row * gp.TILE_SIZE;
+//                switch (gp.currentMap) {
+//                    case 0, 1:
+                if (gp.currentMap == 0){
+                    g2.drawImage(tile[tileNum].image, worldX, worldY, gp.TILE_SIZE, gp.TILE_SIZE, null);
+                } else if (gp.currentMap == 1) {
                     int screenX = worldX - gp.player.worldX + gp.player.screenX;
                     int screenY = worldY - gp.player.worldY + gp.player.screenY;
 
-                    g2.fillRect(screenX,screenY,gp.TILE_SIZE,gp.TILE_SIZE);
+                    if (worldX + gp.TILE_SIZE  > gp.player.worldX - gp.player.screenX - 48*4 &&
+                            worldX - gp.TILE_SIZE < gp.player.worldX + gp.player.screenX + 48*4 &&
+                            worldY + gp.TILE_SIZE > gp.player.worldY - gp.player.screenY &&
+                            worldY - gp.TILE_SIZE < gp.player.worldY + gp.player.screenY + 48*2) {
+                        g2.drawImage(tile[tileNum].image, screenX, screenY, gp.TILE_SIZE, gp.TILE_SIZE, null);
+                    }
                 }
+
+//                        break;
+////                    gp.setBackground(Color.decode("#222034")); // NO LOCK ON PLAYER
+////                    g2.drawImage(tile[tileNum].image, worldX, worldY, gp.TILE_SIZE, gp.TILE_SIZE, null);
+////                    break;
+//                    default:
+//                        System.out.println("Wrong case for TileManager draw");
+//                }
+            } else {
+                System.err.println("Tile or tile image is null for tile number: " + tileNum);
+            }
+
+            WORLD_COL++;
+            if (WORLD_COL == gp.MAX_WORLD_COL) {
+                WORLD_COL = 0;
+                WORLD_ROW++;
+            }
+        }
+        if(drawPath){ // for viewing the move path of entities
+            g2.setColor(new Color(255,0,0,70));
+
+            for(int i = 0; i < gp.pFinder.pathList.size(); i++){
+                int worldX = gp.pFinder.pathList.get(i).col * gp.TILE_SIZE;
+                int worldY = gp.pFinder.pathList.get(i).row * gp.TILE_SIZE;
+                int screenX = worldX - gp.player.worldX + gp.player.screenX;
+                int screenY = worldY - gp.player.worldY + gp.player.screenY;
+
+                g2.fillRect(screenX,screenY,gp.TILE_SIZE,gp.TILE_SIZE);
             }
         }
     }

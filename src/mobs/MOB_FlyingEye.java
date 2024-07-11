@@ -7,7 +7,6 @@ import object.OBJ_PickUpCoin;
 import object.OBJ_Rock;
 
 import java.io.IOException;
-import java.util.Random;
 
 public class MOB_FlyingEye extends Entity {
     GamePanel gp;
@@ -21,7 +20,7 @@ public class MOB_FlyingEye extends Entity {
         currentLife = maxLife;
         action = "idleRight";
         mobNum = 8;
-        projectile = new OBJ_Rock(gp);
+        projectile1 = new OBJ_Rock(gp);
 
         // Load mob sprites
         getMobSprites();

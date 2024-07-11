@@ -9,10 +9,11 @@ import java.io.IOException;
 public class OBJ_Gate extends Entity {
     public OBJ_Gate (GamePanel gp) {
         super(gp);
+        this.gp = gp;
         name = "Gate";
         message = "";
 
-        type = type_block;
+        type = type_gate;
         locked = false;
 
         // Load save pedestal sprites

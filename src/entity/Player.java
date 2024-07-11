@@ -167,6 +167,19 @@ public class Player extends Entity {
             worldY = currentWorldY;
             solidArea.width = solidAreaWidth;
             solidArea.height = solidAreaHeight;
+
+            if (playerClass == 2) {
+                switch (damageSprite) {
+                    case 2:
+                        damageSprite = 9;
+                        break;
+                    case 9:
+                        damageSprite = 16;
+                        break;
+                    case 16:
+                        damageSprite = 2;
+                }
+            }
         }
     }
     public void runAttackAnimation() {
@@ -235,7 +248,7 @@ public class Player extends Entity {
                 if (!gp.objArr[gp.currentMap][index].message.isEmpty())
                     System.out.println(gp.objArr[gp.currentMap][index].message);
                 if (!gp.objArr[gp.currentMap][index].interactList.isEmpty()) {
-                    if (gp.objArr[gp.currentMap][index].type != type_block)
+                    if (gp.objArr[gp.currentMap][index].type != type_gate)
                         gp.objArr[gp.currentMap][index].interacting = true;
                 }
             }

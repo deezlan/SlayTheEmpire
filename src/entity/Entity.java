@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class Entity {
-    GamePanel gp;
+    public GamePanel gp;
     public boolean lookingRight = true;
 
     public Entity(GamePanel gp) {
@@ -24,8 +24,9 @@ public class Entity {
             type_npc = 2,
             type_consumable = 3,
             type_pickup = 4,
-            type_block = 5,
-            type_shop = 6;
+            type_gate = 5,
+            type_shop = 6,
+            type_obelisk = 7;
 
     // PLAYER & MOB ATTRIBUTES
     public int
@@ -512,6 +513,9 @@ public class Entity {
             interactSpriteNum = 0;
             interactSpriteCounter = 0;
             interacting = false;
+            System.out.println("cake");
+            if (type == type_obelisk)
+                gp.eHandler.changeMap();
         }
     }
 
@@ -524,7 +528,7 @@ public class Entity {
         if (interacting) {
             runInteractSprites();
         }
-        if (type == type_block) {
+        if (type == type_gate) {
             if (locking) runLockAnimation();
             if (unlocking) runUnlockingAnimation();
         } else {
@@ -629,7 +633,7 @@ public class Entity {
 
         if (interacting)
             image = interactList.get(interactSpriteNum);
-        else if (type == type_block) {
+        else if (type == type_gate) {
             if (locked && !unlocking) // LOCKED
                 image = defaultList.get(6);
             else if (locked) // UNLOCKING

@@ -2,7 +2,9 @@ package main;
 
 import entity.*;
 import mobs.*;
-import object.*;
+import object.OBJ_ChatBubble;
+import object.OBJ_SavePedestal;
+import object.OBJ_Shop;
 
 public class AssetSetter {
     GamePanel gp;

@@ -28,6 +28,7 @@ public class Player extends Entity {
     // PLAYER STATUS
     public int totalCoins;
     public int playerClass;
+    private int delta;
 
 //    public ArrayList<Entity> inventory = new ArrayList<>(); temp commented
 //    public final int inventorySize = 8; temp commented
@@ -274,6 +275,7 @@ public class Player extends Entity {
     // GAME LOOP METHODS
     @Override
     public void update() {
+        delta++;
         if (currentLife <= 0)
             gp.gameState = gp.deathState;
         else if (currentLife > maxLife)
@@ -405,23 +407,53 @@ public class Player extends Entity {
             if (currentWeapon == null){
                 attacking = true;
             } else {
-                projectile.set(worldX, worldY, action, true, this);
-                shotAvailableCounter = 0; // ADDED COOL-DOWN
-                for (int i = 0; i < gp.projectileArr[1].length; i++) {
-                    if(gp.projectileArr[gp.currentMap][i] == null){
-                        gp.projectileArr[gp.currentMap][i] = projectile;
-                        break;
-                    }
+                if (currentWeapon.name.equalsIgnoreCase("fireball cannon") && delta>60){
+                    delta = 0;
+                    projectile1.set(worldX, worldY, action, true, this, gp.cursor.deltaX, gp.cursor.deltaY);
+                    gp.projectileArr[gp.currentMap][1] = projectile1;
+                } else if (currentWeapon.name.equalsIgnoreCase("stickler") && delta>120) {
+                    delta = 0;
+                    projectile1.set(worldX, worldY-48, action, true, this, gp.cursor.deltaX, gp.cursor.deltaY);
+                    gp.projectileArr[gp.currentMap][47] = projectile1;
+                    projectile2.set(worldX+48, worldY, action, true, this, gp.cursor.deltaX, gp.cursor.deltaY);
+                    gp.projectileArr[gp.currentMap][48] = projectile2;
+                    projectile3.set(worldX-48, worldY+48, action, true, this, gp.cursor.deltaX, gp.cursor.deltaY);
+                    gp.projectileArr[gp.currentMap][49] = projectile3;
+                } else if (currentWeapon.name.equalsIgnoreCase("electric blaster")) {
+                    projectile1.set(worldX, worldY, action, true, this, gp.cursor.deltaX, gp.cursor.deltaY);
+                    gp.projectileArr[gp.currentMap][1] = projectile1;
+                } else if (currentWeapon.name.equalsIgnoreCase("hammer") && delta>200) {
+                    delta = 0;
+                    projectile1.set(gp.player.worldX+48, gp.player.worldY-24, action, true, this, gp.cursor.deltaX, gp.cursor.deltaY);
+                    gp.projectileArr[gp.currentMap][47] = projectile1;
+                    projectile2.set(gp.player.worldX-72, gp.player.worldY-24, action, true, this, gp.cursor.deltaX, gp.cursor.deltaY);
+                    gp.projectileArr[gp.currentMap][48] = projectile2;
+                    projectile3.set(gp.player.worldX-12, gp.player.worldY+24, action, true, this, gp.cursor.deltaX, gp.cursor.deltaY);
+                    gp.projectileArr[gp.currentMap][49] = projectile3;
+                    projectile4.set(gp.player.worldX-12, gp.player.worldY-72, action, true, this, gp.cursor.deltaX, gp.cursor.deltaY);
+                    gp.projectileArr[gp.currentMap][46] = projectile4;
                 }
+
+                shotAvailableCounter = 0; // ADDED COOL-DOWN
+//                for (int i = 0; i < gp.projectileList[1].length; i++) {
+//                    if(gp.projectileList[gp.currentMap][i] == null){
+//                        gp.projectileList[gp.currentMap][i] = projectile;
+//                        break;
+//                    }
+//                }
+
             }
         }
 
         if (gp.keyH.onePressed){
             if (hotbarList.get(0) != null){
                 currentWeapon = hotbarList.get(0);
-                projectile = currentWeapon.projectile;
-                System.out.println("Current Weapon is: " + currentWeapon.projectile);
-                System.out.println(projectile);
+                projectile1 = currentWeapon.projectile1;
+                projectile2 = currentWeapon.projectile2;
+                projectile3 = currentWeapon.projectile3;
+                projectile4 = currentWeapon.projectile4;
+                System.out.println("Current Weapon is: " + currentWeapon);
+                System.out.println(projectile1);
             } else {
                 System.out.println("No weapon");
             }
@@ -429,6 +461,12 @@ public class Player extends Entity {
         if (gp.keyH.twoPressed){
             if (hotbarList.get(1) != null){
                 currentWeapon = hotbarList.get(1);
+                projectile1 = currentWeapon.projectile1;
+                projectile2 = currentWeapon.projectile2;
+                projectile3 = currentWeapon.projectile3;
+                projectile4 = currentWeapon.projectile4;
+                System.out.println("Current Weapon is: " + currentWeapon);
+                System.out.println(projectile1);
             } else {
                 System.out.println("No weapon");
             }
@@ -436,6 +474,10 @@ public class Player extends Entity {
         if (gp.keyH.threePressed){
             if (hotbarList.get(2) != null){
                 currentWeapon = hotbarList.get(2);
+                projectile1 = currentWeapon.projectile1;
+                projectile2 = currentWeapon.projectile2;
+                projectile3 = currentWeapon.projectile3;
+                projectile4 = currentWeapon.projectile4;
             } else {
                 System.out.println("No weapon");
             }

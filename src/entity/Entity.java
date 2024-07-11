@@ -625,6 +625,8 @@ public class Entity {
         BufferedImage image;
         if (spriteNum >= currentList.size() - 1) spriteNum = 0;
 
+        if (!alive) return;
+
         if (interacting)
             image = interactList.get(interactSpriteNum);
         else if (type == type_block) {

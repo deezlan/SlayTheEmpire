@@ -18,7 +18,6 @@ import java.io.InputStream;
 
 public class UI {
 
-    KeyHandler keyH;
     public Entity npc;
     GamePanel gp;
     BufferedImage fullHeart, halfHeart, emptyHeart, hotbar;
@@ -75,7 +74,7 @@ public class UI {
         // FONT initialization
         try {
             GraphicsEnvironment font = GraphicsEnvironment.getLocalGraphicsEnvironment();
-            Font gameFont = loadFont("res/font/x12y16pxMaruMonica.ttf");
+            Font gameFont = loadFont();
             font.registerFont(gameFont);
             this.gameFont = gameFont.deriveFont(Font.PLAIN, 13F);
 
@@ -116,8 +115,8 @@ public class UI {
         assassinGif = assassin.getImage();
     }
 
-    private Font loadFont(String fontPath) throws FontFormatException, IOException {
-        File fontFile = new File(fontPath);
+    private Font loadFont() throws FontFormatException, IOException {
+        File fontFile = new File("res/font/x12y16pxMaruMonica.ttf");
         return Font.createFont(Font.TRUETYPE_FONT, new FileInputStream(fontFile));
     }
 
@@ -474,7 +473,7 @@ public class UI {
     public void checkLogin () {
         if (username.isEmpty() || password.isEmpty()) {
             hasBlankField = true;
-        } else if (!username.matches("[a-zA-Z0-9.\\-_]{0,}")) {
+        } else if (!username.matches("[a-zA-Z0-9.\\-_]*")) {
             System.out.println("Has illegal");
             isInvalidUsername = true;
         } else if (!password.equals("123")) {
@@ -490,7 +489,7 @@ public class UI {
     public void checkRegister () {
         if (username.isEmpty() || password.isEmpty()) {
             hasBlankField = true;
-        } else if (!username.matches("[a-zA-Z0-9.\\-_]{0,}")) {
+        } else if (!username.matches("[a-zA-Z0-9.\\-_]*")) {
             isInvalidUsername = true;
         } else if (username.equals("Zaky")) {
             usernameTaken = true;
@@ -818,7 +817,7 @@ public class UI {
         // VOLUME BAR
         x = frameX + gp.TILE_SIZE*6;
         y = (int) (frameY + gp.TILE_SIZE*2.2f);
-        switch (gp.sound.volumeScale) {
+        switch (gp.music.volumeScale) {
             case 0: g2.drawString("0%", x, y); break;
             case 1: g2.drawString("20%", x, y);break;
             case 2: g2.drawString("40%", x, y);break;

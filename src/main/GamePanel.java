@@ -49,7 +49,8 @@ public class GamePanel extends JPanel implements Runnable {
 
     // PLAYER SETTINGS
     public Cursor cursor = new Cursor(); // Initialize cursor
-    Sound sound = new Sound();
+    Sound music = new Sound();
+    Sound effect = new Sound();
     public Player player = new Player(this, keyH, cursor, playerClass);
     public MouseHandler mouseH = new MouseHandler();
     public UI ui = new UI(this);
@@ -137,6 +138,21 @@ public class GamePanel extends JPanel implements Runnable {
         this.setCursor(defaultCursor);
     }
 
+    public void playMusic(int i) {
+        music.setFile(i);
+        music.play();
+        music.loop();
+    }
+    // STOP MUSIC
+    public void stopMusic() {
+        music.stop();
+    }
+    // PLAY SOUND EFFECT
+    public void playSE(int i) {
+        effect.setFile(i);
+        effect.play();
+    }
+
 
     public void setupGame() {
         aSetter.setObject();
@@ -144,7 +160,7 @@ public class GamePanel extends JPanel implements Runnable {
         aSetter.setMonster();
         aSetter.setInteractiveTile();
         gameState = titleState; // TESTING LOGIN RIGHT NOW
-        keyH.playMusic(0);
+        playMusic(0);
     }
 
     public void retry() {

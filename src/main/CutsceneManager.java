@@ -73,6 +73,12 @@ public class CutsceneManager {
         }
         if(scenePhase == 3) {
             gp.ui.drawDialogScreen();
+            for(int i = 0; i < gp.mobArr[1].length; i++){
+                if(gp.mobArr[gp.currentMap][i] != null && (gp.mobArr[gp.currentMap][i].name.equals(MOB_FrostGiant.monName))){
+                gp.mobArr[gp.currentMap][i].onPath = true;
+                break;
+                }
+            }
         }
 
         if(scenePhase == 4) {

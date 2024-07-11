@@ -7,6 +7,7 @@ import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.Map;
 
 import TileInteractive.InteractiveTIle;
 import ai.Pathfinder;
@@ -27,6 +28,8 @@ public class GamePanel extends JPanel implements Runnable {
             MAX_SCREEN_ROW = 13,
             SCREEN_WIDTH = TILE_SIZE * MAX_SCREEN_COL,
             SCREEN_HEIGHT = TILE_SIZE * MAX_SCREEN_ROW;
+    BufferedImage tempScreen;
+    Graphics2D g2;
 
     // WORLD SETTINGS
     public int currentMap = 0;
@@ -65,6 +68,9 @@ public class GamePanel extends JPanel implements Runnable {
     // PATHFINDER
     public Pathfinder pFinder = new Pathfinder(this);
 
+    // CUTSCENE
+    public boolean bossBattleOn = false;
+    public CutsceneManager csManager = new CutsceneManager(this);
     // GAME STATES
     public int gameState;
     public final int
@@ -74,7 +80,8 @@ public class GamePanel extends JPanel implements Runnable {
             dialogueState = 3,
             shopState = 4,
             deathState = 5,
-            transitionState = 6;
+            transitionState = 6,
+            cutsceneState = 11;
 
     public GamePanel() {
         this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
@@ -108,6 +115,9 @@ public class GamePanel extends JPanel implements Runnable {
         aSetter.setMonster();
         aSetter.setInteractiveTile();
         gameState = playState;
+
+        tempScreen = new BufferedImage(SCREEN_WIDTH,SCREEN_HEIGHT,BufferedImage.TYPE_INT_ARGB);
+        g2 = (Graphics2D) tempScreen.getGraphics();
     }
 
     public void retry() {
@@ -115,16 +125,18 @@ public class GamePanel extends JPanel implements Runnable {
         player.restoreLife();
         aSetter.setMonster();
         aSetter.setNPC();
+        removeTempEntity();
+        bossBattleOn = false;
     }
 
-    public void restart() {
-        player.setDefaultValues();
-        player.setDefaultPosition();
-        aSetter.setObject();
-        aSetter.setNPC();
-        aSetter.setMonster();
-        aSetter.setInteractiveTile();
-    }
+//    public void restart() {
+//        player.setDefaultValues();
+//        player.setDefaultPosition();
+//        aSetter.setObject();
+//        aSetter.setNPC();
+//        aSetter.setMonster();
+//        aSetter.setInteractiveTile();
+//    }
 
     // MAP SETTINGS
     public void setMapColor () {
@@ -134,7 +146,6 @@ public class GamePanel extends JPanel implements Runnable {
                 break;
             case 1:
                 setBackground(Color.decode("#42393a"));
-//                setBackground(Color.decode("#000000"));
                 break;
         }
     }
@@ -157,7 +168,8 @@ public class GamePanel extends JPanel implements Runnable {
 
             if (delta >= 1) {
                 update();
-                repaint();
+                drawToTempScreen(); // DRAW EVERYTHING AT ONCE
+                drawToScreen(); // DRAW TO SCREEN
                 delta--;
                 drawCount++;
             }
@@ -222,10 +234,18 @@ public class GamePanel extends JPanel implements Runnable {
             }
         }
     }
-    public void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        Graphics2D g2 = (Graphics2D)g;
 
+    public void removeTempEntity() {
+        for(int mapNum = 0; mapNum < maxMap; mapNum++){
+            for(int i = 0; i < objArr[i].length; i++) {
+                if(objArr[mapNum][i] != null && objArr[mapNum][i].tempScene == true){
+                    objArr[mapNum][i] = null;
+                }
+            }
+        }
+    }
+
+    public void drawToTempScreen() {
         // Title Screen
         if (gameState == titleState) {
             ui.draw(g2);
@@ -234,7 +254,7 @@ public class GamePanel extends JPanel implements Runnable {
             // DEBUG
             long drawStart = 0;
             if(keyH.showDebug){
-            drawStart = System.nanoTime();
+                drawStart = System.nanoTime();
             }
 
             tileM.draw(g2); // Draw tiles
@@ -286,6 +306,8 @@ public class GamePanel extends JPanel implements Runnable {
                 entityList.remove(i);
             }
 
+            csManager.draw(g2);
+
             ui.draw(g2);
 
             // DEBUG
@@ -306,6 +328,97 @@ public class GamePanel extends JPanel implements Runnable {
                 g2.drawString("Draw Time: " + passed, x, y);
             }
         }
-        g2.dispose();
     }
+
+    public void drawToScreen() {
+        Graphics g = getGraphics();
+        g.drawImage(tempScreen,0,0,SCREEN_WIDTH,SCREEN_HEIGHT,null);
+        g.dispose();
+    }
+//    public void paintComponent(Graphics g) {
+//        super.paintComponent(g);
+//        Graphics2D g2 = (Graphics2D)g;
+//
+//        // Title Screen
+//        if (gameState == titleState) {
+//            ui.draw(g2);
+//        } else {
+//
+//            // DEBUG
+//            long drawStart = 0;
+//            if(keyH.showDebug){
+//            drawStart = System.nanoTime();
+//            }
+//
+//            tileM.draw(g2); // Draw tiles
+//
+//            // ADD INTERACTIVE TILES
+//            for (int i = 0; i < iTile[1].length; i++){ // INTERACTIVE TILES
+//                if(iTile[currentMap][i] != null){
+//                    iTile[currentMap][i].draw(g2);
+//                }
+//            }
+//
+//            // ADD ENTITIES TO THE LIST
+//            entityList.add(player);
+//
+//            for (int i = 0; i < npcArr[1].length; i++){ // NPCs
+//                if(npcArr[currentMap][i] != null){
+//                    entityList.add(npcArr[currentMap][i]);
+//                }
+//            }
+//
+//            for (int i = 0; i < objArr[1].length; i++){ // OBJECT
+//                if(objArr[currentMap][i] != null){
+//                    entityList.add(objArr[currentMap][i]);
+//                }
+//            }
+//
+//            for (int i = 0; i < mobArr[1].length; i++){ // MOBS
+//                if(mobArr[currentMap][i] != null){
+//                    entityList.add(mobArr[currentMap][i]);
+//                }
+//            }
+//
+//            for (int i = 0; i < projectileArr[1].length; i++){ // PROJECTILES
+//                if(projectileArr[currentMap][i] != null){
+//                    entityList.add(projectileArr[currentMap][i]);
+//                }
+//            }
+//
+//            // SORT
+//            entityList.sort(Comparator.comparingInt(e -> e.worldY));
+//
+//            // DRAW ENTITIES
+//            for (Entity entity : entityList) {
+//                entity.draw(g2);
+//            }
+//
+//            // EMPTY ENTITY LIST
+//            for (int i = 0; i < entityList.size(); i++){
+//                entityList.remove(i);
+//            }
+//
+//            ui.draw(g2);
+//
+//            // DEBUG
+//            if(keyH.showDebug){
+//                long drawEnd = System.nanoTime();
+//                long passed = drawEnd - drawStart;
+//
+//                g2.setFont(new Font("Arial",Font.PLAIN,20));
+//                g2.setColor(Color.white);
+//                int x = 10;
+//                int y = 400;
+//                int lineHeight = 20;
+//                g2.drawString("WorldX: "+ player.worldX , x , y); y += lineHeight;
+//                g2.drawString("WorldY: "+ player.worldY , x , y); y += lineHeight;
+//                g2.drawString("Col: " + (player.worldX + player.solidArea.x)/TILE_SIZE, x, y); y += lineHeight;
+//                g2.drawString("Row: " + (player.worldY + player.solidArea.y)/TILE_SIZE, x, y); y += lineHeight;
+//                g2.drawString("GodMode: " + keyH.godModeOn,x,y); y += lineHeight;
+//                g2.drawString("Draw Time: " + passed, x, y);
+//            }
+//        }
+//        g2.dispose();
+//    }
 }

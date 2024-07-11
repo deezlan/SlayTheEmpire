@@ -457,7 +457,9 @@ public class Player extends Entity {
                 if (attacking){
                     g2.drawImage(animationImage, screenX, screenY,null); // draw attack animation
                 } else {
-                    g2.drawImage(image, screenX, screenY, null);
+                    if(drawing){
+                        g2.drawImage(image, screenX, screenY, null); // STOPPED HERE NEED TO FIND DRAW TEMP SCREEN
+                    }
                 }
                 g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
                 break;

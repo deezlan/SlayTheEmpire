@@ -68,6 +68,8 @@ public class EventHandler {
                     drinkWater(gp.dialogueState);
                 } else if (hit(0,13, 10, "any")) {
                     drinkWater(gp.dialogueState);
+                } else if (hit(1,11, 16, "any")) {
+                    FrostGiant();
                 }
             }
         }
@@ -116,6 +118,13 @@ public class EventHandler {
             eventMaster.startDialogue(eventMaster,0);
             gp.player.currentLife = gp.player.maxLife;
             canTouchEvent = false;
+        }
+    }
+
+    public void FrostGiant() {
+        if(!gp.bossBattleOn) {
+            gp.gameState = gp.cutsceneState;
+            gp.csManager.sceneNum = gp.csManager.frostGiant;
         }
     }
 }

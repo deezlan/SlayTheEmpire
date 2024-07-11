@@ -35,6 +35,7 @@ public class Entity {
             defaultSpeed,
             speed,
             mobNum = 0,
+            bossNum = 0,
             attack,
             maxLife,
             currentLife,
@@ -45,7 +46,10 @@ public class Entity {
     public String action = "idleRight"; // DEFAULT ACTION
     public boolean
             inRage = false,
-            boss;
+            sleep,
+            boss,
+            tempScene = false,
+            drawing = true;
 
     // PLAYER & MOB COLLISION DIRECTION
     public boolean
@@ -559,101 +563,104 @@ public class Entity {
 
     // GAME LOOP METHODS
     public void update() {
-        if (interacting) {
-            startInteract();
-        } else {
-            if (knockBack) {
-                checkCollision();
-                if (upCollisionOn && downCollisionOn && leftCollisionOn && rightCollisionOn) {
-                    knockBackCounter = 0;
-                    knockBack = false;
-                    speed = defaultSpeed;
-                } else if (!upCollisionOn && !downCollisionOn && !leftCollisionOn && !rightCollisionOn) {
-                    switch (knockBackDirection) {
-                        case "moveUp": worldY -= speed; break;
-                        case "moveDown": worldY += speed; break;
-                        case "moveRight": worldX += speed; break;
-                        case "moveLeft": worldX -= speed; break;
-
-                        case "moveUpRight":
-                            worldX += speed;
-                            worldY -= speed;
-                            break;
-                        case "moveDownRight":
-                            worldX += speed;
-                            worldY += speed;
-                            break;
-                        case "moveUpLeft":
-                            worldX -= speed;
-                            worldY -= speed;
-                            break;
-                        case "moveDownLeft":
-                            worldX -= speed;
-                            worldY += speed;
-                    }
-                }
-
-                knockBackCounter++;
-                if (knockBackCounter == 10) {
-                    knockBackCounter = 0;
-                    knockBack = false;
-                    speed = defaultSpeed;
-                }
-            } else if (attacking) {
-                startAttack();
+        if(!sleep){
+            if (interacting) {
+                startInteract();
             } else {
-                setAction();
-                checkCollision();
+                if (knockBack) {
+                    checkCollision();
+                    if (upCollisionOn && downCollisionOn && leftCollisionOn && rightCollisionOn) {
+                        knockBackCounter = 0;
+                        knockBack = false;
+                        speed = defaultSpeed;
+                    } else if (!upCollisionOn && !downCollisionOn && !leftCollisionOn && !rightCollisionOn) {
+                        switch (knockBackDirection) {
+                            case "moveUp": worldY -= speed; break;
+                            case "moveDown": worldY += speed; break;
+                            case "moveRight": worldX += speed; break;
+                            case "moveLeft": worldX -= speed; break;
 
-                if (!upCollisionOn && !downCollisionOn && !leftCollisionOn && !rightCollisionOn) {
-                    switch (action) {
-                        case "moveUp": worldY -= speed; break;
-                        case "moveDown": worldY += speed; break;
-                        case "moveRight": worldX += speed; break;
-                        case "moveLeft": worldX -= speed; break;
+                            case "moveUpRight":
+                                worldX += speed;
+                                worldY -= speed;
+                                break;
+                            case "moveDownRight":
+                                worldX += speed;
+                                worldY += speed;
+                                break;
+                            case "moveUpLeft":
+                                worldX -= speed;
+                                worldY -= speed;
+                                break;
+                            case "moveDownLeft":
+                                worldX -= speed;
+                                worldY += speed;
+                        }
+                    }
 
-                        case "moveUpRight":
-                            worldX += speed;
-                            worldY -= speed;
-                            break;
-                        case "moveDownRight":
-                            worldX += speed;
-                            worldY += speed;
-                            break;
-                        case "moveUpLeft":
-                            worldX -= speed;
-                            worldY -= speed;
-                            break;
-                        case "moveDownLeft":
-                            worldX -= speed;
-                            worldY += speed;
-                            break;
+                    knockBackCounter++;
+                    if (knockBackCounter == 10) {
+                        knockBackCounter = 0;
+                        knockBack = false;
+                        speed = defaultSpeed;
+                    }
+                } else if (attacking) {
+                    startAttack();
+                } else {
+                    setAction();
+                    checkCollision();
+
+                    if (!upCollisionOn && !downCollisionOn && !leftCollisionOn && !rightCollisionOn) {
+                        switch (action) {
+                            case "moveUp": worldY -= speed; break;
+                            case "moveDown": worldY += speed; break;
+                            case "moveRight": worldX += speed; break;
+                            case "moveLeft": worldX -= speed; break;
+
+                            case "moveUpRight":
+                                worldX += speed;
+                                worldY -= speed;
+                                break;
+                            case "moveDownRight":
+                                worldX += speed;
+                                worldY += speed;
+                                break;
+                            case "moveUpLeft":
+                                worldX -= speed;
+                                worldY -= speed;
+                                break;
+                            case "moveDownLeft":
+                                worldX -= speed;
+                                worldY += speed;
+                                break;
+                        }
+                    }
+
+                    // Animation speed
+                    spriteCounter++;
+                    if (this.currentList.size() > 28) {
+                        if (spriteCounter > 4) loopThroughSprites();
+                    } else if (this.currentList.size() > 21) {
+                        if (spriteCounter > 6) loopThroughSprites();
+                    } else if (this.currentList.size() > 14) {
+                        if (spriteCounter > 9) loopThroughSprites();
+                    }  else if (this.currentList.size() > 7) {
+                        if (spriteCounter > 11) loopThroughSprites();
+                    } else {
+                        if(spriteCounter > 13) loopThroughSprites();
                     }
                 }
 
-                // Animation speed
-                spriteCounter++;
-                if (this.currentList.size() > 28) {
-                    if (spriteCounter > 4) loopThroughSprites();
-                } else if (this.currentList.size() > 21) {
-                    if (spriteCounter > 6) loopThroughSprites();
-                } else if (this.currentList.size() > 14) {
-                    if (spriteCounter > 9) loopThroughSprites();
-                }  else if (this.currentList.size() > 7) {
-                    if (spriteCounter > 11) loopThroughSprites();
-                } else {
-                    if(spriteCounter > 13) loopThroughSprites();
-                }
-            }
-
-            if (iframe) {
-                iframeCounter++;
-                if (iframeCounter > 30) {
-                    iframe = false;
-                    iframeCounter = 0;
+                if (iframe) {
+                    iframeCounter++;
+                    if (iframeCounter > 30) {
+                        iframe = false;
+                        iframeCounter = 0;
+                    }
                 }
             }
         }
+
     }
     public boolean inCamera() {
         boolean inCamera = false;

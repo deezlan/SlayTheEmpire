@@ -73,14 +73,14 @@ public class TileManager {
                 int worldX = WORLD_COL * gp.TILE_SIZE;
                 int worldY = WORLD_ROW * gp.TILE_SIZE;
 
+                int screenX = worldX - gp.player.worldX + gp.player.screenX;
+                int screenY = worldY - gp.player.worldY + gp.player.screenY;
+
                 switch (gp.currentMap){ // SWITCH IT TO SWITCH CASE FOR LESS REDUNDANCY
                     case 0:
                         g2.drawImage(tile[tileNum].image, worldX, worldY, gp.TILE_SIZE, gp.TILE_SIZE, null);
                         break;
                     case 1, 2:
-                        int screenX = worldX - gp.player.worldX + gp.player.screenX;
-                        int screenY = worldY - gp.player.worldY + gp.player.screenY;
-
                         if (worldX + gp.TILE_SIZE  > gp.player.worldX - gp.player.screenX - 48*4 &&
                                 worldX - gp.TILE_SIZE < gp.player.worldX + gp.player.screenX + 48*4 &&
                                 worldY + gp.TILE_SIZE > gp.player.worldY - gp.player.screenY &&

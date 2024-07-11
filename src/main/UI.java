@@ -444,7 +444,7 @@ public class UI {
 
                     int x = gp.SCREEN_WIDTH/2 - gp.TILE_SIZE*2;
                     int y = gp.SCREEN_HEIGHT - 40;
-
+                    if(mob.bossNum == 1){ // FROST GIANT
                         g2.setColor(new Color(35, 35, 35));
                         g2.fillRect(x-1, y-1, gp.TILE_SIZE*8 + 2, 22);
                         g2.setColor(new Color(255, 0, 30));
@@ -453,6 +453,7 @@ public class UI {
                         g2.setFont(g2.getFont().deriveFont(Font.BOLD,24f));
                         g2.setColor(Color.white);
                         g2.drawString(mob.name,x+4,y-10);
+                    }
                 }
             }
         }

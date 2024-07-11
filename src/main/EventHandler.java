@@ -58,7 +58,7 @@ public class EventHandler {
             if(canTouchEvent) {// use else if to add more events
                 if (hit(0,8, 12, "any")) { // FIRST LEVEL
                     enterDungeon(1,12,20);
-                } else if (hit(1,6, 6, "any")) { // SECOND LEVEL
+                } else if (hit(1,0, 7, "any")) { // SECOND LEVEL
                     enterDungeon(2,9,11);
                 } else if (hit(0,4, 10, "any")) {
                     drinkWater(gp.dialogueState);

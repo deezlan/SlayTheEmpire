@@ -99,7 +99,7 @@ public class KeyHandler implements KeyListener {
         }
     public void dialogState(int code) {
         if (code == KeyEvent.VK_E){
-            gp.gameState = gp.playState;
+            ePressed = true;
         }
     }
     public void shopState(int code) {
@@ -126,7 +126,7 @@ public class KeyHandler implements KeyListener {
         }
         if (code == KeyEvent.VK_E) {
             ePressed = true;
-            if (gp.gameState == gp.shopState || gp.gameState == gp.cutsceneState) {
+            if (gp.gameState == gp.shopState) {
                 gp.gameState = gp.playState;
             }
         }

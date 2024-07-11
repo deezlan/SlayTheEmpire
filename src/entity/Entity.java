@@ -11,7 +11,10 @@ public abstract class Entity {
     GamePanel gp;
     public int actionLockCounter;
     public int worldX, worldY;
-    public Projectile projectile;
+    public Projectile projectile1;
+    public Projectile projectile2;
+    public Projectile projectile3;
+    public Projectile projectile4;
 
     // ENTITY ATTRIBUTES
     public int defaultSpeed;
@@ -347,13 +350,14 @@ public abstract class Entity {
 
     public void checkShoot(int rate, int xOffset, int yOffset, int shotInterval) {
         int i = new Random().nextInt(rate);
-        if(i == 0 && !projectile.alive && shotAvailableCounter == shotInterval){
-            projectile.set(worldX + (xOffset), worldY + (yOffset), action,true,this);
-            for (int ii = 0; ii < gp.projectileList[1].length; i++) {
+        if(i == 0 && !projectile1.alive && shotAvailableCounter == shotInterval){
+            projectile1.set(worldX + (xOffset), worldY + (yOffset), action,true,this, gp.player.worldX, gp.player.worldY);
+            for (int ii = 0; ii < gp.projectileList[1].length; ii++) {
                 if(gp.projectileList[gp.currentMap][ii] == null){
-                    gp.projectileList[gp.currentMap][ii] = projectile;
+                    gp.projectileList[gp.currentMap][ii] = projectile1;
                     break;
                 }
+
             }
             shotAvailableCounter = 0;
         }

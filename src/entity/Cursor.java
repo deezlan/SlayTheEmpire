@@ -13,7 +13,7 @@ public class Cursor{
     private int mouseX, mouseY;
     private double angle;
     private BufferedImage crosshairImage;
-    public int deltaX, deltaY, arrowX, arrowY;
+    public int deltaX, deltaY;
 
     public Cursor() {
         try {
@@ -70,8 +70,8 @@ public class Cursor{
 //    public int getMouseY() {
 //        return mouseY;
 //    }
-//
-//    public double getAngle() {
-//        return angle;
-//    }
+
+    public double getAngle() {
+        return angle;
+    }
 }

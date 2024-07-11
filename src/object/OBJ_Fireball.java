@@ -6,19 +6,21 @@ import main.UtilityTool;
 
 import java.io.IOException;
 
-public class OBJ_Projectile extends Projectile {
+public class OBJ_Fireball extends Projectile {
     GamePanel gp;
-    public OBJ_Projectile(GamePanel gp) {
+    public OBJ_Fireball(GamePanel gp) {
         super(gp);
         this.gp = gp;
 
-        name = "Projectile";
+        name = "Fireball";
         speed = 10;
-        maxLife = 210;
+        maxLife = 100;
         life = maxLife;
         damage = 2;
         alive = false;
         getImage();
+        solidArea.width = gp.TILE_SIZE;
+        solidArea.height = gp.TILE_SIZE;
     }
 
     public void getImage(){

@@ -2,10 +2,10 @@ package entity;
 
 import main.GamePanel;
 import main.UtilityTool;
-import object.OBJ_Flamethrower;
+import object.OBJ_ElectricBlaster;
 import object.OBJ_Hammer;
 import object.OBJ_Raygun;
-import object.OBJ_SnowballCannon;
+import object.OBJ_FireballCannon;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -55,9 +55,9 @@ public class NPC_Blacksmith extends Entity {
     }
 
     private void setShopItems() throws IOException {
-        shopItems.add(new OBJ_SnowballCannon(gp));
+        shopItems.add(new OBJ_FireballCannon(gp));
         shopItems.add(new OBJ_Raygun(gp));
-        shopItems.add(new OBJ_Flamethrower(gp));
+        shopItems.add(new OBJ_ElectricBlaster(gp));
         shopItems.add(new OBJ_Hammer(gp));
     }
 

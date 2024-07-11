@@ -63,7 +63,7 @@ public class CutsceneManager {
         }
         if(scenePhase == 2){
             for(int i = 0; i < gp.mobArr[1].length; i++){
-                if(gp.mobArr[gp.currentMap][i] != null && Objects.equals(gp.mobArr[gp.currentMap][i].name, MOB_FrostGiant.monName)){
+                if(gp.mobArr[gp.currentMap][i] != null && (gp.mobArr[gp.currentMap][i].name.equals(MOB_FrostGiant.monName))){
                     gp.mobArr[gp.currentMap][i].sleep = false;
                     gp.ui.npc = gp.mobArr[gp.currentMap][i];
                     scenePhase++;

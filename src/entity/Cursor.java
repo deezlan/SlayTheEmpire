@@ -73,7 +73,7 @@ public class Cursor{
 //        return mouseY;
 //    }
 //
-//    public double getAngle() {
-//        return angle;
-//    }
+    public double getAngle() {
+        return angle;
+    }
 }

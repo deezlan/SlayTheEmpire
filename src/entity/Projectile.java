@@ -142,7 +142,7 @@ public class Projectile extends Entity{
             if (currentLife <= 0) {
                 alive = false;
             }
-
+        }
         spriteCounter++;
         if (currentList.size() > 14) {
             if (spriteCounter > 4) runCurrentListAnimation();

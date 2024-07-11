@@ -8,7 +8,7 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class Entity {
+public abstract class Entity {
     public GamePanel gp;
     public boolean lookingRight = true;
 

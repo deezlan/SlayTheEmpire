@@ -1,18 +1,18 @@
 package main;
 
-import entity.Entity;
+import entity.Player;
 
 public class EventHandler {
     GamePanel gp;
     EventRect[][][] eventRect ;
-    Entity eventMaster;
+    Player eventMaster;
     int previousEventX, previousEventY; // prevent event from happening again immediately
     int tempMap, tempCol, tempRow;
     boolean canTouchEvent = true;
 
     public EventHandler(GamePanel gp){
         this.gp = gp;
-        eventMaster = new Entity (gp);
+        eventMaster = new Player (gp, gp.keyH, gp.cursor, gp.playerClass);
         eventRect = new EventRect[gp.maxMap][gp.MAX_WORLD_COL][gp.MAX_WORLD_ROW];
         int map = 0;
         int col = 0;

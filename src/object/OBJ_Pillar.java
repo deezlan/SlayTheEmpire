@@ -11,7 +11,6 @@ public class OBJ_Pillar extends Entity {
         super(gp);
         name = "Save Pedestal";
         message = "Saving not implemented... go away";
-        isObject = true;
 
         // Load save pedestal sprites
         getObjectSprites();

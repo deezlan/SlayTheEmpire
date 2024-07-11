@@ -1,14 +1,9 @@
 package main;
 
-import entity.Player;
 import entity.PlayerDummy;
 import mobs.MOB_FrostGiant;
-import object.OBJ_Gate;
-import object.OBJ_Pillar;
-import object.OBJ_SavePedestal;
 
 import java.awt.*;
-import java.util.Objects;
 
 public class CutsceneManager {
     GamePanel gp;
@@ -54,12 +49,14 @@ public class CutsceneManager {
             }
             gp.player.drawing = false;
             scenePhase++;
+            System.out.println("Phase 0");
         }
         if(scenePhase == 1){
             gp.player.worldY -= 2;
             if(gp.player.worldY < gp.TILE_SIZE*4){
                 scenePhase++;
             }
+            System.out.println("Phase 1");
         }
         if(scenePhase == 2){
             for(int i = 0; i < gp.mobArr[1].length; i++){
@@ -70,6 +67,7 @@ public class CutsceneManager {
                     break;
                 }
             }
+            System.out.println("Phase 2");
         }
         if(scenePhase == 3) {
             gp.ui.drawDialogScreen();
@@ -79,6 +77,7 @@ public class CutsceneManager {
                 break;
                 }
             }
+            System.out.println("Phase 3");
         }
 
         if(scenePhase == 4) {
@@ -94,6 +93,7 @@ public class CutsceneManager {
             sceneNum = NA;
             scenePhase = 0;
             gp.gameState = gp.playState;
+            System.out.println("Phase 4");
         }
     }
 }

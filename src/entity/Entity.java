@@ -47,6 +47,7 @@ public abstract class Entity {
             attack,
             maxLife,
             currentLife,
+            bossNum,
 
             // COLLISION ATTRIBUTES
             solidAreaDefaultX, solidAreaDefaultY;
@@ -127,14 +128,6 @@ public abstract class Entity {
             locked = false,
             locking = false,
             unlocking = false;
-
-    public int getGoalCol(Entity target) {
-        return (target.worldX + target.solidArea.x) / gp.TILE_SIZE;
-    }
-
-    public int getGoalRow(Entity target) {
-        return (target.worldY + target.solidArea.y) / gp.TILE_SIZE;
-    }
 
     // ITEM ATTRIBUTES
     public int damage;
@@ -543,6 +536,24 @@ public abstract class Entity {
     public void runLockAnimation() {}
     public void runUnlockingAnimation() {}
 
+    // CAMERA METHODS
+    public int getScreenX() {
+        return worldX - gp.player.worldX + gp.player.screenX;
+    }
+    public int getScreenY() {
+        return worldY - gp.player.worldY + gp.player.screenY;
+    }
+    public boolean inCamera() {
+        boolean inCamera = false;
+        if (worldX + gp.TILE_SIZE*5 > gp.player.worldX - gp.player.screenX - 48*4 && // added values due to player sprite not centered
+                worldX - gp.TILE_SIZE < gp.player.worldX + gp.player.screenX + 48*4 &&
+                worldY + gp.TILE_SIZE*5 > gp.player.worldY - gp.player.screenY - 48*2 &&
+                worldY - gp.TILE_SIZE < gp.player.worldY + gp.player.screenY + 48*2) {
+            inCamera = true;
+        }
+        return inCamera;
+    }
+
     // GAME LOOP METHODS
     public void update() {
         if (interacting) {
@@ -663,7 +674,7 @@ public abstract class Entity {
             else // LOCKING
                 image = defaultList.get(spriteNum);
         } else {
-            image = currentActionList.get(spriteNum - 1);
+            image = currentList.get(spriteNum);
         }
 
         if(gp.currentMap == 0) {

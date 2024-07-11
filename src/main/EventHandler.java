@@ -53,35 +53,36 @@ public class EventHandler {
         int yDistance = Math.abs(gp.player.worldY - previousEventY);
         int distance = Math.max(xDistance, yDistance);
 
-        if (distance > gp.TILE_SIZE){
+        if (distance > gp.TILE_SIZE) {
             canTouchEvent = true;
         }
-        if(canTouchEvent) {// use else if to add more events
+        if (canTouchEvent) {// use else if to add more events
             switch (gp.currentMap) {
                 case 0:
-                    if (hit(0,8, 13, "any")) {
+                    if (hit(0, 8, 13, "any")) {
                         changeMap();
                     } else if (
-                            hit(0,2, 9, "any")
-                            || hit(0,3, 10, "any")
-                            || hit(0,4, 10, "moveDown")
-                            || hit(0,13, 10, "any")
+                            hit(0, 2, 9, "any")
+                                    || hit(0, 3, 10, "any")
+                                    || hit(0, 4, 10, "moveDown")
+                                    || hit(0, 13, 10, "any")
                     ) {
                         drinkWater(gp.dialogueState);
-                    } else if (hit(0,8, 4, "any")) {
+                    } else if (hit(0, 8, 4, "any")) {
                         gp.objArr[0][6].locking = true;
 //                eventRect[0][8][4].eventDone = true;
-                    } else if (hit(0,11, 4, "any")) {
+                    } else if (hit(0, 11, 4, "any")) {
                         gp.objArr[0][6].unlocking = true;
 //                eventRect[0][8][4].eventDone = true;
                     }
                     break;
                 case 1:
                     if ( // TRIGGER 1ST ROOM GATES
-                            hit(1,7, 40, "any")
-                            || hit(1,8, 41, "any")
-                            || hit(1,8, 42, "any")
-                            || hit(1,7, 43, "any")
+                            hit(1, 7, 40, "any")
+                                    || hit(1, 8, 41, "any")
+                                    || hit(1, 8, 42, "any")
+                                    || hit(1, 8, 43, "any")
+                                    || hit(1, 7, 44, "any")
                     ) {
                         for (int i = 1; i <= 5; i++)
                             gp.objArr[1][i].locking = true;
@@ -90,34 +91,37 @@ public class EventHandler {
                         eventRect[1][8][41].eventDone = true;
                         eventRect[1][8][42].eventDone = true;
                         eventRect[1][7][43].eventDone = true;
-                    } else if ( // TRIGGER LEFT PATH GATES
-                            hit(1,8, 30, "any")
-                            || hit(1,8, 31, "any")
+                    }
+                    if ( // TRIGGER LEFT PATH GATES
+                            hit(1, 8, 30, "any")
+                                    || hit(1, 8, 31, "any")
                     ) {
                         for (int i = 6; i <= 7; i++)
                             gp.objArr[1][i].locking = true;
 
                         eventRect[1][8][30].eventDone = true;
                         eventRect[1][8][31].eventDone = true;
-                    } else if ( // TRIGGER RIGHT PATH GATES
-                            hit(1,16, 30, "any")
-                            || hit(1,16, 31, "any")
+                    }
+                    if ( // TRIGGER RIGHT PATH GATES
+                            hit(1, 16, 30, "any")
+                                    || hit(1, 16, 31, "any")
                     ) {
                         for (int i = 8; i <= 9; i++)
                             gp.objArr[1][i].locking = true;
 
                         eventRect[1][16][30].eventDone = true;
                         eventRect[1][16][31].eventDone = true;
-                    } else if ( // TRIGGER MINI-BOSS ROOM GATES
-                            hit(1,7, 22, "any")
-                            || hit(1,8, 23, "any")
-                            || hit(1,8, 24, "any")
-                            || hit(1,7, 25, "any")
+                    }
+                    if ( // TRIGGER MINI-BOSS ROOM GATES
+                            hit(1, 7, 22, "any")
+                                    || hit(1, 8, 23, "any")
+                                    || hit(1, 8, 24, "any")
+                                    || hit(1, 7, 25, "any")
 
-                            || hit(1,17, 22, "any")
-                            || hit(1,16, 23, "any")
-                            || hit(1,16, 24, "any")
-                            || hit(1,17, 25, "any")
+                                    || hit(1, 17, 22, "any")
+                                    || hit(1, 16, 23, "any")
+                                    || hit(1, 16, 24, "any")
+                                    || hit(1, 17, 25, "any")
                     ) {
 //                        for (int i = 10; i <= 16; i++)
 //                            gp.objArr[1][i].locking = true;
@@ -130,15 +134,16 @@ public class EventHandler {
                         eventRect[1][16][23].eventDone = true;
                         eventRect[1][16][24].eventDone = true;
                         eventRect[1][17][25].eventDone = true;
-                    } else if ( // TRIGGER FINAL BOSS ROOM GATES
-                            hit(1,10, 13, "any")
-                            || hit(1,11, 12, "any")
-                            || hit(1,12, 12, "any")
-                            || hit(1,13, 12, "any")
-                            || hit(1,14, 13, "any")
+                    }
+                    if ( // TRIGGER FINAL BOSS ROOM GATES
+                            hit(1, 10, 13, "any")
+                                    || hit(1, 11, 12, "any")
+                                    || hit(1, 12, 12, "any")
+                                    || hit(1, 13, 12, "any")
+                                    || hit(1, 14, 13, "any")
                     ) {
-//                        for (int i = 17; i <= 20; i++)
-//                            gp.objArr[1][i].locking = true;
+                        for (int i = 17; i <= 20; i++)
+                            gp.objArr[1][i].locking = true;
 
                         eventRect[1][10][13].eventDone = true;
                         eventRect[1][11][12].eventDone = true;
@@ -146,14 +151,25 @@ public class EventHandler {
                         eventRect[1][13][12].eventDone = true;
                         eventRect[1][14][13].eventDone = true;
                     }
+                    if (hit(1,12, 16, "any")) {
+                        System.out.println("cake");
+                        FrostGiant();
+                    }
 
                     // UNLOCK FIRST ROOM GATES ONCE EVERY MOB SLAIN
                     if (gp.mobArr[1][0] == null && gp.mobArr[1][1] == null) {
                         for (int i = 1; i <= 5; i++)
                             gp.objArr[1][i].unlocking = true;
                     }
+
+                    // UNLOCK FIRST ROOM GATES ONCE EVERY MOB SLAIN
+                    if (gp.mobArr[1][2] == null) {
+                        for (int i = 17; i <= 20; i++)
+                            gp.objArr[1][i].unlocking = true;
+                    }
             }
         }
+    }
 
     public boolean hit (int map,int col, int row, String reqAction) {
         boolean hit = false;

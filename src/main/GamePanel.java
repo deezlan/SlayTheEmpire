@@ -19,6 +19,8 @@ import tile.TileManager;
 public class GamePanel extends JPanel implements Runnable {
     // SCREEN SETTINGS
     Thread gameThread;
+    BufferedImage tempScreen;
+    Graphics2D g2;
     private final int
             ORIGINAL_TILE_SIZE = 16,
             SCALE = 3;
@@ -78,7 +80,8 @@ public class GamePanel extends JPanel implements Runnable {
             dialogueState = 3,
             shopState = 4,
             deathState = 5,
-            transitionState = 6;
+            transitionState = 6,
+            cutsceneState = 7;
 
     public GamePanel() {
         this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));

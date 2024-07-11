@@ -276,32 +276,6 @@ public class UI {
                 currentDialog = combinedText;
                 charIndex++;
             }
-
-
-            if(gp.keyH.ePressed){
-                charIndex = 0;
-                combinedText = "";
-                if(gp.gameState == gp.dialogueState){
-                    npc.dialogueIndex++;
-                    gp.keyH.ePressed = false;
-                }
-            }
-        } else {
-            npc.dialogueIndex = 0;
-            if(gp.gameState == gp.dialogueState){
-                gp.gameState = gp.playState;
-            }
-        }
-
-        if(npc.dialogs[npc.dialogueSet][npc.dialogueIndex] != null){
-//            currentDialog = npc.dialogs[npc.dialogueSet][npc.dialogueIndex];
-            char[] characters = npc.dialogs[npc.dialogueSet][npc.dialogueIndex].toCharArray(); // DISABLE IF YOU WANT ALL TEXT TO DISPLAY
-            if(charIndex < characters.length){
-                String s = String.valueOf(characters[charIndex]);
-                combinedText = combinedText + s;
-                currentDialog = combinedText;
-                charIndex++;
-            }
             if(gp.keyH.ePressed){
                 charIndex = 0;
                 combinedText = "";

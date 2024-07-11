@@ -27,9 +27,7 @@ public class KeyHandler implements KeyListener {
     }
 
     @Override
-    public void keyTyped(KeyEvent e) {
-    }
-
+    public void keyTyped(KeyEvent e) {}
     @Override
     public void keyPressed(KeyEvent e) {
         int code = e.getKeyCode();
@@ -105,9 +103,7 @@ public class KeyHandler implements KeyListener {
         }
         if (code == KeyEvent.VK_E) {
             ePressed = true;
-//            if(gp.gameState == gp.dialogueState){
-//                gp.gameState = gp.playState;
-            if (gp.gameState == gp.shopState) {
+            if (gp.gameState == gp.shopState || gp.gameState == gp.cutsceneState) {
                 gp.gameState = gp.playState;
             }
         }

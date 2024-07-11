@@ -79,11 +79,9 @@ public class MOB_FrostGiant extends Entity {
     }
 
     public void setDialog() {
-        dialogs[0][0] = "HOW DARE YOU ENTER MY DUNGEON";
+        dialogs[0][0] = "Who are you.....";
         dialogs[0][1] = "YOU WILL PAY... WITH ICE!";
 
-        dialogs[1][0] = "HOW DARE YOU ENTER MY DUNGEON";
-        dialogs[1][1] = "YOU WILL PAY... WITH ICE!";
     }
 
     public void getMobSprites() {

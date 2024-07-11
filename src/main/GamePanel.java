@@ -308,9 +308,9 @@ public class GamePanel extends JPanel implements Runnable {
                 entityList.remove(i);
             }
 
-            csManager.draw(g2);
-
             ui.draw(g2);
+
+            csManager.draw(g2);
 
             // DEBUG
             if(keyH.showDebug){

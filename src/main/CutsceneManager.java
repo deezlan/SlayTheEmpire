@@ -73,7 +73,6 @@ public class CutsceneManager {
         }
         if(scenePhase == 3) {
             gp.ui.drawDialogScreen();
-            scenePhase++;
         }
 
         if(scenePhase == 4) {

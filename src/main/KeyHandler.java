@@ -131,11 +131,6 @@ public class KeyHandler implements KeyListener {
             }
         }
     }
-    public void cutsceneState(int code) {
-        if(code == KeyEvent.VK_E){
-            gp.gameState = gp.playState;
-        }
-    }
     @Override
     public void keyTyped(KeyEvent e) {}
     @Override
@@ -148,12 +143,10 @@ public class KeyHandler implements KeyListener {
             playState(code);
         } else if (gp.gameState == gp.pauseState) {
             pauseState(code);
-        } else if (gp.gameState == gp.dialogueState) {
+        } else if (gp.gameState == gp.dialogueState || gp.gameState == gp.cutsceneState) {
             dialogState(code);
         } else if (gp.gameState == gp.shopState) {
             shopState(code);
-        } else if (gp.gameState == gp.cutsceneState) {
-            cutsceneState(code);
         }
     }
 

@@ -291,8 +291,7 @@ public class UI {
             npc.dialogueIndex = 0;
             if(gp.gameState == gp.dialogueState){
                 gp.gameState = gp.playState;
-            }
-            if(gp.gameState == gp.cutsceneState){
+            } else if(gp.gameState == gp.cutsceneState){
                 gp.csManager.scenePhase++;
             }
         }

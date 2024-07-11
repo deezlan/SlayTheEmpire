@@ -71,7 +71,10 @@ public class CutsceneManager {
                 }
             }
         }
-        if(scenePhase == 3) gp.ui.drawDialogScreen();
+        if(scenePhase == 3) {
+            gp.ui.drawDialogScreen();
+            scenePhase++;
+        }
 
         if(scenePhase == 4) {
             for(int i = 0; i < gp.npcArr[1].length; i++){

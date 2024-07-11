@@ -30,6 +30,9 @@ public class OBJ_ChaosBall extends Projectile {
             weaponSprite = UtilityTool.loadSprite("/Projectile/Chaos/Explosion_2.png", "flame not found");
             weaponSprite = UtilityTool.scaleImage(weaponSprite, gp.TILE_SIZE*2, gp.TILE_SIZE*2);
             currentList.add(weaponSprite);
+            weaponSprite = UtilityTool.loadSprite("/Projectile/Chaos/Explosion_3.png", "flame not found");
+            weaponSprite = UtilityTool.scaleImage(weaponSprite, gp.TILE_SIZE*2, gp.TILE_SIZE*2);
+            currentList.add(weaponSprite);
         } catch (IOException e) {
             e.printStackTrace(System.out);
         }

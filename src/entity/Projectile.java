@@ -12,7 +12,6 @@ public class Projectile extends Entity{
     String direction;
     int delta;
 
-
     public void set(int worldX, int worldY, String direction, boolean alive, Entity user, int mouseX, int mouseY) {
         this.worldX = worldX + 80;
         this.worldY = worldY + 30;
@@ -134,7 +133,6 @@ public class Projectile extends Entity{
                     damagePlayer(damage);
                     alive = false;
                 }
-
             }
 
 

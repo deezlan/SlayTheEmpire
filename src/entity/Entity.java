@@ -11,8 +11,6 @@ import java.util.Random;
 public abstract class Entity {
     public GamePanel gp;
     public boolean lookingRight = true;
-    public int actionLockCounter;
-    public int worldX, worldY;
     public Projectile projectile1;
     public Projectile projectile2;
     public Projectile projectile3;
@@ -21,6 +19,12 @@ public abstract class Entity {
     public Entity(GamePanel gp) {
         this.gp = gp;
     }
+
+    // PLAYER & MOB ATTRIBUTES
+    public int
+            // POSITION OFF OF FULL GAME MAP
+            worldX,
+            worldY;
 
     // ENTITY TYPE
     public int type;
@@ -43,11 +47,18 @@ public abstract class Entity {
             attack,
             maxLife,
             currentLife,
+            bossNum,
 
             // COLLISION ATTRIBUTES
             solidAreaDefaultX, solidAreaDefaultY;
     public Rectangle solidArea = new Rectangle(0, 0, 48, 48); // draw area around entities
     public String action = "idleRight"; // DEFAULT ACTION
+    public boolean
+            inRage = false,
+            sleep,
+            boss,
+            tempScene = false,
+            drawing = true;
 
     // PLAYER & MOB COLLISION DIRECTION
     public boolean
@@ -57,7 +68,7 @@ public abstract class Entity {
             rightCollisionOn = false;
 
     // MOB MOVEMENT ALGORITHM
-//    public int actionLockCounter; // RANDOMIZER
+    public int actionLockCounter; // RANDOMIZER
     public boolean onPath = false; // ACTIVE PLAYER TRACKING
 
     public ArrayList<BufferedImage>
@@ -103,7 +114,7 @@ public abstract class Entity {
             iframeCounter = 0;
     public Rectangle attackArea = new Rectangle(0, 0, 0, 0);
 
-    // MOB KNOCK-BACK
+    // KNOCK-BACK
     public Entity attacker;
     public String knockBackDirection;
     public boolean knockBack = false;
@@ -524,6 +535,24 @@ public abstract class Entity {
     // GATE METHODS
     public void runLockAnimation() {}
     public void runUnlockingAnimation() {}
+
+    // CAMERA METHODS
+    public int getScreenX() {
+        return worldX - gp.player.worldX + gp.player.screenX;
+    }
+    public int getScreenY() {
+        return worldY - gp.player.worldY + gp.player.screenY;
+    }
+    public boolean inCamera() {
+        boolean inCamera = false;
+        if (worldX + gp.TILE_SIZE*5 > gp.player.worldX - gp.player.screenX - 48*4 && // added values due to player sprite not centered
+                worldX - gp.TILE_SIZE < gp.player.worldX + gp.player.screenX + 48*4 &&
+                worldY + gp.TILE_SIZE*5 > gp.player.worldY - gp.player.screenY - 48*2 &&
+                worldY - gp.TILE_SIZE < gp.player.worldY + gp.player.screenY + 48*2) {
+            inCamera = true;
+        }
+        return inCamera;
+    }
 
     // GAME LOOP METHODS
     public void update() {

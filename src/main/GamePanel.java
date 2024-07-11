@@ -7,6 +7,7 @@ import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.Map;
 
 import TileInteractive.InteractiveTIle;
 import ai.Pathfinder;
@@ -18,6 +19,8 @@ import tile.TileManager;
 public class GamePanel extends JPanel implements Runnable {
     // SCREEN SETTINGS
     Thread gameThread;
+    BufferedImage tempScreen;
+    Graphics2D g2;
     private final int
             ORIGINAL_TILE_SIZE = 16,
             SCALE = 3;
@@ -65,6 +68,9 @@ public class GamePanel extends JPanel implements Runnable {
     // PATHFINDER
     public Pathfinder pFinder = new Pathfinder(this);
 
+    // CUTSCENE
+    public boolean bossBattleOn = false;
+    public CutsceneManager csManager = new CutsceneManager(this);
     // GAME STATES
     public int gameState;
     public final int
@@ -74,7 +80,8 @@ public class GamePanel extends JPanel implements Runnable {
             dialogueState = 3,
             shopState = 4,
             deathState = 5,
-            transitionState = 6;
+            transitionState = 6,
+            cutsceneState = 7;
 
     public GamePanel() {
         this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
@@ -108,6 +115,9 @@ public class GamePanel extends JPanel implements Runnable {
         aSetter.setMonster();
         aSetter.setInteractiveTile();
         gameState = playState;
+
+        tempScreen = new BufferedImage(SCREEN_WIDTH,SCREEN_HEIGHT,BufferedImage.TYPE_INT_ARGB);
+        g2 = (Graphics2D) tempScreen.getGraphics();
     }
 
     public void retry() {
@@ -287,6 +297,8 @@ public class GamePanel extends JPanel implements Runnable {
             }
 
             ui.draw(g2);
+
+            csManager.draw(g2);
 
             // DEBUG
             if(keyH.showDebug){

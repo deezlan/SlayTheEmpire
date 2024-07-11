@@ -257,9 +257,9 @@ public abstract class Entity {
 
             // ENTITY SOLID AREA POSITION
             int enLeftX = worldX + solidArea.x;
-            int enRightX = worldX + solidArea.x + solidArea.width;
+            int enRightX = worldX + solidArea.x;
             int enTopY = worldY + solidArea.y;
-            int enBottomY = worldY + solidArea.y + solidArea.height;
+            int enBottomY = worldY + solidArea.y;
 
             if (enTopY > nextY && enLeftX >= nextX && enRightX < nextX + gp.TILE_SIZE) {
                 action = "moveUp";
@@ -544,14 +544,10 @@ public abstract class Entity {
         return worldY - gp.player.worldY + gp.player.screenY;
     }
     public boolean inCamera() {
-        boolean inCamera = false;
-        if (worldX + gp.TILE_SIZE*5 > gp.player.worldX - gp.player.screenX - 48*4 && // added values due to player sprite not centered
-                worldX - gp.TILE_SIZE < gp.player.worldX + gp.player.screenX + 48*4 &&
-                worldY + gp.TILE_SIZE*5 > gp.player.worldY - gp.player.screenY - 48*2 &&
-                worldY - gp.TILE_SIZE < gp.player.worldY + gp.player.screenY + 48*2) {
-            inCamera = true;
-        }
-        return inCamera;
+        return worldX + gp.TILE_SIZE * 5 > gp.player.worldX - gp.player.screenX - 48 * 4 && // added values due to player sprite not centered
+                worldX - gp.TILE_SIZE < gp.player.worldX + gp.player.screenX + 48 * 4 &&
+                worldY + gp.TILE_SIZE * 5 > gp.player.worldY - gp.player.screenY - 48 * 2 &&
+                worldY - gp.TILE_SIZE < gp.player.worldY + gp.player.screenY + 48 * 2;
     }
 
     // GAME LOOP METHODS

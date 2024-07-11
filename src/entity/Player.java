@@ -369,15 +369,31 @@ public class Player extends Entity {
             }
 
             // CALCULATE CENTRAL AXIS OF CURSOR
-            if (playerClass == 0) {
-                // WARRIOR
-                cursor.calculateAngle((int)(screenX + gp.TILE_SIZE * 2.3), screenY + gp.TILE_SIZE + 10);
-            } else if (playerClass == 1) {
-                // KNIGHT
-                cursor.calculateAngle((screenX + gp.TILE_SIZE * 2 + 5), screenY + gp.TILE_SIZE);
-            } else if (playerClass == 2) {
-                // ASSASSIN
-                cursor.calculateAngle((int)(screenX + gp.TILE_SIZE * 1.9), screenY + gp.TILE_SIZE);
+            switch(gp.currentMap) {
+                case 0:
+                    if (playerClass == 0) {
+                        // WARRIOR
+                        cursor.calculateAngle((int)(worldX + gp.TILE_SIZE * 2.3), worldY + gp.TILE_SIZE + 10);
+                    } else if (playerClass == 1) {
+                        // KNIGHT
+                        cursor.calculateAngle((worldX + gp.TILE_SIZE * 2 + 5), worldY + gp.TILE_SIZE);
+                    } else if (playerClass == 2) {
+                        // ASSASSIN
+                        cursor.calculateAngle((int)(worldX + gp.TILE_SIZE * 1.9), worldY + gp.TILE_SIZE);
+                    }
+                    break;
+                case 1,2:
+                    if (playerClass == 0) {
+                        // WARRIOR
+                        cursor.calculateAngle((int)(screenX + gp.TILE_SIZE * 2.3), screenY + gp.TILE_SIZE + 10);
+                    } else if (playerClass == 1) {
+                        // KNIGHT
+                        cursor.calculateAngle((screenX + gp.TILE_SIZE * 2 + 5), screenY + gp.TILE_SIZE);
+                    } else if (playerClass == 2) {
+                        // ASSASSIN
+                        cursor.calculateAngle((int)(screenX + gp.TILE_SIZE * 1.9), screenY + gp.TILE_SIZE);
+                    }
+                    break;
             }
         }
 

@@ -8,7 +8,7 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Random;
 
-public abstract class Entity {
+public class Entity {
     GamePanel gp;
     public boolean lookingRight = true;
     public int actionLockCounter;
@@ -33,10 +33,6 @@ public abstract class Entity {
 
     // PLAYER & MOB ATTRIBUTES
     public int
-            // POSITION OFF OF FULL GAME MAP
-            worldX,
-            worldY,
-
             // STATUS VALUES
             defaultSpeed,
             speed,
@@ -58,7 +54,7 @@ public abstract class Entity {
             rightCollisionOn = false;
 
     // MOB MOVEMENT ALGORITHM
-    public int actionLockCounter; // RANDOMIZER
+//    public int actionLockCounter; // RANDOMIZER
     public boolean onPath = false; // ACTIVE PLAYER TRACKING
 
     public ArrayList<BufferedImage>
@@ -321,7 +317,7 @@ public abstract class Entity {
         int i = new Random().nextInt(rate);
         shotAvailableCounter = 0;
         if(i == 0 && !projectile.alive && shotAvailableCounter == shotInterval){
-            projectile.set(worldX + (xOffset), worldY + (yOffset), action,true,this);
+            projectile.set(worldX + (xOffset), worldY + (yOffset), action,true,this, gp.player.worldX, gp.player.worldY);
             for (int ii = 0; ii < gp.projectileArr[1].length; ii++) {
                 if(gp.projectileArr[gp.currentMap][ii] == null){
                     gp.projectileArr[gp.currentMap][ii] = projectile;

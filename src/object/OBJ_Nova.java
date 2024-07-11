@@ -15,7 +15,7 @@ public class OBJ_Nova extends Projectile {
         name = "Flame";
         speed = 0;
         maxLife = 30;
-        life = maxLife;
+        currentLife = maxLife;
         damage = 1;
         alive = false;
         getImage();
@@ -27,28 +27,28 @@ public class OBJ_Nova extends Projectile {
         try {
             weaponSprite = UtilityTool.loadSprite("/Projectile/Nova/Explosion_3.png", "flame not found");
             weaponSprite = UtilityTool.scaleImage(weaponSprite, gp.TILE_SIZE*3, gp.TILE_SIZE*3);
-            currentActionList.add(weaponSprite);
+            currentList.add(weaponSprite);
             weaponSprite = UtilityTool.loadSprite("/Projectile/Nova/Explosion_4.png", "flame not found");
             weaponSprite = UtilityTool.scaleImage(weaponSprite, gp.TILE_SIZE*3, gp.TILE_SIZE*3);
-            currentActionList.add(weaponSprite);
+            currentList.add(weaponSprite);
             weaponSprite = UtilityTool.loadSprite("/Projectile/Nova/Explosion_5.png", "flame not found");
             weaponSprite = UtilityTool.scaleImage(weaponSprite, gp.TILE_SIZE*3, gp.TILE_SIZE*3);
-            currentActionList.add(weaponSprite);
+            currentList.add(weaponSprite);
             weaponSprite = UtilityTool.loadSprite("/Projectile/Nova/Explosion_6.png", "flame not found");
             weaponSprite = UtilityTool.scaleImage(weaponSprite, gp.TILE_SIZE*3, gp.TILE_SIZE*3);
-            currentActionList.add(weaponSprite);
+            currentList.add(weaponSprite);
             weaponSprite = UtilityTool.loadSprite("/Projectile/Nova/Explosion_7.png", "flame not found");
             weaponSprite = UtilityTool.scaleImage(weaponSprite, gp.TILE_SIZE*3, gp.TILE_SIZE*3);
-            currentActionList.add(weaponSprite);
+            currentList.add(weaponSprite);
             weaponSprite = UtilityTool.loadSprite("/Projectile/Nova/Explosion_8.png", "flame not found");
             weaponSprite = UtilityTool.scaleImage(weaponSprite, gp.TILE_SIZE*3, gp.TILE_SIZE*3);
-            currentActionList.add(weaponSprite);
+            currentList.add(weaponSprite);
             weaponSprite = UtilityTool.loadSprite("/Projectile/Nova/Explosion_9.png", "flame not found");
             weaponSprite = UtilityTool.scaleImage(weaponSprite, gp.TILE_SIZE*3, gp.TILE_SIZE*3);
-            currentActionList.add(weaponSprite);
+            currentList.add(weaponSprite);
             weaponSprite = UtilityTool.loadSprite("/Projectile/Nova/Explosion_10.png", "flame not found");
             weaponSprite = UtilityTool.scaleImage(weaponSprite, gp.TILE_SIZE*3, gp.TILE_SIZE*3);
-            currentActionList.add(weaponSprite);
+            currentList.add(weaponSprite);
         } catch (IOException e){
             e.printStackTrace(System.out);
         }

@@ -384,28 +384,28 @@ public class Player extends Entity {
                 if (currentWeapon.name.equalsIgnoreCase("fireball cannon") && delta>60){
                     delta = 0;
                     projectile1.set(worldX, worldY, action, true, this, gp.cursor.deltaX, gp.cursor.deltaY);
-                    gp.projectileList[gp.currentMap][1] = projectile1;
+                    gp.projectileArr[gp.currentMap][1] = projectile1;
                 } else if (currentWeapon.name.equalsIgnoreCase("stickler") && delta>120) {
                     delta = 0;
                     projectile1.set(worldX, worldY-48, action, true, this, gp.cursor.deltaX, gp.cursor.deltaY);
-                    gp.projectileList[gp.currentMap][47] = projectile1;
+                    gp.projectileArr[gp.currentMap][47] = projectile1;
                     projectile2.set(worldX+48, worldY, action, true, this, gp.cursor.deltaX, gp.cursor.deltaY);
-                    gp.projectileList[gp.currentMap][48] = projectile2;
+                    gp.projectileArr[gp.currentMap][48] = projectile2;
                     projectile3.set(worldX-48, worldY+48, action, true, this, gp.cursor.deltaX, gp.cursor.deltaY);
-                    gp.projectileList[gp.currentMap][49] = projectile3;
+                    gp.projectileArr[gp.currentMap][49] = projectile3;
                 } else if (currentWeapon.name.equalsIgnoreCase("electric blaster")) {
                     projectile1.set(worldX, worldY, action, true, this, gp.cursor.deltaX, gp.cursor.deltaY);
-                    gp.projectileList[gp.currentMap][1] = projectile1;
+                    gp.projectileArr[gp.currentMap][1] = projectile1;
                 } else if (currentWeapon.name.equalsIgnoreCase("hammer") && delta>200) {
                     delta = 0;
                     projectile1.set(gp.player.worldX+48, gp.player.worldY-24, action, true, this, gp.cursor.deltaX, gp.cursor.deltaY);
-                    gp.projectileList[gp.currentMap][47] = projectile1;
+                    gp.projectileArr[gp.currentMap][47] = projectile1;
                     projectile2.set(gp.player.worldX-72, gp.player.worldY-24, action, true, this, gp.cursor.deltaX, gp.cursor.deltaY);
-                    gp.projectileList[gp.currentMap][48] = projectile2;
+                    gp.projectileArr[gp.currentMap][48] = projectile2;
                     projectile3.set(gp.player.worldX-12, gp.player.worldY+24, action, true, this, gp.cursor.deltaX, gp.cursor.deltaY);
-                    gp.projectileList[gp.currentMap][49] = projectile3;
+                    gp.projectileArr[gp.currentMap][49] = projectile3;
                     projectile4.set(gp.player.worldX-12, gp.player.worldY-72, action, true, this, gp.cursor.deltaX, gp.cursor.deltaY);
-                    gp.projectileList[gp.currentMap][46] = projectile4;
+                    gp.projectileArr[gp.currentMap][46] = projectile4;
                 }
 
                 shotAvailableCounter = 0; // ADDED COOL-DOWN

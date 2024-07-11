@@ -14,7 +14,7 @@ public class OBJ_ChaosBall extends Projectile {
 
         speed = 10;
         maxLife = 200;
-        life = maxLife;
+        currentLife = maxLife;
         damage = 2;
         alive = false;
         getImage();
@@ -26,10 +26,10 @@ public class OBJ_ChaosBall extends Projectile {
         try {
             weaponSprite = UtilityTool.loadSprite("/Projectile/Chaos/Explosion_1.png", "flame not found");
             weaponSprite = UtilityTool.scaleImage(weaponSprite, gp.TILE_SIZE*2, gp.TILE_SIZE*2);
-            currentActionList.add(weaponSprite);
+            currentList.add(weaponSprite);
             weaponSprite = UtilityTool.loadSprite("/Projectile/Chaos/Explosion_2.png", "flame not found");
             weaponSprite = UtilityTool.scaleImage(weaponSprite, gp.TILE_SIZE*2, gp.TILE_SIZE*2);
-            currentActionList.add(weaponSprite);
+            currentList.add(weaponSprite);
         } catch (IOException e) {
             e.printStackTrace(System.out);
         }

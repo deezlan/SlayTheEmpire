@@ -14,7 +14,7 @@ public class OBJ_Thunder extends Projectile {
 
         speed = 0;
         maxLife = 50;
-        life = maxLife;
+        currentLife = maxLife;
         damage = 5;
         alive = false;
         getImage();
@@ -26,19 +26,19 @@ public class OBJ_Thunder extends Projectile {
         try {
             weaponSprite = UtilityTool.loadSprite("/Projectile/Electric/Explosion_1.png", "flame not found");
             weaponSprite = UtilityTool.scaleImage(weaponSprite, gp.TILE_SIZE*2, gp.TILE_SIZE*2);
-            currentActionList.add(weaponSprite);
+            currentList.add(weaponSprite);
             weaponSprite = UtilityTool.loadSprite("/Projectile/Electric/Explosion_2.png", "flame not found");
             weaponSprite = UtilityTool.scaleImage(weaponSprite, gp.TILE_SIZE*2, gp.TILE_SIZE*2);
-            currentActionList.add(weaponSprite);
+            currentList.add(weaponSprite);
             weaponSprite = UtilityTool.loadSprite("/Projectile/Electric/Explosion_3.png", "flame not found");
             weaponSprite = UtilityTool.scaleImage(weaponSprite, gp.TILE_SIZE*2, gp.TILE_SIZE*2);
-            currentActionList.add(weaponSprite);
+            currentList.add(weaponSprite);
             weaponSprite = UtilityTool.loadSprite("/Projectile/Electric/Explosion_4.png", "flame not found");
             weaponSprite = UtilityTool.scaleImage(weaponSprite, gp.TILE_SIZE*2, gp.TILE_SIZE*2);
-            currentActionList.add(weaponSprite);
+            currentList.add(weaponSprite);
             weaponSprite = UtilityTool.loadSprite("/Projectile/Electric/Explosion_5.png", "flame not found");
             weaponSprite = UtilityTool.scaleImage(weaponSprite, gp.TILE_SIZE*2, gp.TILE_SIZE*2);
-            currentActionList.add(weaponSprite);
+            currentList.add(weaponSprite);
         } catch (IOException e) {
             e.printStackTrace(System.out);
         }

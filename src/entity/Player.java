@@ -168,6 +168,19 @@ public class Player extends Entity {
             worldY = currentWorldY;
             solidArea.width = solidAreaWidth;
             solidArea.height = solidAreaHeight;
+
+            if (playerClass == 2) {
+                switch (damageSprite) {
+                    case 2:
+                        damageSprite = 9;
+                        break;
+                    case 9:
+                        damageSprite = 16;
+                        break;
+                    case 16:
+                        damageSprite = 2;
+                }
+            }
         }
     }
     public void runAttackAnimation() {
@@ -230,21 +243,24 @@ public class Player extends Entity {
             if (gp.objArr[gp.currentMap][index].type == type_pickup) {
                 gp.objArr[gp.currentMap][index].use(this);
                 gp.objArr[gp.currentMap][index] = null;
-            } else if (index == 0){
+            } else if (type == type_shop){
                 gp.gameState = gp.shopState;
             } else {
-            System.out.println(gp.objArr[gp.currentMap][index].message);
-            if (!gp.objArr[gp.currentMap][index].interactList.isEmpty())
-                gp.objArr[gp.currentMap][index].interacting = true;
+                if (!gp.objArr[gp.currentMap][index].message.isEmpty())
+                    System.out.println(gp.objArr[gp.currentMap][index].message);
+                if (!gp.objArr[gp.currentMap][index].interactList.isEmpty()) {
+                    if (gp.objArr[gp.currentMap][index].type != type_gate)
+                        gp.objArr[gp.currentMap][index].interacting = true;
+                }
             }
         }
     }
     public void interactNPC (int index) {
-            if (index != 999) {
-                gp.npcArr[gp.currentMap][index].speak();
-            }
-            if (index == 1) {
-                gp.gameState = gp.shopState;
+        if (index != 999) {
+            gp.npcArr[gp.currentMap][index].speak();
+        }
+        if (index == 1) {
+            gp.gameState = gp.shopState;
         }
     }
     public void interactMob (int index) {
@@ -335,15 +351,12 @@ public class Player extends Entity {
                     case "moveRight", "moveUpRight", "moveDownRight":
                         currentList = moveRightList;
                         lookingRight = true;
-                        break;
                 }
             } else {
                 action = lookingRight ? "idleRight" : "idleLeft";
                 currentList = action.equals("idleRight") ? idleRightList : idleLeftList;
 
-                if (keyH.enterPressed) {
-                    attacking = true;
-                }
+                if (keyH.enterPressed) attacking = true;
             }
 
             if (iframe) {
@@ -357,23 +370,36 @@ public class Player extends Entity {
             // Animation speed
             spriteCounter++;
             if (currentList.size() > 14) {
-                if (spriteCounter > 4) loopThroughSprites();
+                if (spriteCounter > 4) runCurrentListAnimation();
             } else if (currentList.size() > 7) {
-                if (spriteCounter > 6) loopThroughSprites();
+                if (spriteCounter > 6) runCurrentListAnimation();
             } else {
-                if (spriteCounter > 9) loopThroughSprites();
+                if (spriteCounter > 9) runCurrentListAnimation();
             }
 
             // CALCULATE CENTRAL AXIS OF CURSOR
-            if (playerClass == 0) {
-                // WARRIOR
-                cursor.calculateAngle((int)(screenX + gp.TILE_SIZE * 2.3), screenY + gp.TILE_SIZE + 10);
-            } else if (playerClass == 1) {
-                // KNIGHT
-                cursor.calculateAngle((screenX + gp.TILE_SIZE * 2 + 5), screenY + gp.TILE_SIZE);
-            } else if (playerClass == 2) {
-                // ASSASSIN
-                cursor.calculateAngle((int)(screenX + gp.TILE_SIZE * 1.9), screenY + gp.TILE_SIZE);
+            if (gp.currentMap == 0) {
+                if (playerClass == 0) {
+                    // WARRIOR
+                    cursor.calculateAngle((int)(worldX + gp.TILE_SIZE * 2.3), worldY + gp.TILE_SIZE + 10);
+                } else if (playerClass == 1) {
+                    // KNIGHT
+                    cursor.calculateAngle((worldX + gp.TILE_SIZE * 2 + 5), worldY + gp.TILE_SIZE);
+                } else if (playerClass == 2) {
+                    // ASSASSIN
+                    cursor.calculateAngle((int)(worldX + gp.TILE_SIZE * 1.9), worldY + gp.TILE_SIZE);
+                }
+            } else {
+                if (playerClass == 0) {
+                    // WARRIOR
+                    cursor.calculateAngle((int)(screenX + gp.TILE_SIZE * 2.3), screenY + gp.TILE_SIZE + 10);
+                } else if (playerClass == 1) {
+                    // KNIGHT
+                    cursor.calculateAngle((screenX + gp.TILE_SIZE * 2 + 5), screenY + gp.TILE_SIZE);
+                } else if (playerClass == 2) {
+                    // ASSASSIN
+                    cursor.calculateAngle((int)(screenX + gp.TILE_SIZE * 1.9), screenY + gp.TILE_SIZE);
+                }
             }
         }
 

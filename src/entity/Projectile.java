@@ -1,14 +1,14 @@
 package entity;
 
 import main.GamePanel;
-public class Projectile extends Entity {
+
+public class Projectile extends Entity{
     Entity user;
     double dx, dy, speedX, speedY;
 
     public Projectile(GamePanel gp) {
         super(gp);
     }
-
     String direction;
     int delta;
 
@@ -142,15 +142,14 @@ public class Projectile extends Entity {
             if (currentLife <= 0) {
                 alive = false;
             }
-
-            spriteCounter++;
-            if (currentList.size() > 14) {
-                if (spriteCounter > 4) loopThroughSprites();
-            } else if (currentList.size() > 7) {
-                if (spriteCounter > 6) loopThroughSprites();
-            } else {
-                if (spriteCounter > 9) loopThroughSprites();
-            }
+        }
+        spriteCounter++;
+        if (currentList.size() > 14) {
+            if (spriteCounter > 4) runCurrentListAnimation();
+        } else if (currentList.size() > 7) {
+            if (spriteCounter > 6) runCurrentListAnimation();
+        } else {
+            if (spriteCounter > 9) runCurrentListAnimation();
         }
     }
 }

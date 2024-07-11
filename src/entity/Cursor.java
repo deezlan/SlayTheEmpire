@@ -1,5 +1,6 @@
 package entity;
 
+import main.GamePanel;
 import main.UtilityTool;
 
 import java.awt.*;
@@ -13,9 +14,10 @@ public class Cursor{
     private int mouseX, mouseY;
     private double angle;
     private BufferedImage crosshairImage;
-    public int deltaX, deltaY;
+    public int deltaX, deltaY, arrowX, arrowY;
+    public GamePanel gp;
 
-    public Cursor() {
+    public Cursor(GamePanel gp) {
         try {
             crosshairImage = UtilityTool.loadSprite("/crosshair/crosshair.png", "Missing crosshair");
         } catch(IOException e) {
@@ -70,7 +72,7 @@ public class Cursor{
 //    public int getMouseY() {
 //        return mouseY;
 //    }
-
+//
     public double getAngle() {
         return angle;
     }

@@ -44,7 +44,7 @@ public class GamePanel extends JPanel implements Runnable {
     private final int FPS = 60;
 
     // PLAYER SETTINGS
-    public Cursor cursor = new Cursor(); // Initialize cursor
+    public Cursor cursor = new Cursor(this); // Initialize cursor
     public Player player = new Player(this, keyH, cursor, playerClass);
     public UI ui = new UI(this);
 

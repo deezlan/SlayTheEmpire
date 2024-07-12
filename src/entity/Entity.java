@@ -165,8 +165,7 @@ public abstract class Entity {
     public void speak() {} // NPC
     public void checkDrop() {} // MOB
     public void setAction() {} // MOB
-    public void damageReaction() {
-    } // MOB
+    public void damageReaction() {} // MOB
 
     // NPC METHODS
     public void startDialogue(Entity entity, int setNum) {
@@ -257,9 +256,9 @@ public abstract class Entity {
 
             // ENTITY SOLID AREA POSITION
             int enLeftX = worldX + solidArea.x;
-            int enRightX = worldX + solidArea.x + solidArea.width;
+            int enRightX = worldX + solidArea.x;
             int enTopY = worldY + solidArea.y;
-            int enBottomY = worldY + solidArea.y + solidArea.height;
+            int enBottomY = worldY + solidArea.y;
 
             if (enTopY > nextY && enLeftX >= nextX && enRightX < nextX + gp.TILE_SIZE) {
                 action = "moveUp";
@@ -420,11 +419,11 @@ public abstract class Entity {
         }
     }
     public void dropItem(Entity droppedItem) {
-        for(int i = 0; i < gp.objArr.length; i++){
+        for(int i = 0; i < gp.objArr[1].length; i++){
             if(gp.objArr[gp.currentMap][i] == null){
                 gp.objArr[gp.currentMap][i] = droppedItem;
-                gp.objArr[gp.currentMap][i].worldX = worldX + gp.TILE_SIZE*2;
-                gp.objArr[gp.currentMap][i].worldY = worldY + gp.TILE_SIZE*2;
+                gp.objArr[gp.currentMap][i].worldX = worldX + gp.TILE_SIZE * 2;
+                gp.objArr[gp.currentMap][i].worldY = worldY + gp.TILE_SIZE * 2;
                 break;
             }
         }

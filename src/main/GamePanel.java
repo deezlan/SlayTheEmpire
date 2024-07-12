@@ -132,6 +132,7 @@ public class GamePanel extends JPanel implements Runnable {
     public void resetLevel() {
         bossBattleOn = false;
         aSetter.setObject();
+        aSetter.setMonster();
         aSetter.setInteractiveTile();
     }
 

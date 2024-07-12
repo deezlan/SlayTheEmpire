@@ -6,8 +6,8 @@ import main.UtilityTool;
 
 import java.io.IOException;
 
-public class OBJ_Gate extends Entity {
-    public OBJ_Gate (GamePanel gp) {
+public class OBJ_Gate_Brick extends Entity {
+    public OBJ_Gate_Brick(GamePanel gp) {
         super(gp);
         this.gp = gp;
         name = "Gate";

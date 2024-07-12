@@ -47,7 +47,7 @@ public class AssetSetter {
             gp.objArr[mapNum][i].worldY = 410;
             i++;
 
-            gp.objArr[mapNum][i] = new OBJ_Gate(gp); // Mystery chat bubble
+            gp.objArr[mapNum][i] = new OBJ_Gate_Brick(gp); // Mystery chat bubble
             gp.objArr[mapNum][i].worldX = 540;
             gp.objArr[mapNum][i].worldY = 350;
         }
@@ -66,29 +66,29 @@ public class AssetSetter {
         {
             // ENTRANCES
             {
-                gp.objArr[mapNum][i] = new OBJ_Gate(gp);
+                gp.objArr[mapNum][i] = new OBJ_Gate_Brick(gp);
                 gp.objArr[mapNum][i].worldX = 288;
                 gp.objArr[mapNum][i].worldY = 1968;
                 i++;
 
-                gp.objArr[mapNum][i] = new OBJ_Gate(gp);
+                gp.objArr[mapNum][i] = new OBJ_Gate_Brick(gp);
                 gp.objArr[mapNum][i].worldX = 288;
                 gp.objArr[mapNum][i].worldY = 2016;
                 i++;
             }
             // EXITS
             {
-                gp.objArr[mapNum][i] = new OBJ_Gate(gp);
+                gp.objArr[mapNum][i] = new OBJ_Gate_Brick(gp);
                 gp.objArr[mapNum][i].worldX = 528;
                 gp.objArr[mapNum][i].worldY = 1776;
                 i++;
 
-                gp.objArr[mapNum][i] = new OBJ_Gate(gp);
+                gp.objArr[mapNum][i] = new OBJ_Gate_Brick(gp);
                 gp.objArr[mapNum][i].worldX = 576;
                 gp.objArr[mapNum][i].worldY = 1776;
                 i++;
 
-                gp.objArr[mapNum][i] = new OBJ_Gate(gp);
+                gp.objArr[mapNum][i] = new OBJ_Gate_Brick(gp);
                 gp.objArr[mapNum][i].worldX = 624;
                 gp.objArr[mapNum][i].worldY = 1776;
                 i++;
@@ -98,24 +98,24 @@ public class AssetSetter {
         {
             // LEFT PATH
             {
-                gp.objArr[mapNum][i] = new OBJ_Gate(gp);
+                gp.objArr[mapNum][i] = new OBJ_Gate_Brick(gp);
                 gp.objArr[mapNum][i].worldX = 480;
                 gp.objArr[mapNum][i].worldY = 1440;
                 i++;
 
-                gp.objArr[mapNum][i] = new OBJ_Gate(gp);
+                gp.objArr[mapNum][i] = new OBJ_Gate_Brick(gp);
                 gp.objArr[mapNum][i].worldX = 480;
                 gp.objArr[mapNum][i].worldY = 1488;
                 i++;
             }
             // RIGHT PATH
             {
-                gp.objArr[mapNum][i] = new OBJ_Gate(gp);
+                gp.objArr[mapNum][i] = new OBJ_Gate_Brick(gp);
                 gp.objArr[mapNum][i].worldX = 672;
                 gp.objArr[mapNum][i].worldY = 1440;
                 i++;
 
-                gp.objArr[mapNum][i] = new OBJ_Gate(gp);
+                gp.objArr[mapNum][i] = new OBJ_Gate_Brick(gp);
                 gp.objArr[mapNum][i].worldX = 672;
                 gp.objArr[mapNum][i].worldY = 1488;
                 i++;
@@ -126,40 +126,40 @@ public class AssetSetter {
             // ENTRANCES
             {
                 // LEFT SIDE
-                gp.objArr[mapNum][i] = new OBJ_Gate(gp);
+                gp.objArr[mapNum][i] = new OBJ_Gate_Brick(gp);
                 gp.objArr[mapNum][i].worldX = 288;
                 gp.objArr[mapNum][i].worldY = 1104;
                 i++;
 
-                gp.objArr[mapNum][i] = new OBJ_Gate(gp);
+                gp.objArr[mapNum][i] = new OBJ_Gate_Brick(gp);
                 gp.objArr[mapNum][i].worldX = 288;
                 gp.objArr[mapNum][i].worldY = 1152;
                 i++;
 
                 // RIGHT SIDE
-                gp.objArr[mapNum][i] = new OBJ_Gate(gp);
+                gp.objArr[mapNum][i] = new OBJ_Gate_Brick(gp);
                 gp.objArr[mapNum][i].worldX = 864;
                 gp.objArr[mapNum][i].worldY = 1104;
                 i++;
 
-                gp.objArr[mapNum][i] = new OBJ_Gate(gp);
+                gp.objArr[mapNum][i] = new OBJ_Gate_Brick(gp);
                 gp.objArr[mapNum][i].worldX = 864;
                 gp.objArr[mapNum][i].worldY = 1152;
                 i++;
             }
             // EXITS
             {
-                gp.objArr[mapNum][i] = new OBJ_Gate(gp);
+                gp.objArr[mapNum][i] = new OBJ_Gate_Brick(gp);
                 gp.objArr[mapNum][i].worldX = 528;
                 gp.objArr[mapNum][i].worldY = 912;
                 i++;
 
-                gp.objArr[mapNum][i] = new OBJ_Gate(gp);
+                gp.objArr[mapNum][i] = new OBJ_Gate_Brick(gp);
                 gp.objArr[mapNum][i].worldX = 576;
                 gp.objArr[mapNum][i].worldY = 912;
                 i++;
 
-                gp.objArr[mapNum][i] = new OBJ_Gate(gp);
+                gp.objArr[mapNum][i] = new OBJ_Gate_Brick(gp);
                 gp.objArr[mapNum][i].worldX = 624;
                 gp.objArr[mapNum][i].worldY = 912;
                 i++;
@@ -169,24 +169,24 @@ public class AssetSetter {
         {
             // ENTRANCES
             {
-                gp.objArr[mapNum][i] = new OBJ_Gate(gp);
+                gp.objArr[mapNum][i] = new OBJ_Gate_Brick(gp);
                 gp.objArr[mapNum][i].worldX = 528;
                 gp.objArr[mapNum][i].worldY = 672;
                 i++;
 
-                gp.objArr[mapNum][i] = new OBJ_Gate(gp);
+                gp.objArr[mapNum][i] = new OBJ_Gate_Brick(gp);
                 gp.objArr[mapNum][i].worldX = 576;
                 gp.objArr[mapNum][i].worldY = 672;
                 i++;
 
-                gp.objArr[mapNum][i] = new OBJ_Gate(gp);
+                gp.objArr[mapNum][i] = new OBJ_Gate_Brick(gp);
                 gp.objArr[mapNum][i].worldX = 624;
                 gp.objArr[mapNum][i].worldY = 672;
                 i++;
             }
             // EXIT
             {
-                gp.objArr[mapNum][i] = new OBJ_Gate(gp);
+                gp.objArr[mapNum][i] = new OBJ_Gate_Brick(gp);
                 gp.objArr[mapNum][i].worldX = 240;
                 gp.objArr[mapNum][i].worldY = 336;
                 i++;

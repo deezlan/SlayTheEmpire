@@ -331,7 +331,6 @@ public class UI {
 //
 //        g2.drawString(text, x, y);
     }
-
     public void drawSubWindow(int x, int y, int width,int height){
         Color custom = new Color(0,0,0,220);
         g2.setColor(custom);
@@ -357,9 +356,9 @@ public class UI {
             counter = 0;
             gp.gameState = gp.playState;
             gp.currentMap = gp.eHandler.tempMap;
-            gp.player.worldX = gp.TILE_SIZE * gp.eHandler.tempCol - gp.player.solidArea.x + 30;
-            gp.player.worldY = gp.TILE_SIZE * gp.eHandler.tempRow - gp.player.solidArea.y + 25;
             gp.setMapColor();
+            gp.player.worldX = gp.TILE_SIZE * gp.eHandler.tempCol;
+            gp.player.worldY = gp.TILE_SIZE * gp.eHandler.tempRow;
             gp.eHandler.previousEventX = gp.player.worldX;
             gp.eHandler.previousEventY = gp.player.worldY;
         }

@@ -17,6 +17,7 @@ public class OBJ_PickUpCoin extends Entity {
         getObjectSprites();
     }
 
+    @Override
     public void use(Entity entity) {
         gp.player.totalCoins += price;
         alive = false;

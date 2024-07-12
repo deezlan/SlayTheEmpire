@@ -571,7 +571,6 @@ public abstract class Entity {
                         case "moveDown": worldY += speed; break;
                         case "moveRight": worldX += speed; break;
                         case "moveLeft": worldX -= speed; break;
-
                         case "moveUpRight":
                             worldX += speed;
                             worldY -= speed;
@@ -608,7 +607,6 @@ public abstract class Entity {
                         case "moveDown": worldY += speed; break;
                         case "moveRight": worldX += speed; break;
                         case "moveLeft": worldX -= speed; break;
-
                         case "moveUpRight":
                             worldX += speed;
                             worldY -= speed;
@@ -658,9 +656,9 @@ public abstract class Entity {
 
         if (!alive) return;
 
-        if (interacting)
+        if (interacting) {
             image = interactList.get(interactSpriteNum);
-        else if (type == type_gate) {
+        } else if (type == type_gate) {
             if (locked && !unlocking) // LOCKED
                 image = defaultList.get(6);
             else if (locked) // UNLOCKING
@@ -701,69 +699,14 @@ public abstract class Entity {
                     worldX - gp.TILE_SIZE < gp.player.worldX + gp.player.screenX + 48 * 4 &&
                     worldY + gp.TILE_SIZE > gp.player.worldY - gp.player.screenY - 48 * 2 &&
                     worldY - gp.TILE_SIZE < gp.player.worldY + gp.player.screenY + 48 * 2) {
-                // MONSTER HP BAR
-                if (type == type_mob && hpBarVisible) {
-                    double oneScale = (double) gp.TILE_SIZE / maxLife;
-                    double hpBarValue = oneScale * currentLife;
-
-                    g2.setColor(new Color(35, 35, 35));
-                    switch (mobNum) {
-                        // SLIME
-                        case 1: g2.fillRect(screenX + 51, screenY + 121, gp.TILE_SIZE, 10); break;
-                        // SKELLINGTON
-                        case 2: g2.fillRect(screenX + 51, screenY + 141, gp.TILE_SIZE, 10); break;
-                        // ROBOT GUARDIAN
-                        case 3: g2.fillRect(screenX + 81, screenY + 161, gp.TILE_SIZE, 10); break;
-                        // RAMSES
-                        case 4: g2.fillRect(screenX + 61, screenY + 121, gp.TILE_SIZE, 10); break;
-                        // GOBLIN & SKELETON KNIGHT
-                        case 5, 6: g2.fillRect(screenX + 81, screenY + 141, gp.TILE_SIZE, 10); break;
-                        // ARMORED GUARDIAN
-                        case 7: g2.fillRect(screenX + 51, screenY + 121, gp.TILE_SIZE, 10); break;
-                        // FLYING EYE
-                        case 8: g2.fillRect(screenX + 121, screenY + 191, gp.TILE_SIZE, 10); break;
-                        // MUSHROOM
-                        case 9: g2.fillRect(screenX + 126, screenY + 211, gp.TILE_SIZE, 10); break;
-                        // CANINE
-                        case 10: g2.fillRect(screenX + 21, screenY + 91, gp.TILE_SIZE, 10);
-                    }
-
-                    g2.setColor(new Color(255, 0, 30));
-                    switch (mobNum) {
-                        // SLIME
-                        case 1: g2.fillRect(screenX + 50, screenY + 120, (int) hpBarValue, 9); break;
-                        // SKELLINGTON
-                        case 2: g2.fillRect(screenX + 50, screenY + 140, (int) hpBarValue, 9); break;
-                        // ROBOT GUARDIAN
-                        case 3: g2.fillRect(screenX + 80, screenY + 160, (int) hpBarValue, 9); break;
-                        // RAMSES
-                        case 4: g2.fillRect(screenX + 60, screenY + 120, (int) hpBarValue, 9); break;
-                        // GOBLIN & SKELETON KNIGHT
-                        case 5, 6: g2.fillRect(screenX + 80, screenY + 140, (int) hpBarValue, 9); break;
-                        // ARMORED GUARDIAN
-                        case 7: g2.fillRect(screenX + 50, screenY + 120, (int) hpBarValue, 9); break;
-                        // FLYING EYE
-                        case 8: g2.fillRect(screenX + 120, screenY + 190, (int) hpBarValue, 9); break;
-                        // MUSHROOM
-                        case 9: g2.fillRect(screenX + 125, screenY + 210, (int) hpBarValue, 9); break;
-                        // CANINE
-                        case 10: g2.fillRect(screenX + 20, screenY + 90, (int) hpBarValue, 9);
-                    }
-
-                    hpBarCounter++;
-                    if (hpBarCounter > 600) {
-                        hpBarCounter = 0;
-                        hpBarVisible = false;
-                    }
-                }
                 if (iframe) {
                     hpBarVisible = true;
                     hpBarCounter = 0;
                     UtilityTool.changeAlpha(g2, 0.3f);
                 }
-                if (dead) {
-                    dyingAnimation(g2);
-                }
+
+                if (dead) dyingAnimation(g2);
+
                 if(!attacking){
                     g2.drawImage(image, screenX, screenY, null);
                     UtilityTool.changeAlpha(g2, 1f);

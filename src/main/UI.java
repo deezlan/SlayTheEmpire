@@ -431,36 +431,31 @@ public class UI {
                 } else if(mob.boss) {
                     double oneScale = (double) gp.TILE_SIZE*8 / mob.maxLife;
                     double hpBarValue = oneScale * mob.currentLife;
-
                     int x = gp.SCREEN_WIDTH/2 - gp.TILE_SIZE*2;
                     int y = gp.SCREEN_HEIGHT - 40;
-                    if(mob.bossNum == 1){ // FROST GIANT
-                        g2.setColor(new Color(35, 35, 35));
-                        g2.fillRect(x-1, y-1, gp.TILE_SIZE*8 + 2, 22);
-                        g2.setColor(new Color(255, 0, 30));
-                        g2.fillRect(x, y, (int) hpBarValue, 20);
-
-                        g2.setFont(g2.getFont().deriveFont(Font.BOLD,24f));
-                        g2.setColor(Color.white);
-                        g2.drawString(mob.name,x+4,y-10);
-                    } else if(mob.bossNum == 2) { // DEMON SLIME
-                        g2.setColor(new Color(35, 35, 35));
-                        g2.fillRect(x-1, y-1, gp.TILE_SIZE*8 + 2, 22);
-                        g2.setColor(new Color(255, 0, 30));
-                        g2.fillRect(x, y, (int) hpBarValue, 20);
-
-                        g2.setFont(g2.getFont().deriveFont(Font.BOLD,24f));
-                        g2.setColor(Color.white);
-                        g2.drawString(mob.name,x+4,y-10);
-                    } else if(mob.bossNum == 3) { // GOLEM
-                        g2.setColor(new Color(35, 35, 35));
-                        g2.fillRect(x-1, y-1, gp.TILE_SIZE*8 + 2, 22);
-                        g2.setColor(new Color(255, 0, 30));
-                        g2.fillRect(x, y, (int) hpBarValue, 20);
-
-                        g2.setFont(g2.getFont().deriveFont(Font.BOLD,24f));
-                        g2.setColor(Color.white);
-                        g2.drawString(mob.name,x+4,y-10);
+                    // DRAW BOX
+                    g2.setColor(new Color(35, 35, 35));
+                    g2.fillRect(x-1, y-1, gp.TILE_SIZE*8 + 2, 22);
+                    g2.setColor(new Color(255, 0, 30));
+                    // FILL HP
+                    switch(mob.bossNum){
+                        case 1:
+                            g2.fillRect(x, y, (int) hpBarValue, 20);
+                        case 2:
+                            g2.fillRect(x, y, (int) hpBarValue, 20);
+                        case 3:
+                            g2.fillRect(x, y, (int) hpBarValue, 20);
+                    }
+                    // DRAW NAME
+                    g2.setFont(g2.getFont().deriveFont(Font.BOLD,24f));
+                    g2.setColor(Color.white);
+                    switch(mob.bossNum){
+                        case 1:
+                            g2.drawString(mob.name,x+4,y-10);
+                        case 2:
+                            g2.drawString(mob.name,x+4,y-10);
+                        case 3:
+                            g2.drawString(mob.name,x+4,y-10);
                     }
                 }
             }

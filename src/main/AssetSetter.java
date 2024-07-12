@@ -230,35 +230,35 @@ public class AssetSetter {
 
         // MAP 1
         mapNum = 1;
-//        gp.mobArr[mapNum][i] = new MOB_RobotGuardian(gp);
-//        gp.mobArr[mapNum][i].worldX = 350;
-//        gp.mobArr[mapNum][i].worldY = 1968;
-//        i++;
-//
-//        gp.mobArr[mapNum][i] = new MOB_SkeletonKnight(gp);
-//        gp.mobArr[mapNum][i].worldX = 550;
-//        gp.mobArr[mapNum][i].worldY = 1968;
-//        i++;
+        gp.mobArr[mapNum][i] = new MOB_RobotGuardian(gp);
+        gp.mobArr[mapNum][i].worldX = 350;
+        gp.mobArr[mapNum][i].worldY = 1968;
+        i++;
+
+        gp.mobArr[mapNum][i] = new MOB_SkeletonKnight(gp);
+        gp.mobArr[mapNum][i].worldX = 550;
+        gp.mobArr[mapNum][i].worldY = 1968;
+        i++;
 
         gp.mobArr[mapNum][i] = new BOSS_FrostGiant(gp);
         gp.mobArr[mapNum][i].worldX = 400;
         gp.mobArr[mapNum][i].worldY = 180;
         i++;
 
-//        gp.mobArr[mapNum][i] = new BOSS_DemonSlime(gp);
-//        gp.mobArr[mapNum][i].worldX = 400;
-//        gp.mobArr[mapNum][i].worldY = 850;
-//        i++;
+        gp.mobArr[mapNum][i] = new BOSS_DemonSlime(gp);
+        gp.mobArr[mapNum][i].worldX = 400;
+        gp.mobArr[mapNum][i].worldY = 850;
+        i++;
 
 //        gp.mobArr[mapNum][i] = new BOSS_Golem(gp);
 //        gp.mobArr[mapNum][i].worldX = 450;
 //        gp.mobArr[mapNum][i].worldY = 1000;
 //        i++;
 
-        gp.mobArr[mapNum][i] = new MOB_ArmoredGuardian(gp);
-        gp.mobArr[mapNum][i].worldX = 350;
-        gp.mobArr[mapNum][i].worldY = 1968;
-        i++;
+//        gp.mobArr[mapNum][i] = new MOB_ArmoredGuardian(gp);
+//        gp.mobArr[mapNum][i].worldX = 350;
+//        gp.mobArr[mapNum][i].worldY = 1968;
+//        i++;
 //
 //        gp.mobArr[mapNum][i] = new MOB_FlyingEye(gp);
 //        gp.mobArr[mapNum][i].worldX = 400;

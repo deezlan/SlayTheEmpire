@@ -87,10 +87,10 @@ public class EventHandler {
                         for (int i = 1; i <= 5; i++)
                             gp.objArr[1][i].locking = true;
 
-                        eventRect[1][7][40].eventDone = true;
-                        eventRect[1][8][41].eventDone = true;
-                        eventRect[1][8][42].eventDone = true;
-                        eventRect[1][7][43].eventDone = true;
+//                        eventRect[1][7][40].eventDone = true;
+//                        eventRect[1][8][41].eventDone = true;
+//                        eventRect[1][8][42].eventDone = true;
+//                        eventRect[1][7][43].eventDone = true;
                     }
                     if ( // TRIGGER LEFT PATH GATES
                             hit(1, 8, 30, "any")
@@ -99,8 +99,8 @@ public class EventHandler {
                         for (int i = 6; i <= 7; i++)
                             gp.objArr[1][i].locking = true;
 
-                        eventRect[1][8][30].eventDone = true;
-                        eventRect[1][8][31].eventDone = true;
+//                        eventRect[1][8][30].eventDone = true;
+//                        eventRect[1][8][31].eventDone = true;
                     }
                     if ( // TRIGGER RIGHT PATH GATES
                             hit(1, 16, 30, "any")
@@ -109,8 +109,8 @@ public class EventHandler {
                         for (int i = 8; i <= 9; i++)
                             gp.objArr[1][i].locking = true;
 
-                        eventRect[1][16][30].eventDone = true;
-                        eventRect[1][16][31].eventDone = true;
+//                        eventRect[1][16][30].eventDone = true;
+//                        eventRect[1][16][31].eventDone = true;
                     }
                     if ( // TRIGGER MINI-BOSS ROOM GATES
                             hit(1, 7, 22, "any")
@@ -126,14 +126,14 @@ public class EventHandler {
 //                        for (int i = 10; i <= 16; i++)
 //                            gp.objArr[1][i].locking = true;
 
-                        eventRect[1][7][22].eventDone = true;
-                        eventRect[1][8][23].eventDone = true;
-                        eventRect[1][8][24].eventDone = true;
-                        eventRect[1][7][25].eventDone = true;
-                        eventRect[1][17][22].eventDone = true;
-                        eventRect[1][16][23].eventDone = true;
-                        eventRect[1][16][24].eventDone = true;
-                        eventRect[1][17][25].eventDone = true;
+//                        eventRect[1][7][22].eventDone = true;
+//                        eventRect[1][8][23].eventDone = true;
+//                        eventRect[1][8][24].eventDone = true;
+//                        eventRect[1][7][25].eventDone = true;
+//                        eventRect[1][17][22].eventDone = true;
+//                        eventRect[1][16][23].eventDone = true;
+//                        eventRect[1][16][24].eventDone = true;
+//                        eventRect[1][17][25].eventDone = true;
                     }
                     if ( // TRIGGER FINAL BOSS ROOM GATES
                             hit(1, 10, 13, "any")
@@ -145,11 +145,11 @@ public class EventHandler {
                         for (int i = 17; i <= 20; i++)
                             gp.objArr[1][i].locking = true;
 
-                        eventRect[1][10][13].eventDone = true;
-                        eventRect[1][11][12].eventDone = true;
-                        eventRect[1][12][12].eventDone = true;
-                        eventRect[1][13][12].eventDone = true;
-                        eventRect[1][14][13].eventDone = true;
+//                        eventRect[1][10][13].eventDone = true;
+//                        eventRect[1][11][12].eventDone = true;
+//                        eventRect[1][12][12].eventDone = true;
+//                        eventRect[1][13][12].eventDone = true;
+//                        eventRect[1][14][13].eventDone = true;
                     }
                     if (hit(1,12, 16, "any")) {
                         FrostGiant();

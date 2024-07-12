@@ -152,7 +152,6 @@ public class EventHandler {
                         eventRect[1][14][13].eventDone = true;
                     }
                     if (hit(1,12, 16, "any")) {
-                        System.out.println("cake");
                         FrostGiant();
                     }
 

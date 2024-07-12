@@ -123,15 +123,15 @@ public class GamePanel extends JPanel implements Runnable {
     public void retry() {
         player.setDefaultPosition();
         player.restoreLife();
+        aSetter.setObject();
         aSetter.setMonster();
         aSetter.setNPC();
+        aSetter.setInteractiveTile();
     }
 
-    public void restart() {
-        player.setDefaultValues();
-        player.setDefaultPosition();
+    public void resetLevel() {
+        bossBattleOn = false;
         aSetter.setObject();
-        aSetter.setNPC();
         aSetter.setMonster();
         aSetter.setInteractiveTile();
     }
@@ -314,6 +314,7 @@ public class GamePanel extends JPanel implements Runnable {
                 g2.drawString("WorldY: "+ player.worldY , x , y); y += lineHeight;
                 g2.drawString("Col: " + (player.worldX + player.solidArea.x)/TILE_SIZE, x, y); y += lineHeight;
                 g2.drawString("Row: " + (player.worldY + player.solidArea.y)/TILE_SIZE, x, y); y += lineHeight;
+                g2.drawString("God Mode: " + keyH.godModeOn, x, y); y += lineHeight;
                 g2.drawString("Draw Time: " + passed, x, y);
             }
         }

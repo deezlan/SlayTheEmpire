@@ -11,8 +11,6 @@ import java.util.Random;
 public abstract class Entity {
     public GamePanel gp;
     public boolean lookingRight = true;
-    public int actionLockCounter;
-    public int worldX, worldY;
     public Projectile projectile1;
     public Projectile projectile2;
     public Projectile projectile3;
@@ -21,6 +19,12 @@ public abstract class Entity {
     public Entity(GamePanel gp) {
         this.gp = gp;
     }
+
+    // PLAYER & MOB ATTRIBUTES
+    public int
+            // POSITION OFF OF FULL GAME MAP
+            worldX,
+            worldY;
 
     // ENTITY TYPE
     public int type;
@@ -43,11 +47,18 @@ public abstract class Entity {
             attack,
             maxLife,
             currentLife,
+            bossNum,
 
             // COLLISION ATTRIBUTES
             solidAreaDefaultX, solidAreaDefaultY;
     public Rectangle solidArea = new Rectangle(0, 0, 48, 48); // draw area around entities
     public String action = "idleRight"; // DEFAULT ACTION
+    public boolean
+            inRage = false,
+            sleep,
+            boss,
+            tempScene = false,
+            drawing = true;
 
     // PLAYER & MOB COLLISION DIRECTION
     public boolean
@@ -57,7 +68,7 @@ public abstract class Entity {
             rightCollisionOn = false;
 
     // MOB MOVEMENT ALGORITHM
-//    public int actionLockCounter; // RANDOMIZER
+    public int actionLockCounter; // RANDOMIZER
     public boolean onPath = false; // ACTIVE PLAYER TRACKING
 
     public ArrayList<BufferedImage>
@@ -103,7 +114,7 @@ public abstract class Entity {
             iframeCounter = 0;
     public Rectangle attackArea = new Rectangle(0, 0, 0, 0);
 
-    // MOB KNOCK-BACK
+    // KNOCK-BACK
     public Entity attacker;
     public String knockBackDirection;
     public boolean knockBack = false;
@@ -246,9 +257,9 @@ public abstract class Entity {
 
             // ENTITY SOLID AREA POSITION
             int enLeftX = worldX + solidArea.x;
-            int enRightX = worldX + solidArea.x + solidArea.width;
+            int enRightX = worldX + solidArea.x;
             int enTopY = worldY + solidArea.y;
-            int enBottomY = worldY + solidArea.y + solidArea.height;
+            int enBottomY = worldY + solidArea.y;
 
             if (enTopY > nextY && enLeftX >= nextX && enRightX < nextX + gp.TILE_SIZE) {
                 action = "moveUp";
@@ -515,7 +526,7 @@ public abstract class Entity {
             interactSpriteNum = 0;
             interactSpriteCounter = 0;
             interacting = false;
-            System.out.println("cake");
+
             if (type == type_obelisk)
                 gp.eHandler.changeMap();
         }
@@ -524,6 +535,20 @@ public abstract class Entity {
     // GATE METHODS
     public void runLockAnimation() {}
     public void runUnlockingAnimation() {}
+
+    // CAMERA METHODS
+    public int getScreenX() {
+        return worldX - gp.player.worldX + gp.player.screenX;
+    }
+    public int getScreenY() {
+        return worldY - gp.player.worldY + gp.player.screenY;
+    }
+    public boolean inCamera() {
+        return worldX + gp.TILE_SIZE * 5 > gp.player.worldX - gp.player.screenX - 48 * 4 && // added values due to player sprite not centered
+                worldX - gp.TILE_SIZE < gp.player.worldX + gp.player.screenX + 48 * 4 &&
+                worldY + gp.TILE_SIZE * 5 > gp.player.worldY - gp.player.screenY - 48 * 2 &&
+                worldY - gp.TILE_SIZE < gp.player.worldY + gp.player.screenY + 48 * 2;
+    }
 
     // GAME LOOP METHODS
     public void update() {
@@ -546,7 +571,6 @@ public abstract class Entity {
                         case "moveDown": worldY += speed; break;
                         case "moveRight": worldX += speed; break;
                         case "moveLeft": worldX -= speed; break;
-
                         case "moveUpRight":
                             worldX += speed;
                             worldY -= speed;
@@ -583,7 +607,6 @@ public abstract class Entity {
                         case "moveDown": worldY += speed; break;
                         case "moveRight": worldX += speed; break;
                         case "moveLeft": worldX -= speed; break;
-
                         case "moveUpRight":
                             worldX += speed;
                             worldY -= speed;
@@ -633,9 +656,9 @@ public abstract class Entity {
 
         if (!alive) return;
 
-        if (interacting)
+        if (interacting) {
             image = interactList.get(interactSpriteNum);
-        else if (type == type_gate) {
+        } else if (type == type_gate) {
             if (locked && !unlocking) // LOCKED
                 image = defaultList.get(6);
             else if (locked) // UNLOCKING
@@ -676,85 +699,14 @@ public abstract class Entity {
                     worldX - gp.TILE_SIZE < gp.player.worldX + gp.player.screenX + 48 * 4 &&
                     worldY + gp.TILE_SIZE > gp.player.worldY - gp.player.screenY - 48 * 2 &&
                     worldY - gp.TILE_SIZE < gp.player.worldY + gp.player.screenY + 48 * 2) {
-                // MONSTER HP BAR
-                if (type == type_mob && hpBarVisible) {
-                    double oneScale = (double) gp.TILE_SIZE / maxLife;
-                    double hpBarValue = oneScale * currentLife;
-                    if (mobNum == 1) { // SLIME
-                        g2.setColor(new Color(35, 35, 35));
-                        g2.fillRect(screenX + 51, screenY + 121, gp.TILE_SIZE, 10);
-                        g2.setColor(new Color(255, 0, 30));
-                        g2.fillRect(screenX + 50, screenY + 120, (int) hpBarValue, 9);
-                    }
-                    if (mobNum == 2) { // SKELLINGTON
-                        g2.setColor(new Color(35, 35, 35));
-                        g2.fillRect(screenX + 51, screenY + 141, gp.TILE_SIZE, 10);
-                        g2.setColor(new Color(255, 0, 30));
-                        g2.fillRect(screenX + 50, screenY + 140, (int) hpBarValue, 9);
-                    }
-                    if (mobNum == 3) { // ROBOT GUARDIAN
-                        g2.setColor(new Color(35, 35, 35));
-                        g2.fillRect(screenX + 81, screenY + 161, gp.TILE_SIZE, 10);
-                        g2.setColor(new Color(255, 0, 30));
-                        g2.fillRect(screenX + 80, screenY + 160, (int) hpBarValue, 9);
-                    }
-                    if (mobNum == 4) { // RAMSES
-                        g2.setColor(new Color(35, 35, 35));
-                        g2.fillRect(screenX + 61, screenY + 121, gp.TILE_SIZE, 10);
-                        g2.setColor(new Color(255, 0, 30));
-                        g2.fillRect(screenX + 60, screenY + 120, (int) hpBarValue, 9);
-                    }
-                    if (mobNum == 5) { // GOBLIN
-                        g2.setColor(new Color(35, 35, 35));
-                        g2.fillRect(screenX + 81, screenY + 141, gp.TILE_SIZE, 10);
-                        g2.setColor(new Color(255, 0, 30));
-                        g2.fillRect(screenX + 80, screenY + 140, (int) hpBarValue, 9);
-                    }
-                    if (mobNum == 6) { // SKELETON KNIGHT
-                        g2.setColor(new Color(35, 35, 35));
-                        g2.fillRect(screenX + 81, screenY + 141, gp.TILE_SIZE, 10);
-                        g2.setColor(new Color(255, 0, 30));
-                        g2.fillRect(screenX + 80, screenY + 140, (int) hpBarValue, 9);
-                    }
-                    if (mobNum == 7) { // ARMORED GUARDIAN
-                        g2.setColor(new Color(35, 35, 35));
-                        g2.fillRect(screenX + 51, screenY + 121, gp.TILE_SIZE, 10);
-                        g2.setColor(new Color(255, 0, 30));
-                        g2.fillRect(screenX + 50, screenY + 120, (int) hpBarValue, 9);
-                    }
-                    if (mobNum == 8) { // FLYING EYE
-                        g2.setColor(new Color(35, 35, 35));
-                        g2.fillRect(screenX + 121, screenY + 191, gp.TILE_SIZE, 10);
-                        g2.setColor(new Color(255, 0, 30));
-                        g2.fillRect(screenX + 120, screenY + 190, (int) hpBarValue, 9);
-                    }
-                    if (mobNum == 9) { // MUSHROOM
-                        g2.setColor(new Color(35, 35, 35));
-                        g2.fillRect(screenX + 126, screenY + 211, gp.TILE_SIZE, 10);
-                        g2.setColor(new Color(255, 0, 30));
-                        g2.fillRect(screenX + 125, screenY + 210, (int) hpBarValue, 9);
-                    }
-                    if (mobNum == 10) { // CANINE
-                        g2.setColor(new Color(35, 35, 35));
-                        g2.fillRect(screenX + 21, screenY + 91, gp.TILE_SIZE, 10);
-                        g2.setColor(new Color(255, 0, 30));
-                        g2.fillRect(screenX + 20, screenY + 90, (int) hpBarValue, 9);
-                    }
-
-                    hpBarCounter++;
-                    if (hpBarCounter > 600) {
-                        hpBarCounter = 0;
-                        hpBarVisible = false;
-                    }
-                }
                 if (iframe) {
                     hpBarVisible = true;
                     hpBarCounter = 0;
                     UtilityTool.changeAlpha(g2, 0.3f);
                 }
-                if (dead) {
-                    dyingAnimation(g2);
-                }
+
+                if (dead) dyingAnimation(g2);
+
                 if(!attacking){
                     g2.drawImage(image, screenX, screenY, null);
                     UtilityTool.changeAlpha(g2, 1f);

@@ -20,6 +20,7 @@ public class NPC_Mystery extends Entity {
         solidArea.height = 48;
         solidAreaDefaultX = solidArea.x;
         solidAreaDefaultY = solidArea.y;
+        dialogueSet = -1;
     }
 
     public void setDialog() {
@@ -44,6 +45,11 @@ public class NPC_Mystery extends Entity {
         }
     }
     public void speak() {
-        super.speak();
+      startDialogue(this,dialogueSet);
+        dialogueSet++;
+
+        if(dialogs[dialogueSet][0] == null){
+            dialogueSet = 0;
+        }
     }
 }

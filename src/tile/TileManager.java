@@ -28,8 +28,6 @@ public class TileManager {
         loadMap("/mapTextFiles/LobbyTest.txt",0);
         loadMap("/mapTextFiles/levelOne.txt",1);
         loadMap("/mapTextFiles/levelTwo.txt",2);
-
-//        loadMap("/mapTextFiles/secondLevel.txt", 2);
     }
 
     public void loadMap(String filePath, int map) {

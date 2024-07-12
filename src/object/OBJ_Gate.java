@@ -9,7 +9,7 @@ import java.io.IOException;
 public class OBJ_Gate extends Entity {
     int gateForm;
 
-    public OBJ_Gate (GamePanel gp, int gateForm) {
+    public OBJ_Gate (GamePanel gp, int gateForm, int col, int row) {
         super(gp);
         this.gp = gp;
         this.gateForm = gateForm;
@@ -17,6 +17,9 @@ public class OBJ_Gate extends Entity {
         message = "";
         type = type_gate;
         locked = false;
+
+        worldX = col * gp.TILE_SIZE;
+        worldY = row * gp.TILE_SIZE;
 
         // Load save pedestal sprites
         getObjectSprites();

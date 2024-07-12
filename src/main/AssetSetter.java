@@ -27,29 +27,27 @@ public class AssetSetter {
             gp.objArr[mapNum][i].worldY = 490 ;
             i++;
 
-            gp.objArr[mapNum][i] = new OBJ_ChatBubble(gp); // Maiden chat bubble
+            gp.objArr[mapNum][i] = new OBJ_ChatBubble(gp);
             gp.objArr[mapNum][i].worldX = 410;
             gp.objArr[mapNum][i].worldY = 230;
             i++;
 
-            gp.objArr[mapNum][i] = new OBJ_ChatBubble(gp); // Blacksmith chat bubble
+            gp.objArr[mapNum][i] = new OBJ_ChatBubble(gp);
             gp.objArr[mapNum][i].worldX = 134;
             gp.objArr[mapNum][i].worldY = 108;
             i++;
 
-            gp.objArr[mapNum][i] = new OBJ_ChatBubble(gp); // Merchant chat bubble
+            gp.objArr[mapNum][i] = new OBJ_ChatBubble(gp);
             gp.objArr[mapNum][i].worldX = 640;
             gp.objArr[mapNum][i].worldY = 80;
             i++;
 
-            gp.objArr[mapNum][i] = new OBJ_ChatBubble(gp); // Mystery chat bubble
+            gp.objArr[mapNum][i] = new OBJ_ChatBubble(gp);
             gp.objArr[mapNum][i].worldX = 540;
             gp.objArr[mapNum][i].worldY = 410;
             i++;
 
-            gp.objArr[mapNum][i] = new OBJ_Gate(gp, 0); // Mystery chat bubble
-            gp.objArr[mapNum][i].worldX = 540;
-            gp.objArr[mapNum][i].worldY = 350;
+            gp.objArr[mapNum][i] = new OBJ_Gate(gp, 1, 12, 8);
         }
 
         // MAP 1
@@ -57,140 +55,107 @@ public class AssetSetter {
         i = 0;
 
         // TELEPORTING OBELISK
-        gp.objArr[mapNum][i] = new OBJ_Obelisk(gp);
-        gp.objArr[mapNum][i].worldX = 63;
-        gp.objArr[mapNum][i].worldY = 168;
-        i++;
-
+        {
+            gp.objArr[mapNum][i] = new OBJ_Obelisk(gp);
+            gp.objArr[mapNum][i].worldX = 63;
+            gp.objArr[mapNum][i].worldY = 168;
+            i++;
+        }
         // FIRST ROOM GATES index (1-5)
         {
             // ENTRANCES
-            {
-                gp.objArr[mapNum][i] = new OBJ_Gate(gp, 0);
-                gp.objArr[mapNum][i].worldX = 288;
-                gp.objArr[mapNum][i].worldY = 1968;
-                i++;
-
-                gp.objArr[mapNum][i] = new OBJ_Gate(gp, 0);
-                gp.objArr[mapNum][i].worldX = 288;
-                gp.objArr[mapNum][i].worldY = 2016;
-                i++;
-            }
+            gp.objArr[mapNum][i] = new OBJ_Gate(gp, 0, 6, 41); i++;
+            gp.objArr[mapNum][i] = new OBJ_Gate(gp, 0, 6, 42); i++;
             // EXITS
-            {
-                gp.objArr[mapNum][i] = new OBJ_Gate(gp, 0);
-                gp.objArr[mapNum][i].worldX = 528;
-                gp.objArr[mapNum][i].worldY = 1776;
-                i++;
-
-                gp.objArr[mapNum][i] = new OBJ_Gate(gp, 0);
-                gp.objArr[mapNum][i].worldX = 576;
-                gp.objArr[mapNum][i].worldY = 1776;
-                i++;
-
-                gp.objArr[mapNum][i] = new OBJ_Gate(gp, 0);
-                gp.objArr[mapNum][i].worldX = 624;
-                gp.objArr[mapNum][i].worldY = 1776;
-                i++;
-            }
+            gp.objArr[mapNum][i] = new OBJ_Gate(gp, 0, 11, 37); i++;
+            gp.objArr[mapNum][i] = new OBJ_Gate(gp, 0, 12, 37); i++;
+            gp.objArr[mapNum][i] = new OBJ_Gate(gp, 0, 13, 37); i++;
         }
         // SPLIT PATHWAY GATES index (6-7) (8-9)
         {
             // LEFT PATH
-            {
-                gp.objArr[mapNum][i] = new OBJ_Gate(gp, 0);
-                gp.objArr[mapNum][i].worldX = 480;
-                gp.objArr[mapNum][i].worldY = 1440;
-                i++;
-
-                gp.objArr[mapNum][i] = new OBJ_Gate(gp, 0);
-                gp.objArr[mapNum][i].worldX = 480;
-                gp.objArr[mapNum][i].worldY = 1488;
-                i++;
-            }
+            gp.objArr[mapNum][i] = new OBJ_Gate(gp, 0, 10, 30); i++;
+            gp.objArr[mapNum][i] = new OBJ_Gate(gp, 0, 10, 31); i++;
             // RIGHT PATH
-            {
-                gp.objArr[mapNum][i] = new OBJ_Gate(gp, 0);
-                gp.objArr[mapNum][i].worldX = 672;
-                gp.objArr[mapNum][i].worldY = 1440;
-                i++;
-
-                gp.objArr[mapNum][i] = new OBJ_Gate(gp, 0);
-                gp.objArr[mapNum][i].worldX = 672;
-                gp.objArr[mapNum][i].worldY = 1488;
-                i++;
-            }
+            gp.objArr[mapNum][i] = new OBJ_Gate(gp, 0, 14, 30); i++;
+            gp.objArr[mapNum][i] = new OBJ_Gate(gp, 0, 14, 31); i++;
         }
         // MINI-BOSS ROOM GATES index (10-16)
         {
             // ENTRANCES
-            {
                 // LEFT SIDE
-                gp.objArr[mapNum][i] = new OBJ_Gate(gp, 0);
-                gp.objArr[mapNum][i].worldX = 288;
-                gp.objArr[mapNum][i].worldY = 1104;
-                i++;
-
-                gp.objArr[mapNum][i] = new OBJ_Gate(gp, 0);
-                gp.objArr[mapNum][i].worldX = 288;
-                gp.objArr[mapNum][i].worldY = 1152;
-                i++;
-
+            gp.objArr[mapNum][i] = new OBJ_Gate(gp, 0, 6, 23); i++;
+            gp.objArr[mapNum][i] = new OBJ_Gate(gp, 0, 6, 24); i++;
                 // RIGHT SIDE
-                gp.objArr[mapNum][i] = new OBJ_Gate(gp, 0);
-                gp.objArr[mapNum][i].worldX = 864;
-                gp.objArr[mapNum][i].worldY = 1104;
-                i++;
-
-                gp.objArr[mapNum][i] = new OBJ_Gate(gp, 0);
-                gp.objArr[mapNum][i].worldX = 864;
-                gp.objArr[mapNum][i].worldY = 1152;
-                i++;
-            }
+            gp.objArr[mapNum][i] = new OBJ_Gate(gp, 0, 18, 23); i++;
+            gp.objArr[mapNum][i] = new OBJ_Gate(gp, 0, 18, 24); i++;
             // EXITS
-            {
-                gp.objArr[mapNum][i] = new OBJ_Gate(gp, 0);
-                gp.objArr[mapNum][i].worldX = 528;
-                gp.objArr[mapNum][i].worldY = 912;
-                i++;
-
-                gp.objArr[mapNum][i] = new OBJ_Gate(gp, 0);
-                gp.objArr[mapNum][i].worldX = 576;
-                gp.objArr[mapNum][i].worldY = 912;
-                i++;
-
-                gp.objArr[mapNum][i] = new OBJ_Gate(gp, 0);
-                gp.objArr[mapNum][i].worldX = 624;
-                gp.objArr[mapNum][i].worldY = 912;
-                i++;
-            }
+            gp.objArr[mapNum][i] = new OBJ_Gate(gp, 0, 11, 19); i++;
+            gp.objArr[mapNum][i] = new OBJ_Gate(gp, 0, 12, 19); i++;
+            gp.objArr[mapNum][i] = new OBJ_Gate(gp, 0, 13, 19); i++;
         }
         // FINAL BOSS ROOM GATES index (17-20)
         {
             // ENTRANCES
-            {
-                gp.objArr[mapNum][i] = new OBJ_Gate(gp, 0);
-                gp.objArr[mapNum][i].worldX = 528;
-                gp.objArr[mapNum][i].worldY = 672;
-                i++;
-
-                gp.objArr[mapNum][i] = new OBJ_Gate(gp, 0);
-                gp.objArr[mapNum][i].worldX = 576;
-                gp.objArr[mapNum][i].worldY = 672;
-                i++;
-
-                gp.objArr[mapNum][i] = new OBJ_Gate(gp, 0);
-                gp.objArr[mapNum][i].worldX = 624;
-                gp.objArr[mapNum][i].worldY = 672;
-                i++;
-            }
+            gp.objArr[mapNum][i] = new OBJ_Gate(gp, 0, 11, 14); i++;
+            gp.objArr[mapNum][i] = new OBJ_Gate(gp, 0, 12, 14); i++;
+            gp.objArr[mapNum][i] = new OBJ_Gate(gp, 0, 13, 14); i++;
             // EXIT
-            {
-                gp.objArr[mapNum][i] = new OBJ_Gate(gp, 0);
-                gp.objArr[mapNum][i].worldX = 240;
-                gp.objArr[mapNum][i].worldY = 336;
-                i++;
-            }
+            gp.objArr[mapNum][i] = new OBJ_Gate(gp, 0, 5, 7);
+        }
+
+        // MAP 2;
+        mapNum = 2;
+        i = 0;
+
+        // TELEPORTING OBELISK
+        {
+            gp.objArr[mapNum][i] = new OBJ_Obelisk(gp);
+            gp.objArr[mapNum][i].worldX = 63;
+            gp.objArr[mapNum][i].worldY = 168;
+            i++;
+        }
+
+        // FIRST ROOM GATES index (1-4)
+        {
+            // ENTRANCES
+            gp.objArr[mapNum][i] = new OBJ_Gate(gp, 1, 4, 16); i++;
+            gp.objArr[mapNum][i] = new OBJ_Gate(gp, 1, 5, 16); i++;
+            // EXITS
+            gp.objArr[mapNum][i] = new OBJ_Gate(gp, 1, 4, 25); i++;
+            gp.objArr[mapNum][i] = new OBJ_Gate(gp, 1, 5, 25); i++;
+        }
+
+        // MINI-BOSS ROOM GATES index (5-8)
+        {
+            // ENTRANCES
+            gp.objArr[mapNum][i] = new OBJ_Gate(gp, 1, 7, 32); i++;
+            gp.objArr[mapNum][i] = new OBJ_Gate(gp, 1, 7, 33); i++;
+            // EXITS
+            gp.objArr[mapNum][i] = new OBJ_Gate(gp, 1, 18, 32); i++;
+            gp.objArr[mapNum][i] = new OBJ_Gate(gp, 1, 18, 33); i++;
+        }
+
+        // FINAL BOSS ROOM GATES index (9-12)
+        {
+            // ENTRANCES
+            gp.objArr[mapNum][i] = new OBJ_Gate(gp, 1, 21, 25); i++;
+            // EXIT
+            gp.objArr[mapNum][i] = new OBJ_Gate(gp, 1, 20, 16); i++;
+            gp.objArr[mapNum][i] = new OBJ_Gate(gp, 1, 21, 16); i++;
+            gp.objArr[mapNum][i] = new OBJ_Gate(gp, 1, 22, 16); i++;
+        }
+
+        // PLOT TWIST BOSS ROOM GATES index (13-17)
+        {
+            // ENTRANCES
+            gp.objArr[mapNum][i] = new OBJ_Gate(gp, 1, 20, 10); i++;
+            gp.objArr[mapNum][i] = new OBJ_Gate(gp, 1, 21, 10); i++;
+            gp.objArr[mapNum][i] = new OBJ_Gate(gp, 1, 22, 10); i++;
+
+            // EXIT
+            gp.objArr[mapNum][i] = new OBJ_Gate(gp, 1, 28, 5); i++;
+            gp.objArr[mapNum][i] = new OBJ_Gate(gp, 1, 28, 6);
         }
     }
 
@@ -286,8 +251,9 @@ public class AssetSetter {
 //                gp.mobArr[mapNum][i].worldY = 400;
 //                i++;
 
-                // MAP 2
+//                 MAP 2
 //                mapNum = 2;
+//                i = 0;
 //                gp.mobArr[mapNum][i] = new MOB_Slime(gp);
 //                gp.mobArr[mapNum][i].worldX = 450;
 //                gp.mobArr[mapNum][i].worldY = 270;

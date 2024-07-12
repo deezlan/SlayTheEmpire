@@ -691,7 +691,7 @@ public abstract class Entity {
                 BufferedImage animationImage = currentList.get(animationSpriteNum);
                 g2.drawImage(animationImage, worldX, worldY, null);
             }
-        } else if (gp.currentMap == 1) {
+        } else {
             int screenX = worldX - gp.player.worldX + gp.player.screenX;
             int screenY = worldY - gp.player.worldY + gp.player.screenY;
 

@@ -202,11 +202,14 @@ public class EventHandler {
         System.out.println(gp.currentMap);
         switch (gp.currentMap) {
             case 0:
-                tempMap = 1;
-                tempCol = 2;
-                tempRow = 41;
+//                tempMap = 1;
+//                tempCol = 2;
+//                tempRow = 41;
+                tempMap = 2;
+                tempCol = 4;
+                tempRow = 11;
                 break;
-            case 1:
+            case 1, 2:
                 tempMap = 0;
                 tempCol = 8;
                 tempRow = 3;

@@ -7,7 +7,6 @@ import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.Map;
 
 import TileInteractive.InteractiveTIle;
 import ai.Pathfinder;
@@ -143,9 +142,11 @@ public class GamePanel extends JPanel implements Runnable {
                 setBackground(Color.decode("#181425"));
                 break;
             case 1:
-                setBackground(Color.decode("#42393a"));
+                setBackground(Color.decode("#42393A"));
 //                setBackground(Color.decode("#000000"));
                 break;
+            case 2:
+                setBackground(Color.decode("#42393A"));
         }
     }
 

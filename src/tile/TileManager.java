@@ -70,11 +70,9 @@ public class TileManager {
             if (tileNum >= 0 && tileNum < tile.length && tile[tileNum] != null && tile[tileNum].image != null) {
                 int worldX = WORLD_COL * gp.TILE_SIZE;
                 int worldY = WORLD_ROW * gp.TILE_SIZE;
-//                switch (gp.currentMap) {
-//                    case 0, 1:
                 if (gp.currentMap == 0){
                     g2.drawImage(tile[tileNum].image, worldX, worldY, gp.TILE_SIZE, gp.TILE_SIZE, null);
-                } else if (gp.currentMap == 1) {
+                } else {
                     int screenX = worldX - gp.player.worldX + gp.player.screenX;
                     int screenY = worldY - gp.player.worldY + gp.player.screenY;
 
@@ -85,14 +83,6 @@ public class TileManager {
                         g2.drawImage(tile[tileNum].image, screenX, screenY, gp.TILE_SIZE, gp.TILE_SIZE, null);
                     }
                 }
-
-//                        break;
-////                    gp.setBackground(Color.decode("#222034")); // NO LOCK ON PLAYER
-////                    g2.drawImage(tile[tileNum].image, worldX, worldY, gp.TILE_SIZE, gp.TILE_SIZE, null);
-////                    break;
-//                    default:
-//                        System.out.println("Wrong case for TileManager draw");
-//                }
             } else {
                 System.err.println("Tile or tile image is null for tile number: " + tileNum);
             }

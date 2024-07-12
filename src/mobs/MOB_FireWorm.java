@@ -31,13 +31,15 @@ public class MOB_FireWorm extends Entity {
         setDialog();
 
 
-
-
-
-
-
-
-
+        // Set collision settings
+        solidArea.x = 100;
+        solidArea.y = 130;
+        solidArea.width = 80;
+        solidArea.height = 100;
+        attackArea.width = 140;
+        attackArea.height = 140;
+        solidAreaDefaultX = solidArea.x;
+        solidAreaDefaultY = solidArea.y;
         dialogueSet = 0;
 
     }
@@ -88,12 +90,12 @@ public class MOB_FireWorm extends Entity {
         String dir = "/Mobs/FireWorm";
         try {
             for (int i = 0; i <= 8; i++) {
-                moveRightList.add(i, UtilityTool.loadSprite(dir + "/Mobs/FireWorm/Walk (left)" + i + ".png", "Missing moveRight " + i));
-                moveLeftList.add(i, UtilityTool.loadSprite(dir + "/Mobs/FireWorm/Walk (right)" + i + ".png", "Missing moveLeft " + i));
+                moveRightList.add(i, UtilityTool.loadSprite(dir + "/Walk (right)/" + i + ".png", "Missing moveRight " + i));
+                moveLeftList.add(i, UtilityTool.loadSprite(dir + "/Walk (left)/" + i + ".png", "Missing moveLeft " + i));
             }
 
             for (int i = 0; i <= 8; i++) {
-                idleRightList.add(i, UtilityTool.loadSprite(dir + "/Mobs/FireWorm/Idle" + i + ".png", "Missing idleRight " + i));
+                idleRightList.add(i, UtilityTool.loadSprite(dir + "/Idle/" + i + ".png", "Missing idleRight " + i));
             }
 
             //for (int i = 0; i <= 13; i++) {
@@ -101,11 +103,11 @@ public class MOB_FireWorm extends Entity {
              //   mobRightAttackList.add(i, UtilityTool.loadSprite(dir + "attackRight/" + i + ".png", "Missing idleRight " + i));
            // }
 
-            UtilityTool.scaleEntityList(this, moveRightList, 400, 300);
-            UtilityTool.scaleEntityList(this,moveLeftList, 400, 300);
+            UtilityTool.scaleEntityList(this, moveRightList, 350, 250);
+            UtilityTool.scaleEntityList(this,moveLeftList, 350, 250);
            // UtilityTool.scaleEntityList(this, mobLeftAttackList, 400, 300);
            // UtilityTool.scaleEntityList(this,mobRightAttackList, 400, 300);
-            UtilityTool.scaleEntityList(this, idleRightList, 400, 300);
+            UtilityTool.scaleEntityList(this, idleRightList, 350, 250);
 
             System.out.println("FireWorm sprites loaded successfully");
 

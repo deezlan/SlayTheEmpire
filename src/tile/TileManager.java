@@ -103,7 +103,7 @@ public class TileManager {
                 WORLD_ROW++;
             }
         }
-        if(drawPath){ // for viewing the move path of entities
+        if(drawPath) { // for viewing the move path of entities
             g2.setColor(new Color(255,0,0,70));
 
             for(int i = 0; i < gp.pFinder.pathList.size(); i++){

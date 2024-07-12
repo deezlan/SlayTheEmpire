@@ -89,6 +89,7 @@ public class GamePanel extends JPanel implements Runnable {
             registerState = 8,
             characterSelectionState = 9,
             optionState = 10,
+            optionState2 = 12,
             startMenuState = 11;
 
 
@@ -101,6 +102,10 @@ public class GamePanel extends JPanel implements Runnable {
         this.setDoubleBuffered(true);
         this.addKeyListener(keyH);
         this.setFocusable(true); // pass the player instance variable to the KeyHandler constructor
+
+        // DEFAULT VOLUME
+        music.volumeScale = 3;
+        effect.volumeScale = 3;
 
 //        hideCursor();
 
@@ -284,7 +289,13 @@ public class GamePanel extends JPanel implements Runnable {
         }
 
         // Title Screen
-        if (gameState == playState || gameState == shopState || gameState == dialogueState || gameState == pauseState || gameState == optionState) {
+        if (gameState == playState ||
+                gameState == shopState ||
+                gameState == dialogueState ||
+                gameState == pauseState ||
+                gameState == optionState ||
+                gameState == optionState2) {
+
             // DEBUG
             long drawStart = 0;
             if(keyH.showDebug){

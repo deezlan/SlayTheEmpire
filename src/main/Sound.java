@@ -14,7 +14,7 @@ public class Sound {
     File[] soundURL = new File[30];
     ArrayList<Clip> clips = new ArrayList<>();
     FloatControl fc;
-    int volumeScale = 3;
+    int volumeScale;
     float volume;
 
     public Sound() {

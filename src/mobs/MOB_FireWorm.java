@@ -98,10 +98,10 @@ public class MOB_FireWorm extends Entity {
                 idleRightList.add(i, UtilityTool.loadSprite(dir + "/Idle/" + i + ".png", "Missing idleRight " + i));
             }
 
-            //for (int i = 0; i <= 13; i++) {
-              //  mobLeftAttackList.add(i, UtilityTool.loadSprite(dir + "attackLeft/" + i + ".png", "Missing idleLeft " + i));
-             //   mobRightAttackList.add(i, UtilityTool.loadSprite(dir + "attackRight/" + i + ".png", "Missing idleRight " + i));
-           // }
+//            for (int i = 0; i <= 13; i++) {
+//                mobLeftAttackList.add(i, UtilityTool.loadSprite(dir + "attackLeft/" + i + ".png", "Missing idleLeft " + i));
+//                mobRightAttackList.add(i, UtilityTool.loadSprite(dir + "attackRight/" + i + ".png", "Missing idleRight " + i));
+//            }
 
             UtilityTool.scaleEntityList(this, moveRightList, 350, 250);
             UtilityTool.scaleEntityList(this,moveLeftList, 350, 250);

@@ -156,6 +156,12 @@ public class EventHandler {
                         FrostGiant();
                     }
 
+                    if (hit(1,13,17,"anything")) {
+                        System.out.println("pizza");
+                        FireWorm();
+
+                    }
+
                     // UNLOCK FIRST ROOM GATES ONCE EVERY MOB SLAIN
                     if (gp.mobArr[1][0] == null && gp.mobArr[1][1] == null) {
                         for (int i = 1; i <= 5; i++)
@@ -232,6 +238,13 @@ public class EventHandler {
         if(!gp.bossBattleOn) {
             gp.gameState = gp.cutsceneState;
             gp.csManager.sceneNum = gp.csManager.frostGiant;
+        }
+    }
+
+    public void FireWorm() {
+        if(!gp.bossBattleOn) {
+            gp.gameState = gp.cutsceneState;
+            gp.csManager.sceneNum = gp.csManager.fireWorm;
         }
     }
 }

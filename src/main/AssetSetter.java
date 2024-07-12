@@ -245,10 +245,10 @@ public class AssetSetter {
         gp.mobArr[mapNum][i].worldY = 180;
         i++;
 
-        gp.mobArr[mapNum][i] = new MOB_FireWorm(gp);
-        gp.mobArr[mapNum][i].worldX = 370;
-        gp.mobArr[mapNum][i].worldY = 1300;
-        i++;
+//        gp.mobArr[mapNum][i] = new MOB_FireWorm(gp);
+//        gp.mobArr[mapNum][i].worldX = 550;
+//        gp.mobArr[mapNum][i].worldY = 1970;
+//        i++;
 
 //
 //                gp.mobArr[mapNum][i] = new MOB_ArmoredGuardian(gp);

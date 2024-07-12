@@ -2,10 +2,7 @@ package main;
 
 import entity.*;
 import mobs.*;
-import object.OBJ_ChatBubble;
-import object.OBJ_Obelisk;
-import object.OBJ_SavePedestal;
-import object.OBJ_Shop;
+import object.*;
 
 public class AssetSetter {
     GamePanel gp;
@@ -18,7 +15,8 @@ public class AssetSetter {
         int mapNum = 0;
         int i = 0;
 
-            // MAP 0
+        // MAP 0
+        {
             gp.objArr[mapNum][i] = new OBJ_Shop(gp);
             gp.objArr[mapNum][i].worldX = 516;
             gp.objArr[mapNum][i].worldY = -10;
@@ -49,17 +47,158 @@ public class AssetSetter {
             gp.objArr[mapNum][i].worldY = 410;
             i++;
 
-//            gp.objArr[mapNum][i] = new OBJ_Obelisk(gp);
-//            gp.objArr[mapNum][i].worldX = 400;
-//            gp.objArr[mapNum][i].worldY = 300;
+            gp.objArr[mapNum][i] = new OBJ_Gate(gp); // Mystery chat bubble
+            gp.objArr[mapNum][i].worldX = 540;
+            gp.objArr[mapNum][i].worldY = 350;
+        }
 
-            // MAP 1
+        // MAP 1
+        mapNum = 1;
+        i = 0;
+
+        // TELEPORTING OBELISK
+        gp.objArr[mapNum][i] = new OBJ_Obelisk(gp);
+        gp.objArr[mapNum][i].worldX = 63;
+        gp.objArr[mapNum][i].worldY = 168;
+        i++;
+
+        // FIRST ROOM GATES index (1-5)
+        {
+            // ENTRANCES
+            {
+                gp.objArr[mapNum][i] = new OBJ_Gate(gp);
+                gp.objArr[mapNum][i].worldX = 288;
+                gp.objArr[mapNum][i].worldY = 1968;
+                i++;
+
+                gp.objArr[mapNum][i] = new OBJ_Gate(gp);
+                gp.objArr[mapNum][i].worldX = 288;
+                gp.objArr[mapNum][i].worldY = 2016;
+                i++;
+            }
+            // EXITS
+            {
+                gp.objArr[mapNum][i] = new OBJ_Gate(gp);
+                gp.objArr[mapNum][i].worldX = 528;
+                gp.objArr[mapNum][i].worldY = 1776;
+                i++;
+
+                gp.objArr[mapNum][i] = new OBJ_Gate(gp);
+                gp.objArr[mapNum][i].worldX = 576;
+                gp.objArr[mapNum][i].worldY = 1776;
+                i++;
+
+                gp.objArr[mapNum][i] = new OBJ_Gate(gp);
+                gp.objArr[mapNum][i].worldX = 624;
+                gp.objArr[mapNum][i].worldY = 1776;
+                i++;
+            }
+        }
+        // SPLIT PATHWAY GATES index (6-7) (8-9)
+        {
+            // LEFT PATH
+            {
+                gp.objArr[mapNum][i] = new OBJ_Gate(gp);
+                gp.objArr[mapNum][i].worldX = 480;
+                gp.objArr[mapNum][i].worldY = 1440;
+                i++;
+
+                gp.objArr[mapNum][i] = new OBJ_Gate(gp);
+                gp.objArr[mapNum][i].worldX = 480;
+                gp.objArr[mapNum][i].worldY = 1488;
+                i++;
+            }
+            // RIGHT PATH
+            {
+                gp.objArr[mapNum][i] = new OBJ_Gate(gp);
+                gp.objArr[mapNum][i].worldX = 672;
+                gp.objArr[mapNum][i].worldY = 1440;
+                i++;
+
+                gp.objArr[mapNum][i] = new OBJ_Gate(gp);
+                gp.objArr[mapNum][i].worldX = 672;
+                gp.objArr[mapNum][i].worldY = 1488;
+                i++;
+            }
+        }
+        // MINI-BOSS ROOM GATES index (10-16)
+        {
+            // ENTRANCES
+            {
+                // LEFT SIDE
+                gp.objArr[mapNum][i] = new OBJ_Gate(gp);
+                gp.objArr[mapNum][i].worldX = 288;
+                gp.objArr[mapNum][i].worldY = 1104;
+                i++;
+
+                gp.objArr[mapNum][i] = new OBJ_Gate(gp);
+                gp.objArr[mapNum][i].worldX = 288;
+                gp.objArr[mapNum][i].worldY = 1152;
+                i++;
+
+                // RIGHT SIDE
+                gp.objArr[mapNum][i] = new OBJ_Gate(gp);
+                gp.objArr[mapNum][i].worldX = 864;
+                gp.objArr[mapNum][i].worldY = 1104;
+                i++;
+
+                gp.objArr[mapNum][i] = new OBJ_Gate(gp);
+                gp.objArr[mapNum][i].worldX = 864;
+                gp.objArr[mapNum][i].worldY = 1152;
+                i++;
+            }
+            // EXITS
+            {
+                gp.objArr[mapNum][i] = new OBJ_Gate(gp);
+                gp.objArr[mapNum][i].worldX = 528;
+                gp.objArr[mapNum][i].worldY = 912;
+                i++;
+
+                gp.objArr[mapNum][i] = new OBJ_Gate(gp);
+                gp.objArr[mapNum][i].worldX = 576;
+                gp.objArr[mapNum][i].worldY = 912;
+                i++;
+
+                gp.objArr[mapNum][i] = new OBJ_Gate(gp);
+                gp.objArr[mapNum][i].worldX = 624;
+                gp.objArr[mapNum][i].worldY = 912;
+                i++;
+            }
+        }
+        // FINAL BOSS ROOM GATES index (17-20)
+        {
+            // ENTRANCES
+            {
+                gp.objArr[mapNum][i] = new OBJ_Gate(gp);
+                gp.objArr[mapNum][i].worldX = 528;
+                gp.objArr[mapNum][i].worldY = 672;
+                i++;
+
+                gp.objArr[mapNum][i] = new OBJ_Gate(gp);
+                gp.objArr[mapNum][i].worldX = 576;
+                gp.objArr[mapNum][i].worldY = 672;
+                i++;
+
+                gp.objArr[mapNum][i] = new OBJ_Gate(gp);
+                gp.objArr[mapNum][i].worldX = 624;
+                gp.objArr[mapNum][i].worldY = 672;
+                i++;
+            }
+            // EXIT
+            {
+                gp.objArr[mapNum][i] = new OBJ_Gate(gp);
+                gp.objArr[mapNum][i].worldX = 240;
+                gp.objArr[mapNum][i].worldY = 336;
+                i++;
+            }
+        }
     }
+
     public void setNPC() {
         int mapNum = 0;
         int i = 0;
 
-//            // MAP 0
+            // MAP 0
             gp.npcArr[mapNum][i] = new NPC_Maiden(gp);
             gp.npcArr[mapNum][i].worldX = 368;
             gp.npcArr[mapNum][i].worldY = 250;
@@ -84,29 +223,32 @@ public class AssetSetter {
             System.out.println("NPC Mystery set at (" + gp.npcArr[mapNum][0].worldX + ", " + gp.npcArr[mapNum][0].worldY + ")");
             // MAP 1
     }
+
     public void setMonster() {
         int mapNum;
         int i = 0;
-                // MAP 1
-                mapNum = 1;
-                gp.mobArr[mapNum][i] = new MOB_FrostGiant(gp);
-                gp.mobArr[mapNum][i].worldX = 400;
-                gp.mobArr[mapNum][i].worldY = 180;
-                i++;
 
-//                gp.mobArr[mapNum][i] = new MOB_SkeletonKnight(gp);
-//                gp.mobArr[mapNum][i].worldX = 350;
-//                gp.mobArr[mapNum][i].worldY = 270;
-//                i++;
+        // MAP 1
+        mapNum = 1;
+        gp.mobArr[mapNum][i] = new MOB_RobotGuardian(gp);
+        gp.mobArr[mapNum][i].worldX = 350;
+        gp.mobArr[mapNum][i].worldY = 1968;
+        i++;
 
-//                gp.mobArr[mapNum][i] = new MOB_ArmoredGuardian(gp);
-//                gp.mobArr[mapNum][i].worldX = 350;
-//                gp.mobArr[mapNum][i].worldY = 270;
-//                i++;
+        gp.mobArr[mapNum][i] = new MOB_SkeletonKnight(gp);
+        gp.mobArr[mapNum][i].worldX = 550;
+        gp.mobArr[mapNum][i].worldY = 1968;
+        i++;
+
+        gp.mobArr[mapNum][i] = new MOB_FrostGiant(gp);
+        gp.mobArr[mapNum][i].worldX = 400;
+        gp.mobArr[mapNum][i].worldY = 180;
+        i++;
+
 //
 //                gp.mobArr[mapNum][i] = new MOB_ArmoredGuardian(gp);
-//                gp.mobArr[mapNum][i].worldX = 374;
-//                gp.mobArr[mapNum][i].worldY = 1503;
+//                gp.mobArr[mapNum][i].worldX = 350;
+//                gp.mobArr[mapNum][i].worldY = 270;
 //                i++;
 //
 //                gp.mobArr[mapNum][i] = new MOB_FlyingEye(gp);
@@ -118,17 +260,17 @@ public class AssetSetter {
 //                gp.mobArr[mapNum][i].worldX = 450;
 //                gp.mobArr[mapNum][i].worldY = 270;
 //                i++;
-
+//
 //                gp.mobArr[mapNum][i] = new MOB_Canine(gp);
 //                gp.mobArr[mapNum][i].worldX = 500;
 //                gp.mobArr[mapNum][i].worldY = 300;
 //                i++;
-
+//
 //                gp.mobArr[mapNum][i] = new MOB_Slime(gp);
 //                gp.mobArr[mapNum][i].worldX = 800;
 //                gp.mobArr[mapNum][i].worldY = 400;
 //                i++;
-
+//
 //                gp.mobArr[mapNum][i] = new MOB_Goblin(gp);
 //                gp.mobArr[mapNum][i].worldX = 400;
 //                gp.mobArr[mapNum][i].worldY = 300;
@@ -144,17 +286,12 @@ public class AssetSetter {
 //                gp.mobArr[mapNum][i].worldY = 400;
 //                i++;
 
-//                gp.mobArr[mapNum][i] = new MOB_RobotGuardian(gp);
-//                gp.mobArr[mapNum][i].worldX = 400;
-//                gp.mobArr[mapNum][i].worldY = 270;
-//                    i++;
-
                 // MAP 2
-                mapNum = 2;
-                gp.mobArr[mapNum][i] = new MOB_Slime(gp);
-                gp.mobArr[mapNum][i].worldX = 378;
-                gp.mobArr[mapNum][i].worldY = 1470;
-                i++;
+//                mapNum = 2;
+//                gp.mobArr[mapNum][i] = new MOB_Slime(gp);
+//                gp.mobArr[mapNum][i].worldX = 450;
+//                gp.mobArr[mapNum][i].worldY = 270;
+//                i++;
 //
 //                gp.mobArr[mapNum][i] = new MOB_RobotGuardian(gp);
 //                gp.mobArr[mapNum][i].worldX = 300;
@@ -162,8 +299,8 @@ public class AssetSetter {
 //                i++;
 //
 //                gp.mobArr[mapNum][i] = new MOB_ArmoredGuardian(gp);
-//                gp.mobArr[mapNum][i].worldX = 378;
-//                gp.mobArr[mapNum][i].worldY = 1470;
+//                gp.mobArr[mapNum][i].worldX = 350;
+//                gp.mobArr[mapNum][i].worldY = 270;
 //                i++;
         }
 

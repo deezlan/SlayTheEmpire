@@ -16,6 +16,7 @@ public class MOB_FrostGiant extends Entity {
         name = monName;
         type = type_mob;
         boss = true;
+        bossNum = 1;
         defaultSpeed = 1;
         speed = defaultSpeed;
         attack = 1;
@@ -23,20 +24,24 @@ public class MOB_FrostGiant extends Entity {
         currentLife = maxLife;
         action = "idleRight";
         damageSprite = 7;
+        sleep = true;
 
         // Load mob sprites
         getMobSprites();
+        setDialog();
 
         // Set collision settings
         solidArea.x = 150;
         solidArea.y = 180;
         solidArea.width = 80;
         solidArea.height = 100;
-        attackArea.width = 160;
-        attackArea.height = 160;
+        attackArea.width = 140;
+        attackArea.height = 140;
         solidAreaDefaultX = solidArea.x;
         solidAreaDefaultY = solidArea.y;
+        dialogueSet = 0;
     }
+
 
     @Override
     public void setAction() {
@@ -64,12 +69,19 @@ public class MOB_FrostGiant extends Entity {
     }
 
     public void checkDrop() {
+        gp.bossBattleOn = false;
         dropItem(new OBJ_PickUpCoin(gp));
     }
 
     public void damageReaction() {
         actionLockCounter = 0;
         onPath = true;
+    }
+
+    public void setDialog() {
+        dialogs[0][0] = "Who are you.....";
+        dialogs[0][1] = "YOU WILL PAY... WITH ICE!";
+
     }
 
     public void getMobSprites() {

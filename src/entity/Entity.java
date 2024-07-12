@@ -8,29 +8,38 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class Entity {
-    GamePanel gp;
+public abstract class Entity {
+    public GamePanel gp;
     public boolean lookingRight = true;
+    public Projectile projectile1;
+    public Projectile projectile2;
+    public Projectile projectile3;
+    public Projectile projectile4;
 
     public Entity(GamePanel gp) {
         this.gp = gp;
     }
 
-    // ENTITY TYPE
-    public int type;
-    public final int type_player = 0;
-    public final int type_mob = 1;
-    public final int type_npc = 2;
-    public final int type_consumable = 3;
-    public final int type_pickup = 4;
-    public final int type_block = 5;
-
     // PLAYER & MOB ATTRIBUTES
     public int
             // POSITION OFF OF FULL GAME MAP
             worldX,
-            worldY,
+            worldY;
 
+    // ENTITY TYPE
+    public int type;
+    public final int
+            type_player = 0,
+            type_mob = 1,
+            type_npc = 2,
+            type_consumable = 3,
+            type_pickup = 4,
+            type_gate = 5,
+            type_shop = 6,
+            type_obelisk = 7;
+
+    // PLAYER & MOB ATTRIBUTES
+    public int
             // STATUS VALUES
             defaultSpeed,
             speed,
@@ -38,6 +47,7 @@ public class Entity {
             attack,
             maxLife,
             currentLife,
+            bossNum,
 
             // COLLISION ATTRIBUTES
             solidAreaDefaultX, solidAreaDefaultY;
@@ -45,7 +55,10 @@ public class Entity {
     public String action = "idleRight"; // DEFAULT ACTION
     public boolean
             inRage = false,
-            boss;
+            sleep,
+            boss,
+            tempScene = false,
+            drawing = true;
 
     // PLAYER & MOB COLLISION DIRECTION
     public boolean
@@ -74,7 +87,7 @@ public class Entity {
             mobRightAttackList = new ArrayList<>(),
             mobLeftAttackList = new ArrayList<>(),
 
-            // OBJECT ANIMATION LIST
+            // INTERACTABLE OBJECT ANIMATION LIST
             defaultList = new ArrayList<>(),
             interactList = new ArrayList<>(),
 
@@ -101,7 +114,7 @@ public class Entity {
             iframeCounter = 0;
     public Rectangle attackArea = new Rectangle(0, 0, 0, 0);
 
-    // MOB KNOCK-BACK
+    // KNOCK-BACK
     public Entity attacker;
     public String knockBackDirection;
     public boolean knockBack = false;
@@ -111,7 +124,10 @@ public class Entity {
     public Projectile projectile;
 
     // GATE BLOCKING
-    public boolean locked = false;
+    public boolean
+            locked = false,
+            locking = false,
+            unlocking = false;
 
     // ITEM ATTRIBUTES
     public int damage;
@@ -121,11 +137,10 @@ public class Entity {
     public String description = "";
 
     // OBJECTS ATTRIBUTES
-    public String message;
+    public String message = "";
     public boolean
             interacting = false,
-            collision = false,
-            isObject;
+            collision = false;
 
     // COUNTERS
     public int
@@ -175,12 +190,6 @@ public class Entity {
     }
     public int getGoalRow(Entity target) {
         return (target.worldY + target.solidArea.y) / gp.TILE_SIZE;
-    }
-    public int getScreenX() {
-        return worldX - gp.player.worldX + gp.player.screenX;
-    }
-    public int getScreenY() {
-        return worldY - gp.player.worldY + gp.player.screenY;
     }
 
     // MOB ACTION METHODS
@@ -248,9 +257,9 @@ public class Entity {
 
             // ENTITY SOLID AREA POSITION
             int enLeftX = worldX + solidArea.x;
-            int enRightX = worldX + solidArea.x; // ADD + solidArea.weight
+            int enRightX = worldX + solidArea.x;
             int enTopY = worldY + solidArea.y;
-            int enBottomY = worldY + solidArea.y; // ADD + solidArea.height
+            int enBottomY = worldY + solidArea.y;
 
             if (enTopY > nextY && enLeftX >= nextX && enRightX < nextX + gp.TILE_SIZE) {
                 action = "moveUp";
@@ -270,28 +279,27 @@ public class Entity {
             } else if (enTopY > nextY && enLeftX > nextX) {
                 action = "moveUp";
                 checkCollision();
-                if (upCollisionOn && downCollisionOn && rightCollisionOn && leftCollisionOn) { // check
+                if (upCollisionOn && downCollisionOn && leftCollisionOn && rightCollisionOn) { // check
                     action = "moveLeft";
                     currentList = moveLeftList;
                 }
             } else if (enTopY > nextY && enLeftX < nextX) {
                 action = "moveUp";
-                checkCollision();
-                if (upCollisionOn && downCollisionOn && rightCollisionOn && leftCollisionOn) { // check
+                if (upCollisionOn && downCollisionOn && leftCollisionOn && rightCollisionOn) { // check
                     action = "moveRight";
                     currentList = moveRightList;
                 }
             } else if (enTopY < nextY && enLeftX > nextX) {
                 action = "moveDown";
                 checkCollision(); // check
-                if (upCollisionOn && downCollisionOn && rightCollisionOn && leftCollisionOn) {
+                if (upCollisionOn && downCollisionOn && leftCollisionOn && rightCollisionOn) {
                     action = "moveLeft";
                     currentList = moveLeftList;
                 }
             } else if (enTopY < nextY && enLeftX < nextX) {
                 action = "moveDown";
                 checkCollision(); // check
-                if (upCollisionOn && downCollisionOn && rightCollisionOn && leftCollisionOn) {
+                if (upCollisionOn && downCollisionOn && leftCollisionOn && rightCollisionOn) {
                     action = "moveRight";
                     currentList = moveRightList;
                 }
@@ -325,7 +333,7 @@ public class Entity {
         int i = new Random().nextInt(rate);
         shotAvailableCounter = 0;
         if(i == 0 && !projectile.alive && shotAvailableCounter == shotInterval){
-            projectile.set(worldX + (xOffset), worldY + (yOffset), action,true,this);
+            projectile.set(worldX + (xOffset), worldY + (yOffset), action,true,this, gp.player.worldX, gp.player.worldY);
             for (int ii = 0; ii < gp.projectileArr[1].length; ii++) {
                 if(gp.projectileArr[gp.currentMap][ii] == null){
                     gp.projectileArr[gp.currentMap][ii] = projectile;
@@ -422,55 +430,6 @@ public class Entity {
         }
     }
 
-    // OBJECT METHODS
-    public void loopThroughInteractSprites() {
-        interactSpriteCounter++;
-        if (interactSpriteNum < interactList.size() && interactSpriteCounter%5 == 0) {
-            interactSpriteNum++;
-        }
-        if (interactSpriteNum >= interactList.size() - 1) {
-            interactSpriteNum = 0;
-            interactSpriteCounter = 0;
-            interacting = false;
-        }
-//        if (interactSpriteCounter < 5) {
-//            interactSpriteNum = 0;
-//        } else if (interactSpriteCounter < 10) {
-//            interactSpriteNum = 1;
-//        } else if (interactSpriteCounter < 15) {
-//            interactSpriteNum = 2;
-//        } else if (interactSpriteCounter < 20) {
-//            interactSpriteNum = 3;
-//        } else if (interactSpriteCounter < 25) {
-//            interactSpriteNum = 4;
-//        } else if (interactSpriteCounter < 30) {
-//            interactSpriteNum = 5;
-//        } else if (interactSpriteCounter < 35) {
-//            interactSpriteNum = 6;
-//        } else if (interactSpriteCounter < 40) {
-//            interactSpriteNum = 7;
-//        } else if (interactSpriteCounter < 45) {
-//            interactSpriteNum = 8;
-//        } else if (interactSpriteCounter < 50) {
-//            interactSpriteNum = 9;
-//        } else if (interactSpriteCounter < 55) {
-//            interactSpriteNum = 10;
-//        } else if (interactSpriteCounter < 60) {
-//            interactSpriteNum = 11;
-//        } else if (interactSpriteCounter < 65) {
-//            interactSpriteNum = 12;
-//        } else if (interactSpriteCounter < 70) {
-//            interactSpriteNum = 13;
-//        } else if (interactSpriteCounter <= 75) {
-//            interactSpriteNum = 0;
-//            interactSpriteCounter = 0;
-//            interacting = false;
-//        }
-    }
-    public void startInteract() {
-        loopThroughInteractSprites();
-    }
-
     // PLAYER & MOB METHODS
     public void checkCollision() {
         upCollisionOn = false; // resets collisions off
@@ -490,7 +449,7 @@ public class Entity {
             }
         }
     }
-    public void loopThroughSprites() {
+    public void runCurrentListAnimation() {
         spriteNum = (spriteNum >= currentList.size()) ? 0 : spriteNum + 1;
         spriteCounter = 0;
     }
@@ -557,10 +516,48 @@ public class Entity {
         runAttackAnimation();
     }
 
+    // OBJECT METHODS
+    public void runInteractSprites() {
+        interactSpriteCounter++;
+        if (interactSpriteNum < interactList.size() && interactSpriteCounter%5 == 0) {
+            interactSpriteNum++;
+        }
+        if (interactSpriteNum >= interactList.size() - 1) {
+            interactSpriteNum = 0;
+            interactSpriteCounter = 0;
+            interacting = false;
+
+            if (type == type_obelisk)
+                gp.eHandler.changeMap();
+        }
+    }
+
+    // GATE METHODS
+    public void runLockAnimation() {}
+    public void runUnlockingAnimation() {}
+
+    // CAMERA METHODS
+    public int getScreenX() {
+        return worldX - gp.player.worldX + gp.player.screenX;
+    }
+    public int getScreenY() {
+        return worldY - gp.player.worldY + gp.player.screenY;
+    }
+    public boolean inCamera() {
+        return worldX + gp.TILE_SIZE * 5 > gp.player.worldX - gp.player.screenX - 48 * 4 && // added values due to player sprite not centered
+                worldX - gp.TILE_SIZE < gp.player.worldX + gp.player.screenX + 48 * 4 &&
+                worldY + gp.TILE_SIZE * 5 > gp.player.worldY - gp.player.screenY - 48 * 2 &&
+                worldY - gp.TILE_SIZE < gp.player.worldY + gp.player.screenY + 48 * 2;
+    }
+
     // GAME LOOP METHODS
     public void update() {
         if (interacting) {
-            startInteract();
+            runInteractSprites();
+        }
+        if (type == type_gate) {
+            if (locking) runLockAnimation();
+            if (unlocking) runUnlockingAnimation();
         } else {
             if (knockBack) {
                 checkCollision();
@@ -574,7 +571,6 @@ public class Entity {
                         case "moveDown": worldY += speed; break;
                         case "moveRight": worldX += speed; break;
                         case "moveLeft": worldX -= speed; break;
-
                         case "moveUpRight":
                             worldX += speed;
                             worldY -= speed;
@@ -611,7 +607,6 @@ public class Entity {
                         case "moveDown": worldY += speed; break;
                         case "moveRight": worldX += speed; break;
                         case "moveLeft": worldX -= speed; break;
-
                         case "moveUpRight":
                             worldX += speed;
                             worldY -= speed;
@@ -634,15 +629,15 @@ public class Entity {
                 // Animation speed
                 spriteCounter++;
                 if (this.currentList.size() > 28) {
-                    if (spriteCounter > 4) loopThroughSprites();
+                    if (spriteCounter > 4) runCurrentListAnimation();
                 } else if (this.currentList.size() > 21) {
-                    if (spriteCounter > 6) loopThroughSprites();
+                    if (spriteCounter > 6) runCurrentListAnimation();
                 } else if (this.currentList.size() > 14) {
-                    if (spriteCounter > 9) loopThroughSprites();
+                    if (spriteCounter > 9) runCurrentListAnimation();
                 }  else if (this.currentList.size() > 7) {
-                    if (spriteCounter > 11) loopThroughSprites();
+                    if (spriteCounter > 11) runCurrentListAnimation();
                 } else {
-                    if(spriteCounter > 13) loopThroughSprites();
+                    if(spriteCounter > 13) runCurrentListAnimation();
                 }
             }
 
@@ -655,77 +650,74 @@ public class Entity {
             }
         }
     }
-    public boolean inCamera() {
-        boolean inCamera = false;
-        if (worldX + gp.TILE_SIZE*5 > gp.player.worldX - gp.player.screenX - 48 * 4 && // added values due to player sprite not centered
-                worldX - gp.TILE_SIZE < gp.player.worldX + gp.player.screenX + 48 * 4 &&
-                worldY + gp.TILE_SIZE*5 > gp.player.worldY - gp.player.screenY - 48 * 2 &&
-                worldY - gp.TILE_SIZE < gp.player.worldY + gp.player.screenY + 48 * 2) {
-            inCamera = true;
-        }
-        return inCamera;
-    }
     public void draw(Graphics2D g2) {
         BufferedImage image;
+        if (spriteNum >= currentList.size() - 1) spriteNum = 0;
 
-        if (spriteNum == currentList.size() - 1)
-            spriteNum = 0;
-
-        if (!alive) {
-            return;
-        }
+        if (!alive) return;
 
         if (interacting) {
             image = interactList.get(interactSpriteNum);
+        } else if (type == type_gate) {
+            if (locked && !unlocking) // LOCKED
+                image = defaultList.get(6);
+            else if (locked) // UNLOCKING
+                image = interactList.get(interactSpriteNum);
+            else if (!locking) // UNLOCKED
+                image = defaultList.get(0);
+            else // LOCKING
+                image = defaultList.get(spriteNum);
         } else {
             image = currentList.get(spriteNum);
         }
 
-        switch(gp.currentMap){
-            case 0:
+        if(gp.currentMap == 0) {
+            if (iframe) {
+                hpBarVisible = true;
+                hpBarCounter = 0;
+                UtilityTool.changeAlpha(g2, 0.3f);
+            }
+
+            if (dead) dyingAnimation(g2);
+
+            if(!attacking){
+                g2.drawImage(image, worldX, worldY, null);
+                UtilityTool.changeAlpha(g2, 1f);
+            }
+
+            if (attacking) {
+                if (animationSpriteNum >= currentList.size() - 1)
+                    animationSpriteNum = 0;
+                BufferedImage animationImage = currentList.get(animationSpriteNum);
+                g2.drawImage(animationImage, worldX, worldY, null);
+            }
+        } else if (gp.currentMap == 1) {
+            int screenX = worldX - gp.player.worldX + gp.player.screenX;
+            int screenY = worldY - gp.player.worldY + gp.player.screenY;
+
+            if (worldX + gp.TILE_SIZE > gp.player.worldX - gp.player.screenX - 48 * 4 && // added values due to player sprite not centered
+                    worldX - gp.TILE_SIZE < gp.player.worldX + gp.player.screenX + 48 * 4 &&
+                    worldY + gp.TILE_SIZE > gp.player.worldY - gp.player.screenY - 48 * 2 &&
+                    worldY - gp.TILE_SIZE < gp.player.worldY + gp.player.screenY + 48 * 2) {
                 if (iframe) {
                     hpBarVisible = true;
                     hpBarCounter = 0;
                     UtilityTool.changeAlpha(g2, 0.3f);
                 }
-                if (dead) {
-                    dyingAnimation(g2);
-                }
+
+                if (dead) dyingAnimation(g2);
+
                 if(!attacking){
-                    g2.drawImage(image, worldX, worldY, null);
+                    g2.drawImage(image, screenX, screenY, null);
                     UtilityTool.changeAlpha(g2, 1f);
                 }
                 if (attacking) {
                     if (animationSpriteNum >= currentList.size() - 1)
                         animationSpriteNum = 0;
                     BufferedImage animationImage = currentList.get(animationSpriteNum);
-                    g2.drawImage(animationImage, worldX, worldY, null);
+                    g2.drawImage(animationImage, screenX, screenY, null);
                 }
-                break;
-            case 1,2:
-                int screenX = getScreenX(); // SHORTEN METHOD
-                int screenY = getScreenY();
-
-                if (inCamera()){
-                    if (iframe) {
-                        hpBarVisible = true;
-                        hpBarCounter = 0;
-                        UtilityTool.changeAlpha(g2, 0.3f);
-                    }
-                    if (dead) {
-                        dyingAnimation(g2);
-                    }
-                    if(!attacking){
-                        g2.drawImage(image, screenX, screenY, null);
-                        UtilityTool.changeAlpha(g2, 1f);
-                    }
-                    if (attacking) {
-                        if (animationSpriteNum >= currentList.size() - 1)
-                            animationSpriteNum = 0;
-                        BufferedImage animationImage = currentList.get(animationSpriteNum);
-                        g2.drawImage(animationImage, screenX, screenY, null);
-                    }
-                }
+            }
         }
     }
 }

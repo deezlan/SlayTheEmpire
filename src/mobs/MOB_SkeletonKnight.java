@@ -27,7 +27,7 @@ public class MOB_SkeletonKnight extends Entity {
 
         // Set collision settings
         solidArea.x = 98;
-        solidArea.y = 120;
+        solidArea.y = 100;
         solidArea.width = 28;
         solidArea.height = 40;
         attackArea.width = 50;

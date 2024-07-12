@@ -15,7 +15,7 @@ public class KeyHandler implements KeyListener {
             ePressed,
             pPressed,
             enterPressed,
-            showDebug = false, // DEBUG
+            showDebug, // DEBUG
             shotKeyPressed,
             onePressed,
             twoPressed,
@@ -69,20 +69,10 @@ public class KeyHandler implements KeyListener {
             threePressed = true;
         }
         if (code == KeyEvent.VK_T){
-            if(!showDebug){
-                showDebug = true;
-            }
-            else if (showDebug){
-                showDebug = false;
-            }
+            showDebug = !showDebug;
         }
         if (code == KeyEvent.VK_G){
-            if(!godModeOn){
-                godModeOn = true;
-            }
-            else if (godModeOn){
-                godModeOn = false;
-            }
+            godModeOn = !godModeOn;
         }
         if (code == KeyEvent.VK_P) {
             gp.gameState = gp.pauseState;
@@ -90,6 +80,9 @@ public class KeyHandler implements KeyListener {
         if (code == KeyEvent.VK_ENTER) {
             enterPressed = true;
         }
+//        if (code == KeyEvent.VK_R) { // RESET MONSTER (WIP)
+//            gp.resetMonster();
+//        }
     }
     public void pauseState(int code) {
         if (code == KeyEvent.VK_P) {

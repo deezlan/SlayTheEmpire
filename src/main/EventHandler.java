@@ -123,8 +123,8 @@ public class EventHandler {
                                     || hit(1, 16, 24, "any")
                                     || hit(1, 17, 25, "any")
                     ) {
-//                        for (int i = 10; i <= 16; i++)
-//                            gp.objArr[1][i].locking = true;
+                        for (int i = 10; i <= 16; i++)
+                            gp.objArr[1][i].locking = true;
 
 //                        eventRect[1][7][22].eventDone = true;
 //                        eventRect[1][8][23].eventDone = true;
@@ -204,6 +204,8 @@ public class EventHandler {
                 tempMap = 1;
                 tempCol = 2;
                 tempRow = 41;
+//                tempCol = 12;
+//                tempRow = 26;
                 break;
             case 1:
                 tempMap = 0;

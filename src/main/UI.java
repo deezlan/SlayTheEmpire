@@ -457,7 +457,6 @@ public class UI {
 
         if(counter == 50){
             counter = 0;
-            gp.resetLevel();
             gp.gameState = gp.playState;
             gp.currentMap = 0;
             gp.setMapColor();

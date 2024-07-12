@@ -114,14 +114,14 @@ public class EventHandler {
                     }
                     if ( // TRIGGER MINI-BOSS ROOM GATES
                             hit(1, 7, 22, "any")
-                                    || hit(1, 8, 23, "any")
-                                    || hit(1, 8, 24, "any")
-                                    || hit(1, 7, 25, "any")
+                                    || hit(1, 9, 23, "any")
+                                    || hit(1, 9, 24, "any")
+                                    || hit(1, 8, 25, "any")
 
-                                    || hit(1, 17, 22, "any")
-                                    || hit(1, 16, 23, "any")
-                                    || hit(1, 16, 24, "any")
-                                    || hit(1, 17, 25, "any")
+                                    || hit(1, 16, 22, "any")
+                                    || hit(1, 15, 23, "any")
+                                    || hit(1, 15, 24, "any")
+                                    || hit(1, 16, 25, "any")
                     ) {
                         for (int i = 10; i <= 16; i++)
                             gp.objArr[1][i].locking = true;
@@ -165,6 +165,12 @@ public class EventHandler {
                     if (gp.mobArr[1][2] == null) {
                         for (int i = 17; i <= 20; i++)
                             gp.objArr[1][i].unlocking = true;
+                    }
+
+                    // UNLOCK MINI BOSS GATE AFTER SLAIN
+                    if (gp.mobArr[1][3] == null) {
+                    for (int i = 10; i <= 16; i++)
+                        gp.objArr[1][i].unlocking = true;
                     }
             }
         }

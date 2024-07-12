@@ -21,7 +21,7 @@ public class Projectile extends Entity{
         this.currentLife = this.maxLife;
         this.dx = mouseX;
         this.dy = mouseY;
-        action = "moveUp";
+//        action = "moveUp";
     }
 
     public void update() {
@@ -106,41 +106,42 @@ public class Projectile extends Entity{
                     gp.player.damageMonster(monsterIndex, damage, this);
                 }
             }
-            if (user != gp.player) {
-                boolean contactPlayer = gp.cChecker.checkPLayer(this);
+        }
+        if (user != gp.player) { // FIXED WAS IN PLAYER BRACKET
+            boolean contactPlayer = gp.cChecker.checkPLayer(this);
 
-                switch (action) {
-                    case "moveUp":
-                        worldY -= speed;
-                        currentList = projectileUp;
-                        break;
-                    case "moveDown":
-                        worldY += speed;
-                        currentList = projectileDown;
-                        break;
-                    case "moveLeft":
-                        worldX -= speed;
-                        currentList = projectileLeft;
-                        break;
-                    case "moveRight":
-                        worldX += speed;
-                        currentList = projectileRight;
-                        break;
-                }
-
-                if (!gp.player.iframe && contactPlayer) {
-                    System.out.println("HIT PLAYER!");
-                    damagePlayer(damage);
-                    alive = false;
-                }
+            switch (action) {
+                case "moveUp":
+                    worldY -= speed;
+                    currentList = projectileUp;
+                    break;
+                case "moveDown":
+                    worldY += speed;
+                    currentList = projectileDown;
+                    break;
+                case "moveLeft":
+                    worldX -= speed;
+                    currentList = projectileLeft;
+                    break;
+                case "moveRight":
+                    worldX += speed;
+                    currentList = projectileRight;
+                    break;
             }
 
 
-            currentLife--;
-            if (currentLife <= 0) {
+            if (!gp.player.iframe && contactPlayer) {
+                System.out.println("HIT PLAYER!");
+                damagePlayer(damage);
                 alive = false;
             }
         }
+
+        currentLife--;
+        if (currentLife <= 0) {
+            alive = false;
+        }
+
         spriteCounter++;
         if (currentList.size() > 14) {
             if (spriteCounter > 4) runCurrentListAnimation();

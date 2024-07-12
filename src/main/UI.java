@@ -457,6 +457,24 @@ public class UI {
                         g2.setFont(g2.getFont().deriveFont(Font.BOLD,24f));
                         g2.setColor(Color.white);
                         g2.drawString(mob.name,x+4,y-10);
+                    } else if(mob.bossNum == 2) { // DEMON SLIME
+                        g2.setColor(new Color(35, 35, 35));
+                        g2.fillRect(x-1, y-1, gp.TILE_SIZE*8 + 2, 22);
+                        g2.setColor(new Color(255, 0, 30));
+                        g2.fillRect(x, y, (int) hpBarValue, 20);
+
+                        g2.setFont(g2.getFont().deriveFont(Font.BOLD,24f));
+                        g2.setColor(Color.white);
+                        g2.drawString(mob.name,x+4,y-10);
+                    } else if(mob.bossNum == 3) { // GOLEM
+                        g2.setColor(new Color(35, 35, 35));
+                        g2.fillRect(x-1, y-1, gp.TILE_SIZE*8 + 2, 22);
+                        g2.setColor(new Color(255, 0, 30));
+                        g2.fillRect(x, y, (int) hpBarValue, 20);
+
+                        g2.setFont(g2.getFont().deriveFont(Font.BOLD,24f));
+                        g2.setColor(Color.white);
+                        g2.drawString(mob.name,x+4,y-10);
                     }
                 }
             }

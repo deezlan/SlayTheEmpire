@@ -526,7 +526,7 @@ public abstract class Entity {
             interactSpriteNum = 0;
             interactSpriteCounter = 0;
             interacting = false;
-            System.out.println("cake");
+
             if (type == type_obelisk)
                 gp.eHandler.changeMap();
         }
@@ -705,65 +705,49 @@ public abstract class Entity {
                 if (type == type_mob && hpBarVisible) {
                     double oneScale = (double) gp.TILE_SIZE / maxLife;
                     double hpBarValue = oneScale * currentLife;
-                    if (mobNum == 1) { // SLIME
-                        g2.setColor(new Color(35, 35, 35));
-                        g2.fillRect(screenX + 51, screenY + 121, gp.TILE_SIZE, 10);
-                        g2.setColor(new Color(255, 0, 30));
-                        g2.fillRect(screenX + 50, screenY + 120, (int) hpBarValue, 9);
+
+                    g2.setColor(new Color(35, 35, 35));
+                    switch (mobNum) {
+                        // SLIME
+                        case 1: g2.fillRect(screenX + 51, screenY + 121, gp.TILE_SIZE, 10); break;
+                        // SKELLINGTON
+                        case 2: g2.fillRect(screenX + 51, screenY + 141, gp.TILE_SIZE, 10); break;
+                        // ROBOT GUARDIAN
+                        case 3: g2.fillRect(screenX + 81, screenY + 161, gp.TILE_SIZE, 10); break;
+                        // RAMSES
+                        case 4: g2.fillRect(screenX + 61, screenY + 121, gp.TILE_SIZE, 10); break;
+                        // GOBLIN & SKELETON KNIGHT
+                        case 5, 6: g2.fillRect(screenX + 81, screenY + 141, gp.TILE_SIZE, 10); break;
+                        // ARMORED GUARDIAN
+                        case 7: g2.fillRect(screenX + 51, screenY + 121, gp.TILE_SIZE, 10); break;
+                        // FLYING EYE
+                        case 8: g2.fillRect(screenX + 121, screenY + 191, gp.TILE_SIZE, 10); break;
+                        // MUSHROOM
+                        case 9: g2.fillRect(screenX + 126, screenY + 211, gp.TILE_SIZE, 10); break;
+                        // CANINE
+                        case 10: g2.fillRect(screenX + 21, screenY + 91, gp.TILE_SIZE, 10);
                     }
-                    if (mobNum == 2) { // SKELLINGTON
-                        g2.setColor(new Color(35, 35, 35));
-                        g2.fillRect(screenX + 51, screenY + 141, gp.TILE_SIZE, 10);
-                        g2.setColor(new Color(255, 0, 30));
-                        g2.fillRect(screenX + 50, screenY + 140, (int) hpBarValue, 9);
-                    }
-                    if (mobNum == 3) { // ROBOT GUARDIAN
-                        g2.setColor(new Color(35, 35, 35));
-                        g2.fillRect(screenX + 81, screenY + 161, gp.TILE_SIZE, 10);
-                        g2.setColor(new Color(255, 0, 30));
-                        g2.fillRect(screenX + 80, screenY + 160, (int) hpBarValue, 9);
-                    }
-                    if (mobNum == 4) { // RAMSES
-                        g2.setColor(new Color(35, 35, 35));
-                        g2.fillRect(screenX + 61, screenY + 121, gp.TILE_SIZE, 10);
-                        g2.setColor(new Color(255, 0, 30));
-                        g2.fillRect(screenX + 60, screenY + 120, (int) hpBarValue, 9);
-                    }
-                    if (mobNum == 5) { // GOBLIN
-                        g2.setColor(new Color(35, 35, 35));
-                        g2.fillRect(screenX + 81, screenY + 141, gp.TILE_SIZE, 10);
-                        g2.setColor(new Color(255, 0, 30));
-                        g2.fillRect(screenX + 80, screenY + 140, (int) hpBarValue, 9);
-                    }
-                    if (mobNum == 6) { // SKELETON KNIGHT
-                        g2.setColor(new Color(35, 35, 35));
-                        g2.fillRect(screenX + 81, screenY + 141, gp.TILE_SIZE, 10);
-                        g2.setColor(new Color(255, 0, 30));
-                        g2.fillRect(screenX + 80, screenY + 140, (int) hpBarValue, 9);
-                    }
-                    if (mobNum == 7) { // ARMORED GUARDIAN
-                        g2.setColor(new Color(35, 35, 35));
-                        g2.fillRect(screenX + 51, screenY + 121, gp.TILE_SIZE, 10);
-                        g2.setColor(new Color(255, 0, 30));
-                        g2.fillRect(screenX + 50, screenY + 120, (int) hpBarValue, 9);
-                    }
-                    if (mobNum == 8) { // FLYING EYE
-                        g2.setColor(new Color(35, 35, 35));
-                        g2.fillRect(screenX + 121, screenY + 191, gp.TILE_SIZE, 10);
-                        g2.setColor(new Color(255, 0, 30));
-                        g2.fillRect(screenX + 120, screenY + 190, (int) hpBarValue, 9);
-                    }
-                    if (mobNum == 9) { // MUSHROOM
-                        g2.setColor(new Color(35, 35, 35));
-                        g2.fillRect(screenX + 126, screenY + 211, gp.TILE_SIZE, 10);
-                        g2.setColor(new Color(255, 0, 30));
-                        g2.fillRect(screenX + 125, screenY + 210, (int) hpBarValue, 9);
-                    }
-                    if (mobNum == 10) { // CANINE
-                        g2.setColor(new Color(35, 35, 35));
-                        g2.fillRect(screenX + 21, screenY + 91, gp.TILE_SIZE, 10);
-                        g2.setColor(new Color(255, 0, 30));
-                        g2.fillRect(screenX + 20, screenY + 90, (int) hpBarValue, 9);
+
+                    g2.setColor(new Color(255, 0, 30));
+                    switch (mobNum) {
+                        // SLIME
+                        case 1: g2.fillRect(screenX + 50, screenY + 120, (int) hpBarValue, 9); break;
+                        // SKELLINGTON
+                        case 2: g2.fillRect(screenX + 50, screenY + 140, (int) hpBarValue, 9); break;
+                        // ROBOT GUARDIAN
+                        case 3: g2.fillRect(screenX + 80, screenY + 160, (int) hpBarValue, 9); break;
+                        // RAMSES
+                        case 4: g2.fillRect(screenX + 60, screenY + 120, (int) hpBarValue, 9); break;
+                        // GOBLIN & SKELETON KNIGHT
+                        case 5, 6: g2.fillRect(screenX + 80, screenY + 140, (int) hpBarValue, 9); break;
+                        // ARMORED GUARDIAN
+                        case 7: g2.fillRect(screenX + 50, screenY + 120, (int) hpBarValue, 9); break;
+                        // FLYING EYE
+                        case 8: g2.fillRect(screenX + 120, screenY + 190, (int) hpBarValue, 9); break;
+                        // MUSHROOM
+                        case 9: g2.fillRect(screenX + 125, screenY + 210, (int) hpBarValue, 9); break;
+                        // CANINE
+                        case 10: g2.fillRect(screenX + 20, screenY + 90, (int) hpBarValue, 9);
                     }
 
                     hpBarCounter++;

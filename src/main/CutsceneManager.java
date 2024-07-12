@@ -1,7 +1,7 @@
 package main;
 
 import entity.PlayerDummy;
-import mobs.MOB_FrostGiant;
+import mobs.BOSS_FrostGiant;
 
 import java.awt.*;
 
@@ -14,6 +14,7 @@ public class CutsceneManager {
     // SCENE NUMBERS
     public final int NA = 0;
     public final int frostGiant = 1;
+    public final int demonSlime = 2;
 
     public CutsceneManager(GamePanel gp) {
         this.gp = gp;
@@ -24,6 +25,7 @@ public class CutsceneManager {
 
         switch (sceneNum) {
             case frostGiant: scene_FrostGiant(); break;
+            case demonSlime: scene_DemonSlime(); break; // (WIP)
         }
     }
 
@@ -60,7 +62,7 @@ public class CutsceneManager {
         }
         if(scenePhase == 2){
             for(int i = 0; i < gp.mobArr[1].length; i++){
-                if(gp.mobArr[gp.currentMap][i] != null && (gp.mobArr[gp.currentMap][i].name.equals(MOB_FrostGiant.monName))){
+                if(gp.mobArr[gp.currentMap][i] != null && (gp.mobArr[gp.currentMap][i].name.equals(BOSS_FrostGiant.monName))){
                     gp.mobArr[gp.currentMap][i].sleep = false;
                     gp.ui.npc = gp.mobArr[gp.currentMap][i];
                     scenePhase++;
@@ -72,7 +74,7 @@ public class CutsceneManager {
         if(scenePhase == 3) {
             gp.ui.drawDialogScreen();
             for(int i = 0; i < gp.mobArr[1].length; i++){
-                if(gp.mobArr[gp.currentMap][i] != null && (gp.mobArr[gp.currentMap][i].name.equals(MOB_FrostGiant.monName))){
+                if(gp.mobArr[gp.currentMap][i] != null && (gp.mobArr[gp.currentMap][i].name.equals(BOSS_FrostGiant.monName))){
                 gp.mobArr[gp.currentMap][i].onPath = true;
                 break;
                 }
@@ -95,5 +97,8 @@ public class CutsceneManager {
             gp.gameState = gp.playState;
             System.out.println("Phase 4");
         }
+    }
+    public void scene_DemonSlime() {
+
     }
 }

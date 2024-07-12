@@ -240,7 +240,7 @@ public class AssetSetter {
         gp.mobArr[mapNum][i].worldY = 1968;
         i++;
 
-        gp.mobArr[mapNum][i] = new MOB_FrostGiant(gp);
+        gp.mobArr[mapNum][i] = new BOSS_FrostGiant(gp);
         gp.mobArr[mapNum][i].worldX = 400;
         gp.mobArr[mapNum][i].worldY = 180;
         i++;

@@ -7,10 +7,10 @@ import object.OBJ_PickUpCoin;
 
 import java.io.IOException;
 
-public class MOB_FrostGiant extends Entity {
+public class BOSS_FrostGiant extends Entity {
     GamePanel gp;
     public static final String monName = "Frost Giant";
-    public MOB_FrostGiant(GamePanel gp) {
+    public BOSS_FrostGiant(GamePanel gp) {
         super(gp);
         this.gp = gp;
         name = monName;

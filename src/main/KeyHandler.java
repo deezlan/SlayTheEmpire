@@ -101,6 +101,11 @@ public class KeyHandler implements KeyListener {
             ePressed = true;
         }
     }
+    public void deathState(int code) {
+        if (code == KeyEvent.VK_E){
+            ePressed = true;
+        }
+    }
     public void shopState(int code) {
         if (code == KeyEvent.VK_W) {
             if (gp.ui.slotRowMove != 0) {
@@ -146,6 +151,8 @@ public class KeyHandler implements KeyListener {
             dialogState(code);
         } else if (gp.gameState == gp.shopState) {
             shopState(code);
+        } else if (gp.gameState == gp.deathState) {
+            deathState(code);
         }
     }
 

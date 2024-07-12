@@ -362,6 +362,7 @@ public class UI {
             gp.gameState = gp.playState;
             gp.currentMap = gp.eHandler.tempMap;
             gp.setMapColor();
+            gp.resetLevel();
             gp.player.worldX = gp.TILE_SIZE * gp.eHandler.tempCol;
             gp.player.worldY = gp.TILE_SIZE * gp.eHandler.tempRow;
             gp.eHandler.previousEventX = gp.player.worldX;
@@ -456,6 +457,7 @@ public class UI {
 
         if(counter == 50){
             counter = 0;
+            gp.resetLevel();
             gp.gameState = gp.playState;
             gp.currentMap = 0;
             gp.setMapColor();

@@ -139,11 +139,11 @@ public class GamePanel extends JPanel implements Runnable {
             case 0:
                 setBackground(Color.decode("#181425"));
                 break;
-            case 1:
+            case 1, 2:
                 setBackground(Color.decode("#42393A"));
-                break;
-            case 2:
-                setBackground(Color.decode("#42393A"));
+//                break;
+//            case 2:
+//                setBackground(Color.decode("#42393A"));
         }
     }
 

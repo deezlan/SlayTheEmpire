@@ -111,7 +111,7 @@ public class TileManager {
         try {
             dir = "/tiles/";
             tile = new Tile[200];
-            for (int i = 0; i <= 149; i++) {
+            for (int i = 0; i <= 150; i++) {
                 tile[i] = new Tile();
                 if (i < 13 || i > 25 ) tile[i].collision = true;
             }
@@ -295,10 +295,15 @@ public class TileManager {
             tile[147].image = UtilityTool.loadSprite(dir + "secondLevel/147.png", "Missing ");
             tile[148].image = UtilityTool.loadSprite(dir + "secondLevel/148.png", "Missing ");
             tile[149].image = UtilityTool.loadSprite(dir + "secondLevel/149.png", "Missing ");
+            tile[150].image = UtilityTool.loadSprite(dir + "secondLevel/150.png", "Missing ");
 
             tile[69].collision = false;
+            tile[85].collision = false;
+            tile[86].collision = false;
+            tile[92].collision = false;
+            tile[93].collision = false;
 
-            for (int i = 99; i <= 149; i++) {
+            for (int i = 99; i <= 148; i++) {
                 tile[i].collision = false;
             }
         } catch (IOException e) {

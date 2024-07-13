@@ -12,8 +12,8 @@ import java.util.ArrayList;
 
 public class NPC_Blacksmith extends Entity {
     public static ArrayList<Entity> shopItems = new ArrayList<>();
-    public NPC_Blacksmith(GamePanel gp) {
-        super(gp);
+    public NPC_Blacksmith(GamePanel gp, int worldX, int worldY) {
+        super(gp, worldX, worldY);
         action = "idleRight";
         type = type_npc;
         getNpcSprites();

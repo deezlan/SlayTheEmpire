@@ -23,7 +23,7 @@ public class AssetSetter {
             gp.objArr[mapNum][i] = new OBJ_ChatBubble(gp, 134, 108); i++;
             gp.objArr[mapNum][i] = new OBJ_ChatBubble(gp, 410, 230); i++;
             gp.objArr[mapNum][i] = new OBJ_ChatBubble(gp, 540, 410); i++;
-            gp.objArr[mapNum][i] = new OBJ_ChatBubble(gp, 640, 80); i++;
+            gp.objArr[mapNum][i] = new OBJ_ChatBubble(gp, 650, 80); i++;
 
             gp.objArr[mapNum][i] = new OBJ_Gate(gp, 1, 12, 8);
         }
@@ -132,30 +132,22 @@ public class AssetSetter {
         int mapNum = 0;
         int i = 0;
 
-            // MAP 0
-            gp.npcArr[mapNum][i] = new NPC_Maiden(gp);
-            gp.npcArr[mapNum][i].worldX = 368;
-            gp.npcArr[mapNum][i].worldY = 250;
-            System.out.println("NPC Maiden set at (" + gp.npcArr[mapNum][0].worldX + ", " + gp.npcArr[mapNum][0].worldY + ")");
-            i++;
+        // MAP 0
+        gp.npcArr[mapNum][i] = new NPC_Maiden(gp, 368, 250);
+        System.out.println("NPC Maiden set at (" + gp.npcArr[mapNum][0].worldX + ", " + gp.npcArr[mapNum][0].worldY + ")");
+        i++;
 
-            gp.npcArr[mapNum][i] = new NPC_Blacksmith(gp);
-            gp.npcArr[mapNum][i].worldX = 85;
-            gp.npcArr[mapNum][i].worldY = 128;
-            System.out.println("NPC Blacksmith set at (" + gp.npcArr[mapNum][0].worldX + ", " + gp.npcArr[mapNum][0].worldY + ")");
-            i++;
+        gp.npcArr[mapNum][i] = new NPC_Blacksmith(gp, 85, 128);
+        System.out.println("NPC Blacksmith set at (" + gp.npcArr[mapNum][0].worldX + ", " + gp.npcArr[mapNum][0].worldY + ")");
+        i++;
 
-            gp.npcArr[mapNum][i] = new NPC_Merchant(gp);
-            gp.npcArr[mapNum][i].worldX = 600;
-            gp.npcArr[mapNum][i].worldY = 100;
-            System.out.println("NPC Merchant set at (" + gp.npcArr[mapNum][0].worldX + ", " + gp.npcArr[mapNum][0].worldY + ")");
-            i++;
+        gp.npcArr[mapNum][i] = new NPC_Merchant(gp, 600, 100);
+        System.out.println("NPC Merchant set at (" + gp.npcArr[mapNum][0].worldX + ", " + gp.npcArr[mapNum][0].worldY + ")");
+        i++;
 
-            gp.npcArr[mapNum][i] = new NPC_Mystery(gp);
-            gp.npcArr[mapNum][i].worldX = 500;
-            gp.npcArr[mapNum][i].worldY = 440;
-            System.out.println("NPC Mystery set at (" + gp.npcArr[mapNum][0].worldX + ", " + gp.npcArr[mapNum][0].worldY + ")");
-            // MAP 1
+        gp.npcArr[mapNum][i] = new NPC_Mystery(gp, 500, 440);
+        System.out.println("NPC Mystery set at (" + gp.npcArr[mapNum][0].worldX + ", " + gp.npcArr[mapNum][0].worldY + ")");
+        // MAP 1
     }
 
     public void setMonster() {

@@ -119,31 +119,34 @@ public class AssetSetter {
         // FIRST ROOM GATES index (1-4)
         {
             // ENTRANCES
-            gp.objArr[mapNum][i] = new OBJ_Gate(gp, 1, 4, 16); i++;
-            gp.objArr[mapNum][i] = new OBJ_Gate(gp, 1, 5, 16); i++;
+            gp.objArr[mapNum][i] = new OBJ_Gate(gp, 1, 26, 36); i++;
+            gp.objArr[mapNum][i] = new OBJ_Gate(gp, 1, 26, 37); i++;
             // EXITS
-            gp.objArr[mapNum][i] = new OBJ_Gate(gp, 1, 4, 25); i++;
-            gp.objArr[mapNum][i] = new OBJ_Gate(gp, 1, 5, 25); i++;
+            gp.objArr[mapNum][i] = new OBJ_Gate(gp, 1, 20, 32); i++;
+            gp.objArr[mapNum][i] = new OBJ_Gate(gp, 1, 21, 32); i++;
         }
 
         // MINI-BOSS ROOM GATES index (5-8)
         {
             // ENTRANCES
-            gp.objArr[mapNum][i] = new OBJ_Gate(gp, 1, 7, 32); i++;
-            gp.objArr[mapNum][i] = new OBJ_Gate(gp, 1, 7, 33); i++;
+            gp.objArr[mapNum][i] = new OBJ_Gate(gp, 1, 13, 24); i++;
+            gp.objArr[mapNum][i] = new OBJ_Gate(gp, 1, 13, 25); i++;
             // EXITS
-            gp.objArr[mapNum][i] = new OBJ_Gate(gp, 1, 18, 32); i++;
-            gp.objArr[mapNum][i] = new OBJ_Gate(gp, 1, 18, 33); i++;
+            gp.objArr[mapNum][i] = new OBJ_Gate(gp, 1, 6, 19); i++;
+            gp.objArr[mapNum][i] = new OBJ_Gate(gp, 1, 7, 19); i++;
+            gp.objArr[mapNum][i] = new OBJ_Gate(gp, 1, 8, 19); i++;
         }
 
         // FINAL BOSS ROOM GATES index (9-12)
         {
             // ENTRANCES
-            gp.objArr[mapNum][i] = new OBJ_Gate(gp, 1, 21, 25); i++;
+            gp.objArr[mapNum][i] = new OBJ_Gate(gp, 1, 6, 11); i++;
+            gp.objArr[mapNum][i] = new OBJ_Gate(gp, 1, 7, 11); i++;
+            gp.objArr[mapNum][i] = new OBJ_Gate(gp, 1, 8, 11); i++;
             // EXIT
-            gp.objArr[mapNum][i] = new OBJ_Gate(gp, 1, 20, 16); i++;
-            gp.objArr[mapNum][i] = new OBJ_Gate(gp, 1, 21, 16); i++;
-            gp.objArr[mapNum][i] = new OBJ_Gate(gp, 1, 22, 16); i++;
+            gp.objArr[mapNum][i] = new OBJ_Gate(gp, 1, 14, 5); i++;
+            gp.objArr[mapNum][i] = new OBJ_Gate(gp, 1, 14, 6); i++;
+            gp.objArr[mapNum][i] = new OBJ_Gate(gp, 1, 14, 7); i++;
         }
 
         // PLOT TWIST BOSS ROOM GATES index (13-17)
@@ -152,10 +155,10 @@ public class AssetSetter {
             gp.objArr[mapNum][i] = new OBJ_Gate(gp, 1, 20, 10); i++;
             gp.objArr[mapNum][i] = new OBJ_Gate(gp, 1, 21, 10); i++;
             gp.objArr[mapNum][i] = new OBJ_Gate(gp, 1, 22, 10); i++;
-
             // EXIT
             gp.objArr[mapNum][i] = new OBJ_Gate(gp, 1, 28, 5); i++;
-            gp.objArr[mapNum][i] = new OBJ_Gate(gp, 1, 28, 6);
+            gp.objArr[mapNum][i] = new OBJ_Gate(gp, 1, 28, 5); i++;
+            gp.objArr[mapNum][i] = new OBJ_Gate(gp, 1, 28, 5);
         }
     }
 

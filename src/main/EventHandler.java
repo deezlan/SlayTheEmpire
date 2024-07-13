@@ -205,13 +205,10 @@ public class EventHandler {
 //                tempMap = 1; // FIRST LEVEL CORRECT VALUES
 //                tempCol = 2;
 //                tempRow = 41;
-//                tempMap = 2; // SECOND LEVEL CORRECT VALUES
-//                tempCol = 31;
-//                tempRow = 36;
-//                gp.player.lookingRight = false;
-                tempMap = 2;
-                tempCol = 25;
-                tempRow = 15;
+                tempMap = 2; // SECOND LEVEL CORRECT VALUES
+                tempCol = 31;
+                tempRow = 36;
+                gp.player.lookingRight = false;
                 break;
             case 1, 2:
                 tempMap = 0;

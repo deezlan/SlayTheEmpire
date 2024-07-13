@@ -206,8 +206,9 @@ public class EventHandler {
 //                tempCol = 2;
 //                tempRow = 41;
                 tempMap = 2;
-                tempCol = 4;
-                tempRow = 11;
+                tempCol = 31;
+                tempRow = 36;
+                gp.player.lookingRight = false;
                 break;
             case 1, 2:
                 tempMap = 0;

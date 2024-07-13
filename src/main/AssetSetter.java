@@ -152,13 +152,13 @@ public class AssetSetter {
         // PLOT TWIST BOSS ROOM GATES index (13-17)
         {
             // ENTRANCES
-            gp.objArr[mapNum][i] = new OBJ_Gate(gp, 1, 20, 10); i++;
-            gp.objArr[mapNum][i] = new OBJ_Gate(gp, 1, 21, 10); i++;
-            gp.objArr[mapNum][i] = new OBJ_Gate(gp, 1, 22, 10); i++;
+            gp.objArr[mapNum][i] = new OBJ_Gate(gp, 1, 25, 5); i++;
+            gp.objArr[mapNum][i] = new OBJ_Gate(gp, 1, 25, 6); i++;
+            gp.objArr[mapNum][i] = new OBJ_Gate(gp, 1, 25, 7); i++;
             // EXIT
-            gp.objArr[mapNum][i] = new OBJ_Gate(gp, 1, 28, 5); i++;
-            gp.objArr[mapNum][i] = new OBJ_Gate(gp, 1, 28, 5); i++;
-            gp.objArr[mapNum][i] = new OBJ_Gate(gp, 1, 28, 5);
+            gp.objArr[mapNum][i] = new OBJ_Gate(gp, 1, 32, 11); i++;
+            gp.objArr[mapNum][i] = new OBJ_Gate(gp, 1, 33, 11); i++;
+            gp.objArr[mapNum][i] = new OBJ_Gate(gp, 1, 34, 11);
         }
     }
 

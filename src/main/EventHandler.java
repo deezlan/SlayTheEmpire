@@ -157,7 +157,7 @@ public class EventHandler {
 
                     if (hit(1,13,17,"anything")) {
                         System.out.println("pizza");
-                        FireWorm();
+                        //FireWorm();
 
                     }
 
@@ -248,11 +248,11 @@ public class EventHandler {
         }
     }
 
-    public void FireWorm() {
-        if(!gp.bossBattleOn) {
-            gp.gameState = gp.cutsceneState;
-            gp.csManager.sceneNum = gp.csManager.fireWorm;
-        }
-    }
+//    public void FireWorm() {
+//        if(!gp.bossBattleOn) {
+//            gp.gameState = gp.cutsceneState;
+//            gp.csManager.sceneNum = gp.csManager.fireWorm;
+//        }
+//    }
 }
 

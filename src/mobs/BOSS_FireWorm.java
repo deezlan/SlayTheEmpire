@@ -10,7 +10,7 @@ import java.io.IOException;
 
 public class BOSS_FireWorm extends Entity {
     GamePanel gp;
-    public static final String monName = "Lex";
+    public static final String monName = "Leo";
     public BOSS_FireWorm(GamePanel gp) {
         super(gp);
         this.gp = gp;

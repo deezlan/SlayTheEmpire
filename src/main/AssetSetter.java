@@ -245,10 +245,25 @@ public class AssetSetter {
         gp.mobArr[mapNum][i].worldY = 180;
         i++;
 
-        gp.mobArr[mapNum][i] = new BOSS_DemonSlime(gp);
-        gp.mobArr[mapNum][i].worldX = 400;
-        gp.mobArr[mapNum][i].worldY = 850;
+        gp.mobArr[mapNum][i] = new BOSS_FireWorm(gp);
+        gp.mobArr[mapNum][i].worldX = 450;
+        gp.mobArr[mapNum][i].worldY = 950;
         i++;
+
+//        gp.mobArr[mapNum][i] = new BOSS_DemonSlime(gp);
+//        gp.mobArr[mapNum][i].worldX = 400;
+//        gp.mobArr[mapNum][i].worldY = 850;
+//        i++;
+
+//        gp.mobArr[mapNum][i] = new BOSS_Cultist(gp);
+//        gp.mobArr[mapNum][i].worldX = 500;
+//        gp.mobArr[mapNum][i].worldY = 1100;
+//        i++;
+
+//        gp.mobArr[mapNum][i] = new BOSS_FallenPrincess(gp);
+//        gp.mobArr[mapNum][i].worldX = 500;
+//        gp.mobArr[mapNum][i].worldY = 1100;
+//        i++;
 
 //        gp.mobArr[mapNum][i] = new BOSS_Golem(gp);
 //        gp.mobArr[mapNum][i].worldX = 450;

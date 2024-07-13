@@ -445,6 +445,8 @@ public class UI {
                             g2.fillRect(x, y, (int) hpBarValue, 20);
                         case 3:
                             g2.fillRect(x, y, (int) hpBarValue, 20);
+                        case 4:
+                            g2.fillRect(x, y, (int) hpBarValue, 20);
                     }
                     // DRAW NAME
                     g2.setFont(g2.getFont().deriveFont(Font.BOLD,24f));
@@ -455,6 +457,8 @@ public class UI {
                         case 2:
                             g2.drawString(mob.name,x+4,y-10);
                         case 3:
+                            g2.drawString(mob.name,x+4,y-10);
+                        case 4:
                             g2.drawString(mob.name,x+4,y-10);
                     }
                 }

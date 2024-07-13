@@ -555,8 +555,6 @@ public class UI {
                 break;
             }
         }
-
-
     }
 
     // CHARACTER SELECTION SCREEN
@@ -953,25 +951,49 @@ public class UI {
         text = "Music";
         x = getXForCenteredText(text);
         y += (int) (gp.TILE_SIZE*1.2);
-        g2.drawString(text,x,y);
+        if (gp.ui.commandNum == 0) {
+            g2.setColor(Color.YELLOW); // highlight color
+            g2.drawString(text,x,y);
+        } else {
+            g2.setColor(Color.white);
+            g2.drawString(text,x,y);
+        }
 
         // SOUND EFFECTS
         text = "SFX";
         x = getXForCenteredText(text);
         y += (int) (gp.TILE_SIZE*2.4);
-        g2.drawString(text,x,y);
+        if (gp.ui.commandNum == 1) {
+            g2.setColor(Color.YELLOW); // highlight color
+            g2.drawString(text,x,y);
+        } else {
+            g2.setColor(Color.white);
+            g2.drawString(text,x,y);
+        }
 
         // CONTROL
         text = "Controls";
         x = getXForCenteredText(text);
         y += (int) (gp.TILE_SIZE*2.4);
-        g2.drawString(text,x,y);
+        if (gp.ui.commandNum == 2) {
+            g2.setColor(Color.YELLOW); // highlight color
+            g2.drawString(text,x,y);
+        } else {
+            g2.setColor(Color.white);
+            g2.drawString(text,x,y);
+        }
 
         // BACK
         text = "Back";
         x = getXForCenteredText(text);
         y += (int) (gp.TILE_SIZE*3);
-        g2.drawString(text,x,y);
+        if (gp.ui.commandNum == 4) {
+            g2.setColor(Color.YELLOW); // highlight color
+            g2.drawString(text,x,y);
+        } else {
+            g2.setColor(Color.white);
+            g2.drawString(text,x,y);
+        }
 
         // VOLUME BAR
         x = gp.SCREEN_WIDTH/2 - 120;

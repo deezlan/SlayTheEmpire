@@ -329,6 +329,9 @@ public class Player extends Entity {
                 rightCollisionOn = false;
                 gp.cChecker.checkTile(this);
 
+                // CHECK GATE COLLISION
+                gp.cChecker.checkGate(this, true);
+
                 // CHECK OBJECT COLLISION BEFORE INTERACTING
                 gp.cChecker.checkObject(this, true);
                 int objIndex = gp.cChecker.checkObject(this, true);

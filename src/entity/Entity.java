@@ -442,12 +442,13 @@ public abstract class Entity {
         leftCollisionOn = false;
         rightCollisionOn = false;
         gp.cChecker.checkObject(this, false);
+        gp.cChecker.checkGate(this, false);
         gp.cChecker.checkPLayer(this);
         gp.cChecker.checkTile(this);
         gp.cChecker.checkEntityCollision(this, gp.npcArr);
         boolean contactPlayer = gp.cChecker.checkPLayer(this);
 
-        if (this.type == 1 && contactPlayer) {
+        if (this.type == type_mob && contactPlayer) {
             if (!gp.player.iframe) {
                 gp.player.currentLife -= 1;
                 gp.player.iframe = true;
@@ -560,7 +561,10 @@ public abstract class Entity {
             runInteractSprites();
         }
         if (type == type_gate) {
-            if (locking) runLockAnimation();
+            if (locking) {
+                System.out.println("About to runLock");
+                runLockAnimation();
+            }
             if (unlocking) runUnlockingAnimation();
         } else {
             if (knockBack) {
@@ -699,27 +703,27 @@ public abstract class Entity {
             int screenX = worldX - gp.player.worldX + gp.player.screenX;
             int screenY = worldY - gp.player.worldY + gp.player.screenY;
 
-                if (inCamera()) {
-                    if (iframe) {
-                        hpBarVisible = true;
-                        hpBarCounter = 0;
-                        UtilityTool.changeAlpha(g2, 0.3f);
-                    }
-                    if (dead) {
-                        dyingAnimation(g2);
-                    }
-                    if (!attacking) {
-                        g2.drawImage(image, screenX, screenY, null);
-                        UtilityTool.changeAlpha(g2, 1f);
-                    }
-                    if (attacking) {
-                        if (animationSpriteNum >= currentList.size() - 1)
-                            animationSpriteNum = 0;
-                        BufferedImage animationImage = currentList.get(animationSpriteNum);
-                        g2.drawImage(animationImage, screenX, screenY, null);
-                    }
+            if (inCamera()) {
+                if (iframe) {
+                    hpBarVisible = true;
+                    hpBarCounter = 0;
+                    UtilityTool.changeAlpha(g2, 0.3f);
+                }
+                if (dead) {
+                    dyingAnimation(g2);
+                }
+                if (!attacking) {
+                    g2.drawImage(image, screenX, screenY, null);
+                    UtilityTool.changeAlpha(g2, 1f);
+                }
+                if (attacking) {
+                    if (animationSpriteNum >= currentList.size() - 1)
+                        animationSpriteNum = 0;
+                    BufferedImage animationImage = currentList.get(animationSpriteNum);
+                    g2.drawImage(animationImage, screenX, screenY, null);
                 }
             }
+        }
     }
 }
 

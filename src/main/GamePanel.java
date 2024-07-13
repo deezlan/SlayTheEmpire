@@ -54,9 +54,10 @@ public class GamePanel extends JPanel implements Runnable {
     private final ArrayList<Entity> entityList = new ArrayList<>();
     public AssetSetter aSetter = new AssetSetter(this);
     public Entity[][]
-            objArr= new Entity[maxMap][30],
+            objArr = new Entity[maxMap][30],
             npcArr = new Entity[maxMap][10],
             mobArr = new Entity[maxMap][20],
+            gateArr = new Entity[maxMap][50],
             projectileArr = new Entity[maxMap][50];
     public InteractiveTIle[][] iTile = new InteractiveTIle[maxMap][50];
 
@@ -112,6 +113,7 @@ public class GamePanel extends JPanel implements Runnable {
         aSetter.setObject();
         aSetter.setNPC();
         aSetter.setMonster();
+        aSetter.setGates();
         gameState = playState;
 
         tempScreen = new BufferedImage(SCREEN_WIDTH,SCREEN_HEIGHT,BufferedImage.TYPE_INT_ARGB);
@@ -123,6 +125,7 @@ public class GamePanel extends JPanel implements Runnable {
         player.restoreLife();
         aSetter.setMonster();
         aSetter.setNPC();
+        aSetter.setGates();
     }
 
 //    public void restart() {
@@ -143,6 +146,7 @@ public class GamePanel extends JPanel implements Runnable {
         bossBattleOn = false;
         aSetter.setObject();
         aSetter.setMonster();
+        aSetter.setGates();
     }
 
     // MAP SETTINGS
@@ -240,6 +244,12 @@ public class GamePanel extends JPanel implements Runnable {
                     }
                 }
             }
+
+            for (int i = 0; i < gateArr[1].length; i++) {
+                if (gateArr[currentMap][i] != null) {
+                    gateArr[currentMap][i].update();
+                }
+            }
         }
     }
     public void paintComponent(Graphics g) {
@@ -260,43 +270,52 @@ public class GamePanel extends JPanel implements Runnable {
             tileM.draw(g2); // Draw tiles
 
             // ADD INTERACTIVE TILES
-            for (int i = 0; i < iTile[1].length; i++){ // INTERACTIVE TILES
-                if(iTile[currentMap][i] != null){
-                    iTile[currentMap][i].draw(g2);
-                }
-            }
+//            for (int i = 0; i < iTile[1].length; i++){ // INTERACTIVE TILES
+//                if(iTile[currentMap][i] != null){
+//                    iTile[currentMap][i].draw(g2);
+//                }
+//            }
 
-            // ADD ENTITIES TO THE LIST
+            // ADD ALL ENTITIES TO entityList
+
+            // PLAYER
             entityList.add(player);
-
-            for (int i = 0; i < npcArr[1].length; i++){ // NPCs
+            // NPCs
+            for (int i = 0; i < npcArr[1].length; i++){
                 if(npcArr[currentMap][i] != null){
                     entityList.add(npcArr[currentMap][i]);
                 }
             }
-
-            for (int i = 0; i < objArr[1].length; i++){ // OBJECT
+            // OBJECT
+            for (int i = 0; i < objArr[1].length; i++){
                 if(objArr[currentMap][i] != null){
                     entityList.add(objArr[currentMap][i]);
                 }
             }
-
-            for (int i = 0; i < mobArr[1].length; i++){ // MOBS
+            // MOBS
+            for (int i = 0; i < mobArr[1].length; i++){
                 if(mobArr[currentMap][i] != null){
                     entityList.add(mobArr[currentMap][i]);
                 }
             }
-
-            for (int i = 0; i < projectileArr[1].length; i++){ // PROJECTILES
+            // PROJECTILES
+            for (int i = 0; i < projectileArr[1].length; i++){
                 if(projectileArr[currentMap][i] != null){
                     entityList.add(projectileArr[currentMap][i]);
                 }
             }
 
-            // SORT
+            // SORT FOR RENDERING ORDER
             entityList.sort(Comparator.comparingInt(e -> e.worldY));
 
-            // DRAW ENTITIES
+            // GATES
+            for (int i = 0; i < gateArr[1].length; i++){
+                if(gateArr[currentMap][i] != null){
+                    entityList.add(0, gateArr[currentMap][i]);
+                }
+            }
+
+            // DRAW ALL ENTITIES
             for (Entity entity : entityList) {
                 entity.draw(g2);
             }

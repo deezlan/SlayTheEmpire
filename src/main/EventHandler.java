@@ -70,16 +70,19 @@ public class EventHandler {
                     ) {
                         drinkWater(gp.dialogueState);
                     } else if (hit(0, 8, 4, "any")) {
-                        gp.objArr[gp.currentMap][6].locking = true;
+                        gp.gateArr[gp.currentMap][0].locking = true;
 //                eventRect[0][8][4].eventDone = true;
                     } else if (hit(0, 11, 4, "any")) {
-                        gp.objArr[gp.currentMap][6].unlocking = true;
+                        gp.gateArr[gp.currentMap][0].unlocking = true;
 //                eventRect[0][8][4].eventDone = true;
                     }
                     break;
 
                 // LEVEL ONE
                 case 1:
+                    if (hit(gp.currentMap,12, 16, "any")) {
+                        FrostGiant();
+                    }
                     if ( // TRIGGER 1ST ROOM GATES
                             hit(gp.currentMap, 7, 40, "any")
                                     || hit(gp.currentMap, 8, 41, "any")
@@ -87,8 +90,8 @@ public class EventHandler {
                                     || hit(gp.currentMap, 8, 43, "any")
                                     || hit(gp.currentMap, 7, 44, "any")
                     ) {
-                        for (int i = 1; i <= 5; i++)
-                            gp.objArr[1][i].locking = true;
+                        for (int i = 0; i <= 4; i++)
+                            gp.gateArr[gp.currentMap][i].locking = true;
 
 //                        eventRect[1][7][40].eventDone = true;
 //                        eventRect[1][8][41].eventDone = true;
@@ -99,8 +102,8 @@ public class EventHandler {
                             hit(gp.currentMap, 8, 30, "any")
                                     || hit(gp.currentMap, 8, 31, "any")
                     ) {
-                        for (int i = 6; i <= 7; i++)
-                            gp.objArr[gp.currentMap][i].locking = true;
+                        for (int i = 5; i <= 6; i++)
+                            gp.gateArr[gp.currentMap][i].locking = true;
 
 //                        eventRect[1][8][30].eventDone = true;
 //                        eventRect[1][8][31].eventDone = true;
@@ -109,8 +112,8 @@ public class EventHandler {
                             hit(gp.currentMap, 16, 30, "any")
                                     || hit(1, 16, 31, "any")
                     ) {
-                        for (int i = 8; i <= 9; i++)
-                            gp.objArr[gp.currentMap][i].locking = true;
+                        for (int i = 7; i <= 8; i++)
+                            gp.gateArr[gp.currentMap][i].locking = true;
 
 //                        eventRect[1][16][30].eventDone = true;
 //                        eventRect[1][16][31].eventDone = true;
@@ -126,8 +129,8 @@ public class EventHandler {
                                     || hit(1, 15, 24, "any")
                                     || hit(1, 16, 25, "any")
                     ) {
-//                        for (int i = 10; i <= 16; i++)
-//                            gp.objArr[gp.currentMap][i].locking = true;
+                        for (int i = 9; i <= 15; i++)
+                            gp.objArr[gp.currentMap][i].locking = true;
 
 //                        eventRect[1][7][22].eventDone = true;
 //                        eventRect[1][8][23].eventDone = true;
@@ -145,8 +148,8 @@ public class EventHandler {
                                     || hit(1, 13, 12, "any")
                                     || hit(1, 14, 13, "any")
                     ) {
-                        for (int i = 17; i <= 20; i++)
-                            gp.objArr[gp.currentMap][i].locking = true;
+                        for (int i = 16; i <= 19; i++)
+                            gp.gateArr[gp.currentMap][i].locking = true;
 
 //                        eventRect[1][10][13].eventDone = true;
 //                        eventRect[1][11][12].eventDone = true;
@@ -154,20 +157,17 @@ public class EventHandler {
 //                        eventRect[1][13][12].eventDone = true;
 //                        eventRect[1][14][13].eventDone = true;
                     }
-                    if (hit(gp.currentMap,12, 16, "any")) {
-                        FrostGiant();
-                    }
 
                     // UNLOCK FIRST ROOM GATES ONCE EVERY MOB SLAIN
                     if (gp.mobArr[gp.currentMap][0] == null && gp.mobArr[gp.currentMap][1] == null) {
-                        for (int i = 1; i <= 5; i++)
-                            gp.objArr[gp.currentMap][i].unlocking = true;
+                        for (int i = 0; i <= 4; i++)
+                            gp.gateArr[gp.currentMap][i].unlocking = true;
                     }
 
                     // UNLOCK FIRST ROOM GATES ONCE EVERY MOB SLAIN
                     if (gp.mobArr[gp.currentMap][2] == null) {
-                        for (int i = 17; i <= 20; i++)
-                            gp.objArr[gp.currentMap][i].unlocking = true;
+                        for (int i = 16; i <= 19; i++)
+                            gp.gateArr[gp.currentMap][i].unlocking = true;
                     }
                     break;
 
@@ -180,8 +180,8 @@ public class EventHandler {
                                     || hit(gp.currentMap, 24, 38, "any")
                                     || hit(gp.currentMap, 25, 39, "any")
                     ) {
-                        for (int i = 1; i <= 4; i++)
-                            gp.objArr[gp.currentMap][i].locking = true;
+                        for (int i = 0; i <= 3; i++)
+                            gp.gateArr[gp.currentMap][i].locking = true;
                     }
                     if ( // TRIGGER MINI-BOSS ROOM GATES
                             hit(gp.currentMap, 12, 23, "any")
@@ -190,8 +190,8 @@ public class EventHandler {
                                     || hit(gp.currentMap, 11, 26, "any")
                                     || hit(gp.currentMap, 12, 27, "any")
                     ) {
-                        for (int i = 5; i <= 9; i++)
-                            gp.objArr[gp.currentMap][i].locking = true;
+                        for (int i = 4; i <= 8; i++)
+                            gp.gateArr[gp.currentMap][i].locking = true;
                     }
                     if ( // TRIGGER FINAL BOSS ROOM GATES
                             hit(gp.currentMap, 5, 10, "any")
@@ -200,8 +200,8 @@ public class EventHandler {
                                     || hit(gp.currentMap, 8, 9, "any")
                                     || hit(gp.currentMap, 9, 10, "any")
                     ) {
-                        for (int i = 10; i <= 15; i++)
-                            gp.objArr[gp.currentMap][i].locking = true;
+                        for (int i = 9; i <= 14; i++)
+                            gp.gateArr[gp.currentMap][i].locking = true;
                     }
                     if ( // TRIGGER PLOT TWIST FINAL BOSS ROOM GATES
                             hit(gp.currentMap, 26, 4, "any")
@@ -211,26 +211,26 @@ public class EventHandler {
                                     || hit(gp.currentMap, 27, 8, "any")
                                     || hit(gp.currentMap, 26, 9, "any")
                     ) {
-                        for (int i = 16; i <= 21; i++)
-                            gp.objArr[gp.currentMap][i].locking = true;
+                        for (int i = 15; i <= 20; i++)
+                            gp.gateArr[gp.currentMap][i].locking = true;
                     }
 
                     // UNLOCK FIRST ROOM GATES ONCE EVERY MOB SLAIN
                     if (gp.mobArr[gp.currentMap][0] == null && gp.mobArr[gp.currentMap][1] == null) {
-                        for (int i = 1; i <= 5; i++)
-                            gp.objArr[1][i].unlocking = true;
+                        for (int i = 0; i <= 4; i++)
+                            gp.gateArr[gp.currentMap][i].unlocking = true;
                     }
 
                     // UNLOCK BOSS ROOM GATES ONCE BOSS SLAIN
                     if (gp.mobArr[gp.currentMap][2] == null) {
-                        for (int i = 17; i <= 20; i++)
-                            gp.objArr[1][i].unlocking = true;
+                        for (int i = 16; i <= 19; i++)
+                            gp.gateArr[gp.currentMap][i].unlocking = true;
                     }
 
                     // UNLOCK MINI BOSS GATE AFTER SLAIN
                     if (gp.mobArr[1][3] == null) {
-                    for (int i = 10; i <= 16; i++)
-                        gp.objArr[1][i].unlocking = true;
+                    for (int i = 9; i <= 15; i++)
+                        gp.gateArr[gp.currentMap][i].unlocking = true;
                     }
             }
         }

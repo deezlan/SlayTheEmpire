@@ -26,7 +26,6 @@ public class KeyHandler implements KeyListener {
             twoPressed,
             threePressed,
             godModeOn,
-            threePressed,
             escapePressed;
 
     public KeyHandler(GamePanel gp){
@@ -40,20 +39,28 @@ public class KeyHandler implements KeyListener {
         int code = e.getKeyCode();
 
         // **GAME STATES**
-        if (gp.gameState == gp.loginState) {
-            handleLoginState(code);
+        if (gp.gameState == gp.titleState) {
+            titleState(code);
+        } else if (gp.gameState == gp.loginState) {
+            loginState(code);
         } else if (gp.gameState == gp.startMenuState) {
-            handleStartMenuState(code);
+            startMenuState(code);
         } else if (gp.gameState == gp.characterSelectionState) {
-            handleCharacterSelectionState(code);
+            characterSelectionState(code);
         } else if (gp.gameState == gp.playState) {
-            handlePlayState(code);
+            playState(code);
         } else if (gp.gameState == gp.optionState || gp.gameState == gp.optionState2) {
-            handleOptionState(code);
+            optionState(code);
         } else if (gp.gameState == gp.shopState) {
-            handleShopState(code);
+            shopState(code);
         } else if (gp.gameState == gp.pauseState) {
-            handlePauseState(code);
+            pauseState(code);
+        } else if (gp.gameState == gp.dialogueState) {
+            dialogState(code);
+        } else if (gp.gameState == gp.deathState) {
+            deathState(code);
+        } else if (gp.gameState == gp.creditsState) {
+            creditsState(code);
         }
 
         if (code == KeyEvent.VK_T){
@@ -62,17 +69,6 @@ public class KeyHandler implements KeyListener {
             }
             else {
                 showDebug = false;
-            }
-        }
-
-        // **KEY HANDLING**
-        // MOVING THROUGH DIALOGUE
-        if (code == KeyEvent.VK_E) {
-            ePressed = true;
-//            if(gp.gameState == gp.dialogueState){
-//                gp.gameState = gp.playState;
-            if (gp.gameState == gp.shopState) {
-                gp.gameState = gp.playState;
             }
         }
 
@@ -87,32 +83,46 @@ public class KeyHandler implements KeyListener {
 
     // GAME STATES METHODS
     public void titleState(int code) {
-        // PUT TITLE STATE STUFF HERE
+        if (code == KeyEvent.VK_SPACE) {
+            if (gp.gameState == gp.titleState){
+                gp.playSE(2);
+                gp.gameState = gp.startMenuState;
+            }
+        }
     }
 
-    public void handleStartMenuState(int code) {
+    public void startMenuState(int code) {
         if (gp.gameState == gp.startMenuState){
             if (code == KeyEvent.VK_W || code == KeyEvent.VK_S) {
                 gp.ui.commandNum += (code == KeyEvent.VK_W) ? -1 : 1;
                 gp.playSE(1);
-                gp.ui.commandNum = Math.max(0, Math.min(gp.ui.commandNum, 3));
+                gp.ui.commandNum = Math.max(0, Math.min(gp.ui.commandNum, 4));
             }
 
             // SELECT OPTION
             if (code == KeyEvent.VK_SPACE) {
-                // SELECT SOUND EFFECT
+                //SOUND EFFECT
                 gp.playSE(2);
                 switch (gp.ui.commandNum) {
                     case 0 -> gp.gameState = gp.loginState; // GO TO LOGIN
                     case 1 -> System.out.println("My name is Yoshikage Kira. I'm 33 years old. My house is in the northeast section of Morioh, where all the villas are, and I am not married. I work as an employee for the Kame Yu department stores, and I get home every day by 8 PM at the latest. \n I don't smoke, but I occasionally drink. I'm in bed by 11 PM, and make sure I get eight hours of sleep, no matter what. After having a glass of warm milk and doing about twenty minutes of stretches before going to bed, I usually have no problems sleeping until morning. \n Just like a baby, I wake up without any fatigue or stress in the morning. I was told there were no issues at my last check-up. I'm trying to explain that I'm a person who wishes to live a very quiet life. I take care not to trouble myself with any enemies, like winning and losing, that would cause me to lose sleep at night. \n That is how I deal with society, and I know that is what brings me happiness. Although, if I were to fight I wouldn't lose to anyone."); // LOAD GAME
-                    case 2 -> gp.gameState = gp.optionState2;
-                    case 3 -> System.exit(0); // EXIT GAME
+                    case 2 -> gp.gameState = gp.creditsState;
+                    case 3 -> {
+                        gp.gameState = gp.optionState2;
+                        // DEFAULT TO FIRST OPTION
+                        gp.ui.commandNum = 0;
+                    }
+                    case 4 -> System.exit(0); // EXIT GAME
                 }
             }
         }
     }
 
-    public void handleLoginState(int code) {
+    public void creditsState(int code) {
+
+    }
+
+    public void loginState(int code) {
         if (code == KeyEvent.VK_ESCAPE) {
             gp.gameState = gp.startMenuState;
         }
@@ -152,7 +162,7 @@ public class KeyHandler implements KeyListener {
         }
     }
 
-    public void handleCharacterSelectionState(int code) {
+    public void characterSelectionState(int code) {
         // SELECT CLASS
         if (code == KeyEvent.VK_A || code == KeyEvent.VK_D) {
             gp.ui.commandNum += (code == KeyEvent.VK_A) ? -1 : 1;
@@ -191,6 +201,10 @@ public class KeyHandler implements KeyListener {
                 gp.playMusic(4);
                 musicPlaying = true;
             }
+            // GO TO OPTIONS
+            if (code == KeyEvent.VK_ESCAPE) {
+                gp.gameState = gp.optionState;
+            }
             if (code == KeyEvent.VK_W) {
                 wPressed = true;
             }
@@ -226,6 +240,7 @@ public class KeyHandler implements KeyListener {
             }
         }
     }
+
     public void pauseState(int code) {
         if (code == KeyEvent.VK_P) {
             pPressed = true;
@@ -236,6 +251,7 @@ public class KeyHandler implements KeyListener {
             }
         }
     }
+
     public void dialogState(int code) {
         if (code == KeyEvent.VK_E) {
             ePressed = true;
@@ -246,13 +262,14 @@ public class KeyHandler implements KeyListener {
             }
         }
     }
+
     public void deathState(int code) {
         if (code == KeyEvent.VK_E){
             ePressed = true;
         }
     }
 
-    private void handleOptionState(int code) {
+    private void optionState(int code) {
         if (code == KeyEvent.VK_ESCAPE) {
             gp.gameState = (gp.gameState == gp.playState) ? gp.optionState : (gp.gameState == gp.optionState) ? gp.playState : gp.gameState;
         }
@@ -266,28 +283,28 @@ public class KeyHandler implements KeyListener {
             }
 
             // MUSIC AND SFX CONTROL
-            if (code == KeyEvent.VK_A || code == KeyEvent.VK_D) {
-                int adjustment = (code == KeyEvent.VK_A) ? -1 : 1;
-                gp.playSE(1);
+            if (gp.ui.commandNum == 0 || gp.ui.commandNum == 1) {
+                if (code == KeyEvent.VK_A || code == KeyEvent.VK_D) {
+                    int adjustment = (code == KeyEvent.VK_A) ? -1 : 1;
+                    gp.playSE(1);
 
-                switch (gp.ui.commandNum) {
-                    case 0: {
-                        // MUSIC
-                        gp.music.volumeScale = Math.max(0, Math.min(gp.music.volumeScale + adjustment, 5));
-                        gp.music.checkVolume();
-                        System.out.println((adjustment == -1 ? "minus'ing" : "plus'ing") + "music vol");
-                        break;
-                    }
-                    case 1: {
-                        // SFX
-                        gp.effect.volumeScale = Math.max(0, Math.min(gp.effect.volumeScale + adjustment, 5));
-                        gp.effect.checkVolume();
-                        System.out.println((adjustment == -1 ? "minus'ing" : "plus'ing") + "sfx vol");
-                        break;
+                    switch (gp.ui.commandNum) {
+                        case 0: {
+                            // MUSIC
+                            gp.music.volumeScale = Math.max(0, Math.min(gp.music.volumeScale + adjustment, 5));
+                            gp.music.checkVolume();
+                            System.out.println((adjustment == -1 ? "minus'ing" : "plus'ing") + "music vol");
+                            break;
+                        }
+                        case 1: {
+                            // SFX
+                            gp.effect.volumeScale = Math.max(0, Math.min(gp.effect.volumeScale + adjustment, 5));
+                            gp.effect.checkVolume();
+                            System.out.println((adjustment == -1 ? "minus'ing" : "plus'ing") + "sfx vol");
+                            break;
+                        }
                     }
                 }
-
-
             }
 
             if (code == KeyEvent.VK_SPACE) {
@@ -299,7 +316,9 @@ public class KeyHandler implements KeyListener {
                     }
                     // END GAME
                     case 3: {
-                        System.exit(0);
+                        if (gp.gameState == gp.optionState) {
+                            System.exit(0);
+                        }
                         break;
                     }
                     // BACK
@@ -310,7 +329,6 @@ public class KeyHandler implements KeyListener {
                     }
                 }
             }
-
         }
     }
 

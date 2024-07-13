@@ -91,7 +91,7 @@ public class GamePanel extends JPanel implements Runnable {
             deathState = 5,
             transitionState = 6,
             loginState = 7,
-            registerState = 8,
+            creditsState = 8,
             characterSelectionState = 9,
             optionState = 10,
             optionState2 = 12,

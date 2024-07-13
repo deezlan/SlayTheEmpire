@@ -29,8 +29,10 @@ public class UI {
     private final Image bg;
     private final Image titleGif;
     private final Image titleImage;
-    private final Image startMenuButtons;
-    private final Image warriorGif, knightGif, assassinGif;
+    private final Image startMenu;
+    private final Image warriorGif;
+    private final Image knightGif;
+    private final Image assassinGif;
     private final Image loginDefault, typeUsername, typePassword,
             blankErr, usernameErr, loginErr, usernameTakenErr;
 
@@ -100,7 +102,7 @@ public class UI {
 
         // INITIALIZE START MENU UI
         bg = new ImageIcon("res/UI/bg.png").getImage();
-        startMenuButtons = new ImageIcon("res/UI/startMenu.png").getImage();
+        startMenu = new ImageIcon("res/UI/startMenu.png").getImage();
 
         // INITIALIZE PLAYER PREVIEW
         ImageIcon warrior = new ImageIcon("res/player/WarriorIdle.gif");
@@ -115,7 +117,6 @@ public class UI {
         File fontFile = new File("res/font/x12y16pxMaruMonica.ttf");
         return Font.createFont(Font.TRUETYPE_FONT, new FileInputStream(fontFile));
     }
-
 
     public void draw(Graphics2D g2){
 
@@ -150,7 +151,6 @@ public class UI {
         if (gp.gameState == gp.optionState2) {
             drawBG();
             drawOptions();
-
         }
 
         // PLAY STATE
@@ -514,35 +514,44 @@ public class UI {
         g2.setFont(g2.getFont().deriveFont(Font.BOLD, 60F));
 
         // Draw Title and Buttons
-        int imgWidth = startMenuButtons.getWidth(null);
-        int imgHeight = startMenuButtons.getHeight(null);
+        int imgWidth = startMenu.getWidth(null);
+        int imgHeight = startMenu.getHeight(null);
         int x = (int) ((gp.SCREEN_WIDTH - imgWidth));
         int y = (int) ((gp.SCREEN_HEIGHT - imgHeight));
-        g2.drawImage(startMenuButtons, x, y, imgWidth, imgHeight, null);
+        g2.drawImage(startMenu, x, y, imgWidth, imgHeight, null);
 
-        y = (int) ((gp.SCREEN_HEIGHT)/2 - gp.TILE_SIZE*0.7);
+        int leftx = (int) (gp.SCREEN_WIDTH/2 - gp.TILE_SIZE*5.5);
+        int rightx = (gp.SCREEN_WIDTH/2 + gp.TILE_SIZE*5);
+        y = (int) ((gp.SCREEN_HEIGHT)/2 - 60);
         switch (commandNum) {
             case 0: {
-                g2.drawString(">", (int) (gp.SCREEN_WIDTH/2 - gp.TILE_SIZE*5.25), y);
-                g2.drawString("<", (int) (gp.SCREEN_WIDTH/2 + gp.TILE_SIZE*4.75), y);
+                // 0.5 SCALE DIFF
+                g2.drawString(">", leftx, y);
+                g2.drawString("<", rightx, y);
                 break;
             }
             case 1: {
-                y += (int) (gp.TILE_SIZE*1.55);
-                g2.drawString(">", (int) (gp.SCREEN_WIDTH/2 - gp.TILE_SIZE*5.25), y);
-                g2.drawString("<", (int) (gp.SCREEN_WIDTH/2 + gp.TILE_SIZE*4.75), y);
+                y += (int) (gp.TILE_SIZE*1.5);
+                g2.drawString(">", leftx, y);
+                g2.drawString("<", rightx, y);
                 break;
             }
             case 2: {
-                y += (int) (gp.TILE_SIZE*3.2);
-                g2.drawString(">", (int) (gp.SCREEN_WIDTH/2 - gp.TILE_SIZE*5.4), y);
-                g2.drawString("<", (int) (gp.SCREEN_WIDTH/2 - gp.TILE_SIZE/4), y);
+                y += (int) (gp.TILE_SIZE*3);
+                g2.drawString(">", leftx, y);
+                g2.drawString("<", rightx, y);
                 break;
             }
             case 3: {
-                y += (int) (gp.TILE_SIZE*3.2);
-                g2.drawString(">", (int) (gp.SCREEN_WIDTH/2 - gp.TILE_SIZE/4), y);
-                g2.drawString("<", (int) (gp.SCREEN_WIDTH/2 + gp.TILE_SIZE*4.9), y);
+                y += (int) (gp.TILE_SIZE*4.5);
+                g2.drawString(">", leftx, y);
+                g2.drawString("<", (gp.SCREEN_WIDTH/2 - 18), y);
+                break;
+            }
+            case 4: {
+                y += (int) (gp.TILE_SIZE*4.5);
+                g2.drawString(">", (gp.SCREEN_WIDTH/2 - 5), y);
+                g2.drawString("<", rightx, y);
                 break;
             }
         }
@@ -835,18 +844,36 @@ public class UI {
         int frameWidth = gp.TILE_SIZE*8;
         int frameHeight = gp.TILE_SIZE*10;
 
-        drawSubWindow(frameX, frameY, frameWidth, frameHeight);
+        if (gp.gameState == gp.optionState) {
+            subState = 0;
+        } else if (gp.gameState == gp.optionState2) {
+            subState = 1;
+        }
 
         switch(subState) {
-            case 0: options_top(frameX, frameY); break;
-            case 1: break;
+            case 0: options_playState(frameX, frameY); drawSubWindow(frameX, frameY, frameWidth, frameHeight); break;
+            case 1: options_startMenu(frameX, frameY); break;
             case 2: break;
         }
     }
 
-    public void options_top(int frameX, int frameY) {
-        int x, y;
+    private void drawVolumeBar(int volumeScale, int x, int y) {
+        int barWidth = 240;
+        int barHeight = 20;
+        int fillColor = (int) (barWidth * (volumeScale / 5.0f));
 
+        // BACKGROUND BAR
+        g2.setColor(Color.darkGray);
+        g2.fillRect(x, y, barWidth, barHeight);
+
+        // FILLED BAR
+        g2.setColor(Color.WHITE);
+        g2.fillRect(x, y, fillColor, barHeight);
+
+    }
+
+    public void options_playState(int frameX, int frameY) {
+        int x, y;
         // TITLE
         g2.setFont(g2.getFont().deriveFont(Font.BOLD, 40f));
         String text = "Options";
@@ -854,6 +881,8 @@ public class UI {
         y = frameY + gp.TILE_SIZE;
         g2.drawString(text,x,y);
 
+        // Underline the title
+        g2.drawLine(x, y + 5, x + g2.getFontMetrics().stringWidth(text), y + 5);
 
         // MUSIC
         g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 40f));
@@ -900,24 +929,58 @@ public class UI {
         // VOLUME BAR
         x = frameX + gp.TILE_SIZE*6;
         y = (int) (frameY + gp.TILE_SIZE*2.2f);
-        switch (gp.music.volumeScale) {
-            case 0: g2.drawString("0%", x, y); break;
-            case 1: g2.drawString("20%", x, y);break;
-            case 2: g2.drawString("40%", x, y);break;
-            case 3: g2.drawString("60%", x, y);break;
-            case 4: g2.drawString("80%", x, y);break;
-            case 5: g2.drawString("100%", x, y);break;
-        }
+        drawVolumeBar(gp.music.volumeScale, x, y);
 
         // SFX BAR
         y += (int) (gp.TILE_SIZE*1.2);
-        switch (gp.effect.volumeScale) {
-            case 0: g2.drawString("0%", x, y); break;
-            case 1: g2.drawString("20%", x, y);break;
-            case 2: g2.drawString("40%", x, y);break;
-            case 3: g2.drawString("60%", x, y);break;
-            case 4: g2.drawString("80%", x, y);break;
-            case 5: g2.drawString("100%", x, y);break;
-        }
+        drawVolumeBar(gp.effect.volumeScale, x, y);
     }
+
+    public void options_startMenu(int frameX, int frameY) {
+        int x, y;
+        // TITLE
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 40f));
+        String text = "Start Menu Options";
+        x = getXForCenteredText(text);
+        y = frameY + gp.TILE_SIZE;
+        g2.drawString(text,x,y);
+
+        // Underline the title
+        g2.drawLine(x, y + 5, x + g2.getFontMetrics().stringWidth(text), y + 5);
+
+        // MUSIC
+        g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 40f));
+        text = "Music";
+        x = getXForCenteredText(text);
+        y += (int) (gp.TILE_SIZE*1.2);
+        g2.drawString(text,x,y);
+
+        // SOUND EFFECTS
+        text = "SFX";
+        x = getXForCenteredText(text);
+        y += (int) (gp.TILE_SIZE*2.4);
+        g2.drawString(text,x,y);
+
+        // CONTROL
+        text = "Controls";
+        x = getXForCenteredText(text);
+        y += (int) (gp.TILE_SIZE*2.4);
+        g2.drawString(text,x,y);
+
+        // BACK
+        text = "Back";
+        x = getXForCenteredText(text);
+        y += (int) (gp.TILE_SIZE*3);
+        g2.drawString(text,x,y);
+
+        // VOLUME BAR
+        x = gp.SCREEN_WIDTH/2 - 120;
+        y = (int) (frameY + gp.TILE_SIZE*3);
+        drawVolumeBar(gp.music.volumeScale, x, y);
+
+        // SFX BAR
+        y += (int) (frameY + gp.TILE_SIZE);
+        drawVolumeBar(gp.effect.volumeScale, x, y);
+    }
+
 }

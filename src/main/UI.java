@@ -335,7 +335,6 @@ public class UI {
 //
 //        g2.drawString(text, x, y);
     }
-
     public void drawSubWindow(int x, int y, int width,int height){
         Color custom = new Color(0,0,0,220);
         g2.setColor(custom);

@@ -25,7 +25,7 @@ public class TileManager {
         mapTileNum = new int[gp.maxMap][gp.MAX_WORLD_COL][gp.MAX_WORLD_ROW];
 
         getTileImage();
-        loadMap("/mapTextFiles/LobbyTest.txt",0);
+        loadMap("/mapTextFiles/lobby.txt",0);
         loadMap("/mapTextFiles/levelOne.txt",1);
         loadMap("/mapTextFiles/levelTwo.txt",2);
     }
@@ -70,22 +70,21 @@ public class TileManager {
             if (tileNum >= 0 && tileNum < tile.length && tile[tileNum] != null && tile[tileNum].image != null) {
                 int worldX = WORLD_COL * gp.TILE_SIZE;
                 int worldY = WORLD_ROW * gp.TILE_SIZE;
-                switch (gp.currentMap) {
-                    case 0:
-                        g2.drawImage(tile[tileNum].image, worldX, worldY, gp.TILE_SIZE, gp.TILE_SIZE, null);
-                        break;
-                    case 1,2:
-                        int screenX = worldX - gp.player.worldX + gp.player.screenX;
-                        int screenY = worldY - gp.player.worldY + gp.player.screenY;
+                if (gp.currentMap == 0){
+                    g2.drawImage(tile[tileNum].image, worldX, worldY, gp.TILE_SIZE, gp.TILE_SIZE, null);
+                } else {
+                    int screenX = worldX - gp.player.worldX + gp.player.screenX;
+                    int screenY = worldY - gp.player.worldY + gp.player.screenY;
 
-                        if (worldX + gp.TILE_SIZE  > gp.player.worldX - gp.player.screenX - 48*4 &&
-                                worldX - gp.TILE_SIZE < gp.player.worldX + gp.player.screenX + 48*4 &&
-                                worldY + gp.TILE_SIZE > gp.player.worldY - gp.player.screenY &&
-                                worldY - gp.TILE_SIZE < gp.player.worldY + gp.player.screenY + 48*2) {
-                            g2.drawImage(tile[tileNum].image, screenX, screenY, gp.TILE_SIZE, gp.TILE_SIZE, null);
-                        }
-                        break;
+                    if (worldX + gp.TILE_SIZE  > gp.player.worldX - gp.player.screenX - 48*4 &&
+                            worldX - gp.TILE_SIZE < gp.player.worldX + gp.player.screenX + 48*4 &&
+                            worldY + gp.TILE_SIZE > gp.player.worldY - gp.player.screenY &&
+                            worldY - gp.TILE_SIZE < gp.player.worldY + gp.player.screenY + 48*2) {
+                        g2.drawImage(tile[tileNum].image, screenX, screenY, gp.TILE_SIZE, gp.TILE_SIZE, null);
+                    }
                 }
+            } else {
+                System.err.println("Tile or tile image is null for tile number: " + tileNum);
             }
 
             WORLD_COL++;
@@ -112,7 +111,7 @@ public class TileManager {
         try {
             dir = "/tiles/";
             tile = new Tile[200];
-            for (int i = 0; i <= 149; i++) {
+            for (int i = 0; i <= 150; i++) {
                 tile[i] = new Tile();
                 if (i < 13 || i > 25 ) tile[i].collision = true;
             }
@@ -296,10 +295,15 @@ public class TileManager {
             tile[147].image = UtilityTool.loadSprite(dir + "secondLevel/147.png", "Missing ");
             tile[148].image = UtilityTool.loadSprite(dir + "secondLevel/148.png", "Missing ");
             tile[149].image = UtilityTool.loadSprite(dir + "secondLevel/149.png", "Missing ");
+            tile[150].image = UtilityTool.loadSprite(dir + "secondLevel/150.png", "Missing ");
 
             tile[69].collision = false;
+            tile[85].collision = false;
+            tile[86].collision = false;
+            tile[92].collision = false;
+            tile[93].collision = false;
 
-            for (int i = 99; i <= 149; i++) {
+            for (int i = 99; i <= 148; i++) {
                 tile[i].collision = false;
             }
         } catch (IOException e) {

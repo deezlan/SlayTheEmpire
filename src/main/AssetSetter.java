@@ -158,6 +158,7 @@ public class AssetSetter {
 
         // MAP 1
         mapNum = 1;
+        gp.mobArr[mapNum][i] = new BOSS_FrostGiant(gp, 400, 180);
         gp.mobArr[mapNum][i] = new MOB_RobotGuardian(gp, 350, 1968); i++;
         gp.mobArr[mapNum][i] = new MOB_SkeletonKnight(gp, 550, 1968); i++;
         gp.mobArr[mapNum][i] = new MOB_FrostGiant(gp, 400, 180); i++;

@@ -19,7 +19,7 @@ public class MOB_ArmoredGuardian extends Entity {
         currentLife = maxLife;
         action = "idleRight";
         mobNum = 7;
-        projectile1 = new OBJ_Energyball(gp);
+        projectile = new OBJ_Energyball(gp);
 
         // Load mob sprites
         getMobSprites();

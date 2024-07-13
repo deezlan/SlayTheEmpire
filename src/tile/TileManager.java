@@ -28,8 +28,6 @@ public class TileManager {
         loadMap("/mapTextFiles/LobbyTest.txt",0);
         loadMap("/mapTextFiles/levelOne.txt",1);
         loadMap("/mapTextFiles/levelTwo.txt",2);
-
-//        loadMap("/mapTextFiles/secondLevel.txt", 2);
     }
 
     public void loadMap(String filePath, int map) {
@@ -72,12 +70,11 @@ public class TileManager {
             if (tileNum >= 0 && tileNum < tile.length && tile[tileNum] != null && tile[tileNum].image != null) {
                 int worldX = WORLD_COL * gp.TILE_SIZE;
                 int worldY = WORLD_ROW * gp.TILE_SIZE;
-
-                switch (gp.currentMap){ // SWITCH IT TO SWITCH CASE FOR LESS REDUNDANCY
+                switch (gp.currentMap) {
                     case 0:
                         g2.drawImage(tile[tileNum].image, worldX, worldY, gp.TILE_SIZE, gp.TILE_SIZE, null);
                         break;
-                    case 1, 2:
+                    case 1,2:
                         int screenX = worldX - gp.player.worldX + gp.player.screenX;
                         int screenY = worldY - gp.player.worldY + gp.player.screenY;
 
@@ -89,23 +86,24 @@ public class TileManager {
                         }
                         break;
                 }
-                WORLD_COL++;
-                if (WORLD_COL == gp.MAX_WORLD_COL) {
-                    WORLD_COL = 0;
-                    WORLD_ROW++;
-                }
             }
-            if(drawPath){ // for viewing the move path of entities
-                g2.setColor(new Color(255,0,0,70));
 
-                for(int i = 0; i < gp.pFinder.pathList.size(); i++){
-                    int worldX = gp.pFinder.pathList.get(i).col * gp.TILE_SIZE;
-                    int worldY = gp.pFinder.pathList.get(i).row * gp.TILE_SIZE;
-                    int screenX = worldX - gp.player.worldX + gp.player.screenX;
-                    int screenY = worldY - gp.player.worldY + gp.player.screenY;
+            WORLD_COL++;
+            if (WORLD_COL == gp.MAX_WORLD_COL) {
+                WORLD_COL = 0;
+                WORLD_ROW++;
+            }
+        }
+        if(drawPath){ // for viewing the move path of entities
+            g2.setColor(new Color(255,0,0,70));
 
-                    g2.fillRect(screenX,screenY,gp.TILE_SIZE,gp.TILE_SIZE);
-                }
+            for(int i = 0; i < gp.pFinder.pathList.size(); i++){
+                int worldX = gp.pFinder.pathList.get(i).col * gp.TILE_SIZE;
+                int worldY = gp.pFinder.pathList.get(i).row * gp.TILE_SIZE;
+                int screenX = worldX - gp.player.worldX + gp.player.screenX;
+                int screenY = worldY - gp.player.worldY + gp.player.screenY;
+
+                g2.fillRect(screenX,screenY,gp.TILE_SIZE,gp.TILE_SIZE);
             }
         }
     }

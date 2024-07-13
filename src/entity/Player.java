@@ -28,6 +28,7 @@ public class Player extends Entity {
     // PLAYER STATUS
     public int totalCoins;
     public int playerClass;
+    private int delta;
 
 //    public ArrayList<Entity> inventory = new ArrayList<>(); temp commented
 //    public final int inventorySize = 8; temp commented
@@ -87,7 +88,7 @@ public class Player extends Entity {
                 solidAreaDefaultX = solidArea.x;
                 solidAreaDefaultY = solidArea.y;
                 solidArea.width = 40; // outer area of collision square
-                solidArea.height = 20;
+                solidArea.height = 30;
                 attackArea.width = gp.TILE_SIZE*2;
                 attackArea.height = gp.TILE_SIZE*3;
                 break;
@@ -123,6 +124,7 @@ public class Player extends Entity {
         //add inventory
     }
     public void setDefaultPosition() {
+        gp.currentMap = 0;
         worldX = 303; // PLAYER SPAWN X
         worldY = 9; // PLAYER SPAWN Y
         action = "idleRight";
@@ -167,6 +169,19 @@ public class Player extends Entity {
             worldY = currentWorldY;
             solidArea.width = solidAreaWidth;
             solidArea.height = solidAreaHeight;
+
+            if (playerClass == 2) {
+                switch (damageSprite) {
+                    case 2:
+                        damageSprite = 9;
+                        break;
+                    case 9:
+                        damageSprite = 16;
+                        break;
+                    case 16:
+                        damageSprite = 2;
+                }
+            }
         }
     }
     public void runAttackAnimation() {
@@ -229,21 +244,24 @@ public class Player extends Entity {
             if (gp.objArr[gp.currentMap][index].type == type_pickup) {
                 gp.objArr[gp.currentMap][index].use(this);
                 gp.objArr[gp.currentMap][index] = null;
-            } else if (index == 0){
+            } else if (type == type_shop){
                 gp.gameState = gp.shopState;
             } else {
-            System.out.println(gp.objArr[gp.currentMap][index].message);
-            if (!gp.objArr[gp.currentMap][index].interactList.isEmpty())
-                gp.objArr[gp.currentMap][index].interacting = true;
+                if (!gp.objArr[gp.currentMap][index].message.isEmpty())
+                    System.out.println(gp.objArr[gp.currentMap][index].message);
+                if (!gp.objArr[gp.currentMap][index].interactList.isEmpty()) {
+                    if (gp.objArr[gp.currentMap][index].type != type_gate)
+                        gp.objArr[gp.currentMap][index].interacting = true;
+                }
             }
         }
     }
     public void interactNPC (int index) {
-            if (index != 999) {
-                gp.npcArr[gp.currentMap][index].speak();
-            }
-            if (index == 1) {
-                gp.gameState = gp.shopState;
+        if (index != 999) {
+            gp.npcArr[gp.currentMap][index].speak();
+        }
+        if (index == 1) {
+            gp.gameState = gp.shopState;
         }
     }
     public void interactMob (int index) {
@@ -258,10 +276,16 @@ public class Player extends Entity {
     // GAME LOOP METHODS
     @Override
     public void update() {
-        if (currentLife <= 0)
-            gp.gameState = gp.deathState;
-        else if (currentLife > maxLife)
+        delta++;
+        if(!keyH.godModeOn){
+            if (currentLife <= 0){
+                gp.gameState = gp.deathState;
+            }
+        }
+
+        if (currentLife > maxLife){
             currentLife = maxLife;
+        }
 
         if (attacking)
             startAttack();
@@ -333,15 +357,12 @@ public class Player extends Entity {
                     case "moveRight", "moveUpRight", "moveDownRight":
                         currentList = moveRightList;
                         lookingRight = true;
-                        break;
                 }
             } else {
                 action = lookingRight ? "idleRight" : "idleLeft";
                 currentList = action.equals("idleRight") ? idleRightList : idleLeftList;
 
-                if (keyH.enterPressed) {
-                    attacking = true;
-                }
+                if (keyH.enterPressed) attacking = true;
             }
 
             if (iframe) {
@@ -355,23 +376,36 @@ public class Player extends Entity {
             // Animation speed
             spriteCounter++;
             if (currentList.size() > 14) {
-                if (spriteCounter > 4) loopThroughSprites();
+                if (spriteCounter > 4) runCurrentListAnimation();
             } else if (currentList.size() > 7) {
-                if (spriteCounter > 6) loopThroughSprites();
+                if (spriteCounter > 6) runCurrentListAnimation();
             } else {
-                if (spriteCounter > 9) loopThroughSprites();
+                if (spriteCounter > 9) runCurrentListAnimation();
             }
 
             // CALCULATE CENTRAL AXIS OF CURSOR
-            if (playerClass == 0) {
-                // WARRIOR
-                cursor.calculateAngle((int)(screenX + gp.TILE_SIZE * 2.3), screenY + gp.TILE_SIZE + 10);
-            } else if (playerClass == 1) {
-                // KNIGHT
-                cursor.calculateAngle((screenX + gp.TILE_SIZE * 2 + 5), screenY + gp.TILE_SIZE);
-            } else if (playerClass == 2) {
-                // ASSASSIN
-                cursor.calculateAngle((int)(screenX + gp.TILE_SIZE * 1.9), screenY + gp.TILE_SIZE);
+            if (gp.currentMap == 0) {
+                if (playerClass == 0) {
+                    // WARRIOR
+                    cursor.calculateAngle((int)(worldX + gp.TILE_SIZE * 2.3), worldY + gp.TILE_SIZE + 10);
+                } else if (playerClass == 1) {
+                    // KNIGHT
+                    cursor.calculateAngle((worldX + gp.TILE_SIZE * 2 + 5), worldY + gp.TILE_SIZE);
+                } else if (playerClass == 2) {
+                    // ASSASSIN
+                    cursor.calculateAngle((int)(worldX + gp.TILE_SIZE * 1.9), worldY + gp.TILE_SIZE);
+                }
+            } else {
+                if (playerClass == 0) {
+                    // WARRIOR
+                    cursor.calculateAngle((int)(screenX + gp.TILE_SIZE * 2.3), screenY + gp.TILE_SIZE + 10);
+                } else if (playerClass == 1) {
+                    // KNIGHT
+                    cursor.calculateAngle((screenX + gp.TILE_SIZE * 2 + 5), screenY + gp.TILE_SIZE);
+                } else if (playerClass == 2) {
+                    // ASSASSIN
+                    cursor.calculateAngle((int)(screenX + gp.TILE_SIZE * 1.9), screenY + gp.TILE_SIZE);
+                }
             }
         }
 
@@ -379,23 +413,53 @@ public class Player extends Entity {
             if (currentWeapon == null){
                 attacking = true;
             } else {
-                projectile.set(worldX, worldY, action, true, this);
-                shotAvailableCounter = 0; // ADDED COOL-DOWN
-                for (int i = 0; i < gp.projectileArr[1].length; i++) {
-                    if(gp.projectileArr[gp.currentMap][i] == null){
-                        gp.projectileArr[gp.currentMap][i] = projectile;
-                        break;
-                    }
+                if (currentWeapon.name.equalsIgnoreCase("fireball cannon") && delta>60){
+                    delta = 0;
+                    projectile1.set(worldX, worldY, action, true, this, gp.cursor.deltaX, gp.cursor.deltaY);
+                    gp.projectileArr[gp.currentMap][1] = projectile1;
+                } else if (currentWeapon.name.equalsIgnoreCase("stickler") && delta>120) {
+                    delta = 0;
+                    projectile1.set(worldX, worldY-48, action, true, this, gp.cursor.deltaX, gp.cursor.deltaY);
+                    gp.projectileArr[gp.currentMap][47] = projectile1;
+                    projectile2.set(worldX+48, worldY, action, true, this, gp.cursor.deltaX, gp.cursor.deltaY);
+                    gp.projectileArr[gp.currentMap][48] = projectile2;
+                    projectile3.set(worldX-48, worldY+48, action, true, this, gp.cursor.deltaX, gp.cursor.deltaY);
+                    gp.projectileArr[gp.currentMap][49] = projectile3;
+                } else if (currentWeapon.name.equalsIgnoreCase("electric blaster")) {
+                    projectile1.set(worldX, worldY, action, true, this, gp.cursor.deltaX, gp.cursor.deltaY);
+                    gp.projectileArr[gp.currentMap][1] = projectile1;
+                } else if (currentWeapon.name.equalsIgnoreCase("hammer") && delta>200) {
+                    delta = 0;
+                    projectile1.set(gp.player.worldX+48, gp.player.worldY-24, action, true, this, gp.cursor.deltaX, gp.cursor.deltaY);
+                    gp.projectileArr[gp.currentMap][47] = projectile1;
+                    projectile2.set(gp.player.worldX-72, gp.player.worldY-24, action, true, this, gp.cursor.deltaX, gp.cursor.deltaY);
+                    gp.projectileArr[gp.currentMap][48] = projectile2;
+                    projectile3.set(gp.player.worldX-12, gp.player.worldY+24, action, true, this, gp.cursor.deltaX, gp.cursor.deltaY);
+                    gp.projectileArr[gp.currentMap][49] = projectile3;
+                    projectile4.set(gp.player.worldX-12, gp.player.worldY-72, action, true, this, gp.cursor.deltaX, gp.cursor.deltaY);
+                    gp.projectileArr[gp.currentMap][46] = projectile4;
                 }
+
+                shotAvailableCounter = 0; // ADDED COOL-DOWN
+//                for (int i = 0; i < gp.projectileList[1].length; i++) {
+//                    if(gp.projectileList[gp.currentMap][i] == null){
+//                        gp.projectileList[gp.currentMap][i] = projectile;
+//                        break;
+//                    }
+//                }
+
             }
         }
 
         if (gp.keyH.onePressed){
             if (hotbarList.get(0) != null){
                 currentWeapon = hotbarList.get(0);
-                projectile = currentWeapon.projectile;
-                System.out.println("Current Weapon is: " + currentWeapon.projectile);
-                System.out.println(projectile);
+                projectile1 = currentWeapon.projectile1;
+                projectile2 = currentWeapon.projectile2;
+                projectile3 = currentWeapon.projectile3;
+                projectile4 = currentWeapon.projectile4;
+                System.out.println("Current Weapon is: " + currentWeapon);
+                System.out.println(projectile1);
             } else {
                 System.out.println("No weapon");
             }
@@ -403,6 +467,12 @@ public class Player extends Entity {
         if (gp.keyH.twoPressed){
             if (hotbarList.get(1) != null){
                 currentWeapon = hotbarList.get(1);
+                projectile1 = currentWeapon.projectile1;
+                projectile2 = currentWeapon.projectile2;
+                projectile3 = currentWeapon.projectile3;
+                projectile4 = currentWeapon.projectile4;
+                System.out.println("Current Weapon is: " + currentWeapon);
+                System.out.println(projectile1);
             } else {
                 System.out.println("No weapon");
             }
@@ -410,6 +480,10 @@ public class Player extends Entity {
         if (gp.keyH.threePressed){
             if (hotbarList.get(2) != null){
                 currentWeapon = hotbarList.get(2);
+                projectile1 = currentWeapon.projectile1;
+                projectile2 = currentWeapon.projectile2;
+                projectile3 = currentWeapon.projectile3;
+                projectile4 = currentWeapon.projectile4;
             } else {
                 System.out.println("No weapon");
             }
@@ -443,17 +517,19 @@ public class Player extends Entity {
                 g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
                 break;
             case 1,2:
-                if(iframe){
-                    g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.3f));
-                }
+                if(drawing){
+                    if(iframe){
+                        g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.3f));
+                    }
 
-                if (attacking){
-                    g2.drawImage(animationImage, screenX, screenY,null); // draw attack animation
-                } else {
-                    g2.drawImage(image, screenX, screenY, null);
+                    if (attacking){
+                        g2.drawImage(animationImage, screenX, screenY,null); // draw attack animation
+                    } else {
+                        g2.drawImage(image, screenX, screenY, null); // STOPPED HERE NEED TO FIND DRAW TEMP SCREEN
+                    }
+                    g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
+                    break;
                 }
-                g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
-                break;
         }
         // Draw arrow
         switch (gp.currentMap){
@@ -468,19 +544,19 @@ public class Player extends Entity {
                     // ASSASSIN
                     cursor.draw(g2, (int)(worldX + gp.TILE_SIZE * 1.9), worldY + gp.TILE_SIZE); // For fixed camera
                 }
+                break;
             case 1,2:
                 if (playerClass == 0) {
                     // WARRIOR
                     cursor.draw(g2, (int)(screenX + gp.TILE_SIZE * 2.3), screenY + gp.TILE_SIZE);
                 } else if (playerClass == 1) {
                     // KNIGHT
-//            cursor.draw(g2, worldX + gp.TILE_SIZE * 2 + 5, worldY + gp.TILE_SIZE); // For fixed camera
                     cursor.draw(g2, (int)(screenX + gp.TILE_SIZE * 2.09), screenY + gp.TILE_SIZE);
                 } else if (playerClass == 2) {
                     // ASSASSIN
-//            cursor.draw(g2, (int)(worldX + gp.TILE_SIZE * 1.9), worldY + gp.TILE_SIZE); // For fixed camera
                     cursor.draw(g2, (int)(screenX + gp.TILE_SIZE * 1.86), screenY + gp.TILE_SIZE);
                 }
+                break;
         }
     }
 

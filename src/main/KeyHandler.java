@@ -12,9 +12,6 @@ public class KeyHandler implements KeyListener {
     GamePanel gp;
     boolean musicPlaying = false; // check if music is already playing
 
-    // PLAY MUSIC
-
-
     public boolean
             wPressed,
             sPressed,
@@ -23,10 +20,12 @@ public class KeyHandler implements KeyListener {
             ePressed,
             pPressed,
             enterPressed,
-            showDebug = false, // DEBUG
+            showDebug, // DEBUG
             shotKeyPressed,
             onePressed,
             twoPressed,
+            threePressed,
+            godModeOn,
             threePressed,
             escapePressed;
 
@@ -35,9 +34,7 @@ public class KeyHandler implements KeyListener {
     }
 
     @Override
-    public void keyTyped(KeyEvent e) {
-    }
-
+    public void keyTyped(KeyEvent e) {}
     @Override
     public void keyPressed(KeyEvent e) {
         int code = e.getKeyCode();
@@ -59,7 +56,6 @@ public class KeyHandler implements KeyListener {
             handlePauseState(code);
         }
 
-        // DEBUG
         if (code == KeyEvent.VK_T){
             if(!showDebug){
                 showDebug = true;
@@ -89,7 +85,34 @@ public class KeyHandler implements KeyListener {
         }
     }
 
-    private void handleLoginState(int code) {
+    // GAME STATES METHODS
+    public void titleState(int code) {
+        // PUT TITLE STATE STUFF HERE
+    }
+
+    public void handleStartMenuState(int code) {
+        if (gp.gameState == gp.startMenuState){
+            if (code == KeyEvent.VK_W || code == KeyEvent.VK_S) {
+                gp.ui.commandNum += (code == KeyEvent.VK_W) ? -1 : 1;
+                gp.playSE(1);
+                gp.ui.commandNum = Math.max(0, Math.min(gp.ui.commandNum, 3));
+            }
+
+            // SELECT OPTION
+            if (code == KeyEvent.VK_SPACE) {
+                // SELECT SOUND EFFECT
+                gp.playSE(2);
+                switch (gp.ui.commandNum) {
+                    case 0 -> gp.gameState = gp.loginState; // GO TO LOGIN
+                    case 1 -> System.out.println("My name is Yoshikage Kira. I'm 33 years old. My house is in the northeast section of Morioh, where all the villas are, and I am not married. I work as an employee for the Kame Yu department stores, and I get home every day by 8 PM at the latest. \n I don't smoke, but I occasionally drink. I'm in bed by 11 PM, and make sure I get eight hours of sleep, no matter what. After having a glass of warm milk and doing about twenty minutes of stretches before going to bed, I usually have no problems sleeping until morning. \n Just like a baby, I wake up without any fatigue or stress in the morning. I was told there were no issues at my last check-up. I'm trying to explain that I'm a person who wishes to live a very quiet life. I take care not to trouble myself with any enemies, like winning and losing, that would cause me to lose sleep at night. \n That is how I deal with society, and I know that is what brings me happiness. Although, if I were to fight I wouldn't lose to anyone."); // LOAD GAME
+                    case 2 -> gp.gameState = gp.optionState2;
+                    case 3 -> System.exit(0); // EXIT GAME
+                }
+            }
+        }
+    }
+
+    public void handleLoginState(int code) {
         if (code == KeyEvent.VK_ESCAPE) {
             gp.gameState = gp.startMenuState;
         }
@@ -129,29 +152,7 @@ public class KeyHandler implements KeyListener {
         }
     }
 
-    private void handleStartMenuState(int code) {
-        if (gp.gameState == gp.startMenuState){
-            if (code == KeyEvent.VK_W || code == KeyEvent.VK_S) {
-                gp.ui.commandNum += (code == KeyEvent.VK_W) ? -1 : 1;
-                gp.playSE(1);
-                gp.ui.commandNum = Math.max(0, Math.min(gp.ui.commandNum, 3));
-            }
-
-            // SELECT OPTION
-            if (code == KeyEvent.VK_SPACE) {
-                // SELECT SOUND EFFECT
-                gp.playSE(2);
-                switch (gp.ui.commandNum) {
-                    case 0 -> gp.gameState = gp.loginState; // GO TO LOGIN
-                    case 1 -> System.out.println("My name is Yoshikage Kira. I'm 33 years old. My house is in the northeast section of Morioh, where all the villas are, and I am not married. I work as an employee for the Kame Yu department stores, and I get home every day by 8 PM at the latest. \n I don't smoke, but I occasionally drink. I'm in bed by 11 PM, and make sure I get eight hours of sleep, no matter what. After having a glass of warm milk and doing about twenty minutes of stretches before going to bed, I usually have no problems sleeping until morning. \n Just like a baby, I wake up without any fatigue or stress in the morning. I was told there were no issues at my last check-up. I'm trying to explain that I'm a person who wishes to live a very quiet life. I take care not to trouble myself with any enemies, like winning and losing, that would cause me to lose sleep at night. \n That is how I deal with society, and I know that is what brings me happiness. Although, if I were to fight I wouldn't lose to anyone."); // LOAD GAME
-                    case 2 -> gp.gameState = gp.optionState2;
-                    case 3 -> System.exit(0); // EXIT GAME
-                }
-            }
-        }
-    }
-
-    private void handleCharacterSelectionState(int code) {
+    public void handleCharacterSelectionState(int code) {
         // SELECT CLASS
         if (code == KeyEvent.VK_A || code == KeyEvent.VK_D) {
             gp.ui.commandNum += (code == KeyEvent.VK_A) ? -1 : 1;
@@ -183,7 +184,7 @@ public class KeyHandler implements KeyListener {
         }
     }
 
-    private void handlePlayState(int code) {
+    public void playState(int code) {
         if (gp.gameState == gp.playState){
             if (!musicPlaying) {
                 gp.music.stopAll();
@@ -223,6 +224,31 @@ public class KeyHandler implements KeyListener {
             if (code == KeyEvent.VK_3){
                 threePressed = true;
             }
+        }
+    }
+    public void pauseState(int code) {
+        if (code == KeyEvent.VK_P) {
+            pPressed = true;
+            if(gp.gameState == gp.playState){
+                gp.gameState = gp.pauseState;
+            } else if (gp.gameState == gp.pauseState){
+                gp.gameState = gp.playState;
+            }
+        }
+    }
+    public void dialogState(int code) {
+        if (code == KeyEvent.VK_E) {
+            ePressed = true;
+//            if(gp.gameState == gp.dialogueState){
+//                gp.gameState = gp.playState;
+            if (gp.gameState == gp.shopState) {
+                gp.gameState = gp.playState;
+            }
+        }
+    }
+    public void deathState(int code) {
+        if (code == KeyEvent.VK_E){
+            ePressed = true;
         }
     }
 
@@ -288,7 +314,7 @@ public class KeyHandler implements KeyListener {
         }
     }
 
-    private void handleShopState(int code) {
+    public void shopState(int code) {
         if (gp.gameState == gp.shopState){
             if (code == KeyEvent.VK_W) {
                 if (gp.ui.slotRowMove != 0){
@@ -314,17 +340,6 @@ public class KeyHandler implements KeyListener {
         }
     }
 
-    private void handlePauseState(int code) {
-        if (code == KeyEvent.VK_P) {
-            pPressed = true;
-            if(gp.gameState == gp.playState){
-                gp.gameState = gp.pauseState;
-            } else if (gp.gameState == gp.pauseState){
-                gp.gameState = gp.playState;
-            }
-        }
-    }
-
     @Override
     public void keyReleased(KeyEvent e) {
         int code = e.getKeyCode();
@@ -333,6 +348,7 @@ public class KeyHandler implements KeyListener {
         if (code == KeyEvent.VK_S) { sPressed = false; }
         if (code == KeyEvent.VK_A) { aPressed = false; }
         if (code == KeyEvent.VK_D) { dPressed = false; }
+        if (code == KeyEvent.VK_P) { pPressed = false; }
         if (code == KeyEvent.VK_ENTER) { enterPressed = false; }
         if (code == KeyEvent.VK_F) { shotKeyPressed = false; }
         if (code == KeyEvent.VK_1){ onePressed = false; }

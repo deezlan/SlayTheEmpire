@@ -8,29 +8,38 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class Entity {
-    GamePanel gp;
+public abstract class Entity {
+    public GamePanel gp;
     public boolean lookingRight = true;
+    public Projectile projectile1;
+    public Projectile projectile2;
+    public Projectile projectile3;
+    public Projectile projectile4;
 
     public Entity(GamePanel gp) {
         this.gp = gp;
     }
 
-    // ENTITY TYPE
-    public int type;
-    public final int type_player = 0;
-    public final int type_mob = 1;
-    public final int type_npc = 2;
-    public final int type_consumable = 3;
-    public final int type_pickup = 4;
-    public final int type_block = 5;
-
     // PLAYER & MOB ATTRIBUTES
     public int
             // POSITION OFF OF FULL GAME MAP
             worldX,
-            worldY,
+            worldY;
 
+    // ENTITY TYPE
+    public int type;
+    public final int
+            type_player = 0,
+            type_mob = 1,
+            type_npc = 2,
+            type_consumable = 3,
+            type_pickup = 4,
+            type_gate = 5,
+            type_shop = 6,
+            type_obelisk = 7;
+
+    // PLAYER & MOB ATTRIBUTES
+    public int
             // STATUS VALUES
             defaultSpeed,
             speed,
@@ -38,11 +47,18 @@ public class Entity {
             attack,
             maxLife,
             currentLife,
+            bossNum,
 
-            // COLLISION ATTRIBUTES
-            solidAreaDefaultX, solidAreaDefaultY;
+    // COLLISION ATTRIBUTES
+    solidAreaDefaultX, solidAreaDefaultY;
     public Rectangle solidArea = new Rectangle(0, 0, 48, 48); // draw area around entities
     public String action = "idleRight"; // DEFAULT ACTION
+    public boolean
+            inRage = false,
+            sleep,
+            boss,
+            tempScene = false,
+            drawing = true;
 
     // PLAYER & MOB COLLISION DIRECTION
     public boolean
@@ -59,24 +75,24 @@ public class Entity {
             // ALL ENTITIES CURRENT ANIMATION LIST
             currentList = new ArrayList<>(),
 
-            // PLAYER, NPC & MOB MOVEMENT ANIMATION LIST
-            idleRightList = new ArrayList<>(),
+    // PLAYER, NPC & MOB MOVEMENT ANIMATION LIST
+    idleRightList = new ArrayList<>(),
             idleLeftList = new ArrayList<>(),
             moveRightList = new ArrayList<>(),
             moveLeftList = new ArrayList<>(),
 
-            // PLAYER & MOB ATTACK ANIMATION LIST
-            playerRightAttackList = new ArrayList<>(),
+    // PLAYER & MOB ATTACK ANIMATION LIST
+    playerRightAttackList = new ArrayList<>(),
             playerLeftAttackList = new ArrayList<>(),
             mobRightAttackList = new ArrayList<>(),
             mobLeftAttackList = new ArrayList<>(),
 
-            // OBJECT ANIMATION LIST
-            defaultList = new ArrayList<>(),
+    // INTERACTABLE OBJECT ANIMATION LIST
+    defaultList = new ArrayList<>(),
             interactList = new ArrayList<>(),
 
-            // PROJECTILE ANIMATION LIST
-            projectileRight = new ArrayList<>(),
+    // PROJECTILE ANIMATION LIST
+    projectileRight = new ArrayList<>(),
             projectileLeft = new ArrayList<>(),
             projectileUp = new ArrayList<>(),
             projectileDown = new ArrayList<>();
@@ -98,7 +114,7 @@ public class Entity {
             iframeCounter = 0;
     public Rectangle attackArea = new Rectangle(0, 0, 0, 0);
 
-    // MOB KNOCK-BACK
+    // KNOCK-BACK
     public Entity attacker;
     public String knockBackDirection;
     public boolean knockBack = false;
@@ -108,7 +124,10 @@ public class Entity {
     public Projectile projectile;
 
     // GATE BLOCKING
-    public boolean locked = false;
+    public boolean
+            locked = false,
+            locking = false,
+            unlocking = false;
 
     // ITEM ATTRIBUTES
     public int damage;
@@ -118,11 +137,10 @@ public class Entity {
     public String description = "";
 
     // OBJECTS ATTRIBUTES
-    public String message;
+    public String message = "";
     public boolean
             interacting = false,
-            collision = false,
-            isObject;
+            collision = false;
 
     // COUNTERS
     public int
@@ -130,15 +148,15 @@ public class Entity {
             spriteNum = 0,
             spriteCounter = 0,
 
-            // interactList
-            interactSpriteNum = 0,
+    // interactList
+    interactSpriteNum = 0,
             interactSpriteCounter = 0,
 
-            // attackList
-            animationSpriteNum = 0,
+    // attackList
+    animationSpriteNum = 0,
             animationCounter = 0,
 
-            dyingCounter = 0,
+    dyingCounter = 0,
             hpBarCounter = 0,
             knockBackCounter = 0;
 
@@ -239,9 +257,9 @@ public class Entity {
 
             // ENTITY SOLID AREA POSITION
             int enLeftX = worldX + solidArea.x;
-            int enRightX = worldX + solidArea.x + solidArea.width;
+            int enRightX = worldX + solidArea.x;
             int enTopY = worldY + solidArea.y;
-            int enBottomY = worldY + solidArea.y + solidArea.height;
+            int enBottomY = worldY + solidArea.y;
 
             if (enTopY > nextY && enLeftX >= nextX && enRightX < nextX + gp.TILE_SIZE) {
                 action = "moveUp";
@@ -311,13 +329,14 @@ public class Entity {
             gp.player.iframe = true;
         }
     }
+
     public void checkShoot(int rate, int xOffset, int yOffset, int shotInterval) {
         int i = new Random().nextInt(rate);
         shotAvailableCounter = 0;
-        if(i == 0 && !projectile.alive && shotAvailableCounter == shotInterval){
-            projectile.set(worldX + (xOffset), worldY + (yOffset), action,true,this);
+        if (i == 0 && !projectile.alive && shotAvailableCounter == shotInterval) {
+            projectile.set(worldX + (xOffset), worldY + (yOffset), action, true, this, gp.player.worldX, gp.player.worldY);
             for (int ii = 0; ii < gp.projectileArr[1].length; ii++) {
-                if(gp.projectileArr[gp.currentMap][ii] == null){
+                if (gp.projectileArr[gp.currentMap][ii] == null) {
                     gp.projectileArr[gp.currentMap][ii] = projectile;
                     break;
                 }
@@ -367,9 +386,10 @@ public class Entity {
                 attacking = true;
                 spriteNum = 1;
                 spriteCounter = 0;
+            }
         }
     }
-}
+
     public void dyingAnimation(Graphics2D g2) { // BLINKING EFFECT
         dyingCounter++;
 
@@ -402,63 +422,14 @@ public class Entity {
         }
     }
     public void dropItem(Entity droppedItem) {
-        for(int i = 0; i < gp.objArr.length; i++){
-            if(gp.objArr[gp.currentMap][i] == null){
+        for (int i = 0; i < gp.objArr[1].length; i++) {
+            if (gp.objArr[gp.currentMap][i] == null) {
                 gp.objArr[gp.currentMap][i] = droppedItem;
-                gp.objArr[gp.currentMap][i].worldX = worldX + gp.TILE_SIZE*2;
-                gp.objArr[gp.currentMap][i].worldY = worldY + gp.TILE_SIZE*2;
+                gp.objArr[gp.currentMap][i].worldX = worldX + gp.TILE_SIZE * 2;
+                gp.objArr[gp.currentMap][i].worldY = worldY + gp.TILE_SIZE * 2;
                 break;
             }
         }
-    }
-
-    // OBJECT METHODS
-    public void loopThroughInteractSprites() {
-        interactSpriteCounter++;
-        if (interactSpriteNum < interactList.size() && interactSpriteCounter%5 == 0) {
-            interactSpriteNum++;
-        }
-        if (interactSpriteNum >= interactList.size() - 1) {
-            interactSpriteNum = 0;
-            interactSpriteCounter = 0;
-            interacting = false;
-        }
-//        if (interactSpriteCounter < 5) {
-//            interactSpriteNum = 0;
-//        } else if (interactSpriteCounter < 10) {
-//            interactSpriteNum = 1;
-//        } else if (interactSpriteCounter < 15) {
-//            interactSpriteNum = 2;
-//        } else if (interactSpriteCounter < 20) {
-//            interactSpriteNum = 3;
-//        } else if (interactSpriteCounter < 25) {
-//            interactSpriteNum = 4;
-//        } else if (interactSpriteCounter < 30) {
-//            interactSpriteNum = 5;
-//        } else if (interactSpriteCounter < 35) {
-//            interactSpriteNum = 6;
-//        } else if (interactSpriteCounter < 40) {
-//            interactSpriteNum = 7;
-//        } else if (interactSpriteCounter < 45) {
-//            interactSpriteNum = 8;
-//        } else if (interactSpriteCounter < 50) {
-//            interactSpriteNum = 9;
-//        } else if (interactSpriteCounter < 55) {
-//            interactSpriteNum = 10;
-//        } else if (interactSpriteCounter < 60) {
-//            interactSpriteNum = 11;
-//        } else if (interactSpriteCounter < 65) {
-//            interactSpriteNum = 12;
-//        } else if (interactSpriteCounter < 70) {
-//            interactSpriteNum = 13;
-//        } else if (interactSpriteCounter <= 75) {
-//            interactSpriteNum = 0;
-//            interactSpriteCounter = 0;
-//            interacting = false;
-//        }
-    }
-    public void startInteract() {
-        loopThroughInteractSprites();
     }
 
     // PLAYER & MOB METHODS
@@ -480,7 +451,7 @@ public class Entity {
             }
         }
     }
-    public void loopThroughSprites() {
+    public void runCurrentListAnimation() {
         spriteNum = (spriteNum >= currentList.size()) ? 0 : spriteNum + 1;
         spriteCounter = 0;
     }
@@ -510,7 +481,7 @@ public class Entity {
             } else { // FOR PLAYER
                 // CHECK MONSTER COLLISION
                 int monsterIndex = gp.cChecker.checkEntityCollision(this, gp.mobArr);
-                gp.player.damageMonster(monsterIndex, attack,this);
+                gp.player.damageMonster(monsterIndex, attack, this);
 
                 int iTileIndex = gp.cChecker.checkEntityCollision(this, gp.iTile);
                 gp.player.damageInteractiveTile(iTileIndex);
@@ -525,7 +496,7 @@ public class Entity {
     }
     public void runAttackAnimation() {
         animationCounter++;
-        if (animationSpriteNum < mobRightAttackList.size() && animationCounter%5 == 0) {
+        if (animationSpriteNum < mobRightAttackList.size() && animationCounter % 5 == 0) {
             animationSpriteNum++;
         }
         if (animationSpriteNum >= mobRightAttackList.size() - 1) {
@@ -547,10 +518,47 @@ public class Entity {
         runAttackAnimation();
     }
 
+    // OBJECT METHODS
+    public void runInteractSprites() {
+        interactSpriteCounter++;
+        if (interactSpriteNum < interactList.size() && interactSpriteCounter % 5 == 0) {
+            interactSpriteNum++;
+        }
+        if (interactSpriteNum >= interactList.size() - 1) {
+            interactSpriteNum = 0;
+            interactSpriteCounter = 0;
+            interacting = false;
+            if (type == type_obelisk)
+                gp.eHandler.changeMap();
+        }
+    }
+
+    // GATE METHODS
+    public void runLockAnimation() {}
+    public void runUnlockingAnimation() {}
+
+    // CAMERA METHODS
+    public int getScreenX() {
+        return worldX - gp.player.worldX + gp.player.screenX;
+    }
+    public int getScreenY() {
+        return worldY - gp.player.worldY + gp.player.screenY;
+    }
+    public boolean inCamera() {
+        return worldX + gp.TILE_SIZE * 5 > gp.player.worldX - gp.player.screenX - 48 * 4 && // added values due to player sprite not centered
+                worldX - gp.TILE_SIZE < gp.player.worldX + gp.player.screenX + 48 * 4 &&
+                worldY + gp.TILE_SIZE * 5 > gp.player.worldY - gp.player.screenY - 48 * 2 &&
+                worldY - gp.TILE_SIZE < gp.player.worldY + gp.player.screenY + 48 * 2;
+    }
+
     // GAME LOOP METHODS
     public void update() {
         if (interacting) {
-            startInteract();
+            runInteractSprites();
+        }
+        if (type == type_gate) {
+            if (locking) runLockAnimation();
+            if (unlocking) runUnlockingAnimation();
         } else {
             if (knockBack) {
                 checkCollision();
@@ -564,7 +572,6 @@ public class Entity {
                         case "moveDown": worldY += speed; break;
                         case "moveRight": worldX += speed; break;
                         case "moveLeft": worldX -= speed; break;
-
                         case "moveUpRight":
                             worldX += speed;
                             worldY -= speed;
@@ -601,7 +608,6 @@ public class Entity {
                         case "moveDown": worldY += speed; break;
                         case "moveRight": worldX += speed; break;
                         case "moveLeft": worldX -= speed; break;
-
                         case "moveUpRight":
                             worldX += speed;
                             worldY -= speed;
@@ -624,15 +630,15 @@ public class Entity {
                 // Animation speed
                 spriteCounter++;
                 if (this.currentList.size() > 28) {
-                    if (spriteCounter > 4) loopThroughSprites();
+                    if (spriteCounter > 4) runCurrentListAnimation();
                 } else if (this.currentList.size() > 21) {
-                    if (spriteCounter > 6) loopThroughSprites();
+                    if (spriteCounter > 6) runCurrentListAnimation();
                 } else if (this.currentList.size() > 14) {
-                    if (spriteCounter > 9) loopThroughSprites();
-                }  else if (this.currentList.size() > 7) {
-                    if (spriteCounter > 11) loopThroughSprites();
+                    if (spriteCounter > 9) runCurrentListAnimation();
+                } else if (this.currentList.size() > 7) {
+                    if (spriteCounter > 11) runCurrentListAnimation();
                 } else {
-                    if(spriteCounter > 13) loopThroughSprites();
+                    if (spriteCounter > 13) runCurrentListAnimation();
                 }
             }
 
@@ -647,236 +653,73 @@ public class Entity {
     }
     public void draw(Graphics2D g2) {
         BufferedImage image;
+        if (spriteNum >= currentList.size() - 1) spriteNum = 0;
 
-        if (spriteNum == currentList.size() - 1)
-            spriteNum = 0;
-
-        if (!alive) {
-            return;
-        }
+        if (!alive) return;
 
         if (interacting) {
             image = interactList.get(interactSpriteNum);
+        } else if (type == type_gate) {
+            if (locked && !unlocking) // LOCKED
+                image = defaultList.get(6);
+            else if (locked) // UNLOCKING
+                image = interactList.get(interactSpriteNum);
+            else if (!locking) // UNLOCKED
+                image = defaultList.get(0);
+            else // LOCKING
+                image = defaultList.get(spriteNum);
         } else {
             image = currentList.get(spriteNum);
         }
 
-        if(gp.currentMap == 0) {
-            if (iframe) {
-                hpBarVisible = true;
-                hpBarCounter = 0;
-                UtilityTool.changeAlpha(g2, 0.3f);
-            }
-            if (dead) {
-                dyingAnimation(g2);
-            }
-            if(!attacking){
-                g2.drawImage(image, worldX, worldY, null);
-                UtilityTool.changeAlpha(g2, 1f);
-            }
-            if (attacking) {
-                if (animationSpriteNum >= currentList.size() - 1)
-                    animationSpriteNum = 0;
-                BufferedImage animationImage = currentList.get(animationSpriteNum);
-                g2.drawImage(animationImage, worldX, worldY, null);
-            }
-        } else if (gp.currentMap == 1) {
-            int screenX = worldX - gp.player.worldX + gp.player.screenX;
-            int screenY = worldY - gp.player.worldY + gp.player.screenY;
-
-            if (worldX + gp.TILE_SIZE > gp.player.worldX - gp.player.screenX - 48 * 4 && // added values due to player sprite not centered
-                    worldX - gp.TILE_SIZE < gp.player.worldX + gp.player.screenX + 48 * 4 &&
-                    worldY + gp.TILE_SIZE > gp.player.worldY - gp.player.screenY - 48 * 2 &&
-                    worldY - gp.TILE_SIZE < gp.player.worldY + gp.player.screenY + 48 * 2) {
-                // MONSTER HP BAR
-                if (type == type_mob && hpBarVisible) {
-                    double oneScale = (double) gp.TILE_SIZE / maxLife;
-                    double hpBarValue = oneScale * currentLife;
-                    if (mobNum == 1) { // SLIME
-                        g2.setColor(new Color(35, 35, 35));
-                        g2.fillRect(screenX + 51, screenY + 121, gp.TILE_SIZE, 10);
-                        g2.setColor(new Color(255, 0, 30));
-                        g2.fillRect(screenX + 50, screenY + 120, (int) hpBarValue, 9);
-                    }
-                    if (mobNum == 2) { // SKELLINGTON
-                        g2.setColor(new Color(35, 35, 35));
-                        g2.fillRect(screenX + 51, screenY + 141, gp.TILE_SIZE, 10);
-                        g2.setColor(new Color(255, 0, 30));
-                        g2.fillRect(screenX + 50, screenY + 140, (int) hpBarValue, 9);
-                    }
-                    if (mobNum == 3) { // ROBOT GUARDIAN
-                        g2.setColor(new Color(35, 35, 35));
-                        g2.fillRect(screenX + 81, screenY + 161, gp.TILE_SIZE, 10);
-                        g2.setColor(new Color(255, 0, 30));
-                        g2.fillRect(screenX + 80, screenY + 160, (int) hpBarValue, 9);
-                    }
-                    if (mobNum == 4) { // RAMSES
-                        g2.setColor(new Color(35, 35, 35));
-                        g2.fillRect(screenX + 61, screenY + 121, gp.TILE_SIZE, 10);
-                        g2.setColor(new Color(255, 0, 30));
-                        g2.fillRect(screenX + 60, screenY + 120, (int) hpBarValue, 9);
-                    }
-                    if (mobNum == 5) { // GOBLIN
-                        g2.setColor(new Color(35, 35, 35));
-                        g2.fillRect(screenX + 81, screenY + 141, gp.TILE_SIZE, 10);
-                        g2.setColor(new Color(255, 0, 30));
-                        g2.fillRect(screenX + 80, screenY + 140, (int) hpBarValue, 9);
-                    }
-                    if (mobNum == 6) { // SKELETON KNIGHT
-                        g2.setColor(new Color(35, 35, 35));
-                        g2.fillRect(screenX + 81, screenY + 141, gp.TILE_SIZE, 10);
-                        g2.setColor(new Color(255, 0, 30));
-                        g2.fillRect(screenX + 80, screenY + 140, (int) hpBarValue, 9);
-                    }
-                    if (mobNum == 7) { // ARMORED GUARDIAN
-                        g2.setColor(new Color(35, 35, 35));
-                        g2.fillRect(screenX + 51, screenY + 121, gp.TILE_SIZE, 10);
-                        g2.setColor(new Color(255, 0, 30));
-                        g2.fillRect(screenX + 50, screenY + 120, (int) hpBarValue, 9);
-                    }
-                    if (mobNum == 8) { // FLYING EYE
-                        g2.setColor(new Color(35, 35, 35));
-                        g2.fillRect(screenX + 121, screenY + 191, gp.TILE_SIZE, 10);
-                        g2.setColor(new Color(255, 0, 30));
-                        g2.fillRect(screenX + 120, screenY + 190, (int) hpBarValue, 9);
-                    }
-                    if (mobNum == 9) { // MUSHROOM
-                        g2.setColor(new Color(35, 35, 35));
-                        g2.fillRect(screenX + 126, screenY + 211, gp.TILE_SIZE, 10);
-                        g2.setColor(new Color(255, 0, 30));
-                        g2.fillRect(screenX + 125, screenY + 210, (int) hpBarValue, 9);
-                    }
-                    if (mobNum == 10) { // CANINE
-                        g2.setColor(new Color(35, 35, 35));
-                        g2.fillRect(screenX + 21, screenY + 91, gp.TILE_SIZE, 10);
-                        g2.setColor(new Color(255, 0, 30));
-                        g2.fillRect(screenX + 20, screenY + 90, (int) hpBarValue, 9);
-                    }
-
-                    hpBarCounter++;
-                    if (hpBarCounter > 600) {
-                        hpBarCounter = 0;
-                        hpBarVisible = false;
-                    }
-                }
+        switch (gp.currentMap) {
+            case 0:
                 if (iframe) {
                     hpBarVisible = true;
                     hpBarCounter = 0;
                     UtilityTool.changeAlpha(g2, 0.3f);
                 }
-                if (dead) {
-                    dyingAnimation(g2);
-                }
-                if(!attacking){
-                    g2.drawImage(image, screenX, screenY, null);
+
+                if (dead) dyingAnimation(g2);
+
+                if (!attacking) {
+                    g2.drawImage(image, worldX, worldY, null);
                     UtilityTool.changeAlpha(g2, 1f);
                 }
+
                 if (attacking) {
                     if (animationSpriteNum >= currentList.size() - 1)
                         animationSpriteNum = 0;
                     BufferedImage animationImage = currentList.get(animationSpriteNum);
-                    g2.drawImage(animationImage, screenX, screenY, null);
+                    g2.drawImage(animationImage, worldX, worldY, null);
                 }
-            }
-        } else if (gp.currentMap == 2) {
-            int screenX = worldX - gp.player.worldX + gp.player.screenX;
-            int screenY = worldY - gp.player.worldY + gp.player.screenY;
+                break;
+            case 1, 2:
+                int screenX = worldX - gp.player.worldX + gp.player.screenX;
+                int screenY = worldY - gp.player.worldY + gp.player.screenY;
 
-            if (worldX + gp.TILE_SIZE > gp.player.worldX - gp.player.screenX - 48 * 4 && // added values due to player sprite not centered
-                    worldX - gp.TILE_SIZE < gp.player.worldX + gp.player.screenX + 48 * 4 &&
-                    worldY + gp.TILE_SIZE > gp.player.worldY - gp.player.screenY - 48 * 2 &&
-                    worldY - gp.TILE_SIZE < gp.player.worldY + gp.player.screenY + 48 * 2) {
-                // MONSTER HP BAR
-                if (type == type_mob && hpBarVisible) {
-                    double oneScale = (double) gp.TILE_SIZE / maxLife;
-                    double hpBarValue = oneScale * currentLife;
-                    if (mobNum == 1) { // SLIME
-                        g2.setColor(new Color(35, 35, 35));
-                        g2.fillRect(screenX + 51, screenY + 121, gp.TILE_SIZE, 10);
-                        g2.setColor(new Color(255, 0, 30));
-                        g2.fillRect(screenX + 50, screenY + 120, (int) hpBarValue, 9);
-                    }
-                    if (mobNum == 2) { // SKELLINGTON
-                        g2.setColor(new Color(35, 35, 35));
-                        g2.fillRect(screenX + 51, screenY + 141, gp.TILE_SIZE, 10);
-                        g2.setColor(new Color(255, 0, 30));
-                        g2.fillRect(screenX + 50, screenY + 140, (int) hpBarValue, 9);
-                    }
-                    if (mobNum == 3) { // ROBOT GUARDIAN
-                        g2.setColor(new Color(35, 35, 35));
-                        g2.fillRect(screenX + 81, screenY + 161, gp.TILE_SIZE, 10);
-                        g2.setColor(new Color(255, 0, 30));
-                        g2.fillRect(screenX + 80, screenY + 160, (int) hpBarValue, 9);
-                    }
-                    if (mobNum == 4) { // RAMSES
-                        g2.setColor(new Color(35, 35, 35));
-                        g2.fillRect(screenX + 61, screenY + 121, gp.TILE_SIZE, 10);
-                        g2.setColor(new Color(255, 0, 30));
-                        g2.fillRect(screenX + 60, screenY + 120, (int) hpBarValue, 9);
-                    }
-                    if (mobNum == 5) { // GOBLIN
-                        g2.setColor(new Color(35, 35, 35));
-                        g2.fillRect(screenX + 81, screenY + 141, gp.TILE_SIZE, 10);
-                        g2.setColor(new Color(255, 0, 30));
-                        g2.fillRect(screenX + 80, screenY + 140, (int) hpBarValue, 9);
-                    }
-                    if (mobNum == 6) { // SKELETON KNIGHT
-                        g2.setColor(new Color(35, 35, 35));
-                        g2.fillRect(screenX + 81, screenY + 141, gp.TILE_SIZE, 10);
-                        g2.setColor(new Color(255, 0, 30));
-                        g2.fillRect(screenX + 80, screenY + 140, (int) hpBarValue, 9);
-                    }
-                    if (mobNum == 7) { // ARMORED GUARDIAN
-                        g2.setColor(new Color(35, 35, 35));
-                        g2.fillRect(screenX + 51, screenY + 121, gp.TILE_SIZE, 10);
-                        g2.setColor(new Color(255, 0, 30));
-                        g2.fillRect(screenX + 50, screenY + 120, (int) hpBarValue, 9);
-                    }
-                    if (mobNum == 8) { // FLYING EYE
-                        g2.setColor(new Color(35, 35, 35));
-                        g2.fillRect(screenX + 121, screenY + 191, gp.TILE_SIZE, 10);
-                        g2.setColor(new Color(255, 0, 30));
-                        g2.fillRect(screenX + 120, screenY + 190, (int) hpBarValue, 9);
-                    }
-                    if (mobNum == 9) { // MUSHROOM
-                        g2.setColor(new Color(35, 35, 35));
-                        g2.fillRect(screenX + 126, screenY + 211, gp.TILE_SIZE, 10);
-                        g2.setColor(new Color(255, 0, 30));
-                        g2.fillRect(screenX + 125, screenY + 210, (int) hpBarValue, 9);
-                    }
-                    if (mobNum == 10) { // CANINE
-                        g2.setColor(new Color(35, 35, 35));
-                        g2.fillRect(screenX + 21, screenY + 91, gp.TILE_SIZE, 10);
-                        g2.setColor(new Color(255, 0, 30));
-                        g2.fillRect(screenX + 20, screenY + 90, (int) hpBarValue, 9);
-                    }
-
-                    hpBarCounter++;
-                    if (hpBarCounter > 600) {
+                if (inCamera()) {
+                    if (iframe) {
+                        hpBarVisible = true;
                         hpBarCounter = 0;
-                        hpBarVisible = false;
+                        UtilityTool.changeAlpha(g2, 0.3f);
                     }
-                }
-                if (iframe) {
-                    hpBarVisible = true;
-                    hpBarCounter = 0;
-                    UtilityTool.changeAlpha(g2, 0.3f);
-                }
-                if (dead) {
-                    dyingAnimation(g2);
-                }
-                if(!attacking){
-                    g2.drawImage(image, screenX, screenY, null);
-                    UtilityTool.changeAlpha(g2, 1f);
-                }
-                if (attacking) {
-                    if (animationSpriteNum >= currentList.size() - 1)
-                        animationSpriteNum = 0;
-                    BufferedImage animationImage = currentList.get(animationSpriteNum);
-                    g2.drawImage(animationImage, screenX, screenY, null);
+                    if (dead) {
+                        dyingAnimation(g2);
+                    }
+                    if (!attacking) {
+                        g2.drawImage(image, screenX, screenY, null);
+                        UtilityTool.changeAlpha(g2, 1f);
+                    }
+                    if (attacking) {
+                        if (animationSpriteNum >= currentList.size() - 1)
+                            animationSpriteNum = 0;
+                        BufferedImage animationImage = currentList.get(animationSpriteNum);
+                        g2.drawImage(animationImage, screenX, screenY, null);
+                    }
+                    break;
                 }
             }
-        }
     }
 }
 

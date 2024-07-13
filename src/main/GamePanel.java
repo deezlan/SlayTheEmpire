@@ -22,6 +22,8 @@ import tile.TileManager;
 public class GamePanel extends JPanel implements Runnable {
     // SCREEN SETTINGS
     Thread gameThread;
+    BufferedImage tempScreen;
+    Graphics2D g2;
     private final int
             ORIGINAL_TILE_SIZE = 16,
             SCALE = 3;
@@ -48,9 +50,9 @@ public class GamePanel extends JPanel implements Runnable {
     private final int FPS = 60;
 
     // PLAYER SETTINGS
-    public Cursor cursor = new Cursor(); // Initialize cursor
     Sound music = new Sound();
     Sound effect = new Sound();
+    public Cursor cursor = new Cursor(this); // Initialize cursor
     public Player player = new Player(this, keyH, cursor, playerClass);
     public MouseHandler mouseH = new MouseHandler();
     public UI ui = new UI(this);
@@ -75,13 +77,16 @@ public class GamePanel extends JPanel implements Runnable {
     // PATHFINDER
     public Pathfinder pFinder = new Pathfinder(this);
 
+    // CUTSCENE
+    public boolean bossBattleOn = false;
+    public CutsceneManager csManager = new CutsceneManager(this);
     // GAME STATES
     public int gameState;
     public final int
             titleState = 0,
-            playState = 1, // NO USAGE SO FAR
-            pauseState = 2, // NO USAGE SO FAR
-            dialogueState = 3, // NO USAGE SO FAR
+            playState = 1,
+            pauseState = 2,
+            dialogueState = 3,
             shopState = 4,
             deathState = 5,
             transitionState = 6,
@@ -90,11 +95,8 @@ public class GamePanel extends JPanel implements Runnable {
             characterSelectionState = 9,
             optionState = 10,
             optionState2 = 12,
-            startMenuState = 11;
-
-
-
-
+            startMenuState = 11,
+            cutsceneState = 13;
 
     public GamePanel() {
         this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
@@ -164,6 +166,8 @@ public class GamePanel extends JPanel implements Runnable {
         aSetter.setNPC();
         aSetter.setMonster();
         aSetter.setInteractiveTile();
+        tempScreen = new BufferedImage(SCREEN_WIDTH,SCREEN_HEIGHT,BufferedImage.TYPE_INT_ARGB);
+        g2 = (Graphics2D) tempScreen.getGraphics();
         gameState = titleState; // TESTING LOGIN RIGHT NOW
         playMusic(0);
     }
@@ -175,11 +179,23 @@ public class GamePanel extends JPanel implements Runnable {
         aSetter.setNPC();
     }
 
-    public void restart() {
-        player.setDefaultValues();
-        player.setDefaultPosition();
+//    public void restart() {
+//        player.setDefaultValues();
+//        player.setDefaultPosition();
+//        player.restoreLife();
+//        aSetter.setMonster();
+//        aSetter.setNPC();
+//        aSetter.setObject();
+//        aSetter.setInteractiveTile();
+//    }
+
+//    public void resetMonster() { (WIP)
+//        aSetter.setMonster();
+//    }
+
+    public void resetLevel() {
+        bossBattleOn = false;
         aSetter.setObject();
-        aSetter.setNPC();
         aSetter.setMonster();
         aSetter.setInteractiveTile();
     }
@@ -354,6 +370,8 @@ public class GamePanel extends JPanel implements Runnable {
 
             ui.draw(g2);
 
+            csManager.draw(g2);
+
             // DEBUG
             if(keyH.showDebug){
                 long drawEnd = System.nanoTime();
@@ -368,6 +386,7 @@ public class GamePanel extends JPanel implements Runnable {
                 g2.drawString("WorldY: "+ player.worldY , x , y); y += lineHeight;
                 g2.drawString("Col: " + (player.worldX + player.solidArea.x)/TILE_SIZE, x, y); y += lineHeight;
                 g2.drawString("Row: " + (player.worldY + player.solidArea.y)/TILE_SIZE, x, y); y += lineHeight;
+                g2.drawString("God Mode: " + keyH.godModeOn, x, y); y += lineHeight;
                 g2.drawString("Draw Time: " + passed, x, y);
             }
         } else {

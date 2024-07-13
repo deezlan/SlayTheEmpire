@@ -20,6 +20,12 @@ public abstract class Entity {
         this.gp = gp;
     }
 
+    public Entity(GamePanel gp, int worldX, int worldY) {
+        this.gp = gp;
+        this.worldX = worldX;
+        this.worldY = worldY;
+    }
+
     // PLAYER & MOB ATTRIBUTES
     public int
             // POSITION OFF OF FULL GAME MAP

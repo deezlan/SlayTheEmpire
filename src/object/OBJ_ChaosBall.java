@@ -10,6 +10,7 @@ public class OBJ_ChaosBall extends Projectile {
     GamePanel gp;
     public OBJ_ChaosBall(GamePanel gp) {
         super(gp);
+        // maybe delete below
         this.gp = gp;
 
         speed = 10;

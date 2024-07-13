@@ -13,11 +13,10 @@ public class OBJ_Gate extends Entity {
         super(gp);
         this.gp = gp;
         this.gateForm = gateForm;
-        name = "Gate";
-        message = "";
         type = type_gate;
         locked = false;
 
+        // Set position
         worldX = col * gp.TILE_SIZE;
         worldY = row * gp.TILE_SIZE;
 

@@ -14,151 +14,117 @@ public class AssetSetter {
     public void setObject() {
         int mapNum = 0;
         int i = 0;
-
-        // MAP 0
+        // MAP 0 SETTER
         {
-            gp.objArr[mapNum][i] = new OBJ_Shop(gp);
-            gp.objArr[mapNum][i].worldX = 516;
-            gp.objArr[mapNum][i].worldY = -10;
-            i++;
+            gp.objArr[mapNum][i] = new OBJ_Shop(gp, 516, -10); i++;
+            gp.objArr[mapNum][i] = new OBJ_SavePedestal(gp, 272, 490); i++;
 
-            gp.objArr[mapNum][i] = new OBJ_SavePedestal(gp);
-            gp.objArr[mapNum][i].worldX = 272;
-            gp.objArr[mapNum][i].worldY = 490 ;
-            i++;
-
-            gp.objArr[mapNum][i] = new OBJ_ChatBubble(gp);
-            gp.objArr[mapNum][i].worldX = 410;
-            gp.objArr[mapNum][i].worldY = 230;
-            i++;
-
-            gp.objArr[mapNum][i] = new OBJ_ChatBubble(gp);
-            gp.objArr[mapNum][i].worldX = 134;
-            gp.objArr[mapNum][i].worldY = 108;
-            i++;
-
-            gp.objArr[mapNum][i] = new OBJ_ChatBubble(gp);
-            gp.objArr[mapNum][i].worldX = 640;
-            gp.objArr[mapNum][i].worldY = 80;
-            i++;
-
-            gp.objArr[mapNum][i] = new OBJ_ChatBubble(gp);
-            gp.objArr[mapNum][i].worldX = 540;
-            gp.objArr[mapNum][i].worldY = 410;
-            i++;
+            // CHAT BUBBLES - Blacksmith, Maiden, Shady, Merchant
+            gp.objArr[mapNum][i] = new OBJ_ChatBubble(gp, 134, 108); i++;
+            gp.objArr[mapNum][i] = new OBJ_ChatBubble(gp, 410, 230); i++;
+            gp.objArr[mapNum][i] = new OBJ_ChatBubble(gp, 540, 410); i++;
+            gp.objArr[mapNum][i] = new OBJ_ChatBubble(gp, 640, 80); i++;
 
             gp.objArr[mapNum][i] = new OBJ_Gate(gp, 1, 12, 8);
         }
 
-        // MAP 1
+        i = 0;
         mapNum = 1;
-        i = 0;
-
-        // TELEPORTING OBELISK
+        // MAP 1 SETTER
         {
-            gp.objArr[mapNum][i] = new OBJ_Obelisk(gp);
-            gp.objArr[mapNum][i].worldX = 63;
-            gp.objArr[mapNum][i].worldY = 168;
-            i++;
-        }
-        // FIRST ROOM GATES index (1-5)
-        {
-            // ENTRANCES
-            gp.objArr[mapNum][i] = new OBJ_Gate(gp, 0, 6, 41); i++;
-            gp.objArr[mapNum][i] = new OBJ_Gate(gp, 0, 6, 42); i++;
-            // EXITS
-            gp.objArr[mapNum][i] = new OBJ_Gate(gp, 0, 11, 37); i++;
-            gp.objArr[mapNum][i] = new OBJ_Gate(gp, 0, 12, 37); i++;
-            gp.objArr[mapNum][i] = new OBJ_Gate(gp, 0, 13, 37); i++;
-        }
-        // SPLIT PATHWAY GATES index (6-7) (8-9)
-        {
-            // LEFT PATH
-            gp.objArr[mapNum][i] = new OBJ_Gate(gp, 0, 10, 30); i++;
-            gp.objArr[mapNum][i] = new OBJ_Gate(gp, 0, 10, 31); i++;
-            // RIGHT PATH
-            gp.objArr[mapNum][i] = new OBJ_Gate(gp, 0, 14, 30); i++;
-            gp.objArr[mapNum][i] = new OBJ_Gate(gp, 0, 14, 31); i++;
-        }
-        // MINI-BOSS ROOM GATES index (10-16)
-        {
-            // ENTRANCES
+            // TELEPORTING OBELISK
+            gp.objArr[mapNum][i] = new OBJ_Obelisk(gp, 63, 168); i++;
+            // FIRST ROOM GATES index (1-5)
+            {
+                // ENTRANCES
+                gp.objArr[mapNum][i] = new OBJ_Gate(gp, 0, 6, 41); i++;
+                gp.objArr[mapNum][i] = new OBJ_Gate(gp, 0, 6, 42); i++;
+                // EXITS
+                gp.objArr[mapNum][i] = new OBJ_Gate(gp, 0, 11, 37); i++;
+                gp.objArr[mapNum][i] = new OBJ_Gate(gp, 0, 12, 37); i++;
+                gp.objArr[mapNum][i] = new OBJ_Gate(gp, 0, 13, 37); i++;
+            }
+            // SPLIT PATHWAY GATES index (6-7) (8-9)
+            {
+                // LEFT PATH
+                gp.objArr[mapNum][i] = new OBJ_Gate(gp, 0, 10, 30); i++;
+                gp.objArr[mapNum][i] = new OBJ_Gate(gp, 0, 10, 31); i++;
+                // RIGHT PATH
+                gp.objArr[mapNum][i] = new OBJ_Gate(gp, 0, 14, 30); i++;
+                gp.objArr[mapNum][i] = new OBJ_Gate(gp, 0, 14, 31); i++;
+            }
+            // MINI-BOSS ROOM GATES index (10-16)
+            {
+                // ENTRANCES
                 // LEFT SIDE
-            gp.objArr[mapNum][i] = new OBJ_Gate(gp, 0, 6, 23); i++;
-            gp.objArr[mapNum][i] = new OBJ_Gate(gp, 0, 6, 24); i++;
+                gp.objArr[mapNum][i] = new OBJ_Gate(gp, 0, 6, 23); i++;
+                gp.objArr[mapNum][i] = new OBJ_Gate(gp, 0, 6, 24); i++;
                 // RIGHT SIDE
-            gp.objArr[mapNum][i] = new OBJ_Gate(gp, 0, 18, 23); i++;
-            gp.objArr[mapNum][i] = new OBJ_Gate(gp, 0, 18, 24); i++;
-            // EXITS
-            gp.objArr[mapNum][i] = new OBJ_Gate(gp, 0, 11, 19); i++;
-            gp.objArr[mapNum][i] = new OBJ_Gate(gp, 0, 12, 19); i++;
-            gp.objArr[mapNum][i] = new OBJ_Gate(gp, 0, 13, 19); i++;
-        }
-        // FINAL BOSS ROOM GATES index (17-20)
-        {
-            // ENTRANCES
-            gp.objArr[mapNum][i] = new OBJ_Gate(gp, 0, 11, 14); i++;
-            gp.objArr[mapNum][i] = new OBJ_Gate(gp, 0, 12, 14); i++;
-            gp.objArr[mapNum][i] = new OBJ_Gate(gp, 0, 13, 14); i++;
-            // EXIT
-            gp.objArr[mapNum][i] = new OBJ_Gate(gp, 0, 5, 7);
+                gp.objArr[mapNum][i] = new OBJ_Gate(gp, 0, 18, 23); i++;
+                gp.objArr[mapNum][i] = new OBJ_Gate(gp, 0, 18, 24); i++;
+                // EXITS
+                gp.objArr[mapNum][i] = new OBJ_Gate(gp, 0, 11, 19); i++;
+                gp.objArr[mapNum][i] = new OBJ_Gate(gp, 0, 12, 19); i++;
+                gp.objArr[mapNum][i] = new OBJ_Gate(gp, 0, 13, 19); i++;
+            }
+            // FINAL BOSS ROOM GATES index (17-20)
+            {
+                // ENTRANCES
+                gp.objArr[mapNum][i] = new OBJ_Gate(gp, 0, 11, 14); i++;
+                gp.objArr[mapNum][i] = new OBJ_Gate(gp, 0, 12, 14); i++;
+                gp.objArr[mapNum][i] = new OBJ_Gate(gp, 0, 13, 14); i++;
+                // EXIT
+                gp.objArr[mapNum][i] = new OBJ_Gate(gp, 0, 5, 7);
+            }
         }
 
-        // MAP 2;
-        mapNum = 2;
         i = 0;
-
-        // TELEPORTING OBELISK
+        mapNum = 2;
+        // MAP 2 SETTER
         {
-            gp.objArr[mapNum][i] = new OBJ_Obelisk(gp);
-            gp.objArr[mapNum][i].worldX = 1551;
-            gp.objArr[mapNum][i].worldY = 650;
-            i++;
-        }
-
-        // FIRST ROOM GATES index (1-4)
-        {
-            // ENTRANCES
-            gp.objArr[mapNum][i] = new OBJ_Gate(gp, 1, 26, 36); i++;
-            gp.objArr[mapNum][i] = new OBJ_Gate(gp, 1, 26, 37); i++;
-            // EXITS
-            gp.objArr[mapNum][i] = new OBJ_Gate(gp, 1, 20, 32); i++;
-            gp.objArr[mapNum][i] = new OBJ_Gate(gp, 1, 21, 32); i++;
-        }
-
-        // MINI-BOSS ROOM GATES index (5-9)
-        {
-            // ENTRANCES
-            gp.objArr[mapNum][i] = new OBJ_Gate(gp, 1, 13, 24); i++;
-            gp.objArr[mapNum][i] = new OBJ_Gate(gp, 1, 13, 25); i++;
-            // EXITS
-            gp.objArr[mapNum][i] = new OBJ_Gate(gp, 1, 6, 19); i++;
-            gp.objArr[mapNum][i] = new OBJ_Gate(gp, 1, 7, 19); i++;
-            gp.objArr[mapNum][i] = new OBJ_Gate(gp, 1, 8, 19); i++;
-        }
-
-        // FINAL BOSS ROOM GATES index (10-15)
-        {
-            // ENTRANCES
-            gp.objArr[mapNum][i] = new OBJ_Gate(gp, 1, 6, 11); i++;
-            gp.objArr[mapNum][i] = new OBJ_Gate(gp, 1, 7, 11); i++;
-            gp.objArr[mapNum][i] = new OBJ_Gate(gp, 1, 8, 11); i++;
-            // EXIT
-            gp.objArr[mapNum][i] = new OBJ_Gate(gp, 1, 14, 5); i++;
-            gp.objArr[mapNum][i] = new OBJ_Gate(gp, 1, 14, 6); i++;
-            gp.objArr[mapNum][i] = new OBJ_Gate(gp, 1, 14, 7); i++;
-        }
-
-        // PLOT TWIST BOSS ROOM GATES index (16-21)
-        {
-            // ENTRANCES
-            gp.objArr[mapNum][i] = new OBJ_Gate(gp, 1, 25, 5); i++;
-            gp.objArr[mapNum][i] = new OBJ_Gate(gp, 1, 25, 6); i++;
-            gp.objArr[mapNum][i] = new OBJ_Gate(gp, 1, 25, 7); i++;
-            // EXIT
-            gp.objArr[mapNum][i] = new OBJ_Gate(gp, 1, 32, 11); i++;
-            gp.objArr[mapNum][i] = new OBJ_Gate(gp, 1, 33, 11); i++;
-            gp.objArr[mapNum][i] = new OBJ_Gate(gp, 1, 34, 11);
+            // TELEPORTING OBELISK
+            gp.objArr[mapNum][i] = new OBJ_Obelisk(gp, 1551, 650); i++;
+            // FIRST ROOM GATES index (1-4)
+            {
+                // ENTRANCES
+                gp.objArr[mapNum][i] = new OBJ_Gate(gp, 1, 26, 36); i++;
+                gp.objArr[mapNum][i] = new OBJ_Gate(gp, 1, 26, 37); i++;
+                // EXITS
+                gp.objArr[mapNum][i] = new OBJ_Gate(gp, 1, 20, 32); i++;
+                gp.objArr[mapNum][i] = new OBJ_Gate(gp, 1, 21, 32); i++;
+            }
+            // MINI-BOSS ROOM GATES index (5-9)
+            {
+                // ENTRANCES
+                gp.objArr[mapNum][i] = new OBJ_Gate(gp, 1, 13, 24); i++;
+                gp.objArr[mapNum][i] = new OBJ_Gate(gp, 1, 13, 25); i++;
+                // EXITS
+                gp.objArr[mapNum][i] = new OBJ_Gate(gp, 1, 6, 19); i++;
+                gp.objArr[mapNum][i] = new OBJ_Gate(gp, 1, 7, 19); i++;
+                gp.objArr[mapNum][i] = new OBJ_Gate(gp, 1, 8, 19); i++;
+            }
+            // FINAL BOSS ROOM GATES index (10-15)
+            {
+                // ENTRANCES
+                gp.objArr[mapNum][i] = new OBJ_Gate(gp, 1, 6, 11); i++;
+                gp.objArr[mapNum][i] = new OBJ_Gate(gp, 1, 7, 11); i++;
+                gp.objArr[mapNum][i] = new OBJ_Gate(gp, 1, 8, 11); i++;
+                // EXIT
+                gp.objArr[mapNum][i] = new OBJ_Gate(gp, 1, 14, 5); i++;
+                gp.objArr[mapNum][i] = new OBJ_Gate(gp, 1, 14, 6); i++;
+                gp.objArr[mapNum][i] = new OBJ_Gate(gp, 1, 14, 7); i++;
+            }
+            // PLOT TWIST BOSS ROOM GATES index (16-21)
+            {
+                // ENTRANCES
+                gp.objArr[mapNum][i] = new OBJ_Gate(gp, 1, 25, 5); i++;
+                gp.objArr[mapNum][i] = new OBJ_Gate(gp, 1, 25, 6); i++;
+                gp.objArr[mapNum][i] = new OBJ_Gate(gp, 1, 25, 7); i++;
+                // EXIT
+                gp.objArr[mapNum][i] = new OBJ_Gate(gp, 1, 32, 11); i++;
+                gp.objArr[mapNum][i] = new OBJ_Gate(gp, 1, 33, 11); i++;
+                gp.objArr[mapNum][i] = new OBJ_Gate(gp, 1, 34, 11);
+            }
         }
     }
 

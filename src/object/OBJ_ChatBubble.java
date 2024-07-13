@@ -7,8 +7,8 @@ import main.UtilityTool;
 import java.io.IOException;
 
 public class OBJ_ChatBubble extends Entity {
-    public OBJ_ChatBubble(GamePanel gp) {
-        super(gp);
+    public OBJ_ChatBubble(GamePanel gp, int worldX, int worldY) {
+        super(gp, worldX, worldY);
         name = "Bubble";
 
         // Load save pedestal sprites

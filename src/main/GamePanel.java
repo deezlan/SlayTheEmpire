@@ -7,7 +7,6 @@ import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.Map;
 
 import TileInteractive.InteractiveTIle;
 import ai.Pathfinder;
@@ -127,15 +126,19 @@ public class GamePanel extends JPanel implements Runnable {
         aSetter.setNPC();
     }
 
-    public void restart() {
-        player.setDefaultValues();
-        player.setDefaultPosition();
-        player.restoreLife();
-        aSetter.setMonster();
-        aSetter.setNPC();
-        aSetter.setObject();
-        aSetter.setInteractiveTile();
-    }
+//    public void restart() {
+//        player.setDefaultValues();
+//        player.setDefaultPosition();
+//        player.restoreLife();
+//        aSetter.setMonster();
+//        aSetter.setNPC();
+//        aSetter.setObject();
+//        aSetter.setInteractiveTile();
+//    }
+
+//    public void resetMonster() { (WIP)
+//        aSetter.setMonster();
+//    }
 
     public void resetLevel() {
         bossBattleOn = false;

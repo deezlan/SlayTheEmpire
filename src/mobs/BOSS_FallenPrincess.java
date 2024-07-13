@@ -7,36 +7,35 @@ import object.OBJ_PickUpCoin;
 
 import java.io.IOException;
 
-public class MOB_FrostGiant extends Entity {
+public class BOSS_FallenPrincess extends Entity {
     GamePanel gp;
-    public static final String monName = "Frost Giant";
-    public MOB_FrostGiant(GamePanel gp) {
+    public static final String monName = "Fallen Princess";
+    public BOSS_FallenPrincess(GamePanel gp) {
         super(gp);
         this.gp = gp;
         name = monName;
         type = type_mob;
         boss = true;
-        bossNum = 1;
+        bossNum = 5;
         defaultSpeed = 1;
         speed = defaultSpeed;
         attack = 1;
         maxLife = 10;
         currentLife = maxLife;
         action = "idleRight";
-        damageSprite = 7;
+        damageSprite = 10;
         sleep = true;
-
         // Load mob sprites
         getMobSprites();
         setDialog();
 
         // Set collision settings
-        solidArea.x = 150;
-        solidArea.y = 180;
-        solidArea.width = 80;
-        solidArea.height = 100;
-        attackArea.width = 140;
-        attackArea.height = 140;
+        solidArea.x = 48;
+        solidArea.y = 60;
+        solidArea.width = gp.TILE_SIZE;
+        solidArea.height = gp.TILE_SIZE*2;
+        attackArea.width = 100;
+        attackArea.height = 100;
         solidAreaDefaultX = solidArea.x;
         solidAreaDefaultY = solidArea.y;
         dialogueSet = 0;
@@ -64,7 +63,7 @@ public class MOB_FrostGiant extends Entity {
         }
         // CHECK ATTACK ON PLAYER
         if(!attacking){
-            checkWithinAttackRange(30,gp.TILE_SIZE*6,gp.TILE_SIZE*6); // CHANGE ATTACK RANGE
+            checkWithinAttackRange(30,gp.TILE_SIZE*5,gp.TILE_SIZE*5); // CHANGE ATTACK RANGE
         }
     }
 
@@ -85,31 +84,30 @@ public class MOB_FrostGiant extends Entity {
     }
 
     public void getMobSprites() {
-        String dir = "/Mobs/FrostGiant/";
+        String dir = "/Mobs/FallenPrincess/";
         try {
-            for (int i = 0; i <= 9; i++) {
+            for (int i = 0; i <= 3; i++) {
                 moveRightList.add(i, UtilityTool.loadSprite(dir + "moveRight/" + i + ".png", "Missing moveRight " + i));
                 moveLeftList.add(i, UtilityTool.loadSprite(dir + "moveLeft/" + i + ".png", "Missing moveLeft " + i));
             }
 
-            for (int i = 0; i <= 5; i++) {
+            for (int i = 0; i <= 7; i++) {
                 idleLeftList.add(i, UtilityTool.loadSprite(dir + "idleLeft/" + i + ".png", "Missing idleLeft " + i));
                 idleRightList.add(i, UtilityTool.loadSprite(dir + "idleRight/" + i + ".png", "Missing idleRight " + i));
             }
 
-            for (int i = 0; i <= 13; i++) {
+            for (int i = 0; i <= 12; i++) {
                 mobLeftAttackList.add(i, UtilityTool.loadSprite(dir + "attackLeft/" + i + ".png", "Missing idleLeft " + i));
                 mobRightAttackList.add(i, UtilityTool.loadSprite(dir + "attackRight/" + i + ".png", "Missing idleRight " + i));
             }
 
-            UtilityTool.scaleEntityList(this, moveRightList, 400, 300);
-            UtilityTool.scaleEntityList(this,moveLeftList, 400, 300);
-            UtilityTool.scaleEntityList(this, mobLeftAttackList, 400, 300);
-            UtilityTool.scaleEntityList(this,mobRightAttackList, 400, 300);
-            UtilityTool.scaleEntityList(this,idleLeftList, 400, 300);
-            UtilityTool.scaleEntityList(this, idleRightList, 400, 300);
+            UtilityTool.scaleEntityList(this, moveRightList, 150, 150);
+            UtilityTool.scaleEntityList(this,moveLeftList, 150, 150);
+            UtilityTool.scaleEntityList(this, mobLeftAttackList, 150, 150);
+            UtilityTool.scaleEntityList(this,mobRightAttackList, 150, 150);
+            UtilityTool.scaleEntityList(this,idleLeftList, 150, 150);
+            UtilityTool.scaleEntityList(this, idleRightList, 150, 150);
 
-            System.out.println("Robot Guardian sprites loaded successfully");
         } catch (IOException e) {
             e.printStackTrace(System.out);
         }

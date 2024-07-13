@@ -114,17 +114,17 @@ public class EventHandler {
                     }
                     if ( // TRIGGER MINI-BOSS ROOM GATES
                             hit(1, 7, 22, "any")
-                                    || hit(1, 8, 23, "any")
-                                    || hit(1, 8, 24, "any")
-                                    || hit(1, 7, 25, "any")
+                                    || hit(1, 9, 23, "any")
+                                    || hit(1, 9, 24, "any")
+                                    || hit(1, 8, 25, "any")
 
-                                    || hit(1, 17, 22, "any")
-                                    || hit(1, 16, 23, "any")
-                                    || hit(1, 16, 24, "any")
-                                    || hit(1, 17, 25, "any")
+                                    || hit(1, 16, 22, "any")
+                                    || hit(1, 15, 23, "any")
+                                    || hit(1, 15, 24, "any")
+                                    || hit(1, 16, 25, "any")
                     ) {
-//                        for (int i = 10; i <= 16; i++)
-//                            gp.objArr[1][i].locking = true;
+                        for (int i = 10; i <= 16; i++)
+                            gp.objArr[1][i].locking = true;
 
 //                        eventRect[1][7][22].eventDone = true;
 //                        eventRect[1][8][23].eventDone = true;
@@ -172,6 +172,12 @@ public class EventHandler {
                         for (int i = 17; i <= 20; i++)
                             gp.objArr[1][i].unlocking = true;
                     }
+
+                    // UNLOCK MINI BOSS GATE AFTER SLAIN
+                    if (gp.mobArr[1][3] == null) {
+                    for (int i = 10; i <= 16; i++)
+                        gp.objArr[1][i].unlocking = true;
+                    }
             }
         }
     }
@@ -208,8 +214,10 @@ public class EventHandler {
         switch (gp.currentMap) {
             case 0:
                 tempMap = 1;
-                tempCol = 2;
-                tempRow = 41;
+//                tempCol = 2;
+//                tempRow = 41;
+                tempCol = 12;
+                tempRow = 26;
                 break;
             case 1:
                 tempMap = 0;

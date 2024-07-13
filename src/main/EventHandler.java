@@ -208,10 +208,10 @@ public class EventHandler {
         switch (gp.currentMap) {
             case 0:
                 tempMap = 1;
-//                tempCol = 2;
-//                tempRow = 41;
-                tempCol = 12;
-                tempRow = 26;
+                tempCol = 2;
+                tempRow = 41;
+//                tempCol = 12;
+//                tempRow = 26;
                 break;
             case 1:
                 tempMap = 0;

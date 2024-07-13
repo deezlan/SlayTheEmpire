@@ -374,7 +374,7 @@ public class UI {
         for(int i = 0; i < gp.mobArr[1].length; i++){
             Entity mob = gp.mobArr[gp.currentMap][i]; // LOCAL ENTITY FOR SHORTER CODE
             if(mob != null && mob.inCamera()){
-                if (mob.hpBarVisible && !mob.boss && mob.onPath) {
+                if (mob.hpBarVisible && !mob.boss) {
                     double oneScale = (double) gp.TILE_SIZE / mob.maxLife;
                     double hpBarValue = oneScale * mob.currentLife;
                     // DRAW HP BAR BOX
@@ -428,7 +428,7 @@ public class UI {
                         mob.hpBarCounter = 0;
                         mob.hpBarVisible = false;
                     }
-                } else if(mob.boss) {
+                } else if(mob.boss && mob.onPath) {
                     double oneScale = (double) gp.TILE_SIZE*8 / mob.maxLife;
                     double hpBarValue = oneScale * mob.currentLife;
                     int x = gp.SCREEN_WIDTH/2 - gp.TILE_SIZE*2;

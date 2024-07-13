@@ -175,10 +175,4 @@ public class AssetSetter {
         gp.mobArr[mapNum][i] = new MOB_Slime(gp, 450, 270); i++;
         gp.mobArr[mapNum][i] = new MOB_RobotGuardian(gp, 300, 270); i++;
     }
-
-    public void setInteractiveTile() {
-//        int mapNum = 0;
-//        int i = 0;
-//        gp.iTile[i] = new
-    }
 }

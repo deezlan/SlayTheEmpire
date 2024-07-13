@@ -112,7 +112,6 @@ public class GamePanel extends JPanel implements Runnable {
         aSetter.setObject();
         aSetter.setNPC();
         aSetter.setMonster();
-        aSetter.setInteractiveTile();
         gameState = playState;
 
         tempScreen = new BufferedImage(SCREEN_WIDTH,SCREEN_HEIGHT,BufferedImage.TYPE_INT_ARGB);
@@ -132,7 +131,6 @@ public class GamePanel extends JPanel implements Runnable {
         aSetter.setObject();
         aSetter.setNPC();
         aSetter.setMonster();
-        aSetter.setInteractiveTile();
     }
 
     // MAP SETTINGS

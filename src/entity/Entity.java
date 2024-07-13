@@ -330,6 +330,13 @@ public abstract class Entity {
         }
     }
 
+    public void knockBack(Entity target,Entity attacker){
+        this.attacker = attacker;
+        target.knockBackDirection = attacker.action;
+        target.speed += 10;
+        target.knockBack = true;
+    }
+
     public void checkShoot(int rate, int xOffset, int yOffset, int shotInterval) {
         int i = new Random().nextInt(rate);
         shotAvailableCounter = 0;

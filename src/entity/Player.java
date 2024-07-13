@@ -226,12 +226,6 @@ public class Player extends Entity {
             }
         }
     }
-    public void knockBack(Entity target,Entity attacker){
-        this.attacker = attacker;
-        target.knockBackDirection = attacker.action;
-        target.speed += 10;
-        target.knockBack = true;
-    }
     public void damageInteractiveTile(int i) {
         if(i != 999 && gp.iTile[gp.currentMap][i].destructible){
             gp.iTile[i] = null;

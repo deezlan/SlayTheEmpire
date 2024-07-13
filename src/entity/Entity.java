@@ -2,6 +2,7 @@ package entity;
 
 import main.GamePanel;
 import main.UtilityTool;
+import object.OBJ_PickUpCoin;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -169,7 +170,8 @@ public abstract class Entity {
     // INTERFACE METHODS
     public void use(Entity entity) {} // PLAYER
     public void speak() {} // NPC
-    public void checkDrop() {} // MOB
+
+    // MOB
     public void setAction() {} // MOB
     public void damageReaction() {
     } // MOB
@@ -394,7 +396,6 @@ public abstract class Entity {
             }
         }
     }
-
     public void dyingAnimation(Graphics2D g2) { // BLINKING EFFECT
         dyingCounter++;
 
@@ -426,15 +427,12 @@ public abstract class Entity {
             alive = false;
         }
     }
-    public void dropItem(Entity droppedItem) {
-        for (int i = 0; i < gp.objArr[1].length; i++) {
-            if (gp.objArr[gp.currentMap][i] == null) {
-                gp.objArr[gp.currentMap][i] = droppedItem;
-                gp.objArr[gp.currentMap][i].worldX = worldX + gp.TILE_SIZE * 2;
-                gp.objArr[gp.currentMap][i].worldY = worldY + gp.TILE_SIZE * 2;
-                break;
-            }
-        }
+    public void checkDrop() {
+        int i = 0;
+        while (gp.objArr[gp.currentMap][i] != null)
+            i++;
+
+        gp.objArr[gp.currentMap][i] = new OBJ_PickUpCoin(gp, worldX + idleRightList.get(0).getWidth()/2 - 24, worldY + idleRightList.get(0).getHeight()/2 - 24);
     }
 
     // PLAYER & MOB METHODS

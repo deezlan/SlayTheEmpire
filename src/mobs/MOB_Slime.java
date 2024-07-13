@@ -3,7 +3,6 @@ package mobs;
 import entity.Entity;
 import main.GamePanel;
 import main.UtilityTool;
-import object.OBJ_PickUpCoin;
 
 import java.io.IOException;
 
@@ -35,10 +34,6 @@ public class MOB_Slime extends Entity {
         solidAreaDefaultY = solidArea.y;
         attackArea.width = 50;
         attackArea.height = 30;
-    }
-
-    public void checkDrop() {
-        dropItem(new OBJ_PickUpCoin(gp));
     }
 
     @Override

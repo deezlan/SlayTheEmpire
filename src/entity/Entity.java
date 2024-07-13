@@ -720,7 +720,6 @@ public abstract class Entity {
                         BufferedImage animationImage = currentList.get(animationSpriteNum);
                         g2.drawImage(animationImage, screenX, screenY, null);
                     }
-                    break;
                 }
             }
     }

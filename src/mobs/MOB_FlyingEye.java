@@ -20,7 +20,7 @@ public class MOB_FlyingEye extends Entity {
         currentLife = maxLife;
         action = "idleRight";
         mobNum = 8;
-        projectile1 = new OBJ_Rock(gp);
+        projectile = new OBJ_Rock(gp);
 
         // Load mob sprites
         getMobSprites();

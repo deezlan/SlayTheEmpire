@@ -161,8 +161,8 @@ public class AssetSetter {
         gp.mobArr[mapNum][i] = new BOSS_FrostGiant(gp, 400, 180);
         gp.mobArr[mapNum][i] = new MOB_RobotGuardian(gp, 350, 1968); i++;
         gp.mobArr[mapNum][i] = new MOB_SkeletonKnight(gp, 550, 1968); i++;
-        gp.mobArr[mapNum][i] = new MOB_FrostGiant(gp, 400, 180); i++;
-//        gp.mobArr[mapNum][i] = new MOB_FlyingEye(gp, 400, 270); i++;
+        gp.mobArr[mapNum][i] = new BOSS_FrostGiant(gp, 400, 180); i++;
+        gp.mobArr[mapNum][i] = new MOB_FlyingEye(gp, 350, 1968); i++;
         gp.mobArr[mapNum][i] = new MOB_Mushroom(gp, 450, 270); i++;
         gp.mobArr[mapNum][i] = new MOB_Canine(gp, 500, 300); i++;
         gp.mobArr[mapNum][i] = new MOB_Slime(gp, 800, 400); i++;
@@ -173,7 +173,7 @@ public class AssetSetter {
 
         // MAP 2
         mapNum = 2;
-        gp.mobArr[mapNum][i] = new MOB_Slime(gp, 450, 270); i++;
-        gp.mobArr[mapNum][i] = new MOB_RobotGuardian(gp, 300, 270); i++;
+        gp.mobArr[mapNum][i] = new MOB_Slime(gp, 1600, 1968); i++;
+        gp.mobArr[mapNum][i] = new MOB_RobotGuardian(gp, 1700, 1968); i++;
     }
 }

@@ -16,7 +16,7 @@ public class BOSS_FallenPrincess extends Entity {
         name = monName;
         type = type_mob;
         boss = true;
-        bossNum = 4;
+        bossNum = 5;
         defaultSpeed = 1;
         speed = defaultSpeed;
         attack = 1;

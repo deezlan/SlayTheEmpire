@@ -17,7 +17,7 @@ public class BOSS_FireWorm extends Entity {
         name = monName;
         type = type_mob;
         boss = true;
-        bossNum = 2;
+        bossNum = 6;
         defaultSpeed = 1;
         speed = defaultSpeed;
         attack = 1;

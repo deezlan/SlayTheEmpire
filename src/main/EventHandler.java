@@ -58,31 +58,34 @@ public class EventHandler {
         }
         if (canTouchEvent) {// use else if to add more events
             switch (gp.currentMap) {
+                // LOBBY
                 case 0:
                     if (hit(0, 8, 13, "any")) {
                         changeMap();
                     } else if (
                             hit(0, 2, 9, "any")
-                                    || hit(0, 3, 10, "any")
-                                    || hit(0, 4, 10, "moveDown")
-                                    || hit(0, 13, 10, "any")
+                                    || hit(gp.currentMap, 3, 10, "any")
+                                    || hit(gp.currentMap, 4, 10, "moveDown")
+                                    || hit(gp.currentMap, 13, 10, "any")
                     ) {
                         drinkWater(gp.dialogueState);
                     } else if (hit(0, 8, 4, "any")) {
-                        gp.objArr[0][6].locking = true;
+                        gp.objArr[gp.currentMap][6].locking = true;
 //                eventRect[0][8][4].eventDone = true;
                     } else if (hit(0, 11, 4, "any")) {
-                        gp.objArr[0][6].unlocking = true;
+                        gp.objArr[gp.currentMap][6].unlocking = true;
 //                eventRect[0][8][4].eventDone = true;
                     }
                     break;
+
+                // LEVEL ONE
                 case 1:
                     if ( // TRIGGER 1ST ROOM GATES
-                            hit(1, 7, 40, "any")
-                                    || hit(1, 8, 41, "any")
-                                    || hit(1, 8, 42, "any")
-                                    || hit(1, 8, 43, "any")
-                                    || hit(1, 7, 44, "any")
+                            hit(gp.currentMap, 7, 40, "any")
+                                    || hit(gp.currentMap, 8, 41, "any")
+                                    || hit(gp.currentMap, 8, 42, "any")
+                                    || hit(gp.currentMap, 8, 43, "any")
+                                    || hit(gp.currentMap, 7, 44, "any")
                     ) {
                         for (int i = 1; i <= 5; i++)
                             gp.objArr[1][i].locking = true;
@@ -93,21 +96,21 @@ public class EventHandler {
                         eventRect[1][7][43].eventDone = true;
                     }
                     if ( // TRIGGER LEFT PATH GATES
-                            hit(1, 8, 30, "any")
-                                    || hit(1, 8, 31, "any")
+                            hit(gp.currentMap, 8, 30, "any")
+                                    || hit(gp.currentMap, 8, 31, "any")
                     ) {
                         for (int i = 6; i <= 7; i++)
-                            gp.objArr[1][i].locking = true;
+                            gp.objArr[gp.currentMap][i].locking = true;
 
                         eventRect[1][8][30].eventDone = true;
                         eventRect[1][8][31].eventDone = true;
                     }
                     if ( // TRIGGER RIGHT PATH GATES
-                            hit(1, 16, 30, "any")
+                            hit(gp.currentMap, 16, 30, "any")
                                     || hit(1, 16, 31, "any")
                     ) {
                         for (int i = 8; i <= 9; i++)
-                            gp.objArr[1][i].locking = true;
+                            gp.objArr[gp.currentMap][i].locking = true;
 
                         eventRect[1][16][30].eventDone = true;
                         eventRect[1][16][31].eventDone = true;
@@ -124,7 +127,7 @@ public class EventHandler {
                                     || hit(1, 17, 25, "any")
                     ) {
 //                        for (int i = 10; i <= 16; i++)
-//                            gp.objArr[1][i].locking = true;
+//                            gp.objArr[gp.currentMap][i].locking = true;
 
                         eventRect[1][7][22].eventDone = true;
                         eventRect[1][8][23].eventDone = true;
@@ -143,7 +146,7 @@ public class EventHandler {
                                     || hit(1, 14, 13, "any")
                     ) {
                         for (int i = 17; i <= 20; i++)
-                            gp.objArr[1][i].locking = true;
+                            gp.objArr[gp.currentMap][i].locking = true;
 
                         eventRect[1][10][13].eventDone = true;
                         eventRect[1][11][12].eventDone = true;
@@ -151,27 +154,84 @@ public class EventHandler {
                         eventRect[1][13][12].eventDone = true;
                         eventRect[1][14][13].eventDone = true;
                     }
-                    if (hit(1,12, 16, "any")) {
-                        System.out.println("cake");
+                    if (hit(gp.currentMap,12, 16, "any")) {
                         FrostGiant();
                     }
 
                     // UNLOCK FIRST ROOM GATES ONCE EVERY MOB SLAIN
-                    if (gp.mobArr[1][0] == null && gp.mobArr[1][1] == null) {
+                    if (gp.mobArr[gp.currentMap][0] == null && gp.mobArr[gp.currentMap][1] == null) {
+                        for (int i = 1; i <= 5; i++)
+                            gp.objArr[gp.currentMap][i].unlocking = true;
+                    }
+
+                    // UNLOCK FIRST ROOM GATES ONCE EVERY MOB SLAIN
+                    if (gp.mobArr[gp.currentMap][2] == null) {
+                        for (int i = 17; i <= 20; i++)
+                            gp.objArr[gp.currentMap][i].unlocking = true;
+                    }
+                    break;
+
+                // LEVEL TWO
+                case 2:
+                    if ( // TRIGGER 1ST ROOM GATES
+                            hit(gp.currentMap, 25, 35, "any")
+                                    || hit(gp.currentMap, 24, 36, "any")
+                                    || hit(gp.currentMap, 24, 37, "any")
+                                    || hit(gp.currentMap, 24, 38, "any")
+                                    || hit(gp.currentMap, 25, 39, "any")
+                    ) {
+                        for (int i = 1; i <= 4; i++)
+                            gp.objArr[gp.currentMap][i].locking = true;
+                    }
+                    if ( // TRIGGER MINI-BOSS ROOM GATES
+                            hit(gp.currentMap, 12, 23, "any")
+                                    || hit(gp.currentMap, 11, 24, "any")
+                                    || hit(gp.currentMap, 11, 25, "any")
+                                    || hit(gp.currentMap, 11, 26, "any")
+                                    || hit(gp.currentMap, 12, 27, "any")
+                    ) {
+                        for (int i = 5; i <= 9; i++)
+                            gp.objArr[gp.currentMap][i].locking = true;
+                    }
+                    if ( // TRIGGER FINAL BOSS ROOM GATES
+                            hit(gp.currentMap, 5, 10, "any")
+                                    || hit(gp.currentMap, 6, 9, "any")
+                                    || hit(gp.currentMap, 7, 9, "any")
+                                    || hit(gp.currentMap, 8, 9, "any")
+                                    || hit(gp.currentMap, 9, 10, "any")
+                    ) {
+                        for (int i = 10; i <= 15; i++)
+                            gp.objArr[gp.currentMap][i].locking = true;
+                    }
+                    if ( // TRIGGER PLOT TWIST FINAL BOSS ROOM GATES
+                            hit(gp.currentMap, 26, 4, "any")
+                                    || hit(gp.currentMap, 27, 5, "any")
+                                    || hit(gp.currentMap, 27, 6, "any")
+                                    || hit(gp.currentMap, 27, 7, "any")
+                                    || hit(gp.currentMap, 27, 8, "any")
+                                    || hit(gp.currentMap, 26, 9, "any")
+                    ) {
+                        for (int i = 16; i <= 21; i++)
+                            gp.objArr[gp.currentMap][i].locking = true;
+                    }
+
+                    // UNLOCK FIRST ROOM GATES ONCE EVERY MOB SLAIN
+                    if (gp.mobArr[gp.currentMap][0] == null && gp.mobArr[gp.currentMap][1] == null) {
                         for (int i = 1; i <= 5; i++)
                             gp.objArr[1][i].unlocking = true;
                     }
 
-                    // UNLOCK FIRST ROOM GATES ONCE EVERY MOB SLAIN
-                    if (gp.mobArr[1][2] == null) {
+                    // UNLOCK BOSS ROOM GATES ONCE BOSS SLAIN
+                    if (gp.mobArr[gp.currentMap][2] == null) {
                         for (int i = 17; i <= 20; i++)
                             gp.objArr[1][i].unlocking = true;
                     }
+                    break;
             }
         }
     }
 
-    public boolean hit (int map,int col, int row, String reqAction) {
+    public boolean hit (int map, int col, int row, String reqAction) {
         boolean hit = false;
 
         if (map == gp.currentMap) {

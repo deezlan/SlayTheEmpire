@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public abstract class Entity {
+    public String name;
     public GamePanel gp;
     public boolean lookingRight = true;
     public Projectile projectile1;
@@ -58,7 +59,8 @@ public abstract class Entity {
             sleep,
             boss,
             tempScene = false,
-            drawing = true;
+            drawing = true,
+            specialAttacking = false;
 
     // PLAYER & MOB COLLISION DIRECTION
     public boolean
@@ -86,6 +88,7 @@ public abstract class Entity {
             playerLeftAttackList = new ArrayList<>(),
             mobRightAttackList = new ArrayList<>(),
             mobLeftAttackList = new ArrayList<>(),
+            mobSpecialAttackList = new ArrayList<>(),
 
     // INTERACTABLE OBJECT ANIMATION LIST
     defaultList = new ArrayList<>(),
@@ -132,7 +135,6 @@ public abstract class Entity {
     // ITEM ATTRIBUTES
     public int damage;
     public BufferedImage weaponSprite;
-    public String name;
     public int price;
     public String description = "";
 
@@ -155,6 +157,8 @@ public abstract class Entity {
     // attackList
     animationSpriteNum = 0,
             animationCounter = 0,
+    specialSpriteNum = 0,
+            specialCounter = 0,
 
     dyingCounter = 0,
             hpBarCounter = 0,
@@ -165,6 +169,7 @@ public abstract class Entity {
     public void speak() {} // NPC
     public void checkDrop() {} // MOB
     public void setAction() {} // MOB
+    public void specialAttack() {} // MOB
     public void damageReaction() {
     } // MOB
 
@@ -505,6 +510,20 @@ public abstract class Entity {
             attacking = false;
         }
     }
+    public void runSpecialAttackAnimation(){
+        specialCounter++;
+        if (specialSpriteNum < mobSpecialAttackList.size() && specialCounter % 10 == 0) {
+            System.out.println("that");
+            specialSpriteNum++;
+            System.out.println(specialSpriteNum);
+        }
+        if (specialSpriteNum >= mobSpecialAttackList.size() - 1) {
+            System.out.println("this");
+            specialSpriteNum = 0;
+            specialCounter = 0;
+            specialAttacking = false;
+        }
+    }
     public void startAttack() { // animation attack
         checkDamageSprite();
         switch (action) {
@@ -568,10 +587,18 @@ public abstract class Entity {
                     speed = defaultSpeed;
                 } else if (!upCollisionOn && !downCollisionOn && !leftCollisionOn && !rightCollisionOn) {
                     switch (knockBackDirection) {
-                        case "moveUp": worldY -= speed; break;
-                        case "moveDown": worldY += speed; break;
-                        case "moveRight": worldX += speed; break;
-                        case "moveLeft": worldX -= speed; break;
+                        case "moveUp":
+                            worldY -= speed;
+                            break;
+                        case "moveDown":
+                            worldY += speed;
+                            break;
+                        case "moveRight":
+                            worldX += speed;
+                            break;
+                        case "moveLeft":
+                            worldX -= speed;
+                            break;
                         case "moveUpRight":
                             worldX += speed;
                             worldY -= speed;
@@ -596,6 +623,8 @@ public abstract class Entity {
                     knockBack = false;
                     speed = defaultSpeed;
                 }
+            } else if (specialAttacking){
+                specialAttack();
             } else if (attacking) {
                 startAttack();
             } else {
@@ -654,6 +683,8 @@ public abstract class Entity {
     public void draw(Graphics2D g2) {
         BufferedImage image;
         if (spriteNum >= currentList.size() - 1) spriteNum = 0;
+        if (animationSpriteNum >= currentList.size() - 1) animationSpriteNum = 0;
+        if (specialSpriteNum >= currentList.size() - 1) specialSpriteNum = 0;
 
         if (!alive) return;
 
@@ -682,9 +713,19 @@ public abstract class Entity {
 
                 if (dead) dyingAnimation(g2);
 
-                if (!attacking) {
+                if (!attacking & !specialAttacking) {
                     g2.drawImage(image, worldX, worldY, null);
                     UtilityTool.changeAlpha(g2, 1f);
+                }
+//                if (!specialAttacking) {
+//                    g2.drawImage(image, worldX, worldY, null);
+//                    UtilityTool.changeAlpha(g2, 1f);
+//                }
+                if (specialAttacking) {
+                    if (specialSpriteNum >= currentList.size() - 1)
+                        specialSpriteNum = 0;
+                    BufferedImage animationImage = currentList.get(specialSpriteNum);
+                    g2.drawImage(animationImage, worldX, worldY, null);
                 }
 
                 if (attacking) {
@@ -707,9 +748,19 @@ public abstract class Entity {
                     if (dead) {
                         dyingAnimation(g2);
                     }
-                    if (!attacking) {
+                    if (!attacking & !specialAttacking) {
                         g2.drawImage(image, screenX, screenY, null);
                         UtilityTool.changeAlpha(g2, 1f);
+                    }
+//                    if (!specialAttacking) {
+//                        g2.drawImage(image, screenX, screenY, null);
+//                        UtilityTool.changeAlpha(g2, 1f);
+//                    }
+                    if (specialAttacking) {
+                        if (specialSpriteNum >= currentList.size() - 1)
+                            specialSpriteNum = 0;
+                        BufferedImage animationImage = currentList.get(specialSpriteNum);
+                        g2.drawImage(animationImage, screenX, screenY, null);
                     }
                     if (attacking) {
                         if (animationSpriteNum >= currentList.size() - 1)

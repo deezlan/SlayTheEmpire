@@ -10,8 +10,8 @@ import java.io.IOException;
 
 public class MOB_FlyingEye extends Entity {
     GamePanel gp;
-    public MOB_FlyingEye(GamePanel gp) {
-        super(gp);
+    public MOB_FlyingEye(GamePanel gp, int worldX, int worldY) {
+        super(gp, worldX, worldY);
         this.gp = gp;
         type = type_mob;
         defaultSpeed = 1;

@@ -9,8 +9,8 @@ import java.io.IOException;
 
 public class MOB_SkeletonKnight extends Entity {
     GamePanel gp;
-    public MOB_SkeletonKnight(GamePanel gp) {
-        super(gp);
+    public MOB_SkeletonKnight(GamePanel gp, int worldX, int worldY) {
+        super(gp, worldX, worldY);
         this.gp = gp;
         type = type_mob;
         defaultSpeed = 1;

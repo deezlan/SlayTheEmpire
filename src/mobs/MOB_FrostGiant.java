@@ -10,8 +10,8 @@ import java.io.IOException;
 public class MOB_FrostGiant extends Entity {
     GamePanel gp;
     public static final String monName = "Frost Giant";
-    public MOB_FrostGiant(GamePanel gp) {
-        super(gp);
+    public MOB_FrostGiant(GamePanel gp, int worldX, int worldY) {
+        super(gp, worldX, worldY);
         this.gp = gp;
         name = monName;
         type = type_mob;

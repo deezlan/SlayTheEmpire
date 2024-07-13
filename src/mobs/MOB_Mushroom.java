@@ -7,12 +7,11 @@ import object.OBJ_PickUpCoin;
 
 import java.awt.*;
 import java.io.IOException;
-import java.util.Random;
 
 public class MOB_Mushroom extends Entity {
     GamePanel gp;
-    public MOB_Mushroom(GamePanel gp) {
-        super(gp);
+    public MOB_Mushroom(GamePanel gp, int worldX, int worldY) {
+        super(gp, worldX, worldY);
         this.gp = gp;
         type = type_mob;
         defaultSpeed = 1;

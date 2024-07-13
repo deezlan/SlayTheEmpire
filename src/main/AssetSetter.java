@@ -6,15 +6,17 @@ import object.*;
 
 public class AssetSetter {
     GamePanel gp;
+    int mapNum, i;
 
     public AssetSetter(GamePanel gp) {
         this.gp = gp;
     }
 
     public void setObject() {
-        int mapNum = 0;
-        int i = 0;
+        i = 0;
+
         // MAP 0 SETTER
+        mapNum = 0;
         {
             gp.objArr[mapNum][i] = new OBJ_Shop(gp, 516, -10); i++;
             gp.objArr[mapNum][i] = new OBJ_SavePedestal(gp, 272, 490); i++;
@@ -27,10 +29,10 @@ public class AssetSetter {
 
             gp.objArr[mapNum][i] = new OBJ_Gate(gp, 1, 12, 8);
         }
-
         i = 0;
-        mapNum = 1;
+
         // MAP 1 SETTER
+        mapNum = 1;
         {
             // TELEPORTING OBELISK
             gp.objArr[mapNum][i] = new OBJ_Obelisk(gp, 63, 168); i++;
@@ -77,10 +79,10 @@ public class AssetSetter {
                 gp.objArr[mapNum][i] = new OBJ_Gate(gp, 0, 5, 7);
             }
         }
-
         i = 0;
-        mapNum = 2;
+
         // MAP 2 SETTER
+        mapNum = 2;
         {
             // TELEPORTING OBELISK
             gp.objArr[mapNum][i] = new OBJ_Obelisk(gp, 1551, 650); i++;
@@ -129,10 +131,10 @@ public class AssetSetter {
     }
 
     public void setNPC() {
-        int mapNum = 0;
         int i = 0;
 
         // MAP 0
+        mapNum = 0;
         gp.npcArr[mapNum][i] = new NPC_Maiden(gp, 368, 250);
         System.out.println("NPC Maiden set at (" + gp.npcArr[mapNum][0].worldX + ", " + gp.npcArr[mapNum][0].worldY + ")");
         i++;
@@ -148,87 +150,31 @@ public class AssetSetter {
         gp.npcArr[mapNum][i] = new NPC_Mystery(gp, 500, 440);
         System.out.println("NPC Mystery set at (" + gp.npcArr[mapNum][0].worldX + ", " + gp.npcArr[mapNum][0].worldY + ")");
         // MAP 1
+        mapNum = 1;
     }
 
     public void setMonster() {
-        int mapNum;
-        int i = 0;
+        i = 0;
 
         // MAP 1
         mapNum = 1;
-        gp.mobArr[mapNum][i] = new MOB_RobotGuardian(gp);
-        gp.mobArr[mapNum][i].worldX = 350;
-        gp.mobArr[mapNum][i].worldY = 1968;
-        i++;
+        gp.mobArr[mapNum][i] = new MOB_RobotGuardian(gp, 350, 1968); i++;
+        gp.mobArr[mapNum][i] = new MOB_SkeletonKnight(gp, 550, 1968); i++;
+        gp.mobArr[mapNum][i] = new MOB_FrostGiant(gp, 400, 180); i++;
+//        gp.mobArr[mapNum][i] = new MOB_FlyingEye(gp, 400, 270); i++;
+        gp.mobArr[mapNum][i] = new MOB_Mushroom(gp, 450, 270); i++;
+        gp.mobArr[mapNum][i] = new MOB_Canine(gp, 500, 300); i++;
+        gp.mobArr[mapNum][i] = new MOB_Slime(gp, 800, 400); i++;
+        gp.mobArr[mapNum][i] = new MOB_Goblin(gp, 400, 300); i++;
+        gp.mobArr[mapNum][i] = new MOB_Skellington(gp, 700, 300); i++;
+        gp.mobArr[mapNum][i] = new MOB_Ramses(gp, 700, 400);
+        i = 0;
 
-        gp.mobArr[mapNum][i] = new MOB_SkeletonKnight(gp);
-        gp.mobArr[mapNum][i].worldX = 550;
-        gp.mobArr[mapNum][i].worldY = 1968;
-        i++;
-
-        gp.mobArr[mapNum][i] = new MOB_FrostGiant(gp);
-        gp.mobArr[mapNum][i].worldX = 400;
-        gp.mobArr[mapNum][i].worldY = 180;
-
-//
-//                gp.mobArr[mapNum][i] = new MOB_ArmoredGuardian(gp);
-//                gp.mobArr[mapNum][i].worldX = 350;
-//                gp.mobArr[mapNum][i].worldY = 270;
-//                i++;
-//
-//                gp.mobArr[mapNum][i] = new MOB_FlyingEye(gp);
-//                gp.mobArr[mapNum][i].worldX = 400;
-//                gp.mobArr[mapNum][i].worldY = 270;
-//                i++;
-//
-//                gp.mobArr[mapNum][i] = new MOB_Mushroom(gp);
-//                gp.mobArr[mapNum][i].worldX = 450;
-//                gp.mobArr[mapNum][i].worldY = 270;
-//                i++;
-//
-//                gp.mobArr[mapNum][i] = new MOB_Canine(gp);
-//                gp.mobArr[mapNum][i].worldX = 500;
-//                gp.mobArr[mapNum][i].worldY = 300;
-//                i++;
-//
-//                gp.mobArr[mapNum][i] = new MOB_Slime(gp);
-//                gp.mobArr[mapNum][i].worldX = 800;
-//                gp.mobArr[mapNum][i].worldY = 400;
-//                i++;
-//
-//                gp.mobArr[mapNum][i] = new MOB_Goblin(gp);
-//                gp.mobArr[mapNum][i].worldX = 400;
-//                gp.mobArr[mapNum][i].worldY = 300;
-//                i++;
-//
-//                gp.mobArr[mapNum][i] = new MOB_Skellington(gp);
-//                gp.mobArr[mapNum][i].worldX = 700;
-//                gp.mobArr[mapNum][i].worldY = 300;
-//                i++;
-//
-//                gp.mobArr[mapNum][i] = new MOB_Ramses(gp);
-//                gp.mobArr[mapNum][i].worldX = 700;
-//                gp.mobArr[mapNum][i].worldY = 400;
-//                i++;
-
-//                 MAP 2
-//                mapNum = 2;
-//                i = 0;
-//                gp.mobArr[mapNum][i] = new MOB_Slime(gp);
-//                gp.mobArr[mapNum][i].worldX = 450;
-//                gp.mobArr[mapNum][i].worldY = 270;
-//                i++;
-//
-//                gp.mobArr[mapNum][i] = new MOB_RobotGuardian(gp);
-//                gp.mobArr[mapNum][i].worldX = 300;
-//                gp.mobArr[mapNum][i].worldY = 270;
-//                i++;
-//
-//                gp.mobArr[mapNum][i] = new MOB_ArmoredGuardian(gp);
-//                gp.mobArr[mapNum][i].worldX = 350;
-//                gp.mobArr[mapNum][i].worldY = 270;
-//                i++;
-        }
+        // MAP 2
+        mapNum = 2;
+        gp.mobArr[mapNum][i] = new MOB_Slime(gp, 450, 270); i++;
+        gp.mobArr[mapNum][i] = new MOB_RobotGuardian(gp, 300, 270); i++;
+    }
 
     public void setInteractiveTile() {
 //        int mapNum = 0;

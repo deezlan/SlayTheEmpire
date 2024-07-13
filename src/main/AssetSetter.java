@@ -111,8 +111,8 @@ public class AssetSetter {
         // TELEPORTING OBELISK
         {
             gp.objArr[mapNum][i] = new OBJ_Obelisk(gp);
-            gp.objArr[mapNum][i].worldX = 63;
-            gp.objArr[mapNum][i].worldY = 168;
+            gp.objArr[mapNum][i].worldX = 1551;
+            gp.objArr[mapNum][i].worldY = 650;
             i++;
         }
 

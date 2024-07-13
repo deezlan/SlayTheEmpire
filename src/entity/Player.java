@@ -198,16 +198,17 @@ public class Player extends Entity {
     @Override
     public void startAttack(){
         checkDamageSprite();
-        switch (playerClass) {
-            case 0:
-                runAttackAnimation();
-                break;
-            case 1:
-                runAttackAnimation();
-                break;
-            case 2:
-                runAttackAnimation();
-        }
+        runAttackAnimation();
+//        switch (playerClass) {
+//            case 0:
+//                runAttackAnimation();
+//                break;
+//            case 1:
+//                runAttackAnimation();
+//                break;
+//            case 2:
+//                runAttackAnimation();
+//        }
     }
     public void damageMonster(int i, int attack, Entity attacker) {
         if (i != 999){

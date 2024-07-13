@@ -204,19 +204,20 @@ public class GamePanel extends JPanel implements Runnable {
         if (gameState == playState) {
             player.update();
 
-            for (int i = 0; i < objArr[1].length; i++){ // OBJECT
+            // OBJECT
+            for (int i = 0; i < objArr[1].length; i++) {
                 if(objArr[currentMap][i] != null){
                     objArr[currentMap][i].update();
                 }
             }
-
-            for (int i = 0; i < npcArr[1].length; i++){ // NPCs
+            // NPCs
+            for (int i = 0; i < npcArr[1].length; i++) {
                 if(npcArr[currentMap][i] != null){
                     npcArr[currentMap][i].update();
                 }
             }
-
-            for (int mob = 0; mob < mobArr[1].length; mob++) { // MOBS
+            // MOBS
+            for (int mob = 0; mob < mobArr[1].length; mob++) {
                 if (mobArr[currentMap][mob] != null) {
                     if (mobArr[currentMap][mob].alive && (!mobArr[currentMap][mob].dead)) {
                         mobArr[currentMap][mob].update();
@@ -227,13 +228,13 @@ public class GamePanel extends JPanel implements Runnable {
                     }
                 }
             }
-
-            for (int i = 0; i < iTile[1].length; i++){ // INTERACTIVE TILES
+            // INTERACTIVE TILES
+            for (int i = 0; i < iTile[1].length; i++) {
                 if(iTile[currentMap][i] != null){
                     iTile[currentMap][i].update();
                 }
             }
-
+            // PROJECTILES
             for (int i = 0; i < projectileArr[1].length; i++){
                 if (projectileArr[currentMap][i] != null){
                     if (projectileArr[currentMap][i].alive){
@@ -264,11 +265,13 @@ public class GamePanel extends JPanel implements Runnable {
             // DEBUG
             long drawStart = 0;
             if(keyH.showDebug){
-            drawStart = System.nanoTime();
+                drawStart = System.nanoTime();
             }
 
             tileM.draw(g2); // Draw tiles
 
+            for (Entity gate : gateArr[currentMap])
+                if (gate != null) gate.draw(g2);
             // ADD INTERACTIVE TILES
 //            for (int i = 0; i < iTile[1].length; i++){ // INTERACTIVE TILES
 //                if(iTile[currentMap][i] != null){
@@ -308,22 +311,13 @@ public class GamePanel extends JPanel implements Runnable {
             // SORT FOR RENDERING ORDER
             entityList.sort(Comparator.comparingInt(e -> e.worldY));
 
-            // GATES
-            for (int i = 0; i < gateArr[1].length; i++){
-                if(gateArr[currentMap][i] != null){
-                    entityList.add(0, gateArr[currentMap][i]);
-                }
-            }
-
             // DRAW ALL ENTITIES
-            for (Entity entity : entityList) {
+            for (Entity entity : entityList)
                 entity.draw(g2);
-            }
 
             // EMPTY ENTITY LIST
-            for (int i = 0; i < entityList.size(); i++){
+            for (int i = 0; i < entityList.size(); i++)
                 entityList.remove(i);
-            }
 
             ui.draw(g2);
 

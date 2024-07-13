@@ -561,10 +561,7 @@ public abstract class Entity {
             runInteractSprites();
         }
         if (type == type_gate) {
-            if (locking) {
-                System.out.println("About to runLock");
-                runLockAnimation();
-            }
+            if (locking) runLockAnimation();
             if (unlocking) runUnlockingAnimation();
         } else {
             if (knockBack) {

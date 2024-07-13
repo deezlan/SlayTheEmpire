@@ -268,7 +268,7 @@ public class CollisionChecker {
                 entity.solidArea.x = entity.worldX + entity.solidArea.x;
                 entity.solidArea.y = entity.worldY + entity.solidArea.y;
 
-                // Get the object's solid area position
+                // Get the gate's solid area position
                 gp.gateArr[gp.currentMap][i].solidArea.x = gp.gateArr[gp.currentMap][i].worldX + gp.gateArr[gp.currentMap][i].solidArea.x;
                 gp.gateArr[gp.currentMap][i].solidArea.y = gp.gateArr[gp.currentMap][i].worldY + gp.gateArr[gp.currentMap][i].solidArea.y;
 

@@ -130,7 +130,7 @@ public class EventHandler {
                                     || hit(1, 16, 25, "any")
                     ) {
                         for (int i = 9; i <= 15; i++)
-                            gp.objArr[gp.currentMap][i].locking = true;
+                            gp.gateArr[gp.currentMap][i].locking = true;
 
 //                        eventRect[1][7][22].eventDone = true;
 //                        eventRect[1][8][23].eventDone = true;

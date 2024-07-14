@@ -849,7 +849,7 @@ public class UI {
         }
 
         switch(subState) {
-            case 0: options_playState(frameX, frameY); drawSubWindow(frameX, frameY, frameWidth, frameHeight); break;
+            case 0: drawSubWindow(frameX, frameY, frameWidth, frameHeight); options_playState(frameX, frameY);  break;
             case 1: options_startMenu(frameX, frameY); break;
             case 2: break;
         }
@@ -858,6 +858,9 @@ public class UI {
     private void drawVolumeBar(int volumeScale, int x, int y) {
         int barWidth = 240;
         int barHeight = 20;
+        if (gp.gameState == gp.optionState) {
+            barWidth = 180;
+        }
         int fillColor = (int) (barWidth * (volumeScale / 5.0f));
 
         // BACKGROUND BAR
@@ -887,46 +890,75 @@ public class UI {
         text = "Music";
         x = frameX + gp.TILE_SIZE;
         y += (int) (gp.TILE_SIZE*1.2);
-        g2.drawString(text,x,y);
-        if (commandNum == 0) {
+        if (gp.ui.commandNum == 0) {
+            g2.setColor(Color.YELLOW); // highlight color
+            g2.drawString(text,x,y);
             g2.drawString(">", x-25, y);
+
+        } else {
+            g2.setColor(Color.WHITE);
+            g2.drawString(text,x,y);
         }
 
         // SOUND EFFECTS
         text = "SFX";
         y += (int) (gp.TILE_SIZE*1.2);
         g2.drawString(text,x,y);
-        if (commandNum == 1) {
+        if (gp.ui.commandNum == 1) {
+            g2.setColor(Color.YELLOW); // highlight color
+            g2.drawString(text,x,y);
             g2.drawString(">", x-25, y);
+
+        } else {
+            g2.setColor(Color.WHITE);
+            g2.drawString(text,x,y);
         }
 
         // CONTROL
         text = "Controls";
         y += (int) (gp.TILE_SIZE*1.2);
         g2.drawString(text,x,y);
-        if (commandNum == 2) {
+        if (gp.ui.commandNum == 2) {
+            g2.setColor(Color.YELLOW); // highlight color
+            g2.drawString(text,x,y);
             g2.drawString(">", x-25, y);
+
+        } else {
+            g2.setColor(Color.WHITE);
+            g2.drawString(text,x,y);
         }
 
         // END GAME
         text = "End Game";
         y += (int) (gp.TILE_SIZE*1.2);
         g2.drawString(text,x,y);
-        if (commandNum == 3) {
+        if (gp.ui.commandNum == 3) {
+            g2.setColor(Color.YELLOW); // highlight color
+            g2.drawString(text,x,y);
             g2.drawString(">", x-25, y);
+
+        } else {
+            g2.setColor(Color.WHITE);
+            g2.drawString(text,x,y);
         }
 
         // BACK
         text = "Back";
         y += (int) (gp.TILE_SIZE*3.5);
         g2.drawString(text,x,y);
-        if (commandNum == 4) {
+        if (gp.ui.commandNum == 4) {
+            g2.setColor(Color.YELLOW); // highlight color
+            g2.drawString(text,x,y);
             g2.drawString(">", x-25, y);
+
+        } else {
+            g2.setColor(Color.WHITE);
+            g2.drawString(text,x,y);
         }
 
         // VOLUME BAR
-        x = frameX + gp.TILE_SIZE*6;
-        y = (int) (frameY + gp.TILE_SIZE*2.2f);
+        x = (int) (frameX + gp.TILE_SIZE*3.75);
+        y = (int) (frameY + gp.TILE_SIZE*1.65f + 2);
         drawVolumeBar(gp.music.volumeScale, x, y);
 
         // SFX BAR

@@ -65,7 +65,6 @@ public class LoginSystem extends JPanel {
         while(input.hasNext() && !found) {
             dbCredentials = input.nextLine().split(":");
 
-            System.out.println("Shudnt run");
             if (dbCredentials[0].equalsIgnoreCase(gp.ui.inpUser)){
                 found = true;
                 gp.ui.usernameTaken = true;
@@ -94,7 +93,6 @@ public class LoginSystem extends JPanel {
                 s.append(Integer.toString((aByte & 0xff) + 0x100, 16).substring(1));
 
             // Store in String
-            System.out.println("s : " + s.toString());
             encryptedPass = s.toString();
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace(System.out);

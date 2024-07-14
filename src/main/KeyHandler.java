@@ -4,7 +4,6 @@ import entity.NPC_Blacksmith;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.security.Key;
 
 import entity.Player;
 
@@ -64,12 +63,7 @@ public class KeyHandler implements KeyListener {
         }
 
         if (code == KeyEvent.VK_T){
-            if(!showDebug){
-                showDebug = true;
-            }
-            else {
-                showDebug = false;
-            }
+            showDebug = !showDebug;
         }
 
         // !!!!! LOGIN+START MENU !!!!!

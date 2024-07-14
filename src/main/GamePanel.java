@@ -24,6 +24,8 @@ public class GamePanel extends JPanel implements Runnable {
     Thread gameThread;
     BufferedImage tempScreen;
     Graphics2D g2;
+
+    // SCREEN SETTINGS
     private final int
             ORIGINAL_TILE_SIZE = 16,
             SCALE = 3;
@@ -49,6 +51,9 @@ public class GamePanel extends JPanel implements Runnable {
     // FPS SETTINGS
     private final int FPS = 60;
 
+    // LOGIN SETTINGS
+    public LoginSystem loginSys = new LoginSystem(this);
+
     // PLAYER SETTINGS
     Sound music = new Sound();
     Sound effect = new Sound();
@@ -56,9 +61,6 @@ public class GamePanel extends JPanel implements Runnable {
     public Player player = new Player(this, keyH, cursor, playerClass);
     public MouseHandler mouseH = new MouseHandler();
     public UI ui = new UI(this);
-    public boolean
-            onUsername = false,
-            onPassword = false;
 
     // ENTITY AND OBJECTS ARRAYS
     private final ArrayList<Entity> entityList = new ArrayList<>();
@@ -305,17 +307,21 @@ public class GamePanel extends JPanel implements Runnable {
         }
 
         // Title Screen
-        if (gameState == playState ||
-                gameState == shopState ||
-                gameState == dialogueState ||
-                gameState == pauseState ||
-                gameState == optionState ||
-                gameState == optionState2) {
+        if (gameState != titleState
+                && gameState != loginState
+                && gameState != startMenuState
+                && gameState != creditsState) {
+//        if (gameState == playState ||
+//                gameState == shopState ||
+//                gameState == dialogueState ||
+//                gameState == pauseState ||
+//                gameState == optionState ||
+//                gameState == optionState2) {
 
             // DEBUG
             long drawStart = 0;
             if(keyH.showDebug){
-            drawStart = System.nanoTime();
+                drawStart = System.nanoTime();
             }
 
             tileM.draw(g2); // Draw tiles

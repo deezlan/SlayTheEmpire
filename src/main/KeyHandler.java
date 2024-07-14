@@ -125,39 +125,44 @@ public class KeyHandler implements KeyListener {
     public void loginState(int code) {
         if (code == KeyEvent.VK_ESCAPE) {
             gp.gameState = gp.startMenuState;
+            gp.ui.typingUsername = false;
+            gp.ui.typingPassword = false;
+            gp.ui.inpUser = "";
+            gp.ui.inpPass = "";
+            gp.ui.inpPassHidden = "";
         }
 
-        if (gp.onUsername) {
+        if (gp.ui.typingUsername) {
             if (code == KeyEvent.VK_BACK_SPACE) {
                 System.out.println("Test backspace");
-                if (!gp.ui.username.isEmpty()) {
-                    gp.ui.username = gp.ui.username.substring(0, gp.ui.username.length() - 1);
+                if (!gp.ui.inpUser.isEmpty()) {
+                    gp.ui.inpUser = gp.ui.inpUser.substring(0, gp.ui.inpUser.length() - 1);
                 }
             } else if (code!= KeyEvent.VK_SHIFT && code!= KeyEvent.VK_SPACE && code!= KeyEvent.VK_CAPS_LOCK) {
                 System.out.println("Test any key");
 
-                System.out.println(gp.ui.username);
-                gp.ui.username = gp.ui.username.concat(String.valueOf((char) code));
-                System.out.println("Username is: " + gp.ui.username);
+                System.out.println(gp.ui.inpUser);
+                gp.ui.inpUser = gp.ui.inpUser.concat(String.valueOf((char) code));
+                System.out.println("Username is: " + gp.ui.inpUser);
             }
         }
 
-        if (gp.onPassword) {
+        if (gp.ui.typingPassword) {
             if (code == KeyEvent.VK_BACK_SPACE) {
                 System.out.println("Test backspace");
-                if (!gp.ui.password.isEmpty()) {
-                    gp.ui.password = gp.ui.password.substring(0, gp.ui.password.length() - 1);
-                    gp.ui.passwordHidden = gp.ui.passwordHidden.substring(0, gp.ui.passwordHidden.length() - 1);
+                if (!gp.ui.inpPass.isEmpty()) {
+                    gp.ui.inpPass = gp.ui.inpPass.substring(0, gp.ui.inpPass.length() - 1);
+                    gp.ui.inpPassHidden = gp.ui.inpPassHidden.substring(0, gp.ui.inpPassHidden.length() - 1);
                 }
             } else if (code!= KeyEvent.VK_SHIFT && code!= KeyEvent.VK_SPACE && code!= KeyEvent.VK_CAPS_LOCK) {
                 System.out.println("Test any key");
 
-                System.out.println(gp.ui.password);
-                gp.ui.password = gp.ui.password.concat(String.valueOf((char) code));
-                gp.ui.passwordHidden = gp.ui.passwordHidden.concat("*");
+                System.out.println(gp.ui.inpPass);
+                gp.ui.inpPass = gp.ui.inpPass.concat(String.valueOf((char) code));
+                gp.ui.inpPassHidden = gp.ui.inpPassHidden.concat("*");
 
-                System.out.println("Password is: " + gp.ui.password);
-                System.out.println("Password Hidden is: " + gp.ui.passwordHidden);
+                System.out.println("Password is: " + gp.ui.inpPass);
+                System.out.println("Password Hidden is: " + gp.ui.inpPassHidden);
             }
         }
     }

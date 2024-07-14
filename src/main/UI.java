@@ -46,12 +46,14 @@ public class UI {
     int subState = 0;
 
     // Login variables
-    public String username = "", password = "", passwordHidden = "";
+    public String inpUser = "", inpPass = "", inpPassHidden = "";
     public boolean hasBlankField = false,
             isInvalidUsername = false,
             isInvalidLogin = false,
             usernameTaken = false,
-            validLogin = false;
+            validLogin = false,
+            typingUsername = false,
+            typingPassword = false;
 
     public UI(GamePanel gp) {
         this.gp = gp;
@@ -67,8 +69,6 @@ public class UI {
         } catch (IOException e){
             e.printStackTrace(System.out);
         }
-
-
         coin = new OBJ_Coin(gp);
 
         // FONT initialization
@@ -81,8 +81,6 @@ public class UI {
         } catch (FontFormatException | IOException e) {
             e.printStackTrace(System.out);
         }
-
-
 
         // INITIALIZE TITLE VIDEO
         ImageIcon icon = new ImageIcon("res/UI/Title.gif");
@@ -116,74 +114,6 @@ public class UI {
     private Font loadFont() throws FontFormatException, IOException {
         File fontFile = new File("res/font/x12y16pxMaruMonica.ttf");
         return Font.createFont(Font.TRUETYPE_FONT, new FileInputStream(fontFile));
-    }
-
-    public void draw(Graphics2D g2){
-
-        this.g2 = g2;
-        g2.setFont(gameFont);
-
-        // TITLE STATE
-        if (gp.gameState == gp.titleState) {
-            drawTitleScreen();
-        }
-
-        // START MENU STATE
-        if (gp.gameState == gp.startMenuState) {
-            drawStartMenu();
-        }
-
-        // CHAR SELECTION SCREEN
-        if (gp.gameState == gp.characterSelectionState) {
-            drawCharacterSelection();
-        }
-
-        // LOGIN MENU
-        if (gp.gameState == gp.loginState) {
-            drawLoginScreen();
-        }
-
-        // OPTION 1 AND 2
-        if (gp.gameState == gp.optionState) {
-            drawOptions();
-        }
-
-        if (gp.gameState == gp.optionState2) {
-            drawBG();
-            drawOptions();
-        }
-
-        // PLAY STATE
-        if (gp.gameState == gp.playState) {
-            drawPlayerMoney();
-            drawHotbar();
-            drawPlayerLife();
-            drawAllMobHP();
-        }
-
-        // PAUSE STATE
-        if (gp.gameState == gp.pauseState) {
-            drawPauseScreen();
-        }
-
-        // DIALOGUE STATE
-        if(gp.gameState == gp.dialogueState){
-            drawDialogScreen();
-        }
-
-        // SHOP STATE
-        if (gp.gameState == gp.shopState){
-            drawShop();
-        }
-
-        // DEATH STATE
-        if (gp.gameState == gp.deathState) {
-            drawDeathScreen();
-        }
-
-        if(gp.gameState == gp.transitionState){
-            drawTransition();
-        }
     }
 
     public void drawBG() {
@@ -403,9 +333,9 @@ public class UI {
     public void drawLoginScreen() {
         g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 18F));
 
-        if (gp.onUsername) {
+        if (typingUsername) {
             g2.drawImage(typeUsername, 0, 0, loginDefault.getWidth(null), loginDefault.getHeight(null), null);
-        } else if (gp.onPassword) {
+        } else if (typingPassword) {
             g2.drawImage(typePassword, 0, 0, loginDefault.getWidth(null), loginDefault.getHeight(null), null);
         } else {
             g2.drawImage(loginDefault, 0, 0, loginDefault.getWidth(null), loginDefault.getHeight(null), null);
@@ -427,22 +357,22 @@ public class UI {
 
 
         g2.setColor(Color.WHITE);
-        g2.drawString(username, 275, 285);
+        g2.drawString(inpUser, 275, 285);
 //        g2.drawString(password, 275, 351);  // ENABLE TO VIEW PASSWORD DATA
-        g2.drawString(passwordHidden, 275, 355); // ENABLE TO HIDE PASSWORD DATA
+        g2.drawString(inpPassHidden, 275, 355); // ENABLE TO HIDE PASSWORD DATA
 
         if (gp.mouseH.leftClicked) {
             if (nameRect.contains(gp.cursor.getMouseX(), gp.cursor.getMouseY())) {
                 System.out.println("I am within username.");
-                gp.onUsername = true;
-                gp.onPassword = false;
+                typingUsername = true;
+                typingPassword = false;
             } else if (passRect.contains(gp.cursor.getMouseX(), gp.cursor.getMouseY())) {
                 System.out.println("I am within password.");
-                gp.onUsername = false;
-                gp.onPassword = true;
+                typingUsername = false;
+                typingPassword = true;
             } else {
-                gp.onUsername = false;
-                gp.onPassword = false;
+                typingUsername = false;
+                typingPassword = false;
             }
 
             hasBlankField = false;
@@ -462,14 +392,14 @@ public class UI {
 
         if (hasBlankField)
             g2.drawImage(blankErr, 320, 480, 250, 20, null);
-        if (isInvalidUsername && !username.isEmpty())
+        if (isInvalidUsername && !inpUser.isEmpty())
             g2.drawImage(usernameErr, 320, 480, 250, 20, null);
         if (isInvalidLogin)
             g2.drawImage(loginErr, 320, 480, 250, 20, null);
         if (usernameTaken)
             g2.drawImage(usernameTakenErr, 320, 480, 250, 20, null);
         if (validLogin)
-            System.out.println("Login successful! JACOB'S LADDER");
+            gp.gameState = gp.playState;
 
         g2.setColor(Color.WHITE);
         g2.setStroke(new BasicStroke(3f));
@@ -481,28 +411,25 @@ public class UI {
     }
 
     public void checkLogin () {
-        if (username.isEmpty() || password.isEmpty()) {
+        if (inpUser.isEmpty() || inpPass.isEmpty()) {
             hasBlankField = true;
-        } else if (!username.matches("[a-zA-Z0-9.\\-_]*")) {
+        } else if (!inpUser.matches("[a-zA-Z0-9.\\-_]*")) {
             System.out.println("Has illegal");
             isInvalidUsername = true;
-        } else if (!password.equals("123")) {
-            isInvalidLogin = true;
-        } else if (username.equals("123")) {
-
-
-            validLogin = true;
-            gp.gameState = gp.characterSelectionState;
+        } else {
+            System.out.println("Good login path");
+            gp.loginSys.authLogin();
         }
     }
 
     public void checkRegister () {
-        if (username.isEmpty() || password.isEmpty()) {
+        if (inpUser.isEmpty() || inpPass.isEmpty()) {
             hasBlankField = true;
-        } else if (!username.matches("[a-zA-Z0-9.\\-_]*")) {
+        } else if (!inpUser.matches("[a-zA-Z0-9.\\-_]*")) {
             isInvalidUsername = true;
-        } else if (username.equals("Zaky")) {
-            usernameTaken = true;
+        } else {
+            System.out.println("Good reg path");
+            gp.loginSys.authRegister();
         }
     }
 
@@ -1037,4 +964,71 @@ public class UI {
         drawVolumeBar(gp.effect.volumeScale, x, y);
     }
 
+    public void draw(Graphics2D g2){
+
+        this.g2 = g2;
+        g2.setFont(gameFont);
+
+        // TITLE STATE
+        if (gp.gameState == gp.titleState) {
+            drawTitleScreen();
+        }
+
+        // START MENU STATE
+        if (gp.gameState == gp.startMenuState) {
+            drawStartMenu();
+        }
+
+        // CHAR SELECTION SCREEN
+        if (gp.gameState == gp.characterSelectionState) {
+            drawCharacterSelection();
+        }
+
+        // LOGIN MENU
+        if (gp.gameState == gp.loginState) {
+            drawLoginScreen();
+        }
+
+        // OPTION 1 AND 2
+        if (gp.gameState == gp.optionState) {
+            drawOptions();
+        }
+
+        if (gp.gameState == gp.optionState2) {
+            drawBG();
+            drawOptions();
+        }
+
+        // PLAY STATE
+        if (gp.gameState == gp.playState) {
+            drawPlayerMoney();
+            drawHotbar();
+            drawPlayerLife();
+            drawAllMobHP();
+        }
+
+        // PAUSE STATE
+        if (gp.gameState == gp.pauseState) {
+            drawPauseScreen();
+        }
+
+        // DIALOGUE STATE
+        if(gp.gameState == gp.dialogueState){
+            drawDialogScreen();
+        }
+
+        // SHOP STATE
+        if (gp.gameState == gp.shopState){
+            drawShop();
+        }
+
+        // DEATH STATE
+        if (gp.gameState == gp.deathState) {
+            drawDeathScreen();
+        }
+
+        if(gp.gameState == gp.transitionState){
+            drawTransition();
+        }
+    }
 }

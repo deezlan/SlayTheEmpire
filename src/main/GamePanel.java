@@ -96,7 +96,12 @@ public class GamePanel extends JPanel implements Runnable {
             optionState = 10,
             optionState2 = 12,
             startMenuState = 11,
-            cutsceneState = 13;
+            cutsceneState = 13,
+            controlsState = 14;
+
+
+
+
 
     public GamePanel() {
         this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
@@ -394,4 +399,6 @@ public class GamePanel extends JPanel implements Runnable {
         }
         g2.dispose();
     }
+
+
 }

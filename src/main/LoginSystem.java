@@ -38,7 +38,8 @@ public class LoginSystem extends JPanel {
             if (dbCredentials[0].equalsIgnoreCase(gp.ui.inpUser)){
                 if (dbCredentials[1].equalsIgnoreCase(encryptedPass)){
                     found = true;
-                    gp.ui.validLogin = true;
+//                    gp.ui.validLogin = true;
+                    gp.gameState = gp.startMenuState;
                     break;
                 }
             }

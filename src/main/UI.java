@@ -325,9 +325,9 @@ public class UI {
 
         int spriteY = musicY+40;
 
-        for (int i = 0; i < spriteCredits.length; i++) {
-            for (int j = 0; j < spriteCredits[i].length; j++) {
-                String line = spriteCredits[i][j];
+        for (String[] spriteCredit : spriteCredits) {
+            for (int j = 0; j < spriteCredit.length; j++) {
+                String line = spriteCredit[j];
                 int spriteX;
                 if (j == 0) {
                     spriteX = getXForCenteredText(line, g2) - leftX;
@@ -490,8 +490,8 @@ public class UI {
             g2.drawImage(loginErr, 320, 480, 250, 20, null);
         if (usernameTaken)
             g2.drawImage(usernameTakenErr, 320, 480, 250, 20, null);
-        if (validLogin)
-            gp.gameState = gp.playState;
+//        if (validLogin)
+//            gp.gameState = gp.playState;
 
         g2.setColor(Color.WHITE);
         g2.setStroke(new BasicStroke(3f));

@@ -26,7 +26,7 @@ public class UI {
     Font gameFont;
 
     // IMAGE AND GIFS
-    private final Image bg;
+    private final Image bg, bg2;
     private final Image titleGif;
     private final Image titleImage;
     private final Image startMenu;
@@ -35,6 +35,7 @@ public class UI {
     private final Image assassinGif;
     private final Image loginDefault, typeUsername, typePassword,
             blankErr, usernameErr, loginErr, usernameTakenErr;
+    private final Image warriorSelected, knightSelected, assassinSelected;
 
     public String currentDialog = "";
     public int slotRow = 0;
@@ -54,6 +55,23 @@ public class UI {
             validLogin = false,
             typingUsername = false,
             typingPassword = false;
+
+    public String[] musicCredits = {
+            "Music/SFX by:",
+            "Sara Garrard",
+            "RandomizedRandomizer",
+            "Leohpaz"
+    };
+
+    public String[][] spriteCredits = {
+            {"", "Sprites/Art by:", ""},
+            {"Admurin", "David G.", "Cainos"},
+            {"Eddie's Workshop", "Chierit", "CreativeKind"},
+            {"Ho88it", "Kronovi", "HorusKDI"},
+            {"LuizMelo", "RiLi_XL", "Snowhexart"},
+            {"", "wxhaust", ""},
+            {"", "", ""},
+    };
 
     public UI(GamePanel gp) {
         this.gp = gp;
@@ -90,17 +108,23 @@ public class UI {
         titleImage = new ImageIcon("res/UI/Title.png").getImage();
 
         // INITIALIZE LOGIN SCREEN
-        loginDefault = new ImageIcon("res/UI/loginDefault.png").getImage();
-        typeUsername = new ImageIcon("res/UI/loginUsername.png").getImage();
-        typePassword = new ImageIcon("res/UI/loginPassword.png").getImage();
-        blankErr = new ImageIcon("res/UI/blankField.png").getImage();
-        loginErr = new ImageIcon("res/UI/invalidLogin.png").getImage();
-        usernameErr = new ImageIcon("res/UI/invalidUsername.png").getImage();
-        usernameTakenErr = new ImageIcon("res/UI/usernameTaken.png").getImage();
+        loginDefault = new ImageIcon("res/UI/login/loginDefault.png").getImage();
+        typeUsername = new ImageIcon("res/UI/login/loginUsername.png").getImage();
+        typePassword = new ImageIcon("res/UI/login/loginPassword.png").getImage();
+        blankErr = new ImageIcon("res/UI/login/blankField.png").getImage();
+        loginErr = new ImageIcon("res/UI/login/invalidLogin.png").getImage();
+        usernameErr = new ImageIcon("res/UI/login/invalidUsername.png").getImage();
+        usernameTakenErr = new ImageIcon("res/UI/login/usernameTaken.png").getImage();
 
         // INITIALIZE START MENU UI
         bg = new ImageIcon("res/UI/bg.png").getImage();
+        bg2 = new ImageIcon("res/UI/bg2.png").getImage();
         startMenu = new ImageIcon("res/UI/startMenu.png").getImage();
+
+        // INITIALIZE CHARACTER SELECT ASSETS
+        warriorSelected = new ImageIcon("res/UI/character_select/warriorSelected.png").getImage();
+        knightSelected = new ImageIcon("res/UI/character_select/knightSelected.png").getImage();
+        assassinSelected = new ImageIcon("res/UI/character_select/assassinSelected.png").getImage();
 
         // INITIALIZE PLAYER PREVIEW
         ImageIcon warrior = new ImageIcon("res/player/WarriorIdle.gif");
@@ -117,9 +141,35 @@ public class UI {
     }
 
     public void drawBG() {
-        g2.setColor(Color.BLACK);
-        g2.fillRect(0,0, gp.SCREEN_WIDTH, gp.SCREEN_HEIGHT);
         g2.drawImage(bg, 0, 0, null);
+    }
+
+    public void drawBG2() {
+        g2.drawImage(bg2, 0, 0, null);
+    }
+
+    public void drawCharacterSelectPreview() {
+        int gifX = 300;
+        int gifY = 150;
+
+        switch (gp.ui.commandNum) {
+            case 0 -> {
+                g2.drawImage(warriorSelected, 0, 0, null);
+                g2.drawImage(warriorGif, (gp.SCREEN_WIDTH - gifX)/2 - 225, (int) ((gp.SCREEN_HEIGHT - gifY)/3) + 40, gifX, gifY, null);
+            }
+            case 1 -> {
+                g2.drawImage(knightSelected, 0, 0, null);
+                g2.drawImage(knightGif, (gp.SCREEN_WIDTH - gifX)/2, (int) ((gp.SCREEN_HEIGHT - gifY)/3) + 50, gifX, gifY, null);
+            }
+            case 2 -> {
+                g2.drawImage(assassinSelected, 0, 0, null);
+                g2.drawImage(assassinGif, (gp.SCREEN_WIDTH - gifX)/2 + 225, (int) ((gp.SCREEN_HEIGHT - gifY)/3) + 40, gifX, gifY, null);
+            }
+        }
+    }
+
+    public void drawControls() {
+
     }
 
     public void drawHotbar() {
@@ -250,6 +300,48 @@ public class UI {
         }
     }
 
+    public void drawCredits(Graphics2D g2) {
+        g2.setColor(Color.BLACK);
+        g2.fillRect(0,0, gp.SCREEN_WIDTH, gp.SCREEN_HEIGHT);
+        g2.setColor(Color.WHITE);
+        g2.drawImage(bg, 0, 0, null);
+
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 50F));
+        String text = "Special Thanks";
+        g2.drawString(text, getXForCenteredText(text, g2), gp.SCREEN_HEIGHT/8);
+        g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 35F));
+        g2.drawLine(getXForCenteredText(text, g2)-50, gp.SCREEN_HEIGHT/8 + 5, getXForCenteredText(text, g2) + g2.getFontMetrics().stringWidth(text) + 50, gp.SCREEN_HEIGHT/8 + 5);
+
+
+        int musicY = gp.SCREEN_HEIGHT/4 - 20;
+        int leftX = gp.TILE_SIZE*5;
+
+
+        for (String line : musicCredits) {
+            int musicX = getXForCenteredText(line, g2);
+            g2.drawString(line,musicX,musicY);
+            musicY += 40;
+        }
+
+        int spriteY = musicY+40;
+
+        for (int i = 0; i < spriteCredits.length; i++) {
+            for (int j = 0; j < spriteCredits[i].length; j++) {
+                String line = spriteCredits[i][j];
+                int spriteX;
+                if (j == 0) {
+                    spriteX = getXForCenteredText(line, g2) - leftX;
+                } else if (j == 1) {
+                    spriteX = getXForCenteredText(line, g2);
+                } else {
+                    spriteX = getXForCenteredText(line, g2) + leftX;
+                }
+                g2.drawString(line, spriteX, spriteY);
+            }
+            spriteY += 40;
+        }
+    }
+
     public void drawPlayerLife(){
         int posX = gp.TILE_SIZE/2;
         int posY = gp.TILE_SIZE/2;
@@ -302,7 +394,7 @@ public class UI {
 
         g2.setFont(g2.getFont().deriveFont(Font.BOLD, 60F));
         String text = "PAUSED";
-        int x = getXForCenteredText(text);
+        int x = getXForCenteredText(text, g2);
         int y = gp.SCREEN_HEIGHT/2;
 
         // SHADOW
@@ -488,53 +580,17 @@ public class UI {
     public void drawCharacterSelection() {
         g2.setColor(Color.BLACK);
         g2.fillRect(0,0, gp.SCREEN_WIDTH, gp.SCREEN_HEIGHT);
+        drawBG();
 
         g2.setColor(Color.WHITE);
         g2.setFont(g2.getFont().deriveFont(Font.BOLD, 40F));
 
         String text = "Select Your Class";
-        int x = getXForCenteredText(text);
+        int x = getXForCenteredText(text, g2);
         int y = gp.TILE_SIZE*3;
         g2.drawString(text, x, y);
 
-        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 30F));
-        String text1 = "Warrior";
-        x = getXForCenteredText(text)/3;
-        y = gp.TILE_SIZE*12;
-
-        int gifX = (int) (gp.SCREEN_WIDTH/1.5);
-        int gifY = gp.SCREEN_HEIGHT/2;
-        if (commandNum == 0) {
-            g2.setColor(Color.WHITE);
-            g2.drawString(text1, x, y);
-            g2.drawImage(warriorGif, (gp.SCREEN_WIDTH - gifX)/2, (gp.SCREEN_HEIGHT - gifY)/2 + 30, gifX, gifY, null);
-        } else {
-            g2.setColor(Color.GRAY);
-            g2.drawString(text1, x, y);
-        }
-
-        String text2 = "Knight";
-        x += (int) (getXForCenteredText(text)/1.1);
-        if (commandNum == 1) {
-            g2.setColor(Color.WHITE);
-            g2.drawString(text2, x, y);
-            g2.drawImage(knightGif, (gp.SCREEN_WIDTH - gifX)/2, (gp.SCREEN_HEIGHT - gifY)/2  + 30, gifX, gifY, null);
-        } else {
-            g2.setColor(Color.GRAY);
-            g2.drawString(text2, x, y);
-        }
-
-        String text3 = "Assassin";
-        x += (int) (getXForCenteredText(text) / 1.1);
-        if (commandNum == 2) {
-            g2.setColor(Color.WHITE);
-            g2.drawString(text3, x, y);
-            g2.drawImage(assassinGif, (gp.SCREEN_WIDTH - gifX)/2, (gp.SCREEN_HEIGHT - gifY)/2  + 30, gifX, gifY, null);
-
-        } else {
-            g2.setColor(Color.GRAY);
-            g2.drawString(text3, x, y);
-        }
+        drawCharacterSelectPreview();
     }
 
     //Draw dialog
@@ -596,7 +652,7 @@ public class UI {
 
         // SHADOW
         g2.setColor(Color.BLACK);
-        x = getXForCenteredText(text);
+        x = getXForCenteredText(text, g2);
         y = gp.TILE_SIZE*4;
         g2.drawString(text,x,y);
         // MAIN MESSAGE
@@ -606,7 +662,7 @@ public class UI {
         // RETRY
         g2.setFont(g2.getFont().deriveFont(40f));
         text = "PRESS E TO RETRY";
-        x = getXForCenteredText(text);
+        x = getXForCenteredText(text, g2);
         y += gp.TILE_SIZE*4;
         g2.drawString(text,x,y);
 
@@ -630,8 +686,8 @@ public class UI {
         g2.drawRoundRect(x+5,y+5,width-10,height-10,25,25);
     }
 
-    public int getXForCenteredText(String text) {
-        int length = (int)g2.getFontMetrics().getStringBounds(text, g2).getWidth();
+    public int getXForCenteredText(String text, Graphics2D g2) {
+        int length = (int) this.g2.getFontMetrics().getStringBounds(text, this.g2).getWidth();
         return gp.SCREEN_WIDTH/2 - length/2;
     }
     //  DRAWS TRANSITION EVENT WHEN ENTERING OR EXITING
@@ -805,7 +861,7 @@ public class UI {
         // TITLE
         g2.setFont(g2.getFont().deriveFont(Font.BOLD, 40f));
         String text = "Options";
-        x = getXForCenteredText(text);
+        x = getXForCenteredText(text, g2);
         y = frameY + gp.TILE_SIZE;
         g2.drawString(text,x,y);
 
@@ -895,10 +951,11 @@ public class UI {
 
     public void options_startMenu(int frameX, int frameY) {
         int x, y;
+        drawBG2();
         // TITLE
         g2.setFont(g2.getFont().deriveFont(Font.BOLD, 40f));
         String text = "Start Menu Options";
-        x = getXForCenteredText(text);
+        x = getXForCenteredText(text, g2);
         y = frameY + gp.TILE_SIZE;
         g2.drawString(text,x,y);
 
@@ -908,7 +965,7 @@ public class UI {
         // MUSIC
         g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 40f));
         text = "Music";
-        x = getXForCenteredText(text);
+        x = getXForCenteredText(text, g2);
         y += (int) (gp.TILE_SIZE*1.2);
         if (gp.ui.commandNum == 0) {
             g2.setColor(Color.YELLOW); // highlight color
@@ -920,7 +977,7 @@ public class UI {
 
         // SOUND EFFECTS
         text = "SFX";
-        x = getXForCenteredText(text);
+        x = getXForCenteredText(text, g2);
         y += (int) (gp.TILE_SIZE*2.4);
         if (gp.ui.commandNum == 1) {
             g2.setColor(Color.YELLOW); // highlight color
@@ -932,7 +989,7 @@ public class UI {
 
         // CONTROL
         text = "Controls";
-        x = getXForCenteredText(text);
+        x = getXForCenteredText(text, g2);
         y += (int) (gp.TILE_SIZE*2.4);
         if (gp.ui.commandNum == 2) {
             g2.setColor(Color.YELLOW); // highlight color
@@ -944,7 +1001,7 @@ public class UI {
 
         // BACK
         text = "Back";
-        x = getXForCenteredText(text);
+        x = getXForCenteredText(text, g2);
         y += (int) (gp.TILE_SIZE*3);
         if (gp.ui.commandNum == 4) {
             g2.setColor(Color.YELLOW); // highlight color
@@ -1029,6 +1086,10 @@ public class UI {
 
         if(gp.gameState == gp.transitionState){
             drawTransition();
+        }
+
+        if (gp.gameState == gp.creditsState) {
+            drawCredits(g2);
         }
     }
 }

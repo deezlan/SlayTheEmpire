@@ -184,6 +184,7 @@ public class Player extends Entity {
             }
         }
     }
+    @Override
     public void runAttackAnimation() {
         animationCounter++;
         if (animationSpriteNum < playerRightAttackList.size() && animationCounter%5 == 0) {

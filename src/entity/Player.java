@@ -148,10 +148,25 @@ public class Player extends Entity {
 
             // ADJUST FOR ATTACK
             switch (action) {
+                case "idleRight", "moveRight": worldX += attackArea.width; break;
+                case "idleLeft", "moveLeft": worldX -= attackArea.width; break;
                 case "moveUp": worldY -= attackArea.height; break;
                 case "moveDown": worldY += attackArea.height; break;
-                case "moveLeft": worldX -= attackArea.width; break;
-                case "moveRight": worldX += attackArea.width; break;
+                case "moveUpRight":
+                    worldX += attackArea.width;
+                    worldY -= attackArea.height;
+                    break;
+                case "moveDownRight":
+                    worldX += attackArea.width;
+                    worldY += attackArea.height;
+                    break;
+                case "moveUpLeft":
+                    worldX -= attackArea.width;
+                    worldY -= attackArea.height;
+                    break;
+                case "moveDownLeft":
+                    worldX -= attackArea.width;
+                    worldY += attackArea.height;
             }
 
             // ATTACK AREA BECOMES SOLID AREA

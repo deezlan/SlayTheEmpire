@@ -48,9 +48,6 @@ public class GamePanel extends JPanel implements Runnable {
     public int playerClass;
     public KeyHandler keyH = new KeyHandler(this);
 
-    // FPS SETTINGS
-    private final int FPS = 60;
-
     // LOGIN SETTINGS
     public LoginSystem loginSys = new LoginSystem(this);
 
@@ -211,7 +208,9 @@ public class GamePanel extends JPanel implements Runnable {
     // FPS SETTINGS
     @Override
     public void run() {
-        double drawInterval = (double) 1000000000 /FPS;
+        // FPS SETTINGS
+        int FPS = 60;
+        double drawInterval = (double) 1000000000 / FPS;
         double delta = 0;
         long lastTime = System.nanoTime();
         long currentTime;

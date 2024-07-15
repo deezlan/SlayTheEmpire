@@ -6,19 +6,36 @@ import object.OBJ_Coin;
 import object.OBJ_Heart;
 //import object.SuperObject;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.awt.Font;
+import java.awt.GraphicsEnvironment;
 import java.io.InputStream;
 
 public class UI {
+
     public Entity npc;
     GamePanel gp;
-
     BufferedImage fullHeart, halfHeart, emptyHeart, hotbar;
     Graphics2D g2;
     Entity coin;
+    Font gameFont;
+
+    // IMAGE AND GIFS
+    private final Image bg, bg2;
+    private final Image titleGif;
+    private final Image titleImage;
+    private final Image startMenu;
+    private final Image warriorGif;
+    private final Image knightGif;
+    private final Image assassinGif;
+    private final Image loginDefault, typeUsername, typePassword,
+            blankErr, usernameErr, loginErr, usernameTakenErr;
+    private final Image warriorSelected, knightSelected, assassinSelected;
 
     public String currentDialog = "";
     public int slotRow = 0;
@@ -26,6 +43,35 @@ public class UI {
     int counter = 0;
     int charIndex = 0;
     String combinedText = "";
+    public int commandNum = 0;
+    int subState = 0;
+
+    // Login variables
+    public String inpUser = "", inpPass = "", inpPassHidden = "";
+    public boolean hasBlankField = false,
+            isInvalidUsername = false,
+            isInvalidLogin = false,
+            usernameTaken = false,
+            validLogin = false,
+            typingUsername = false,
+            typingPassword = false;
+
+    public String[] musicCredits = {
+            "Music/SFX by:",
+            "Sara Garrard",
+            "RandomizedRandomizer",
+            "Leohpaz"
+    };
+
+    public String[][] spriteCredits = {
+            {"", "Sprites/Art by:", ""},
+            {"Admurin", "David G.", "Cainos"},
+            {"Eddie's Workshop", "Chierit", "CreativeKind"},
+            {"Ho88it", "Kronovi", "HorusKDI"},
+            {"LuizMelo", "RiLi_XL", "Snowhexart"},
+            {"", "wxhaust", ""},
+            {"", "", ""},
+    };
 
     public UI(GamePanel gp) {
         this.gp = gp;
@@ -41,43 +87,89 @@ public class UI {
         } catch (IOException e){
             e.printStackTrace(System.out);
         }
-
         coin = new OBJ_Coin(gp);
+
+        // FONT initialization
+        try {
+            GraphicsEnvironment font = GraphicsEnvironment.getLocalGraphicsEnvironment();
+            Font gameFont = loadFont();
+            font.registerFont(gameFont);
+            this.gameFont = gameFont.deriveFont(Font.PLAIN, 13F);
+
+        } catch (FontFormatException | IOException e) {
+            e.printStackTrace(System.out);
+        }
+
+        // INITIALIZE TITLE VIDEO
+        ImageIcon icon = new ImageIcon("res/UI/Title.gif");
+        titleGif = icon.getImage();
+
+        // INITIALIZE TITLE
+        titleImage = new ImageIcon("res/UI/Title.png").getImage();
+
+        // INITIALIZE LOGIN SCREEN
+        loginDefault = new ImageIcon("res/UI/login/loginDefault.png").getImage();
+        typeUsername = new ImageIcon("res/UI/login/loginUsername.png").getImage();
+        typePassword = new ImageIcon("res/UI/login/loginPassword.png").getImage();
+        blankErr = new ImageIcon("res/UI/login/blankField.png").getImage();
+        loginErr = new ImageIcon("res/UI/login/invalidLogin.png").getImage();
+        usernameErr = new ImageIcon("res/UI/login/invalidUsername.png").getImage();
+        usernameTakenErr = new ImageIcon("res/UI/login/usernameTaken.png").getImage();
+
+        // INITIALIZE START MENU UI
+        bg = new ImageIcon("res/UI/bg.png").getImage();
+        bg2 = new ImageIcon("res/UI/bg2.png").getImage();
+        startMenu = new ImageIcon("res/UI/startMenu.png").getImage();
+
+        // INITIALIZE CHARACTER SELECT ASSETS
+        warriorSelected = new ImageIcon("res/UI/character_select/warriorSelected.png").getImage();
+        knightSelected = new ImageIcon("res/UI/character_select/knightSelected.png").getImage();
+        assassinSelected = new ImageIcon("res/UI/character_select/assassinSelected.png").getImage();
+
+        // INITIALIZE PLAYER PREVIEW
+        ImageIcon warrior = new ImageIcon("res/player/WarriorIdle.gif");
+        warriorGif = warrior.getImage();
+        ImageIcon knight = new ImageIcon("res/player/KnightIdle.gif");
+        knightGif = knight.getImage();
+        ImageIcon assassin = new ImageIcon("res/player/AssassinIdle.gif");
+        assassinGif = assassin.getImage();
     }
 
-    public void draw(Graphics2D g2){
+    private Font loadFont() throws FontFormatException, IOException {
+        File fontFile = new File("res/font/x12y16pxMaruMonica.ttf");
+        return Font.createFont(Font.TRUETYPE_FONT, new FileInputStream(fontFile));
+    }
 
-        this.g2 = g2;
-        g2.setFont(new Font("Microsoft YaHei", Font.PLAIN, 28));
-        g2.setColor(Color.white);
-        if (gp.gameState == gp.playState) {
-            drawPlayerMoney();
-            drawHotbar();
-            drawPlayerLife();
-            drawAllMobHP();
-        }
+    public void drawBG() {
+        g2.drawImage(bg, 0, 0, null);
+    }
 
-        //Pause State
-        if (gp.gameState == gp.pauseState) {
-            drawPauseScreen();
-        }
+    public void drawBG2() {
+        g2.drawImage(bg2, 0, 0, null);
+    }
 
-        //Dialog State
-        if(gp.gameState == gp.dialogueState){
-            drawDialogScreen();
-        }
+    public void drawCharacterSelectPreview() {
+        int gifX = 300;
+        int gifY = 150;
 
-        if (gp.gameState == gp.shopState){
-            drawShop();
+        switch (gp.ui.commandNum) {
+            case 0 -> {
+                g2.drawImage(warriorSelected, 0, 0, null);
+                g2.drawImage(warriorGif, (gp.SCREEN_WIDTH - gifX)/2 - 225, (int) ((gp.SCREEN_HEIGHT - gifY)/3) + 40, gifX, gifY, null);
+            }
+            case 1 -> {
+                g2.drawImage(knightSelected, 0, 0, null);
+                g2.drawImage(knightGif, (gp.SCREEN_WIDTH - gifX)/2, (int) ((gp.SCREEN_HEIGHT - gifY)/3) + 50, gifX, gifY, null);
+            }
+            case 2 -> {
+                g2.drawImage(assassinSelected, 0, 0, null);
+                g2.drawImage(assassinGif, (gp.SCREEN_WIDTH - gifX)/2 + 225, (int) ((gp.SCREEN_HEIGHT - gifY)/3) + 40, gifX, gifY, null);
+            }
         }
+    }
 
-        if (gp.gameState == gp.deathState) {
-            drawDeathScreen();
-        }
+    public void drawControls() {
 
-        if(gp.gameState == gp.transitionState){
-            drawTransition();
-        }
     }
 
     public void drawHotbar() {
@@ -208,6 +300,48 @@ public class UI {
         }
     }
 
+    public void drawCredits(Graphics2D g2) {
+        g2.setColor(Color.BLACK);
+        g2.fillRect(0,0, gp.SCREEN_WIDTH, gp.SCREEN_HEIGHT);
+        g2.setColor(Color.WHITE);
+        g2.drawImage(bg, 0, 0, null);
+
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 50F));
+        String text = "Special Thanks";
+        g2.drawString(text, getXForCenteredText(text, g2), gp.SCREEN_HEIGHT/8);
+        g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 35F));
+        g2.drawLine(getXForCenteredText(text, g2)-50, gp.SCREEN_HEIGHT/8 + 5, getXForCenteredText(text, g2) + g2.getFontMetrics().stringWidth(text) + 50, gp.SCREEN_HEIGHT/8 + 5);
+
+
+        int musicY = gp.SCREEN_HEIGHT/4 - 20;
+        int leftX = gp.TILE_SIZE*5;
+
+
+        for (String line : musicCredits) {
+            int musicX = getXForCenteredText(line, g2);
+            g2.drawString(line,musicX,musicY);
+            musicY += 40;
+        }
+
+        int spriteY = musicY+40;
+
+        for (String[] spriteCredit : spriteCredits) {
+            for (int j = 0; j < spriteCredit.length; j++) {
+                String line = spriteCredit[j];
+                int spriteX;
+                if (j == 0) {
+                    spriteX = getXForCenteredText(line, g2) - leftX;
+                } else if (j == 1) {
+                    spriteX = getXForCenteredText(line, g2);
+                } else {
+                    spriteX = getXForCenteredText(line, g2) + leftX;
+                }
+                g2.drawString(line, spriteX, spriteY);
+            }
+            spriteY += 40;
+        }
+    }
+
     public void drawPlayerLife(){
         int posX = gp.TILE_SIZE/2;
         int posY = gp.TILE_SIZE/2;
@@ -244,14 +378,219 @@ public class UI {
 
     // Draw Pause Screen
     public void drawPauseScreen() {
+        // save composite
+        Composite orgComposite = g2.getComposite();
 
-        g2.setFont(g2.getFont().deriveFont(Font.BOLD));
-        String text = "GO TOUCH GRASS BITCH";
-        int x = getXforCenteredText(text);
+        // set opacity of bg
+        float opacity = 0.5f;
+        g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, opacity));
+
+        // Draw black background
+        g2.setColor(Color.BLACK);
+        g2.fillRect(0,0, gp.SCREEN_WIDTH, gp.SCREEN_HEIGHT);
+
+        // reset composite
+        g2.setComposite(orgComposite);
+
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 60F));
+        String text = "PAUSED";
+        int x = getXForCenteredText(text, g2);
         int y = gp.SCREEN_HEIGHT/2;
 
+        // SHADOW
+        g2.setColor(Color.gray);
+        g2.drawString(text, x+2, y+2);
+        // Main PauseScreen
+        g2.setColor(Color.white);
         g2.drawString(text, x, y);
 
+    }
+
+    // Draw Title GIF
+    public void drawTitleScreen() {
+        g2.drawImage(titleGif, 0, 0, gp.SCREEN_WIDTH, gp.SCREEN_HEIGHT, null);
+    }
+
+    // DRAW TITLE IMAGE
+    public void drawTitleImage() {
+        int imageWidth = (int)(gp.SCREEN_WIDTH/1.3);
+        int imageHeight = (int) (titleImage.getHeight(null) * ((double) imageWidth / titleImage.getWidth(null)));
+        int x = (gp.SCREEN_WIDTH - imageWidth) / 2;
+        int y = (gp.SCREEN_HEIGHT - imageHeight) / 4;
+
+        g2.drawImage(titleImage, x, y, imageWidth, imageHeight, null);
+    }
+
+    // Draw Login Screen
+    public void drawLoginScreen() {
+        g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 18F));
+
+        if (typingUsername) {
+            g2.drawImage(typeUsername, 0, 0, loginDefault.getWidth(null), loginDefault.getHeight(null), null);
+        } else if (typingPassword) {
+            g2.drawImage(typePassword, 0, 0, loginDefault.getWidth(null), loginDefault.getHeight(null), null);
+        } else {
+            g2.drawImage(loginDefault, 0, 0, loginDefault.getWidth(null), loginDefault.getHeight(null), null);
+        }
+
+        validLogin = false;
+
+        Rectangle nameRect = new Rectangle(264, 264, 288, 29);
+        Rectangle passRect = new Rectangle(264, 331, 288, 28);
+        Rectangle registerRect = new Rectangle(345, 380, 130, 28);
+        Rectangle loginRect = new Rectangle(365, 425, 90, 28);
+
+        g2.draw(nameRect);
+        g2.draw(passRect);
+
+        g2.setColor(Color.BLACK);
+        g2.draw(registerRect);
+        g2.draw(loginRect);
+
+
+        g2.setColor(Color.WHITE);
+        g2.drawString(inpUser, 275, 285);
+//        g2.drawString(password, 275, 351);  // ENABLE TO VIEW PASSWORD DATA
+        g2.drawString(inpPassHidden, 275, 355); // ENABLE TO HIDE PASSWORD DATA
+
+        if (gp.mouseH.leftClicked) {
+            if (nameRect.contains(gp.cursor.getMouseX(), gp.cursor.getMouseY())) {
+                System.out.println("I am within username.");
+                typingUsername = true;
+                typingPassword = false;
+            } else if (passRect.contains(gp.cursor.getMouseX(), gp.cursor.getMouseY())) {
+                System.out.println("I am within password.");
+                typingUsername = false;
+                typingPassword = true;
+            } else {
+                typingUsername = false;
+                typingPassword = false;
+            }
+
+            hasBlankField = false;
+            isInvalidUsername = false;
+            isInvalidLogin = false;
+            usernameTaken = false;
+
+            // Execute user registration on Register button click
+            if (registerRect.contains(gp.cursor.getMouseX(), gp.cursor.getMouseY()))
+                checkRegister();
+            // Execute user login on Login button click
+            if (loginRect.contains(gp.cursor.getMouseX(), gp.cursor.getMouseY()))
+                checkLogin();
+
+            gp.mouseH.clearMouseClick();
+        }
+
+        if (hasBlankField)
+            g2.drawImage(blankErr, 320, 480, 250, 20, null);
+        if (isInvalidUsername && !inpUser.isEmpty())
+            g2.drawImage(usernameErr, 320, 480, 250, 20, null);
+        if (isInvalidLogin)
+            g2.drawImage(loginErr, 320, 480, 250, 20, null);
+        if (usernameTaken)
+            g2.drawImage(usernameTakenErr, 320, 480, 250, 20, null);
+//        if (validLogin)
+//            gp.gameState = gp.playState;
+
+        g2.setColor(Color.WHITE);
+        g2.setStroke(new BasicStroke(3f));
+        if (registerRect.contains(gp.cursor.getMouseX(), gp.cursor.getMouseY())) {
+            g2.drawRect(355, 410, 110, 0);
+        } else if (loginRect.contains(gp.cursor.getMouseX(), gp.cursor.getMouseY())) {
+            g2.drawRect(375, 455, 72, 0);
+        }
+    }
+
+    public void checkLogin () {
+        if (inpUser.isEmpty() || inpPass.isEmpty()) {
+            hasBlankField = true;
+        } else if (!inpUser.matches("[a-zA-Z0-9.\\-_]*")) {
+            System.out.println("Has illegal");
+            isInvalidUsername = true;
+        } else {
+            System.out.println("Good login path");
+            gp.loginSys.authLogin();
+        }
+    }
+
+    public void checkRegister () {
+        if (inpUser.isEmpty() || inpPass.isEmpty()) {
+            hasBlankField = true;
+        } else if (!inpUser.matches("[a-zA-Z0-9.\\-_]*")) {
+            isInvalidUsername = true;
+        } else {
+            System.out.println("Good reg path");
+            gp.loginSys.authRegister();
+        }
+    }
+
+    // Draw Start Menu
+    public void drawStartMenu() {
+//        g2.setColor(Color.BLACK);
+//        g2.fillRect(0,0, gp.SCREEN_WIDTH, gp.SCREEN_HEIGHT);
+        g2.setColor(Color.WHITE);
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 60F));
+
+        // Draw Title and Buttons
+        int imgWidth = startMenu.getWidth(null);
+        int imgHeight = startMenu.getHeight(null);
+        int x = (int) ((gp.SCREEN_WIDTH - imgWidth));
+        int y = (int) ((gp.SCREEN_HEIGHT - imgHeight));
+        g2.drawImage(startMenu, x, y, imgWidth, imgHeight, null);
+
+        int leftx = (int) (gp.SCREEN_WIDTH/2 - gp.TILE_SIZE*5.5);
+        int rightx = (gp.SCREEN_WIDTH/2 + gp.TILE_SIZE*5);
+        y = (int) ((gp.SCREEN_HEIGHT)/2 - 60);
+        switch (commandNum) {
+            case 0: {
+                // 0.5 SCALE DIFF
+                g2.drawString(">", leftx, y);
+                g2.drawString("<", rightx, y);
+                break;
+            }
+            case 1: {
+                y += (int) (gp.TILE_SIZE*1.5);
+                g2.drawString(">", leftx, y);
+                g2.drawString("<", rightx, y);
+                break;
+            }
+            case 2: {
+                y += (int) (gp.TILE_SIZE*3);
+                g2.drawString(">", leftx, y);
+                g2.drawString("<", rightx, y);
+                break;
+            }
+            case 3: {
+                y += (int) (gp.TILE_SIZE*4.5);
+                g2.drawString(">", leftx, y);
+                g2.drawString("<", (gp.SCREEN_WIDTH/2 - 18), y);
+                break;
+            }
+            case 4: {
+                y += (int) (gp.TILE_SIZE*4.5);
+                g2.drawString(">", (gp.SCREEN_WIDTH/2 - 5), y);
+                g2.drawString("<", rightx, y);
+                break;
+            }
+        }
+    }
+
+    // CHARACTER SELECTION SCREEN
+    public void drawCharacterSelection() {
+        g2.setColor(Color.BLACK);
+        g2.fillRect(0,0, gp.SCREEN_WIDTH, gp.SCREEN_HEIGHT);
+        drawBG();
+
+        g2.setColor(Color.WHITE);
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 40F));
+
+        String text = "Select Your Class";
+        int x = getXForCenteredText(text, g2);
+        int y = gp.TILE_SIZE*3;
+        g2.drawString(text, x, y);
+
+        drawCharacterSelectPreview();
     }
 
     //Draw dialog
@@ -263,7 +602,7 @@ public class UI {
         int dialogHeight = gp.TILE_SIZE*4;
         drawSubWindow(dialogX,dialogY,dialogWidth,dialogHeight);
 
-        g2.setFont(g2.getFont().deriveFont(Font.PLAIN,32));
+        g2.setFont(g2.getFont().deriveFont(Font.PLAIN,32F));
         dialogX += gp.TILE_SIZE;
         dialogY += gp.TILE_SIZE;
 
@@ -313,7 +652,7 @@ public class UI {
 
         // SHADOW
         g2.setColor(Color.BLACK);
-        x = getXforCenteredText(text);
+        x = getXForCenteredText(text, g2);
         y = gp.TILE_SIZE*4;
         g2.drawString(text,x,y);
         // MAIN MESSAGE
@@ -323,7 +662,7 @@ public class UI {
         // RETRY
         g2.setFont(g2.getFont().deriveFont(40f));
         text = "PRESS E TO RETRY";
-        x = getXforCenteredText(text);
+        x = getXForCenteredText(text, g2);
         y += gp.TILE_SIZE*4;
         g2.drawString(text,x,y);
 
@@ -346,8 +685,8 @@ public class UI {
         g2.drawRoundRect(x+5,y+5,width-10,height-10,25,25);
     }
 
-    public int getXforCenteredText(String text) {
-        int length = (int)g2.getFontMetrics().getStringBounds(text, g2).getWidth();
+    public int getXForCenteredText(String text, Graphics2D g2) {
+        int length = (int) this.g2.getFontMetrics().getStringBounds(text, this.g2).getWidth();
         return gp.SCREEN_WIDTH/2 - length/2;
     }
     //  DRAWS TRANSITION EVENT WHEN ENTERING OR EXITING
@@ -484,6 +823,284 @@ public class UI {
             gp.currentMap = 0;
             gp.setMapColor();
             gp.retry();
+        }
+    }
+
+    public void drawOptions() {
+        g2.setColor(Color.WHITE);
+        g2.setFont((g2.getFont().deriveFont(30F)));
+
+        // SUB WINDOW
+        int frameX = (int) (gp.TILE_SIZE*4.5);
+        int frameY = gp.TILE_SIZE;
+        int frameWidth = gp.TILE_SIZE*8;
+        int frameHeight = gp.TILE_SIZE*10;
+
+        if (gp.gameState == gp.optionState) {
+            subState = 0;
+        } else if (gp.gameState == gp.optionState2) {
+            subState = 1;
+        }
+
+        switch(subState) {
+            case 0: drawSubWindow(frameX, frameY, frameWidth, frameHeight); options_playState(frameX, frameY);  break;
+            case 1: options_startMenu(frameX, frameY); break;
+            case 2: break;
+        }
+    }
+
+    private void drawVolumeBar(int volumeScale, int x, int y) {
+        int barWidth = 240;
+        int barHeight = 20;
+        if (gp.gameState == gp.optionState) {
+            barWidth = 180;
+        }
+        int fillColor = (int) (barWidth * (volumeScale / 5.0f));
+
+        // BACKGROUND BAR
+        g2.setColor(Color.darkGray);
+        g2.fillRect(x, y, barWidth, barHeight);
+
+        // FILLED BAR
+        g2.setColor(Color.WHITE);
+        g2.fillRect(x, y, fillColor, barHeight);
+
+    }
+
+    public void options_playState(int frameX, int frameY) {
+        int x, y;
+        // TITLE
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 40f));
+        String text = "Options";
+        x = getXForCenteredText(text, g2);
+        y = frameY + gp.TILE_SIZE;
+        g2.drawString(text,x,y);
+
+        // Underline the title
+        g2.drawLine(x, y + 5, x + g2.getFontMetrics().stringWidth(text), y + 5);
+
+        // MUSIC
+        g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 40f));
+        text = "Music";
+        x = frameX + gp.TILE_SIZE;
+        y += (int) (gp.TILE_SIZE*1.2);
+        if (gp.ui.commandNum == 0) {
+            g2.setColor(Color.YELLOW); // highlight color
+            g2.drawString(text,x,y);
+            g2.drawString(">", x-25, y);
+
+        } else {
+            g2.setColor(Color.WHITE);
+            g2.drawString(text,x,y);
+        }
+
+        // SOUND EFFECTS
+        text = "SFX";
+        y += (int) (gp.TILE_SIZE*1.2);
+        g2.drawString(text,x,y);
+        if (gp.ui.commandNum == 1) {
+            g2.setColor(Color.YELLOW); // highlight color
+            g2.drawString(text,x,y);
+            g2.drawString(">", x-25, y);
+
+        } else {
+            g2.setColor(Color.WHITE);
+            g2.drawString(text,x,y);
+        }
+
+        // CONTROL
+        text = "Controls";
+        y += (int) (gp.TILE_SIZE*1.2);
+        g2.drawString(text,x,y);
+        if (gp.ui.commandNum == 2) {
+            g2.setColor(Color.YELLOW); // highlight color
+            g2.drawString(text,x,y);
+            g2.drawString(">", x-25, y);
+
+        } else {
+            g2.setColor(Color.WHITE);
+            g2.drawString(text,x,y);
+        }
+
+        // END GAME
+        text = "End Game";
+        y += (int) (gp.TILE_SIZE*1.2);
+        g2.drawString(text,x,y);
+        if (gp.ui.commandNum == 3) {
+            g2.setColor(Color.YELLOW); // highlight color
+            g2.drawString(text,x,y);
+            g2.drawString(">", x-25, y);
+
+        } else {
+            g2.setColor(Color.WHITE);
+            g2.drawString(text,x,y);
+        }
+
+        // BACK
+        text = "Back";
+        y += (int) (gp.TILE_SIZE*3.5);
+        g2.drawString(text,x,y);
+        if (gp.ui.commandNum == 4) {
+            g2.setColor(Color.YELLOW); // highlight color
+            g2.drawString(text,x,y);
+            g2.drawString(">", x-25, y);
+
+        } else {
+            g2.setColor(Color.WHITE);
+            g2.drawString(text,x,y);
+        }
+
+        // VOLUME BAR
+        x = (int) (frameX + gp.TILE_SIZE*3.75);
+        y = (int) (frameY + gp.TILE_SIZE*1.65f + 2);
+        drawVolumeBar(gp.music.volumeScale, x, y);
+
+        // SFX BAR
+        y += (int) (gp.TILE_SIZE*1.2);
+        drawVolumeBar(gp.effect.volumeScale, x, y);
+    }
+
+    public void options_startMenu(int frameX, int frameY) {
+        int x, y;
+        drawBG2();
+        // TITLE
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 40f));
+        String text = "Start Menu Options";
+        x = getXForCenteredText(text, g2);
+        y = frameY + gp.TILE_SIZE;
+        g2.drawString(text,x,y);
+
+        // Underline the title
+        g2.drawLine(x, y + 5, x + g2.getFontMetrics().stringWidth(text), y + 5);
+
+        // MUSIC
+        g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 40f));
+        text = "Music";
+        x = getXForCenteredText(text, g2);
+        y += (int) (gp.TILE_SIZE*1.2);
+        if (gp.ui.commandNum == 0) {
+            g2.setColor(Color.YELLOW); // highlight color
+            g2.drawString(text,x,y);
+        } else {
+            g2.setColor(Color.white);
+            g2.drawString(text,x,y);
+        }
+
+        // SOUND EFFECTS
+        text = "SFX";
+        x = getXForCenteredText(text, g2);
+        y += (int) (gp.TILE_SIZE*2.4);
+        if (gp.ui.commandNum == 1) {
+            g2.setColor(Color.YELLOW); // highlight color
+            g2.drawString(text,x,y);
+        } else {
+            g2.setColor(Color.white);
+            g2.drawString(text,x,y);
+        }
+
+        // CONTROL
+        text = "Controls";
+        x = getXForCenteredText(text, g2);
+        y += (int) (gp.TILE_SIZE*2.4);
+        if (gp.ui.commandNum == 2) {
+            g2.setColor(Color.YELLOW); // highlight color
+            g2.drawString(text,x,y);
+        } else {
+            g2.setColor(Color.white);
+            g2.drawString(text,x,y);
+        }
+
+        // BACK
+        text = "Back";
+        x = getXForCenteredText(text, g2);
+        y += (int) (gp.TILE_SIZE*3);
+        if (gp.ui.commandNum == 4) {
+            g2.setColor(Color.YELLOW); // highlight color
+            g2.drawString(text,x,y);
+        } else {
+            g2.setColor(Color.white);
+            g2.drawString(text,x,y);
+        }
+
+        // VOLUME BAR
+        x = gp.SCREEN_WIDTH/2 - 120;
+        y = (int) (frameY + gp.TILE_SIZE*3);
+        drawVolumeBar(gp.music.volumeScale, x, y);
+
+        // SFX BAR
+        y += (int) (frameY + gp.TILE_SIZE);
+        drawVolumeBar(gp.effect.volumeScale, x, y);
+    }
+
+    public void draw(Graphics2D g2){
+
+        this.g2 = g2;
+        g2.setFont(gameFont);
+
+        // TITLE STATE
+        if (gp.gameState == gp.titleState) {
+            drawTitleScreen();
+        }
+
+        // START MENU STATE
+        if (gp.gameState == gp.startMenuState) {
+            drawStartMenu();
+        }
+
+        // CHAR SELECTION SCREEN
+        if (gp.gameState == gp.characterSelectionState) {
+            drawCharacterSelection();
+        }
+
+        // LOGIN MENU
+        if (gp.gameState == gp.loginState) {
+            drawLoginScreen();
+        }
+
+        // OPTION 1 AND 2
+        if (gp.gameState == gp.optionState) {
+            drawOptions();
+        }
+
+        if (gp.gameState == gp.optionState2) {
+            drawBG();
+            drawOptions();
+        }
+
+        // PLAY STATE
+        if (gp.gameState == gp.playState) {
+            drawPlayerMoney();
+            drawHotbar();
+            drawPlayerLife();
+            drawAllMobHP();
+        }
+
+        // PAUSE STATE
+        if (gp.gameState == gp.pauseState) {
+            drawPauseScreen();
+        }
+
+        // DIALOGUE STATE
+        if(gp.gameState == gp.dialogueState){
+            drawDialogScreen();
+        }
+
+        // SHOP STATE
+        if (gp.gameState == gp.shopState){
+            drawShop();
+        }
+
+        // DEATH STATE
+        if (gp.gameState == gp.deathState) {
+            drawDeathScreen();
+        }
+
+        if(gp.gameState == gp.transitionState){
+            drawTransition();
+        }
+
+        if (gp.gameState == gp.creditsState) {
+            drawCredits(g2);
         }
     }
 }

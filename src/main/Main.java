@@ -4,10 +4,12 @@ import javax.swing.JFrame;
 
 public class Main {
     public static void main(String[] args) {
+
+
         JFrame window = new JFrame();
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setResizable(false);
-        window.setTitle("Slay the Empire");
+        window.setTitle("Slay the Empires totally cool branch by Jason");
 
         GamePanel gamePanel = new GamePanel();
         window.add(gamePanel);

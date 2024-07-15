@@ -65,14 +65,14 @@ public class Cursor{
         g2.setTransform(old);
     }
 
-//    public int getMouseX() {
-//        return mouseX;
-//    }
-//
-//    public int getMouseY() {
-//        return mouseY;
-//    }
-//
+    public int getMouseX() {
+        return mouseX;
+    }
+
+    public int getMouseY() {
+        return mouseY;
+    }
+
     public double getAngle() {
         return angle;
     }

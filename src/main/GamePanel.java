@@ -1,6 +1,10 @@
 package main;
 
-import javax.swing.JPanel;
+import javax.swing.*;
+import java.awt.Dimension;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -20,6 +24,8 @@ public class GamePanel extends JPanel implements Runnable {
     Thread gameThread;
     BufferedImage tempScreen;
     Graphics2D g2;
+
+    // SCREEN SETTINGS
     private final int
             ORIGINAL_TILE_SIZE = 16,
             SCALE = 3;
@@ -45,9 +51,15 @@ public class GamePanel extends JPanel implements Runnable {
     // FPS SETTINGS
     private final int FPS = 60;
 
+    // LOGIN SETTINGS
+    public LoginSystem loginSys = new LoginSystem(this);
+
     // PLAYER SETTINGS
+    Sound music = new Sound();
+    Sound effect = new Sound();
     public Cursor cursor = new Cursor(this); // Initialize cursor
     public Player player = new Player(this, keyH, cursor, playerClass);
+    public MouseHandler mouseH = new MouseHandler();
     public UI ui = new UI(this);
 
     // ENTITY AND OBJECTS ARRAYS
@@ -81,21 +93,48 @@ public class GamePanel extends JPanel implements Runnable {
             shopState = 4,
             deathState = 5,
             transitionState = 6,
-            cutsceneState = 7;
+            loginState = 7,
+            creditsState = 8,
+            characterSelectionState = 9,
+            optionState = 10,
+            optionState2 = 12,
+            startMenuState = 11,
+            cutsceneState = 13,
+            controlsState = 14;
+
+
+
+
 
     public GamePanel() {
         this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
         this.setBackground(Color.decode("#181425"));
         this.setDoubleBuffered(true);
         this.addKeyListener(keyH);
-        this.setFocusable(true);
+        this.setFocusable(true); // pass the player instance variable to the KeyHandler constructor
 
-        hideCursor();
+        // DEFAULT VOLUME
+        music.volumeScale = 3;
+        effect.volumeScale = 3;
+
+//        hideCursor();
 
         addMouseMotionListener(new MouseAdapter() {
             @Override
             public void mouseMoved(MouseEvent e) {
                 cursor.updateMousePosition(e.getX(), e.getY());
+            }
+        });
+
+        addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                mouseH.mouseClicked(e);
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                mouseH.mouseEntered(e);
             }
         });
     }
@@ -109,6 +148,27 @@ public class GamePanel extends JPanel implements Runnable {
         this.setCursor(blankCursor);
     }
 
+    private void showCursor() {
+        java.awt.Cursor defaultCursor = java.awt.Cursor.getDefaultCursor();
+        this.setCursor(defaultCursor);
+    }
+
+    public void playMusic(int i) {
+        music.setFile(i);
+        music.play();
+        music.loop();
+    }
+    // STOP MUSIC
+    public void stopMusic() {
+        music.stop();
+    }
+    // PLAY SOUND EFFECT
+    public void playSE(int i) {
+        effect.setFile(i);
+        effect.play();
+    }
+
+
     public void setupGame() {
         aSetter.setObject();
         aSetter.setNPC();
@@ -118,6 +178,8 @@ public class GamePanel extends JPanel implements Runnable {
 
         tempScreen = new BufferedImage(SCREEN_WIDTH,SCREEN_HEIGHT,BufferedImage.TYPE_INT_ARGB);
         g2 = (Graphics2D) tempScreen.getGraphics();
+        gameState = titleState; // TESTING LOGIN RIGHT NOW
+        playMusic(0);
     }
 
     public void retry() {
@@ -200,8 +262,8 @@ public class GamePanel extends JPanel implements Runnable {
     }
     // GAME LOOP METHODS
     public void update() {
-
         if (gameState == playState) {
+            hideCursor(); // HIDE CURSOR
             player.update();
 
             // OBJECT
@@ -257,10 +319,21 @@ public class GamePanel extends JPanel implements Runnable {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D)g;
 
+        if (gameState == optionState){
+            showCursor();
+        }
+
         // Title Screen
-        if (gameState == titleState) {
-            ui.draw(g2);
-        } else {
+        if (gameState != titleState
+                && gameState != loginState
+                && gameState != startMenuState
+                && gameState != creditsState) {
+//        if (gameState == playState ||
+//                gameState == shopState ||
+//                gameState == dialogueState ||
+//                gameState == pauseState ||
+//                gameState == optionState ||
+//                gameState == optionState2) {
 
             // DEBUG
             long drawStart = 0;
@@ -269,6 +342,7 @@ public class GamePanel extends JPanel implements Runnable {
             }
 
             tileM.draw(g2); // Draw tiles
+            ui.draw(g2);
 
             for (Entity gate : gateArr[currentMap])
                 if (gate != null) gate.draw(g2);
@@ -340,6 +414,8 @@ public class GamePanel extends JPanel implements Runnable {
                 g2.drawString("God Mode: " + keyH.godModeOn, x, y); y += lineHeight;
                 g2.drawString("Draw Time: " + passed, x, y);
             }
+        } else {
+            ui.draw(g2);
         }
         g2.dispose();
     }

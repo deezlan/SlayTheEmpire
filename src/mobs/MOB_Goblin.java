@@ -3,15 +3,13 @@ package mobs;
 import entity.Entity;
 import main.GamePanel;
 import main.UtilityTool;
-import object.OBJ_PickUpCoin;
 
 import java.io.IOException;
-import java.util.Random;
 
 public class MOB_Goblin extends Entity {
     GamePanel gp;
-    public MOB_Goblin(GamePanel gp) {
-        super(gp);
+    public MOB_Goblin(GamePanel gp, int worldX, int worldY) {
+        super(gp, worldX, worldY);
         this.gp = gp;
         type = type_mob;
         defaultSpeed = 1;
@@ -35,10 +33,6 @@ public class MOB_Goblin extends Entity {
         attackArea.height = 50;
         solidAreaDefaultX = solidArea.x;
         solidAreaDefaultY = solidArea.y;
-    }
-
-    public void checkDrop() {
-        dropItem(new OBJ_PickUpCoin(gp));
     }
 
     @Override

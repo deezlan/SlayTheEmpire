@@ -6,8 +6,8 @@ import main.UtilityTool;
 import java.io.IOException;
 
 public class NPC_Merchant extends Entity {
-    public NPC_Merchant(GamePanel gp) {
-        super(gp);
+    public NPC_Merchant(GamePanel gp, int worldX, int worldY) {
+        super(gp, worldX, worldY);
         action = "idleRight";
         type = type_npc;
         getNpcSprites();

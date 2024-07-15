@@ -32,14 +32,7 @@ public class CutsceneManager {
     public void scene_FrostGiant() {
         if(scenePhase == 0) {
             gp.bossBattleOn = true;
-//            for (int i = 0; i < gp.objArr[1].length; i++){
-//                if(gp.objArr[gp.currentMap][i] == null){
-//                    gp.objArr[gp.currentMap][i] = new OBJ_Pillar(gp);
-//                    gp.objArr[gp.currentMap][i].worldX = gp.TILE_SIZE*23;
-//                    gp.objArr[gp.currentMap][i].tempScene = true;
-//                    break;
-//                }
-//            }
+
             for(int i = 0; i < gp.npcArr[1].length; i++) {
                 if(gp.npcArr[gp.currentMap][i] == null){
                     gp.npcArr[gp.currentMap][i] = new PlayerDummy(gp);

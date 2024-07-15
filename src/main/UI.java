@@ -674,7 +674,6 @@ public class UI {
 //
 //        g2.drawString(text, x, y);
     }
-
     public void drawSubWindow(int x, int y, int width,int height){
         Color custom = new Color(0,0,0,220);
         g2.setColor(custom);
@@ -767,7 +766,7 @@ public class UI {
                         mob.hpBarCounter = 0;
                         mob.hpBarVisible = false;
                     }
-                } else if(mob.boss) {
+                } else if(mob.boss && mob.onPath) {
                     double oneScale = (double) gp.TILE_SIZE*8 / mob.maxLife;
                     double hpBarValue = oneScale * mob.currentLife;
                     int x = gp.SCREEN_WIDTH/2 - gp.TILE_SIZE*2;
@@ -779,25 +778,37 @@ public class UI {
                     // FILL HP
                     switch(mob.bossNum){
                         case 1:
-                            g2.fillRect(x, y, (int) hpBarValue, 20);
+                            g2.fillRect(x, y, (int) hpBarValue, 20); break;
                         case 2:
-                            g2.fillRect(x, y, (int) hpBarValue, 20);
+                            g2.fillRect(x, y, (int) hpBarValue, 20); break;
                         case 3:
-                            g2.fillRect(x, y, (int) hpBarValue, 20);
+                            g2.fillRect(x, y, (int) hpBarValue, 20); break;
+                        case 4:
+                            g2.fillRect(x, y, (int) hpBarValue, 20); break;
+                        case 5:
+                            g2.fillRect(x, y, (int) hpBarValue, 20); break;
+                        case 6:
+                            g2.fillRect(x, y, (int) hpBarValue, 20); break;
                     }
                     // DRAW NAME
                     g2.setFont(g2.getFont().deriveFont(Font.BOLD,24f));
                     g2.setColor(Color.white);
                     switch(mob.bossNum){
                         case 1:
-                            g2.drawString(mob.name,x+4,y-10);
+                            g2.drawString(mob.name,x+4,y-10); break;
                         case 2:
-                            g2.drawString(mob.name,x+4,y-10);
+                            g2.drawString(mob.name,x+4,y-10); break;
                         case 3:
-                            g2.drawString(mob.name,x+4,y-10);
+                            g2.drawString(mob.name,x+4,y-10); break;
+                        case 4:
+                            g2.drawString(mob.name,x+4,y-10); break;
+                        case 5:
+                            g2.drawString(mob.name,x+4,y-10); break;
+                        case 6:
+                            g2.drawString(mob.name,x+4,y-10); break;
                     }
-                }
-            }
+        }
+    }
         }
     }
 

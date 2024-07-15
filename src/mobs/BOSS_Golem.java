@@ -4,7 +4,6 @@ import entity.Entity;
 import main.GamePanel;
 import main.UtilityTool;
 import object.OBJ_Energyball;
-import object.OBJ_PickUpCoin;
 
 import java.io.IOException;
 
@@ -68,11 +67,6 @@ public class BOSS_Golem extends Entity {
         if(!attacking){
             checkWithinAttackRange(30,gp.TILE_SIZE*4,gp.TILE_SIZE*3); // CHANGE ATTACK RANGE
         }
-    }
-
-    public void checkDrop() {
-        gp.bossBattleOn = false;
-        dropItem(new OBJ_PickUpCoin(gp));
     }
 
     public void damageReaction() {

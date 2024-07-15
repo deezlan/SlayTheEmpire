@@ -434,7 +434,8 @@ public class Player extends Entity {
             } else {
                 if (currentWeapon.name.equalsIgnoreCase("fireball cannon") && delta>60){
                     delta = 0;
-                    projectile1.set(worldX, worldY, action, true, this, gp.cursor.deltaX, gp.cursor.deltaY);
+                    projectile1.set(worldX + currentList.get(0).getWidth()/2 - projectile1.currentList.get(0).getWidth()/2,
+                            worldY + currentList.get(0).getHeight()/2 - projectile1.currentList.get(0).getHeight()/2, action, true, this, gp.cursor.deltaX, gp.cursor.deltaY);
                     gp.projectileArr[gp.currentMap][1] = projectile1;
                 } else if (currentWeapon.name.equalsIgnoreCase("stickler") && delta>120) {
                     delta = 0;
@@ -535,7 +536,7 @@ public class Player extends Entity {
 
                 g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
                 break;
-            case 1,2:
+            case 1, 2:
                 if(drawing){
                     if(iframe){
                         g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.3f));

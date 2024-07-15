@@ -80,7 +80,8 @@ public class GamePanel extends JPanel implements Runnable {
     // CUTSCENE
     public boolean bossBattleOn = false;
     public CutsceneManager csManager = new CutsceneManager(this);
-    // GAME STATES
+
+    // GAME SETTINGS
     public int gameState;
     public final int
             titleState = 0,
@@ -98,7 +99,11 @@ public class GamePanel extends JPanel implements Runnable {
             startMenuState = 11,
             cutsceneState = 13,
             controlsState = 14;
-
+    public int gameMode;
+    public final int
+                easyMode = 1,
+                normalMode = 2,
+                hardMode = 3;
 
 
 
@@ -311,7 +316,6 @@ public class GamePanel extends JPanel implements Runnable {
                 gameState == dialogueState ||
                 gameState == pauseState ||
                 gameState == optionState ||
-                gameState == optionState2 ||
                 gameState == transitionState ||
                 gameState == cutsceneState) {
 

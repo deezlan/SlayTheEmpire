@@ -13,8 +13,8 @@ public class Projectile extends Entity{
     int delta;
 
     public void set(int worldX, int worldY, String action, boolean alive, Entity user, int mouseX, int mouseY) {
-        this.worldX = worldX + 80;
-        this.worldY = worldY + 30;
+        this.worldX = worldX;
+        this.worldY = worldY;
         this.action = action;
         this.alive = alive;
         this.user = user;

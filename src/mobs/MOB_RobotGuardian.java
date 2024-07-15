@@ -11,48 +11,29 @@ public class MOB_RobotGuardian extends Entity {
     public MOB_RobotGuardian(GamePanel gp, int worldX, int worldY) {
         super(gp, worldX, worldY);
         this.gp = gp;
-        type = type_mob;
-        defaultSpeed = 1;
-        speed = defaultSpeed;
-        attack = 1;
-        maxLife = 6;
-        currentLife = maxLife;
-        action = "idleRight";
-        mobNum = 3;
-        damageSprite = 7;
+        setStatValues(1, 6, false, false, 3);
+        setCollisionValues(70, 90, 40, 40);
+        setAttackValues(1, 7, 60, 60);
 
         // Load mob sprites
         getMobSprites();
-
-        // Set collision settings
-        solidArea.x = 70;
-        solidArea.y = 90;
-        solidArea.width = 40;
-        solidArea.height = 40;
-        attackArea.width = 60;
-        attackArea.height = 60;
-        solidAreaDefaultX = solidArea.x;
-        solidAreaDefaultY = solidArea.y;
     }
 
-    @Override
-    public void setAction() {
-        if(onPath) {
-            // CHECK IF STOP CHASING
-            checkStopChase(gp.player, 15, 100);
-            // SEARCH DIRECTION TO GO
-            searchPath(getGoalCol(gp.player),getGoalRow(gp.player));
-        } else {
-            // CHECK IF START CHASING
-            checkStartChase(gp.player, 5 , 100);
-            // GET RANDOM DIRECTION
-            getRandomDirection();
-        }
-        // CHECK ATTACK ON PLAYER
-        if(!attacking){
-            checkWithinAttackRange(30,gp.TILE_SIZE*2,gp.TILE_SIZE*2); // CHANGE ATTACK RANGE
-        }
-    }
+//    public void setAction() {
+//        if(onPath) {
+//            // SEARCH DIRECTION TO GO
+//            searchPath(getGoalCol(gp.player),getGoalRow(gp.player));
+//        } else {
+//            // CHECK IF START CHASING
+//            checkStartChase(gp.player, 5 , 100);
+//            // GET RANDOM DIRECTION
+//            getRandomDirection();
+//        }
+//        // CHECK ATTACK ON PLAYER
+//        if(!attacking){
+//            checkWithinAttackRange(30,gp.TILE_SIZE*2,gp.TILE_SIZE*2); // CHANGE ATTACK RANGE
+//        }
+//    }
 
     public void damageReaction() {
         actionLockCounter = 0;

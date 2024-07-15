@@ -153,10 +153,10 @@ public class AssetSetter {
             case 0:
             {
                 gp.npcArr[gp.currentMap][i] = new NPC_Maiden(gp, 368, 250); i++;
-                System.out.println("NPC Maiden set at (" + gp.npcArr[gp.currentMap][0].worldX + ", " + gp.npcArr[gp.currentMap][0].worldY + ")");
+                System.out.println("NPC Maiden set at (" + gp.npcArr[gp.currentMap][i-1].worldX + ", " + gp.npcArr[gp.currentMap][0].worldY + ")");
 
                 gp.npcArr[gp.currentMap][i] = new NPC_Blacksmith(gp, 85, 128); i++;
-                System.out.println("NPC Blacksmith set at (" + gp.npcArr[gp.currentMap][0].worldX + ", " + gp.npcArr[gp.currentMap][0].worldY + ")");
+                System.out.println("NPC Blacksmith set at (" + gp.npcArr[gp.currentMap][i-1].worldX + ", " + gp.npcArr[gp.currentMap][0].worldY + ")");
 
                 gp.npcArr[gp.currentMap][i] = new NPC_Merchant(gp, 600, 100); i++;
                 System.out.println("NPC Merchant set at (" + gp.npcArr[gp.currentMap][0].worldX + ", " + gp.npcArr[gp.currentMap][0].worldY + ")");
@@ -176,16 +176,19 @@ public class AssetSetter {
             case 1:
             {
                 gp.mobArr[gp.currentMap][i] = new BOSS_FrostGiant(gp, 400, 180);
-                gp.mobArr[gp.currentMap][i] = new MOB_RobotGuardian(gp, 350, 1968); i++;
-                gp.mobArr[gp.currentMap][i] = new MOB_SkeletonKnight(gp, 550, 1968); i++;
-                gp.mobArr[gp.currentMap][i] = new BOSS_FrostGiant(gp, 400, 180); i++;
                 gp.mobArr[gp.currentMap][i] = new MOB_FlyingEye(gp, 350, 1968); i++;
-                gp.mobArr[gp.currentMap][i] = new MOB_Mushroom(gp, 450, 270); i++;
-                gp.mobArr[gp.currentMap][i] = new MOB_Canine(gp, 500, 300); i++;
-                gp.mobArr[gp.currentMap][i] = new MOB_Slime(gp, 800, 400); i++;
-                gp.mobArr[gp.currentMap][i] = new MOB_Goblin(gp, 400, 300); i++;
-                gp.mobArr[gp.currentMap][i] = new MOB_Skellington(gp, 700, 300); i++;
-                gp.mobArr[gp.currentMap][i] = new MOB_Ramses(gp, 700, 400);
+
+//                gp.mobArr[gp.currentMap][i] = new MOB_RobotGuardian(gp, 350, 1968); i++;
+//                gp.mobArr[gp.currentMap][i] = new MOB_SkeletonKnight(gp, 550, 1968); i++;
+//                gp.mobArr[gp.currentMap][i] = new BOSS_FrostGiant(gp, 400, 180); i++;
+                gp.mobArr[gp.currentMap][i] = new MOB_FlyingEye(gp, 350, 1968); i++;
+//                gp.mobArr[gp.currentMap][i] = new MOB_Mushroom(gp, 450, 1968); i++;
+//                gp.mobArr[gp.currentMap][i] = new MOB_Canine(gp, 500, 300); i++;
+//                gp.mobArr[gp.currentMap][i] = new MOB_Slime(gp, 800, 400); i++;
+//                gp.mobArr[gp.currentMap][i] = new MOB_Goblin(gp, 400, 300); i++;
+//                gp.mobArr[gp.currentMap][i] = new MOB_Skellington(gp, 700, 300); i++;
+//                gp.mobArr[gp.currentMap][i] = new MOB_Ramses(gp, 700, 400); i++;
+//                gp.mobArr[gp.currentMap][i] = new MOB_ArmoredGuardian(gp, 400, 1968);
             }
                 break;
             case 2:
@@ -194,24 +197,5 @@ public class AssetSetter {
                 gp.mobArr[gp.currentMap][i] = new MOB_Skellington(gp, 1700, 1968);
             }
         }
-//        // MAP 1
-//        gp.currentMap = 1;
-//        gp.mobArr[gp.currentMap][i] = new BOSS_FrostGiant(gp, 400, 180);
-//        gp.mobArr[gp.currentMap][i] = new MOB_RobotGuardian(gp, 350, 1968); i++;
-//        gp.mobArr[gp.currentMap][i] = new MOB_SkeletonKnight(gp, 550, 1968); i++;
-//        gp.mobArr[gp.currentMap][i] = new BOSS_FrostGiant(gp, 400, 180); i++;
-//        gp.mobArr[gp.currentMap][i] = new MOB_FlyingEye(gp, 350, 1968); i++;
-//        gp.mobArr[gp.currentMap][i] = new MOB_Mushroom(gp, 450, 270); i++;
-//        gp.mobArr[gp.currentMap][i] = new MOB_Canine(gp, 500, 300); i++;
-//        gp.mobArr[gp.currentMap][i] = new MOB_Slime(gp, 800, 400); i++;
-//        gp.mobArr[gp.currentMap][i] = new MOB_Goblin(gp, 400, 300); i++;
-//        gp.mobArr[gp.currentMap][i] = new MOB_Skellington(gp, 700, 300); i++;
-//        gp.mobArr[gp.currentMap][i] = new MOB_Ramses(gp, 700, 400);
-//        i = 0;
-//
-//        // MAP 2
-//        gp.currentMap = 2;
-//        gp.mobArr[gp.currentMap][i] = new MOB_Slime(gp, 1600, 1968); i++;
-//        gp.mobArr[gp.currentMap][i] = new MOB_RobotGuardian(gp, 1700, 1968); i++;
     }
 }

@@ -246,6 +246,9 @@ public class KeyHandler implements KeyListener {
             if (code == KeyEvent.VK_3){
                 threePressed = true;
             }
+            if (code == KeyEvent.VK_G){
+                godModeOn = !godModeOn;
+            }
         }
     }
 

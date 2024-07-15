@@ -30,14 +30,9 @@ public class BOSS_DemonSlime extends Entity {
         setDialog();
 
         // Set collision settings
-        solidArea.x = 180;
-        solidArea.y = 230;
-        solidArea.width = 60;
-        solidArea.height = 80;
+//        setCollisionValues(180, 230, 60, 80);
         attackArea.width = 140;
         attackArea.height = 140;
-        solidAreaDefaultX = solidArea.x;
-        solidAreaDefaultY = solidArea.y;
         dialogueSet = 0;
     }
 

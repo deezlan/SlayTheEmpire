@@ -8,8 +8,8 @@ import object.OBJ_Energyball;
 import java.io.IOException;
 public class MOB_ArmoredGuardian extends Entity {
     GamePanel gp;
-    public MOB_ArmoredGuardian(GamePanel gp) {
-        super(gp);
+    public MOB_ArmoredGuardian(GamePanel gp, int worldX, int worldY) {
+        super(gp, worldX, worldY);
         this.gp = gp;
         type = type_mob;
         defaultSpeed = 1;
@@ -24,37 +24,32 @@ public class MOB_ArmoredGuardian extends Entity {
         getMobSprites();
 
         // Set collision settings
-        solidArea.x = 58;
-        solidArea.y = gp.TILE_SIZE + 50;
-        solidArea.width = 28;
-        solidArea.height = 30;
-        solidAreaDefaultX = solidArea.x;
-        solidAreaDefaultY = solidArea.y;
+//        setCollisionValues(58, 98, 28, 30);
     }
+
+//    public void setAction() {
+//
+//        if(onPath) {
+//            // CHECK IF STOP CHASING
+//            checkStopChase(gp.player, 15, 100);
+//            // SEARCH DIRECTION TO GO
+//            searchPath(getGoalCol(gp.player),getGoalRow(gp.player));
+//
+//            checkShoot(200, 0, 50, 0);
+//        } else {
+//            // CHECK IF START CHASING
+//            checkStartChase(gp.player, 5 , 100);
+//            // GET RANDOM DIRECTION
+//            getRandomDirection();
+//        }
+//        // CHECK ATTACK ON PLAYER
+//        if(!attacking){
+//            checkWithinAttackRange(30,gp.TILE_SIZE*4,gp.TILE_SIZE*2);
+//            checkShoot(200,0,50,0);
+//        }
+//    }
 
     @Override
-    public void setAction() {
-
-        if(onPath) {
-            // CHECK IF STOP CHASING
-            checkStopChase(gp.player, 15, 100);
-            // SEARCH DIRECTION TO GO
-            searchPath(getGoalCol(gp.player),getGoalRow(gp.player));
-
-            checkShoot(200,0,50,0);
-        } else {
-            // CHECK IF START CHASING
-            checkStartChase(gp.player, 5 , 100);
-            // GET RANDOM DIRECTION
-            getRandomDirection();
-        }
-        // CHECK ATTACK ON PLAYER
-        if(!attacking){
-            checkWithinAttackRange(30,gp.TILE_SIZE*4,gp.TILE_SIZE*2);
-            checkShoot(200,0,50,0);
-        }
-    }
-
     public void damageReaction() {
         actionLockCounter = 0;
         onPath = true;

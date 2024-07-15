@@ -35,7 +35,6 @@ public class MOB_SkeletonKnight extends Entity {
         solidAreaDefaultY = solidArea.y;
     }
 
-    @Override
     public void setAction() {
 
         if(onPath) {

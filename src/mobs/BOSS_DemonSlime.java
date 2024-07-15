@@ -105,8 +105,13 @@ public class BOSS_DemonSlime extends Entity {
     }
 
     public void checkDrop() {
-        gp.bossBattleOn = false;
-        dropItem(new OBJ_PickUpCoin(gp));
+        int i = 0;
+        while (gp.objArr[gp.currentMap][i] != null)
+            i++;
+
+        gp.objArr[gp.currentMap][i] = new OBJ_PickUpCoin(gp,
+                worldX + idleRightList.get(0).getWidth()/2 -24,
+                worldY + idleRightList.get(0).getWidth()/2 - 24);
     }
 
     public void damageReaction() {

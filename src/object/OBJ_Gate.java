@@ -7,14 +7,18 @@ import main.UtilityTool;
 import java.io.IOException;
 
 public class OBJ_Gate extends Entity {
-    public OBJ_Gate (GamePanel gp) {
+    int gateForm;
+
+    public OBJ_Gate (GamePanel gp, int gateForm, int col, int row) {
         super(gp);
         this.gp = gp;
-        name = "Gate";
-        message = "";
-
+        this.gateForm = gateForm;
         type = type_gate;
         locked = false;
+
+        // Set position
+        worldX = col * gp.TILE_SIZE;
+        worldY = row * gp.TILE_SIZE;
 
         // Load save pedestal sprites
         getObjectSprites();
@@ -63,14 +67,25 @@ public class OBJ_Gate extends Entity {
     }
 
     public void getObjectSprites() {
-        String dir = "/objects/lockingGate/";
-        try {
-            // Load sprites
-            for (int i = 0; i <= 6; i++)
-                defaultList.add(i, UtilityTool.loadSprite(dir + i + ".png", "Missing lockingGate " + i));
+        String dir;
+        if (gateForm == 0) { dir = "/objects/gate/brick/"; }
+            else { dir = "/objects/gate/fence/"; }
 
-            for (int i = 6; i >= 0; i--)
-                interactList.add(UtilityTool.loadSprite(dir + i + ".png", "Missing lockingGate " + i));
+        try {
+            if (gateForm == 0) {
+                // Load sprites
+                for (int i = 0; i <= 6; i++)
+                    defaultList.add(i, UtilityTool.loadSprite(dir + i + ".png", "Missing brick gate " + i));
+
+                for (int i = 6; i >= 0; i--)
+                    interactList.add(UtilityTool.loadSprite(dir + i + ".png", "Missing brick gate " + i));
+            } else {
+                for (int i = 0; i <= 7; i++)
+                    defaultList.add(i, UtilityTool.loadSprite(dir + i + ".png", "Missing fence gate " + i));
+
+                for (int i = 7; i >= 0; i--)
+                    interactList.add(UtilityTool.loadSprite(dir + i + ".png", "Missing brick gate " + i));
+            }
 
             // Scale sprites up
             UtilityTool.scaleEntityList(this, defaultList, 48, 48);

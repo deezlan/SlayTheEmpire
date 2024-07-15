@@ -3,15 +3,14 @@ package mobs;
 import entity.Entity;
 import main.GamePanel;
 import main.UtilityTool;
-import object.OBJ_PickUpCoin;
 
 import java.io.IOException;
 
 public class BOSS_FrostGiant extends Entity {
     GamePanel gp;
     public static final String monName = "Frost Giant";
-    public BOSS_FrostGiant(GamePanel gp) {
-        super(gp);
+    public BOSS_FrostGiant(GamePanel gp, int worldX, int worldY) {
+        super(gp, worldX, worldY);
         this.gp = gp;
         name = monName;
         type = type_mob;
@@ -66,11 +65,6 @@ public class BOSS_FrostGiant extends Entity {
         if(!attacking){
             checkWithinAttackRange(30,gp.TILE_SIZE*6,gp.TILE_SIZE*6); // CHANGE ATTACK RANGE
         }
-    }
-
-    public void checkDrop() {
-        gp.bossBattleOn = false;
-        dropItem(new OBJ_PickUpCoin(gp));
     }
 
     public void damageReaction() {

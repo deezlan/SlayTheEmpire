@@ -2,6 +2,7 @@ package entity;
 
 import main.GamePanel;
 import main.UtilityTool;
+import object.OBJ_PickUpCoin;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -19,6 +20,12 @@ public abstract class Entity {
 
     public Entity(GamePanel gp) {
         this.gp = gp;
+    }
+
+    public Entity(GamePanel gp, int worldX, int worldY) {
+        this.gp = gp;
+        this.worldX = worldX;
+        this.worldY = worldY;
     }
 
     // PLAYER & MOB ATTRIBUTES
@@ -50,8 +57,8 @@ public abstract class Entity {
             currentLife,
             bossNum,
 
-    // COLLISION ATTRIBUTES
-    solidAreaDefaultX, solidAreaDefaultY;
+            // COLLISION ATTRIBUTES
+            solidAreaDefaultX, solidAreaDefaultY;
     public Rectangle solidArea = new Rectangle(0, 0, 48, 48); // draw area around entities
     public String action = "idleRight"; // DEFAULT ACTION
     public boolean
@@ -77,25 +84,25 @@ public abstract class Entity {
             // ALL ENTITIES CURRENT ANIMATION LIST
             currentList = new ArrayList<>(),
 
-    // PLAYER, NPC & MOB MOVEMENT ANIMATION LIST
-    idleRightList = new ArrayList<>(),
+            // PLAYER, NPC & MOB MOVEMENT ANIMATION LIST
+            idleRightList = new ArrayList<>(),
             idleLeftList = new ArrayList<>(),
             moveRightList = new ArrayList<>(),
             moveLeftList = new ArrayList<>(),
 
-    // PLAYER & MOB ATTACK ANIMATION LIST
-    playerRightAttackList = new ArrayList<>(),
+            // PLAYER & MOB ATTACK ANIMATION LIST
+            playerRightAttackList = new ArrayList<>(),
             playerLeftAttackList = new ArrayList<>(),
             mobRightAttackList = new ArrayList<>(),
             mobLeftAttackList = new ArrayList<>(),
             mobSpecialAttackList = new ArrayList<>(),
 
-    // INTERACTABLE OBJECT ANIMATION LIST
-    defaultList = new ArrayList<>(),
+            // INTERACTABLE OBJECT ANIMATION LIST
+            defaultList = new ArrayList<>(),
             interactList = new ArrayList<>(),
 
-    // PROJECTILE ANIMATION LIST
-    projectileRight = new ArrayList<>(),
+            // PROJECTILE ANIMATION LIST
+            projectileRight = new ArrayList<>(),
             projectileLeft = new ArrayList<>(),
             projectileUp = new ArrayList<>(),
             projectileDown = new ArrayList<>();
@@ -150,24 +157,25 @@ public abstract class Entity {
             spriteNum = 0,
             spriteCounter = 0,
 
-    // interactList
-    interactSpriteNum = 0,
+            // interactList
+            interactSpriteNum = 0,
             interactSpriteCounter = 0,
 
-    // attackList
-    animationSpriteNum = 0,
+            // attackList
+            animationSpriteNum = 0,
             animationCounter = 0,
-    specialSpriteNum = 0,
+            specialSpriteNum = 0,
             specialCounter = 0,
 
-    dyingCounter = 0,
+            dyingCounter = 0,
             hpBarCounter = 0,
             knockBackCounter = 0;
 
     // INTERFACE METHODS
     public void use(Entity entity) {} // PLAYER
     public void speak() {} // NPC
-    public void checkDrop() {} // MOB
+
+    // MOB
     public void setAction() {} // MOB
     public void specialAttack() {} // MOB
     public void damageReaction() {
@@ -334,7 +342,6 @@ public abstract class Entity {
             gp.player.iframe = true;
         }
     }
-
     public void checkShoot(int rate, int xOffset, int yOffset, int shotInterval) {
         int i = new Random().nextInt(rate);
         shotAvailableCounter = 0;
@@ -394,7 +401,6 @@ public abstract class Entity {
             }
         }
     }
-
     public void dyingAnimation(Graphics2D g2) { // BLINKING EFFECT
         dyingCounter++;
 
@@ -426,15 +432,12 @@ public abstract class Entity {
             alive = false;
         }
     }
-    public void dropItem(Entity droppedItem) {
-        for (int i = 0; i < gp.objArr[1].length; i++) {
-            if (gp.objArr[gp.currentMap][i] == null) {
-                gp.objArr[gp.currentMap][i] = droppedItem;
-                gp.objArr[gp.currentMap][i].worldX = worldX + gp.TILE_SIZE * 2;
-                gp.objArr[gp.currentMap][i].worldY = worldY + gp.TILE_SIZE * 2;
-                break;
-            }
-        }
+    public void checkDrop() {
+        int i = 0;
+        while (gp.objArr[gp.currentMap][i] != null)
+            i++;
+
+        gp.objArr[gp.currentMap][i] = new OBJ_PickUpCoin(gp, worldX + idleRightList.get(0).getWidth()/2 - 24, worldY + idleRightList.get(0).getHeight()/2 - 24);
     }
 
     // PLAYER & MOB METHODS
@@ -444,12 +447,13 @@ public abstract class Entity {
         leftCollisionOn = false;
         rightCollisionOn = false;
         gp.cChecker.checkObject(this, false);
+        gp.cChecker.checkGate(this, false);
         gp.cChecker.checkPLayer(this);
         gp.cChecker.checkTile(this);
         gp.cChecker.checkEntityCollision(this, gp.npcArr);
         boolean contactPlayer = gp.cChecker.checkPLayer(this);
 
-        if (this.type == 1 && contactPlayer) {
+        if (this.type == type_mob && contactPlayer) {
             if (!gp.player.iframe) {
                 gp.player.currentLife -= 1;
                 gp.player.iframe = true;
@@ -587,18 +591,10 @@ public abstract class Entity {
                     speed = defaultSpeed;
                 } else if (!upCollisionOn && !downCollisionOn && !leftCollisionOn && !rightCollisionOn) {
                     switch (knockBackDirection) {
-                        case "moveUp":
-                            worldY -= speed;
-                            break;
-                        case "moveDown":
-                            worldY += speed;
-                            break;
-                        case "moveRight":
-                            worldX += speed;
-                            break;
-                        case "moveLeft":
-                            worldX -= speed;
-                            break;
+                        case "moveUp": worldY -= speed; break;
+                        case "moveDown": worldY += speed; break;
+                        case "moveRight": worldX += speed; break;
+                        case "moveLeft": worldX -= speed; break;
                         case "moveUpRight":
                             worldX += speed;
                             worldY -= speed;
@@ -703,16 +699,19 @@ public abstract class Entity {
             image = currentList.get(spriteNum);
         }
 
-        switch (gp.currentMap) {
-            case 0:
-                if (iframe) {
-                    hpBarVisible = true;
-                    hpBarCounter = 0;
-                    UtilityTool.changeAlpha(g2, 0.3f);
-                }
+        if(gp.currentMap == 0) {
+            if (iframe) {
+                hpBarVisible = true;
+                hpBarCounter = 0;
+                UtilityTool.changeAlpha(g2, 0.3f);
+            }
 
-                if (dead) dyingAnimation(g2);
+            if (dead) dyingAnimation(g2);
 
+            if(!attacking){
+                g2.drawImage(image, worldX, worldY, null);
+                UtilityTool.changeAlpha(g2, 1f);
+            }
                 if (!attacking & !specialAttacking) {
                     g2.drawImage(image, worldX, worldY, null);
                     UtilityTool.changeAlpha(g2, 1f);
@@ -728,16 +727,15 @@ public abstract class Entity {
                     g2.drawImage(animationImage, worldX, worldY, null);
                 }
 
-                if (attacking) {
-                    if (animationSpriteNum >= currentList.size() - 1)
-                        animationSpriteNum = 0;
-                    BufferedImage animationImage = currentList.get(animationSpriteNum);
-                    g2.drawImage(animationImage, worldX, worldY, null);
-                }
-                break;
-            case 1, 2:
-                int screenX = worldX - gp.player.worldX + gp.player.screenX;
-                int screenY = worldY - gp.player.worldY + gp.player.screenY;
+            if (attacking) {
+                if (animationSpriteNum >= currentList.size() - 1)
+                    animationSpriteNum = 0;
+                BufferedImage animationImage = currentList.get(animationSpriteNum);
+                g2.drawImage(animationImage, worldX, worldY, null);
+            }
+        } else {
+            int screenX = worldX - gp.player.worldX + gp.player.screenX;
+            int screenY = worldY - gp.player.worldY + gp.player.screenY;
 
                 if (inCamera()) {
                     if (iframe) {

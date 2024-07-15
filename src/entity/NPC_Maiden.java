@@ -6,8 +6,8 @@ import main.UtilityTool;
 import java.io.IOException;
 
 public class NPC_Maiden extends Entity {
-    public NPC_Maiden(GamePanel gp) {
-        super(gp);
+    public NPC_Maiden(GamePanel gp, int worldX, int worldY) {
+        super(gp, worldX, worldY);
         action = "idleRight";
         type = type_npc;
         getNpcSprites();

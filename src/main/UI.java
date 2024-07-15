@@ -700,11 +700,11 @@ public class UI {
             gp.gameState = gp.playState;
             gp.currentMap = gp.eHandler.tempMap;
             gp.setMapColor();
-            gp.resetLevel();
             gp.player.worldX = gp.TILE_SIZE * gp.eHandler.tempCol;
             gp.player.worldY = gp.TILE_SIZE * gp.eHandler.tempRow;
             gp.eHandler.previousEventX = gp.player.worldX;
             gp.eHandler.previousEventY = gp.player.worldY;
+            gp.loadLevel();
         }
     }
 

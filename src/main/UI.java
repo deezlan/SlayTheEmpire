@@ -368,7 +368,7 @@ public class UI {
 
     public void drawPlayerMoney() {
         coin.spriteCounter++;
-        if (coin.spriteCounter > 4) coin.runCurrentListAnimation();
+        if (coin.spriteCounter > 10) coin.runCurrentListAnimation();
         g2.setFont(g2.getFont().deriveFont(Font.BOLD, 40));
         g2.drawString ("" + gp.player.totalCoins, 38, 117);
         if (coin.spriteNum == coin.defaultList.size() - 1)

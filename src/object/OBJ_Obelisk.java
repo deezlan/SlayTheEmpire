@@ -7,11 +7,11 @@ import main.UtilityTool;
 import java.io.IOException;
 
 public class OBJ_Obelisk extends Entity {
-    public OBJ_Obelisk(GamePanel gp) {
-        super(gp);
+    public OBJ_Obelisk(GamePanel gp, int worldX, int worldY) {
+        super(gp, worldX, worldY);
         name = "Obelisk";
         message = "teleport";
-        isObject = true;
+        type = type_obelisk;
         // Load sprites
         getObjectSprites();
 

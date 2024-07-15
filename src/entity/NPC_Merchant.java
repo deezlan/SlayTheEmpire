@@ -6,9 +6,10 @@ import main.UtilityTool;
 import java.io.IOException;
 
 public class NPC_Merchant extends Entity {
-    public NPC_Merchant(GamePanel gp) {
-        super(gp);
+    public NPC_Merchant(GamePanel gp, int worldX, int worldY) {
+        super(gp, worldX, worldY);
         action = "idleRight";
+        type = type_npc;
         getNpcSprites();
         setDialog();
 
@@ -19,6 +20,7 @@ public class NPC_Merchant extends Entity {
         solidArea.height = 48;
         solidAreaDefaultX = solidArea.x;
         solidAreaDefaultY = solidArea.y;
+        dialogueSet = -1;
     }
 
     public void setDialog() {
@@ -43,6 +45,11 @@ public class NPC_Merchant extends Entity {
         }
     }
     public void speak() {
-        super.speak();
+        startDialogue(this,dialogueSet);
+        dialogueSet++;
+
+        if(dialogs[dialogueSet][0] == null){
+            dialogueSet = 0;
+        }
     }
 }

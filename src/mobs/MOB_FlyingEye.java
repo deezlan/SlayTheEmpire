@@ -6,18 +6,17 @@ import main.UtilityTool;
 import object.OBJ_Rock;
 
 import java.io.IOException;
-import java.util.Random;
 
 public class MOB_FlyingEye extends Entity {
     GamePanel gp;
-    public MOB_FlyingEye(GamePanel gp) {
-        super(gp);
+    public MOB_FlyingEye(GamePanel gp, int worldX, int worldY) {
+        super(gp, worldX, worldY);
         this.gp = gp;
-        type = 1;
+        type = type_mob;
         defaultSpeed = 1;
         speed = defaultSpeed;
         maxLife = 4;
-        life = maxLife;
+        currentLife = maxLife;
         action = "idleRight";
         mobNum = 8;
         projectile = new OBJ_Rock(gp);
@@ -52,7 +51,7 @@ public class MOB_FlyingEye extends Entity {
         }
         // CHECK ATTACK ON PLAYER
         if(!attacking){
-            checkMobAttack(30,gp.TILE_SIZE*5,gp.TILE_SIZE*2); // CHANGE ATTACK RANGE
+            checkWithinAttackRange(30,gp.TILE_SIZE*5,gp.TILE_SIZE*2); // CHANGE ATTACK RANGE
             checkShoot(200,0,100,0);
         }
     }

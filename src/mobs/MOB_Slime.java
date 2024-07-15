@@ -8,14 +8,14 @@ import java.io.IOException;
 
 public class MOB_Slime extends Entity {
     GamePanel gp;
-    public MOB_Slime(GamePanel gp) {
-        super(gp);
+    public MOB_Slime(GamePanel gp, int worldX, int worldY) {
+        super(gp, worldX, worldY);
         this.gp = gp;
-        type = 1;
+        type = type_mob;
         defaultSpeed = 1;
         speed = defaultSpeed;
         maxLife = 4;
-        life = maxLife;
+        currentLife = maxLife;
         attack = 1;
         lookingRight = true;
         action = "idleRight";
@@ -52,7 +52,7 @@ public class MOB_Slime extends Entity {
             }
         // CHECK ATTACK ON PLAYER
         if(!attacking){
-            checkMobAttack(30,gp.TILE_SIZE*2,gp.TILE_SIZE*2);
+            checkWithinAttackRange(30,gp.TILE_SIZE*2,gp.TILE_SIZE*2);
         }
     }
 

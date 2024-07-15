@@ -7,11 +7,10 @@ import main.UtilityTool;
 import java.io.IOException;
 
 public class OBJ_Shop extends Entity {
-    public OBJ_Shop(GamePanel gp) {
-        super(gp);
-        name = "Shop";
+    public OBJ_Shop(GamePanel gp, int worldX, int worldY) {
+        super(gp, worldX, worldY);
         message = "Shop closed bitch";
-        isObject = true;
+        type = type_shop;
 
         // Load shop sprites
         getObjectSprites();

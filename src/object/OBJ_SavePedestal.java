@@ -7,11 +7,9 @@ import main.UtilityTool;
 import java.io.IOException;
 
 public class OBJ_SavePedestal extends Entity {
-    public OBJ_SavePedestal(GamePanel gp) {
-        super(gp);
-        name = "Save Pedestal";
+    public OBJ_SavePedestal(GamePanel gp, int worldX, int worldY) {
+        super(gp, worldX, worldY);
         message = "Saving not implemented... go away";
-        isObject = true;
 
         // Load save pedestal sprites
         getObjectSprites();

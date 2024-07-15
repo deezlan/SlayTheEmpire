@@ -5,19 +5,18 @@ import main.GamePanel;
 import main.UtilityTool;
 
 import java.io.IOException;
-import java.util.Random;
 
 public class MOB_Ramses extends Entity {
     GamePanel gp;
-    public MOB_Ramses(GamePanel gp) {
-        super(gp);
+    public MOB_Ramses(GamePanel gp, int worldX, int worldY) {
+        super(gp, worldX, worldY);
         this.gp = gp;
-        type = 1;
+        type = type_mob;
         defaultSpeed = 1;
         speed = defaultSpeed;
         damage = 1;
         maxLife = 4;
-        life = maxLife;
+        currentLife = maxLife;
         action = "idleRight";
         mobNum = 4;
 

@@ -33,9 +33,13 @@ public class SaveLoad {
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(saveFiles[slot]))) {
             DataStorage ds = new DataStorage();
             ds.maxLife = gp.player.maxLife;
-            ds.life = gp.player.life;
+            ds.life = gp.player.currentLife;
             ds.coin = gp.player.totalCoins;
             ds.playerClass = gp.player.playerClass;
+
+//            for (int i = 0; i < gp.player.hotbarList.size(); i++){
+//                ds.weaponNames.add(gp.player.hotbarList.get(i).name);
+//            }
 
             // Write the DataStorage object
             oos.writeObject(ds);
@@ -56,9 +60,11 @@ public class SaveLoad {
             DataStorage ds = (DataStorage) ois.readObject();
 
             gp.player.maxLife = ds.maxLife;
-            gp.player.life = ds.life;
+            gp.player.currentLife = ds.life;
             gp.player.totalCoins = ds.coin;
             gp.player.playerClass = ds.playerClass;
+
+            slotCheck[slot] = true;
 
         }catch(Exception e){
             System.out.println("Load Exception");

@@ -78,6 +78,7 @@ public class Player extends Entity {
         totalCoins = 500;
         damage = 1;
         damageSprite = 2;
+
     }
     private void setCollisionValues() {
         // Set collision settings based on character class
@@ -242,8 +243,10 @@ public class Player extends Entity {
 
     // INTERACT METHODS
     public void interactObject (int index) {
-        if (index == 0){
-            gp.gameState = gp.saveState;
+        if (index == 1){
+            gp.gameState = gp.savePageState;
+            gp.saveLoad.isloadPage = false;
+            gp.showCursor();
         }
         if (index != 999) {
             if (gp.objArr[gp.currentMap][index].type == type_pickup) {

@@ -74,12 +74,13 @@ public class GamePanel extends JPanel implements Runnable {
             gateArr = new Entity[maxMap][50],
             projectileArr = new Entity[maxMap][50];
     public InteractiveTIle[][] iTile = new InteractiveTIle[maxMap][50];
+    boolean bossBattleOn;
 
     // HANDLERS
     public CollisionChecker cChecker = new CollisionChecker(this);
     public EventHandler eHandler = new EventHandler(this);
-    ArrayList<Entity> entityList = new ArrayList<>();
     public SaveLoad saveLoad = new SaveLoad(this, 3);
+    public CutsceneManager csManager = new CutsceneManager(this);
 
     // PATHFINDER
     public Pathfinder pFinder = new Pathfinder(this);
@@ -101,7 +102,7 @@ public class GamePanel extends JPanel implements Runnable {
             optionState2 = 12,
             startMenuState = 11,
             cutsceneState = 13,
-            controlsState = 14;
+            controlsState = 14,
             savePageState = 15;
 
 
@@ -150,7 +151,7 @@ public class GamePanel extends JPanel implements Runnable {
         this.setCursor(blankCursor);
     }
 
-    private void showCursor() {
+    public void showCursor() {
         java.awt.Cursor defaultCursor = java.awt.Cursor.getDefaultCursor();
         this.setCursor(defaultCursor);
     }

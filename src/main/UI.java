@@ -29,10 +29,10 @@ public class UI {
     Font gameFont;
     private final Image titleGif;
     private final Image titleImage;
-    private final Image newGame;
-    private final Image loadGame;
-    private final Image options;
-    private final Image quit;
+//    private final Image newGame;
+//    private final Image loadGame;
+//    private final Image options;
+//    private final Image quit;
     private final Image warriorGif, knightGif, assassinGif;
     private final Image loginDefault, typeUsername, typePassword,
             blankErr, usernameErr, loginErr, usernameTakenErr;
@@ -49,10 +49,14 @@ public class UI {
     private final Image overrideBox;
     private final Image progressSavedBox;
     private final Image selectFileBox;
+    private final Image bg;
+    private final Image bg2;
+    private final Image startMenu;
 
     Rectangle saveButtonBounds1;
     Rectangle saveButtonBounds2;
     Rectangle saveButtonBounds3;
+    Rectangle toStartMenuRect;
 
     public String currentDialog = "";
     public int slotRow = 0;
@@ -154,6 +158,30 @@ public class UI {
         knightGif = knight.getImage();
         ImageIcon assassin = new ImageIcon("res/player/AssassinIdle.gif");
         assassinGif = assassin.getImage();
+
+        //INITIALIZE SAVE MENU UI
+        file1 = new ImageIcon("res/UI/login/file1.png").getImage();
+        file2 = new ImageIcon("res/UI/login/file2.png").getImage();
+        file3 = new ImageIcon("res/UI/login/file3.png").getImage();
+        saveFileBackground = new ImageIcon("res/UI/login/saveFileBackground.png").getImage();
+        emptySaveButton1 = new ImageIcon("res/UI/login/emptySaveButton.png").getImage();
+        emptySaveButton2 = new ImageIcon("res/UI/login/emptySaveButton.png").getImage();
+        emptySaveButton3 = new ImageIcon("res/UI/login/emptySaveButton.png").getImage();
+        saveFound = new ImageIcon("res/UI/login/saveFound.png").getImage();
+        saveNotFound = new ImageIcon("res/UI/login/saveNotFound.png").getImage();
+        overrideBox = new ImageIcon("res/UI/login/overrideBox.png").getImage();
+        progressSavedBox = new ImageIcon("res/UI/login/progressSavedBox.png").getImage();
+        selectFileBox = new ImageIcon("res/UI/login/selectFileBox.png").getImage();
+
+
+        // INITIALIZE SAVE BUTTON POSITIONS & IMAGE BOUNDS
+        saveButtonX = 70 + ((gp.SCREEN_WIDTH - emptySaveButton1.getWidth(null)) / 2);
+        saveButtonY = (gp.SCREEN_HEIGHT - emptySaveButton1.getHeight(null)) / 2;
+        saveButtonWidth = (int)(emptySaveButton1.getWidth(null)/1.3);
+        saveButtonHeight = (int)(emptySaveButton1.getHeight(null)/1.3);
+        saveButtonBounds1 = new Rectangle(saveButtonX, (saveButtonY - 100), saveButtonWidth, saveButtonHeight);
+        saveButtonBounds2 = new Rectangle(saveButtonX, saveButtonY, saveButtonWidth, saveButtonHeight);
+        saveButtonBounds3 = new Rectangle(saveButtonX, (saveButtonY + 100), saveButtonWidth, saveButtonHeight);
     }
 
     private Font loadFont() throws FontFormatException, IOException {
@@ -614,6 +642,7 @@ public class UI {
         drawCharacterSelectPreview();
     }
 
+
     // DRAW SAVE PAGE
     public void drawSavePage(){
         int imageWidth = (int)(gp.SCREEN_WIDTH/1.0000000002);
@@ -623,16 +652,18 @@ public class UI {
 
         g2.drawImage(saveFileBackground, x , y, imageWidth, imageHeight, null);
 
-
         if(gp.mouseH.leftClicked){
             if(saveButtonBounds1.contains(gp.cursor.getMouseX(), gp.cursor.getMouseY())){
                 if(gp.saveLoad.isloadPage && gp.saveLoad.slotCheck[0]){
-                    gp.saveLoad.load(0);
+                    System.out.println("isloadpage is true");
                     gp.gameState = gp.playState;
+                    gp.saveLoad.load(0);
                 } else if (!gp.saveLoad.isloadPage) {
+                    System.out.println("isloadPage is false");
                     saveFileDialogue(2);
                     if (gp.saveLoad.slotCheck[0]) {
                         saveFileDialogue(0);
+                        System.out.println("in override");
                     } else{
                         gp.saveLoad.save(0);
                         saveFileDialogue(1);
@@ -667,19 +698,17 @@ public class UI {
                     }
                 }
                 System.out.println("button 3");
+            } else if (toStartMenuRect.contains(gp.cursor.getMouseX(), gp.cursor.getMouseY())){
+                gp.gameState = gp.startMenuState;
             }
 
-            gp.mouseH.clearMouseClick();
-        }else{
-            saveFileDialogue(9);
+        } else if (!gp.saveLoad.slotCheck[0] && !gp.saveLoad.slotCheck[1] && !gp.saveLoad.slotCheck[2]){
+            saveFileDialogue(5);
+        } else{
+            saveFileDialogue(4);
         }
 
-//        if(gp.saveLoad.isloadPage){
-//            //add condition when user came from menu
-//        } else if (!gp.saveLoad.isloadPage){
-//            //add condition when user came from save pedestal
-//        }
-
+        gp.mouseH.clearMouseClick();
         drawSaveButtons();
 
     }
@@ -699,8 +728,12 @@ public class UI {
             case 2:
                 g2.drawImage(selectFileBox, x, y, saveFound.getWidth(null), saveFound.getHeight(null), null);
                 break;
-            default:
+            case 4:
                 g2.drawImage(saveFound, x, y, saveFound.getWidth(null), saveFound.getHeight(null), null);
+                break;
+            case 5:
+                g2.drawImage(saveNotFound, x, y, saveFound.getWidth(null), saveFound.getHeight(null), null);
+                break;
         }
     }
 

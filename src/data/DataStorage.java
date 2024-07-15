@@ -1,6 +1,7 @@
 package data;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class DataStorage implements Serializable {
 
@@ -14,4 +15,7 @@ public class DataStorage implements Serializable {
     int dexterity;
     int exp;
     int nextLevelExp;
+
+    // PLAYER WEAPON INVENTORY
+    ArrayList<String> weaponNames = new ArrayList<>();
 }

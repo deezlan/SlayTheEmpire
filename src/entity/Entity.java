@@ -67,7 +67,8 @@ public abstract class Entity {
             sleep,
             boss,
             tempScene = false,
-            drawing = true;
+            drawing = true,
+            specialAttacking = false;
 
     // PLAYER & MOB COLLISION DIRECTION
     public boolean
@@ -95,8 +96,9 @@ public abstract class Entity {
             playerLeftAttackList = new ArrayList<>(),
             mobRightAttackList = new ArrayList<>(),
             mobLeftAttackList = new ArrayList<>(),
+            mobSpecialAttackList = new ArrayList<>(),
 
-            // INTERACTABLE OBJECT ANIMATION LIST
+    // INTERACTABLE OBJECT ANIMATION LIST
             defaultList = new ArrayList<>(),
             interactList = new ArrayList<>(),
 
@@ -164,6 +166,8 @@ public abstract class Entity {
             // attackList
             animationSpriteNum = 0,
             animationCounter = 0,
+            specialSpriteNum = 0,
+            specialCounter = 0,
 
             dyingCounter = 0,
             hpBarCounter = 0,
@@ -592,6 +596,20 @@ public abstract class Entity {
         }
         runAttackAnimation();
     }
+    public void runSpecialAttackAnimation(){
+        specialCounter++;
+        if (specialSpriteNum < mobSpecialAttackList.size() && specialCounter % 10 == 0) {
+            System.out.println("that");
+            specialSpriteNum++;
+            System.out.println(specialSpriteNum);
+        }
+        if (specialSpriteNum >= mobSpecialAttackList.size() - 1) {
+            System.out.println("this");
+            specialSpriteNum = 0;
+            specialCounter = 0;
+            specialAttacking = false;
+        }
+    }
 
     // OBJECT METHODS
     public void runInteractSprites() {
@@ -671,6 +689,8 @@ public abstract class Entity {
                     knockBack = false;
                     speed = defaultSpeed;
                 }
+            } else if (specialAttacking){
+                specialAttack();
             } else if (attacking) {
                 startAttack();
             } else {
@@ -764,6 +784,21 @@ public abstract class Entity {
                 UtilityTool.changeAlpha(g2, 1f);
             }
 
+            if (!attacking & !specialAttacking) {
+                g2.drawImage(image, worldX, worldY, null);
+                UtilityTool.changeAlpha(g2, 1f);
+            }
+//                if (!specialAttacking) {
+//                    g2.drawImage(image, worldX, worldY, null);
+//                    UtilityTool.changeAlpha(g2, 1f);
+//                }
+            if (specialAttacking) {
+                if (specialSpriteNum >= currentList.size() - 1)
+                    specialSpriteNum = 0;
+                BufferedImage animationImage = currentList.get(specialSpriteNum);
+                g2.drawImage(animationImage, worldX, worldY, null);
+            }
+
             if (attacking) {
                 BufferedImage animationImage = currentList.get(animationSpriteNum);
                 g2.drawImage(animationImage, worldX, worldY, null);
@@ -790,8 +825,20 @@ public abstract class Entity {
                         animationSpriteNum = 0;
                     BufferedImage animationImage = currentList.get(animationSpriteNum);
                     g2.drawImage(animationImage, screenX, screenY, null);
+//                    g2.drawRect(screenX + mobRightAttackList.get(0).getWidth()/2 - attackArea.width/2,
+//                            screenY + mobRightAttackList.get(0).getHeight()/2 - attackArea.height/2,
+//                            attackArea.width,
+//                            attackArea.height);
                 }
+//                g2.drawRect(screenX + currentList.get(0).getWidth()/2 - solidArea.width/2,
+//                        screenY + currentList.get(0).getHeight()/2 - solidArea.height/2,
+//                        solidArea.width,
+//                        solidArea.height);
             }
+            g2.drawRect(attackArea.x, attackArea.y, attackArea.width, attackArea.height);
+
+            g2.drawRect(solidArea.x, solidArea.y, solidArea.width, solidArea.height);
+
         }
     }
 }

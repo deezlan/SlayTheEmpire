@@ -109,11 +109,6 @@ public class BOSS_DemonSlime extends Entity {
                 worldY + idleRightList.get(0).getWidth()/2 - 24);
     }
 
-    public void damageReaction() {
-        actionLockCounter = 0;
-        onPath = true;
-    }
-
     public void setDialog() {
         dialogs[0][0] = "Who are you.....";
         dialogs[0][1] = "YOU WILL PAY... WITH ICE!";

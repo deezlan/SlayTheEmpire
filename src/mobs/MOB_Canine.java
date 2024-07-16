@@ -11,28 +11,31 @@ public class MOB_Canine extends Entity {
     public MOB_Canine(GamePanel gp, int worldX, int worldY) {
         super(gp, worldX, worldY);
         this.gp = gp;
-        type = type_mob;
-        defaultSpeed = 2;
-        speed = defaultSpeed;
-        attack = 1;
-        maxLife = 4;
-        currentLife = maxLife;
-        action = "idleRight";
-        mobNum = 10;
-        damageSprite = 3;
+        setStatValues(2, 4, false, false, 10);
+        setCollisionValues(30, 50, 40, 30);
+        setAttackValues(1, 3, 50, 50);
+//        type = type_mob;
+//        defaultSpeed = 2;
+//        speed = defaultSpeed;
+//        attack = 1;
+//        maxLife = 4;
+//        currentLife = maxLife;
+//        action = "idleRight";
+//        mobNum = 10;
+//        damageSprite = 3;
 
         // Load mob sprites
         getMobSprites();
 
         // Set collision settings
-        solidArea.x = 30;
-        solidArea.y = 50;
-        solidArea.width = 40;
-        solidArea.height = 30;
-        attackArea.width = 50;
-        attackArea.height = 50;
-        solidAreaDefaultX = solidArea.x;
-        solidAreaDefaultY = solidArea.y;
+//        solidArea.x = 30;
+//        solidArea.y = 50;
+//        solidArea.width = 40;
+//        solidArea.height = 30;
+//        attackArea.width = 50;
+//        attackArea.height = 50;
+//        solidAreaDefaultX = solidArea.x;
+//        solidAreaDefaultY = solidArea.y;
     }
 
     @Override

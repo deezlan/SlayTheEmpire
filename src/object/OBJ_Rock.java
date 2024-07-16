@@ -14,7 +14,7 @@ public class OBJ_Rock extends Projectile {
 
         name = "Rock";
         speed = 5;
-        maxLife = 80;
+        maxLife = 40;
         currentLife = maxLife;
         damage = 1;
         alive = false;
@@ -24,7 +24,7 @@ public class OBJ_Rock extends Projectile {
     public void getImage(){
         String dir = "/Projectile/flyingEye/";
         try {
-            for (int i = 0; i <= 3; i++) {
+            for (int i = 0; i <= 7; i++) {
                 projectileRight.add(i, UtilityTool.loadSprite(dir + "right/" + i + ".png", "Missing Right Energy " + i));
                 projectileLeft.add(i, UtilityTool.loadSprite(dir + "left/" + i + ".png", "Missing left Energy " + i));
                 projectileUp.add(i, UtilityTool.loadSprite(dir + "up/" + i + ".png", "Missing up Energy " + i));

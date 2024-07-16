@@ -669,7 +669,7 @@ public abstract class Entity {
                 startAttack();
             } else {
                 if (type == type_mob) {
-                    System.out.println("Set action");
+                    System.out.println("For mobNum " + mobNum + " the type is " + type);
                     setAction();
                 }
 

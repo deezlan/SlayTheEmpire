@@ -4,7 +4,6 @@ import entity.Entity;
 import main.GamePanel;
 import main.UtilityTool;
 
-import java.awt.*;
 import java.io.IOException;
 
 public class MOB_Mushroom extends Entity {
@@ -12,30 +11,33 @@ public class MOB_Mushroom extends Entity {
     public MOB_Mushroom(GamePanel gp, int worldX, int worldY) {
         super(gp, worldX, worldY);
         this.gp = gp;
-        type = type_mob;
-        defaultSpeed = 1;
-        speed = defaultSpeed;
-        attack = 1;
-        maxLife = 4;
-        currentLife = maxLife;
-        lookingRight = true;
-        action = "idleRight";
-        mobNum = 9;
-        damageSprite = 8;
+        setStatValues(1, 4, false, false, 9);
+        setCollisionValues(150, 150, 28, 40);
+        setAttackValues(1, 8, gp.TILE_SIZE*2, gp.TILE_SIZE*2);
+//        type = type_mob;
+//        defaultSpeed = 1;
+//        speed = defaultSpeed;
+//        attack = 1;
+//        maxLife = 4;
+//        currentLife = maxLife;
+//        lookingRight = true;
+//        action = "idleRight";
+//        mobNum = 9;
+//        damageSprite = 8;
 
         // Load mob sprites
         getMobSprites();
 
         // Set collision settings
-        solidArea = new Rectangle();
-        solidArea.x = 150;
-        solidArea.y = 150;
-        solidAreaDefaultX = solidArea.x;
-        solidAreaDefaultY = solidArea.y;
-        solidArea.width = 28;
-        solidArea.height = 40;
-        attackArea.width = gp.TILE_SIZE*2;
-        attackArea.height = gp.TILE_SIZE*2;
+//        solidArea = new Rectangle();
+//        solidArea.x = 150;
+//        solidArea.y = 150;
+//        solidAreaDefaultX = solidArea.x;
+//        solidAreaDefaultY = solidArea.y;
+//        solidArea.width = 28;
+//        solidArea.height = 40;
+//        attackArea.width = gp.TILE_SIZE*2;
+//        attackArea.height = gp.TILE_SIZE*2;
     }
 
     @Override

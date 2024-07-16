@@ -11,28 +11,31 @@ public class MOB_Goblin extends Entity {
     public MOB_Goblin(GamePanel gp, int worldX, int worldY) {
         super(gp, worldX, worldY);
         this.gp = gp;
-        type = type_mob;
-        defaultSpeed = 1;
-        attack = 1;
-        speed = defaultSpeed;
-        maxLife = 4;
-        currentLife = maxLife;
-        action = "idleRight";
-        mobNum = 5;
-        damageSprite = 4;
+        setStatValues(1, 4, false, false, 5);
+        setCollisionValues(98, 120, 28, 30);
+        setAttackValues(1, 4, 50, 50);
+//        type = type_mob;
+//        defaultSpeed = 1;
+//        attack = 1;
+//        speed = defaultSpeed;
+//        maxLife = 4;
+//        currentLife = maxLife;
+//        action = "idleRight";
+//        mobNum = 5;
+//        damageSprite = 4;
 
         // Load mob sprites
         getMobSprites();
 
         // Set collision settings
-        solidArea.x = 98;
-        solidArea.y = 120;
-        solidArea.width = 28;
-        solidArea.height = 30;
-        attackArea.width = 50;
-        attackArea.height = 50;
-        solidAreaDefaultX = solidArea.x;
-        solidAreaDefaultY = solidArea.y;
+//        solidArea.x = 98;
+//        solidArea.y = 120;
+//        solidArea.width = 28;
+//        solidArea.height = 30;
+//        attackArea.width = 50;
+//        attackArea.height = 50;
+//        solidAreaDefaultX = solidArea.x;
+//        solidAreaDefaultY = solidArea.y;
     }
 
     @Override

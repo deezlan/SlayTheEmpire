@@ -284,7 +284,7 @@ public class Player extends Entity {
     public void interactMob (int index) {
         if (index != 999) {
             if (!iframe && !gp.mobArr[gp.currentMap][index].dead){
-                currentLife -= 1;
+                currentLife -= gp.gameMode;
                 iframe = true;
             }
         }

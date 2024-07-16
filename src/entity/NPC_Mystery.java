@@ -45,7 +45,17 @@ public class NPC_Mystery extends Entity {
         }
     }
     public void speak() {
-      startDialogue(this,dialogueSet);
+        if (gp.gameMode == gp.easyMode) {
+            System.out.println("NORMAL NORMAL NORMAL NORMAL NORMAL NORMAL");
+            gp.gameMode = gp.normalMode;
+        } else if (gp.gameMode == gp.normalMode) {
+            System.out.println("HARD HARD HARD HARD HARD HARD");
+            gp.gameMode = gp.hardMode;
+        } else {
+            System.out.println("EASY EASY EASY EASY EASY EASY");
+            gp.gameMode = gp.easyMode;
+        }
+        startDialogue(this,dialogueSet);
         dialogueSet++;
 
         if(dialogs[dialogueSet][0] == null){

@@ -99,13 +99,11 @@ public class GamePanel extends JPanel implements Runnable {
             startMenuState = 11,
             cutsceneState = 13,
             controlsState = 14;
-    public int gameMode;
     public final int
                 easyMode = 1,
                 normalMode = 2,
                 hardMode = 3;
-
-
+    public int gameMode = easyMode;
 
     public GamePanel() {
         this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));

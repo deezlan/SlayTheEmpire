@@ -67,8 +67,7 @@ public abstract class Entity {
             sleep,
             boss,
             tempScene = false,
-            drawing = true,
-            alpha = false;
+            drawing = true;
 
     // PLAYER & MOB COLLISION DIRECTION
     public boolean
@@ -175,8 +174,16 @@ public abstract class Entity {
         this.type = type_mob;
         this.defaultSpeed = defaultSpeed;
         this.speed = defaultSpeed;
-        this.maxLife = maxLife;
-        this.currentLife = maxLife;
+        this.maxLife = maxLife * gp.gameMode;
+        this.currentLife = maxLife * gp.gameMode;
+
+        if (gp.gameMode == gp.normalMode || gp.gameMode == gp.hardMode) {
+            this.maxLife *= gp.gameMode;
+            this.currentLife *= gp.gameMode;
+        }
+        if (gp.gameMode == gp.hardMode) {
+            this.speed += 1;
+        }
         this.hasRanged = hasRanged;
 
         if (isBoss) {
@@ -195,7 +202,7 @@ public abstract class Entity {
         solidAreaDefaultY = y;
     }
     public void setAttackValues(int damage, int damageSprite, int attWidth, int attHeight) {
-        attack = damage;
+        attack = damage * gp.gameMode;
         this.damageSprite = damageSprite;
         attackArea.width = attWidth;
         attackArea.height = attHeight;
@@ -513,7 +520,7 @@ public abstract class Entity {
 
         if (this.type == type_mob && contactPlayer) {
             if (!gp.player.iframe) {
-                gp.player.currentLife -= 1;
+                gp.player.currentLife -= gp.gameMode;
                 gp.player.iframe = true;
             }
         }

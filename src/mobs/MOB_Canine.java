@@ -14,48 +14,9 @@ public class MOB_Canine extends Entity {
         setStatValues(2, 4, false, false, 10);
         setCollisionValues(30, 50, 40, 30);
         setAttackValues(1, 3, 50, 50);
-//        type = type_mob;
-//        defaultSpeed = 2;
-//        speed = defaultSpeed;
-//        attack = 1;
-//        maxLife = 4;
-//        currentLife = maxLife;
-//        action = "idleRight";
-//        mobNum = 10;
-//        damageSprite = 3;
 
         // Load mob sprites
         getMobSprites();
-
-        // Set collision settings
-//        solidArea.x = 30;
-//        solidArea.y = 50;
-//        solidArea.width = 40;
-//        solidArea.height = 30;
-//        attackArea.width = 50;
-//        attackArea.height = 50;
-//        solidAreaDefaultX = solidArea.x;
-//        solidAreaDefaultY = solidArea.y;
-    }
-
-    @Override
-    public void setAction() {
-
-        if(onPath) {
-            // CHECK IF STOP CHASING
-            checkStopChase(gp.player, 15, 100);
-            // SEARCH DIRECTION TO GO
-            searchPath(getGoalCol(gp.player),getGoalRow(gp.player));
-        } else {
-            // CHECK IF START CHASING
-            checkStartChase(gp.player, 5 , 100);
-            // GET RANDOM DIRECTION
-            getRandomDirection();
-        }
-        // CHECK ATTACK ON PLAYER
-        if(!attacking){
-            checkWithinAttackRange(30,gp.TILE_SIZE*2,gp.TILE_SIZE*2); // CHANGE ATTACK RANGE
-        }
     }
 
     public void damageReaction() {

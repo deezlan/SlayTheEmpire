@@ -14,48 +14,9 @@ public class MOB_Goblin extends Entity {
         setStatValues(1, 4, false, false, 5);
         setCollisionValues(98, 120, 28, 30);
         setAttackValues(1, 4, 50, 50);
-//        type = type_mob;
-//        defaultSpeed = 1;
-//        attack = 1;
-//        speed = defaultSpeed;
-//        maxLife = 4;
-//        currentLife = maxLife;
-//        action = "idleRight";
-//        mobNum = 5;
-//        damageSprite = 4;
 
         // Load mob sprites
         getMobSprites();
-
-        // Set collision settings
-//        solidArea.x = 98;
-//        solidArea.y = 120;
-//        solidArea.width = 28;
-//        solidArea.height = 30;
-//        attackArea.width = 50;
-//        attackArea.height = 50;
-//        solidAreaDefaultX = solidArea.x;
-//        solidAreaDefaultY = solidArea.y;
-    }
-
-    @Override
-    public void setAction() {
-
-        if(onPath) {
-            // CHECK IF STOP CHASING
-            checkStopChase(gp.player, 15, 100);
-            // SEARCH DIRECTION TO GO
-            searchPath(getGoalCol(gp.player),getGoalRow(gp.player));
-        } else {
-            // CHECK IF START CHASING
-            checkStartChase(gp.player, 5 , 100);
-            // GET RANDOM DIRECTION
-            getRandomDirection();
-        }
-        // CHECK ATTACK ON PLAYER
-        if(!attacking){
-            checkWithinAttackRange(30,gp.TILE_SIZE*2,gp.TILE_SIZE*2); // CHANGE ATTACK RANGE
-        }
     }
 
     public void damageReaction() {

@@ -368,24 +368,21 @@ public abstract class Entity {
             searchPath(getGoalCol(gp.player),getGoalRow(gp.player));
 
             if (hasRanged) {
-                System.out.println("I have range onPath");
                 checkShoot(200, idleRightList.get(0).getWidth()/2, idleRightList.get(0).getHeight()/2, 0);
-
             }
         } else {
             // CHECK IF START CHASING
-            checkStartChase(gp.player, 5 , 100);
+            checkStartChase(gp.player, 3 , 100);
             // GET RANDOM DIRECTION
             getRandomDirection();
         }
         // CHECK ATTACK ON PLAYER
         if (!attacking) {
             if (hasRanged) {
-                System.out.println("I have range");
                 checkWithinAttackRange(30, gp.TILE_SIZE*5, gp.TILE_SIZE*2); // CHANGE ATTACK RANGE
                 checkShoot(200, idleRightList.get(0).getWidth()/2, idleRightList.get(0).getHeight()/2, 0);
             } else {
-                checkWithinAttackRange(30, gp.TILE_SIZE*2, gp.TILE_SIZE*2); // CHANGE ATTACK RANGE
+                checkWithinAttackRange(30, gp.TILE_SIZE*3, gp.TILE_SIZE*3); // CHANGE ATTACK RANGE
             }
         }
     }
@@ -545,7 +542,7 @@ public abstract class Entity {
             // ATTACK AREA BECOMES SOLID AREA
             solidArea.width = attackArea.width;
             solidArea.height = attackArea.height;
-            if (type == 1) {
+            if (type == 1) { // FOR MOB
                 if (gp.cChecker.checkPLayer(this)) damagePlayer(attack);
             } else { // FOR PLAYER
                 // CHECK MONSTER COLLISION
@@ -568,7 +565,7 @@ public abstract class Entity {
         if (animationSpriteNum < mobRightAttackList.size() && animationCounter % 5 == 0) {
             animationSpriteNum++;
         }
-        if (animationSpriteNum >= mobRightAttackList.size() - 1) {
+        if (animationSpriteNum >= mobRightAttackList.size()) {
             animationSpriteNum = 0;
             animationCounter = 0;
             attacking = false;
@@ -669,7 +666,6 @@ public abstract class Entity {
                 startAttack();
             } else {
                 if (type == type_mob) {
-                    System.out.println("For mobNum " + mobNum + " the type is " + type);
                     setAction();
                 }
 
@@ -760,8 +756,6 @@ public abstract class Entity {
             }
 
             if (attacking) {
-                if (animationSpriteNum >= currentList.size() - 1)
-                    animationSpriteNum = 0;
                 BufferedImage animationImage = currentList.get(animationSpriteNum);
                 g2.drawImage(animationImage, worldX, worldY, null);
             }
@@ -783,7 +777,7 @@ public abstract class Entity {
                     UtilityTool.changeAlpha(g2, 1f);
                 }
                 if (attacking) {
-                    if (animationSpriteNum >= currentList.size() - 1)
+                    if (animationSpriteNum >= currentList.size())
                         animationSpriteNum = 0;
                     BufferedImage animationImage = currentList.get(animationSpriteNum);
                     g2.drawImage(animationImage, screenX, screenY, null);

@@ -19,11 +19,6 @@ public class MOB_Goblin extends Entity {
         getMobSprites();
     }
 
-    public void damageReaction() {
-        actionLockCounter = 0;
-        onPath = true;
-    }
-
     public void getMobSprites() {
         String dir = "/Mobs/Goblin/";
         try {

@@ -18,12 +18,6 @@ public class MOB_ArmoredGuardian extends Entity {
         getMobSprites();
     }
 
-    @Override
-    public void damageReaction() {
-        actionLockCounter = 0;
-        onPath = true;
-    }
-
     public void getMobSprites() {
         String dir = "/Mobs/ArmoredGuardian/";
         try {

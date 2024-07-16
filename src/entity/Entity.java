@@ -206,10 +206,11 @@ public abstract class Entity {
     public void speak() {} // NPC
 
     // MOB
-//    public void setAction() {}
     public void specialAttack() {}
     public void damageReaction() {
-    } // MOB
+        actionLockCounter = 0;
+        onPath = true;
+    }
 
     // NPC METHODS
     public void startDialogue(Entity entity, int setNum) {

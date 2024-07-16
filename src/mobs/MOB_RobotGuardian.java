@@ -19,27 +19,6 @@ public class MOB_RobotGuardian extends Entity {
         getMobSprites();
     }
 
-//    public void setAction() {
-//        if(onPath) {
-//            // SEARCH DIRECTION TO GO
-//            searchPath(getGoalCol(gp.player),getGoalRow(gp.player));
-//        } else {
-//            // CHECK IF START CHASING
-//            checkStartChase(gp.player, 5 , 100);
-//            // GET RANDOM DIRECTION
-//            getRandomDirection();
-//        }
-//        // CHECK ATTACK ON PLAYER
-//        if(!attacking){
-//            checkWithinAttackRange(30,gp.TILE_SIZE*2,gp.TILE_SIZE*2); // CHANGE ATTACK RANGE
-//        }
-//    }
-
-    public void damageReaction() {
-        actionLockCounter = 0;
-        onPath = true;
-    }
-
     public void getMobSprites() {
         String dir = "/Mobs/RobotGuardian/";
         try {

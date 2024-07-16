@@ -534,17 +534,18 @@ public abstract class Entity {
             int solidAreaWidth = solidArea.width;
             int solidAreaHeight = solidArea.height;
 
-            // ADJUST FOR ATTACK
-            switch (action) {
-                case "moveUp": worldY -= attackArea.height; break;
-                case "moveDown": worldY += attackArea.height; break;
-                case "moveLeft": worldX -= attackArea.width; break;
-                case "moveRight": worldX += attackArea.width; break;
-            }
-
             // ATTACK AREA BECOMES SOLID AREA
             solidArea.width = attackArea.width;
             solidArea.height = attackArea.height;
+
+            // ADJUST FOR ATTACK
+            switch (action) {
+                case "moveUp": worldY -= (mobRightAttackList.get(0).getHeight() - attackArea.height)/2; break;
+                case "moveDown": worldY += (mobLeftAttackList.get(0).getHeight() - attackArea.height)/2; break;
+                case "moveLeft": worldX -= (mobLeftAttackList.get(0).getWidth() - attackArea.width)/2; break;
+                case "moveRight": worldX += (mobRightAttackList.get(0).getWidth() - attackArea.width)/2; break;
+            }
+
             if (type == 1) {
                 if (gp.cChecker.checkPLayer(this)) damagePlayer(attack);
             } else { // FOR PLAYER

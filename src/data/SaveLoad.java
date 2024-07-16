@@ -11,6 +11,8 @@ public class SaveLoad {
     public boolean slotCheck[];
     GamePanel gp;
     File saveFiles[];
+    DataStorage ds = new DataStorage();
+
 
 
     public SaveLoad(GamePanel gp, int numberOfSaveSlots){
@@ -20,7 +22,7 @@ public class SaveLoad {
         isloadPage = false;
 
         for (int i = 0; i < numberOfSaveSlots; i++) {
-            this.saveFiles[i] = new File("save" + (i + 1) + ".dat");
+            this.saveFiles[i] = new File("save" + (i + 1) + ".txt");
             this.slotCheck[i] = false;
         }
     }
@@ -41,20 +43,15 @@ public class SaveLoad {
         }
 
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(saveFiles[slot]))) {
-            DataStorage ds = new DataStorage();
             ds.maxLife = gp.player.maxLife;
             ds.life = gp.player.currentLife;
             ds.coin = gp.player.totalCoins;
             ds.playerClass = gp.player.playerClass;
 
-            System.out.println(ds.maxLife);
-            System.out.println(ds.coin);
-            System.out.println(ds.life);
-            System.out.println(ds.playerClass);
-
-
             // Write the DataStorage object
-            oos.writeObject(ds);
+            oos.write(gp.player.totalCoins);
+            oos.close();
+            System.out.println("succesfully saved");
 
         }catch(Exception e){
             System.out.println("Save Exception!");
@@ -69,19 +66,14 @@ public class SaveLoad {
 
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(saveFiles[slot]))) {
             // Read the DataStorage object
-            DataStorage ds = (DataStorage) ois.readObject();
-
-            System.out.println(ds.maxLife);
-            System.out.println(ds.coin);
-            System.out.println(ds.life);
-            System.out.println(ds.playerClass);
-
-            gp.player.maxLife = ds.maxLife;
-            gp.player.currentLife = ds.life;
-            gp.player.totalCoins = ds.coin;
-            gp.player.playerClass = ds.playerClass;
 
             slotCheck[slot] = true;
+            gp.player.maxLife = ds.maxLife;
+            gp.player.currentLife = ds.life;
+            gp.player.playerClass = ds.playerClass;
+
+            ds = (DataStorage) ois.readObject();
+            gp.player.totalCoins = ds.coin;
 
         }catch(Exception e){
             System.out.println("Load Exception");

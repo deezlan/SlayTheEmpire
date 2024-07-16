@@ -15,6 +15,7 @@ import java.util.Comparator;
 import TileInteractive.InteractiveTIle;
 import ai.Pathfinder;
 import data.SaveLoad;
+import data.TrySaveLoad;
 import main.EventHandler;
 import entity.Cursor;
 import entity.Entity;
@@ -81,6 +82,7 @@ public class GamePanel extends JPanel implements Runnable {
     public EventHandler eHandler = new EventHandler(this);
     public SaveLoad saveLoad = new SaveLoad(this, 3);
     public CutsceneManager csManager = new CutsceneManager(this);
+    public TrySaveLoad trySaveLoad = new TrySaveLoad(this);
 
     // PATHFINDER
     public Pathfinder pFinder = new Pathfinder(this);

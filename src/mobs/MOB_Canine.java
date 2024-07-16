@@ -83,10 +83,10 @@ public class MOB_Canine extends Entity {
 
             UtilityTool.scaleEntityList(this, moveRightList, 80, 80);
             UtilityTool.scaleEntityList(this,moveLeftList, 80, 80);
-            UtilityTool.scaleEntityList(this,idleLeftList, 80, 80);
-            UtilityTool.scaleEntityList(this, idleRightList, 80, 80);
             UtilityTool.scaleEntityList(this,mobRightAttackList, 80, 80);
             UtilityTool.scaleEntityList(this, mobLeftAttackList, 80, 80);
+            UtilityTool.scaleEntityList(this,idleLeftList, 80, 80);
+            UtilityTool.scaleEntityList(this, idleRightList, 80, 80);
 
             System.out.println("Slime sprites loaded successfully");
         } catch (IOException e) {

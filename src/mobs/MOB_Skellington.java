@@ -78,10 +78,10 @@ public class MOB_Skellington extends Entity {
 
             UtilityTool.scaleEntityList(this, moveRightList, 150, 150);
             UtilityTool.scaleEntityList(this,moveLeftList, 150, 150);
-            UtilityTool.scaleEntityList(this,idleLeftList, 150, 150);
-            UtilityTool.scaleEntityList(this, idleRightList, 150, 150);
             UtilityTool.scaleEntityList(this,mobLeftAttackList, 150, 150);
             UtilityTool.scaleEntityList(this, mobRightAttackList, 150, 150);
+            UtilityTool.scaleEntityList(this,idleLeftList, 150, 150);
+            UtilityTool.scaleEntityList(this, idleRightList, 150, 150);
 
             System.out.println("Goblin sprites loaded successfully");
         } catch (IOException e) {

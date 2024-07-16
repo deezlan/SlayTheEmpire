@@ -13,7 +13,7 @@ public class MOB_Mushroom extends Entity {
         this.gp = gp;
         setStatValues(1, 4, false, false, 9);
         setCollisionValues(150, 150, 28, 40);
-        setAttackValues(1, 8, gp.TILE_SIZE*2, gp.TILE_SIZE*2);
+        setAttackValues(1, 6, gp.TILE_SIZE*2, gp.TILE_SIZE*2);
 //        type = type_mob;
 //        defaultSpeed = 1;
 //        speed = defaultSpeed;
@@ -83,10 +83,10 @@ public class MOB_Mushroom extends Entity {
 
             UtilityTool.scaleEntityList(this, moveRightList, 300, 300);
             UtilityTool.scaleEntityList(this,moveLeftList, 300, 300);
-            UtilityTool.scaleEntityList(this,idleLeftList, 300, 300);
-            UtilityTool.scaleEntityList(this, idleRightList, 300, 300);
             UtilityTool.scaleEntityList(this, mobRightAttackList, 300, 300);
             UtilityTool.scaleEntityList(this, mobLeftAttackList, 300, 300);
+            UtilityTool.scaleEntityList(this,idleLeftList, 300, 300);
+            UtilityTool.scaleEntityList(this, idleRightList, 300, 300);
 
             System.out.println("Slime sprites loaded successfully");
         } catch (IOException e) {

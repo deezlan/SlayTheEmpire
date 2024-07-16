@@ -73,10 +73,10 @@ public class MOB_FlyingEye extends Entity {
 
             UtilityTool.scaleEntityList(this, moveRightList, 300, 300);
             UtilityTool.scaleEntityList(this, moveLeftList, 300, 300);
-            UtilityTool.scaleEntityList(this, idleLeftList, 300, 300);
-            UtilityTool.scaleEntityList(this, idleRightList, 300, 300);
             UtilityTool.scaleEntityList(this, mobLeftAttackList, 300, 300);
             UtilityTool.scaleEntityList(this, mobRightAttackList, 300, 300);
+            UtilityTool.scaleEntityList(this, idleLeftList, 300, 300);
+            UtilityTool.scaleEntityList(this, idleRightList, 300, 300);
 
             System.out.println("Slime sprites loaded successfully");
         } catch (IOException e) {

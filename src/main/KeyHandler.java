@@ -62,6 +62,8 @@ public class KeyHandler implements KeyListener {
             creditsState(code);
         } else if (gp.gameState == gp.controlsState) {
             controlsState(code);
+        } else if (gp.gameState == gp.difficultyState) {
+            difficultyState(code);
         }
 
         if (code == KeyEvent.VK_T){
@@ -122,6 +124,27 @@ public class KeyHandler implements KeyListener {
             gp.ui.inpUser = "";
             gp.ui.inpPass = "";
             gp.ui.inpPassHidden = "";
+        }
+    }
+
+    public void difficultyState(int code) {
+        if(code == KeyEvent.VK_ENTER){
+            enterPressed = true;
+        }
+
+        if (gp.ui.subState == 0) {
+            if(code == KeyEvent.VK_W) {
+                gp.ui.commandNum--;
+                if(gp.ui.commandNum < 0) {
+                    gp.ui.commandNum = 3;
+                }
+            }
+            if(code == KeyEvent.VK_S) {
+                gp.ui.commandNum++;
+                if(gp.ui.commandNum > 3) {
+                    gp.ui.commandNum = 0;
+                }
+            }
         }
     }
 

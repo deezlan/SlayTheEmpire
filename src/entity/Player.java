@@ -279,6 +279,9 @@ public class Player extends Entity {
         if (index == 1) {
             gp.gameState = gp.shopState;
         }
+        if (index == 3) {
+            gp.ui.difficultySelect();
+        }
     }
     public void interactMob (int index) {
         if (index != 999) {

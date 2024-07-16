@@ -641,6 +641,53 @@ public class UI {
         }
     }
 
+    public void difficultySelect() {
+        drawDialogScreen();
+
+        // DRAW WINDOW
+        int x = gp.TILE_SIZE * 12;
+        int y = gp.TILE_SIZE * 4;
+        int width = gp.TILE_SIZE * 4;
+        int height = (int)(gp.TILE_SIZE * 4.5);
+        drawSubWindow(x,y,width,height);
+
+        // DRAW TEXT
+        x += gp.TILE_SIZE;
+        y += gp.TILE_SIZE;
+        g2.drawString("Easy",x,y);
+        if (commandNum == 0) {
+            g2.drawString(">", x-24,y);
+            if (gp.keyH.ePressed) {
+                subState = 1;
+            }
+        }
+        y += gp.TILE_SIZE;
+        g2.drawString("Medium",x,y);
+        if (commandNum == 1) {
+            g2.drawString(">", x-24,y);
+            if (gp.keyH.ePressed) {
+                subState = 2;
+            }
+        }
+        y += gp.TILE_SIZE;
+        g2.drawString("Hard",x,y);
+        if (commandNum == 2) {
+            g2.drawString(">", x-24,y);
+            if (gp.keyH.ePressed) {
+                subState = 3;
+            }
+        }
+        y += gp.TILE_SIZE;
+        g2.drawString("No",x,y);
+        if (commandNum == 3) {
+            g2.drawString(">", x-24,y);
+            if (gp.keyH.enterPressed) {
+                gp.gameState = gp.dialogueState;
+                currentDialog = "Pish, you are a coward";
+            }
+        }
+    }
+
     public void drawDeathScreen() {
         g2.setColor(new Color(0,0,0,150));
         g2.fillRect(0,0, gp.SCREEN_WIDTH , gp.SCREEN_HEIGHT);
@@ -1101,6 +1148,10 @@ public class UI {
 
         if (gp.gameState == gp.creditsState) {
             drawCredits(g2);
+        }
+
+        if (gp.gameState == gp.difficultyState) {
+            difficultySelect();
         }
     }
 }

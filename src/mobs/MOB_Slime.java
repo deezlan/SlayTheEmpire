@@ -35,12 +35,12 @@ public class MOB_Slime extends Entity {
                 System.out.println("ATTACK is LOADED!");
             }
 
-            UtilityTool.scaleEntityList(this, moveRightList, 150, 150);
-            UtilityTool.scaleEntityList(this,moveLeftList, 150, 150);
-            UtilityTool.scaleEntityList(this, mobLeftAttackList, 150, 150);
-            UtilityTool.scaleEntityList(this, mobRightAttackList, 150, 150);
-            UtilityTool.scaleEntityList(this,idleLeftList, 150, 150);
-            UtilityTool.scaleEntityList(this, idleRightList, 150, 150);
+            UtilityTool.scaleEntityList(this, moveRightList, 200, 200);
+            UtilityTool.scaleEntityList(this,moveLeftList, 200, 200);
+            UtilityTool.scaleEntityList(this, mobLeftAttackList, 200, 200);
+            UtilityTool.scaleEntityList(this, mobRightAttackList, 200, 200);
+            UtilityTool.scaleEntityList(this,idleLeftList, 200, 200);
+            UtilityTool.scaleEntityList(this, idleRightList, 200, 200);
 
             System.out.println("Slime sprites loaded successfully");
         } catch (IOException e) {

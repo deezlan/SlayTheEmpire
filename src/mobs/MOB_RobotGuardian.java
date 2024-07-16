@@ -13,7 +13,7 @@ public class MOB_RobotGuardian extends Entity {
         this.gp = gp;
         setStatValues(1, 6, false, false, 3);
         setCollisionValues(70, 90, 40, 40);
-        setAttackValues(1, 7, gp.TILE_SIZE*2, gp.TILE_SIZE*2);
+        setAttackValues(1, 7, 50, 50);
 
         // Load mob sprites
         getMobSprites();

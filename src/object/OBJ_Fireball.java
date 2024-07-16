@@ -37,12 +37,6 @@ public class OBJ_Fireball extends Projectile {
             UtilityTool.scaleEntityList(this, projectileLeft, gp.TILE_SIZE, gp.TILE_SIZE);
             UtilityTool.scaleEntityList(this, projectileUp, gp.TILE_SIZE, gp.TILE_SIZE);
             UtilityTool.scaleEntityList(this, projectileDown, gp.TILE_SIZE, gp.TILE_SIZE);
-//            weaponSprite = UtilityTool.loadSprite("/Projectile/fireball/fireball_right_1.png", "fireball not found");
-//            weaponSprite = UtilityTool.scaleImage(weaponSprite, gp.TILE_SIZE, gp.TILE_SIZE);
-//            currentActionList.add(weaponSprite);
-//            weaponSprite = UtilityTool.loadSprite("/Projectile/fireball/fireball_right_2.png", "fireball not found");
-//            weaponSprite = UtilityTool.scaleImage(weaponSprite, gp.TILE_SIZE, gp.TILE_SIZE);
-//            currentActionList.add(weaponSprite);
         } catch (IOException e){
             e.printStackTrace(System.out);
         }

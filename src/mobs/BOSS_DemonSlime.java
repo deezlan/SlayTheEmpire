@@ -4,7 +4,6 @@ import entity.Entity;
 import main.GamePanel;
 import main.UtilityTool;
 import object.OBJ_DemonBlast;
-import object.OBJ_PickUpCoin;
 
 import java.io.IOException;
 
@@ -34,12 +33,11 @@ public class BOSS_DemonSlime extends Entity {
         setDialog();
 
         // Set collision settings
-//        setCollisionValues(180, 230, 60, 80);
+        setCollisionValues(180, 230, 60, 80);
         attackArea.width = 140;
         attackArea.height = 140;
         dialogueSet = 0;
     }
-
 
     @Override
     public void setAction() {
@@ -75,7 +73,8 @@ public class BOSS_DemonSlime extends Entity {
             spriteNum = 1;
             checkShoot(0,24,144,0);
         } else if (!attacking & !specialAttacking){
-            checkWithinAttackRange(30,gp.TILE_SIZE*6,gp.TILE_SIZE*6); // CHANGE ATTACK RANGE
+//            checkWithinAttackRange(30,gp.TILE_SIZE*6,gp.TILE_SIZE*6); // Original
+            checkWithinAttackRange(30); // CHANGE ATTACK RANGE
         }
     }
 
@@ -97,16 +96,6 @@ public class BOSS_DemonSlime extends Entity {
                 break;
             }
         }
-    }
-
-    public void checkDrop() {
-        int i = 0;
-        while (gp.objArr[gp.currentMap][i] != null)
-            i++;
-
-        gp.objArr[gp.currentMap][i] = new OBJ_PickUpCoin(gp,
-                worldX + idleRightList.get(0).getWidth()/2 -24,
-                worldY + idleRightList.get(0).getWidth()/2 - 24);
     }
 
     public void setDialog() {

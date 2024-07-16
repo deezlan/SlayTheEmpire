@@ -177,7 +177,7 @@ public class AssetSetter {
             case 1:
             {
                 gp.mobArr[gp.currentMap][i] = new MOB_RobotGuardian(gp, 400, 1968); i++;
-                gp.mobArr[gp.currentMap][i] = new MOB_Mushroom(gp, 350, 1968); i++;
+//                gp.mobArr[gp.currentMap][i] = new MOB_Mushroom(gp, 350, 1968); i++;
 //                gp.mobArr[gp.currentMap][i] = new BOSS_FrostGiant(gp, 400, 180); i++;
 //                gp.mobArr[gp.currentMap][i] = new MOB_FlyingEye(gp, 350, 1968); i++;
 //                gp.mobArr[gp.currentMap][i] = new MOB_ArmoredGuardian(gp, 400, 1968); i++;

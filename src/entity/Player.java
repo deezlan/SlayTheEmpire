@@ -72,7 +72,7 @@ public class Player extends Entity {
         type = type_player;
 
         // ATTRIBUTES
-        maxLife = 6;
+        maxLife = 100;
         currentLife = maxLife;
         totalCoins = 500;
         damage = 1;

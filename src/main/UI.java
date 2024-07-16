@@ -20,7 +20,7 @@ public class UI {
 
     public Entity npc;
     GamePanel gp;
-    BufferedImage fullHeart, halfHeart, emptyHeart, hotbar;
+    BufferedImage fullHeart, halfHeart, emptyHeart, hotbar, lifebar;
     Graphics2D g2;
     Entity coin;
     Font gameFont;
@@ -82,6 +82,8 @@ public class UI {
         halfHeart = heart.defaultList.get(1);
         emptyHeart = heart.defaultList.get(0);
         try {
+            lifebar = UtilityTool.loadSprite("/objects/life/syringe-empty-1.png", "no life bar");
+            lifebar = UtilityTool.scaleImage(lifebar, gp.TILE_SIZE*5, gp.TILE_SIZE);
             hotbar = UtilityTool.loadSprite("/objects/hotbar/hotbar.png", "Cannot load hotbar");
             hotbar = UtilityTool.scaleImage(hotbar, gp.TILE_SIZE+24, gp.TILE_SIZE+24);
         } catch (IOException e){
@@ -346,24 +348,11 @@ public class UI {
         int posX = gp.TILE_SIZE/2;
         int posY = gp.TILE_SIZE/2;
         int i = 0;
+        double length = 182*((double) gp.player.currentLife/ (double) gp.player.maxLife);
 
-        while (i < gp.player.maxLife/2){
-            g2.drawImage(emptyHeart, posX, posY, null);
-            i++;
-            posX += gp.TILE_SIZE;
-        }
-
-        posX = gp.TILE_SIZE/2;
-        i = 0;
-
-        while (i < gp.player.currentLife){
-            g2.drawImage (halfHeart, posX, posY, null);
-            i++;
-            if (i < gp.player.currentLife)
-                g2.drawImage(fullHeart, posX, posY, null);
-            i++;
-            posX += gp.TILE_SIZE;
-        }
+        g2.setColor(Color.RED);
+        g2.fillRect(posX+gp.TILE_SIZE, posY+16, (int) length, 18);
+        g2.drawImage(lifebar, posX, posY, null);
     }
 
     public void drawPlayerMoney() {

@@ -3,10 +3,13 @@ package mobs;
 import entity.Entity;
 import main.GamePanel;
 import main.UtilityTool;
+import object.OBJ_DemonBlast;
+import object.OBJ_PickUpCoin;
 
 import java.io.IOException;
 
 public class BOSS_DemonSlime extends Entity {
+    int specialAttackCounter;
     GamePanel gp;
     public static final String monName = "Demon Slime";
     public BOSS_DemonSlime(GamePanel gp) {
@@ -24,6 +27,7 @@ public class BOSS_DemonSlime extends Entity {
         action = "idleRight";
         damageSprite = 9;
         sleep = true;
+        projectile = new OBJ_DemonBlast(gp);
 
         // Load mob sprites
         getMobSprites();
@@ -39,7 +43,7 @@ public class BOSS_DemonSlime extends Entity {
 
     @Override
     public void setAction() {
-
+        specialAttackCounter++;
         if(!inRage && currentLife < maxLife/2) {
             inRage = true;
             defaultSpeed++;
@@ -57,9 +61,52 @@ public class BOSS_DemonSlime extends Entity {
             checkStartChase(gp.player, 5 , 100);
         }
         // CHECK ATTACK ON PLAYER
-        if(!attacking){
+        attackCheck();
+    }
+
+    void attackCheck(){
+        if (specialAttackCounter >= 20){
+            speed = defaultSpeed;
+        }
+        if (specialAttackCounter >= 150 & inCamera() & onPath){
+            specialAttacking = true;
+            specialAttackCounter = 0;
+            spriteCounter = 0;
+            spriteNum = 1;
+            checkShoot(0,24,144,0);
+        } else if (!attacking & !specialAttacking){
             checkWithinAttackRange(30,gp.TILE_SIZE*6,gp.TILE_SIZE*6); // CHANGE ATTACK RANGE
         }
+    }
+
+    @Override
+    public void specialAttack(){
+        System.out.println("now cumming");
+        speed = 0;
+        currentList = mobSpecialAttackList;
+
+        runSpecialAttackAnimation();
+    }
+
+    @Override
+    public void checkShoot(int rate, int xOffset, int yOffset, int shotInterval){
+        projectile.set(worldX + (xOffset), worldY + (yOffset), action, true, this, gp.player.worldX, gp.player.worldY);
+        for (int ii = 0; ii < gp.projectileArr[1].length; ii++) {
+            if (gp.projectileArr[gp.currentMap][ii] == null) {
+                gp.projectileArr[gp.currentMap][ii] = projectile;
+                break;
+            }
+        }
+    }
+
+    public void checkDrop() {
+        int i = 0;
+        while (gp.objArr[gp.currentMap][i] != null)
+            i++;
+
+        gp.objArr[gp.currentMap][i] = new OBJ_PickUpCoin(gp,
+                worldX + idleRightList.get(0).getWidth()/2 -24,
+                worldY + idleRightList.get(0).getWidth()/2 - 24);
     }
 
     public void damageReaction() {
@@ -91,12 +138,18 @@ public class BOSS_DemonSlime extends Entity {
                 mobRightAttackList.add(i, UtilityTool.loadSprite(dir + "attackRight/" + i + ".png", "Missing idleRight " + i));
             }
 
+            for (int i = 1; i <= 7; i++) {
+                mobSpecialAttackList.add(i-1, UtilityTool.loadSprite("/Mobs/DemonSlime/DemonBlast/" + i + ".png", "Missing demon " + i));
+            }
+
+            UtilityTool.scaleEntityList(this, mobSpecialAttackList, 450, 300);
             UtilityTool.scaleEntityList(this, moveRightList, 450, 300);
             UtilityTool.scaleEntityList(this,moveLeftList, 450, 300);
             UtilityTool.scaleEntityList(this, mobLeftAttackList, 450, 300);
             UtilityTool.scaleEntityList(this,mobRightAttackList, 450, 300);
             UtilityTool.scaleEntityList(this,idleLeftList, 450, 300);
             UtilityTool.scaleEntityList(this, idleRightList, 450, 300);
+
 
         } catch (IOException e) {
             e.printStackTrace(System.out);

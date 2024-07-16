@@ -93,10 +93,10 @@ public class EventHandler {
                         for (int i = 0; i <= 4; i++)
                             gp.gateArr[gp.currentMap][i].locking = true;
 
-//                        eventRect[1][7][40].eventDone = true;
-//                        eventRect[1][8][41].eventDone = true;
-//                        eventRect[1][8][42].eventDone = true;
-//                        eventRect[1][7][43].eventDone = true;
+                        eventRect[1][7][40].eventDone = true;
+                        eventRect[1][8][41].eventDone = true;
+                        eventRect[1][8][42].eventDone = true;
+                        eventRect[1][7][43].eventDone = true;
                     }
                     if ( // TRIGGER LEFT PATH GATES
                             hit(gp.currentMap, 8, 30, "any")
@@ -129,8 +129,8 @@ public class EventHandler {
                                     || hit(1, 15, 24, "any")
                                     || hit(1, 16, 25, "any")
                     ) {
-                        for (int i = 9; i <= 15; i++)
-                            gp.gateArr[gp.currentMap][i].locking = true;
+//                        for (int i = 9; i <= 15; i++)
+//                            gp.gateArr[gp.currentMap][i].locking = true;
 
 //                        eventRect[1][7][22].eventDone = true;
 //                        eventRect[1][8][23].eventDone = true;
@@ -180,8 +180,8 @@ public class EventHandler {
                                     || hit(gp.currentMap, 24, 38, "any")
                                     || hit(gp.currentMap, 25, 39, "any")
                     ) {
-                        for (int i = 0; i <= 3; i++)
-                            gp.gateArr[gp.currentMap][i].locking = true;
+//                        for (int i = 0; i <= 3; i++)
+//                            gp.gateArr[gp.currentMap][i].locking = true;
                     }
                     if ( // TRIGGER MINI-BOSS ROOM GATES
                             hit(gp.currentMap, 12, 23, "any")
@@ -190,8 +190,8 @@ public class EventHandler {
                                     || hit(gp.currentMap, 11, 26, "any")
                                     || hit(gp.currentMap, 12, 27, "any")
                     ) {
-                        for (int i = 4; i <= 8; i++)
-                            gp.gateArr[gp.currentMap][i].locking = true;
+//                        for (int i = 4; i <= 8; i++)
+//                            gp.gateArr[gp.currentMap][i].locking = true;
                     }
                     if ( // TRIGGER FINAL BOSS ROOM GATES
                             hit(gp.currentMap, 5, 10, "any")
@@ -200,8 +200,8 @@ public class EventHandler {
                                     || hit(gp.currentMap, 8, 9, "any")
                                     || hit(gp.currentMap, 9, 10, "any")
                     ) {
-                        for (int i = 9; i <= 14; i++)
-                            gp.gateArr[gp.currentMap][i].locking = true;
+//                        for (int i = 9; i <= 14; i++)
+//                            gp.gateArr[gp.currentMap][i].locking = true;
                     }
                     if ( // TRIGGER PLOT TWIST FINAL BOSS ROOM GATES
                             hit(gp.currentMap, 26, 4, "any")
@@ -211,26 +211,26 @@ public class EventHandler {
                                     || hit(gp.currentMap, 27, 8, "any")
                                     || hit(gp.currentMap, 26, 9, "any")
                     ) {
-                        for (int i = 15; i <= 20; i++)
-                            gp.gateArr[gp.currentMap][i].locking = true;
+//                        for (int i = 15; i <= 20; i++)
+//                            gp.gateArr[gp.currentMap][i].locking = true;
                     }
 
                     // UNLOCK FIRST ROOM GATES ONCE EVERY MOB SLAIN
                     if (gp.mobArr[gp.currentMap][0] == null && gp.mobArr[gp.currentMap][1] == null) {
-                        for (int i = 0; i <= 4; i++)
-                            gp.gateArr[gp.currentMap][i].unlocking = true;
+//                        for (int i = 0; i <= 4; i++)
+//                            gp.gateArr[gp.currentMap][i].unlocking = true;
                     }
 
                     // UNLOCK BOSS ROOM GATES ONCE BOSS SLAIN
                     if (gp.mobArr[gp.currentMap][2] == null) {
-                        for (int i = 16; i <= 19; i++)
-                            gp.gateArr[gp.currentMap][i].unlocking = true;
+//                        for (int i = 16; i <= 19; i++)
+//                            gp.gateArr[gp.currentMap][i].unlocking = true;
                     }
 
                     // UNLOCK MINI BOSS GATE AFTER SLAIN
                     if (gp.mobArr[1][3] == null) {
-                    for (int i = 9; i <= 15; i++)
-                        gp.gateArr[gp.currentMap][i].unlocking = true;
+//                    for (int i = 9; i <= 15; i++)
+//                        gp.gateArr[gp.currentMap][i].unlocking = true;
                     }
             }
         }
@@ -265,6 +265,7 @@ public class EventHandler {
     public void changeMap(){
         gp.gameState = gp.transitionState;
         System.out.println(gp.currentMap);
+        System.out.println("Changing map - loadLevel() to " + gp.currentMap);
         switch (gp.currentMap) {
             case 0:
                 tempMap = 1; // FIRST LEVEL CORRECT VALUES
@@ -273,7 +274,7 @@ public class EventHandler {
 //                tempMap = 2; // SECOND LEVEL CORRECT VALUES
 //                tempCol = 31;
 //                tempRow = 36;
-                gp.player.lookingRight = false;
+//                gp.player.lookingRight = false;
                 break;
             case 1, 2:
                 tempMap = 0;

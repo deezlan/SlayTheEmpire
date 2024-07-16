@@ -45,7 +45,7 @@ public class GamePanel extends JPanel implements Runnable {
     public TileManager tileM = new TileManager(this);
 
     // PLAYER SETTINGS
-    public int playerClass = 0;
+    public int playerClass;
     public KeyHandler keyH = new KeyHandler(this);
 
     // FPS SETTINGS
@@ -58,7 +58,7 @@ public class GamePanel extends JPanel implements Runnable {
     Sound music = new Sound();
     Sound effect = new Sound();
     public Cursor cursor = new Cursor(this); // Initialize cursor
-    public Player player = new Player(this, keyH, cursor, playerClass);
+    public Player player;
     public MouseHandler mouseH = new MouseHandler();
     public UI ui = new UI(this);
 
@@ -102,7 +102,6 @@ public class GamePanel extends JPanel implements Runnable {
             cutsceneState = 13,
             controlsState = 14,
             difficultySelectState = 15;
-
 
 
 
@@ -169,14 +168,7 @@ public class GamePanel extends JPanel implements Runnable {
         effect.play();
     }
 
-
     public void setupGame() {
-        aSetter.setObject();
-        aSetter.setNPC();
-        aSetter.setMonster();
-        aSetter.setGates();
-        gameState = playState;
-
         tempScreen = new BufferedImage(SCREEN_WIDTH,SCREEN_HEIGHT,BufferedImage.TYPE_INT_ARGB);
         g2 = (Graphics2D) tempScreen.getGraphics();
         gameState = titleState; // TESTING LOGIN RIGHT NOW
@@ -201,15 +193,9 @@ public class GamePanel extends JPanel implements Runnable {
 //        aSetter.setInteractiveTile();
 //    }
 
-//    public void resetMonster() { (WIP)
-//        aSetter.setMonster();
-//    }
-
-    public void resetLevel() {
+    public void loadLevel() {
         bossBattleOn = false;
-        aSetter.setObject();
-        aSetter.setMonster();
-        aSetter.setGates();
+        aSetter.loadAssets();
     }
 
     // MAP SETTINGS
@@ -220,9 +206,6 @@ public class GamePanel extends JPanel implements Runnable {
                 break;
             case 1, 2:
                 setBackground(Color.decode("#42393A"));
-//                break;
-//            case 2:
-//                setBackground(Color.decode("#42393A"));
         }
     }
 
@@ -325,16 +308,14 @@ public class GamePanel extends JPanel implements Runnable {
         }
 
         // Title Screen
-        if (gameState != titleState
-                && gameState != loginState
-                && gameState != startMenuState
-                && gameState != creditsState) {
-//        if (gameState == playState ||
-//                gameState == shopState ||
-//                gameState == dialogueState ||
-//                gameState == pauseState ||
-//                gameState == optionState ||
-//                gameState == optionState2) {
+        if (gameState == playState ||
+                gameState == shopState ||
+                gameState == dialogueState ||
+                gameState == pauseState ||
+                gameState == optionState ||
+                gameState == optionState2 ||
+                gameState == transitionState ||
+                gameState == cutsceneState) {
 
             // DEBUG
             long drawStart = 0;
@@ -347,15 +328,8 @@ public class GamePanel extends JPanel implements Runnable {
 
             for (Entity gate : gateArr[currentMap])
                 if (gate != null) gate.draw(g2);
-            // ADD INTERACTIVE TILES
-//            for (int i = 0; i < iTile[1].length; i++){ // INTERACTIVE TILES
-//                if(iTile[currentMap][i] != null){
-//                    iTile[currentMap][i].draw(g2);
-//                }
-//            }
 
-            // ADD ALL ENTITIES TO entityList
-
+            // ADD ALL ENTITIES TO entityList //
             // PLAYER
             entityList.add(player);
             // NPCs

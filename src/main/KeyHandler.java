@@ -55,7 +55,7 @@ public class KeyHandler implements KeyListener {
             shopState(code);
         } else if (gp.gameState == gp.pauseState) {
             pauseState(code);
-        } else if (gp.gameState == gp.dialogueState) {
+        } else if (gp.gameState == gp.dialogueState || gp.gameState == gp.cutsceneState) {
             dialogState(code);
         } else if (gp.gameState == gp.deathState) {
             deathState(code);
@@ -235,6 +235,7 @@ public class KeyHandler implements KeyListener {
                     gp.gameState = gp.difficultySelectState;
                     break;
             }
+            gp.loadLevel();
         }
     }
 
@@ -299,8 +300,6 @@ public class KeyHandler implements KeyListener {
     public void dialogState(int code) {
         if (code == KeyEvent.VK_E) {
             ePressed = true;
-//            if(gp.gameState == gp.dialogueState){
-//                gp.gameState = gp.playState;
             if (gp.gameState == gp.shopState) {
                 gp.gameState = gp.playState;
             }

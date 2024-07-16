@@ -368,7 +368,7 @@ public class UI {
 
     public void drawPlayerMoney() {
         coin.spriteCounter++;
-        if (coin.spriteCounter > 4) coin.runCurrentListAnimation();
+        if (coin.spriteCounter > 10) coin.runCurrentListAnimation();
         g2.setFont(g2.getFont().deriveFont(Font.BOLD, 40));
         g2.drawString ("" + gp.player.totalCoins, 38, 117);
         if (coin.spriteNum == coin.defaultList.size() - 1)
@@ -700,11 +700,11 @@ public class UI {
             gp.gameState = gp.playState;
             gp.currentMap = gp.eHandler.tempMap;
             gp.setMapColor();
-            gp.resetLevel();
             gp.player.worldX = gp.TILE_SIZE * gp.eHandler.tempCol;
             gp.player.worldY = gp.TILE_SIZE * gp.eHandler.tempRow;
             gp.eHandler.previousEventX = gp.player.worldX;
             gp.eHandler.previousEventY = gp.player.worldY;
+            gp.loadLevel();
         }
     }
 

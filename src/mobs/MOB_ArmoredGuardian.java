@@ -40,10 +40,10 @@ public class MOB_ArmoredGuardian extends Entity {
 
             UtilityTool.scaleEntityList(this, moveRightList, 150, 150);
             UtilityTool.scaleEntityList(this,moveLeftList, 150, 150);
-            UtilityTool.scaleEntityList(this,idleLeftList, 150, 150);
-            UtilityTool.scaleEntityList(this, idleRightList, 150, 150);
             UtilityTool.scaleEntityList(this, mobLeftAttackList, 150, 150);
             UtilityTool.scaleEntityList(this, mobRightAttackList, 150, 150);
+            UtilityTool.scaleEntityList(this,idleLeftList, 150, 150);
+            UtilityTool.scaleEntityList(this, idleRightList, 150, 150);
             System.out.println("ATTACK is LOADED!");
 
             System.out.println("Slime sprites loaded successfully");

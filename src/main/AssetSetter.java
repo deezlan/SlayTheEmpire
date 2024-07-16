@@ -16,6 +16,7 @@ public class AssetSetter {
         setNPC();
         setMonster();
         setObject();
+        setGates();
     }
 
     public void setObject() {

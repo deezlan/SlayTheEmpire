@@ -2,7 +2,6 @@ package data;
 
 import main.GamePanel;
 
-import javax.xml.crypto.Data;
 import java.io.*;
 
 public class SaveLoad {

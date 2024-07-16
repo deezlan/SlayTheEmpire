@@ -28,7 +28,7 @@ public class TrySaveLoad implements Serializable {
             System.out.println("trySave is saved successfully");
 
         }catch(IOException i ){
-            System.out.println(i.getMessage());;
+            System.out.println(i.getMessage());
         }
 
         System.out.println(ds.playerClass);

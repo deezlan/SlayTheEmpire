@@ -152,6 +152,7 @@ public class KeyHandler implements KeyListener {
             }
         }
 
+
         if (gp.ui.typingPassword) {
             if (code == KeyEvent.VK_BACK_SPACE) {
                 System.out.println("Test backspace");

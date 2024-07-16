@@ -17,10 +17,20 @@ public class SaveLoad {
         this.gp = gp;
         this.saveFiles = new File[numberOfSaveSlots];
         this.slotCheck = new boolean[numberOfSaveSlots];
+        isloadPage = false;
 
         for (int i = 0; i < numberOfSaveSlots; i++) {
             this.saveFiles[i] = new File("save" + (i + 1) + ".dat");
             this.slotCheck[i] = false;
+        }
+    }
+
+    public void clearSaveFile(int slot){
+        try(FileOutputStream fos = new FileOutputStream(saveFiles[slot])){
+
+        }catch(IOException e){
+            System.out.println("clear save file is not working" + e.getMessage());
+            e.printStackTrace();
         }
     }
 
@@ -37,9 +47,11 @@ public class SaveLoad {
             ds.coin = gp.player.totalCoins;
             ds.playerClass = gp.player.playerClass;
 
-//            for (int i = 0; i < gp.player.hotbarList.size(); i++){
-//                ds.weaponNames.add(gp.player.hotbarList.get(i).name);
-//            }
+            System.out.println(ds.maxLife);
+            System.out.println(ds.coin);
+            System.out.println(ds.life);
+            System.out.println(ds.playerClass);
+
 
             // Write the DataStorage object
             oos.writeObject(ds);
@@ -59,6 +71,11 @@ public class SaveLoad {
             // Read the DataStorage object
             DataStorage ds = (DataStorage) ois.readObject();
 
+            System.out.println(ds.maxLife);
+            System.out.println(ds.coin);
+            System.out.println(ds.life);
+            System.out.println(ds.playerClass);
+
             gp.player.maxLife = ds.maxLife;
             gp.player.currentLife = ds.life;
             gp.player.totalCoins = ds.coin;
@@ -72,11 +89,6 @@ public class SaveLoad {
 
     }
     public boolean isSaveFileEmpty(int slot) {
-        if (slot < 0 || slot >= saveFiles.length) {
-            System.out.println("Invalid slot number.");
-            return true;
-        }
-
         File saveFile = saveFiles[slot];
         boolean saveEmpty = !saveFile.exists() || saveFile.length() == 0;
         if (!saveEmpty){
@@ -84,5 +96,4 @@ public class SaveLoad {
         }
         return saveEmpty;
     }
-
 }

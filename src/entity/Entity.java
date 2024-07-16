@@ -98,7 +98,7 @@ public abstract class Entity {
             mobLeftAttackList = new ArrayList<>(),
             mobSpecialAttackList = new ArrayList<>(),
 
-    // INTERACTABLE OBJECT ANIMATION LIST
+            // INTERACTABLE OBJECT ANIMATION LIST
             defaultList = new ArrayList<>(),
             interactList = new ArrayList<>(),
 
@@ -143,7 +143,6 @@ public abstract class Entity {
     // ITEM ATTRIBUTES
     public int damage;
     public BufferedImage weaponSprite;
-//    public String name;
     public int price;
     public String description = "";
 
@@ -752,6 +751,8 @@ public abstract class Entity {
     public void draw(Graphics2D g2) {
         BufferedImage image;
         if (spriteNum >= currentList.size() - 1) spriteNum = 0;
+        if (animationSpriteNum >= currentList.size() - 1) animationSpriteNum = 0;
+        if (specialSpriteNum >= currentList.size() - 1) specialSpriteNum = 0;
 
         if (!alive) return;
 
@@ -800,6 +801,8 @@ public abstract class Entity {
             }
 
             if (attacking) {
+                if (animationSpriteNum >= currentList.size() - 1)
+                    animationSpriteNum = 0;
                 BufferedImage animationImage = currentList.get(animationSpriteNum);
                 g2.drawImage(animationImage, worldX, worldY, null);
             }
@@ -807,39 +810,37 @@ public abstract class Entity {
             int screenX = worldX - gp.player.worldX + gp.player.screenX;
             int screenY = worldY - gp.player.worldY + gp.player.screenY;
 
-            if (inCamera()) {
-                if (iframe) {
-                    hpBarVisible = true;
-                    hpBarCounter = 0;
-                    UtilityTool.changeAlpha(g2, 0.3f);
+                if (inCamera()) {
+                    if (iframe) {
+                        hpBarVisible = true;
+                        hpBarCounter = 0;
+                        UtilityTool.changeAlpha(g2, 0.3f);
+                    }
+                    if (dead) {
+                        dyingAnimation(g2);
+                    }
+                    if (!attacking & !specialAttacking) {
+                        g2.drawImage(image, screenX, screenY, null);
+                        UtilityTool.changeAlpha(g2, 1f);
+                    }
+                    if (!specialAttacking) {
+                        g2.drawImage(image, screenX, screenY, null);
+                        UtilityTool.changeAlpha(g2, 1f);
+                    }
+                    if (specialAttacking) {
+                        if (specialSpriteNum >= currentList.size() - 1)
+                            specialSpriteNum = 0;
+                        BufferedImage animationImage = currentList.get(specialSpriteNum);
+                        g2.drawImage(animationImage, screenX, screenY, null);
+                    }
+                    if (attacking) {
+                        if (animationSpriteNum >= currentList.size() - 1)
+                            animationSpriteNum = 0;
+                        BufferedImage animationImage = currentList.get(animationSpriteNum);
+                        g2.drawImage(animationImage, screenX, screenY, null);
+                    }
                 }
-                if (dead) {
-                    dyingAnimation(g2);
-                }
-                if (!attacking) {
-                    g2.drawImage(image, screenX, screenY, null);
-                    UtilityTool.changeAlpha(g2, 1f);
-                }
-                if (attacking) {
-                    if (animationSpriteNum >= currentList.size())
-                        animationSpriteNum = 0;
-                    BufferedImage animationImage = currentList.get(animationSpriteNum);
-                    g2.drawImage(animationImage, screenX, screenY, null);
-//                    g2.drawRect(screenX + mobRightAttackList.get(0).getWidth()/2 - attackArea.width/2,
-//                            screenY + mobRightAttackList.get(0).getHeight()/2 - attackArea.height/2,
-//                            attackArea.width,
-//                            attackArea.height);
-                }
-//                g2.drawRect(screenX + currentList.get(0).getWidth()/2 - solidArea.width/2,
-//                        screenY + currentList.get(0).getHeight()/2 - solidArea.height/2,
-//                        solidArea.width,
-//                        solidArea.height);
             }
-            g2.drawRect(attackArea.x, attackArea.y, attackArea.width, attackArea.height);
-
-            g2.drawRect(solidArea.x, solidArea.y, solidArea.width, solidArea.height);
-
-        }
     }
 }
 

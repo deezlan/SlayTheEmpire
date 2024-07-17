@@ -390,10 +390,10 @@ public abstract class Entity {
         // CHECK ATTACK ON PLAYER
         if (!attacking) {
             if (hasRanged) {
-                checkWithinAttackRange(30); // CHANGE ATTACK RANGE
+                checkWithinAttackRange(30, moveRightList.get(0).getHeight()/2, moveRightList.get(0).getWidth()/2); // CHANGE ATTACK RANGE
                 checkShoot(200, idleRightList.get(0).getWidth()/2, idleRightList.get(0).getHeight()/2, 0);
             } else {
-                checkWithinAttackRange(30); // CHANGE ATTACK RANGE
+                checkWithinAttackRange(30, gp.TILE_SIZE*3, gp.TILE_SIZE*3); // CHANGE ATTACK RANGE
             }
         }
     }
@@ -430,29 +430,29 @@ public abstract class Entity {
             }
         }
     }
-    public void checkWithinAttackRange(int rate) {
+    public void checkWithinAttackRange(int rate, int straight, int horizontal) {
         boolean targetInRange = false;
         int xDis = getDistanceX(gp.player);
         int yDis = getDistanceY(gp.player);
 
         switch (action) {
             case "moveUp":
-                if (gp.player.worldY < worldY && yDis < attackArea.height/2 && xDis < attackArea.width) {
+                if (gp.player.worldY < worldY && yDis < straight && xDis < horizontal) {
                     targetInRange = true;
                 }
                 break;
             case "moveDown":
-                if (gp.player.worldY > worldY && yDis < attackArea.height + attackArea.height/2 && xDis < attackArea.width) {
+                if (gp.player.worldY > worldY && yDis < straight && xDis < horizontal) {
                     targetInRange = true;
                 }
                 break;
             case "moveLeft":
-                if (gp.player.worldX < worldX && xDis < attackArea.width + attackArea.width/2 && yDis < attackArea.height) {
+                if (gp.player.worldX < worldX && xDis < straight && yDis < horizontal) {
                     targetInRange = true;
                 }
                 break;
             case "moveRight":
-                if (gp.player.worldX > worldX && xDis < attackArea.width && yDis < attackArea.height) {
+                if (gp.player.worldX > worldX && xDis < straight && yDis < horizontal) {
                     targetInRange = true;
                 }
                 break;
@@ -463,7 +463,7 @@ public abstract class Entity {
             int i = new Random().nextInt(rate);
             if (i == 0) {
                 attacking = true;
-                spriteNum = 1;
+                spriteNum = 0;
                 spriteCounter = 0;
             }
         }
@@ -539,8 +539,6 @@ public abstract class Entity {
             // SAVE CURRENT DATA OF ENTITY
             int currentWorldX = worldX;
             int currentWorldY = worldY;
-            int solidAreaX = solidArea.x;
-            int solidAreaY = solidArea.y;
             int solidAreaWidth = solidArea.width;
             int solidAreaHeight = solidArea.height;
 
@@ -570,8 +568,6 @@ public abstract class Entity {
             // CHANGE BACK TO ORIGINAL
             worldX = currentWorldX;
             worldY = currentWorldY;
-            solidArea.x = solidAreaX;
-            solidArea.y = solidAreaY;
             solidArea.width = solidAreaWidth;
             solidArea.height = solidAreaHeight;
         }

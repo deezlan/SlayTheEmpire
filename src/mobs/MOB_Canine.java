@@ -13,15 +13,10 @@ public class MOB_Canine extends Entity {
         this.gp = gp;
         setStatValues(2, 4, false, false, 10);
         setCollisionValues(30, 50, 40, 30);
-        setAttackValues(1, 3, 50, 50);
+        setAttackValues(1, 3, 60, 60);
 
         // Load mob sprites
         getMobSprites();
-    }
-
-    public void damageReaction() {
-        actionLockCounter = 0;
-        onPath = true;
     }
 
     public void getMobSprites() {
@@ -42,12 +37,12 @@ public class MOB_Canine extends Entity {
                 mobLeftAttackList.add(i, UtilityTool.loadSprite(dir + "attackLeft/" + i + ".png", "Missing idleRight " + i));
             }
 
-            UtilityTool.scaleEntityList(this, moveRightList, 80, 80);
-            UtilityTool.scaleEntityList(this,moveLeftList, 80, 80);
-            UtilityTool.scaleEntityList(this,mobRightAttackList, 80, 80);
-            UtilityTool.scaleEntityList(this, mobLeftAttackList, 80, 80);
-            UtilityTool.scaleEntityList(this,idleLeftList, 80, 80);
-            UtilityTool.scaleEntityList(this, idleRightList, 80, 80);
+            UtilityTool.scaleEntityList(this, moveRightList, 96, 64);
+            UtilityTool.scaleEntityList(this,moveLeftList, 96, 64);
+            UtilityTool.scaleEntityList(this,mobRightAttackList, 96, 64);
+            UtilityTool.scaleEntityList(this, mobLeftAttackList, 96, 64);
+            UtilityTool.scaleEntityList(this,idleLeftList, 96, 64);
+            UtilityTool.scaleEntityList(this, idleRightList, 96, 64);
 
             System.out.println("Slime sprites loaded successfully");
         } catch (IOException e) {

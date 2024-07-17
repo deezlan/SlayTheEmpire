@@ -34,12 +34,12 @@ public class MOB_Goblin extends Entity {
                 idleRightList.add(i, UtilityTool.loadSprite(dir + "idleRight/" + i + ".png", "Missing idleRight " + i));
             }
 
-            UtilityTool.scaleEntityList(this, moveRightList, 200, 200);
-            UtilityTool.scaleEntityList(this,moveLeftList, 200, 200);
-            UtilityTool.scaleEntityList(this, mobLeftAttackList, 200, 180);
-            UtilityTool.scaleEntityList(this,mobRightAttackList, 200, 200);
-            UtilityTool.scaleEntityList(this,idleLeftList, 200, 200);
-            UtilityTool.scaleEntityList(this, idleRightList, 200, 200);
+            UtilityTool.scaleEntityList(this, moveRightList, 300, 300);
+            UtilityTool.scaleEntityList(this,moveLeftList, 300, 300);
+            UtilityTool.scaleEntityList(this, mobLeftAttackList, 300, 300);
+            UtilityTool.scaleEntityList(this,mobRightAttackList, 300, 300);
+            UtilityTool.scaleEntityList(this,idleLeftList, 300, 300);
+            UtilityTool.scaleEntityList(this, idleRightList, 300, 300);
 
             System.out.println("Goblin sprites loaded successfully");
         } catch (IOException e) {

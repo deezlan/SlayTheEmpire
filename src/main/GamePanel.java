@@ -113,7 +113,7 @@ public class GamePanel extends JPanel implements Runnable {
         // DEFAULT SETTINGS
         music.volumeScale = 3;
         effect.volumeScale = 3;
-        gameState = easyMode;
+        gameMode = easyMode;
 
 //        hideCursor();
 

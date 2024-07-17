@@ -11,9 +11,8 @@ public class BOSS_DemonSlime extends Entity {
     int specialAttackCounter;
     GamePanel gp;
     public static final String monName = "Demon Slime";
-    public BOSS_DemonSlime(GamePanel gp) {
-        super(gp);
-        this.gp = gp;
+    public BOSS_DemonSlime(GamePanel gp, int worldX, int worldY) {
+        super(gp, worldX, worldY);
         name = monName;
         type = type_mob;
         boss = true;

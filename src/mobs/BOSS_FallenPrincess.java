@@ -9,8 +9,8 @@ import java.io.IOException;
 public class BOSS_FallenPrincess extends Entity {
     GamePanel gp;
     public static final String monName = "Fallen Princess";
-    public BOSS_FallenPrincess(GamePanel gp) {
-        super(gp);
+    public BOSS_FallenPrincess(GamePanel gp, int worldX, int worldY) {
+        super(gp, worldX, worldY);
         this.gp = gp;
         name = monName;
         type = type_mob;

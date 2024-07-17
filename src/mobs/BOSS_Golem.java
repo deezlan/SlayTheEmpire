@@ -10,8 +10,8 @@ import java.io.IOException;
 public class BOSS_Golem extends Entity {
     GamePanel gp;
     public static final String monName = "Golem";
-    public BOSS_Golem(GamePanel gp) {
-        super(gp);
+    public BOSS_Golem(GamePanel gp, int worldX, int worldY) {
+        super(gp, worldX, worldY);
         this.gp = gp;
         name = monName;
         type = type_mob;

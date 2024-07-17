@@ -10,8 +10,8 @@ import java.io.IOException;
 public class BOSS_FireWorm extends Entity {
     GamePanel gp;
     public static final String monName = "Lex";
-    public BOSS_FireWorm(GamePanel gp) {
-        super(gp);
+    public BOSS_FireWorm(GamePanel gp, int worldX, int worldY) {
+        super(gp, worldX, worldY);
         this.gp = gp;
         name = monName;
         type = type_mob;

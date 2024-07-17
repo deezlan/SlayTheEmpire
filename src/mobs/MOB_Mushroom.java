@@ -12,7 +12,7 @@ public class MOB_Mushroom extends Entity {
         super(gp, worldX, worldY);
         this.gp = gp;
         setStatValues(1, 4, false, 9, 350);
-        setCollisionValues(150, 150, 28, 40);
+        setCollisionValues(70, 90, 40, 40);
         setAttackValues(1, 6, gp.TILE_SIZE*2, gp.TILE_SIZE*2, false);
 
         // Load mob sprites
@@ -35,12 +35,12 @@ public class MOB_Mushroom extends Entity {
                 mobLeftAttackList.add(i, UtilityTool.loadSprite(dir + "attackLeft/" + i + ".png", "Missing attackLeft " + i));
             }
 
-            UtilityTool.scaleEntityList(this, moveRightList, 300, 300);
-            UtilityTool.scaleEntityList(this, moveLeftList, 300, 300);
-            UtilityTool.scaleEntityList(this, mobRightAttackList, 300, 300);
-            UtilityTool.scaleEntityList(this, mobLeftAttackList, 300, 300);
-            UtilityTool.scaleEntityList(this, idleLeftList, 300, 300);
-            UtilityTool.scaleEntityList(this, idleRightList, 300, 300);
+            UtilityTool.scaleEntityList(this, moveRightList, 200, 200);
+            UtilityTool.scaleEntityList(this, moveLeftList, 200, 200);
+            UtilityTool.scaleEntityList(this, mobRightAttackList, 200, 200);
+            UtilityTool.scaleEntityList(this, mobLeftAttackList, 200, 200);
+            UtilityTool.scaleEntityList(this, idleLeftList, 200, 200);
+            UtilityTool.scaleEntityList(this, idleRightList, 200, 200);
 
             System.out.println("Slime sprites loaded successfully");
         } catch (IOException e) {

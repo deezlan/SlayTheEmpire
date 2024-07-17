@@ -377,10 +377,10 @@ public abstract class Entity {
         // CHECK ATTACK ON PLAYER
         if (!attacking) {
             if (hasRanged) {
-                checkWithinAttackRange(30, moveRightList.get(0).getHeight()/2, moveRightList.get(0).getWidth()/2); // CHANGE ATTACK RANGE
+                checkWithinAttackRange(30); // CHANGE ATTACK RANGE
                 checkShoot(200, idleRightList.get(0).getWidth()/2, idleRightList.get(0).getHeight()/2, 0);
             } else {
-                checkWithinAttackRange(30, gp.TILE_SIZE*3, gp.TILE_SIZE*3); // CHANGE ATTACK RANGE
+                checkWithinAttackRange(30); // CHANGE ATTACK RANGE
             }
         }
     }
@@ -414,39 +414,6 @@ public abstract class Entity {
             int i = new Random().nextInt(rate);
             if (i == 0) {
                 onPath = false;
-            }
-        }
-    }
-    public void checkWithinAttackRange(int rate, int straight, int horizontal) {
-        boolean targetInRange = false;
-        int xDis = getDistanceX(gp.player);
-        int yDis = getDistanceY(gp.player);
-
-        switch (action) {
-            case "moveUp":
-                if (gp.player.worldY < worldY && yDis < straight && xDis < horizontal)
-                    targetInRange = true;
-                break;
-            case "moveDown":
-                if (gp.player.worldY > worldY && yDis < straight && xDis < horizontal)
-                    targetInRange = true;
-                break;
-            case "moveLeft":
-                if (gp.player.worldX < worldX && xDis < straight && yDis < horizontal)
-                    targetInRange = true;
-                break;
-            case "moveRight":
-                if (gp.player.worldX > worldX && xDis < straight && yDis < horizontal)
-                    targetInRange = true;
-        }
-
-        if (targetInRange) {
-            // CHECK ATTACK HAPPENS
-            int i = new Random().nextInt(rate);
-            if (i == 0) {
-                attacking = true;
-                spriteNum = 0;
-                spriteCounter = 0;
             }
         }
     }
@@ -500,6 +467,39 @@ public abstract class Entity {
     }
 
     // ATTACK METHODS
+    public void checkWithinAttackRange(int rate) {
+        boolean targetInRange = false;
+        int xDis = getDistanceX(gp.player);
+        int yDis = getDistanceY(gp.player);
+
+        switch (action) {
+            case "moveUp":
+                if (gp.player.worldY < worldY && yDis < attackArea.width - 48 && xDis < attackArea.height)
+                    targetInRange = true;
+                break;
+            case "moveDown":
+                if (gp.player.worldY > worldY && yDis < attackArea.width + 48 && xDis < attackArea.height)
+                    targetInRange = true;
+                break;
+            case "moveLeft":
+                if (gp.player.worldX < worldX && xDis < attackArea.width + 48 && yDis < attackArea.height)
+                    targetInRange = true;
+                break;
+            case "moveRight":
+                if (gp.player.worldX > worldX && xDis < attackArea.width && yDis < attackArea.height)
+                    targetInRange = true;
+        }
+
+        if (targetInRange) {
+            // CHECK ATTACK HAPPENS
+            int i = new Random().nextInt(rate);
+            if (i == 0) {
+                attacking = true;
+                spriteNum = 0;
+                spriteCounter = 0;
+            }
+        }
+    }
     public void checkDamageSprite() {
         if (animationSpriteNum == damageSprite) {
             // SAVE CURRENT DATA OF ENTITY
@@ -582,7 +582,7 @@ public abstract class Entity {
         if (interactSpriteNum < interactList.size() && interactSpriteCounter % 5 == 0) {
             interactSpriteNum++;
         }
-        if (interactSpriteNum >= interactList.size() - 1) {
+        if (interactSpriteNum >= interactList.size()) {
             interactSpriteNum = 0;
             interactSpriteCounter = 0;
             interacting = false;
@@ -708,7 +708,9 @@ public abstract class Entity {
     public void draw(Graphics2D g2) {
         BufferedImage image;
         if (spriteNum >= currentList.size()) spriteNum = 0;
+//        if (animationSpriteNum >= mobRightAttackList.size()) animationSpriteNum = 0;
         if (specialSpriteNum >= currentList.size()) specialSpriteNum = 0;
+//        if (interactSpriteNum >= interactList.size()) interactSpriteNum = 0;
 
         if (!alive) return;
 
@@ -736,7 +738,7 @@ public abstract class Entity {
 
             if (dead) dyingAnimation(g2);
 
-            if(!attacking){
+            if (!attacking){
                 g2.drawImage(image, worldX, worldY, null);
                 UtilityTool.changeAlpha(g2, 1f);
             }

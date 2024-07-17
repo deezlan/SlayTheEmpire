@@ -1,11 +1,13 @@
 package main;
 
-import javax.swing.*;
-import java.awt.Dimension;
-import java.awt.Color;
+import javax.swing.JPanel;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.*;
+import java.awt.Dimension;
+import java.awt.Point;
+import java.awt.Font;
+import java.awt.Toolkit;
+import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
@@ -111,7 +113,7 @@ public class GamePanel extends JPanel implements Runnable {
         this.setFocusable(true); // pass the player instance variable to the KeyHandler constructor
 
         // DEFAULT SETTINGS
-        music.volumeScale = 3;
+        music.volumeScale = 0;
         effect.volumeScale = 3;
         gameMode = easyMode;
 
@@ -177,7 +179,7 @@ public class GamePanel extends JPanel implements Runnable {
     public void setupGame() {
         tempScreen = new BufferedImage(SCREEN_WIDTH,SCREEN_HEIGHT,BufferedImage.TYPE_INT_ARGB);
         g2 = (Graphics2D) tempScreen.getGraphics();
-        gameState = titleState; // TESTING LOGIN RIGHT NOW
+        gameState = characterSelectionState; // TESTING LOGIN RIGHT NOW
         playMusic(0);
     }
 

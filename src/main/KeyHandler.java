@@ -306,6 +306,9 @@ public class KeyHandler implements KeyListener {
                     gp.ui.slotRow++;
                 }
             }
+            if (code == KeyEvent.VK_E) { // DONT REMOVE THIS, TO EXIT FROM SHOP
+                gp.gameState = gp.playState;
+            }
         }
     }
 

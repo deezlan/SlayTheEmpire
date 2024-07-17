@@ -786,7 +786,6 @@ public abstract class Entity {
                     BufferedImage animationImage = currentList.get(animationSpriteNum);
                     g2.drawImage(animationImage, screenX, screenY, null);
                 }
-                g2.drawRect(solidArea.x, solidArea.y, solidArea.width, solidArea.height);
             }
         }
     }

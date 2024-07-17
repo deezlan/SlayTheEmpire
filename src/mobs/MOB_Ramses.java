@@ -11,46 +11,12 @@ public class MOB_Ramses extends Entity {
     public MOB_Ramses(GamePanel gp, int worldX, int worldY) {
         super(gp, worldX, worldY);
         this.gp = gp;
-        type = type_mob;
-        defaultSpeed = 1;
-        speed = defaultSpeed;
-        damage = 1;
-        maxLife = 4;
-        currentLife = maxLife;
-        action = "idleRight";
-        mobNum = 4;
+        setStatValues(1, 4, false, false, 4);
+        setCollisionValues(58, 98, 50, 30);
+        setAttackValues(1, 3, 50, 50);
 
         // Load mob sprites
         getMobSprites();
-
-        // Set collision settings
-        solidArea.x = 58;
-        solidArea.y = gp.TILE_SIZE + 50;
-        solidArea.width = 50;
-        solidArea.height = 30;
-        solidAreaDefaultX = solidArea.x;
-        solidAreaDefaultY = solidArea.y;
-    }
-
-    @Override
-    public void setAction() {
-
-        if(onPath) {
-            // CHECK IF STOP CHASING
-            checkStopChase(gp.player, 15, 100);
-            // SEARCH DIRECTION TO GO
-            searchPath(getGoalCol(gp.player),getGoalRow(gp.player));
-        } else {
-            // CHECK IF START CHASING
-            checkStartChase(gp.player, 5 , 100);
-            // GET RANDOM DIRECTION
-            getRandomDirection();
-        }
-    }
-
-    public void damageReaction() {
-        actionLockCounter = 0;
-        onPath = true;
     }
 
     public void getMobSprites() {

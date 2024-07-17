@@ -578,6 +578,10 @@ public class UI {
 
     // CHARACTER SELECTION SCREEN
     public void drawCharacterSelection() {
+        g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 20F));
+        String text = "(Esc to Exit)";
+        g2.drawString(text,10,30);
+
         g2.setColor(Color.BLACK);
         g2.fillRect(0,0, gp.SCREEN_WIDTH, gp.SCREEN_HEIGHT);
         drawBG();
@@ -585,12 +589,13 @@ public class UI {
         g2.setColor(Color.WHITE);
         g2.setFont(g2.getFont().deriveFont(Font.BOLD, 40F));
 
-        String text = "Select Your Class";
+        text = "Select Your Class";
         int x = getXForCenteredText(text);
         int y = gp.TILE_SIZE*3;
         g2.drawString(text, x, y);
 
         drawCharacterSelectPreview();
+
     }
 
     //Draw dialog
@@ -994,7 +999,15 @@ public class UI {
     }
 
     public void drawControls() {
+        g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 20F));
+        String text = "(Esc to Exit)";
+        g2.drawString(text,10,30);
 
+        int frameX = 0;
+        int frameY = gp.TILE_SIZE*2;
+        int frameWidth = gp.SCREEN_WIDTH;
+        int frameHeight = gp.SCREEN_HEIGHT - gp.TILE_SIZE*2;
+        drawSubWindow(frameX, frameY, frameWidth, frameHeight);
     }
 
     public void drawDifficultySelect() {
@@ -1078,8 +1091,6 @@ public class UI {
         if (gp.ui.commandNum == 3) {
             g2.drawString(">", x - 25, y);
         }
-
-        // DESCRIPTION
     }
 
     public void draw(Graphics2D g2){

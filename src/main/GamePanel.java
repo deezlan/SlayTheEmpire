@@ -48,9 +48,6 @@ public class GamePanel extends JPanel implements Runnable {
     public int playerClass;
     public KeyHandler keyH = new KeyHandler(this);
 
-    // FPS SETTINGS
-    private final int FPS = 60;
-
     // LOGIN SETTINGS
     public LoginSystem loginSys = new LoginSystem(this);
 
@@ -83,7 +80,8 @@ public class GamePanel extends JPanel implements Runnable {
     // CUTSCENE
     public boolean bossBattleOn = false;
     public CutsceneManager csManager = new CutsceneManager(this);
-    // GAME STATES
+
+    // GAME SETTINGS
     public int gameState;
     public final int
             titleState = 0,
@@ -103,8 +101,11 @@ public class GamePanel extends JPanel implements Runnable {
             controlsState = 14,
             difficultySelectState = 15;
 
-
-
+    public final int
+                easyMode = 1,
+                normalMode = 2,
+                hardMode = 3;
+    public int gameMode = easyMode;
 
     public GamePanel() {
         this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
@@ -212,7 +213,9 @@ public class GamePanel extends JPanel implements Runnable {
     // FPS SETTINGS
     @Override
     public void run() {
-        double drawInterval = (double) 1000000000 /FPS;
+        // FPS SETTINGS
+        int FPS = 60;
+        double drawInterval = (double) 1000000000 / FPS;
         double delta = 0;
         long lastTime = System.nanoTime();
         long currentTime;

@@ -11,9 +11,9 @@ public class MOB_Skellington extends Entity {
     public MOB_Skellington(GamePanel gp, int worldX, int worldY) {
         super(gp, worldX, worldY);
         this.gp = gp;
-        setStatValues(1, 8, false, false, 2);
+        setStatValues(1, 8, false, 2, 300);
         setCollisionValues(58, 98, 50, 30);
-        setAttackValues(1, 7, 60, 60);
+        setAttackValues(1, 7, 60, 60, false);
 
         // Load mob sprites
         getMobSprites();

@@ -11,9 +11,9 @@ public class MOB_Ramses extends Entity {
     public MOB_Ramses(GamePanel gp, int worldX, int worldY) {
         super(gp, worldX, worldY);
         this.gp = gp;
-        setStatValues(1, 4, false, false, 4);
+        setStatValues(1, 4, false, 4, 125);
         setCollisionValues(58, 98, 50, 30);
-        setAttackValues(1, 3, 50, 50);
+        setAttackValues(1, 3, 50, 50, false);
 
         // Load mob sprites
         getMobSprites();

@@ -55,7 +55,7 @@ public class PlayerDummy extends Entity{
                     UtilityTool.scaleEntityList(this, idleRightList, 200, 96);
                     UtilityTool.scaleEntityList(this, idleLeftList, 200, 96);
                     break;
-                case 2:
+                case 2: // ASSASSIN
                     dir = "/player/Assassin/";
                     // Load sprites for movement
                     for (int i = 0; i <= 24; i++) {

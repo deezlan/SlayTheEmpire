@@ -2,6 +2,7 @@ package main;
 
 import javax.swing.*;
 import java.io.*;
+import java.util.HashMap;
 import java.util.Scanner;
 import java.security.NoSuchAlgorithmException;
 import java.security.MessageDigest;
@@ -10,9 +11,9 @@ public class LoginSystem extends JPanel {
     GamePanel gp;
     PrintWriter output;
     Scanner input;
-    boolean found;
     String encryptedPass;
-    String[] dbCredentials;
+    String[] loginCred;
+    HashMap<String, String> accDatabase = new HashMap<>();
     File file = new File("res/userData.txt");
 
     public LoginSystem(GamePanel gp) {
@@ -22,58 +23,44 @@ public class LoginSystem extends JPanel {
         } catch (IOException e) { e.printStackTrace(System.out); }
     }
 
-    public void authLogin() {
+    public void loadUsers() {
+        accDatabase = null;
         try {
             input = new Scanner(file);
-        } catch (IOException e) {
-            e.printStackTrace(System.out);
+        } catch (IOException e) { e.printStackTrace(System.out); }
+
+        while (input.hasNext()) {
+            loginCred = input.nextLine().split(":");
+            accDatabase.put(loginCred[0], loginCred[1]);
         }
-        found = false;
+    }
+
+    public void authLogin() {
+        loadUsers();
 
         encryptPass();
-        // Loop through every entry in the file
-        while (input.hasNext() && !found) {
-            dbCredentials = input.nextLine().split(":");
-
-            if (dbCredentials[0].equalsIgnoreCase(gp.ui.inpUser)){
-                if (dbCredentials[1].equalsIgnoreCase(encryptedPass)){
-                    found = true;
-//                    gp.ui.validLogin = true;
-                    gp.gameState = gp.startMenuState;
-                    break;
-                }
-            }
-        }
-
-        if(!found) {
+        if (accDatabase.containsKey(gp.ui.inpUser)) {
+            if (accDatabase.get(gp.ui.inpUser).equals(encryptedPass)) {
+                gp.gameState = gp.startMenuState;
+            } else { gp.ui.isInvalidLogin = true; }
+        } else {
             gp.ui.isInvalidLogin = true;
         }
     }
 
     public void authRegister() {
-        try {
-            input = new Scanner(file);
-            FileWriter fw = new FileWriter(file, true);
-            BufferedWriter bw = new BufferedWriter(fw);
-            output = new PrintWriter(bw);
-        } catch (IOException e) {
-            e.printStackTrace(System.out);
-        }
-        found = false;
+        loadUsers();
 
-        encryptPass();
-        // Loop through every entry in the file
-        while(input.hasNext() && !found) {
-            dbCredentials = input.nextLine().split(":");
+        if (accDatabase.containsKey(gp.ui.inpUser)) {
+            gp.ui.usernameTaken = true;
+        } else {
+            try {
+                FileWriter fw = new FileWriter(file, true);
+                BufferedWriter bw = new BufferedWriter(fw);
+                output = new PrintWriter(bw);
+            } catch (IOException e) { e.printStackTrace(System.out); }
 
-            if (dbCredentials[0].equalsIgnoreCase(gp.ui.inpUser)){
-                found = true;
-                gp.ui.usernameTaken = true;
-                break;
-            }
-        }
-
-        if (!found) {
+            encryptPass();
             output.print(gp.ui.inpUser + ":" + encryptedPass + "\n");
             output.close();
         }

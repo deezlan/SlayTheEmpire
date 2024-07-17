@@ -145,7 +145,7 @@ public class KeyHandler implements KeyListener {
 
                 System.out.println(gp.ui.inpUser);
                 gp.ui.inpUser = gp.ui.inpUser.concat(String.valueOf((char) code));
-                System.out.println("Username is: " + gp.ui.inpUser);
+                System.out.println("Username is: " + gp.ui.inpUser.toLowerCase());
             }
         }
 
@@ -160,7 +160,7 @@ public class KeyHandler implements KeyListener {
                 System.out.println("Test any key");
 
                 System.out.println(gp.ui.inpPass);
-                gp.ui.inpPass = gp.ui.inpPass.concat(String.valueOf((char) code));
+                gp.ui.inpPass = gp.ui.inpPass.concat(String.valueOf((char) code).toLowerCase());
                 gp.ui.inpPassHidden = gp.ui.inpPassHidden.concat("*");
 
                 System.out.println("Password is: " + gp.ui.inpPass);

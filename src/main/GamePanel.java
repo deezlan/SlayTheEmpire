@@ -48,11 +48,8 @@ public class GamePanel extends JPanel implements Runnable {
     public TileManager tileM = new TileManager(this);
 
     // PLAYER SETTINGS
-    public int playerClass = 0;
+    public int playerClass;
     public KeyHandler keyH = new KeyHandler(this);
-
-    // FPS SETTINGS
-    private final int FPS = 60;
 
     // LOGIN SETTINGS
     public LoginSystem loginSys = new LoginSystem(this);
@@ -61,7 +58,7 @@ public class GamePanel extends JPanel implements Runnable {
     Sound music = new Sound();
     Sound effect = new Sound();
     public Cursor cursor = new Cursor(this); // Initialize cursor
-    public Player player = new Player(this, keyH, cursor, playerClass);
+    public Player player;
     public MouseHandler mouseH = new MouseHandler();
     public UI ui = new UI(this);
 
@@ -75,19 +72,21 @@ public class GamePanel extends JPanel implements Runnable {
             gateArr = new Entity[maxMap][50],
             projectileArr = new Entity[maxMap][50];
     public InteractiveTIle[][] iTile = new InteractiveTIle[maxMap][50];
-    boolean bossBattleOn;
 
     // HANDLERS
     public CollisionChecker cChecker = new CollisionChecker(this);
     public EventHandler eHandler = new EventHandler(this);
     public SaveLoad saveLoad = new SaveLoad(this, 3);
-    public CutsceneManager csManager = new CutsceneManager(this);
     public TrySaveLoad trySaveLoad = new TrySaveLoad(this, 3);
 
     // PATHFINDER
     public Pathfinder pFinder = new Pathfinder(this);
 
-    // GAME STATES
+    // CUTSCENE
+    public boolean bossBattleOn = false;
+    public CutsceneManager csManager = new CutsceneManager(this);
+
+    // GAME SETTINGS
     public int gameState;
     public final int
             titleState = 0,
@@ -107,9 +106,11 @@ public class GamePanel extends JPanel implements Runnable {
             controlsState = 14,
             savePageState = 15;
 
-
-
-
+    public final int
+                easyMode = 1,
+                normalMode = 2,
+                hardMode = 3;
+    public int gameMode = easyMode;
 
     public GamePanel() {
         this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
@@ -153,7 +154,7 @@ public class GamePanel extends JPanel implements Runnable {
         this.setCursor(blankCursor);
     }
 
-    public void showCursor() {
+    private void showCursor() {
         java.awt.Cursor defaultCursor = java.awt.Cursor.getDefaultCursor();
         this.setCursor(defaultCursor);
     }
@@ -173,14 +174,7 @@ public class GamePanel extends JPanel implements Runnable {
         effect.play();
     }
 
-
     public void setupGame() {
-        aSetter.setObject();
-        aSetter.setNPC();
-        aSetter.setMonster();
-        aSetter.setGates();
-        gameState = playState;
-
         tempScreen = new BufferedImage(SCREEN_WIDTH,SCREEN_HEIGHT,BufferedImage.TYPE_INT_ARGB);
         g2 = (Graphics2D) tempScreen.getGraphics();
         gameState = titleState; // TESTING LOGIN RIGHT NOW
@@ -205,15 +199,9 @@ public class GamePanel extends JPanel implements Runnable {
 //        aSetter.setInteractiveTile();
 //    }
 
-//    public void resetMonster() { (WIP)
-//        aSetter.setMonster();
-//    }
-
-    public void resetLevel() {
+    public void loadLevel() {
         bossBattleOn = false;
-        aSetter.setObject();
-        aSetter.setMonster();
-        aSetter.setGates();
+        aSetter.loadAssets();
     }
 
     // MAP SETTINGS
@@ -224,16 +212,15 @@ public class GamePanel extends JPanel implements Runnable {
                 break;
             case 1, 2:
                 setBackground(Color.decode("#42393A"));
-//                break;
-//            case 2:
-//                setBackground(Color.decode("#42393A"));
         }
     }
 
     // FPS SETTINGS
     @Override
     public void run() {
-        double drawInterval = (double) 1000000000 /FPS;
+        // FPS SETTINGS
+        int FPS = 60;
+        double drawInterval = (double) 1000000000 / FPS;
         double delta = 0;
         long lastTime = System.nanoTime();
         long currentTime;
@@ -329,16 +316,13 @@ public class GamePanel extends JPanel implements Runnable {
         }
 
         // Title Screen
-        if (gameState != titleState
-                && gameState != loginState
-                && gameState != startMenuState
-                && gameState != creditsState) {
-//        if (gameState == playState ||
-//                gameState == shopState ||
-//                gameState == dialogueState ||
-//                gameState == pauseState ||
-//                gameState == optionState ||
-//                gameState == optionState2) {
+        if (gameState == playState ||
+                gameState == shopState ||
+                gameState == dialogueState ||
+                gameState == pauseState ||
+                gameState == optionState ||
+                gameState == transitionState ||
+                gameState == cutsceneState) {
 
             // DEBUG
             long drawStart = 0;
@@ -351,15 +335,8 @@ public class GamePanel extends JPanel implements Runnable {
 
             for (Entity gate : gateArr[currentMap])
                 if (gate != null) gate.draw(g2);
-            // ADD INTERACTIVE TILES
-//            for (int i = 0; i < iTile[1].length; i++){ // INTERACTIVE TILES
-//                if(iTile[currentMap][i] != null){
-//                    iTile[currentMap][i].draw(g2);
-//                }
-//            }
 
-            // ADD ALL ENTITIES TO entityList
-
+            // ADD ALL ENTITIES TO entityList //
             // PLAYER
             entityList.add(player);
             // NPCs

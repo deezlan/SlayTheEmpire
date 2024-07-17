@@ -13,8 +13,8 @@ public class Projectile extends Entity{
     int delta;
 
     public void set(int worldX, int worldY, String action, boolean alive, Entity user, int mouseX, int mouseY) {
-        this.worldX = worldX + 80;
-        this.worldY = worldY + 30;
+        this.worldX = worldX;
+        this.worldY = worldY;
         this.action = action;
         this.alive = alive;
         this.user = user;
@@ -129,8 +129,10 @@ public class Projectile extends Entity{
                     break;
             }
 
-
-            if (!gp.player.iframe && contactPlayer) {
+            if (name.equalsIgnoreCase("demon blast") & !gp.player.iframe & contactPlayer){
+                System.out.println("HIT PLAYER!");
+                damagePlayer(damage);
+            }else if (!gp.player.iframe && contactPlayer) {
                 System.out.println("HIT PLAYER!");
                 damagePlayer(damage);
                 alive = false;
@@ -140,6 +142,7 @@ public class Projectile extends Entity{
         currentLife--;
         if (currentLife <= 0) {
             alive = false;
+            spriteNum = 0;
         }
 
         spriteCounter++;

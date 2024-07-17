@@ -30,9 +30,6 @@ public class Player extends Entity {
     public int playerClass;
     private int delta;
 
-//    public ArrayList<Entity> inventory = new ArrayList<>(); temp commented
-//    public final int inventorySize = 8; temp commented
-
     public Player (GamePanel gp, KeyHandler keyH, Cursor cursor, int playerClass) {
         super(gp);
         this.gp = gp;
@@ -63,6 +60,16 @@ public class Player extends Entity {
         getPlayerAttackSprites();
     }
 
+//    @Override
+//    public void setStatValues(int defaultSpeed, int maxLife, boolean hasRanged, boolean isBoss, int mobBossNum) {
+//        super.setStatValues(defaultSpeed, maxLife, hasRanged, isBoss, mobBossNum);
+//    }
+//
+//    @Override
+//    public void setAttackValues(int damage, int damageSprite, int attWidth, int attHeight) {
+//        super.setAttackValues(damage, damageSprite, attWidth, attHeight);
+//    }
+
     // DEFAULT INITIALIZATION
     public void setDefaultValues() {
         worldX = 303; // PLAYER SPAWN X
@@ -72,7 +79,7 @@ public class Player extends Entity {
         type = type_player;
 
         // ATTRIBUTES
-        maxLife = 6;
+        maxLife = 10;
         currentLife = maxLife;
         totalCoins = 500;
         damage = 1;
@@ -199,6 +206,7 @@ public class Player extends Entity {
             }
         }
     }
+    @Override
     public void runAttackAnimation() {
         animationCounter++;
         if (animationSpriteNum < playerRightAttackList.size() && animationCounter%5 == 0) {
@@ -214,16 +222,6 @@ public class Player extends Entity {
     public void startAttack(){
         checkDamageSprite();
         runAttackAnimation();
-//        switch (playerClass) {
-//            case 0:
-//                runAttackAnimation();
-//                break;
-//            case 1:
-//                runAttackAnimation();
-//                break;
-//            case 2:
-//                runAttackAnimation();
-//        }
     }
     public void damageMonster(int i, int attack, Entity attacker) {
         if (i != 999){
@@ -286,7 +284,7 @@ public class Player extends Entity {
     public void interactMob (int index) {
         if (index != 999) {
             if (!iframe && !gp.mobArr[gp.currentMap][index].dead){
-                currentLife -= 1;
+                currentLife -= gp.gameMode;
                 iframe = true;
             }
         }
@@ -297,9 +295,8 @@ public class Player extends Entity {
     public void update() {
         delta++;
         if(!keyH.godModeOn){
-            if (currentLife <= 0){
+            if (currentLife <= 0)
                 gp.gameState = gp.deathState;
-            }
         }
 
         if (currentLife > maxLife){
@@ -516,6 +513,7 @@ public class Player extends Entity {
             shotAvailableCounter++;
         }
     }
+    @Override
     public void draw(Graphics2D g2) {
         if (spriteNum > currentList.size() - 1)
             spriteNum = 0;

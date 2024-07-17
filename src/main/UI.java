@@ -26,25 +26,29 @@ public class UI {
     Font gameFont;
 
     // IMAGE AND GIFS
-    private final Image bg, bg2;
-    private final Image titleGif;
-    private final Image titleImage;
-    private final Image startMenu;
-    private final Image warriorGif;
-    private final Image knightGif;
-    private final Image assassinGif;
-    private final Image loginDefault, typeUsername, typePassword,
-            blankErr, usernameErr, loginErr, usernameTakenErr;
-    private final Image warriorSelected, knightSelected, assassinSelected;
+    private final Image
+            bg, bg2,
+            // TITLE STATE
+            titleGif, titleImage,
+            // LOGIN STATE
+            loginDefault, typeUsername, typePassword,
+            blankErr, usernameErr, loginErr, usernameTakenErr,
+            // MAIN MENU STATE
+            startMenu,
+            // CHARACTER SELECTION STATE
+            warriorGif, knightGif, assassinGif,
+            warriorSelected, knightSelected, assassinSelected;
 
-    public String currentDialog = "";
-    public int slotRow = 0;
-    public int slotRowMove = 0;
-    int counter = 0;
-    int charIndex = 0;
-    String combinedText = "";
+    public String currentDialog = "",
+            combinedText = "";
+    int counter = 0,
+        charIndex = 0;
+    // OPTIONS
     public int commandNum = 0;
     int subState = 0;
+
+    public int slotRow = 0,
+            slotRowMove = 0;
 
     // Login variables
     public String inpUser = "", inpPass = "", inpPassHidden = "";
@@ -615,7 +619,7 @@ public class UI {
                 currentDialog = combinedText;
                 charIndex++;
             }
-            if(gp.keyH.ePressed){
+            if (gp.keyH.ePressed){
                 charIndex = 0;
                 combinedText = "";
                 if(gp.gameState == gp.dialogueState){
@@ -628,9 +632,9 @@ public class UI {
             }
         } else {
             npc.dialogueIndex = 0;
-            if(gp.gameState == gp.dialogueState){
+            if (gp.gameState == gp.dialogueState) {
                 gp.gameState = gp.playState;
-            } else if(gp.gameState == gp.cutsceneState){
+            } else if (gp.gameState == gp.cutsceneState) {
                 gp.csManager.scenePhase++;
             }
         }
@@ -691,11 +695,10 @@ public class UI {
     public void drawDeathScreen() {
         g2.setColor(new Color(0,0,0,150));
         g2.fillRect(0,0, gp.SCREEN_WIDTH , gp.SCREEN_HEIGHT);
-        int x;
-        int y;
+        int x, y;
         String text;
         g2.setFont(g2.getFont().deriveFont(Font.BOLD, 50f));
-        text = "KAMU DAH MATI";
+        text = "YOU HAVE DIED";
 
         // SHADOW
         g2.setColor(Color.BLACK);
@@ -713,13 +716,7 @@ public class UI {
         y += gp.TILE_SIZE*4;
         g2.drawString(text,x,y);
 
-        if(gp.keyH.ePressed){
-            drawDeathTransition();
-        }
-//        int x = getXforCenteredText(text);
-//        int y = gp.SCREEN_HEIGHT/2;
-//
-//        g2.drawString(text, x, y);
+        if (gp.keyH.ePressed) drawDeathTransition();
     }
     public void drawSubWindow(int x, int y, int width,int height){
         Color custom = new Color(0,0,0,220);
@@ -742,9 +739,8 @@ public class UI {
         g2.setColor(new Color(0,0,0,counter*5));
         g2.fillRect(0,0,gp.SCREEN_WIDTH,gp.SCREEN_HEIGHT);
 
-        if(counter == 50){
+        if (counter == 50) {
             counter = 0;
-            gp.gameState = gp.playState;
             gp.currentMap = gp.eHandler.tempMap;
             gp.setMapColor();
             gp.player.worldX = gp.TILE_SIZE * gp.eHandler.tempCol;
@@ -758,7 +754,7 @@ public class UI {
     public void drawAllMobHP() {
         for(int i = 0; i < gp.mobArr[1].length; i++){
             Entity mob = gp.mobArr[gp.currentMap][i]; // LOCAL ENTITY FOR SHORTER CODE
-            if(mob != null && mob.inCamera()){
+            if (mob != null && mob.inCamera()){
                 if (mob.hpBarVisible && !mob.boss) {
                     double oneScale = (double) gp.TILE_SIZE / mob.maxLife;
                     double hpBarValue = oneScale * mob.currentLife;
@@ -813,7 +809,7 @@ public class UI {
                         mob.hpBarCounter = 0;
                         mob.hpBarVisible = false;
                     }
-                } else if(mob.boss && mob.onPath) {
+                } else if (mob.boss && mob.onPath) {
                     double oneScale = (double) gp.TILE_SIZE*8 / mob.maxLife;
                     double hpBarValue = oneScale * mob.currentLife;
                     int x = gp.SCREEN_WIDTH/2 - gp.TILE_SIZE*2;
@@ -854,8 +850,8 @@ public class UI {
                         case 6:
                             g2.drawString(mob.name,x+4,y-10); break;
                     }
-        }
-    }
+                }
+            }
         }
     }
 
@@ -864,7 +860,7 @@ public class UI {
         g2.setColor(new Color(0,0,0,counter*5));
         g2.fillRect(0,0,gp.SCREEN_WIDTH,gp.SCREEN_HEIGHT);
 
-        if(counter == 50){
+        if (counter == 50){
             counter = 0;
             gp.gameState = gp.playState;
             gp.currentMap = 0;
@@ -911,7 +907,6 @@ public class UI {
         // FILLED BAR
         g2.setColor(Color.WHITE);
         g2.fillRect(x, y, fillColor, barHeight);
-
     }
 
     public void options_playState(int frameX, int frameY) {
@@ -921,9 +916,9 @@ public class UI {
         String text = "Options";
         x = getXForCenteredText(text, g2);
         y = frameY + gp.TILE_SIZE;
-        g2.drawString(text,x,y);
+        g2.drawString(text, x, y);
 
-        // Underline the title
+        // TITLE UNDERLINE
         g2.drawLine(x, y + 5, x + g2.getFontMetrics().stringWidth(text), y + 5);
 
         // MUSIC
@@ -963,7 +958,6 @@ public class UI {
             g2.setColor(Color.YELLOW); // highlight color
             g2.drawString(text,x,y);
             g2.drawString(">", x-25, y);
-
         } else {
             g2.setColor(Color.WHITE);
             g2.drawString(text,x,y);
@@ -977,7 +971,6 @@ public class UI {
             g2.setColor(Color.YELLOW); // highlight color
             g2.drawString(text,x,y);
             g2.drawString(">", x-25, y);
-
         } else {
             g2.setColor(Color.WHITE);
             g2.drawString(text,x,y);
@@ -1017,7 +1010,7 @@ public class UI {
         y = frameY + gp.TILE_SIZE;
         g2.drawString(text,x,y);
 
-        // Underline the title
+        // UNDERLINE TITLE
         g2.drawLine(x, y + 5, x + g2.getFontMetrics().stringWidth(text), y + 5);
 
         // MUSIC
@@ -1080,78 +1073,45 @@ public class UI {
     }
 
     public void draw(Graphics2D g2){
-
         this.g2 = g2;
         g2.setFont(gameFont);
 
-        // TITLE STATE
-        if (gp.gameState == gp.titleState) {
-            drawTitleScreen();
-        }
-
-        // START MENU STATE
-        if (gp.gameState == gp.startMenuState) {
-            drawStartMenu();
-        }
-
-        // CHAR SELECTION SCREEN
-        if (gp.gameState == gp.characterSelectionState) {
-            drawCharacterSelection();
-        }
-
+        // TITLE
+        if (gp.gameState == gp.titleState) drawTitleScreen();
         // LOGIN MENU
-        if (gp.gameState == gp.loginState) {
-            drawLoginScreen();
-        }
-
-        // OPTION 1 AND 2
-        if (gp.gameState == gp.optionState) {
-            drawOptions();
-        }
-
+        if (gp.gameState == gp.loginState) drawLoginScreen();
+        // START MENU
+        if (gp.gameState == gp.startMenuState) drawStartMenu();
+        // CREDITS
+        if (gp.gameState == gp.creditsState) drawCredits(g2);
+        // CHAR SELECTION
+        if (gp.gameState == gp.characterSelectionState) drawCharacterSelection();
+        // MENU OPTION & GAMEPLAY OPTION
+        if (gp.gameState == gp.optionState) drawOptions();
         if (gp.gameState == gp.optionState2) {
             drawBG();
             drawOptions();
         }
-
-        // PLAY STATE
+        // GAMEPLAY
         if (gp.gameState == gp.playState) {
             drawPlayerMoney();
             drawHotbar();
             drawPlayerLife();
             drawAllMobHP();
         }
-
-        // PAUSE STATE
-        if (gp.gameState == gp.pauseState) {
-            drawPauseScreen();
-        }
-
-        // DIALOGUE STATE
-        if(gp.gameState == gp.dialogueState){
-            drawDialogScreen();
-        }
-
-        // SHOP STATE
-        if (gp.gameState == gp.shopState){
-            drawShop();
-        }
-
-        // DEATH STATE
-        if (gp.gameState == gp.deathState) {
-            drawDeathScreen();
-        }
-
-        if(gp.gameState == gp.transitionState){
-            drawTransition();
-        }
-
-        if (gp.gameState == gp.creditsState) {
-            drawCredits(g2);
-        }
-
-        if (gp.gameState == gp.difficultyState) {
-            difficultySelect();
-        }
+        // PAUSE
+        if (gp.gameState == gp.pauseState) drawPauseScreen();
+        // DIALOGUE
+        if(gp.gameState == gp.dialogueState) drawDialogScreen();
+        // SHOP
+        if (gp.gameState == gp.shopState) drawShop();
+        // DEATH
+        if (gp.gameState == gp.deathState) drawDeathScreen();
+        // TRANSITION
+        if (gp.gameState == gp.transitionState) drawTransition();
+        // CREDITS
+        if (gp.gameState == gp.creditsState)  drawCredits(g2);
+        // DIFFICULTY SELECT
+        if (gp.gameState == gp.difficultyState) difficultySelect();
     }
 }

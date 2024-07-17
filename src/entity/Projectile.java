@@ -21,7 +21,6 @@ public class Projectile extends Entity{
         this.currentLife = this.maxLife;
         this.dx = mouseX;
         this.dy = mouseY;
-//        action = "moveUp";
     }
 
     public void update() {
@@ -129,8 +128,10 @@ public class Projectile extends Entity{
                     break;
             }
 
-
-            if (!gp.player.iframe && contactPlayer) {
+            if (name.equalsIgnoreCase("demon blast") & !gp.player.iframe & contactPlayer){
+                System.out.println("HIT PLAYER!");
+                damagePlayer(damage);
+            }else if (!gp.player.iframe && contactPlayer) {
                 System.out.println("HIT PLAYER!");
                 damagePlayer(damage);
                 alive = false;

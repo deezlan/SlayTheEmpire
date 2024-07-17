@@ -9,8 +9,8 @@ import java.io.IOException;
 public class BOSS_Cultist extends Entity {
     GamePanel gp;
     public static final String monName = "Cultist";
-    public BOSS_Cultist(GamePanel gp) {
-        super(gp);
+    public BOSS_Cultist(GamePanel gp, int worldX, int worldY) {
+        super(gp, worldX, worldY);
         this.gp = gp;
         name = monName;
         type = type_mob;
@@ -62,13 +62,9 @@ public class BOSS_Cultist extends Entity {
         }
         // CHECK ATTACK ON PLAYER
         if(!attacking){
-            checkWithinAttackRange(30,gp.TILE_SIZE*5,gp.TILE_SIZE*5); // CHANGE ATTACK RANGE
+            checkWithinAttackRange(30,gp.TILE_SIZE*5,gp.TILE_SIZE*5); // Original
+//            checkWithinAttackRange(30); // CHANGE ATTACK RANGE
         }
-    }
-
-    public void damageReaction() {
-        actionLockCounter = 0;
-        onPath = true;
     }
 
     public void setDialog() {

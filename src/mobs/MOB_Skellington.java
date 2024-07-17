@@ -11,57 +11,12 @@ public class MOB_Skellington extends Entity {
     public MOB_Skellington(GamePanel gp, int worldX, int worldY) {
         super(gp, worldX, worldY);
         this.gp = gp;
-        setStatValues(1, 8, false, false, 2);
+        setStatValues(1, 8, false, 2, 300);
         setCollisionValues(58, 98, 50, 30);
-        setAttackValues(1, 7, 60, 60);
-
-//        type = type_mob;
-//        defaultSpeed = 1;
-//        attack = 1;
-//        speed = defaultSpeed;
-//        maxLife = 8;
-//        currentLife = maxLife;
-//        action = "idleRight";
-//        mobNum = 2;
-//        damageSprite = 7;
+        setAttackValues(1, 7, 60, 60, false);
 
         // Load mob sprites
         getMobSprites();
-
-        // Set collision settings
-//        solidArea.x = 58;
-//        solidArea.y = gp.TILE_SIZE + 50;
-//        solidArea.width = 50;
-//        solidArea.height = 30;
-//        attackArea.width = 60;
-//        attackArea.height = 60;
-//        solidAreaDefaultX = solidArea.x;
-//        solidAreaDefaultY = solidArea.y;
-    }
-
-    @Override
-    public void setAction() {
-
-        if(onPath) {
-            // CHECK IF STOP CHASING
-            checkStopChase(gp.player, 15, 100);
-            // SEARCH DIRECTION TO GO
-            searchPath(getGoalCol(gp.player),getGoalRow(gp.player));
-        } else {
-            // CHECK IF START CHASING
-            checkStartChase(gp.player, 5 , 100);
-            // GET RANDOM DIRECTION
-            getRandomDirection();
-        }
-        // CHECK ATTACK ON PLAYER
-        if(!attacking){
-            checkWithinAttackRange(30,gp.TILE_SIZE*2,gp.TILE_SIZE*2); // CHANGE ATTACK RANGE
-        }
-    }
-
-    public void damageReaction() {
-        actionLockCounter = 0;
-        onPath = true;
     }
 
     public void getMobSprites() {

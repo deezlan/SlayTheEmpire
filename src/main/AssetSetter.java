@@ -12,6 +12,7 @@ public class AssetSetter {
     }
 
     public void loadAssets() {
+        setGates();
         setNPC();
         setMonster();
         setObject();
@@ -175,21 +176,19 @@ public class AssetSetter {
         switch (gp.currentMap) {
             case 1:
             {
-                gp.mobArr[gp.currentMap][i] = new MOB_SkeletonKnight(gp, 500, 1968); i++;
-                gp.mobArr[gp.currentMap][i] = new MOB_RobotGuardian(gp, 350, 1968); i++;
-                gp.mobArr[gp.currentMap][i] = new BOSS_FrostGiant(gp, 400, 180);
-
-
-//                gp.mobArr[gp.currentMap][i] = new MOB_RobotGuardian(gp, 350, 1968); i++;
+                gp.mobArr[gp.currentMap][i] = new MOB_RobotGuardian(gp, 400, 1968); i++;
+                gp.mobArr[gp.currentMap][i] = new MOB_Mushroom(gp, 350, 1968); i++;
+//                gp.mobArr[gp.currentMap][i] = new BOSS_FrostGiant(gp, 400, 180); i++;
+//                gp.mobArr[gp.currentMap][i] = new MOB_FlyingEye(gp, 350, 1968); i++;
+//                gp.mobArr[gp.currentMap][i] = new MOB_ArmoredGuardian(gp, 400, 1968); i++;
 //                gp.mobArr[gp.currentMap][i] = new MOB_SkeletonKnight(gp, 350, 1968); i++;
-//                gp.mobArr[gp.currentMap][i] = new MOB_Mushroom(gp, 450, 1968); i++;
-//                gp.mobArr[gp.currentMap][i] = new MOB_Canine(gp, 500, 300); i++;
-//                gp.mobArr[gp.currentMap][i] = new MOB_Slime(gp, 350, 400); i++;
-//                gp.mobArr[gp.currentMap][i] = new MOB_Goblin(gp, 400, 300); i++;
-//                gp.mobArr[gp.currentMap][i] = new MOB_Skellington(gp, 700, 300); i++;
-//                gp.mobArr[gp.currentMap][i] = new MOB_Ramses(gp, 700, 400); i++;
-//                gp.mobArr[gp.currentMap][i] = new MOB_ArmoredGuardian(gp, 400, 1968);
-            }
+//                gp.mobArr[gp.currentMap][i] = new MOB_Canine(gp, 350, 1968); i++;
+//                gp.mobArr[gp.currentMap][i] = new MOB_Slime(gp, 350, 1968); i++;
+//                gp.mobArr[gp.currentMap][i] = new MOB_Goblin(gp, 350, 1968); i++;
+//                gp.mobArr[gp.currentMap][i] = new MOB_Skellington(gp, 350, 1968); i++;
+//                gp.mobArr[gp.currentMap][i] = new MOB_Ramses(gp, 350, 1968); i++;
+                gp.mobArr[gp.currentMap][i] = new BOSS_FrostGiant(gp, 400, 180); i++;
+        }
                 break;
             case 2:
             {

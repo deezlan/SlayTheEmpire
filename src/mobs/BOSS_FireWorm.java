@@ -10,8 +10,8 @@ import java.io.IOException;
 public class BOSS_FireWorm extends Entity {
     GamePanel gp;
     public static final String monName = "Lex";
-    public BOSS_FireWorm(GamePanel gp) {
-        super(gp);
+    public BOSS_FireWorm(GamePanel gp, int worldX, int worldY) {
+        super(gp, worldX, worldY);
         this.gp = gp;
         name = monName;
         type = type_mob;
@@ -65,13 +65,9 @@ public class BOSS_FireWorm extends Entity {
         }
         // CHECK ATTACK ON PLAYER
         if(!attacking){
-            checkWithinAttackRange(30,gp.TILE_SIZE*6,gp.TILE_SIZE*6); // CHANGE ATTACK RANGE
+            checkWithinAttackRange(30,gp.TILE_SIZE*6,gp.TILE_SIZE*6); // Original
+//            checkWithinAttackRange(30); // CHANGE ATTACK RANGE
         }
-    }
-
-    public void damageReaction() {
-        actionLockCounter = 0;
-        onPath = true;
     }
 
     public void setDialog() {

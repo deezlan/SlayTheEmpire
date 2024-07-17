@@ -24,7 +24,7 @@ public class LoginSystem extends JPanel {
     }
 
     public void loadUsers() {
-        accDatabase = null;
+        accDatabase.clear();
         try {
             input = new Scanner(file);
         } catch (IOException e) { e.printStackTrace(System.out); }

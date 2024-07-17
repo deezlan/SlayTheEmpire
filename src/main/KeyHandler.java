@@ -341,6 +341,8 @@ public class KeyHandler implements KeyListener {
             creditsState(code);
         } else if (gp.gameState == gp.controlsState) {
             controlsState(code);
+        } else if (gp.gameState == gp.difficultyState) {
+            difficultyState(code);
         }
 
         if (code == KeyEvent.VK_T){

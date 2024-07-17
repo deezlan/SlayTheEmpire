@@ -661,24 +661,30 @@ public class UI {
         g2.drawString("Easy",x,y);
         if (commandNum == 0) {
             g2.drawString(">", x-24,y);
-            if (gp.keyH.ePressed) {
-                subState = 1;
+            if (gp.keyH.enterPressed) {
+                gp.gameMode = 1;
+                gp.gameState = gp.dialogueState;
+                currentDialog = "Going Easy are we?";
             }
         }
         y += gp.TILE_SIZE;
         g2.drawString("Medium",x,y);
         if (commandNum == 1) {
             g2.drawString(">", x-24,y);
-            if (gp.keyH.ePressed) {
-                subState = 2;
+            if (gp.keyH.enterPressed) {
+                gp.gameMode = 2;
+                gp.gameState = gp.dialogueState;
+                currentDialog = "Okay we are getting somewhere";
             }
         }
         y += gp.TILE_SIZE;
         g2.drawString("Hard",x,y);
         if (commandNum == 2) {
             g2.drawString(">", x-24,y);
-            if (gp.keyH.ePressed) {
-                subState = 3;
+            if (gp.keyH.enterPressed) {
+                gp.gameMode = 3;
+                gp.gameState = gp.dialogueState;
+                currentDialog = "We have a big boy here";
             }
         }
         y += gp.TILE_SIZE;

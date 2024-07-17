@@ -7,14 +7,22 @@ import java.io.*;
 public class TrySaveLoad implements Serializable {
     GamePanel gp;
     DataStorage ds = new DataStorage();
+    File trySaveFiles[];
 
-    public TrySaveLoad(GamePanel gp){
+    public TrySaveLoad(GamePanel gp, int numberOfFiles){
         this.gp = gp;
+        this.trySaveFiles = new File[numberOfFiles];
+
+        for(int i = 0; i < numberOfFiles; i++){
+            this.trySaveFiles[i] = new File("trySave" + (i+1) + ".dat");
+        }
+
     }
 
-    public void save(){
+
+    public void save(int slot){
         try {
-            FileOutputStream fileOut = new FileOutputStream("trySave.dat");
+            FileOutputStream fileOut = new FileOutputStream("trySave" + slot + ".dat" );
             ObjectOutputStream out = new ObjectOutputStream(fileOut);
 
             ds.life = gp.player.currentLife;
@@ -39,9 +47,9 @@ public class TrySaveLoad implements Serializable {
 
     }
 
-    public void load(){
+    public void load(int slot){
         try{
-            FileInputStream fileIn = new FileInputStream("trySave.dat");
+            FileInputStream fileIn = new FileInputStream("trySave"+ slot +".dat");
             ObjectInputStream in = new ObjectInputStream(fileIn);
 
             ds = (DataStorage) in.readObject();
@@ -63,5 +71,11 @@ public class TrySaveLoad implements Serializable {
         System.out.println(ds.coin);
         System.out.println(ds.maxLife);
 
+    }
+
+    public boolean isSaveFileEmpty(int slot) {
+        File saveFile = trySaveFiles[slot];
+        boolean saveEmpty = !saveFile.exists() || saveFile.length() == 0;
+        return saveEmpty;
     }
 }

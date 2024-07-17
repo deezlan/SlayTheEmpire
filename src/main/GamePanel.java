@@ -82,7 +82,7 @@ public class GamePanel extends JPanel implements Runnable {
     public EventHandler eHandler = new EventHandler(this);
     public SaveLoad saveLoad = new SaveLoad(this, 3);
     public CutsceneManager csManager = new CutsceneManager(this);
-    public TrySaveLoad trySaveLoad = new TrySaveLoad(this);
+    public TrySaveLoad trySaveLoad = new TrySaveLoad(this, 3);
 
     // PATHFINDER
     public Pathfinder pFinder = new Pathfinder(this);

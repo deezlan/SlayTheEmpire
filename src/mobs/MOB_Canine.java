@@ -12,7 +12,7 @@ public class MOB_Canine extends Entity {
         super(gp, worldX, worldY);
         this.gp = gp;
         setStatValues(2, 4, false, 10, 50);
-        setCollisionValues(30, 50, 40, 30);
+        setCollisionValues(70, 90, 40, 30);
         setAttackValues(1, 3, 60, 60, false);
 
         // Load mob sprites
@@ -37,12 +37,12 @@ public class MOB_Canine extends Entity {
                 mobLeftAttackList.add(i, UtilityTool.loadSprite(dir + "attackLeft/" + i + ".png", "Missing idleRight " + i));
             }
 
-            UtilityTool.scaleEntityList(this, moveRightList, 96, 64);
-            UtilityTool.scaleEntityList(this,moveLeftList, 96, 64);
-            UtilityTool.scaleEntityList(this,mobRightAttackList, 96, 64);
-            UtilityTool.scaleEntityList(this, mobLeftAttackList, 96, 64);
-            UtilityTool.scaleEntityList(this,idleLeftList, 96, 64);
-            UtilityTool.scaleEntityList(this, idleRightList, 96, 64);
+            UtilityTool.scaleEntityList(this, moveRightList, 200, 200);
+            UtilityTool.scaleEntityList(this,moveLeftList, 200, 200);
+            UtilityTool.scaleEntityList(this,mobRightAttackList, 200, 200);
+            UtilityTool.scaleEntityList(this, mobLeftAttackList, 200, 200);
+            UtilityTool.scaleEntityList(this,idleLeftList, 200, 200);
+            UtilityTool.scaleEntityList(this, idleRightList, 200, 200);
 
             System.out.println("Slime sprites loaded successfully");
         } catch (IOException e) {

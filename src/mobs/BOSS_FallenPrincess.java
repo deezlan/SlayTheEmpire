@@ -61,8 +61,8 @@ public class BOSS_FallenPrincess extends Entity {
         }
         // CHECK ATTACK ON PLAYER
         if(!attacking){
-            checkWithinAttackRange(30,gp.TILE_SIZE*5,gp.TILE_SIZE*5); // Original
-//            checkWithinAttackRange(30); // CHANGE ATTACK RANGE
+//            checkWithinAttackRange(30,gp.TILE_SIZE*5,gp.TILE_SIZE*5); // Original
+            checkWithinAttackRange(30); // CHANGE ATTACK RANGE
         }
     }
 

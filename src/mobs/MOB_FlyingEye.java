@@ -13,7 +13,7 @@ public class MOB_FlyingEye extends Entity {
         super(gp, worldX, worldY);
         this.gp = gp;
         setStatValues(1, 4, false, 8, 100);
-        setCollisionValues(150, 170, 38, 30);
+        setCollisionValues(70, 90, 40, 40);
         setAttackValues(0, 0, 0, 0, true);
         projectile = new OBJ_Rock(gp);
         hasRanged = true;
@@ -34,12 +34,12 @@ public class MOB_FlyingEye extends Entity {
                 mobRightAttackList.add(i, UtilityTool.loadSprite(dir + "idleRight/" + i + ".png", "Missing idleRight " + i));
             }
 
-            UtilityTool.scaleEntityList(this, moveRightList, 300, 300);
-            UtilityTool.scaleEntityList(this, moveLeftList, 300, 300);
-            UtilityTool.scaleEntityList(this, mobLeftAttackList, 300, 300);
-            UtilityTool.scaleEntityList(this, mobRightAttackList, 300, 300);
-            UtilityTool.scaleEntityList(this, idleLeftList, 300, 300);
-            UtilityTool.scaleEntityList(this, idleRightList, 300, 300);
+            UtilityTool.scaleEntityList(this, moveRightList, 200, 200);
+            UtilityTool.scaleEntityList(this, moveLeftList, 200, 200);
+            UtilityTool.scaleEntityList(this, mobLeftAttackList, 200, 200);
+            UtilityTool.scaleEntityList(this, mobRightAttackList, 200, 200);
+            UtilityTool.scaleEntityList(this, idleLeftList, 200, 200);
+            UtilityTool.scaleEntityList(this, idleRightList, 200, 200);
 
             System.out.println("Slime sprites loaded successfully");
         } catch (IOException e) {

@@ -5,7 +5,6 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.FloatControl;
 import java.io.File;
-import java.net.URL;
 import java.util.ArrayList;
 
 public class Sound {
@@ -62,28 +61,26 @@ public class Sound {
     // stop all sound effects
     public void stopAll() {
         for (Clip c : clips) {
-            if (c.isRunning()) {
+            if (c.isRunning())
                 c.stop();
-            }
         }
     }
 
     // Volume
     public void checkVolume() {
-        if (fc == null) {
+        if (fc != null) {
+            switch (volumeScale) {
+                case 0: volume = -80f; break;
+                case 1: volume = -20f; break;
+                case 2: volume = -12f; break;
+                case 3: volume = -5f; break;
+                case 4: volume = 1f; break;
+                case 5: volume = 6f; break;
+
+            }
+            fc.setValue(volume);
+        } else {
             System.out.println("FloatControl is not initialized. Cannot adjust volume.");
-            return;
         }
-
-        switch (volumeScale) {
-            case 0: volume = -80f; break;
-            case 1: volume = -20f; break;
-            case 2: volume = -12f; break;
-            case 3: volume = -5f; break;
-            case 4: volume = 1f; break;
-            case 5: volume = 6f; break;
-
-        }
-        fc.setValue(volume);
     }
 }

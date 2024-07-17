@@ -40,7 +40,6 @@ public class BOSS_FallenPrincess extends Entity {
         dialogueSet = 0;
     }
 
-
     @Override
     public void setAction() {
 
@@ -62,19 +61,14 @@ public class BOSS_FallenPrincess extends Entity {
         }
         // CHECK ATTACK ON PLAYER
         if(!attacking){
-            checkWithinAttackRange(30,gp.TILE_SIZE*5,gp.TILE_SIZE*5); // CHANGE ATTACK RANGE
+            checkWithinAttackRange(30,gp.TILE_SIZE*5,gp.TILE_SIZE*5); // Original
+//            checkWithinAttackRange(30); // CHANGE ATTACK RANGE
         }
-    }
-
-    public void damageReaction() {
-        actionLockCounter = 0;
-        onPath = true;
     }
 
     public void setDialog() {
         dialogs[0][0] = "Who are you.....";
         dialogs[0][1] = "YOU WILL PAY... WITH ICE!";
-
     }
 
     public void getMobSprites() {

@@ -30,9 +30,6 @@ public class Player extends Entity {
     public int playerClass;
     private int delta;
 
-//    public ArrayList<Entity> inventory = new ArrayList<>(); temp commented
-//    public final int inventorySize = 8; temp commented
-
     public Player (GamePanel gp, KeyHandler keyH, Cursor cursor, int playerClass) {
         super(gp);
         this.gp = gp;
@@ -62,6 +59,16 @@ public class Player extends Entity {
         getPlayerSprites();
         getPlayerAttackSprites();
     }
+
+//    @Override
+//    public void setStatValues(int defaultSpeed, int maxLife, boolean hasRanged, boolean isBoss, int mobBossNum) {
+//        super.setStatValues(defaultSpeed, maxLife, hasRanged, isBoss, mobBossNum);
+//    }
+//
+//    @Override
+//    public void setAttackValues(int damage, int damageSprite, int attWidth, int attHeight) {
+//        super.setAttackValues(damage, damageSprite, attWidth, attHeight);
+//    }
 
     // DEFAULT INITIALIZATION
     public void setDefaultValues() {
@@ -148,10 +155,25 @@ public class Player extends Entity {
 
             // ADJUST FOR ATTACK
             switch (action) {
+                case "idleRight", "moveRight": worldX += attackArea.width; break;
+                case "idleLeft", "moveLeft": worldX -= attackArea.width; break;
                 case "moveUp": worldY -= attackArea.height; break;
                 case "moveDown": worldY += attackArea.height; break;
-                case "moveLeft": worldX -= attackArea.width; break;
-                case "moveRight": worldX += attackArea.width; break;
+                case "moveUpRight":
+                    worldX += attackArea.width;
+                    worldY -= attackArea.height;
+                    break;
+                case "moveDownRight":
+                    worldX += attackArea.width;
+                    worldY += attackArea.height;
+                    break;
+                case "moveUpLeft":
+                    worldX -= attackArea.width;
+                    worldY -= attackArea.height;
+                    break;
+                case "moveDownLeft":
+                    worldX -= attackArea.width;
+                    worldY += attackArea.height;
             }
 
             // ATTACK AREA BECOMES SOLID AREA
@@ -184,6 +206,7 @@ public class Player extends Entity {
             }
         }
     }
+    @Override
     public void runAttackAnimation() {
         animationCounter++;
         if (animationSpriteNum < playerRightAttackList.size() && animationCounter%5 == 0) {
@@ -199,16 +222,6 @@ public class Player extends Entity {
     public void startAttack(){
         checkDamageSprite();
         runAttackAnimation();
-//        switch (playerClass) {
-//            case 0:
-//                runAttackAnimation();
-//                break;
-//            case 1:
-//                runAttackAnimation();
-//                break;
-//            case 2:
-//                runAttackAnimation();
-//        }
     }
     public void damageMonster(int i, int attack, Entity attacker) {
         if (i != 999){
@@ -271,7 +284,7 @@ public class Player extends Entity {
     public void interactMob (int index) {
         if (index != 999) {
             if (!iframe && !gp.mobArr[gp.currentMap][index].dead){
-                currentLife -= 1;
+                currentLife -= gp.gameMode;
                 iframe = true;
             }
         }
@@ -282,9 +295,8 @@ public class Player extends Entity {
     public void update() {
         delta++;
         if(!keyH.godModeOn){
-            if (currentLife <= 0){
+            if (currentLife <= 0)
                 gp.gameState = gp.deathState;
-            }
         }
 
         if (currentLife > maxLife){
@@ -422,7 +434,8 @@ public class Player extends Entity {
             } else {
                 if (currentWeapon.name.equalsIgnoreCase("fireball cannon") && delta>60){
                     delta = 0;
-                    projectile1.set(worldX, worldY, action, true, this, gp.cursor.deltaX, gp.cursor.deltaY);
+                    projectile1.set(worldX + currentList.get(0).getWidth()/2 - projectile1.currentList.get(0).getWidth()/2,
+                            worldY + currentList.get(0).getHeight()/2 - projectile1.currentList.get(0).getHeight()/2, action, true, this, gp.cursor.deltaX, gp.cursor.deltaY);
                     gp.projectileArr[gp.currentMap][1] = projectile1;
                 } else if (currentWeapon.name.equalsIgnoreCase("stickler") && delta>120) {
                     delta = 0;
@@ -500,6 +513,7 @@ public class Player extends Entity {
             shotAvailableCounter++;
         }
     }
+    @Override
     public void draw(Graphics2D g2) {
         if (spriteNum > currentList.size() - 1)
             spriteNum = 0;
@@ -523,7 +537,7 @@ public class Player extends Entity {
 
                 g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
                 break;
-            case 1,2:
+            case 1, 2:
                 if(drawing){
                     if(iframe){
                         g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.3f));

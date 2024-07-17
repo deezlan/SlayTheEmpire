@@ -11,8 +11,9 @@ public class MOB_ArmoredGuardian extends Entity {
     public MOB_ArmoredGuardian(GamePanel gp, int worldX, int worldY) {
         super(gp, worldX, worldY);
         this.gp = gp;
-        setStatValues(1, 4, true, false, 7);
+        setStatValues(1, 4, false, 7, 200);
         setCollisionValues(58, 98, 28, 30);
+        setAttackValues(0, 0, 0, 0, true);
         projectile = new OBJ_Energyball(gp);
 
         getMobSprites();

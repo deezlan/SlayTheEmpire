@@ -11,9 +11,9 @@ public class MOB_Canine extends Entity {
     public MOB_Canine(GamePanel gp, int worldX, int worldY) {
         super(gp, worldX, worldY);
         this.gp = gp;
-        setStatValues(2, 4, false, false, 10);
+        setStatValues(2, 4, false, 10, 50);
         setCollisionValues(30, 50, 40, 30);
-        setAttackValues(1, 3, 60, 60);
+        setAttackValues(1, 3, 60, 60, false);
 
         // Load mob sprites
         getMobSprites();

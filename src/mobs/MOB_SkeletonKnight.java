@@ -11,9 +11,9 @@ public class MOB_SkeletonKnight extends Entity {
     public MOB_SkeletonKnight(GamePanel gp, int worldX, int worldY) {
         super(gp, worldX, worldY);
         this.gp = gp;
-        setStatValues(1, 4, false, false, 6);
+        setStatValues(1, 4, false, 6, 66);
         setCollisionValues(98, 100, 28, 40);
-        setAttackValues(1, 6, 50, 50);
+        setAttackValues(1, 6, 50, 50, false);
 
         // Load mob sprites
         getMobSprites();

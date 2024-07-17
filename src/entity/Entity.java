@@ -56,6 +56,7 @@ public abstract class Entity {
             maxLife,
             currentLife,
             bossNum,
+            coinValue,
 
             // COLLISION ATTRIBUTES
             solidAreaDefaultX, solidAreaDefaultY;
@@ -173,21 +174,19 @@ public abstract class Entity {
             knockBackCounter = 0;
 
     // MOB INITIALIZATION METHODS
-    public void setStatValues(int defaultSpeed, int maxLife, boolean hasRanged, boolean isBoss, int mobBossNum) {
+    public void setStatValues(int defaultSpeed, int maxLife, boolean isBoss, int mobBossNum, int coinValue) {
         this.type = type_mob;
         this.defaultSpeed = defaultSpeed;
         this.speed = defaultSpeed;
         this.maxLife = maxLife * gp.gameMode;
         this.currentLife = maxLife * gp.gameMode;
+        this.coinValue = coinValue;
 
         if (gp.gameMode == gp.normalMode || gp.gameMode == gp.hardMode) {
             this.maxLife *= gp.gameMode;
             this.currentLife *= gp.gameMode;
         }
-        if (gp.gameMode == gp.hardMode) {
-            this.speed += 1;
-        }
-        this.hasRanged = hasRanged;
+        if (gp.gameMode == gp.hardMode) this.speed += 1;
 
         if (isBoss) {
             boss = true;
@@ -204,11 +203,12 @@ public abstract class Entity {
         solidAreaDefaultX = x;
         solidAreaDefaultY = y;
     }
-    public void setAttackValues(int damage, int damageSprite, int attWidth, int attHeight) {
+    public void setAttackValues(int damage, int damageSprite, int attWidth, int attHeight, boolean hasRanged) {
         attack = damage * gp.gameMode;
         this.damageSprite = damageSprite;
         attackArea.width = attWidth;
         attackArea.height = attHeight;
+        this.hasRanged = hasRanged;
     }
 
     // INTERFACE METHODS
@@ -503,9 +503,11 @@ public abstract class Entity {
         while (gp.objArr[gp.currentMap][i] != null)
             i++;
 
-        gp.objArr[gp.currentMap][i] = new OBJ_PickUpCoin(gp,
+        gp.objArr[gp.currentMap][i] = new OBJ_PickUpCoin(
+                gp,
                 worldX + idleRightList.get(0).getWidth()/2 - 24,
-                worldY + idleRightList.get(0).getHeight()/2 - 24);
+                worldY + idleRightList.get(0).getHeight()/2 - 24,
+                coinValue);
     }
 
     // PLAYER & MOB METHODS

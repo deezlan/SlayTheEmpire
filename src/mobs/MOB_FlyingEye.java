@@ -12,8 +12,9 @@ public class MOB_FlyingEye extends Entity {
     public MOB_FlyingEye(GamePanel gp, int worldX, int worldY) {
         super(gp, worldX, worldY);
         this.gp = gp;
-        setStatValues(1, 4, true, false, 8);
+        setStatValues(1, 4, false, 8, 100);
         setCollisionValues(150, 170, 38, 30);
+        setAttackValues(0, 0, 0, 0, true);
         projectile = new OBJ_Rock(gp);
 
         // Load mob sprites

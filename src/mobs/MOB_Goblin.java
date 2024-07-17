@@ -11,9 +11,9 @@ public class MOB_Goblin extends Entity {
     public MOB_Goblin(GamePanel gp, int worldX, int worldY) {
         super(gp, worldX, worldY);
         this.gp = gp;
-        setStatValues(1, 4, false, false, 5);
+        setStatValues(1, 4, false, 5, 25);
         setCollisionValues(98, 120, 28, 30);
-        setAttackValues(1, 4, 50, 50);
+        setAttackValues(1, 4, 50, 50, false);
 
         // Load mob sprites
         getMobSprites();

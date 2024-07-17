@@ -10,10 +10,10 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class UtilityTool {
+    // CHANGE ALPHA
     public static void changeAlpha(Graphics2D g2, float alphaValue) {
         g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alphaValue));
     }
-
     // SCALE & RETURN IMAGE
     public static BufferedImage scaleImage (BufferedImage original, int width, int height){
         BufferedImage scaledImage = new BufferedImage(width, height, original.getType());
@@ -63,13 +63,4 @@ public class UtilityTool {
             entity.currentList = spriteList;
         }
     }
-
-//    public static void scaleEffectsList (ArrayList<BufferedImage> spriteList, int width, int height) {
-//        ArrayList <BufferedImage> tempList = cloneList(spriteList);
-//        spriteList.clear();
-//        for (BufferedImage original : tempList) {
-//            BufferedImage scaledSprite = scaleImage(original, width, height);
-//            spriteList.add(scaledSprite);
-//        }
-//    }
 }

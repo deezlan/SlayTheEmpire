@@ -10,16 +10,9 @@ public class NPC_Maiden extends Entity {
         super(gp, worldX, worldY);
         action = "idleRight";
         type = type_npc;
+        setCollisionValues(20, 48, 48, 48);
         getNpcSprites();
         setDialog();
-
-        // Set collision settings
-        solidArea.x = 20;
-        solidArea.y = gp.TILE_SIZE;
-        solidArea.width = 48;
-        solidArea.height = 48;
-        solidAreaDefaultX = solidArea.x;
-        solidAreaDefaultY = solidArea.y;
 
         dialogueSet = -1;
     }

@@ -11,9 +11,9 @@ public class MOB_Slime extends Entity {
     public MOB_Slime(GamePanel gp, int worldX, int worldY) {
         super(gp, worldX, worldY);
         this.gp = gp;
-        setStatValues(1, 4, false, false, 1);
+        setStatValues(1, 4, false, 1, 15);
         setCollisionValues(58, 98, 28, 30);
-        setAttackValues(1, 2, 50, 30);
+        setAttackValues(1, 2, 50, 30, false);
 
         // Load mob sprites
         getMobSprites();

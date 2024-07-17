@@ -11,9 +11,9 @@ public class MOB_Mushroom extends Entity {
     public MOB_Mushroom(GamePanel gp, int worldX, int worldY) {
         super(gp, worldX, worldY);
         this.gp = gp;
-        setStatValues(1, 4, false, false, 9);
+        setStatValues(1, 4, false, 9, 350);
         setCollisionValues(150, 150, 28, 40);
-        setAttackValues(1, 7, 60, 60);
+        setAttackValues(1, 6, gp.TILE_SIZE*2, gp.TILE_SIZE*2, false);
 
         // Load mob sprites
         getMobSprites();

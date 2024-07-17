@@ -79,7 +79,7 @@ public class Player extends Entity {
         type = type_player;
 
         // ATTRIBUTES
-        maxLife = 100;
+        maxLife = 6;
         currentLife = maxLife;
         totalCoins = 500;
         damage = 1;
@@ -286,6 +286,7 @@ public class Player extends Entity {
             if (!iframe && !gp.mobArr[gp.currentMap][index].dead){
                 currentLife -= gp.gameMode;
                 iframe = true;
+                System.out.println(currentLife);
             }
         }
     }

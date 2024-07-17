@@ -287,6 +287,29 @@ public class KeyHandler implements KeyListener {
             }
         }
     }
+    public void potionShopState(int code){
+        if (gp.gameState == gp.potionShopState){
+            if (code == KeyEvent.VK_W) {
+                if (gp.ui.slotRowMove != 0){
+                    gp.ui.slotRowMove -= 1;
+                    gp.ui.slotRow--;
+                }
+            }
+            if (code == KeyEvent.VK_ENTER){
+                NPC_Blacksmith bs = (NPC_Blacksmith) gp.npcArr[gp.currentMap][1];
+                if (gp.player.totalCoins >= bs.getShopItems().get(gp.ui.slotRow).price)
+                    bs.buy();
+
+                gp.gameState = gp.playState;
+            }
+            if (code == KeyEvent.VK_S) {
+                if (gp.ui.slotRowMove != 3){
+                    gp.ui.slotRowMove += 1;
+                    gp.ui.slotRow++;
+                }
+            }
+        }
+    }
 
     // IMPLEMENTED METHODS
     @Override
@@ -320,6 +343,8 @@ public class KeyHandler implements KeyListener {
             creditsState(code);
         } else if (gp.gameState == gp.controlsState) {
             controlsState(code);
+        } else if (gp.gameState == gp.potionShopState){
+            potionShopState(code);
         }
 
         if (code == KeyEvent.VK_T){

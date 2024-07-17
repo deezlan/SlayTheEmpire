@@ -1015,9 +1015,8 @@ public class UI {
         drawVolumeBar(gp.effect.volumeScale, x, y);
     }
 
-    public void drawPotionShop(Graphics2D g2){
+    public void drawPotionShop(){
         try {
-            OBJ_Shop shop = (OBJ_Shop) gp.objArr[gp.currentMap][0];
             NPC_Blacksmith bs = (NPC_Blacksmith) gp.npcArr[gp.currentMap][1];
             InputStream is = new FileInputStream("ARCADE_N.TTF");
             Font arcade = Font.createFont(Font.TRUETYPE_FONT, is);
@@ -1155,9 +1154,11 @@ public class UI {
         if(gp.gameState == gp.dialogueState) drawDialogScreen();
         // SHOP
         if (gp.gameState == gp.shopState) drawShop();
+        if (gp.gameState == gp.potionShopState) drawPotionShop();
         // DEATH
         if (gp.gameState == gp.deathState) drawDeathScreen();
         // TRANSITION
         if(gp.gameState == gp.transitionState) drawTransition();
+
     }
 }

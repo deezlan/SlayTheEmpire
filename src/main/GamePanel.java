@@ -97,7 +97,7 @@ public class GamePanel extends JPanel implements Runnable {
             startMenuState = 11,
             cutsceneState = 13,
             controlsState = 14,
-            potionShopState = 15;
+            potionShopState = 15,
 
 
             // DIFFICULTY MODES
@@ -179,7 +179,7 @@ public class GamePanel extends JPanel implements Runnable {
     public void setupGame() {
         tempScreen = new BufferedImage(SCREEN_WIDTH,SCREEN_HEIGHT,BufferedImage.TYPE_INT_ARGB);
         g2 = (Graphics2D) tempScreen.getGraphics();
-        gameState = titleState; // TESTING LOGIN RIGHT NOW
+        gameState = characterSelectionState; // TESTING LOGIN RIGHT NOW
         playMusic(0);
     }
 
@@ -313,7 +313,8 @@ public class GamePanel extends JPanel implements Runnable {
                 gameState == pauseState ||
                 gameState == optionState ||
                 gameState == transitionState ||
-                gameState == cutsceneState) {
+                gameState == cutsceneState ||
+                gameState == potionShopState){
 
             // DEBUG
             long drawStart = 0;

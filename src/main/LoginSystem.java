@@ -12,7 +12,7 @@ public class LoginSystem extends JPanel {
     PrintWriter output;
     Scanner input;
     String encryptedPass;
-    String[] loginCred;
+    String[] userAcc;
     HashMap<String, String> accDatabase = new HashMap<>();
     File file = new File("res/userData.txt");
 
@@ -30,8 +30,8 @@ public class LoginSystem extends JPanel {
         } catch (IOException e) { e.printStackTrace(System.out); }
 
         while (input.hasNext()) {
-            loginCred = input.nextLine().split(":");
-            accDatabase.put(loginCred[0], loginCred[1]);
+            userAcc = input.nextLine().split(":");
+            accDatabase.put(userAcc[0], userAcc[1]);
         }
     }
 

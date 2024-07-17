@@ -256,6 +256,9 @@ public class Player extends Entity {
                 }
             }
         }
+        if (index == 0){
+            gp.gameState = gp.potionShopState;
+        }
     }
     public void interactNPC (int index) {
         if (index != 999) {

@@ -5,8 +5,10 @@ import main.GamePanel;
 import main.UtilityTool;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class OBJ_Shop extends Entity {
+    public static ArrayList<Entity> shopItems = new ArrayList<>();
     public OBJ_Shop(GamePanel gp, int worldX, int worldY) {
         super(gp, worldX, worldY);
         message = "Shop closed bitch";
@@ -25,6 +27,17 @@ public class OBJ_Shop extends Entity {
         collision = true;
 
         System.out.println(interactList.size());
+    }
+
+    private void setShopItems() throws IOException {
+        shopItems.add(new OBJ_FireballCannon(gp));
+        shopItems.add(new OBJ_Raygun(gp));
+        shopItems.add(new OBJ_ElectricBlaster(gp));
+        shopItems.add(new OBJ_Hammer(gp));
+    }
+
+    public void buy(){
+
     }
 
     public void getObjectSprites() {

@@ -100,7 +100,8 @@ public class GamePanel extends JPanel implements Runnable {
             optionState2 = 12,
             startMenuState = 11,
             cutsceneState = 13,
-            controlsState = 14;
+            controlsState = 14,
+            potionShopState = 15;
 
 
 

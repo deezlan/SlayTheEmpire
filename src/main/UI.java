@@ -4,6 +4,7 @@ import entity.Entity;
 import entity.NPC_Blacksmith;
 import object.OBJ_Coin;
 import object.OBJ_Heart;
+import object.OBJ_Shop;
 //import object.SuperObject;
 
 import javax.swing.*;
@@ -1021,6 +1022,113 @@ public class UI {
         drawVolumeBar(gp.effect.volumeScale, x, y);
     }
 
+    public void drawPotionShop(Graphics2D g2){
+        try {
+            OBJ_Shop shop = (OBJ_Shop) gp.objArr[gp.currentMap][0];
+            NPC_Blacksmith bs = (NPC_Blacksmith) gp.npcArr[gp.currentMap][1];
+            InputStream is = new FileInputStream("ARCADE_N.TTF");
+            Font arcade = Font.createFont(Font.TRUETYPE_FONT, is);
+            arcade = arcade.deriveFont(Font.PLAIN, 16);
+
+            int frameX = gp.TILE_SIZE*2;
+            int frameY = gp.TILE_SIZE;
+            int frameWidth = (gp.TILE_SIZE*9) + 25;
+            int frameHeight= (gp.TILE_SIZE*4) + 40;
+            g2.setFont(arcade);
+
+            g2.setColor(Color.BLACK);
+            g2.fillRoundRect(frameX,frameY,frameWidth,frameHeight,0,0);
+
+            g2.setColor(Color.WHITE);
+            g2.setStroke(new BasicStroke((5)));
+            g2.drawRoundRect(frameX,frameY,frameWidth,frameHeight,0,0);
+
+            g2.setColor(Color.WHITE);
+
+            //SLOT
+            final int slotXstart = frameX + 15;
+            final int slotYstart = frameY + 38;
+            int slotY = slotYstart;
+            g2.drawString("Item", frameX + 15, frameY + 30);
+            g2.drawString("Price", frameX + gp.TILE_SIZE*8 - 15, frameY + 30);
+            //DRAW SHOP
+            for (int i = 0; i < 4; i++){
+                BufferedImage BI = bs.getShopItems().get(i).weaponSprite;
+                BufferedImage coinImage = coin.defaultList.get(0);
+                coinImage = UtilityTool.scaleImage(coinImage, 36, 36);
+
+                g2.drawImage(BI, slotXstart + gp.TILE_SIZE/4, slotY + gp.TILE_SIZE/4, null);
+                g2.drawString(bs.getShopItems().get(i).name, slotXstart + gp.TILE_SIZE + 10, slotY + 32);
+                g2.drawString(Integer.toString(bs.getShopItems().get(i).price), slotXstart + gp.TILE_SIZE*8 - 40, slotY + 32);
+                g2.drawImage(coinImage, slotXstart + gp.TILE_SIZE*8+15, slotY+7, null);
+
+                slotY += gp.TILE_SIZE;
+            }
+
+            //CURSOR
+            int cursorY = slotYstart + (gp.TILE_SIZE * slotRowMove);
+            int cursorWidth = gp.TILE_SIZE*9+15;
+            int cursorHeight = gp.TILE_SIZE;
+            //DRAW CURSOR
+            g2.setColor(Color.WHITE);
+            g2.setStroke(new BasicStroke(3));
+            g2.drawRoundRect(frameX+3, cursorY, cursorWidth+3, cursorHeight, 0, 0);
+
+            //DESC FRAME
+            int descX = frameX;
+            int descY = frameY + frameHeight;
+            int descWidth = frameWidth;
+            int descHeight = gp.TILE_SIZE*3;
+            drawSubWindow(descX, descY, descWidth, descHeight);
+
+            g2.setColor(Color.BLACK);
+            g2.fillRoundRect(descX, descY, descWidth, descHeight, 0, 0);
+
+            g2.setColor(Color.WHITE);
+            g2.setStroke(new BasicStroke((5)));
+            g2.drawRoundRect(descX, descY, descWidth, descHeight, 0, 0);
+            //DRAW DESC TEXT
+            int textX = descX + 20;
+            int textY= descY + gp.TILE_SIZE;
+            g2.setFont(arcade);
+            if (slotRow == 0){
+                g2.drawString(bs.getShopItems().get(0).description, textX, textY);
+                g2.drawString("Damage: " + bs.getShopItems().get(0).damage, textX, textY+30);
+                if (gp.player.ownedWeapon.contains(0)){
+                    g2.drawString("Item Bought, ENTER to equip", textX, textY+60);
+                } else if (gp.player.totalCoins < bs.getShopItems().get(slotRow).price){
+                    g2.drawString("You don't have money!", textX, textY+60);
+                }
+            } else if (slotRow == 1) {
+                g2.drawString(bs.getShopItems().get(1).description, textX, textY);
+                g2.drawString("Damage: " + bs.getShopItems().get(1).damage, textX, textY+30);
+                if (gp.player.ownedWeapon.contains(1)){
+                    g2.drawString("Item Bought, ENTER to equip", textX, textY+60);
+                } else if (gp.player.totalCoins < bs.getShopItems().get(slotRow).price){
+                    g2.drawString("You don't have money!", textX, textY+60);
+                }
+            } else if (slotRow == 2) {
+                g2.drawString(bs.getShopItems().get(2).description, textX, textY);
+                g2.drawString("Damage: " + bs.getShopItems().get(2).damage, textX, textY+30);
+                if (gp.player.ownedWeapon.contains(2)){
+                    g2.drawString("Item Bought, ENTER to equip", textX, textY+60);
+                } else if (gp.player.totalCoins < bs.getShopItems().get(slotRow).price){
+                    g2.drawString("You don't have money!", textX, textY+60);
+                }
+            } else if (slotRow == 3) {
+                g2.drawString(bs.getShopItems().get(3).description, textX, textY);
+                g2.drawString("Damage: " + bs.getShopItems().get(3).damage, textX, textY+30);
+                if (gp.player.ownedWeapon.contains(3)){
+                    g2.drawString("Item Bought, ENTER to equip", textX, textY+60);
+                } else if (gp.player.totalCoins < bs.getShopItems().get(slotRow).price){
+                    g2.drawString("You don't have money!", textX, textY+60);
+                }
+            }
+        } catch (FontFormatException | IOException e){
+            e.printStackTrace(System.out);
+        }
+    }
+
     public void draw(Graphics2D g2){
 
         this.g2 = g2;
@@ -1090,6 +1198,10 @@ public class UI {
 
         if (gp.gameState == gp.creditsState) {
             drawCredits(g2);
+        }
+
+        if (gp.gameState == gp.potionShopState){
+            drawPotionShop(g2);
         }
     }
 }

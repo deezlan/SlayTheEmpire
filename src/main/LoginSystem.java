@@ -2,6 +2,8 @@ package main;
 
 import javax.swing.*;
 import java.io.*;
+import java.math.BigInteger;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Scanner;
 import java.security.NoSuchAlgorithmException;
@@ -12,12 +14,15 @@ public class LoginSystem extends JPanel {
     PrintWriter output;
     Scanner input;
     String encryptedPass;
-    String[] userAcc;
-    HashMap<String, String> accDatabase = new HashMap<>();
-    File file = new File("res/userData.txt");
+    String[] accUser;
+    HashMap<String, String> accDatabase;
+    File file;
 
     public LoginSystem(GamePanel gp) {
         this.gp = gp;
+        file = new File("res/userData.txt");
+        accDatabase = new HashMap<>();
+
         try {
             file.createNewFile();
         } catch (IOException e) { e.printStackTrace(System.out); }
@@ -30,8 +35,8 @@ public class LoginSystem extends JPanel {
         } catch (IOException e) { e.printStackTrace(System.out); }
 
         while (input.hasNext()) {
-            userAcc = input.nextLine().split(":");
-            accDatabase.put(userAcc[0], userAcc[1]);
+            accUser = input.nextLine().split(":");
+            accDatabase.put(accUser[0], accUser[1]);
         }
     }
 
@@ -68,20 +73,30 @@ public class LoginSystem extends JPanel {
 
     public void encryptPass() {
         try {
-            // Initialize MD5 Hashing Algorithm
-            MessageDigest m = MessageDigest.getInstance("MD5");
-            m.update(gp.ui.inpPass.getBytes());
+            MessageDigest md = MessageDigest.getInstance("SHA-256");
 
-            // Convert Hash value into bytes
-            byte[] bytes = m.digest();
+            BigInteger number = new BigInteger(1, md.digest(gp.ui.inpPass.getBytes(StandardCharsets.UTF_8)));
+            StringBuilder hexString = new StringBuilder(number.toString(16));
 
-            // Convert into hexadecimal format
-            StringBuilder s = new StringBuilder();
-            for (byte aByte : bytes)
-                s.append(Integer.toString((aByte & 0xff) + 0x100, 16).substring(1));
+            while (hexString.length() < 32) {
+                hexString.insert(0, '0');
+            }
 
-            // Store in String
-            encryptedPass = s.toString();
+            encryptedPass = hexString.toString();
+//            // Initialize MD5 Hashing Algorithm
+//            MessageDigest m = MessageDigest.getInstance("MD5");
+//            m.update(gp.ui.inpPass.getBytes());
+//
+//            // Convert Hash value into bytes
+//            byte[] bytes = m.digest();
+//
+//            // Convert into hexadecimal format
+//            StringBuilder s = new StringBuilder();
+//            for (byte aByte : bytes)
+//                s.append(Integer.toString((aByte & 0xff) + 0x100, 16).substring(1));
+//
+//            // Store in String
+//            encryptedPass = s.toString();
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace(System.out);
         }

@@ -13,14 +13,9 @@ public abstract class Entity {
     public String name;
     public GamePanel gp;
     public boolean lookingRight = true;
-    public Projectile projectile1;
-    public Projectile projectile2;
-    public Projectile projectile3;
-    public Projectile projectile4;
+    public Projectile projectile1, projectile2, projectile3, projectile4;
 
-    public Entity(GamePanel gp) {
-        this.gp = gp;
-    }
+    public Entity(GamePanel gp) { this.gp = gp; }
 
     public Entity(GamePanel gp, int worldX, int worldY) {
         this.gp = gp;
@@ -49,27 +44,22 @@ public abstract class Entity {
     // PLAYER & MOB ATTRIBUTES
     public int
             // STATUS VALUES
-            defaultSpeed,
-            speed,
+            defaultSpeed, speed,
+            maxLife, currentLife,
             mobNum = 0,
-            attack,
-            maxLife,
-            currentLife,
             bossNum,
             coinValue,
+            attack,
 
             // COLLISION ATTRIBUTES
             solidAreaDefaultX, solidAreaDefaultY;
     public Rectangle solidArea = new Rectangle(0, 0, 48, 48); // draw area around entities
     public String action = "idleRight"; // DEFAULT ACTION
     public boolean
-            hasRanged,
-            inRage = false,
             sleep,
             boss,
             tempScene = false,
-            drawing = true,
-            specialAttacking = false;
+            drawing = true;
 
     // PLAYER & MOB COLLISION DIRECTION
     public boolean
@@ -114,9 +104,12 @@ public abstract class Entity {
     public int dialogueSet = 0,
             dialogueIndex = 0;
 
-    // HIT DETECTION
+    // COMBAT ATTRIBUTES
     public boolean
+            hasRanged,
+            inRage = false,
             attacking = false,
+            specialAttacking = false,
             iframe = false,
             alive = true,
             dead = false,
@@ -142,9 +135,8 @@ public abstract class Entity {
             unlocking = false;
 
     // ITEM ATTRIBUTES
-    public int damage;
+    public int damage, price;
     public BufferedImage weaponSprite;
-    public int price;
     public String description = "";
 
     // OBJECTS ATTRIBUTES
@@ -169,6 +161,7 @@ public abstract class Entity {
             specialSpriteNum = 0,
             specialCounter = 0,
 
+            // COMBAT COUNTERS
             dyingCounter = 0,
             hpBarCounter = 0,
             knockBackCounter = 0;
@@ -298,7 +291,6 @@ public abstract class Entity {
         }
     }
     public void searchPath(int goalCol, int goalRow) {
-
         int startCol = (worldX + solidArea.x) / gp.TILE_SIZE;
         int startRow = (worldY + solidArea.y) / gp.TILE_SIZE;
 
@@ -358,11 +350,6 @@ public abstract class Entity {
                     currentList = moveRightList;
                 }
             }
-            // IF REACH GOAL STOP
-//            int nextCol = gp.pFinder.pathList.get(0).col;
-//            int nextRow = gp.pFinder.pathList.get(0).row;
-//            if(nextCol == goalCol && nextRow == goalRow) {
-//                onPath = false;
         }
     }
     public void checkStartChase(Entity target, int distance, int rate) {
@@ -437,29 +424,24 @@ public abstract class Entity {
 
         switch (action) {
             case "moveUp":
-                if (gp.player.worldY < worldY && yDis < straight && xDis < horizontal) {
+                if (gp.player.worldY < worldY && yDis < straight && xDis < horizontal)
                     targetInRange = true;
-                }
                 break;
             case "moveDown":
-                if (gp.player.worldY > worldY && yDis < straight && xDis < horizontal) {
+                if (gp.player.worldY > worldY && yDis < straight && xDis < horizontal)
                     targetInRange = true;
-                }
                 break;
             case "moveLeft":
-                if (gp.player.worldX < worldX && xDis < straight && yDis < horizontal) {
+                if (gp.player.worldX < worldX && xDis < straight && yDis < horizontal)
                     targetInRange = true;
-                }
                 break;
             case "moveRight":
-                if (gp.player.worldX > worldX && xDis < straight && yDis < horizontal) {
+                if (gp.player.worldX > worldX && xDis < straight && yDis < horizontal)
                     targetInRange = true;
-                }
-                break;
         }
 
         if (targetInRange) {
-//          CHECK ATTACK HAPPENS
+            // CHECK ATTACK HAPPENS
             int i = new Random().nextInt(rate);
             if (i == 0) {
                 attacking = true;
@@ -470,33 +452,15 @@ public abstract class Entity {
     }
     public void dyingAnimation(Graphics2D g2) { // BLINKING EFFECT
         dyingCounter++;
-        if (dyingCounter <= 5) {
-            UtilityTool.changeAlpha(g2, 0f);
-        }
-        if (dyingCounter > 5 && dyingCounter <= 10) {
-            UtilityTool.changeAlpha(g2, 1f);
-        }
-        if (dyingCounter > 10 && dyingCounter <= 15) {
-            UtilityTool.changeAlpha(g2, 0f);
-        }
-        if (dyingCounter > 15 && dyingCounter <= 20) {
-            UtilityTool.changeAlpha(g2, 1f);
-        }
-        if (dyingCounter > 20 && dyingCounter <= 25) {
-            UtilityTool.changeAlpha(g2, 0f);
-        }
-        if (dyingCounter > 25 && dyingCounter <= 30) {
-            UtilityTool.changeAlpha(g2, 1f);
-        }
-        if (dyingCounter > 30 && dyingCounter <= 35) {
-            UtilityTool.changeAlpha(g2, 0f);
-        }
-        if (dyingCounter > 35 && dyingCounter <= 40) {
-            UtilityTool.changeAlpha(g2, 1f);
-        }
-        if (dyingCounter > 40) {
-            alive = false;
-        }
+        if (dyingCounter <= 5) UtilityTool.changeAlpha(g2, 0f);
+        if (dyingCounter > 5 && dyingCounter <= 10) UtilityTool.changeAlpha(g2, 1f);
+        if (dyingCounter > 10 && dyingCounter <= 15) UtilityTool.changeAlpha(g2, 0f);
+        if (dyingCounter > 15 && dyingCounter <= 20) UtilityTool.changeAlpha(g2, 1f);
+        if (dyingCounter > 20 && dyingCounter <= 25) UtilityTool.changeAlpha(g2, 0f);
+        if (dyingCounter > 25 && dyingCounter <= 30) UtilityTool.changeAlpha(g2, 1f);
+        if (dyingCounter > 30 && dyingCounter <= 35) UtilityTool.changeAlpha(g2, 0f);
+        if (dyingCounter > 35 && dyingCounter <= 40) UtilityTool.changeAlpha(g2, 1f);
+        if (dyingCounter > 40) alive = false;
     }
     public void checkDrop() {
         int i = 0;
@@ -632,12 +596,8 @@ public abstract class Entity {
     public void runUnlockingAnimation() {}
 
     // CAMERA METHODS
-    public int getScreenX() {
-        return worldX - gp.player.worldX + gp.player.screenX;
-    }
-    public int getScreenY() {
-        return worldY - gp.player.worldY + gp.player.screenY;
-    }
+    public int getScreenX() { return worldX - gp.player.worldX + gp.player.screenX; }
+    public int getScreenY() { return worldY - gp.player.worldY + gp.player.screenY; }
     public boolean inCamera() {
         return worldX + gp.TILE_SIZE * 5 > gp.player.worldX - gp.player.screenX - 48 * 4 && // added values due to player sprite not centered
                 worldX - gp.TILE_SIZE < gp.player.worldX + gp.player.screenX + 48 * 4 &&
@@ -647,9 +607,7 @@ public abstract class Entity {
 
     // GAME LOOP METHODS
     public void update() {
-        if (interacting) {
-            runInteractSprites();
-        }
+        if (interacting) runInteractSprites();
         if (type == type_gate) {
             if (locking) runLockAnimation();
             if (unlocking) runUnlockingAnimation();
@@ -695,9 +653,7 @@ public abstract class Entity {
             } else if (attacking) {
                 startAttack();
             } else {
-                if (type == type_mob) {
-                    setAction();
-                }
+                if (type == type_mob) setAction();
 
                 checkCollision();
 
@@ -722,7 +678,6 @@ public abstract class Entity {
                         case "moveDownLeft":
                             worldX -= speed;
                             worldY += speed;
-                            break;
                     }
                 }
 

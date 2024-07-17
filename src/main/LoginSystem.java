@@ -83,20 +83,6 @@ public class LoginSystem extends JPanel {
             }
 
             encryptedPass = hexString.toString();
-//            // Initialize MD5 Hashing Algorithm
-//            MessageDigest m = MessageDigest.getInstance("MD5");
-//            m.update(gp.ui.inpPass.getBytes());
-//
-//            // Convert Hash value into bytes
-//            byte[] bytes = m.digest();
-//
-//            // Convert into hexadecimal format
-//            StringBuilder s = new StringBuilder();
-//            for (byte aByte : bytes)
-//                s.append(Integer.toString((aByte & 0xff) + 0x100, 16).substring(1));
-//
-//            // Store in String
-//            encryptedPass = s.toString();
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace(System.out);
         }

@@ -292,9 +292,8 @@ public class Player extends Entity {
     public void update() {
         delta++;
         if(!keyH.godModeOn){
-            if (currentLife <= 0){
+            if (currentLife <= 0)
                 gp.gameState = gp.deathState;
-            }
         }
 
         if (currentLife > maxLife){

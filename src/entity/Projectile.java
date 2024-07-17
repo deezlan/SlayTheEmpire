@@ -21,7 +21,6 @@ public class Projectile extends Entity{
         this.currentLife = this.maxLife;
         this.dx = mouseX;
         this.dy = mouseY;
-//        action = "moveUp";
     }
 
     public void update() {

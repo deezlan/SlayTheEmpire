@@ -113,7 +113,7 @@ public class GamePanel extends JPanel implements Runnable {
         this.setFocusable(true); // pass the player instance variable to the KeyHandler constructor
 
         // DEFAULT SETTINGS
-        music.volumeScale = 3;
+        music.volumeScale = 0;
         effect.volumeScale = 3;
         gameMode = easyMode;
 
@@ -179,7 +179,7 @@ public class GamePanel extends JPanel implements Runnable {
     public void setupGame() {
         tempScreen = new BufferedImage(SCREEN_WIDTH,SCREEN_HEIGHT,BufferedImage.TYPE_INT_ARGB);
         g2 = (Graphics2D) tempScreen.getGraphics();
-        gameState = titleState; // TESTING LOGIN RIGHT NOW
+        gameState = characterSelectionState; // TESTING LOGIN RIGHT NOW
         playMusic(0);
     }
 

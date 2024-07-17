@@ -72,8 +72,8 @@ public class BOSS_DemonSlime extends Entity {
             spriteNum = 1;
             checkShoot(0,24,144,0);
         } else if (!attacking & !specialAttacking){
-            checkWithinAttackRange(30,gp.TILE_SIZE*6,gp.TILE_SIZE*6); // Original
-//            checkWithinAttackRange(30); // CHANGE ATTACK RANGE
+//            checkWithinAttackRange(30,gp.TILE_SIZE*6,gp.TILE_SIZE*6); // Original
+            checkWithinAttackRange(30); // CHANGE ATTACK RANGE
         }
     }
 

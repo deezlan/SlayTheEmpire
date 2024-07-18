@@ -26,7 +26,7 @@ public class TileManager {
 
         getTileImage();
         loadMap("/mapTextFiles/lobby.bin",0);
-        loadMap("/mapTextFiles/levelOne.txt",1);
+        loadMap("/mapTextFiles/levelOne.bin",1);
         loadMap("/mapTextFiles/levelTwo.bin",2);
     }
 

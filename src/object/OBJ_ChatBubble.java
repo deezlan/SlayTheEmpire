@@ -9,19 +9,10 @@ import java.io.IOException;
 public class OBJ_ChatBubble extends Entity {
     public OBJ_ChatBubble(GamePanel gp, int worldX, int worldY) {
         super(gp, worldX, worldY);
-        name = "Bubble";
+        name = "Chat Bubble";
 
         // Load save pedestal sprites
         getObjectSprites();
-
-        // Set collision settings
-        solidArea.x = 0;
-        solidArea.y = 50;
-        solidArea.width = 24;
-        solidArea.height = 60;
-        solidAreaDefaultX = solidArea.x;
-        solidAreaDefaultY = solidArea.y;
-        collision = false;
     }
 
     public void getObjectSprites() {

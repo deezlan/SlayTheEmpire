@@ -765,46 +765,46 @@ public class UI {
                     g2.setColor(new Color(35, 35, 35));
                     switch (mob.mobNum) {
                         // SLIME
-                        case 1: g2.fillRect(mob.getScreenX() + 51, mob.getScreenY() + 121, gp.TILE_SIZE, 10); break;
+                        case 1: g2.fillRect(mob.getScreenX() + 81, mob.getScreenY() + 161, gp.TILE_SIZE, 10); break;
                         // SKELLINGTON
-                        case 2: g2.fillRect(mob.getScreenX() + 51, mob.getScreenY() + 141, gp.TILE_SIZE, 10); break;
+                        case 2: g2.fillRect(mob.getScreenX() + 71, mob.getScreenY() + 161, gp.TILE_SIZE, 10); break;
                         // ROBOT GUARDIAN
                         case 3: g2.fillRect(mob.getScreenX() + 81, mob.getScreenY() + 161, gp.TILE_SIZE, 10); break;
                         // RAMSES
-                        case 4: g2.fillRect(mob.getScreenX() + 61, mob.getScreenY() + 121, gp.TILE_SIZE, 10); break;
+                        case 4: g2.fillRect(mob.getScreenX() + 81, mob.getScreenY() + 141, gp.TILE_SIZE, 10); break;
                         // GOBLIN & SKELETON KNIGHT
                         case 5, 6: g2.fillRect(mob.getScreenX() + 81, mob.getScreenY() + 141, gp.TILE_SIZE, 10); break;
                         // ARMORED GUARDIAN
-                        case 7: g2.fillRect(mob.getScreenX() + 51, mob.getScreenY() + 121, gp.TILE_SIZE, 10); break;
+                        case 7: g2.fillRect(mob.getScreenX() + 71, mob.getScreenY() + 141, gp.TILE_SIZE, 10); break;
                         // FLYING EYE
-                        case 8: g2.fillRect(mob.getScreenX() + 121, mob.getScreenY() + 191, gp.TILE_SIZE, 10); break;
+                        case 8: g2.fillRect(mob.getScreenX() + 81, mob.getScreenY() + 131, gp.TILE_SIZE, 10); break;
                         // MUSHROOM
-                        case 9: g2.fillRect(mob.getScreenX() + 126, mob.getScreenY() + 211, gp.TILE_SIZE, 10); break;
+                        case 9: g2.fillRect(mob.getScreenX() + 81, mob.getScreenY() + 161, gp.TILE_SIZE, 10); break;
                         // CANINE
-                        case 10: g2.fillRect(mob.getScreenX() + 21, mob.getScreenY() + 91, gp.TILE_SIZE, 10);
+                        case 10: g2.fillRect(mob.getScreenX() + 81, mob.getScreenY() + 141, gp.TILE_SIZE, 10);
                     }
 
                     // FILL CURRENT HP
                     g2.setColor(new Color(255, 0, 30));
                     switch (mob.mobNum) {
                         // SLIME
-                        case 1: g2.fillRect(mob.getScreenX() + 50, mob.getScreenY() + 120, (int) hpBarValue, 9); break;
+                        case 1: g2.fillRect(mob.getScreenX() + 80, mob.getScreenY() + 160, (int) hpBarValue, 9); break;
                         // SKELLINGTON
-                        case 2: g2.fillRect(mob.getScreenX() + 50, mob.getScreenY() + 140, (int) hpBarValue, 9); break;
+                        case 2: g2.fillRect(mob.getScreenX() + 70, mob.getScreenY() + 160, (int) hpBarValue, 9); break;
                         // ROBOT GUARDIAN
                         case 3: g2.fillRect(mob.getScreenX() + 80, mob.getScreenY() + 160, (int) hpBarValue, 9); break;
                         // RAMSES
-                        case 4: g2.fillRect(mob.getScreenX() + 60, mob.getScreenY() + 120, (int) hpBarValue, 9); break;
+                        case 4: g2.fillRect(mob.getScreenX() + 80, mob.getScreenY() + 140, (int) hpBarValue, 9); break;
                         // GOBLIN & SKELETON KNIGHT
-                        case 5, 6: g2.fillRect(mob.getScreenX() + 80, mob.getScreenY() + 140, (int) hpBarValue, 9); break;
+                        case 5, 6: g2.fillRect(mob.getScreenX() + 75, mob.getScreenY() + 140, (int) hpBarValue, 9); break;
                         // ARMORED GUARDIAN
-                        case 7: g2.fillRect(mob.getScreenX() + 50, mob.getScreenY() + 120, (int) hpBarValue, 9); break;
+                        case 7: g2.fillRect(mob.getScreenX() + 70, mob.getScreenY() + 140, (int) hpBarValue, 9); break;
                         // FLYING EYE
-                        case 8: g2.fillRect(mob.getScreenX() + 120, mob.getScreenY() + 190, (int) hpBarValue, 9); break;
+                        case 8: g2.fillRect(mob.getScreenX() + 80, mob.getScreenY() + 130, (int) hpBarValue, 9); break;
                         // MUSHROOM
-                        case 9: g2.fillRect(mob.getScreenX() + 125, mob.getScreenY() + 210, (int) hpBarValue, 9); break;
+                        case 9: g2.fillRect(mob.getScreenX() + 80, mob.getScreenY() + 160, (int) hpBarValue, 9); break;
                         // CANINE
-                        case 10: g2.fillRect(mob.getScreenX() + 20, mob.getScreenY() + 90, (int) hpBarValue, 9);
+                        case 10: g2.fillRect(mob.getScreenX() + 80, mob.getScreenY() + 140, (int) hpBarValue, 9);
                     }
 
                     mob.hpBarCounter++;

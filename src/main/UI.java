@@ -246,20 +246,18 @@ public class UI {
         g2.drawRoundRect(frameX+3, cursorY, cursorWidth+3, cursorHeight, 0, 0);
 
         //DESC FRAME
-        int descX = frameX;
         int descY = frameY + frameHeight;
-        int descWidth = frameWidth;
         int descHeight = gp.TILE_SIZE*3;
-        drawSubWindow(descX, descY, descWidth, descHeight);
+        drawSubWindow(frameX, descY, frameWidth, descHeight);
 
         g2.setColor(Color.BLACK);
-        g2.fillRoundRect(descX, descY, descWidth, descHeight, 0, 0);
+        g2.fillRoundRect(frameX, descY, frameWidth, descHeight, 0, 0);
 
         g2.setColor(Color.WHITE);
         g2.setStroke(new BasicStroke((5)));
-        g2.drawRoundRect(descX, descY, descWidth, descHeight, 0, 0);
+        g2.drawRoundRect(frameX, descY, frameWidth, descHeight, 0, 0);
         //DRAW DESC TEXT
-        int textX = descX + 20;
+        int textX = frameX + 20;
         int textY= descY + gp.TILE_SIZE;
         g2.setFont(arcade);
         if (slotRow == 0){
@@ -543,7 +541,7 @@ public class UI {
         int y = gp.SCREEN_HEIGHT - imgHeight;
         g2.drawImage(startMenu, x, y, imgWidth, imgHeight, null);
 
-        int leftx = (int) (gp.SCREEN_WIDTH/2 - gp.TILE_SIZE*5.5);
+        int leftx = (int) ((double) gp.SCREEN_WIDTH /2 - gp.TILE_SIZE*5.5);
         int rightx = (gp.SCREEN_WIDTH/2 + gp.TILE_SIZE*5);
         y = gp.SCREEN_HEIGHT/2 - 60;
         switch (commandNum) {
@@ -1010,7 +1008,7 @@ public class UI {
         // BACK
         text = "Back";
         x = getXForCenteredText(text, g2);
-        y += (int) (gp.TILE_SIZE*3);
+        y += gp.TILE_SIZE*3;
         if (gp.ui.commandNum == 4) {
             g2.setColor(Color.YELLOW); // highlight color
             g2.drawString(text,x,y);
@@ -1021,11 +1019,11 @@ public class UI {
 
         // VOLUME BAR
         x = gp.SCREEN_WIDTH/2 - 120;
-        y = (int) (frameY + gp.TILE_SIZE*3);
+        y = frameY + gp.TILE_SIZE*3;
         drawVolumeBar(gp.music.volumeScale, x, y);
 
         // SFX BAR
-        y += (int) (frameY + gp.TILE_SIZE);
+        y += frameY + gp.TILE_SIZE;
         drawVolumeBar(gp.effect.volumeScale, x, y);
     }
 

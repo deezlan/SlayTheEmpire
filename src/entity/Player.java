@@ -106,7 +106,7 @@ public class Player extends Entity {
         switch (playerClass) {
             case 0:
                 solidArea = new Rectangle(); // draws a square at the centre of the player
-                solidArea.x = 90; // position of actual collision square
+                solidArea.x = 80; // position of actual collision square
                 solidArea.y = 60;
                 solidAreaDefaultX = solidArea.x;
                 solidAreaDefaultY = solidArea.y;
@@ -114,7 +114,7 @@ public class Player extends Entity {
                 solidArea.height = 30;
 
                 attackArea.width = 50;
-                attackArea.height = 30;
+                attackArea.height = 75;
                 break;
             case 1:
                 solidArea = new Rectangle(); // draws a square at the centre of the player
@@ -132,7 +132,7 @@ public class Player extends Entity {
                 break;
             case 2:
                 solidArea = new Rectangle(); // draws a square at the centre of the player
-                solidArea.x = 75; // position of actual collision square
+                solidArea.x = 85; // position of actual collision square
                 solidArea.y = 60;
                 solidAreaDefaultX = solidArea.x;
                 solidAreaDefaultY = solidArea.y;
@@ -172,11 +172,17 @@ public class Player extends Entity {
 
             // ADJUST FOR ATTACK
             switch (action) {
-//                case "moveUp": worldY -= (playerRightAttackList.get(0).getHeight() + attackArea.height)/2; break;
-                case "moveUp": worldY -= playerRightAttackList.get(0).getHeight() + attackArea.height - 20; break;
+                case "moveUp": worldY -= (playerRightAttackList.get(0).getHeight() - attackArea.height)/2; break;
+//                case "moveUp": worldY -= playerRightAttackList.get(0).getHeight() + attackArea.height - 20; break;
                 case "moveDown": worldY += (playerRightAttackList.get(0).getHeight() - attackArea.height)/2; break;
-                case "idleLeft", "moveLeft": worldX -= (playerRightAttackList.get(0).getWidth() - attackArea.width)/2; break;
-                case "idleRight", "moveRight": worldX += (playerRightAttackList.get(0).getWidth() - attackArea.width)/2; break;
+                case "idleLeft", "moveLeft":
+                    worldY -= 50;
+                    worldX -= (playerRightAttackList.get(0).getWidth() - attackArea.width)/2;
+                    break;
+                case "idleRight", "moveRight":
+                    worldY -= 50;
+                    worldX += (playerRightAttackList.get(0).getWidth() - attackArea.width)/2;
+                    break;
 //                case "idleRight", "moveRight": worldX += attackArea.width; break;
 //                case "idleLeft", "moveLeft": worldX -= attackArea.width; break;
 //                case "moveUp": worldY -= attackArea.height; break;

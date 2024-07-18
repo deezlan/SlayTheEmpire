@@ -14,6 +14,7 @@ public class MOB_Canine extends Entity {
         setStatValues(2, 4, false, 10, 50);
         setCollisionValues(70, 90, 40, 30);
         setAttackValues(1, 3, 60, 60, false);
+        setHitboxValues(60, 90, 80, 20);
 
         // Load mob sprites
         getMobSprites();

@@ -259,7 +259,7 @@ public class Player extends Entity {
                 gp.objArr[gp.currentMap][index].use(this);
                 gp.objArr[gp.currentMap][index] = null;
             } else if (type == type_shop){
-                gp.gameState = gp.shopState;
+                gp.gameState = gp.SHOP_STATE;
             } else {
                 if (!gp.objArr[gp.currentMap][index].message.isEmpty())
                     System.out.println(gp.objArr[gp.currentMap][index].message);
@@ -275,7 +275,10 @@ public class Player extends Entity {
             gp.npcArr[gp.currentMap][index].speak();
         }
         if (index == 1) {
-            gp.gameState = gp.shopState;
+            gp.gameState = gp.SHOP_STATE;
+        }
+        if (index == 3) {
+            gp.ui.difficultySelect();
         }
     }
     public void interactMob (int index) {
@@ -293,7 +296,7 @@ public class Player extends Entity {
         delta++;
         if(!keyH.godModeOn){
             if (currentLife <= 0)
-                gp.gameState = gp.deathState;
+                gp.gameState = gp.DEATH_STATE;
         }
 
         if (currentLife > maxLife){

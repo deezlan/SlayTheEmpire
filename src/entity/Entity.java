@@ -175,11 +175,11 @@ public abstract class Entity {
         this.currentLife = maxLife * gp.gameMode;
         this.coinValue = coinValue;
 
-        if (gp.gameMode == gp.normalMode || gp.gameMode == gp.hardMode) {
+        if (gp.gameMode == gp.NORMAL_MODE || gp.gameMode == gp.HARD_MODE) {
             this.maxLife *= gp.gameMode;
             this.currentLife *= gp.gameMode;
         }
-        if (gp.gameMode == gp.hardMode) this.speed += 1;
+        if (gp.gameMode == gp.HARD_MODE) this.speed += 1;
 
         if (isBoss) {
             boss = true;
@@ -217,7 +217,7 @@ public abstract class Entity {
 
     // NPC METHODS
     public void startDialogue(Entity entity, int setNum) {
-        gp.gameState = gp.dialogueState;
+        gp.gameState = gp.DIALOGUE_STATE;
         gp.ui.npc = entity;
         dialogueSet = setNum;
     }
@@ -788,7 +788,6 @@ public abstract class Entity {
                     BufferedImage animationImage = currentList.get(animationSpriteNum);
                     g2.drawImage(animationImage, screenX, screenY, null);
                 }
-                g2.drawRect(solidArea.x, solidArea.y, solidArea.width, solidArea.height);
             }
         }
     }

@@ -16,6 +16,7 @@ public class MOB_FlyingEye extends Entity {
         setCollisionValues(70, 90, 40, 40);
         setAttackValues(0, 0, 0, 0, true);
         projectile = new OBJ_Rock(gp);
+        hasRanged = true;
 
         // Load mob sprites
         getMobSprites();

@@ -152,26 +152,6 @@ public class UI {
         g2.drawImage(bg2, 0, 0, null);
     }
 
-    public void drawCharacterSelectPreview() {
-        int gifX = 300;
-        int gifY = 150;
-
-        switch (gp.ui.commandNum) {
-            case 0 -> {
-                g2.drawImage(warriorSelected, 0, 0, null);
-                g2.drawImage(warriorGif, (gp.SCREEN_WIDTH - gifX)/2 - 225,  ((gp.SCREEN_HEIGHT - gifY)/3) + 40, gifX, gifY, null);
-            }
-            case 1 -> {
-                g2.drawImage(knightSelected, 0, 0, null);
-                g2.drawImage(knightGif, (gp.SCREEN_WIDTH - gifX)/2, ((gp.SCREEN_HEIGHT - gifY)/3) + 50, gifX, gifY, null);
-            }
-            case 2 -> {
-                g2.drawImage(assassinSelected, 0, 0, null);
-                g2.drawImage(assassinGif, (gp.SCREEN_WIDTH - gifX)/2 + 225, ((gp.SCREEN_HEIGHT - gifY)/3) + 40, gifX, gifY, null);
-            }
-        }
-    }
-
     public void drawHotbar() {
         int frameX = gp.TILE_SIZE/2;
         int frameY = gp.TILE_SIZE*11-5;
@@ -306,9 +286,9 @@ public class UI {
 
         g2.setFont(g2.getFont().deriveFont(Font.BOLD, 50F));
         String text = "Special Thanks";
-        g2.drawString(text, getXForCenteredText(text, g2), gp.SCREEN_HEIGHT/8);
+        g2.drawString(text, getXForCenteredText(text), gp.SCREEN_HEIGHT/8);
         g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 35F));
-        g2.drawLine(getXForCenteredText(text, g2)-50, gp.SCREEN_HEIGHT/8 + 5, getXForCenteredText(text, g2) + g2.getFontMetrics().stringWidth(text) + 50, gp.SCREEN_HEIGHT/8 + 5);
+        g2.drawLine(getXForCenteredText(text)-50, gp.SCREEN_HEIGHT/8 + 5, getXForCenteredText(text) + g2.getFontMetrics().stringWidth(text) + 50, gp.SCREEN_HEIGHT/8 + 5);
 
 
         int musicY = gp.SCREEN_HEIGHT/4 - 20;
@@ -316,7 +296,7 @@ public class UI {
 
 
         for (String line : musicCredits) {
-            int musicX = getXForCenteredText(line, g2);
+            int musicX = getXForCenteredText(line);
             g2.drawString(line,musicX,musicY);
             musicY += 40;
         }
@@ -328,11 +308,11 @@ public class UI {
                 String line = spriteCredit[j];
                 int spriteX;
                 if (j == 0) {
-                    spriteX = getXForCenteredText(line, g2) - leftX;
+                    spriteX = getXForCenteredText(line) - leftX;
                 } else if (j == 1) {
-                    spriteX = getXForCenteredText(line, g2);
+                    spriteX = getXForCenteredText(line);
                 } else {
-                    spriteX = getXForCenteredText(line, g2) + leftX;
+                    spriteX = getXForCenteredText(line) + leftX;
                 }
                 g2.drawString(line, spriteX, spriteY);
             }
@@ -396,7 +376,7 @@ public class UI {
 
         g2.setFont(g2.getFont().deriveFont(Font.BOLD, 60F));
         String text = "PAUSED";
-        int x = getXForCenteredText(text, g2);
+        int x = getXForCenteredText(text);
         int y = gp.SCREEN_HEIGHT/2;
 
         // SHADOW
@@ -492,8 +472,6 @@ public class UI {
             g2.drawImage(loginErr, 320, 480, 250, 20, null);
         if (usernameTaken)
             g2.drawImage(usernameTakenErr, 320, 480, 250, 20, null);
-//        if (validLogin)
-//            gp.gameState = gp.playState;
 
         g2.setColor(Color.WHITE);
         g2.setStroke(new BasicStroke(3f));
@@ -578,25 +556,40 @@ public class UI {
         }
     }
 
+    public void drawCharacterSelectPreview() {
+        int gifX = 300;
+        int gifY = 150;
+
+        switch (gp.ui.commandNum) {
+            case 0 -> {
+                g2.drawImage(warriorSelected, 0, 0, null);
+                g2.drawImage(warriorGif, (gp.SCREEN_WIDTH - gifX)/2 - 225,  (gp.SCREEN_HEIGHT - gifY)/3 + 40, gifX, gifY, null);
+            }
+            case 1 -> {
+                g2.drawImage(knightSelected, 0, 0, null);
+                g2.drawImage(knightGif, (gp.SCREEN_WIDTH - gifX)/2, (gp.SCREEN_HEIGHT - gifY)/3 + 50, gifX, gifY, null);
+            }
+            case 2 -> {
+                g2.drawImage(assassinSelected, 0, 0, null);
+                g2.drawImage(assassinGif, (gp.SCREEN_WIDTH - gifX)/2 + 225, (gp.SCREEN_HEIGHT - gifY)/3 + 40, gifX, gifY, null);
+            }
+        }
+    }
+
     // CHARACTER SELECTION SCREEN
     public void drawCharacterSelection() {
-        g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 20F));
-        String text = "(Esc to Exit)";
-        g2.drawString(text,10,30);
-
         g2.setColor(Color.BLACK);
         g2.fillRect(0,0, gp.SCREEN_WIDTH, gp.SCREEN_HEIGHT);
         drawBG();
 
+        drawCharacterSelectPreview();
+
         g2.setColor(Color.WHITE);
         g2.setFont(g2.getFont().deriveFont(Font.BOLD, 40F));
 
-        text = "Select Your Class";
-        int x = getXForCenteredText(text, g2);
-        int y = gp.TILE_SIZE*3;
-        g2.drawString(text, x, y);
-
-        drawCharacterSelectPreview();
+        g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 20F));
+        String text = "(Esc to Exit)";
+        g2.drawString(text,10,30);
     }
 
     //Draw dialog
@@ -657,7 +650,7 @@ public class UI {
 
         // SHADOW
         g2.setColor(Color.BLACK);
-        x = getXForCenteredText(text, g2);
+        x = getXForCenteredText(text);
         y = gp.TILE_SIZE*4;
         g2.drawString(text,x,y);
         // MAIN MESSAGE
@@ -667,7 +660,7 @@ public class UI {
         // RETRY
         g2.setFont(g2.getFont().deriveFont(40f));
         text = "PRESS E TO RETRY";
-        x = getXForCenteredText(text, g2);
+        x = getXForCenteredText(text);
         y += gp.TILE_SIZE*4;
         g2.drawString(text,x,y);
 
@@ -684,7 +677,7 @@ public class UI {
         g2.drawRoundRect(x+5,y+5,width-10,height-10,25,25);
     }
 
-    public int getXForCenteredText(String text, Graphics2D g2) {
+    public int getXForCenteredText(String text) {
         int length = (int) this.g2.getFontMetrics().getStringBounds(text, this.g2).getWidth();
         return gp.SCREEN_WIDTH/2 - length/2;
     }
@@ -842,7 +835,7 @@ public class UI {
 
         switch(subState) {
             case 0: drawSubWindow(frameX, frameY, frameWidth, frameHeight); options_playState(frameX, frameY);  break;
-            case 1: options_startMenu(frameX, frameY); break;
+            case 1: options_startMenu(frameY); break;
             case 2: break;
         }
     }
@@ -869,80 +862,65 @@ public class UI {
         // TITLE
         g2.setFont(g2.getFont().deriveFont(Font.BOLD, 40f));
         String text = "Options";
-        x = getXForCenteredText(text, g2);
+        x = getXForCenteredText(text);
         y = frameY + gp.TILE_SIZE;
         g2.drawString(text, x, y);
 
         // TITLE UNDERLINE
         g2.drawLine(x, y + 5, x + g2.getFontMetrics().stringWidth(text), y + 5);
-
-        // MUSIC
         g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 40f));
+
         text = "Music";
         x = frameX + gp.TILE_SIZE;
-        y += (int) (gp.TILE_SIZE*1.2);
+        y += (int) (gp.TILE_SIZE * 1.2);
+        g2.setColor(gp.ui.commandNum == 0? Color.YELLOW : Color.WHITE);
+        g2.drawString(text, x, y);
         if (gp.ui.commandNum == 0) {
-            g2.setColor(Color.YELLOW); // highlight color
-            g2.drawString(text,x,y);
-            g2.drawString(">", x-25, y);
-
-        } else {
-            g2.setColor(Color.WHITE);
-            g2.drawString(text,x,y);
+            g2.drawString(">", x - 25, y);
         }
 
         // SOUND EFFECTS
         text = "SFX";
-        y += (int) (gp.TILE_SIZE*1.2);
-        g2.drawString(text,x,y);
+        y += (int) (gp.TILE_SIZE * 1.2);
+        g2.setColor(gp.ui.commandNum == 1? Color.YELLOW : Color.WHITE);
+        g2.drawString(text, x, y);
         if (gp.ui.commandNum == 1) {
-            g2.setColor(Color.YELLOW); // highlight color
-            g2.drawString(text,x,y);
-            g2.drawString(">", x-25, y);
-
-        } else {
-            g2.setColor(Color.WHITE);
-            g2.drawString(text,x,y);
+            g2.drawString(">", x - 25, y);
         }
 
         // CONTROL
         text = "Controls";
-        y += (int) (gp.TILE_SIZE*1.2);
-        g2.drawString(text,x,y);
+        y += (int) (gp.TILE_SIZE * 1.2);
+        g2.setColor(gp.ui.commandNum == 2? Color.YELLOW : Color.WHITE);
+        g2.drawString(text, x, y);
         if (gp.ui.commandNum == 2) {
-            g2.setColor(Color.YELLOW); // highlight color
-            g2.drawString(text,x,y);
-            g2.drawString(">", x-25, y);
-        } else {
-            g2.setColor(Color.WHITE);
-            g2.drawString(text,x,y);
+            g2.drawString(">", x - 25, y);
+        }
+
+        text = "Back to Lobby";
+        y += (int) (gp.TILE_SIZE * 1.2);
+        g2.setColor(gp.ui.commandNum == 3? Color.YELLOW : Color.WHITE);
+        g2.drawString(text, x, y);
+        if (gp.ui.commandNum == 3) {
+            g2.drawString(">", x - 25, y);
         }
 
         // END GAME
         text = "End Game";
-        y += (int) (gp.TILE_SIZE*1.2);
-        g2.drawString(text,x,y);
-        if (gp.ui.commandNum == 3) {
-            g2.setColor(Color.YELLOW); // highlight color
-            g2.drawString(text,x,y);
-            g2.drawString(">", x-25, y);
-        } else {
-            g2.setColor(Color.WHITE);
-            g2.drawString(text,x,y);
+        y += (int) (gp.TILE_SIZE * 1.2);
+        g2.setColor(gp.ui.commandNum == 4? Color.YELLOW : Color.WHITE);
+        g2.drawString(text, x, y);
+        if (gp.ui.commandNum == 4) {
+            g2.drawString(">", x - 25, y);
         }
 
         // BACK
         text = "Back";
-        y += (int) (gp.TILE_SIZE*3.5);
-        g2.drawString(text,x,y);
-        if (gp.ui.commandNum == 4) {
-            g2.setColor(Color.YELLOW); // highlight color
-            g2.drawString(text,x,y);
-            g2.drawString(">", x-25, y);
-
-        } else {
-            g2.setColor(Color.WHITE);
-            g2.drawString(text,x,y);
+        y += (gp.TILE_SIZE * 2);
+        g2.setColor(gp.ui.commandNum == 5? Color.YELLOW : Color.WHITE);
+        g2.drawString(text, x, y);
+        if (gp.ui.commandNum == 5) {
+            g2.drawString(">", x - 25, y);
         }
 
         // VOLUME BAR
@@ -955,13 +933,13 @@ public class UI {
         drawVolumeBar(gp.effect.volumeScale, x, y);
     }
 
-    public void options_startMenu(int frameX, int frameY) {
+    public void options_startMenu(int frameY) {
         int x, y;
         drawBG2();
         // TITLE
         g2.setFont(g2.getFont().deriveFont(Font.BOLD, 40f));
         String text = "Start Menu Options";
-        x = getXForCenteredText(text, g2);
+        x = getXForCenteredText(text);
         y = frameY + gp.TILE_SIZE;
         g2.drawString(text,x,y);
 
@@ -971,51 +949,32 @@ public class UI {
         // MUSIC
         g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 40f));
         text = "Music";
-        x = getXForCenteredText(text, g2);
+        x = getXForCenteredText(text);
         y += (int) (gp.TILE_SIZE*1.2);
-        if (gp.ui.commandNum == 0) {
-            g2.setColor(Color.YELLOW); // highlight color
-            g2.drawString(text,x,y);
-        } else {
-            g2.setColor(Color.white);
-            g2.drawString(text,x,y);
-        }
+        g2.setColor(gp.ui.commandNum == 0? Color.YELLOW : Color.WHITE);
+        g2.drawString(text,x,y);
+
 
         // SOUND EFFECTS
         text = "SFX";
-        x = getXForCenteredText(text, g2);
+        x = getXForCenteredText(text);
         y += (int) (gp.TILE_SIZE*2.4);
-        if (gp.ui.commandNum == 1) {
-            g2.setColor(Color.YELLOW); // highlight color
-            g2.drawString(text,x,y);
-        } else {
-            g2.setColor(Color.white);
-            g2.drawString(text,x,y);
-        }
+        g2.setColor(gp.ui.commandNum == 1? Color.YELLOW : Color.WHITE);
+        g2.drawString(text,x,y);
 
         // CONTROL
         text = "Controls";
-        x = getXForCenteredText(text, g2);
+        x = getXForCenteredText(text);
         y += (int) (gp.TILE_SIZE*2.4);
-        if (gp.ui.commandNum == 2) {
-            g2.setColor(Color.YELLOW); // highlight color
-            g2.drawString(text,x,y);
-        } else {
-            g2.setColor(Color.white);
-            g2.drawString(text,x,y);
-        }
+        g2.setColor(gp.ui.commandNum == 2? Color.YELLOW : Color.WHITE);
+        g2.drawString(text,x,y);
 
         // BACK
         text = "Back";
-        x = getXForCenteredText(text, g2);
+        x = getXForCenteredText(text);
         y += gp.TILE_SIZE*3;
-        if (gp.ui.commandNum == 4) {
-            g2.setColor(Color.YELLOW); // highlight color
-            g2.drawString(text,x,y);
-        } else {
-            g2.setColor(Color.white);
-            g2.drawString(text,x,y);
-        }
+        g2.setColor(gp.ui.commandNum == 5? Color.YELLOW : Color.WHITE);
+        g2.drawString(text,x,y);
 
         // VOLUME BAR
         x = gp.SCREEN_WIDTH/2 - 120;
@@ -1050,7 +1009,7 @@ public class UI {
 
         // DIFFICULTY
         text = "Difficulty Selection";
-        x = getXForCenteredText(text, g2);
+        x = getXForCenteredText(text);
         y = gp.TILE_SIZE*2;
         g2.setColor(Color.WHITE);
         g2.drawString(text,x,y);
@@ -1060,7 +1019,7 @@ public class UI {
 
         // MODES
         text = "Easy";
-        x = getXForCenteredText(text, g2);
+        x = getXForCenteredText(text);
         y += gp.TILE_SIZE*2;
         g2.setColor(gp.ui.commandNum == 0? Color.YELLOW : Color.WHITE);
         g2.drawString(text,x,y);
@@ -1069,7 +1028,7 @@ public class UI {
         }
 
         text = "Medium";
-        x = getXForCenteredText(text, g2);
+        x = getXForCenteredText(text);
         y += gp.TILE_SIZE;
         g2.setColor(gp.ui.commandNum == 1? Color.BLUE : Color.WHITE);
         g2.drawString(text,x,y);
@@ -1078,7 +1037,7 @@ public class UI {
         }
 
         text = "Hard";
-        x = getXForCenteredText(text, g2);
+        x = getXForCenteredText(text);
         y += gp.TILE_SIZE;
         g2.setColor(gp.ui.commandNum == 2? Color.RED : Color.WHITE);
         g2.drawString(text,x,y);
@@ -1091,21 +1050,21 @@ public class UI {
         switch (gp.ui.commandNum) {
             case 0: {
                 text = "For newborns.";
-                x = getXForCenteredText(text, g2);
+                x = getXForCenteredText(text);
                 g2.setColor(gp.ui.commandNum == 0? Color.YELLOW : Color.WHITE);
                 g2.drawString(text, x, y);
                 break;
             }
             case 1: {
                 text = "For regular people.";
-                x = getXForCenteredText(text, g2);
+                x = getXForCenteredText(text);
                 g2.setColor(gp.ui.commandNum == 1? Color.BLUE : Color.WHITE);
                 g2.drawString(text, x, y);
                 break;
             }
             case 2: {
                 text = "For renowned legends.";
-                x = getXForCenteredText(text, g2);
+                x = getXForCenteredText(text);
                 g2.setColor(gp.ui.commandNum == 2? Color.RED : Color.WHITE);
                 g2.drawString(text, x, y);
                 break;
@@ -1113,7 +1072,7 @@ public class UI {
         }
 
         text = "Back";
-        x = getXForCenteredText(text, g2);
+        x = getXForCenteredText(text);
         y += gp.TILE_SIZE*3;
         g2.setColor(gp.ui.commandNum == 3? Color.YELLOW : Color.WHITE);
         g2.drawString(text,x,y);
@@ -1136,6 +1095,8 @@ public class UI {
         if (gp.gameState == gp.creditsState) drawCredits(g2);
         // CHAR SELECTION
         if (gp.gameState == gp.characterSelectionState) drawCharacterSelection();
+        // DIFFICULTY SELECTION
+        if (gp.gameState == gp.difficultySelectState) drawDifficultySelect();
         // MENU OPTION & GAMEPLAY OPTION
         if (gp.gameState == gp.optionState) drawOptions();
         if (gp.gameState == gp.optionState2) {
@@ -1158,6 +1119,6 @@ public class UI {
         // DEATH
         if (gp.gameState == gp.deathState) drawDeathScreen();
         // TRANSITION
-        if(gp.gameState == gp.transitionState) drawTransition();
+        if (gp.gameState == gp.transitionState) drawTransition();
     }
 }

@@ -76,6 +76,28 @@ public class KeyHandler implements KeyListener {
 
     }
 
+    public void difficultySelectState(int code) {
+        if (code == KeyEvent.VK_W || code == KeyEvent.VK_S) {
+            gp.ui.commandNum += (code == KeyEvent.VK_W) ? -1 : 1;
+            gp.ui.commandNum = Math.max(0, Math.min(gp.ui.commandNum, 3));
+            gp.playSE(1);
+        }
+        if (code == KeyEvent.VK_SPACE) {
+            gp.playSE(2);
+            switch (gp.ui.commandNum) {
+                case 0, 1, 2: {
+                    gp.loadLevel();
+                    break;
+                }
+                case 3: {
+                    gp.ui.commandNum = 0;
+                    gp.gameState = gp.characterSelectionState;
+                }
+            }
+        }
+        if (code == KeyEvent.VK_ESCAPE) gp.gameState = gp.characterSelectionState;
+    }
+
     public void loginState(int code) {
         if (code == KeyEvent.VK_ESCAPE) {
             gp.gameState = gp.titleState;
@@ -91,8 +113,8 @@ public class KeyHandler implements KeyListener {
                 System.out.println("Test any key");
 
                 System.out.println(gp.ui.inpUser);
-                gp.ui.inpUser = gp.ui.inpUser.concat(String.valueOf((char) code));
-                System.out.println("Username is: " + gp.ui.inpUser.toLowerCase());
+                gp.ui.inpUser = gp.ui.inpUser.concat(String.valueOf((char) code).toLowerCase());
+                System.out.println("Username is: " + gp.ui.inpUser);
             }
         }
 
@@ -139,10 +161,10 @@ public class KeyHandler implements KeyListener {
                 case 2:
                     // CHANGE CLASS TO ASSASSIN
                     gp.player = new Player(gp, gp.keyH, gp.cursor, 2);
-                    break;
             }
-            gp.loadLevel();
+            gp.gameState = gp.difficultySelectState;
         }
+        if (code == KeyEvent.VK_ESCAPE) gp.gameState = gp.startMenuState;
     }
 
     public void playState(int code) {
@@ -204,12 +226,16 @@ public class KeyHandler implements KeyListener {
         if (gp.gameState == gp.optionState || gp.gameState == gp.optionState2) {
             if (code == KeyEvent.VK_W || code == KeyEvent.VK_S) {
                 gp.ui.commandNum += (code == KeyEvent.VK_W) ? -1 : 1;
+                gp.ui.commandNum = Math.max(0, Math.min(gp.ui.commandNum, 5));
                 gp.playSE(1);
 
-                // skip through empty button for option 2
+                // skip through 2 empty button for option 2
                 if (gp.gameState == gp.optionState2) {
                     if (gp.ui.commandNum == 3) {
-                        gp.ui.commandNum += (code == KeyEvent.VK_W) ? -1 : 1;
+                        gp.ui.commandNum += (code == KeyEvent.VK_W) ? -1 : 2;
+                    }
+                    if (gp.ui.commandNum == 4) {
+                        gp.ui.commandNum += (code == KeyEvent.VK_W) ? -2 : 1;
                     }
                 }
             }
@@ -244,17 +270,23 @@ public class KeyHandler implements KeyListener {
                 switch (gp.ui.commandNum) {
                     // CONTROLS
                     case 2: {
+                        gp.gameState= gp.controlsState;
                         break;
                     }
-                    // END GAME
+                    // BACK TO LOBBY
                     case 3: {
+                        gp.loadLevel();
+                        break;
+                    }
+                    // Back to Start Menu
+                    case 4: {
                         if (gp.gameState == gp.optionState) {
-                            System.exit(0);
+                            gp.gameState = gp.startMenuState;
                         }
                         break;
                     }
                     // BACK
-                    case 4: {
+                    case 5: {
                         gp.gameState = (gp.gameState == gp.optionState) ? gp.playState : gp.startMenuState;
                         gp.ui.commandNum = 0;
                         break;
@@ -320,6 +352,8 @@ public class KeyHandler implements KeyListener {
             creditsState(code);
         } else if (gp.gameState == gp.controlsState) {
             controlsState(code);
+        } else if (gp.gameState == gp.difficultySelectState) {
+            difficultySelectState(code);
         }
 
         if (code == KeyEvent.VK_T){

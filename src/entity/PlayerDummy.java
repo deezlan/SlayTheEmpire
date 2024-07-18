@@ -5,78 +5,62 @@ import main.UtilityTool;
 
 import java.io.IOException;
 
-public class PlayerDummy extends Entity{
+public class PlayerDummy extends Entity {
     public static final String npcName = "Dummy";
     String dir;
-    public PlayerDummy(GamePanel gp){
+
+    public int playerClass;
+
+    public PlayerDummy(GamePanel gp) {
         super(gp);
         name = npcName;
-        getPlayerSprites();
+        playerClass = gp.player.playerClass;
+        updatePlayerClassSprites();
     }
 
-    public void getPlayerSprites() {
+    public void updatePlayerClassSprites() {
+        clearSpriteLists();  // Ensure old sprites are cleared before loading new ones
         try {
-            switch (gp.playerClass) {
+            switch (playerClass) {
                 case 0: // WARRIOR
-                    dir = "/player/Warrior/";
-                    // Load sprites for movement
-                    for (int i = 0; i <= 7; i++) {
-                        moveRightList.add(i, UtilityTool.loadSprite(dir + "moveRight/" + i + ".png", "Missing moveRight " + i));
-                        moveLeftList.add(i, UtilityTool.loadSprite(dir + "moveLeft/" + i + ".png", "Missing moveLeft " + i));
-                    }
-                    // Load sprites for idle
-                    for (int i = 0; i <= 5; i++) {
-                        idleRightList.add(i, UtilityTool.loadSprite(dir + "idleRight/" + i + ".png", "Missing idleRight " + i));
-                        idleLeftList.add(i, UtilityTool.loadSprite(dir + "idleLeft/" + i + ".png", "Missing idleLeft " + i));
-                    }
-
-                    // Scale sprites up
-                    UtilityTool.scaleEntityList(this, moveRightList, 220, 96);
-                    UtilityTool.scaleEntityList(this, moveLeftList, 220, 96);
-                    UtilityTool.scaleEntityList(this, idleRightList, 220, 96);
-                    UtilityTool.scaleEntityList(this, idleLeftList, 220, 96);
+                    loadSprites("/player/Warrior/", 220, 96, 7, 5);
                     break;
                 case 1: // KNIGHT
-                    dir = "/player/Knight/";
-                    // Load sprites for movement
-                    for (int i = 0; i <= 9; i++) {
-                        moveRightList.add(i, UtilityTool.loadSprite(dir + "moveRight/" + i + ".png", "Missing moveRight " + i));
-                        moveLeftList.add(i, UtilityTool.loadSprite(dir + "moveLeft/" + i + ".png", "Missing moveLeft " + i));
-                    }
-                    // Load sprites for idle
-                    for (int i = 0; i <= 9; i++) {
-                        idleRightList.add(i, UtilityTool.loadSprite(dir + "idleRight/" + i + ".png", "Missing idleRight " + i));
-                        idleLeftList.add(i, UtilityTool.loadSprite(dir + "idleLeft/" + i + ".png", "Missing idleLeft " + i));
-                    }
-                    System.out.println("Loaded Knight sprites");
-                    // Scale sprites up
-                    UtilityTool.scaleEntityList(this, moveRightList, 200, 96);
-                    UtilityTool.scaleEntityList(this, moveLeftList, 200, 96);
-                    UtilityTool.scaleEntityList(this, idleRightList, 200, 96);
-                    UtilityTool.scaleEntityList(this, idleLeftList, 200, 96);
+                    loadSprites("/player/Knight/", 200, 96, 9, 9);
                     break;
                 case 2: // ASSASSIN
-                    dir = "/player/Assassin/";
-                    // Load sprites for movement
-                    for (int i = 0; i <= 24; i++) {
-                        moveRightList.add(i, UtilityTool.loadSprite(dir + "moveRight/" + i + ".png", "Missing moveRight " + i));
-                        moveLeftList.add(i, UtilityTool.loadSprite(dir + "moveLeft/" + i + ".png", "Missing moveLeft " + i));
-                    }
-                    // Load sprites for idle
-                    for (int i = 0; i <= 17; i++) {
-                        idleRightList.add(i, UtilityTool.loadSprite(dir + "idleRight/" + i + ".png", "Missing idleRight " + i));
-                        idleLeftList.add(i, UtilityTool.loadSprite(dir + "idleLeft/" + i + ".png", "Missing idleLeft " + i));
-                    }
-
-                    // Scale sprites up
-                    UtilityTool.scaleEntityList(this, moveRightList, 180, 96);
-                    UtilityTool.scaleEntityList(this, moveLeftList, 180, 96);
-                    UtilityTool.scaleEntityList(this, idleRightList, 180, 96);
-                    UtilityTool.scaleEntityList(this, idleLeftList, 180, 96);
+                    loadSprites("/player/Assassin/", 180, 96, 24, 17);
                     break;
             }
         } catch (IOException e) {
             e.printStackTrace(System.out);
         }
+    }
+
+    private void clearSpriteLists() {
+        moveRightList.clear();
+        moveLeftList.clear();
+        idleRightList.clear();
+        idleLeftList.clear();
+    }
+
+    private void loadSprites(String dir, int scaleWidth, int scaleHeight, int moveFrames, int idleFrames) throws IOException {
+        this.dir = dir;
+        // Load sprites for movement
+        for (int i = 0; i <= moveFrames; i++) {
+            moveRightList.add(i, UtilityTool.loadSprite(dir + "moveRight/" + i + ".png", "Missing moveRight " + i));
+            moveLeftList.add(i, UtilityTool.loadSprite(dir + "moveLeft/" + i + ".png", "Missing moveLeft " + i));
+        }
+        // Load sprites for idle
+        for (int i = 0; i <= idleFrames; i++) {
+            idleRightList.add(i, UtilityTool.loadSprite(dir + "idleRight/" + i + ".png", "Missing idleRight " + i));
+            idleLeftList.add(i, UtilityTool.loadSprite(dir + "idleLeft/" + i + ".png", "Missing idleLeft " + i));
+        }
+
+        // Scale sprites up
+        UtilityTool.scaleEntityList(this, moveRightList, scaleWidth, scaleHeight);
+        UtilityTool.scaleEntityList(this, moveLeftList, scaleWidth, scaleHeight);
+        UtilityTool.scaleEntityList(this, idleRightList, scaleWidth, scaleHeight);
+        UtilityTool.scaleEntityList(this, idleLeftList, scaleWidth, scaleHeight);
     }
 }

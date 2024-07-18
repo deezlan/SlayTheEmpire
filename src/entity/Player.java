@@ -31,7 +31,7 @@ public class Player extends Entity {
     private int delta;
 
     public Player (GamePanel gp, KeyHandler keyH, Cursor cursor, int playerClass) {
-        super(gp, 303, 9);
+        super(gp,303,9);
         this.gp = gp;
         this.keyH = keyH;
         this.playerClass = playerClass;
@@ -317,9 +317,9 @@ public class Player extends Entity {
             currentLife = maxLife;
         }
 
-        if (attacking)
+        if (attacking) {
             startAttack();
-        else {
+        } else {
 
             if ((keyH.wPressed && keyH.sPressed) || (keyH.aPressed && keyH.dPressed)) {
                 action = "stuckOppositeDirection";

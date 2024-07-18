@@ -11,6 +11,7 @@ public class OBJ_Fireball extends Projectile {
     public OBJ_Fireball(GamePanel gp) {
         super(gp);
         this.gp = gp;
+        setCollisionValues(0, 0, 48, 48);
 
         name = "Fireball";
         speed = 10;
@@ -19,8 +20,8 @@ public class OBJ_Fireball extends Projectile {
         damage = 2;
         alive = false;
         getImage();
-        solidArea.width = gp.TILE_SIZE;
-        solidArea.height = gp.TILE_SIZE;
+//        solidArea.width = gp.TILE_SIZE;
+//        solidArea.height = gp.TILE_SIZE;
     }
 
     public void getImage(){

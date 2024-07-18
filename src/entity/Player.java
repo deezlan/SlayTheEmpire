@@ -31,7 +31,7 @@ public class Player extends Entity {
     private int delta;
 
     public Player (GamePanel gp, KeyHandler keyH, Cursor cursor, int playerClass) {
-        super(gp);
+        super(gp, 303, 9);
         this.gp = gp;
         this.keyH = keyH;
         this.playerClass = playerClass;
@@ -41,17 +41,15 @@ public class Player extends Entity {
         switch (playerClass) {
             case 0:
                 screenX = (gp.SCREEN_WIDTH/2) - (gp.TILE_SIZE/2) - 90; // CENTERED PLAYER 0 POSITION
-                screenY = (gp.SCREEN_HEIGHT/2) - 72;
                 break;
             case 1:
                 screenX = (gp.SCREEN_WIDTH/2) - (gp.TILE_SIZE/2) - 72; // CENTERED PLAYER 1 POSITION
-                screenY = (gp.SCREEN_HEIGHT/2) - 72;
                 break;
             case 2:
                 default:
                 screenX = (gp.SCREEN_WIDTH/2) - (gp.TILE_SIZE/2) - 48; // CENTERED PLAYER 2 POSITION
-                screenY = (gp.SCREEN_HEIGHT/2) - 72;
         }
+        screenY = (gp.SCREEN_HEIGHT/2) - 72;
 
         setDefaultValues();
         setCollisionValues();
@@ -72,8 +70,6 @@ public class Player extends Entity {
 
     // DEFAULT INITIALIZATION
     public void setDefaultValues() {
-        worldX = 303; // PLAYER SPAWN X
-        worldY = 9; // PLAYER SPAWN Y
         defaultSpeed = 3;
         speed = defaultSpeed;
         type = type_player;
@@ -132,8 +128,6 @@ public class Player extends Entity {
     }
     public void setDefaultPosition() {
         gp.currentMap = 0;
-        worldX = 303; // PLAYER SPAWN X
-        worldY = 9; // PLAYER SPAWN Y
         action = "idleRight";
     }
 
@@ -521,7 +515,7 @@ public class Player extends Entity {
 
         if (animationSpriteNum > playerRightAttackList.size())
             animationSpriteNum = 0;
-        BufferedImage animationImage = lookingRight? playerRightAttackList.get(animationSpriteNum) : playerLeftAttackList.get(animationSpriteNum);
+        BufferedImage animationImage = lookingRight ? playerRightAttackList.get(animationSpriteNum) : playerLeftAttackList.get(animationSpriteNum);
 
         switch (gp.currentMap){ // SWITCH TO SWITCH STATEMENT
             case 0:

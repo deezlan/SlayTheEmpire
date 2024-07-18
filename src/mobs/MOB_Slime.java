@@ -14,6 +14,7 @@ public class MOB_Slime extends Entity {
         setStatValues(1, 4, false, 1, 15);
         setCollisionValues(70, 90, 40, 30);
         setAttackValues(1, 2, 50, 30, false);
+        setHitboxValues(70, 100, 60, 45);
 
         // Load mob sprites
         getMobSprites();

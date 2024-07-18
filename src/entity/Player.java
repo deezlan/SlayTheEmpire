@@ -41,17 +41,15 @@ public class Player extends Entity {
         switch (playerClass) {
             case 0:
                 screenX = (gp.SCREEN_WIDTH/2) - (gp.TILE_SIZE/2) - 90; // CENTERED PLAYER 0 POSITION
-                screenY = (gp.SCREEN_HEIGHT/2) - 72;
                 break;
             case 1:
                 screenX = (gp.SCREEN_WIDTH/2) - (gp.TILE_SIZE/2) - 72; // CENTERED PLAYER 1 POSITION
-                screenY = (gp.SCREEN_HEIGHT/2) - 72;
                 break;
             case 2:
                 default:
                 screenX = (gp.SCREEN_WIDTH/2) - (gp.TILE_SIZE/2) - 48; // CENTERED PLAYER 2 POSITION
-                screenY = (gp.SCREEN_HEIGHT/2) - 72;
         }
+        screenY = (gp.SCREEN_HEIGHT/2) - 72;
 
         setDefaultValues();
         setCollisionValues();

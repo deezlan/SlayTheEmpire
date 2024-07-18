@@ -888,7 +888,7 @@ public class UI {
             subState = 1;
         }
 
-        switch(subState) {
+        switch (subState) {
             case 0: drawSubWindow(frameX, frameY, frameWidth, frameHeight); options_PLAY_STATE(frameX, frameY);  break;
             case 1: options_startMenu(frameY); break;
             case 2: break;
@@ -954,7 +954,9 @@ public class UI {
 
         text = "Back to Lobby";
         y += (int) (gp.TILE_SIZE * 1.2);
-        g2.setColor(gp.ui.commandNum == 3? Color.YELLOW : Color.WHITE);
+        g2.setColor(gp.ui.commandNum == 3 ? Color.YELLOW : Color.WHITE);
+        if (gp.currentMap == 0)
+            g2.setColor(Color.GRAY);
         g2.drawString(text, x, y);
         if (gp.ui.commandNum == 3) {
             g2.drawString(">", x - 25, y);

@@ -280,8 +280,8 @@ public class EventHandler {
                 break;
             case 1, 2:
                 tempMap = 0;
-                tempCol = 8;
-                tempRow = 3;
+                tempCol = 6;
+                tempRow = 2;
         }
 
         canTouchEvent = false;

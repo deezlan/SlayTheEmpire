@@ -297,7 +297,10 @@ public class KeyHandler implements KeyListener {
                     }
                     // BACK TO LOBBY
                     case 3: {
-                        gp.loadLevel();
+                        if (gp.currentMap != 0) {
+                            gp.eHandler.changeMap();
+                            gp.gameState = gp.TRANSITION_STATE;
+                        }
                         break;
                     }
                     // Back to Start Menu

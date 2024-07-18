@@ -31,7 +31,7 @@ public class Player extends Entity {
     private int delta;
 
     public Player (GamePanel gp, KeyHandler keyH, Cursor cursor, int playerClass) {
-        super(gp, 303, 9);
+        super(gp,303,9);
         this.gp = gp;
         this.keyH = keyH;
         this.playerClass = playerClass;
@@ -70,15 +70,33 @@ public class Player extends Entity {
 
     // DEFAULT INITIALIZATION
     public void setDefaultValues() {
-        defaultSpeed = 3;
-        speed = defaultSpeed;
         type = type_player;
 
-        // ATTRIBUTES
-        maxLife = 10;
-        currentLife = maxLife;
+        // ATTRIBUTES DEPENDING ON CHOSEN CLASS
+        switch (playerClass) {
+            case 0:
+                defaultSpeed = 3;
+                speed = defaultSpeed;
+                maxLife = 8;
+                currentLife = maxLife;
+                damage = 5;
+                break;
+            case 1:
+                defaultSpeed = 2;
+                speed = defaultSpeed;
+                maxLife = 10;
+                currentLife = maxLife;
+                damage = 3;
+                break;
+            case 2:
+                defaultSpeed = 4;
+                speed = defaultSpeed;
+                maxLife = 6;
+                currentLife = maxLife;
+                damage = 1;
+        }
+
         totalCoins = 500;
-        damage = 1;
         damageSprite = 2;
     }
     private void setCollisionValues() {
@@ -127,6 +145,8 @@ public class Player extends Entity {
         //add inventory
     }
     public void setDefaultPosition() {
+        worldX = 303;
+        worldY = 9;
         gp.currentMap = 0;
         action = "idleRight";
     }
@@ -297,9 +317,9 @@ public class Player extends Entity {
             currentLife = maxLife;
         }
 
-        if (attacking)
+        if (attacking) {
             startAttack();
-        else {
+        } else {
 
             if ((keyH.wPressed && keyH.sPressed) || (keyH.aPressed && keyH.dPressed)) {
                 action = "stuckOppositeDirection";

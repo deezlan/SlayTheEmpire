@@ -77,9 +77,6 @@ public class KeyHandler implements KeyListener {
     }
 
     public void difficultySelectState(int code) {
-        if (code == KeyEvent.VK_SPACE) {
-
-        }
         if (code == KeyEvent.VK_W || code == KeyEvent.VK_S) {
             gp.ui.commandNum += (code == KeyEvent.VK_W) ? -1 : 1;
             gp.ui.commandNum = Math.max(0, Math.min(gp.ui.commandNum, 3));
@@ -88,23 +85,14 @@ public class KeyHandler implements KeyListener {
         if (code == KeyEvent.VK_SPACE) {
             gp.playSE(2);
             switch (gp.ui.commandNum) {
-                case 0: {
-                    gp.gameState = gp.playState;
-                    break;
-                }
-                case 1: {
-                    gp.gameState = gp.playState;
-                    break;
-                }
-                case 2: {
-                    gp.gameState = gp.playState;
+                case 0, 1, 2: {
+                    gp.loadLevel();
                     break;
                 }
                 case 3: {
                     gp.gameState = gp.characterSelectionState;
                     break;
                 }
-
             }
         }
 
@@ -175,7 +163,6 @@ public class KeyHandler implements KeyListener {
                     gp.player = new Player(gp, gp.keyH, gp.cursor, 2);
             }
             gp.gameState = gp.difficultySelectState;
-            gp.loadLevel();
         }
     }
 
@@ -364,6 +351,8 @@ public class KeyHandler implements KeyListener {
             creditsState(code);
         } else if (gp.gameState == gp.controlsState) {
             controlsState(code);
+        } else if (gp.gameState == gp.difficultySelectState) {
+            difficultySelectState(code);
         }
 
         if (code == KeyEvent.VK_T){

@@ -692,7 +692,7 @@ public abstract class Entity {
                 } else if (this.currentList.size() > 7) {
                     if (spriteCounter > 11) runCurrentListAnimation();
                 } else {
-                    if (spriteCounter > 13) runCurrentListAnimation();
+                    if (spriteCounter > 8) runCurrentListAnimation();
                 }
             }
 

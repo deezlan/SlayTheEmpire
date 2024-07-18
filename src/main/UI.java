@@ -492,8 +492,6 @@ public class UI {
             g2.drawImage(loginErr, 320, 480, 250, 20, null);
         if (usernameTaken)
             g2.drawImage(usernameTakenErr, 320, 480, 250, 20, null);
-//        if (validLogin)
-//            gp.gameState = gp.playState;
 
         g2.setColor(Color.WHITE);
         g2.setStroke(new BasicStroke(3f));
@@ -580,23 +578,23 @@ public class UI {
 
     // CHARACTER SELECTION SCREEN
     public void drawCharacterSelection() {
-        g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 20F));
-        String text = "(Esc to Exit)";
-        g2.drawString(text,10,30);
-
         g2.setColor(Color.BLACK);
         g2.fillRect(0,0, gp.SCREEN_WIDTH, gp.SCREEN_HEIGHT);
         drawBG();
 
+        drawCharacterSelectPreview();
+
         g2.setColor(Color.WHITE);
         g2.setFont(g2.getFont().deriveFont(Font.BOLD, 40F));
+//
+//        String text = "Select Your Class";
+//        int x = getXForCenteredText(text);
+//        int y = gp.TILE_SIZE*3;
+//        g2.drawString(text, x, y);
 
-        text = "Select Your Class";
-        int x = getXForCenteredText(text);
-        int y = gp.TILE_SIZE*3;
-        g2.drawString(text, x, y);
-
-        drawCharacterSelectPreview();
+        g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 20F));
+        String text = "(Esc to Exit)";
+        g2.drawString(text,10,30);
     }
 
     //Draw dialog
@@ -1102,6 +1100,8 @@ public class UI {
         if (gp.gameState == gp.creditsState) drawCredits(g2);
         // CHAR SELECTION
         if (gp.gameState == gp.characterSelectionState) drawCharacterSelection();
+        // DIFFICULTY SELECTION
+        if (gp.gameState == gp.difficultySelectState) drawDifficultySelect();
         // MENU OPTION & GAMEPLAY OPTION
         if (gp.gameState == gp.optionState) drawOptions();
         if (gp.gameState == gp.optionState2) {

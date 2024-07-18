@@ -882,7 +882,7 @@ public class UI {
         int frameWidth = gp.TILE_SIZE*8;
         int frameHeight = gp.TILE_SIZE*10;
 
-        if (gp.gameState == gp.OPTION_MENU_STATE) {
+        if (gp.gameState == gp.OPTIONS_MENU_STATE) {
             subState = 0;
         } else if (gp.gameState == gp.OPTIONS_DIALOGUE_STATE) {
             subState = 1;
@@ -898,7 +898,7 @@ public class UI {
     private void drawVolumeBar(int volumeScale, int x, int y) {
         int barWidth = 240;
         int barHeight = 20;
-        if (gp.gameState == gp.OPTION_MENU_STATE) {
+        if (gp.gameState == gp.OPTIONS_MENU_STATE) {
             barWidth = 180;
         }
         int fillColor = (int) (barWidth * (volumeScale / 5.0f));
@@ -1152,7 +1152,7 @@ public class UI {
         // DIFFICULTY SELECTION
         if (gp.gameState == gp.DIFF_MENU_STATE) drawDifficultySelect();
         // MENU OPTION & GAMEPLAY OPTION
-        if (gp.gameState == gp.OPTION_MENU_STATE) drawOptions();
+        if (gp.gameState == gp.OPTIONS_MENU_STATE) drawOptions();
         if (gp.gameState == gp.OPTIONS_DIALOGUE_STATE) {
             drawBG();
             drawOptions();

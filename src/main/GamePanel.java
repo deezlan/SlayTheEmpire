@@ -89,7 +89,7 @@ public class GamePanel extends JPanel implements Runnable {
             MAIN_MENU_STATE = 2,
             CHAR_SELECT_STATE = 3,
             DIFF_MENU_STATE = 4,
-            OPTION_MENU_STATE = 5,
+            OPTIONS_MENU_STATE = 5,
             CONTROLS_STATE = 6,
             CREDITS_STATE = 7,
             PLAY_STATE = 8,
@@ -304,7 +304,7 @@ public class GamePanel extends JPanel implements Runnable {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D)g;
 
-        if (gameState == OPTION_MENU_STATE){
+        if (gameState == OPTIONS_MENU_STATE){
             showCursor();
         }
 
@@ -313,7 +313,7 @@ public class GamePanel extends JPanel implements Runnable {
                 gameState == SHOP_STATE ||
                 gameState == DIALOGUE_STATE ||
                 gameState == PAUSE_STATE ||
-                gameState == OPTION_MENU_STATE ||
+                gameState == OPTIONS_MENU_STATE ||
                 gameState == TRANSITION_STATE ||
                 gameState == CUTSCENE_STATE ||
                 gameState == DIFF_DIALOGUE_STATE) {

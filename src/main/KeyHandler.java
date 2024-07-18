@@ -198,7 +198,7 @@ public class KeyHandler implements KeyListener {
             }
 
             // GO TO OPTIONS
-            if (code == KeyEvent.VK_ESCAPE) gp.gameState = gp.OPTION_MENU_STATE;
+            if (code == KeyEvent.VK_ESCAPE) gp.gameState = gp.OPTIONS_MENU_STATE;
 
             // PLAYER ACTIONS
             if (code == KeyEvent.VK_W) wPressed = true;
@@ -241,11 +241,11 @@ public class KeyHandler implements KeyListener {
 
     private void optionState(int code) {
         if (code == KeyEvent.VK_ESCAPE) {
-            gp.gameState = (gp.gameState == gp.PLAY_STATE) ? gp.OPTION_MENU_STATE : (gp.gameState == gp.OPTION_MENU_STATE) ? gp.PLAY_STATE : gp.gameState;
+            gp.gameState = (gp.gameState == gp.PLAY_STATE) ? gp.OPTIONS_MENU_STATE : (gp.gameState == gp.OPTIONS_MENU_STATE) ? gp.PLAY_STATE : gp.gameState;
         }
 
         // OPTION SELECT
-        if (gp.gameState == gp.OPTION_MENU_STATE || gp.gameState == gp.OPTIONS_DIALOGUE_STATE) {
+        if (gp.gameState == gp.OPTIONS_MENU_STATE || gp.gameState == gp.OPTIONS_DIALOGUE_STATE) {
             if (code == KeyEvent.VK_W || code == KeyEvent.VK_S) {
                 gp.ui.commandNum += (code == KeyEvent.VK_W) ? -1 : 1;
                 gp.ui.commandNum = Math.max(0, Math.min(gp.ui.commandNum, 5));
@@ -302,14 +302,14 @@ public class KeyHandler implements KeyListener {
                     }
                     // Back to Start Menu
                     case 4: {
-                        if (gp.gameState == gp.OPTION_MENU_STATE) {
+                        if (gp.gameState == gp.OPTIONS_MENU_STATE) {
                             gp.gameState = gp.MAIN_MENU_STATE;
                         }
                         break;
                     }
                     // BACK
                     case 5: {
-                        gp.gameState = (gp.gameState == gp.OPTION_MENU_STATE) ? gp.PLAY_STATE : gp.MAIN_MENU_STATE;
+                        gp.gameState = (gp.gameState == gp.OPTIONS_MENU_STATE) ? gp.PLAY_STATE : gp.MAIN_MENU_STATE;
                         gp.ui.commandNum = 0;
                         break;
                     }
@@ -363,7 +363,7 @@ public class KeyHandler implements KeyListener {
             characterSelectionState(code);
         } else if (gp.gameState == gp.PLAY_STATE) {
             playState(code);
-        } else if (gp.gameState == gp.OPTION_MENU_STATE || gp.gameState == gp.OPTIONS_DIALOGUE_STATE) {
+        } else if (gp.gameState == gp.OPTIONS_MENU_STATE || gp.gameState == gp.OPTIONS_DIALOGUE_STATE) {
             optionState(code);
         } else if (gp.gameState == gp.SHOP_STATE) {
             shopState(code);

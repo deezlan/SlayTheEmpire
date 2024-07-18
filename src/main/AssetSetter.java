@@ -39,7 +39,7 @@ public class AssetSetter {
                 break;
             case 1:
                 // TELEPORTING OBELISK
-                gp.objArr[gp.currentMap][i] = new OBJ_Obelisk(gp, 63, 168);
+                gp.objArr[gp.currentMap][i] = new OBJ_Obelisk(gp, 63 + gp.TILE_SIZE*17, 168);
                 break;
             case 2:
                 // TELEPORTING OBELISK
@@ -59,44 +59,44 @@ public class AssetSetter {
                 // FIRST ROOM GATES index (0-4)
                 {
                     // ENTRANCES
-                    gp.gateArr[gp.currentMap][i] = new OBJ_Gate(gp, 0, 6, 41); i++;
-                    gp.gateArr[gp.currentMap][i] = new OBJ_Gate(gp, 0, 6, 42); i++;
+                    gp.gateArr[gp.currentMap][i] = new OBJ_Gate(gp, 0, 23, 41); i++;
+                    gp.gateArr[gp.currentMap][i] = new OBJ_Gate(gp, 0, 23, 42); i++;
                     // EXITS
-                    gp.gateArr[gp.currentMap][i] = new OBJ_Gate(gp, 0, 11, 37); i++;
-                    gp.gateArr[gp.currentMap][i] = new OBJ_Gate(gp, 0, 12, 37); i++;
-                    gp.gateArr[gp.currentMap][i] = new OBJ_Gate(gp, 0, 13, 37); i++;
+                    gp.gateArr[gp.currentMap][i] = new OBJ_Gate(gp, 0, 28, 37); i++;
+                    gp.gateArr[gp.currentMap][i] = new OBJ_Gate(gp, 0, 29, 37); i++;
+                    gp.gateArr[gp.currentMap][i] = new OBJ_Gate(gp, 0, 30, 37); i++;
                 }
                 // SPLIT PATHWAY GATES index (5-6) (7-8)
                 {
                     // LEFT PATH
-                    gp.gateArr[gp.currentMap][i] = new OBJ_Gate(gp, 0, 10, 30); i++;
-                    gp.gateArr[gp.currentMap][i] = new OBJ_Gate(gp, 0, 10, 31); i++;
+                    gp.gateArr[gp.currentMap][i] = new OBJ_Gate(gp, 0, 27, 30); i++;
+                    gp.gateArr[gp.currentMap][i] = new OBJ_Gate(gp, 0, 27, 31); i++;
                     // RIGHT PATH
-                    gp.gateArr[gp.currentMap][i] = new OBJ_Gate(gp, 0, 14, 30); i++;
-                    gp.gateArr[gp.currentMap][i] = new OBJ_Gate(gp, 0, 14, 31); i++;
+                    gp.gateArr[gp.currentMap][i] = new OBJ_Gate(gp, 0, 31, 30); i++;
+                    gp.gateArr[gp.currentMap][i] = new OBJ_Gate(gp, 0, 31, 31); i++;
                 }
                 // MINI-BOSS ROOM GATES index (9-15)
                 {
                     // ENTRANCES
                     // LEFT SIDE
-                    gp.gateArr[gp.currentMap][i] = new OBJ_Gate(gp, 0, 6, 23); i++;
-                    gp.gateArr[gp.currentMap][i] = new OBJ_Gate(gp, 0, 6, 24); i++;
+                    gp.gateArr[gp.currentMap][i] = new OBJ_Gate(gp, 0, 23, 23); i++;
+                    gp.gateArr[gp.currentMap][i] = new OBJ_Gate(gp, 0, 23, 24); i++;
                     // RIGHT SIDE
-                    gp.gateArr[gp.currentMap][i] = new OBJ_Gate(gp, 0, 18, 23); i++;
-                    gp.gateArr[gp.currentMap][i] = new OBJ_Gate(gp, 0, 18, 24); i++;
+                    gp.gateArr[gp.currentMap][i] = new OBJ_Gate(gp, 0, 35, 23); i++;
+                    gp.gateArr[gp.currentMap][i] = new OBJ_Gate(gp, 0, 35, 24); i++;
                     // EXITS
-                    gp.gateArr[gp.currentMap][i] = new OBJ_Gate(gp, 0, 11, 19); i++;
-                    gp.gateArr[gp.currentMap][i] = new OBJ_Gate(gp, 0, 12, 19); i++;
-                    gp.gateArr[gp.currentMap][i] = new OBJ_Gate(gp, 0, 13, 19); i++;
+                    gp.gateArr[gp.currentMap][i] = new OBJ_Gate(gp, 0, 28, 19); i++;
+                    gp.gateArr[gp.currentMap][i] = new OBJ_Gate(gp, 0, 29, 19); i++;
+                    gp.gateArr[gp.currentMap][i] = new OBJ_Gate(gp, 0, 30, 19); i++;
                 }
                 // FINAL BOSS ROOM GATES index (16-19)
                 {
                     // ENTRANCES
-                    gp.gateArr[gp.currentMap][i] = new OBJ_Gate(gp, 0, 11, 14); i++;
-                    gp.gateArr[gp.currentMap][i] = new OBJ_Gate(gp, 0, 12, 14); i++;
-                    gp.gateArr[gp.currentMap][i] = new OBJ_Gate(gp, 0, 13, 14); i++;
+                    gp.gateArr[gp.currentMap][i] = new OBJ_Gate(gp, 0, 28, 14); i++;
+                    gp.gateArr[gp.currentMap][i] = new OBJ_Gate(gp, 0, 29, 14); i++;
+                    gp.gateArr[gp.currentMap][i] = new OBJ_Gate(gp, 0, 30, 14); i++;
                     // EXIT
-                    gp.gateArr[gp.currentMap][i] = new OBJ_Gate(gp, 0, 5, 7);
+                    gp.gateArr[gp.currentMap][i] = new OBJ_Gate(gp, 0, 22, 7);
                 }
             }
                 break;
@@ -176,8 +176,8 @@ public class AssetSetter {
         switch (gp.currentMap) {
             case 1:
             {
-                gp.mobArr[gp.currentMap][i] = new MOB_RobotGuardian(gp, 400, 1968); i++;
-                gp.mobArr[gp.currentMap][i] = new MOB_Mushroom(gp, 350, 1968); i++;
+                gp.mobArr[gp.currentMap][i] = new MOB_RobotGuardian(gp, 400 + 48*17, 1968); i++;
+                gp.mobArr[gp.currentMap][i] = new MOB_Mushroom(gp, 350 + 48*17, 1968); i++;
 //                gp.mobArr[gp.currentMap][i] = new MOB_FlyingEye(gp, 350, 1968); i++;
 //                gp.mobArr[gp.currentMap][i] = new MOB_ArmoredGuardian(gp, 400, 1968); i++;
 //                gp.mobArr[gp.currentMap][i] = new MOB_SkeletonKnight(gp, 350, 1968); i++;
@@ -186,7 +186,7 @@ public class AssetSetter {
 //                gp.mobArr[gp.currentMap][i] = new MOB_Goblin(gp, 350, 1968); i++;
 //                gp.mobArr[gp.currentMap][i] = new MOB_Ramses(gp, 350, 1968); i++;
 //                gp.mobArr[gp.currentMap][i] = new MOB_Skellington(gp, 350, 1968); i++;
-                gp.mobArr[gp.currentMap][i] = new BOSS_FrostGiant(gp, 400, 180); i++;
+                gp.mobArr[gp.currentMap][i] = new BOSS_FrostGiant(gp, 400 + 48*17, 180); i++;
         }
                 break;
             case 2:

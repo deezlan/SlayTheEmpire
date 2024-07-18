@@ -31,7 +31,7 @@ public class Player extends Entity {
     private int delta;
 
     public Player (GamePanel gp, KeyHandler keyH, Cursor cursor, int playerClass) {
-        super(gp);
+        super(gp, 303, 9);
         this.gp = gp;
         this.keyH = keyH;
         this.playerClass = playerClass;
@@ -70,8 +70,6 @@ public class Player extends Entity {
 
     // DEFAULT INITIALIZATION
     public void setDefaultValues() {
-        worldX = 303; // PLAYER SPAWN X
-        worldY = 9; // PLAYER SPAWN Y
         defaultSpeed = 3;
         speed = defaultSpeed;
         type = type_player;
@@ -130,8 +128,6 @@ public class Player extends Entity {
     }
     public void setDefaultPosition() {
         gp.currentMap = 0;
-        worldX = 303; // PLAYER SPAWN X
-        worldY = 9; // PLAYER SPAWN Y
         action = "idleRight";
     }
 
@@ -519,7 +515,7 @@ public class Player extends Entity {
 
         if (animationSpriteNum > playerRightAttackList.size())
             animationSpriteNum = 0;
-        BufferedImage animationImage = lookingRight? playerRightAttackList.get(animationSpriteNum) : playerLeftAttackList.get(animationSpriteNum);
+        BufferedImage animationImage = lookingRight ? playerRightAttackList.get(animationSpriteNum) : playerLeftAttackList.get(animationSpriteNum);
 
         switch (gp.currentMap){ // SWITCH TO SWITCH STATEMENT
             case 0:

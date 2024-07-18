@@ -53,7 +53,7 @@ public class Player extends Entity {
 
         setDefaultValues();
         setCollisionValues();
-//        setHitboxValues();
+        setHitboxValues(75, 30, 30, 30);
         setItems();
         getPlayerSprites();
         getPlayerAttackSprites();
@@ -80,7 +80,8 @@ public class Player extends Entity {
                 speed = defaultSpeed;
                 maxLife = 8;
                 currentLife = maxLife;
-                damage = 5;
+//                damage = 5;
+                damage = 1;
                 break;
             case 1:
                 defaultSpeed = 2;
@@ -112,8 +113,8 @@ public class Player extends Entity {
                 solidArea.width = 40; // outer area of collision square
                 solidArea.height = 30;
 
-                attackArea.width = gp.TILE_SIZE*2;
-                attackArea.height = gp.TILE_SIZE*3;
+                attackArea.width = 50;
+                attackArea.height = 30;
                 break;
             case 1:
                 solidArea = new Rectangle(); // draws a square at the centre of the player
@@ -121,12 +122,12 @@ public class Player extends Entity {
                 solidArea.y = 60;
                 solidAreaDefaultX = solidArea.x;
                 solidAreaDefaultY = solidArea.y;
-                solidArea.width = 50; // outer area of collision square
+                solidArea.width = 55; // outer area of collision square
                 solidArea.height = 30;
 
                 // IMPLEMENT THESE VALUES
-                attackArea.width = gp.TILE_SIZE*2;
-                attackArea.height = gp.TILE_SIZE*3;
+                attackArea.width = 50;
+                attackArea.height = 30;
 
                 break;
             case 2:
@@ -171,7 +172,8 @@ public class Player extends Entity {
 
             // ADJUST FOR ATTACK
             switch (action) {
-                case "moveUp": worldY -= (playerRightAttackList.get(0).getHeight() - attackArea.height)/2; break;
+//                case "moveUp": worldY -= (playerRightAttackList.get(0).getHeight() + attackArea.height)/2; break;
+                case "moveUp": worldY -= playerRightAttackList.get(0).getHeight() + attackArea.height - 20; break;
                 case "moveDown": worldY += (playerRightAttackList.get(0).getHeight() - attackArea.height)/2; break;
                 case "idleLeft", "moveLeft": worldX -= (playerRightAttackList.get(0).getWidth() - attackArea.width)/2; break;
                 case "idleRight", "moveRight": worldX += (playerRightAttackList.get(0).getWidth() - attackArea.width)/2; break;
@@ -424,27 +426,9 @@ public class Player extends Entity {
 
             // CALCULATE CENTRAL AXIS OF CURSOR
             if (gp.currentMap == 0) {
-//                if (playerClass == 0) {
-//                    // WARRIOR
-                    cursor.calculateAngle((int)(worldX + gp.TILE_SIZE * 2 + 3), worldY + gp.TILE_SIZE);
-//                } else if (playerClass == 1) {
-//                    // KNIGHT
-//                    cursor.calculateAngle((worldX + gp.TILE_SIZE * 2 + 3), worldY + gp.TILE_SIZE);
-//                } else if (playerClass == 2) {
-//                    // ASSASSIN
-//                    cursor.calculateAngle((int)(worldX + gp.TILE_SIZE * 2 + 5), worldY + gp.TILE_SIZE);
-//                }
+                cursor.calculateAngle(worldX + gp.TILE_SIZE * 2 + 3, worldY + gp.TILE_SIZE);
             } else {
-//                if (playerClass == 0) {
-//                    // WARRIOR
-//                    cursor.calculateAngle((int)(screenX + gp.TILE_SIZE * 2.3), screenY + gp.TILE_SIZE + 10);
-//                } else if (playerClass == 1) {
-//                    // KNIGHT
-                    cursor.calculateAngle((screenX + gp.TILE_SIZE * 2 + 3), screenY + gp.TILE_SIZE);
-//                } else if (playerClass == 2) {
-//                    // ASSASSIN
-//                    cursor.calculateAngle((int)(screenX + gp.TILE_SIZE * 1.9), screenY + gp.TILE_SIZE);
-//                }
+                cursor.calculateAngle((screenX + gp.TILE_SIZE * 2 + 3), screenY + gp.TILE_SIZE);
             }
         }
 
@@ -573,31 +557,10 @@ public class Player extends Entity {
                 }
         }
         // Draw arrow
-        switch (gp.currentMap){
-            case 0:
-//                if (playerClass == 0) {
-//                    // WARRIOR
-                    cursor.draw(g2, (int)(worldX + gp.TILE_SIZE * 2 + 3), worldY + gp.TILE_SIZE);
-//                } else if (playerClass == 1) {
-//                    // KNIGHT
-//                    cursor.draw(g2, worldX + gp.TILE_SIZE * 2 + 3, worldY + gp.TILE_SIZE); // For fixed camera
-//                } else if (playerClass == 2) {
-//                    // ASSASSIN
-//                    cursor.draw(g2, (int)(worldX + gp.TILE_SIZE * 2 + 3), worldY + gp.TILE_SIZE); // For fixed camera
-//                }
-                break;
-            case 1,2:
-//                if (playerClass == 0) {
-//                    // WARRIOR
-//                    cursor.draw(g2, (int)(screenX + gp.TILE_SIZE * 2.3), screenY + gp.TILE_SIZE);
-//                } else if (playerClass == 1) {
-//                    // KNIGHT
-                    cursor.draw(g2, (int)(screenX + gp.TILE_SIZE * 2.09), screenY + gp.TILE_SIZE);
-//                } else if (playerClass == 2) {
-//                    // ASSASSIN
-//                    cursor.draw(g2, (int)(screenX + gp.TILE_SIZE * 1.86), screenY + gp.TILE_SIZE);
-//                }
-                break;
+        if (gp.currentMap == 0) {
+            cursor.draw(g2, worldX + gp.TILE_SIZE * 2 + 3, worldY + gp.TILE_SIZE);
+        } else {
+            cursor.draw(g2, (int)(screenX + gp.TILE_SIZE * 2.09), screenY + gp.TILE_SIZE);
         }
     }
 

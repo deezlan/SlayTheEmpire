@@ -361,80 +361,173 @@ public class CollisionChecker {
                 entity.solidArea.x = entity.worldX + entity.solidArea.x;
                 entity.solidArea.y = entity.worldY + entity.solidArea.y;
 
-                // Get the object's solid area position
-                target[gp.currentMap][i].solidArea.x = target[gp.currentMap][i].worldX + target[gp.currentMap][i].solidArea.x;
-                target[gp.currentMap][i].solidArea.y = target[gp.currentMap][i].worldY + target[gp.currentMap][i].solidArea.y;
+                if (target[gp.currentMap][i].type == entity.type_mob) {
+                    target[gp.currentMap][i].hitboxArea.x = target[gp.currentMap][i].worldX + target[gp.currentMap][i].hitboxArea.x;
+                    target[gp.currentMap][i].hitboxArea.y = target[gp.currentMap][i].worldY + target[gp.currentMap][i].hitboxArea.y;
 
-                switch (action) {
-                    case "moveUp":
-                        entity.solidArea.y -= entity.speed;
-                        if (entity.solidArea.intersects(target[gp.currentMap][i].solidArea)) {
-                            entity.upCollisionOn = true;
-                            index = i;
-                        }
-                        break;
-                    case "moveDown":
-                        entity.solidArea.y += entity.speed;
-                        if (entity.solidArea.intersects(target[gp.currentMap][i].solidArea)) {
-                            entity.downCollisionOn = true;
-                            index = i;
-                        }
-                        break;
-                    case "moveLeft":
-                        entity.solidArea.x -= entity.speed;
-                        if (entity.solidArea.intersects(target[gp.currentMap][i].solidArea)) {
-                            entity.leftCollisionOn = true;
-                            index = i;
-                        }
-                        break;
-                    case "moveRight":
-                        entity.solidArea.x += entity.speed;
-                        if (entity.solidArea.intersects(target[gp.currentMap][i].solidArea)) {
-                            entity.rightCollisionOn = true;
-                            index = i;
-                        }
-                        break;
-                    case "moveUpRight":
-                        entity.solidArea.y -= entity.speed;
-                        entity.solidArea.x += entity.speed;
-                        if (entity.solidArea.intersects(target[gp.currentMap][i].solidArea)) {
+                    switch (action) {
+                        case "moveUp":
+                            entity.solidArea.y -= entity.speed;
+                            if (entity.solidArea.intersects(target[gp.currentMap][i].hitboxArea)) {
+                                entity.upCollisionOn = true;
+                                index = i;
+                            }
+                            break;
+                        case "moveDown":
+                            entity.solidArea.y += entity.speed;
+                            if (entity.solidArea.intersects(target[gp.currentMap][i].hitboxArea)) {
+                                entity.downCollisionOn = true;
+                                index = i;
+                            }
+                            break;
+                        case "moveLeft":
+                            entity.solidArea.x -= entity.speed;
+                            if (entity.solidArea.intersects(target[gp.currentMap][i].hitboxArea)) {
+                                entity.leftCollisionOn = true;
+                                index = i;
+                            }
+                            break;
+                        case "moveRight":
+                            entity.solidArea.x += entity.speed;
+                            if (entity.solidArea.intersects(target[gp.currentMap][i].hitboxArea)) {
+                                entity.rightCollisionOn = true;
+                                index = i;
+                            }
+                            break;
+                        case "moveUpRight":
+                            entity.solidArea.y -= entity.speed;
+                            entity.solidArea.x += entity.speed;
+                            if (entity.solidArea.intersects(target[gp.currentMap][i].hitboxArea)) {
                                 entity.rightCollisionOn = true;
                                 entity.upCollisionOn = true;
                                 index = i;
-                        }
-                        break;
-                    case "moveDownRight":
-                        entity.solidArea.y += entity.speed;
-                        entity.solidArea.x += entity.speed;
-                        if (entity.solidArea.intersects(target[gp.currentMap][i].solidArea)) {
+                            }
+                            break;
+                        case "moveDownRight":
+                            entity.solidArea.y += entity.speed;
+                            entity.solidArea.x += entity.speed;
+                            if (entity.solidArea.intersects(target[gp.currentMap][i].hitboxArea)) {
                                 entity.rightCollisionOn = true;
                                 entity.downCollisionOn = true;
                                 index = i;
-                        }
-                        break;
-                    case "moveUpLeft":
-                        entity.solidArea.y -= entity.speed;
-                        entity.solidArea.x -= entity.speed;
-                        if (entity.solidArea.intersects(target[gp.currentMap][i].solidArea)) {
+                            }
+                            break;
+                        case "moveUpLeft":
+                            entity.solidArea.y -= entity.speed;
+                            entity.solidArea.x -= entity.speed;
+                            if (entity.solidArea.intersects(target[gp.currentMap][i].hitboxArea)) {
                                 entity.leftCollisionOn = true;
                                 entity.upCollisionOn = true;
                                 index = i;
-                        }
-                        break;
-                    case "moveDownLeft", "idleRight", "idleLeft":
-                        entity.solidArea.y += entity.speed;
-                        entity.solidArea.x += entity.speed;
-                        if (entity.solidArea.intersects(target[gp.currentMap][i].solidArea)) {
+                            }
+                            break;
+                        case "moveDownLeft":
+                            entity.solidArea.y += entity.speed;
+                            entity.solidArea.x += entity.speed;
+                            if (entity.solidArea.intersects(target[gp.currentMap][i].hitboxArea)) {
                                 entity.downCollisionOn = true;
                                 entity.leftCollisionOn = true;
                                 index = i;
-                        }
+                            }
+                            break;
+                        case "idleRight":
+                            if (entity.solidArea.intersects(target[gp.currentMap][i].hitboxArea)) {
+                                entity.rightCollisionOn = true;
+                                index = i;
+                            }
+                            break;
+                        case "idleLeft":
+                            if (entity.solidArea.intersects(target[gp.currentMap][i].hitboxArea)) {
+                                entity.leftCollisionOn = true;
+                                index = i;
+                            }
+                    }
+
+                    entity.solidArea.x = entity.solidAreaDefaultX;
+                    entity.solidArea.y = entity.solidAreaDefaultY;
+                    target[gp.currentMap][i].hitboxArea.x = target[gp.currentMap][i].hitboxAreaDefaultX;
+                    target[gp.currentMap][i].hitboxArea.y = target[gp.currentMap][i].hitboxAreaDefaultY;
+                } else {
+                    // Get the object's solid area position
+                    target[gp.currentMap][i].solidArea.x = target[gp.currentMap][i].worldX + target[gp.currentMap][i].solidArea.x;
+                    target[gp.currentMap][i].solidArea.y = target[gp.currentMap][i].worldY + target[gp.currentMap][i].solidArea.y;
+
+                    switch (action) {
+                        case "moveUp":
+                            entity.solidArea.y -= entity.speed;
+                            if (entity.solidArea.intersects(target[gp.currentMap][i].solidArea)) {
+                                entity.upCollisionOn = true;
+                                index = i;
+                            }
+                            break;
+                        case "moveDown":
+                            entity.solidArea.y += entity.speed;
+                            if (entity.solidArea.intersects(target[gp.currentMap][i].solidArea)) {
+                                entity.downCollisionOn = true;
+                                index = i;
+                            }
+                            break;
+                        case "moveLeft":
+                            entity.solidArea.x -= entity.speed;
+                            if (entity.solidArea.intersects(target[gp.currentMap][i].solidArea)) {
+                                entity.leftCollisionOn = true;
+                                index = i;
+                            }
+                            break;
+                        case "moveRight":
+                            entity.solidArea.x += entity.speed;
+                            if (entity.solidArea.intersects(target[gp.currentMap][i].solidArea)) {
+                                entity.rightCollisionOn = true;
+                                index = i;
+                            }
+                            break;
+                        case "moveUpRight":
+                            entity.solidArea.y -= entity.speed;
+                            entity.solidArea.x += entity.speed;
+                            if (entity.solidArea.intersects(target[gp.currentMap][i].solidArea)) {
+                                entity.rightCollisionOn = true;
+                                entity.upCollisionOn = true;
+                                index = i;
+                            }
+                            break;
+                        case "moveDownRight":
+                            entity.solidArea.y += entity.speed;
+                            entity.solidArea.x += entity.speed;
+                            if (entity.solidArea.intersects(target[gp.currentMap][i].solidArea)) {
+                                entity.rightCollisionOn = true;
+                                entity.downCollisionOn = true;
+                                index = i;
+                            }
+                            break;
+                        case "moveUpLeft":
+                            entity.solidArea.y -= entity.speed;
+                            entity.solidArea.x -= entity.speed;
+                            if (entity.solidArea.intersects(target[gp.currentMap][i].solidArea)) {
+                                entity.leftCollisionOn = true;
+                                entity.upCollisionOn = true;
+                                index = i;
+                            }
+                            break;
+                        case "moveDownLeft":
+                            entity.solidArea.y += entity.speed;
+                            entity.solidArea.x += entity.speed;
+                            if (entity.solidArea.intersects(target[gp.currentMap][i].solidArea)) {
+                                entity.downCollisionOn = true;
+                                entity.leftCollisionOn = true;
+                                index = i;
+                            }
+                            break;
+                        case "idleLeft", "idleRight":
+                            if (entity.solidArea.intersects(target[gp.currentMap][i].solidArea)) {
+                                index = i;
+                            }
+                    }
+
+                    entity.solidArea.x = entity.solidAreaDefaultX;
+                    entity.solidArea.y = entity.solidAreaDefaultY;
+                    target[gp.currentMap][i].solidArea.x = target[gp.currentMap][i].solidAreaDefaultX;
+                    target[gp.currentMap][i].solidArea.y = target[gp.currentMap][i].solidAreaDefaultY;
                 }
-
-                entity.solidArea.x = entity.solidAreaDefaultX;
-                entity.solidArea.y = entity.solidAreaDefaultY;
-                target[gp.currentMap][i].solidArea.x = target[gp.currentMap][i].solidAreaDefaultX;
-                target[gp.currentMap][i].solidArea.y = target[gp.currentMap][i].solidAreaDefaultY;
             }
         }
         return index;

@@ -12,7 +12,7 @@ public class MOB_Canine extends Entity {
         super(gp, worldX, worldY);
         this.gp = gp;
         setStatValues(2, 4, false, 10, 50);
-        setCollisionValues(70, 90, 40, 30);
+        setCollisionValues(60, 85, 80, 15);
         setAttackValues(1, 3, 60, 60, false);
         setHitboxValues(60, 90, 80, 20);
 

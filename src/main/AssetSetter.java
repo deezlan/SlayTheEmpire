@@ -176,8 +176,8 @@ public class AssetSetter {
         switch (gp.currentMap) {
             case 1:
             {
-                gp.mobArr[gp.currentMap][i] = new MOB_ArmoredGuardian(gp, 400 + 48*17, 1968); i++;
-//                gp.mobArr[gp.currentMap][i] = new MOB_Canine(gp, 350 + 48*17, 1968); i++;
+//                gp.mobArr[gp.currentMap][i] = new MOB_ArmoredGuardian(gp, 400 + 48*17, 1968); i++;
+                gp.mobArr[gp.currentMap][i] = new MOB_Canine(gp, 350 + 48*17, 1968); i++;
 //                gp.mobArr[gp.currentMap][i] = new MOB_FlyingEye(gp, 350 + 48*17, 1968); i++;
 //                gp.mobArr[gp.currentMap][i] = new MOB_Goblin(gp, 350 + 48*17, 1968); i++;
 //                gp.mobArr[gp.currentMap][i] = new MOB_Mushroom(gp, 350 + 48*17, 1968); i++;

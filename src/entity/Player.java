@@ -70,15 +70,33 @@ public class Player extends Entity {
 
     // DEFAULT INITIALIZATION
     public void setDefaultValues() {
-        defaultSpeed = 3;
-        speed = defaultSpeed;
         type = type_player;
 
-        // ATTRIBUTES
-        maxLife = 10;
-        currentLife = maxLife;
+        // ATTRIBUTES DEPENDING ON CHOSEN CLASS
+        switch (playerClass) {
+            case 0:
+                defaultSpeed = 3;
+                speed = defaultSpeed;
+                maxLife = 8;
+                currentLife = maxLife;
+                damage = 5;
+                break;
+            case 1:
+                defaultSpeed = 2;
+                speed = defaultSpeed;
+                maxLife = 10;
+                currentLife = maxLife;
+                damage = 3;
+                break;
+            case 2:
+                defaultSpeed = 4;
+                speed = defaultSpeed;
+                maxLife = 6;
+                currentLife = maxLife;
+                damage = 1;
+        }
+
         totalCoins = 500;
-        damage = 1;
         damageSprite = 2;
     }
     private void setCollisionValues() {

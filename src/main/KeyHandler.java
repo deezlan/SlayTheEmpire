@@ -93,6 +93,27 @@ public class KeyHandler implements KeyListener {
         }
     }
 
+    public void dialogueMap(int code) {
+        if(code == KeyEvent.VK_ENTER){
+            enterPressed = true;
+        }
+
+        if (gp.ui.subState == 0) {
+            if(code == KeyEvent.VK_W) {
+                gp.ui.commandNum--;
+                if(gp.ui.commandNum < 0) {
+                    gp.ui.commandNum = 2;
+                }
+            }
+            if(code == KeyEvent.VK_S) {
+                gp.ui.commandNum++;
+                if(gp.ui.commandNum > 2) {
+                    gp.ui.commandNum = 0;
+                }
+            }
+        }
+    }
+
     public void controlsState(int code) {
 
     }
@@ -384,6 +405,8 @@ public class KeyHandler implements KeyListener {
             dialogueDiffState(code);
         } else if (gp.gameState == gp.DIFF_MENU_STATE) {
             menuDiffState(code);
+        } else if (gp.gameState == gp.MAP_SELECTION) {
+            dialogueMap(code);
         }
 
         if (code == KeyEvent.VK_T){

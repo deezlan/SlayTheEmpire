@@ -642,6 +642,68 @@ public class UI {
         }
     }
 
+    public void mapSelect() {
+        try {
+            InputStream is = new FileInputStream("ARCADE_N.TTF");
+            Font arcade = Font.createFont(Font.TRUETYPE_FONT, is);
+            arcade = arcade.deriveFont(Font.PLAIN, 16);
+            int frameX = (gp.TILE_SIZE * 6) - 24;
+            int frameY = gp.TILE_SIZE * 3;
+            int frameWidth = (gp.TILE_SIZE * 6);
+            int frameHeight= (gp.TILE_SIZE * 6);
+            int x = gp.TILE_SIZE * 6 - 24;
+            int y = gp.TILE_SIZE * 3;
+            g2.setFont(arcade);
+
+            g2.setColor(Color.BLACK);
+            g2.fillRoundRect(frameX,frameY,frameWidth,frameHeight,0,0);
+
+            g2.setColor(Color.WHITE);
+            g2.setStroke(new BasicStroke((5)));
+            g2.drawRoundRect(frameX,frameY,frameWidth,frameHeight,0,0);
+
+            g2.setColor(Color.WHITE);
+
+            x += gp.TILE_SIZE;
+            y += gp.TILE_SIZE;
+            String text = "Map Selection";
+            g2.drawString(text,x,y);
+            y += gp.TILE_SIZE;
+            g2.drawString("Map 1",x,y);
+            if (commandNum == 0) {
+                g2.drawString(">", x-24,y);
+                if (gp.keyH.enterPressed) {
+                    gp.gameState = gp.TRANSITION_STATE;
+                    gp.eHandler.tempMap = 1;
+                    gp.eHandler.tempCol = 19;
+                    gp.eHandler.tempRow = 41;
+                }
+            }
+            y += gp.TILE_SIZE;
+            g2.drawString("Map 2",x,y);
+            if (commandNum == 1) {
+                g2.drawString(">", x-24,y);
+                if (gp.keyH.enterPressed) {
+                    gp.gameState = gp.TRANSITION_STATE;
+                    gp.eHandler.tempMap = 2; // SECOND LEVEL CORRECT VALUES
+                    gp.eHandler.tempCol = 31;
+                    gp.eHandler.tempRow = 36;
+                }
+            }
+            y += gp.TILE_SIZE;
+            g2.drawString("Exit",x,y);
+            if (commandNum == 2) {
+                g2.drawString(">", x-24,y);
+                if (gp.keyH.enterPressed) {
+                    gp.eHandler.eventMaster.startDialogue(gp.eHandler.eventMaster,1);
+                }
+            }
+
+        } catch (FontFormatException | IOException e) {
+            e.printStackTrace(System.out);
+        }
+    }
+
     public void difficultySelect() {
         drawDialogScreen();
 
@@ -1178,5 +1240,7 @@ public class UI {
         if (gp.gameState == gp.TRANSITION_STATE) drawTransition();
         // NPC DIALOGUE DIFFICULTY SELECT
         if (gp.gameState == gp.DIFF_DIALOGUE_STATE) difficultySelect();
+        // MAP SELECTION
+        if (gp.gameState == gp.MAP_SELECTION) mapSelect();
     }
 }

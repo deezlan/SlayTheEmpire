@@ -2,6 +2,8 @@ package main;
 
 import entity.Player;
 
+import java.awt.*;
+
 public class EventHandler {
     GamePanel gp;
     EventRect[][][] eventRect ;
@@ -45,6 +47,8 @@ public class EventHandler {
     public void setDialogue() {
         eventMaster.dialogs[0][0] = "Drank Possibly Toilet Water";
         eventMaster.dialogs[0][1] = "Why does it taste like pee";
+        eventMaster.dialogs[1][0] = "Turned Back";
+
     }
     // check tile for event;
     public void checkEvent() {
@@ -269,32 +273,14 @@ public class EventHandler {
     }
 
     public void changeMap(){
-        gp.gameState = gp.TRANSITION_STATE;
-
-        System.out.println("Changing map - loadLevel() to " + gp.currentMap);
-        switch (gp.currentMap) {
-            case 0:
-                tempMap = 1; // FIRST LEVEL CORRECT VALUES
-                tempCol = 19;
-                tempRow = 41;
-//                tempMap = 2; // SECOND LEVEL CORRECT VALUES
-//                tempCol = 31;
-//                tempRow = 36;
-//                gp.player.lookingRight = false;
-                break;
-            case 1, 2:
-                tempMap = 0;
-                tempCol = 6;
-                tempRow = 2;
-        }
-
+        gp.gameState = gp.MAP_SELECTION;
+        gp.ui.mapSelect();
         canTouchEvent = false;
     }
 
     public void drinkWater(int gameState){
         if(gp.keyH.ePressed){
             gp.gameState = gameState;
-            gp.ui.currentDialog = "Drank Possibly Toilet Water";
             eventMaster.startDialogue(eventMaster,0);
             gp.player.currentLife = gp.player.maxLife;
             canTouchEvent = false;

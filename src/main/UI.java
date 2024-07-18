@@ -1098,7 +1098,6 @@ public class UI {
             g2.drawString(">", x - 25, y);
         }
 
-
         y += gp.TILE_SIZE*3;
         switch (gp.ui.commandNum) {
             case 0: {

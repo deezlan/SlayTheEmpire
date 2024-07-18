@@ -72,7 +72,7 @@ public class KeyHandler implements KeyListener {
         }
     }
 
-    public void difficultyState(int code) {
+    public void dialogueDiffState(int code) {
         if(code == KeyEvent.VK_ENTER){
             enterPressed = true;
         }
@@ -97,7 +97,7 @@ public class KeyHandler implements KeyListener {
 
     }
 
-    public void difficultySelectState(int code) {
+    public void menuDiffState(int code) {
         if (code == KeyEvent.VK_W || code == KeyEvent.VK_S) {
             gp.ui.commandNum += (code == KeyEvent.VK_W) ? -1 : 1;
             gp.ui.commandNum = Math.max(0, Math.min(gp.ui.commandNum, 3));
@@ -107,6 +107,7 @@ public class KeyHandler implements KeyListener {
             gp.playSE(2);
             switch (gp.ui.commandNum) {
                 case 0, 1, 2: {
+                    gp.gameMode = gp.ui.commandNum + 1;
                     gp.loadLevel();
                     break;
                 }
@@ -377,9 +378,9 @@ public class KeyHandler implements KeyListener {
         } else if (gp.gameState == gp.controlsState) {
             controlsState(code);
         } else if (gp.gameState == gp.difficultyState) {
-            difficultyState(code);
+            dialogueDiffState(code);
         } else if (gp.gameState == gp.difficultySelectState) {
-            difficultySelectState(code);
+            menuDiffState(code);
         }
 
         if (code == KeyEvent.VK_T){

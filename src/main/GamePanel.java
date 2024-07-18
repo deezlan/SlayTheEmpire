@@ -95,11 +95,12 @@ public class GamePanel extends JPanel implements Runnable {
             creditsState = 8,
             characterSelectionState = 9,
             optionState = 10,
-            optionState2 = 12,
             startMenuState = 11,
+            optionState2 = 12,
             cutsceneState = 13,
             controlsState = 14,
-            difficultyState = 15,
+            difficultySelectState = 15,
+            difficultyState = 16,
 
             // DIFFICULTY MODES
             easyMode = 1,
@@ -114,7 +115,7 @@ public class GamePanel extends JPanel implements Runnable {
         this.setFocusable(true); // pass the player instance variable to the KeyHandler constructor
 
         // DEFAULT SETTINGS
-        music.volumeScale = 0;
+        music.volumeScale = 1;
         effect.volumeScale = 3;
         gameMode = easyMode;
 

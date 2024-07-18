@@ -361,7 +361,8 @@ public class CollisionChecker {
                 entity.solidArea.x = entity.worldX + entity.solidArea.x;
                 entity.solidArea.y = entity.worldY + entity.solidArea.y;
 
-                if (target[gp.currentMap][i].type == entity.type_mob) {
+                if (target[gp.currentMap][i].type == entity.type_mob) { // for testing hitboxes
+//                if (entity.attacking) {
                     target[gp.currentMap][i].hitboxArea.x = target[gp.currentMap][i].worldX + target[gp.currentMap][i].hitboxArea.x;
                     target[gp.currentMap][i].hitboxArea.y = target[gp.currentMap][i].worldY + target[gp.currentMap][i].hitboxArea.y;
 

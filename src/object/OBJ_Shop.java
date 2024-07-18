@@ -11,19 +11,11 @@ public class OBJ_Shop extends Entity {
         super(gp, worldX, worldY);
         message = "Shop closed bitch";
         type = type_shop;
+        setCollisionValues(20, 0, 172, 130);
+        collision = true;
 
         // Load shop sprites
         getObjectSprites();
-
-        // Set shop collision settings
-        solidArea.x = 20;
-        solidArea.y = 0;
-        solidArea.width = 172;
-        solidArea.height = 130;
-        solidAreaDefaultX = solidArea.x;
-        solidAreaDefaultY = solidArea.y;
-        collision = true;
-
         System.out.println(interactList.size());
     }
 

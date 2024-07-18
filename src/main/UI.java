@@ -882,13 +882,13 @@ public class UI {
         int frameWidth = gp.TILE_SIZE*8;
         int frameHeight = gp.TILE_SIZE*10;
 
-        if (gp.gameState == gp.OPTION_MENU_STATE) {
+        if (gp.gameState == gp.OPTIONS_MENU_STATE) {
             subState = 0;
         } else if (gp.gameState == gp.OPTIONS_DIALOGUE_STATE) {
             subState = 1;
         }
 
-        switch(subState) {
+        switch (subState) {
             case 0: drawSubWindow(frameX, frameY, frameWidth, frameHeight); options_PLAY_STATE(frameX, frameY);  break;
             case 1: options_startMenu(frameY); break;
             case 2: break;
@@ -898,7 +898,7 @@ public class UI {
     private void drawVolumeBar(int volumeScale, int x, int y) {
         int barWidth = 240;
         int barHeight = 20;
-        if (gp.gameState == gp.OPTION_MENU_STATE) {
+        if (gp.gameState == gp.OPTIONS_MENU_STATE) {
             barWidth = 180;
         }
         int fillColor = (int) (barWidth * (volumeScale / 5.0f));
@@ -954,7 +954,9 @@ public class UI {
 
         text = "Back to Lobby";
         y += (int) (gp.TILE_SIZE * 1.2);
-        g2.setColor(gp.ui.commandNum == 3? Color.YELLOW : Color.WHITE);
+        g2.setColor(gp.ui.commandNum == 3 ? Color.YELLOW : Color.WHITE);
+        if (gp.currentMap == 0)
+            g2.setColor(Color.GRAY);
         g2.drawString(text, x, y);
         if (gp.ui.commandNum == 3) {
             g2.drawString(">", x - 25, y);
@@ -1152,7 +1154,7 @@ public class UI {
         // DIFFICULTY SELECTION
         if (gp.gameState == gp.DIFF_MENU_STATE) drawDifficultySelect();
         // MENU OPTION & GAMEPLAY OPTION
-        if (gp.gameState == gp.OPTION_MENU_STATE) drawOptions();
+        if (gp.gameState == gp.OPTIONS_MENU_STATE) drawOptions();
         if (gp.gameState == gp.OPTIONS_DIALOGUE_STATE) {
             drawBG();
             drawOptions();

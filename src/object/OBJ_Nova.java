@@ -11,6 +11,7 @@ public class OBJ_Nova extends Projectile {
     public OBJ_Nova(GamePanel gp) {
         super(gp);
         this.gp = gp;
+        setCollisionValues(0, 0, gp.TILE_SIZE * 3, gp.TILE_SIZE * 3);
 
         name = "Flame";
         speed = 0;
@@ -19,8 +20,6 @@ public class OBJ_Nova extends Projectile {
         damage = 1;
         alive = false;
         getImage();
-        solidArea.width = gp.TILE_SIZE*3;
-        solidArea.height = gp.TILE_SIZE*3;
     }
 
     public void getImage(){

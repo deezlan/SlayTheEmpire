@@ -35,15 +35,15 @@ public class NPC_Mystery extends Entity {
         }
     }
     public void speak() {
-        if (gp.gameMode == gp.easyMode) {
+        if (gp.gameMode == gp.EASY_MODE) {
             System.out.println("NORMAL NORMAL NORMAL NORMAL NORMAL NORMAL");
-            gp.gameMode = gp.normalMode;
-        } else if (gp.gameMode == gp.normalMode) {
+            gp.gameMode = gp.NORMAL_MODE;
+        } else if (gp.gameMode == gp.NORMAL_MODE) {
             System.out.println("HARD HARD HARD HARD HARD HARD");
-            gp.gameMode = gp.hardMode;
+            gp.gameMode = gp.HARD_MODE;
         } else {
             System.out.println("EASY EASY EASY EASY EASY EASY");
-            gp.gameMode = gp.easyMode;
+            gp.gameMode = gp.EASY_MODE;
         }
         startDialogue(this,dialogueSet);
         dialogueSet++;
@@ -51,7 +51,7 @@ public class NPC_Mystery extends Entity {
             dialogueSet = 0;
         }
 
-        gp.gameState = gp.difficultyState;
+        gp.gameState = gp.DIFF_DIALOGUE_STATE;
         gp.ui.npc = this;
 
     }

@@ -22,7 +22,7 @@ public class TileManager {
         gp.currentMap = 0;
         this.gp = gp;
 
-        mapTileNum = new int[gp.maxMap][gp.MAX_WORLD_COL][gp.MAX_WORLD_ROW];
+        mapTileNum = new int[gp.MAX_MAP][gp.MAX_WORLD_COL][gp.MAX_WORLD_ROW];
 
         getTileImage();
         loadMap("/mapTextFiles/lobby.bin",0);

@@ -13,12 +13,12 @@ public class EventHandler {
     public EventHandler(GamePanel gp){
         this.gp = gp;
         eventMaster = new Player (gp, gp.keyH, gp.cursor, gp.playerClass);
-        eventRect = new EventRect[gp.maxMap][gp.MAX_WORLD_COL][gp.MAX_WORLD_ROW];
+        eventRect = new EventRect[gp.MAX_MAP][gp.MAX_WORLD_COL][gp.MAX_WORLD_ROW];
         int map = 0;
         int col = 0;
         int row = 0;
 
-        while (map < gp.maxMap && col < gp.MAX_WORLD_COL && row < gp.MAX_WORLD_ROW) {
+        while (map < gp.MAX_MAP && col < gp.MAX_WORLD_COL && row < gp.MAX_WORLD_ROW) {
 
             eventRect[map][col][row] = new EventRect();
             eventRect[map][col][row].x = 0;
@@ -68,7 +68,7 @@ public class EventHandler {
                                     || hit(gp.currentMap, 4, 10, "moveDown")
                                     || hit(gp.currentMap, 13, 10, "any")
                     ) {
-                        drinkWater(gp.dialogueState);
+                        drinkWater(gp.DIALOGUE_STATE);
                     } else if (hit(0, 8, 4, "any")) {
                         gp.gateArr[gp.currentMap][0].locking = true;
 //                eventRect[0][8][4].eventDone = true;
@@ -265,7 +265,7 @@ public class EventHandler {
     }
 
     public void changeMap(){
-        gp.gameState = gp.transitionState;
+        gp.gameState = gp.TRANSITION_STATE;
 
         System.out.println("Changing map - loadLevel() to " + gp.currentMap);
         switch (gp.currentMap) {
@@ -299,7 +299,7 @@ public class EventHandler {
 
     public void FrostGiant() {
         if(!gp.bossBattleOn) {
-            gp.gameState = gp.cutsceneState;
+            gp.gameState = gp.CUTSCENE_STATE;
             gp.csManager.sceneNum = gp.csManager.frostGiant;
         }
     }

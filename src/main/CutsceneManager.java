@@ -85,7 +85,7 @@ public class CutsceneManager {
             gp.player.drawing = true;
             sceneNum = NA;
             scenePhase = 0;
-            gp.gameState = gp.playState;
+            gp.gameState = gp.PLAY_STATE;
         }
     }
 

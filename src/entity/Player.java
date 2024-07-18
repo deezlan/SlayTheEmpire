@@ -127,6 +127,8 @@ public class Player extends Entity {
         //add inventory
     }
     public void setDefaultPosition() {
+        worldX = 303;
+        worldY = 9;
         gp.currentMap = 0;
         action = "idleRight";
     }

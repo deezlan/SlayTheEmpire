@@ -40,19 +40,20 @@ public class Player extends Entity {
         // CENTER PLAYER SCREEN POSITION BASED ON PLAYER CLASS
         switch (playerClass) {
             case 0:
-                screenX = (gp.SCREEN_WIDTH/2) - (gp.TILE_SIZE/2) - 90; // CENTERED PLAYER 0 POSITION
+                screenX = (gp.SCREEN_WIDTH/2) - (gp.TILE_SIZE/2) - 72; // CENTERED PLAYER 0 POSITION
                 break;
             case 1:
                 screenX = (gp.SCREEN_WIDTH/2) - (gp.TILE_SIZE/2) - 72; // CENTERED PLAYER 1 POSITION
                 break;
             case 2:
                 default:
-                screenX = (gp.SCREEN_WIDTH/2) - (gp.TILE_SIZE/2) - 48; // CENTERED PLAYER 2 POSITION
+                screenX = (gp.SCREEN_WIDTH/2) - (gp.TILE_SIZE/2) - 72; // CENTERED PLAYER 2 POSITION
         }
         screenY = (gp.SCREEN_HEIGHT/2) - 72;
 
         setDefaultValues();
         setCollisionValues();
+//        setHitboxValues();
         setItems();
         getPlayerSprites();
         getPlayerAttackSprites();
@@ -110,6 +111,7 @@ public class Player extends Entity {
                 solidAreaDefaultY = solidArea.y;
                 solidArea.width = 40; // outer area of collision square
                 solidArea.height = 30;
+
                 attackArea.width = gp.TILE_SIZE*2;
                 attackArea.height = gp.TILE_SIZE*3;
                 break;
@@ -169,10 +171,14 @@ public class Player extends Entity {
 
             // ADJUST FOR ATTACK
             switch (action) {
-                case "idleRight", "moveRight": worldX += attackArea.width; break;
-                case "idleLeft", "moveLeft": worldX -= attackArea.width; break;
-                case "moveUp": worldY -= attackArea.height; break;
-                case "moveDown": worldY += attackArea.height; break;
+                case "moveUp": worldY -= (playerRightAttackList.get(0).getHeight() - attackArea.height)/2; break;
+                case "moveDown": worldY += (playerRightAttackList.get(0).getHeight() - attackArea.height)/2; break;
+                case "idleLeft", "moveLeft": worldX -= (playerRightAttackList.get(0).getWidth() - attackArea.width)/2; break;
+                case "idleRight", "moveRight": worldX += (playerRightAttackList.get(0).getWidth() - attackArea.width)/2; break;
+//                case "idleRight", "moveRight": worldX += attackArea.width; break;
+//                case "idleLeft", "moveLeft": worldX -= attackArea.width; break;
+//                case "moveUp": worldY -= attackArea.height; break;
+//                case "moveDown": worldY += attackArea.height; break;
                 case "moveUpRight":
                     worldX += attackArea.width;
                     worldY -= attackArea.height;
@@ -418,27 +424,27 @@ public class Player extends Entity {
 
             // CALCULATE CENTRAL AXIS OF CURSOR
             if (gp.currentMap == 0) {
-                if (playerClass == 0) {
-                    // WARRIOR
-                    cursor.calculateAngle((int)(worldX + gp.TILE_SIZE * 2.3), worldY + gp.TILE_SIZE + 10);
-                } else if (playerClass == 1) {
-                    // KNIGHT
-                    cursor.calculateAngle((worldX + gp.TILE_SIZE * 2 + 5), worldY + gp.TILE_SIZE);
-                } else if (playerClass == 2) {
-                    // ASSASSIN
-                    cursor.calculateAngle((int)(worldX + gp.TILE_SIZE * 1.9), worldY + gp.TILE_SIZE);
-                }
+//                if (playerClass == 0) {
+//                    // WARRIOR
+                    cursor.calculateAngle((int)(worldX + gp.TILE_SIZE * 2 + 3), worldY + gp.TILE_SIZE);
+//                } else if (playerClass == 1) {
+//                    // KNIGHT
+//                    cursor.calculateAngle((worldX + gp.TILE_SIZE * 2 + 3), worldY + gp.TILE_SIZE);
+//                } else if (playerClass == 2) {
+//                    // ASSASSIN
+//                    cursor.calculateAngle((int)(worldX + gp.TILE_SIZE * 2 + 5), worldY + gp.TILE_SIZE);
+//                }
             } else {
-                if (playerClass == 0) {
-                    // WARRIOR
-                    cursor.calculateAngle((int)(screenX + gp.TILE_SIZE * 2.3), screenY + gp.TILE_SIZE + 10);
-                } else if (playerClass == 1) {
-                    // KNIGHT
-                    cursor.calculateAngle((screenX + gp.TILE_SIZE * 2 + 5), screenY + gp.TILE_SIZE);
-                } else if (playerClass == 2) {
-                    // ASSASSIN
-                    cursor.calculateAngle((int)(screenX + gp.TILE_SIZE * 1.9), screenY + gp.TILE_SIZE);
-                }
+//                if (playerClass == 0) {
+//                    // WARRIOR
+//                    cursor.calculateAngle((int)(screenX + gp.TILE_SIZE * 2.3), screenY + gp.TILE_SIZE + 10);
+//                } else if (playerClass == 1) {
+//                    // KNIGHT
+                    cursor.calculateAngle((screenX + gp.TILE_SIZE * 2 + 3), screenY + gp.TILE_SIZE);
+//                } else if (playerClass == 2) {
+//                    // ASSASSIN
+//                    cursor.calculateAngle((int)(screenX + gp.TILE_SIZE * 1.9), screenY + gp.TILE_SIZE);
+//                }
             }
         }
 
@@ -569,28 +575,28 @@ public class Player extends Entity {
         // Draw arrow
         switch (gp.currentMap){
             case 0:
-                if (playerClass == 0) {
-                    // WARRIOR
-                    cursor.draw(g2, (int)(worldX + gp.TILE_SIZE * 2.3), worldY + gp.TILE_SIZE);
-                } else if (playerClass == 1) {
-                    // KNIGHT
-                    cursor.draw(g2, worldX + gp.TILE_SIZE * 2 + 5, worldY + gp.TILE_SIZE); // For fixed camera
-                } else if (playerClass == 2) {
-                    // ASSASSIN
-                    cursor.draw(g2, (int)(worldX + gp.TILE_SIZE * 1.9), worldY + gp.TILE_SIZE); // For fixed camera
-                }
+//                if (playerClass == 0) {
+//                    // WARRIOR
+                    cursor.draw(g2, (int)(worldX + gp.TILE_SIZE * 2 + 3), worldY + gp.TILE_SIZE);
+//                } else if (playerClass == 1) {
+//                    // KNIGHT
+//                    cursor.draw(g2, worldX + gp.TILE_SIZE * 2 + 3, worldY + gp.TILE_SIZE); // For fixed camera
+//                } else if (playerClass == 2) {
+//                    // ASSASSIN
+//                    cursor.draw(g2, (int)(worldX + gp.TILE_SIZE * 2 + 3), worldY + gp.TILE_SIZE); // For fixed camera
+//                }
                 break;
             case 1,2:
-                if (playerClass == 0) {
-                    // WARRIOR
-                    cursor.draw(g2, (int)(screenX + gp.TILE_SIZE * 2.3), screenY + gp.TILE_SIZE);
-                } else if (playerClass == 1) {
-                    // KNIGHT
+//                if (playerClass == 0) {
+//                    // WARRIOR
+//                    cursor.draw(g2, (int)(screenX + gp.TILE_SIZE * 2.3), screenY + gp.TILE_SIZE);
+//                } else if (playerClass == 1) {
+//                    // KNIGHT
                     cursor.draw(g2, (int)(screenX + gp.TILE_SIZE * 2.09), screenY + gp.TILE_SIZE);
-                } else if (playerClass == 2) {
-                    // ASSASSIN
-                    cursor.draw(g2, (int)(screenX + gp.TILE_SIZE * 1.86), screenY + gp.TILE_SIZE);
-                }
+//                } else if (playerClass == 2) {
+//                    // ASSASSIN
+//                    cursor.draw(g2, (int)(screenX + gp.TILE_SIZE * 1.86), screenY + gp.TILE_SIZE);
+//                }
                 break;
         }
     }
@@ -614,10 +620,10 @@ public class Player extends Entity {
                     }
 
                     // Scale sprites up
-                    UtilityTool.scaleEntityList(this, moveRightList, 220, 96);
-                    UtilityTool.scaleEntityList(this, moveLeftList, 220, 96);
-                    UtilityTool.scaleEntityList(this, idleRightList, 220, 96);
-                    UtilityTool.scaleEntityList(this, idleLeftList, 220, 96);
+                    UtilityTool.scaleEntityList(this, moveRightList, 200, 96);
+                    UtilityTool.scaleEntityList(this, moveLeftList, 200, 96);
+                    UtilityTool.scaleEntityList(this, idleRightList, 200, 96);
+                    UtilityTool.scaleEntityList(this, idleLeftList, 200, 96);
                     break;
                 case 1: // KNIGHT
                     System.out.println("Player is a Knight");
@@ -654,10 +660,10 @@ public class Player extends Entity {
                     }
 
                     // Scale sprites up
-                    UtilityTool.scaleEntityList(this, moveRightList, 180, 96);
-                    UtilityTool.scaleEntityList(this, moveLeftList, 180, 96);
-                    UtilityTool.scaleEntityList(this, idleRightList, 180, 96);
-                    UtilityTool.scaleEntityList(this, idleLeftList, 180, 96);
+                    UtilityTool.scaleEntityList(this, moveRightList, 200, 96);
+                    UtilityTool.scaleEntityList(this, moveLeftList, 200, 96);
+                    UtilityTool.scaleEntityList(this, idleRightList, 200, 96);
+                    UtilityTool.scaleEntityList(this, idleLeftList, 200, 96);
                     break;
             }
         } catch (IOException e) {
@@ -676,8 +682,8 @@ public class Player extends Entity {
                     }
 
                     // Scale sprites up
-                    UtilityTool.scaleEntityList(this, playerRightAttackList, 220, 96);
-                    UtilityTool.scaleEntityList(this, playerLeftAttackList, 220, 96);
+                    UtilityTool.scaleEntityList(this, playerRightAttackList, 200, 96);
+                    UtilityTool.scaleEntityList(this, playerLeftAttackList, 200, 96);
                     break;
                 case 1: // KNIGHT
                     dir = "/player/Knight/";
@@ -697,8 +703,8 @@ public class Player extends Entity {
                         playerLeftAttackList.add(i, UtilityTool.loadSprite(dir + "attackLeft/" + i + ".png", "Missing attackLeft " + i));
                     }
                     // Scale sprites up
-                    UtilityTool.scaleEntityList(this, playerRightAttackList, 180, 96);
-                    UtilityTool.scaleEntityList(this, playerLeftAttackList, 180, 96);
+                    UtilityTool.scaleEntityList(this, playerRightAttackList, 200, 96);
+                    UtilityTool.scaleEntityList(this, playerLeftAttackList, 200, 96);
             }
         } catch (IOException e){
             e.printStackTrace(System.out);

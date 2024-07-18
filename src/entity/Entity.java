@@ -52,8 +52,10 @@ public abstract class Entity {
             attack,
 
             // COLLISION ATTRIBUTES
-            solidAreaDefaultX, solidAreaDefaultY;
+            solidAreaDefaultX, solidAreaDefaultY,
+            hitboxAreaDefaultX, hitboxAreaDefaultY;
     public Rectangle solidArea = new Rectangle(0, 0, 48, 48); // draw area around entities
+    public Rectangle hitboxArea = new Rectangle(0, 0, 0, 0);
     public String action = "idleRight"; // DEFAULT ACTION
     public boolean
             sleep,
@@ -195,6 +197,14 @@ public abstract class Entity {
         solidArea.height = height;
         solidAreaDefaultX = x;
         solidAreaDefaultY = y;
+    }
+    public void setHitboxValues(int x, int y, int width, int height) {
+        hitboxArea.x = x;
+        hitboxArea.y = y;
+        hitboxArea.width = width;
+        hitboxArea.height = height;
+        hitboxAreaDefaultX = x;
+        hitboxAreaDefaultY = y;
     }
     public void setAttackValues(int damage, int damageSprite, int attWidth, int attHeight, boolean hasRanged) {
         attack = damage * gp.gameMode;

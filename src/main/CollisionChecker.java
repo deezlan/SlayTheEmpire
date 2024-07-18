@@ -447,34 +447,36 @@ public class CollisionChecker {
         entity.solidArea.y = entity.worldY + entity.solidArea.y;
 
         // Get the object's solid area position
-        gp.player.solidArea.x = gp.player.worldX + gp.player.solidArea.x;
-        gp.player.solidArea.y = gp.player.worldY + gp.player.solidArea.y;
+//        gp.player.solidArea.x = gp.player.worldX + gp.player.solidArea.x;
+//        gp.player.solidArea.y = gp.player.worldY + gp.player.solidArea.y;
+        gp.player.hitboxArea.x = gp.player.worldX + gp.player.hitboxArea.x;
+        gp.player.hitboxArea.y = gp.player.worldY + gp.player.hitboxArea.y;
 
         switch (entity.action) {
             case "moveUp":
                 entity.solidArea.y -= entity.speed;
-                if (entity.solidArea.intersects(gp.player.solidArea)) {
+                if (entity.solidArea.intersects(gp.player.hitboxArea)) {
                     entity.upCollisionOn = true;
                     contactPlayer = true;
                 }
                 break;
             case "moveDown":
                 entity.solidArea.y += entity.speed;
-                if (entity.solidArea.intersects(gp.player.solidArea)) {
+                if (entity.solidArea.intersects(gp.player.hitboxArea)) {
                     entity.downCollisionOn = true;
                     contactPlayer = true;
                 }
                 break;
             case "moveLeft":
                 entity.solidArea.x -= entity.speed;
-                if (entity.solidArea.intersects(gp.player.solidArea)) {
+                if (entity.solidArea.intersects(gp.player.hitboxArea)) {
                     entity.leftCollisionOn = true;
                     contactPlayer = true;
                 }
                 break;
             case "moveRight":
                 entity.solidArea.x += entity.speed;
-                if (entity.solidArea.intersects(gp.player.solidArea)) {
+                if (entity.solidArea.intersects(gp.player.hitboxArea)) {
                     entity.rightCollisionOn = true;
                     contactPlayer = true;
                 }
@@ -482,7 +484,7 @@ public class CollisionChecker {
             case "moveUpRight":
                 entity.solidArea.y -= entity.speed;
                 entity.solidArea.x += entity.speed;
-                if (entity.solidArea.intersects(gp.player.solidArea)) {
+                if (entity.solidArea.intersects(gp.player.hitboxArea)) {
                     entity.rightCollisionOn = true;
                     entity.upCollisionOn = true;
                     contactPlayer = true;
@@ -491,7 +493,7 @@ public class CollisionChecker {
             case "moveDownRight":
                 entity.solidArea.y += entity.speed;
                 entity.solidArea.x += entity.speed;
-                if (entity.solidArea.intersects(gp.player.solidArea)) {
+                if (entity.solidArea.intersects(gp.player.hitboxArea)) {
                     entity.rightCollisionOn = true;
                     entity.downCollisionOn = true;
                     contactPlayer = true;
@@ -500,7 +502,7 @@ public class CollisionChecker {
             case "moveUpLeft":
                 entity.solidArea.y -= entity.speed;
                 entity.solidArea.x -= entity.speed;
-                if (entity.solidArea.intersects(gp.player.solidArea)) {
+                if (entity.solidArea.intersects(gp.player.hitboxArea)) {
                     entity.leftCollisionOn = true;
                     entity.upCollisionOn = true;
                     contactPlayer = true;
@@ -510,7 +512,7 @@ public class CollisionChecker {
             case "moveDownLeft":
                 entity.solidArea.y += entity.speed;
                 entity.solidArea.x += entity.speed;
-                if (entity.solidArea.intersects(gp.player.solidArea)) {
+                if (entity.solidArea.intersects(gp.player.hitboxArea)) {
                     entity.downCollisionOn = true;
                     entity.leftCollisionOn = true;
                     contactPlayer = true;
@@ -519,8 +521,8 @@ public class CollisionChecker {
 
         entity.solidArea.x = entity.solidAreaDefaultX;
         entity.solidArea.y = entity.solidAreaDefaultY;
-        gp.player.solidArea.x = gp.player.solidAreaDefaultX;
-        gp.player.solidArea.y = gp.player.solidAreaDefaultY;
+        gp.player.hitboxArea.x = gp.player.hitboxAreaDefaultX;
+        gp.player.hitboxArea.y = gp.player.hitboxAreaDefaultY;
         return contactPlayer;
     }
 }

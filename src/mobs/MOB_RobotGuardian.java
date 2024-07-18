@@ -11,9 +11,9 @@ public class MOB_RobotGuardian extends Entity {
     public MOB_RobotGuardian(GamePanel gp, int worldX, int worldY) {
         super(gp, worldX, worldY);
         this.gp = gp;
-        setStatValues(1, 6, false, false, 3);
+        setStatValues(1, 6, false, 3, 200);
         setCollisionValues(70, 90, 40, 40);
-        setAttackValues(1, 7, 50, 50);
+        setAttackValues(1, 7, gp.TILE_SIZE*2, gp.TILE_SIZE*2, false);
 
         // Load mob sprites
         getMobSprites();

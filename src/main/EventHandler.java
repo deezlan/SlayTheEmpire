@@ -96,7 +96,8 @@ public class EventHandler {
                         eventRect[1][7][40].eventDone = true;
                         eventRect[1][8][41].eventDone = true;
                         eventRect[1][8][42].eventDone = true;
-                        eventRect[1][7][43].eventDone = true;
+                        eventRect[1][8][43].eventDone = true;
+                        eventRect[1][7][44].eventDone = true;
                     }
                     if ( // TRIGGER LEFT PATH GATES
                             hit(gp.currentMap, 8, 30, "any")
@@ -245,7 +246,8 @@ public class EventHandler {
             eventRect[map][col][row].x = col * gp.TILE_SIZE + eventRect[map][col][row].x;
             eventRect[map][col][row].y = row * gp.TILE_SIZE + eventRect[map][col][row].y;
 
-            if (gp.player.solidArea.intersects(eventRect[map][col][row]) && !eventRect[map][col][row].eventDone) { // second half of if statement for 1 time events
+            // second half of if statement for 1 time events
+            if (gp.player.solidArea.intersects(eventRect[map][col][row]) && !eventRect[map][col][row].eventDone) {
                 if (gp.player.action.contentEquals(reqAction) || reqAction.contentEquals("any")) {
                     hit = true;
 
@@ -264,7 +266,7 @@ public class EventHandler {
 
     public void changeMap(){
         gp.gameState = gp.transitionState;
-        System.out.println(gp.currentMap);
+
         System.out.println("Changing map - loadLevel() to " + gp.currentMap);
         switch (gp.currentMap) {
             case 0:
@@ -283,9 +285,6 @@ public class EventHandler {
         }
 
         canTouchEvent = false;
-
-        //if one time only event enable this
-//        eventRect[col][row].eventDone = true;
     }
 
     public void drinkWater(int gameState){

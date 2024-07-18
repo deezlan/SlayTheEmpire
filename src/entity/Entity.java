@@ -13,14 +13,9 @@ public abstract class Entity {
     public String name;
     public GamePanel gp;
     public boolean lookingRight = true;
-    public Projectile projectile1;
-    public Projectile projectile2;
-    public Projectile projectile3;
-    public Projectile projectile4;
+    public Projectile projectile1, projectile2, projectile3, projectile4;
 
-    public Entity(GamePanel gp) {
-        this.gp = gp;
-    }
+    public Entity(GamePanel gp) { this.gp = gp; }
 
     public Entity(GamePanel gp, int worldX, int worldY) {
         this.gp = gp;
@@ -49,26 +44,22 @@ public abstract class Entity {
     // PLAYER & MOB ATTRIBUTES
     public int
             // STATUS VALUES
-            defaultSpeed,
-            speed,
+            defaultSpeed, speed,
+            maxLife, currentLife,
             mobNum = 0,
-            attack,
-            maxLife,
-            currentLife,
             bossNum,
+            coinValue,
+            attack,
 
             // COLLISION ATTRIBUTES
             solidAreaDefaultX, solidAreaDefaultY;
     public Rectangle solidArea = new Rectangle(0, 0, 48, 48); // draw area around entities
     public String action = "idleRight"; // DEFAULT ACTION
     public boolean
-            hasRanged,
-            inRage = false,
             sleep,
             boss,
             tempScene = false,
-            drawing = true,
-            specialAttacking = false;
+            drawing = true;
 
     // PLAYER & MOB COLLISION DIRECTION
     public boolean
@@ -113,9 +104,12 @@ public abstract class Entity {
     public int dialogueSet = 0,
             dialogueIndex = 0;
 
-    // HIT DETECTION
+    // COMBAT ATTRIBUTES
     public boolean
+            hasRanged,
+            inRage = false,
             attacking = false,
+            specialAttacking = false,
             iframe = false,
             alive = true,
             dead = false,
@@ -141,9 +135,8 @@ public abstract class Entity {
             unlocking = false;
 
     // ITEM ATTRIBUTES
-    public int damage;
+    public int damage, price;
     public BufferedImage weaponSprite;
-    public int price;
     public String description = "";
 
     // OBJECTS ATTRIBUTES
@@ -168,26 +161,25 @@ public abstract class Entity {
             specialSpriteNum = 0,
             specialCounter = 0,
 
+            // COMBAT COUNTERS
             dyingCounter = 0,
             hpBarCounter = 0,
             knockBackCounter = 0;
 
     // MOB INITIALIZATION METHODS
-    public void setStatValues(int defaultSpeed, int maxLife, boolean hasRanged, boolean isBoss, int mobBossNum) {
+    public void setStatValues(int defaultSpeed, int maxLife, boolean isBoss, int mobBossNum, int coinValue) {
         this.type = type_mob;
         this.defaultSpeed = defaultSpeed;
         this.speed = defaultSpeed;
         this.maxLife = maxLife * gp.gameMode;
         this.currentLife = maxLife * gp.gameMode;
+        this.coinValue = coinValue;
 
         if (gp.gameMode == gp.normalMode || gp.gameMode == gp.hardMode) {
             this.maxLife *= gp.gameMode;
             this.currentLife *= gp.gameMode;
         }
-        if (gp.gameMode == gp.hardMode) {
-            this.speed += 1;
-        }
-        this.hasRanged = hasRanged;
+        if (gp.gameMode == gp.hardMode) this.speed += 1;
 
         if (isBoss) {
             boss = true;
@@ -204,11 +196,12 @@ public abstract class Entity {
         solidAreaDefaultX = x;
         solidAreaDefaultY = y;
     }
-    public void setAttackValues(int damage, int damageSprite, int attWidth, int attHeight) {
+    public void setAttackValues(int damage, int damageSprite, int attWidth, int attHeight, boolean hasRanged) {
         attack = damage * gp.gameMode;
         this.damageSprite = damageSprite;
         attackArea.width = attWidth;
         attackArea.height = attHeight;
+        this.hasRanged = hasRanged;
     }
 
     // INTERFACE METHODS
@@ -298,7 +291,6 @@ public abstract class Entity {
         }
     }
     public void searchPath(int goalCol, int goalRow) {
-
         int startCol = (worldX + solidArea.x) / gp.TILE_SIZE;
         int startRow = (worldY + solidArea.y) / gp.TILE_SIZE;
 
@@ -358,11 +350,6 @@ public abstract class Entity {
                     currentList = moveRightList;
                 }
             }
-            // IF REACH GOAL STOP
-//            int nextCol = gp.pFinder.pathList.get(0).col;
-//            int nextRow = gp.pFinder.pathList.get(0).row;
-//            if(nextCol == goalCol && nextRow == goalRow) {
-//                onPath = false;
         }
     }
     public void checkStartChase(Entity target, int distance, int rate) {
@@ -390,10 +377,10 @@ public abstract class Entity {
         // CHECK ATTACK ON PLAYER
         if (!attacking) {
             if (hasRanged) {
-                checkWithinAttackRange(30, moveRightList.get(0).getHeight()/2, moveRightList.get(0).getWidth()/2); // CHANGE ATTACK RANGE
+                checkWithinAttackRange(30); // CHANGE ATTACK RANGE
                 checkShoot(200, idleRightList.get(0).getWidth()/2, idleRightList.get(0).getHeight()/2, 0);
             } else {
-                checkWithinAttackRange(30, gp.TILE_SIZE*3, gp.TILE_SIZE*3); // CHANGE ATTACK RANGE
+                checkWithinAttackRange(30); // CHANGE ATTACK RANGE
             }
         }
     }
@@ -430,82 +417,28 @@ public abstract class Entity {
             }
         }
     }
-    public void checkWithinAttackRange(int rate, int straight, int horizontal) {
-        boolean targetInRange = false;
-        int xDis = getDistanceX(gp.player);
-        int yDis = getDistanceY(gp.player);
-
-        switch (action) {
-            case "moveUp":
-                if (gp.player.worldY < worldY && yDis < straight && xDis < horizontal) {
-                    targetInRange = true;
-                }
-                break;
-            case "moveDown":
-                if (gp.player.worldY > worldY && yDis < straight && xDis < horizontal) {
-                    targetInRange = true;
-                }
-                break;
-            case "moveLeft":
-                if (gp.player.worldX < worldX && xDis < straight && yDis < horizontal) {
-                    targetInRange = true;
-                }
-                break;
-            case "moveRight":
-                if (gp.player.worldX > worldX && xDis < straight && yDis < horizontal) {
-                    targetInRange = true;
-                }
-                break;
-        }
-
-        if (targetInRange) {
-//          CHECK ATTACK HAPPENS
-            int i = new Random().nextInt(rate);
-            if (i == 0) {
-                attacking = true;
-                spriteNum = 0;
-                spriteCounter = 0;
-            }
-        }
-    }
     public void dyingAnimation(Graphics2D g2) { // BLINKING EFFECT
         dyingCounter++;
-        if (dyingCounter <= 5) {
-            UtilityTool.changeAlpha(g2, 0f);
-        }
-        if (dyingCounter > 5 && dyingCounter <= 10) {
-            UtilityTool.changeAlpha(g2, 1f);
-        }
-        if (dyingCounter > 10 && dyingCounter <= 15) {
-            UtilityTool.changeAlpha(g2, 0f);
-        }
-        if (dyingCounter > 15 && dyingCounter <= 20) {
-            UtilityTool.changeAlpha(g2, 1f);
-        }
-        if (dyingCounter > 20 && dyingCounter <= 25) {
-            UtilityTool.changeAlpha(g2, 0f);
-        }
-        if (dyingCounter > 25 && dyingCounter <= 30) {
-            UtilityTool.changeAlpha(g2, 1f);
-        }
-        if (dyingCounter > 30 && dyingCounter <= 35) {
-            UtilityTool.changeAlpha(g2, 0f);
-        }
-        if (dyingCounter > 35 && dyingCounter <= 40) {
-            UtilityTool.changeAlpha(g2, 1f);
-        }
-        if (dyingCounter > 40) {
-            alive = false;
-        }
+        if (dyingCounter <= 5) UtilityTool.changeAlpha(g2, 0f);
+        if (dyingCounter > 5 && dyingCounter <= 10) UtilityTool.changeAlpha(g2, 1f);
+        if (dyingCounter > 10 && dyingCounter <= 15) UtilityTool.changeAlpha(g2, 0f);
+        if (dyingCounter > 15 && dyingCounter <= 20) UtilityTool.changeAlpha(g2, 1f);
+        if (dyingCounter > 20 && dyingCounter <= 25) UtilityTool.changeAlpha(g2, 0f);
+        if (dyingCounter > 25 && dyingCounter <= 30) UtilityTool.changeAlpha(g2, 1f);
+        if (dyingCounter > 30 && dyingCounter <= 35) UtilityTool.changeAlpha(g2, 0f);
+        if (dyingCounter > 35 && dyingCounter <= 40) UtilityTool.changeAlpha(g2, 1f);
+        if (dyingCounter > 40) alive = false;
     }
     public void checkDrop() {
         int i = 0;
         while (gp.objArr[gp.currentMap][i] != null)
             i++;
 
-        gp.objArr[gp.currentMap][i] = new OBJ_PickUpCoin(gp,
+        gp.objArr[gp.currentMap][i] = new OBJ_PickUpCoin(
+                gp,
                 worldX + idleRightList.get(0).getWidth()/2 - 24,
-                worldY + idleRightList.get(0).getHeight()/2 - 24);
+                worldY + idleRightList.get(0).getHeight()/2 - 24,
+                coinValue);
     }
 
     // PLAYER & MOB METHODS
@@ -534,13 +467,44 @@ public abstract class Entity {
     }
 
     // ATTACK METHODS
+    public void checkWithinAttackRange(int rate) {
+        boolean targetInRange = false;
+        int xDis = getDistanceX(gp.player);
+        int yDis = getDistanceY(gp.player);
+
+        switch (action) {
+            case "moveUp":
+                if (gp.player.worldY < worldY && yDis < attackArea.width - 48 && xDis < attackArea.height)
+                    targetInRange = true;
+                break;
+            case "moveDown":
+                if (gp.player.worldY > worldY && yDis < attackArea.width + 48 && xDis < attackArea.height)
+                    targetInRange = true;
+                break;
+            case "moveLeft":
+                if (gp.player.worldX < worldX && xDis < attackArea.width + 48 && yDis < attackArea.height)
+                    targetInRange = true;
+                break;
+            case "moveRight":
+                if (gp.player.worldX > worldX && xDis < attackArea.width && yDis < attackArea.height)
+                    targetInRange = true;
+        }
+
+        if (targetInRange) {
+            // CHECK ATTACK HAPPENS
+            int i = new Random().nextInt(rate);
+            if (i == 0) {
+                attacking = true;
+                spriteNum = 0;
+                spriteCounter = 0;
+            }
+        }
+    }
     public void checkDamageSprite() {
         if (animationSpriteNum == damageSprite) {
             // SAVE CURRENT DATA OF ENTITY
             int currentWorldX = worldX;
             int currentWorldY = worldY;
-            int solidAreaX = solidArea.x;
-            int solidAreaY = solidArea.y;
             int solidAreaWidth = solidArea.width;
             int solidAreaHeight = solidArea.height;
 
@@ -550,18 +514,11 @@ public abstract class Entity {
 
             // ADJUST FOR ATTACK
             switch (action) {
-                case "moveUp": worldY -= (mobRightAttackList.get(0).getHeight() + attackArea.height)/2; break;
+                case "moveUp": worldY -= (mobRightAttackList.get(0).getHeight() - attackArea.height)/2; break;
                 case "moveDown": worldY += (mobLeftAttackList.get(0).getHeight() - attackArea.height)/2; break;
                 case "moveLeft": worldX -= (mobLeftAttackList.get(0).getWidth() - attackArea.width)/2; break;
                 case "moveRight": worldX += (mobRightAttackList.get(0).getWidth() - attackArea.width)/2; break;
             }
-
-//            switch (action) {
-//                case "moveUp": worldY -= getDistanceY(gp.player); break;
-//                case "moveDown": worldY += getDistanceY(gp.player); break;
-//                case "moveLeft": worldX -= getDistanceX(gp.player); break;
-//                case "moveRight": worldX += getDistanceX(gp.player); break;
-//            }
 
             if (type == 1) { // FOR MOB
                 if (gp.cChecker.checkPLayer(this)) damagePlayer(attack);
@@ -577,8 +534,6 @@ public abstract class Entity {
             // CHANGE BACK TO ORIGINAL
             worldX = currentWorldX;
             worldY = currentWorldY;
-            solidArea.x = solidAreaX;
-            solidArea.y = solidAreaY;
             solidArea.width = solidAreaWidth;
             solidArea.height = solidAreaHeight;
         }
@@ -627,7 +582,7 @@ public abstract class Entity {
         if (interactSpriteNum < interactList.size() && interactSpriteCounter % 5 == 0) {
             interactSpriteNum++;
         }
-        if (interactSpriteNum >= interactList.size() - 1) {
+        if (interactSpriteNum >= interactList.size()) {
             interactSpriteNum = 0;
             interactSpriteCounter = 0;
             interacting = false;
@@ -641,12 +596,8 @@ public abstract class Entity {
     public void runUnlockingAnimation() {}
 
     // CAMERA METHODS
-    public int getScreenX() {
-        return worldX - gp.player.worldX + gp.player.screenX;
-    }
-    public int getScreenY() {
-        return worldY - gp.player.worldY + gp.player.screenY;
-    }
+    public int getScreenX() { return worldX - gp.player.worldX + gp.player.screenX; }
+    public int getScreenY() { return worldY - gp.player.worldY + gp.player.screenY; }
     public boolean inCamera() {
         return worldX + gp.TILE_SIZE * 5 > gp.player.worldX - gp.player.screenX - 48 * 4 && // added values due to player sprite not centered
                 worldX - gp.TILE_SIZE < gp.player.worldX + gp.player.screenX + 48 * 4 &&
@@ -656,9 +607,7 @@ public abstract class Entity {
 
     // GAME LOOP METHODS
     public void update() {
-        if (interacting) {
-            runInteractSprites();
-        }
+        if (interacting) runInteractSprites();
         if (type == type_gate) {
             if (locking) runLockAnimation();
             if (unlocking) runUnlockingAnimation();
@@ -704,9 +653,7 @@ public abstract class Entity {
             } else if (attacking) {
                 startAttack();
             } else {
-                if (type == type_mob) {
-                    setAction();
-                }
+                if (type == type_mob) setAction();
 
                 checkCollision();
 
@@ -731,7 +678,6 @@ public abstract class Entity {
                         case "moveDownLeft":
                             worldX -= speed;
                             worldY += speed;
-                            break;
                     }
                 }
 
@@ -762,7 +708,9 @@ public abstract class Entity {
     public void draw(Graphics2D g2) {
         BufferedImage image;
         if (spriteNum >= currentList.size()) spriteNum = 0;
+//        if (animationSpriteNum >= mobRightAttackList.size()) animationSpriteNum = 0;
         if (specialSpriteNum >= currentList.size()) specialSpriteNum = 0;
+//        if (interactSpriteNum >= interactList.size()) interactSpriteNum = 0;
 
         if (!alive) return;
 
@@ -790,7 +738,7 @@ public abstract class Entity {
 
             if (dead) dyingAnimation(g2);
 
-            if(!attacking){
+            if (!attacking){
                 g2.drawImage(image, worldX, worldY, null);
                 UtilityTool.changeAlpha(g2, 1f);
             }

@@ -30,9 +30,6 @@ public class Player extends Entity {
     public int playerClass;
     private int delta;
 
-//    public ArrayList<Entity> inventory = new ArrayList<>(); temp commented
-//    public final int inventorySize = 8; temp commented
-
     public Player (GamePanel gp, KeyHandler keyH, Cursor cursor, int playerClass) {
         super(gp);
         this.gp = gp;
@@ -63,15 +60,15 @@ public class Player extends Entity {
         getPlayerAttackSprites();
     }
 
-    @Override
-    public void setStatValues(int defaultSpeed, int maxLife, boolean hasRanged, boolean isBoss, int mobBossNum) {
-        super.setStatValues(defaultSpeed, maxLife, hasRanged, isBoss, mobBossNum);
-    }
-
-    @Override
-    public void setAttackValues(int damage, int damageSprite, int attWidth, int attHeight) {
-        super.setAttackValues(damage, damageSprite, attWidth, attHeight);
-    }
+//    @Override
+//    public void setStatValues(int defaultSpeed, int maxLife, boolean hasRanged, boolean isBoss, int mobBossNum) {
+//        super.setStatValues(defaultSpeed, maxLife, hasRanged, isBoss, mobBossNum);
+//    }
+//
+//    @Override
+//    public void setAttackValues(int damage, int damageSprite, int attWidth, int attHeight) {
+//        super.setAttackValues(damage, damageSprite, attWidth, attHeight);
+//    }
 
     // DEFAULT INITIALIZATION
     public void setDefaultValues() {
@@ -295,9 +292,8 @@ public class Player extends Entity {
     public void update() {
         delta++;
         if(!keyH.godModeOn){
-            if (currentLife <= 0){
+            if (currentLife <= 0)
                 gp.gameState = gp.deathState;
-            }
         }
 
         if (currentLife > maxLife){

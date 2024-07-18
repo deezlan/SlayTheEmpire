@@ -11,9 +11,9 @@ public class MOB_SkeletonKnight extends Entity {
     public MOB_SkeletonKnight(GamePanel gp, int worldX, int worldY) {
         super(gp, worldX, worldY);
         this.gp = gp;
-        setStatValues(1, 4, false, false, 6);
-        setCollisionValues(98, 100, 28, 40);
-        setAttackValues(1, 6, 50, 50);
+        setStatValues(1, 4, false, 6, 66);
+        setCollisionValues(70, 90, 40, 40);
+        setAttackValues(1, 6, 50, 50, false);
 
         // Load mob sprites
         getMobSprites();
@@ -35,10 +35,10 @@ public class MOB_SkeletonKnight extends Entity {
             }
 
             UtilityTool.scaleEntityList(this, moveRightList, 200, 200);
-            UtilityTool.scaleEntityList(this,moveLeftList, 200, 200);
-            UtilityTool.scaleEntityList(this, mobLeftAttackList, 200, 180);
-            UtilityTool.scaleEntityList(this,mobRightAttackList, 200, 200);
-            UtilityTool.scaleEntityList(this,idleLeftList, 200, 200);
+            UtilityTool.scaleEntityList(this, moveLeftList, 200, 200);
+            UtilityTool.scaleEntityList(this, mobLeftAttackList, 200, 200);
+            UtilityTool.scaleEntityList(this, mobRightAttackList, 200, 200);
+            UtilityTool.scaleEntityList(this, idleLeftList, 200, 200);
             UtilityTool.scaleEntityList(this, idleRightList, 200, 200);
 
             System.out.println("Goblin sprites loaded successfully");

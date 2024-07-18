@@ -31,7 +31,7 @@ public class Player extends Entity {
     private int delta;
 
     public Player (GamePanel gp, KeyHandler keyH, Cursor cursor, int playerClass) {
-        super(gp);
+        super(gp,303,9);
         this.gp = gp;
         this.keyH = keyH;
         this.playerClass = playerClass;

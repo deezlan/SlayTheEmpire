@@ -159,21 +159,17 @@ public class UI {
         switch (gp.ui.commandNum) {
             case 0 -> {
                 g2.drawImage(warriorSelected, 0, 0, null);
-                g2.drawImage(warriorGif, (gp.SCREEN_WIDTH - gifX)/2 - 225, (int) ((gp.SCREEN_HEIGHT - gifY)/3) + 40, gifX, gifY, null);
+                g2.drawImage(warriorGif, (gp.SCREEN_WIDTH - gifX)/2 - 225,  ((gp.SCREEN_HEIGHT - gifY)/3) + 40, gifX, gifY, null);
             }
             case 1 -> {
                 g2.drawImage(knightSelected, 0, 0, null);
-                g2.drawImage(knightGif, (gp.SCREEN_WIDTH - gifX)/2, (int) ((gp.SCREEN_HEIGHT - gifY)/3) + 50, gifX, gifY, null);
+                g2.drawImage(knightGif, (gp.SCREEN_WIDTH - gifX)/2, ((gp.SCREEN_HEIGHT - gifY)/3) + 50, gifX, gifY, null);
             }
             case 2 -> {
                 g2.drawImage(assassinSelected, 0, 0, null);
-                g2.drawImage(assassinGif, (gp.SCREEN_WIDTH - gifX)/2 + 225, (int) ((gp.SCREEN_HEIGHT - gifY)/3) + 40, gifX, gifY, null);
+                g2.drawImage(assassinGif, (gp.SCREEN_WIDTH - gifX)/2 + 225, ((gp.SCREEN_HEIGHT - gifY)/3) + 40, gifX, gifY, null);
             }
         }
-    }
-
-    public void drawControls() {
-
     }
 
     public void drawHotbar() {
@@ -344,6 +340,10 @@ public class UI {
             }
             spriteY += 40;
         }
+
+        g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 20F));
+        text = "(Esc to Exit)";
+        g2.drawString(text,10,30);
     }
 
     public void drawPlayerLife(){
@@ -539,13 +539,13 @@ public class UI {
         // Draw Title and Buttons
         int imgWidth = startMenu.getWidth(null);
         int imgHeight = startMenu.getHeight(null);
-        int x = (int) ((gp.SCREEN_WIDTH - imgWidth));
-        int y = (int) ((gp.SCREEN_HEIGHT - imgHeight));
+        int x = gp.SCREEN_WIDTH - imgWidth;
+        int y = gp.SCREEN_HEIGHT - imgHeight;
         g2.drawImage(startMenu, x, y, imgWidth, imgHeight, null);
 
         int leftx = (int) (gp.SCREEN_WIDTH/2 - gp.TILE_SIZE*5.5);
         int rightx = (gp.SCREEN_WIDTH/2 + gp.TILE_SIZE*5);
-        y = (int) ((gp.SCREEN_HEIGHT)/2 - 60);
+        y = gp.SCREEN_HEIGHT/2 - 60;
         switch (commandNum) {
             case 0: {
                 // 0.5 SCALE DIFF
@@ -560,7 +560,7 @@ public class UI {
                 break;
             }
             case 2: {
-                y += (int) (gp.TILE_SIZE*3);
+                y += gp.TILE_SIZE*3;
                 g2.drawString(">", leftx, y);
                 g2.drawString("<", rightx, y);
                 break;
@@ -582,6 +582,10 @@ public class UI {
 
     // CHARACTER SELECTION SCREEN
     public void drawCharacterSelection() {
+        g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 20F));
+        String text = "(Esc to Exit)";
+        g2.drawString(text,10,30);
+
         g2.setColor(Color.BLACK);
         g2.fillRect(0,0, gp.SCREEN_WIDTH, gp.SCREEN_HEIGHT);
         drawBG();
@@ -589,7 +593,7 @@ public class UI {
         g2.setColor(Color.WHITE);
         g2.setFont(g2.getFont().deriveFont(Font.BOLD, 40F));
 
-        String text = "Select Your Class";
+        text = "Select Your Class";
         int x = getXForCenteredText(text, g2);
         int y = gp.TILE_SIZE*3;
         g2.drawString(text, x, y);
@@ -1023,6 +1027,101 @@ public class UI {
         // SFX BAR
         y += (int) (frameY + gp.TILE_SIZE);
         drawVolumeBar(gp.effect.volumeScale, x, y);
+    }
+
+    public void drawControls() {
+        g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 20F));
+        String text = "(Esc to Exit)";
+        g2.drawString(text,10,30);
+
+        int frameX = 0;
+        int frameY = gp.TILE_SIZE*2;
+        int frameWidth = gp.SCREEN_WIDTH;
+        int frameHeight = gp.SCREEN_HEIGHT - gp.TILE_SIZE*2;
+        drawSubWindow(frameX, frameY, frameWidth, frameHeight);
+    }
+
+    public void drawDifficultySelect() {
+        drawBG();
+        g2.setColor(Color.BLACK);
+        g2.fillRect(0,0, gp.SCREEN_WIDTH, gp.SCREEN_HEIGHT);
+        g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 50f));
+        String text;
+        int x;
+        int y;
+
+        // DIFFICULTY
+        text = "Difficulty Selection";
+        x = getXForCenteredText(text, g2);
+        y = gp.TILE_SIZE*2;
+        g2.setColor(Color.WHITE);
+        g2.drawString(text,x,y);
+
+        //UNDERLINE
+        g2.drawLine(x, y + 5, x + g2.getFontMetrics().stringWidth(text), y + 5);
+
+        // MODES
+        text = "Easy";
+        x = getXForCenteredText(text, g2);
+        y += gp.TILE_SIZE*2;
+        g2.setColor(gp.ui.commandNum == 0? Color.YELLOW : Color.WHITE);
+        g2.drawString(text,x,y);
+        if (gp.ui.commandNum == 0) {
+            g2.drawString(">", x - 25, y);
+        }
+
+        text = "Medium";
+        x = getXForCenteredText(text, g2);
+        y += gp.TILE_SIZE;
+        g2.setColor(gp.ui.commandNum == 1? Color.BLUE : Color.WHITE);
+        g2.drawString(text,x,y);
+        if (gp.ui.commandNum == 1) {
+            g2.drawString(">", x - 25, y);
+        }
+
+        text = "Hard";
+        x = getXForCenteredText(text, g2);
+        y += gp.TILE_SIZE;
+        g2.setColor(gp.ui.commandNum == 2? Color.RED : Color.WHITE);
+        g2.drawString(text,x,y);
+        if (gp.ui.commandNum == 2) {
+            g2.drawString(">", x - 25, y);
+        }
+
+
+        y += gp.TILE_SIZE*3;
+        switch (gp.ui.commandNum) {
+            case 0: {
+                text = "For newborns.";
+                x = getXForCenteredText(text, g2);
+                g2.setColor(gp.ui.commandNum == 0? Color.YELLOW : Color.WHITE);
+                g2.drawString(text, x, y);
+                break;
+            }
+            case 1: {
+                text = "For regular people.";
+                x = getXForCenteredText(text, g2);
+                g2.setColor(gp.ui.commandNum == 1? Color.BLUE : Color.WHITE);
+                g2.drawString(text, x, y);
+                break;
+            }
+            case 2: {
+                text = "For renowned legends.";
+                x = getXForCenteredText(text, g2);
+                g2.setColor(gp.ui.commandNum == 2? Color.RED : Color.WHITE);
+                g2.drawString(text, x, y);
+                break;
+            }
+        }
+
+        text = "Back";
+        x = getXForCenteredText(text, g2);
+        y += gp.TILE_SIZE*3;
+        g2.setColor(gp.ui.commandNum == 3? Color.YELLOW : Color.WHITE);
+        g2.drawString(text,x,y);
+        if (gp.ui.commandNum == 3) {
+            g2.drawString(">", x - 25, y);
+        }
     }
 
     public void draw(Graphics2D g2){

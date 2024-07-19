@@ -56,7 +56,7 @@ public class CutsceneManager {
         if (scenePhase == 2) {
             for (int i = 0; i < gp.mobArr[1].length; i++) {
                 if (gp.mobArr[gp.currentMap][i] != null && gp.mobArr[gp.currentMap][i].name.equals(BOSS_FrostGiant.monName)) {
-                    gp.mobArr[gp.currentMap][i].sleep = false;
+//                    gp.mobArr[gp.currentMap][i].sleep = false;
                     gp.ui.npc = gp.mobArr[gp.currentMap][i];
                     scenePhase++;
                     break;

@@ -150,7 +150,7 @@ public class GamePanel extends JPanel implements Runnable {
     @Override
     public void run() {
         // FPS SETTINGS
-        int FPS = 60;
+        final int FPS = 60;
         double drawInterval = (double) 1000000000 / FPS;
         double delta = 0;
         long lastTime = System.nanoTime();
@@ -181,7 +181,7 @@ public class GamePanel extends JPanel implements Runnable {
     public void setupGame() {
         tempScreen = new BufferedImage(SCREEN_WIDTH,SCREEN_HEIGHT,BufferedImage.TYPE_INT_ARGB);
         g2 = (Graphics2D) tempScreen.getGraphics();
-        gameState = TITLE_STATE; // TESTING LOGIN RIGHT NOW
+        gameState = CHAR_SELECT_STATE; // TESTING LOGIN RIGHT NOW
         playMusic(0);
     }
 
@@ -221,15 +221,6 @@ public class GamePanel extends JPanel implements Runnable {
         aSetter.setNPC();
         aSetter.setGates();
     }
-//    public void restart() {
-//        player.setDefaultValues();
-//        player.setDefaultPosition();
-//        player.restoreLife();
-//        aSetter.setMonster();
-//        aSetter.setNPC();
-//        aSetter.setObject();
-//        aSetter.setInteractiveTile();
-//    }
     public void loadLevel() {
         bossBattleOn = false;
         aSetter.loadAssets();

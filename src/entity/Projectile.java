@@ -29,6 +29,7 @@ public class Projectile extends Entity{
 
         if (user == gp.player) {
             if (gp.player.currentWeapon.name.equalsIgnoreCase("fireball cannon")) {
+
                 upCollisionOn = false;
                 downCollisionOn = false;
                 leftCollisionOn = false;

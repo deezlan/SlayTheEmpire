@@ -196,6 +196,15 @@ public class KeyHandler implements KeyListener {
                 gp.playMusic(4);
                 musicPlaying = true;
             }
+            if(code == KeyEvent.VK_F){
+
+                if (gp.player.currentWeapon.name.equalsIgnoreCase("fireball cannon")) {
+                    gp.playSE(12);
+                }
+
+            }
+
+
 
             // GO TO OPTIONS
             if (code == KeyEvent.VK_ESCAPE) gp.gameState = gp.OPTIONS_MENU_STATE;

@@ -173,6 +173,8 @@ public abstract class Entity {
     // MOB INITIALIZATION METHODS
     public void setStatValues(int defaultSpeed, int maxLife, boolean isBoss, int mobBossNum, int coinValue) {
         this.type = type_mob;
+        sleep = true;
+
         this.defaultSpeed = defaultSpeed;
         this.speed = defaultSpeed;
         this.maxLife = maxLife * gp.gameMode;
@@ -503,24 +505,6 @@ public abstract class Entity {
                 if (gp.player.worldX > worldX && xDis < attRangeHorz && yDis < attRangeVert)
                     targetInRange = true;
         }
-
-//        switch (action) {
-//            case "moveUp":
-//                if (gp.player.worldY < worldY && yDis < attackArea.width - 48 && xDis < attackArea.height)
-//                    targetInRange = true;
-//                break;
-//            case "moveDown":
-//                if (gp.player.worldY > worldY && yDis < attackArea.width + 48 && xDis < attackArea.height)
-//                    targetInRange = true;
-//                break;
-//            case "moveLeft":
-//                if (gp.player.worldX < worldX && xDis < attackArea.width + 48 && yDis < attackArea.height)
-//                    targetInRange = true;
-//                break;
-//            case "moveRight":
-//                if (gp.player.worldX > worldX && xDis < attackArea.width  && yDis < attackArea.height)
-//                    targetInRange = true;
-//        }
 
         if (targetInRange) {
             // CHECK ATTACK HAPPENS

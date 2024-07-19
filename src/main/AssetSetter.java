@@ -192,27 +192,25 @@ public class AssetSetter {
             case 2:
             {
                 // FIRST ROOM index 0-3
-                gp.mobArr[gp.currentMap][i] = new MOB_RobotGuardian(gp, 1316, 1900); i++;
-                gp.mobArr[gp.currentMap][i] = new MOB_FlyingEye(gp, 1182, 1790); i++;
-                gp.mobArr[gp.currentMap][i] = new MOB_FlyingEye(gp, 1452, 1790); i++;
-                gp.mobArr[gp.currentMap][i] = new MOB_FlyingEye(gp, 1316, 2096); i++;
+                gp.mobArr[gp.currentMap][i] = new MOB_RobotGuardian(gp, 910, 1660); i++;
+                gp.mobArr[gp.currentMap][i] = new MOB_FlyingEye(gp, 780, 1544); i++;
+                gp.mobArr[gp.currentMap][i] = new MOB_FlyingEye(gp, 1040, 1544); i++;
+                gp.mobArr[gp.currentMap][i] = new MOB_FlyingEye(gp, 908, 1792); i++;
 
-                // MINI-BOSS ROOM
-                gp.mobArr[gp.currentMap][i] = new MOB_Canine(gp, 1600, 1968); i++;
-                gp.mobArr[gp.currentMap][i] = new MOB_Skellington(gp, 1700, 1968);
+                // MINI-BOSS ROOM index 4-6
+                gp.mobArr[gp.currentMap][i] = new MOB_SkeletonKnight(gp, 460, 947); i++;
+                gp.mobArr[gp.currentMap][i] = new MOB_SkeletonKnight(gp, 460, 1248); i++;
+                gp.mobArr[gp.currentMap][i] = new MOB_SkeletonKnight(gp, 200, 1098); i++; // replace with demon slime
 
-//                gp.mobArr[gp.currentMap][i] = new MOB_ArmoredGuardian(gp, 400 + 48*17, 1968); i++;
-//                gp.mobArr[gp.currentMap][i] = new MOB_Goblin(gp, 400 + 48*17, 1968); i++;
+                // 'FINAL' BOSS ROOM index 7-10
+                gp.mobArr[gp.currentMap][i] = new MOB_ArmoredGuardian(gp, 100, 96); i++;
+                gp.mobArr[gp.currentMap][i] = new MOB_ArmoredGuardian(gp, 422, 96); i++;
+                gp.mobArr[gp.currentMap][i] = new MOB_Skellington(gp, 266, 220); i++;
+                gp.mobArr[gp.currentMap][i] = new MOB_SkeletonKnight(gp, 254, 48); i++; // replace with stone golem
 
-//                gp.mobArr[gp.currentMap][i] = new MOB_SkeletonKnight(gp, 400 + 48*17, 1968); i++;
-//                gp.mobArr[gp.currentMap][i] = new MOB_Skellington(gp, 475 + 48*17, 1968); i++;
-//                gp.mobArr[gp.currentMap][i] = new MOB_Slime(gp, 1216, 1850); i++;
-//                gp.mobArr[gp.currentMap][i] = new MOB_Slime(gp, 1216, 1968); i++;
-
-                // 'FINAL' BOSS ROOM
-
-
-                // STORY BOSS ROOM
+                // STORY BOSS ROOM index 11-12
+                gp.mobArr[gp.currentMap][i] = new MOB_Skellington(gp, 1475, 180); i++; // replace with king
+                gp.mobArr[gp.currentMap][i] = new MOB_Skellington(gp, 1551, 180); // replace with princess
             }
         }
     }

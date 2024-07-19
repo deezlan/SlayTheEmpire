@@ -46,6 +46,7 @@ public class EventHandler {
         eventMaster.dialogs[0][0] = "Drank Possibly Toilet Water";
         eventMaster.dialogs[0][1] = "Why does it taste like pee";
     }
+
     // check tile for event;
     public void checkEvent() {
         // check tile if player i one tile away from the tile
@@ -53,10 +54,9 @@ public class EventHandler {
         int yDistance = Math.abs(gp.player.worldY - previousEventY);
         int distance = Math.max(xDistance, yDistance);
 
-        if (distance > gp.TILE_SIZE) {
-            canTouchEvent = true;
-        }
-        if (canTouchEvent) {// use else if to add more events
+        if (distance > gp.TILE_SIZE) canTouchEvent = true;
+
+        if (canTouchEvent) { // use else if to add more events
             switch (gp.currentMap) {
                 // LOBBY
                 case 0:
@@ -69,12 +69,6 @@ public class EventHandler {
                                     || hit(gp.currentMap, 13, 10, "any")
                     ) {
                         drinkWater(gp.DIALOGUE_STATE);
-                    } else if (hit(0, 8, 4, "any")) {
-                        gp.gateArr[gp.currentMap][0].locking = true;
-//                eventRect[0][8][4].eventDone = true;
-                    } else if (hit(0, 11, 4, "any")) {
-                        gp.gateArr[gp.currentMap][0].unlocking = true;
-//                eventRect[0][8][4].eventDone = true;
                     }
                     break;
 

@@ -133,19 +133,18 @@ public class EventHandler {
                                     || hit(1, 33, 25, "any")
                                     || hit(1, 34, 26, "any")
                     ) {
-//                        for (int i = 9; i <= 15; i++)
-//                            gp.gateArr[gp.currentMap][i].locking = true;
+                        triggerGates(true, 9, 15);
 
-//                        eventRect[1][24][22].eventDone = true;
-//                        eventRect[1][25][23].eventDone = true;
-//                        eventRect[1][25][24].eventDone = true;
-//                        eventRect[1][25][25].eventDone = true;
-//                        eventRect[1][24][26].eventDone = true;
-//                        eventRect[1][34][22].eventDone = true;
-//                        eventRect[1][33][23].eventDone = true;
-//                        eventRect[1][33][24].eventDone = true;
-//                        eventRect[1][33][25].eventDone = true;
-//                        eventRect[1][34][26].eventDone = true;
+                        eventRect[1][24][22].eventDone = true;
+                        eventRect[1][25][23].eventDone = true;
+                        eventRect[1][25][24].eventDone = true;
+                        eventRect[1][25][25].eventDone = true;
+                        eventRect[1][24][26].eventDone = true;
+                        eventRect[1][34][22].eventDone = true;
+                        eventRect[1][33][23].eventDone = true;
+                        eventRect[1][33][24].eventDone = true;
+                        eventRect[1][33][25].eventDone = true;
+                        eventRect[1][34][26].eventDone = true;
                     }
                     if ( // TRIGGER FINAL BOSS ROOM GATES
                             hit(1, 27, 13, "any")

@@ -33,9 +33,6 @@ public class AssetSetter {
                 gp.objArr[gp.currentMap][i] = new OBJ_ChatBubble(gp, 410, 230); i++;
                 gp.objArr[gp.currentMap][i] = new OBJ_ChatBubble(gp, 540, 410); i++;
                 gp.objArr[gp.currentMap][i] = new OBJ_ChatBubble(gp, 650, 80);
-
-                // TEST GATE - DELETE AFTER
-                gp.gateArr[gp.currentMap][0] = new OBJ_Gate(gp, 1, 12, 8);
                 break;
             case 1:
                 // TELEPORTING OBELISK
@@ -184,7 +181,7 @@ public class AssetSetter {
 //                gp.mobArr[gp.currentMap][i] = new MOB_ArmoredGuardian(gp, 400 + 48*17, 1968); i++;
 //                gp.mobArr[gp.currentMap][i] = new MOB_Canine(gp, 400 + 48*17, 1968); i++;
 //                gp.mobArr[gp.currentMap][i] = new MOB_Goblin(gp, 400 + 48*17, 1968); i++;
-//                gp.mobArr[gp.currentMap][i] = new MOB_Mushroom(gp, 400 + 48*17, 1968); i++;
+                gp.mobArr[gp.currentMap][i] = new MOB_Mushroom(gp, 1316, 1000); i++;
 //                gp.mobArr[gp.currentMap][i] = new MOB_Ramses(gp, 400 + 48*17, 1968); i++;
 //                gp.mobArr[gp.currentMap][i] = new MOB_SkeletonKnight(gp, 400 + 48*17, 1968); i++;
 //                gp.mobArr[gp.currentMap][i] = new MOB_Skellington(gp, 475 + 48*17, 1968); i++;

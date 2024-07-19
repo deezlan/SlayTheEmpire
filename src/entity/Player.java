@@ -51,70 +51,56 @@ public class Player extends Entity {
         }
         screenY = (gp.SCREEN_HEIGHT/2) - 72;
 
-        setDefaultValues();
-        setCollisionValues();
-        setHitboxValues(75, 30, 30, 30);
+        setStatValues(3, 8, false, 0, 0);
+        setCollisionValues(80, 60, 40, 30);
+        setHitboxValues(75, 20, 50, 60);
+        setAttackValues(5, 2, 50, 75, false);
         setItems();
         getPlayerSprites();
         getPlayerAttackSprites();
     }
 
-//    @Override
-//    public void setStatValues(int defaultSpeed, int maxLife, boolean hasRanged, boolean isBoss, int mobBossNum) {
-//        super.setStatValues(defaultSpeed, maxLife, hasRanged, isBoss, mobBossNum);
-//    }
-//
-//    @Override
-//    public void setAttackValues(int damage, int damageSprite, int attWidth, int attHeight) {
-//        super.setAttackValues(damage, damageSprite, attWidth, attHeight);
-//    }
-
     // DEFAULT INITIALIZATION
-    public void setDefaultValues() {
+
+    @Override
+    public void setStatValues(int defaultSpeed, int maxLife, boolean isBoss, int mobBossNum, int coinValue) {
         type = type_player;
+        totalCoins = 500;
 
         // ATTRIBUTES DEPENDING ON CHOSEN CLASS
         switch (playerClass) {
             case 0:
-                defaultSpeed = 3;
-                speed = defaultSpeed;
-                maxLife = 8;
+                this.defaultSpeed = defaultSpeed;
+                this.speed = this.defaultSpeed;
+                this.maxLife = maxLife;
                 currentLife = maxLife;
-//                damage = 5;
-                damage = 1;
                 break;
             case 1:
-                defaultSpeed = 2;
-                speed = defaultSpeed;
-                maxLife = 10;
-                currentLife = maxLife;
-                damage = 3;
+                this.defaultSpeed = 3;
+                this.speed = this.defaultSpeed;
+                this.maxLife = 10;
+                this.currentLife = this.maxLife;
                 break;
             case 2:
-                defaultSpeed = 4;
-                speed = defaultSpeed;
-                maxLife = 6;
-                currentLife = maxLife;
-                damage = 1;
+                this.defaultSpeed = 4;
+                this.speed = defaultSpeed;
+                this.maxLife = 6;
+                currentLife = this.maxLife;
         }
-
-        totalCoins = 500;
-        damageSprite = 2;
     }
-    private void setCollisionValues() {
+    @Override
+    public void setCollisionValues(int x, int y, int width, int height) {
         // Set collision settings based on character class
+
         switch (playerClass) {
             case 0:
                 solidArea = new Rectangle(); // draws a square at the centre of the player
-                solidArea.x = 80; // position of actual collision square
-                solidArea.y = 60;
+                solidArea.x = x; // position of actual collision square
+                solidArea.y = y;
                 solidAreaDefaultX = solidArea.x;
                 solidAreaDefaultY = solidArea.y;
-                solidArea.width = 40; // outer area of collision square
-                solidArea.height = 30;
-
-                attackArea.width = 50;
-                attackArea.height = 75;
+                solidArea.width = width; // outer area of collision square
+                solidArea.height = height;
                 break;
             case 1:
                 solidArea = new Rectangle(); // draws a square at the centre of the player
@@ -122,26 +108,46 @@ public class Player extends Entity {
                 solidArea.y = 60;
                 solidAreaDefaultX = solidArea.x;
                 solidAreaDefaultY = solidArea.y;
-                solidArea.width = 55; // outer area of collision square
+                solidArea.width = 40; // outer area of collision square
                 solidArea.height = 30;
 
                 // IMPLEMENT THESE VALUES
                 attackArea.width = 50;
-                attackArea.height = 30;
-
+                attackArea.height = 85;
                 break;
             case 2:
                 solidArea = new Rectangle(); // draws a square at the centre of the player
                 solidArea.x = 85; // position of actual collision square
-                solidArea.y = 60;
+                solidArea.y = 50;
                 solidAreaDefaultX = solidArea.x;
                 solidAreaDefaultY = solidArea.y;
                 solidArea.width = 30; // outer area of collision square
-                solidArea.height = 30;
+                solidArea.height = 40;
 
                 // IMPLEMENT THESE VALUES
-                attackArea.width = gp.TILE_SIZE*2;
-                attackArea.height = gp.TILE_SIZE*3;
+                attackArea.width = 1;
+                attackArea.height = 75;
+        }
+    }
+    @Override
+    public void setAttackValues(int damage, int damageSprite, int attWidth, int attHeight, boolean hasRanged) {
+        this.damageSprite = 2;
+
+        switch (playerClass) {
+            case 0:
+                this.damage = damage;
+                attackArea.width = attWidth;
+                attackArea.height = attHeight;
+                break;
+            case 1:
+                this.damage = 3;
+                attackArea.width = 50;
+                attackArea.height = 85;
+                break;
+            case 2:
+                this.damage = 4;
+                attackArea.width = 1;
+                attackArea.height = 75;
         }
     }
     public void setItems() {
@@ -173,20 +179,19 @@ public class Player extends Entity {
             // ADJUST FOR ATTACK
             switch (action) {
                 case "moveUp": worldY -= (playerRightAttackList.get(0).getHeight() - attackArea.height)/2; break;
-//                case "moveUp": worldY -= playerRightAttackList.get(0).getHeight() + attackArea.height - 20; break;
                 case "moveDown": worldY += (playerRightAttackList.get(0).getHeight() - attackArea.height)/2; break;
                 case "idleLeft", "moveLeft":
-                    worldY -= 50;
+                    if (playerClass == 0) worldY -= 50;
+                    if (playerClass == 1) worldY -= 70;
+                    if (playerClass == 2) worldY -= 55;
                     worldX -= (playerRightAttackList.get(0).getWidth() - attackArea.width)/2;
                     break;
                 case "idleRight", "moveRight":
-                    worldY -= 50;
+                    if (playerClass == 0) worldY -= 50;
+                    if (playerClass == 1) worldY -= 70;
+                    if (playerClass == 2) worldY -= 55;
                     worldX += (playerRightAttackList.get(0).getWidth() - attackArea.width)/2;
                     break;
-//                case "idleRight", "moveRight": worldX += attackArea.width; break;
-//                case "idleLeft", "moveLeft": worldX -= attackArea.width; break;
-//                case "moveUp": worldY -= attackArea.height; break;
-//                case "moveDown": worldY += attackArea.height; break;
                 case "moveUpRight":
                     worldX += attackArea.width;
                     worldY -= attackArea.height;

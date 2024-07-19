@@ -177,15 +177,15 @@ public class AssetSetter {
             case 1:
             {
 //                gp.mobArr[gp.currentMap][i] = new MOB_ArmoredGuardian(gp, 400 + 48*17, 1968); i++;
-//                gp.mobArr[gp.currentMap][i] = new MOB_Canine(gp, 350 + 48*17, 1968); i++;
-//                gp.mobArr[gp.currentMap][i] = new MOB_FlyingEye(gp, 350 + 48*17, 1968); i++;
-//                gp.mobArr[gp.currentMap][i] = new MOB_Goblin(gp, 350 + 48*17, 1968); i++;
-//                gp.mobArr[gp.currentMap][i] = new MOB_Mushroom(gp, 350 + 48*17, 1968); i++;
-//                gp.mobArr[gp.currentMap][i] = new MOB_Ramses(gp, 350 + 48*17, 1968); i++;
-//                gp.mobArr[gp.currentMap][i] = new MOB_RobotGuardian(gp, 400 + 48*17, 1968); i++;
-//                gp.mobArr[gp.currentMap][i] = new MOB_SkeletonKnight(gp, 350 + 48*17, 1968); i++;
-                gp.mobArr[gp.currentMap][i] = new MOB_Skellington(gp, 350 + 48*17, 1968); i++;
-//                gp.mobArr[gp.currentMap][i] = new MOB_Slime(gp, 350 + 48*17, 1968); i++;
+//                gp.mobArr[gp.currentMap][i] = new MOB_Canine(gp, 400 + 48*17, 1968); i++;
+//                gp.mobArr[gp.currentMap][i] = new MOB_FlyingEye(gp, 400 + 48*17, 1968); i++;
+//                gp.mobArr[gp.currentMap][i] = new MOB_Goblin(gp, 400 + 48*17, 1968); i++;
+//                gp.mobArr[gp.currentMap][i] = new MOB_Mushroom(gp, 400 + 48*17, 1968); i++;
+//                gp.mobArr[gp.currentMap][i] = new MOB_Ramses(gp, 400 + 48*17, 1968); i++;
+                gp.mobArr[gp.currentMap][i] = new MOB_RobotGuardian(gp, 475 + 48*17, 1968); i++;
+//                gp.mobArr[gp.currentMap][i] = new MOB_SkeletonKnight(gp, 400 + 48*17, 1968); i++;
+//                gp.mobArr[gp.currentMap][i] = new MOB_Skellington(gp, 475 + 48*17, 1968); i++;
+//                gp.mobArr[gp.currentMap][i] = new MOB_Slime(gp, 400 + 48*17, 1968); i++;
                 gp.mobArr[gp.currentMap][i] = new BOSS_FrostGiant(gp, 400 + 48*17, 180); i++;
             }
                 break;

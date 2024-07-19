@@ -365,9 +365,7 @@ public abstract class Entity {
     public void checkStartChase(Entity target, int distance, int rate) {
         if (getTileDistance(target) < distance) {
             int i = new Random().nextInt(rate);
-            if (i == 0) {
-                onPath = true;
-            }
+            if (i == 0) onPath = true;
         }
     }
     public void setAction() {
@@ -526,8 +524,13 @@ public abstract class Entity {
             switch (action) {
                 case "moveUp": worldY -= (mobRightAttackList.get(0).getHeight() - attackArea.height)/2; break;
                 case "moveDown": worldY += (mobLeftAttackList.get(0).getHeight() - attackArea.height)/2; break;
-                case "moveLeft": worldX -= (mobLeftAttackList.get(0).getWidth() - attackArea.width)/2; break;
-                case "moveRight": worldX += (mobRightAttackList.get(0).getWidth() - attackArea.width)/2; break;
+                case "moveLeft":
+                    worldX -= (mobLeftAttackList.get(0).getWidth() - attackArea.width)/2;
+                    worldY -= (mobRightAttackList.get(0).getHeight())/4;;
+                    break;
+                case "moveRight":
+                    worldX += (mobRightAttackList.get(0).getWidth() - attackArea.width)/2;
+                    worldY -= (mobRightAttackList.get(0).getHeight())/4;
             }
 
             if (type == 1) { // FOR MOB

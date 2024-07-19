@@ -95,23 +95,19 @@ public class KeyHandler implements KeyListener {
 
     public void dialogueMap(int code) {
         if(code == KeyEvent.VK_ENTER){
-            enterPressed = true;
+            if (gp.ui.commandNum < 2)
+                gp.eHandler.changeMap(gp.ui.commandNum + 1);
+            else
+                gp.eHandler.eventMaster.startDialogue(gp.eHandler.eventMaster,1);
         }
 
         if (gp.ui.subState == 0) {
-            if(code == KeyEvent.VK_W) {
-                gp.ui.commandNum--;
-                if(gp.ui.commandNum < 0) {
-                    gp.ui.commandNum = 2;
-                }
-            }
-            if(code == KeyEvent.VK_S) {
-                gp.ui.commandNum++;
-                if(gp.ui.commandNum > 2) {
-                    gp.ui.commandNum = 0;
-                }
-            }
+            if(code == KeyEvent.VK_W) gp.ui.commandNum--;
+            if(code == KeyEvent.VK_S) gp.ui.commandNum++;
         }
+        // LOOP BACK SELECTION
+        if(gp.ui.commandNum < 0) gp.ui.commandNum = 2;
+        if(gp.ui.commandNum > 2) gp.ui.commandNum = 0;
     }
 
     public void controlsState(int code) {
@@ -319,7 +315,7 @@ public class KeyHandler implements KeyListener {
                     // BACK TO LOBBY
                     case 3: {
                         if (gp.currentMap != 0) {
-                            gp.eHandler.teleportLobby();
+                            gp.eHandler.changeMap(0);
                             gp.gameState = gp.TRANSITION_STATE;
                         }
                         break;

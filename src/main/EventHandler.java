@@ -2,8 +2,6 @@ package main;
 
 import entity.Player;
 
-import java.awt.*;
-
 public class EventHandler {
     GamePanel gp;
     EventRect[][][] eventRect ;
@@ -65,7 +63,7 @@ public class EventHandler {
                 // LOBBY
                 case 0:
                     if (hit(0, 8, 13, "any")) {
-                        changeMap();
+                        gp.gameState = gp.MAP_SELECTION;
                     } else if (
                             hit(0, 2, 9, "any")
                                     || hit(gp.currentMap, 3, 10, "any")
@@ -272,23 +270,22 @@ public class EventHandler {
         return hit;
     }
 
-    public void changeMap(){
-        gp.gameState = gp.MAP_SELECTION;
-        gp.ui.mapSelect();
-        canTouchEvent = false;
-    }
-
-    public void teleportLobby() {
+    public void changeMap(int nextMap){
         gp.gameState = gp.TRANSITION_STATE;
-
-        System.out.println("Changing map - loadLevel() to " + gp.currentMap);
-        switch (gp.currentMap) {
-            case 1, 2:
-                tempMap = 0;
-                tempCol = 8;
-                tempRow = 3;
+        if (gp.currentMap == 0) {
+            tempMap = nextMap;
+            if (nextMap == 1) {
+                tempCol = 19;
+                tempRow = 41;
+            } else {
+                tempCol = 31;
+                tempRow = 36;
+            }
+        } else {
+            tempMap = nextMap;
+            tempCol = 6;
+            tempRow = 2;
         }
-        canTouchEvent = false;
     }
 
     public void drinkWater(int gameState){

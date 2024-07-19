@@ -672,31 +672,16 @@ public class UI {
             g2.drawString("Map 1",x,y);
             if (commandNum == 0) {
                 g2.drawString(">", x-24,y);
-                if (gp.keyH.enterPressed) {
-                    gp.gameState = gp.TRANSITION_STATE;
-                    gp.eHandler.tempMap = 1;
-                    gp.eHandler.tempCol = 19;
-                    gp.eHandler.tempRow = 41;
-                }
             }
             y += gp.TILE_SIZE;
             g2.drawString("Map 2",x,y);
             if (commandNum == 1) {
                 g2.drawString(">", x-24,y);
-                if (gp.keyH.enterPressed) {
-                    gp.gameState = gp.TRANSITION_STATE;
-                    gp.eHandler.tempMap = 2; // SECOND LEVEL CORRECT VALUES
-                    gp.eHandler.tempCol = 31;
-                    gp.eHandler.tempRow = 36;
-                }
             }
             y += gp.TILE_SIZE;
             g2.drawString("Exit",x,y);
             if (commandNum == 2) {
                 g2.drawString(">", x-24,y);
-                if (gp.keyH.enterPressed) {
-                    gp.eHandler.eventMaster.startDialogue(gp.eHandler.eventMaster,1);
-                }
             }
 
         } catch (FontFormatException | IOException e) {

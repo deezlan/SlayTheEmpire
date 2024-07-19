@@ -587,7 +587,7 @@ public abstract class Entity {
             interactSpriteCounter = 0;
             interacting = false;
             if (type == type_obelisk)
-                gp.eHandler.teleportLobby();
+                gp.eHandler.changeMap(0);
         }
     }
 

@@ -50,6 +50,8 @@ public abstract class Entity {
             bossNum,
             coinValue,
             attack,
+            attRangeHorz,
+            attRangeVert,
 
             // COLLISION ATTRIBUTES
             solidAreaDefaultX, solidAreaDefaultY,
@@ -234,10 +236,14 @@ public abstract class Entity {
 
     // TRACKING METHODS
     public int getDistanceX(Entity target) {
-        return Math.abs(worldX - target.worldX);
+//        return Math.abs(worldX - target.worldX);
+
+        return Math.abs((worldX + moveRightList.get(0).getWidth()/2) - (target.worldX + target.moveRightList.get(0).getWidth()/2));
     }
     public int getDistanceY(Entity target) {
-        return Math.abs(worldY - target.worldY);
+        return Math.abs((worldY + moveRightList.get(0).getHeight()/2) - (target.worldY + target.moveRightList.get(0).getHeight()/2));
+
+//        return Math.abs(worldY - target.worldY);
     }
     public int getTileDistance(Entity target) {
         return (getDistanceX(target) + getDistanceY(target)) / gp.TILE_SIZE;
@@ -301,8 +307,8 @@ public abstract class Entity {
         }
     }
     public void searchPath(int goalCol, int goalRow) {
-        int startCol = (worldX + solidArea.x) / gp.TILE_SIZE;
-        int startRow = (worldY + solidArea.y) / gp.TILE_SIZE;
+        int startCol = (worldX + moveRightList.get(0).getWidth()/2) / gp.TILE_SIZE;
+        int startRow = (worldY + moveRightList.get(0).getHeight()/2) / gp.TILE_SIZE;
 
         gp.pFinder.setNodes(startCol, startRow, goalCol, goalRow);
 
@@ -482,21 +488,39 @@ public abstract class Entity {
 
         switch (action) {
             case "moveUp":
-                if (gp.player.worldY < worldY && yDis < attackArea.width - 48 && xDis < attackArea.height)
+                if (gp.player.worldY < worldY && yDis < attRangeHorz && xDis < attRangeVert)
                     targetInRange = true;
                 break;
             case "moveDown":
-                if (gp.player.worldY > worldY && yDis < attackArea.width + 48 && xDis < attackArea.height)
+                if (gp.player.worldY > worldY && yDis < attRangeHorz && xDis < attRangeVert)
                     targetInRange = true;
                 break;
             case "moveLeft":
-                if (gp.player.worldX < worldX && xDis < attackArea.width + 48 && yDis < attackArea.height)
+                if (gp.player.worldX < worldX && xDis < attRangeHorz && yDis < attRangeVert)
                     targetInRange = true;
                 break;
             case "moveRight":
-                if (gp.player.worldX > worldX && xDis < attackArea.width && yDis < attackArea.height)
+                if (gp.player.worldX > worldX && xDis < attRangeHorz && yDis < attRangeVert)
                     targetInRange = true;
         }
+
+//        switch (action) {
+//            case "moveUp":
+//                if (gp.player.worldY < worldY && yDis < attackArea.width - 48 && xDis < attackArea.height)
+//                    targetInRange = true;
+//                break;
+//            case "moveDown":
+//                if (gp.player.worldY > worldY && yDis < attackArea.width + 48 && xDis < attackArea.height)
+//                    targetInRange = true;
+//                break;
+//            case "moveLeft":
+//                if (gp.player.worldX < worldX && xDis < attackArea.width + 48 && yDis < attackArea.height)
+//                    targetInRange = true;
+//                break;
+//            case "moveRight":
+//                if (gp.player.worldX > worldX && xDis < attackArea.width  && yDis < attackArea.height)
+//                    targetInRange = true;
+//        }
 
         if (targetInRange) {
             // CHECK ATTACK HAPPENS
@@ -570,7 +594,7 @@ public abstract class Entity {
             case "moveLeft":
                 currentList = mobLeftAttackList; break;
             case "moveRight":
-                currentList = mobRightAttackList; break;
+                currentList = mobRightAttackList;
         }
         runAttackAnimation();
     }

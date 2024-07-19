@@ -185,7 +185,9 @@ public class AssetSetter {
                 gp.mobArr[gp.currentMap][i] = new MOB_RobotGuardian(gp, 475 + 48*17, 1968); i++;
 //                gp.mobArr[gp.currentMap][i] = new MOB_SkeletonKnight(gp, 400 + 48*17, 1968); i++;
 //                gp.mobArr[gp.currentMap][i] = new MOB_Skellington(gp, 475 + 48*17, 1968); i++;
-//                gp.mobArr[gp.currentMap][i] = new MOB_Slime(gp, 400 + 48*17, 1968); i++;
+//                gp.mobArr[gp.currentMap][i] = new MOB_Slime(gp, 1216, 1850); i++;
+//                gp.mobArr[gp.currentMap][i] = new MOB_Slime(gp, 1216, 1968); i++;
+
                 gp.mobArr[gp.currentMap][i] = new BOSS_FrostGiant(gp, 400 + 48*17, 180); i++;
             }
                 break;

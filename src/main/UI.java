@@ -279,12 +279,11 @@ public class UI {
         g2.drawImage(redoButton, rx, y, saveButtonWidth, saveButtonHeight, null);
 
         if (gp.mouseH.leftClicked && redoRect.contains(gp.cursor.getMouseX(), gp.cursor.getMouseY())) {
-            gp.progressSaved = 0;
             gp.mouseH.clearMouseClick();
             gp.saveLoad.load(gp.saveLoad.slot);
+            gp.progressSaved = 0;
             gp.mouseH.clearMouseClick();
         } else if(gp.mouseH.leftClicked && continueRect.contains(gp.cursor.getMouseX(), gp.cursor.getMouseY())){
-            gp.progressSaved = 1;
             gp.mouseH.clearMouseClick();
             gp.saveLoad.load(gp.saveLoad.slot);
         }

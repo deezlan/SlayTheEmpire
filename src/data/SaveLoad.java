@@ -36,6 +36,7 @@ public class SaveLoad implements Serializable {
             ds.maxLife = gp.player.maxLife;
             ds.playerClass = gp.player.playerClass;
             ds.coin = gp.player.totalCoins;
+            ds.progressSaved = gp.progressSaved;
             ds.weapons.addAll(gp.player.ownedWeapon);
 
             out.writeObject(ds);
@@ -74,6 +75,7 @@ public class SaveLoad implements Serializable {
         gp.player.maxLife = ds.maxLife;
         gp.player.currentLife = ds.life;
         gp.player.totalCoins = ds.coin;
+        gp.progressSaved = ds.progressSaved;
         gp.player.ownedWeapon.addAll(ds.weapons);
         gp.loadLevel();
 

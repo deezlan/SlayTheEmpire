@@ -291,16 +291,23 @@ public class EventHandler {
         System.out.println("Changing map - loadLevel() to " + gp.currentMap);
         switch (gp.currentMap) {
             case 0:
-//                tempMap = 1; // FIRST LEVEL CORRECT VALUES
+                // FIRST LEVEL CORRECT VALUES
+//                tempMap = 1;
 //                tempCol = 19;
 //                tempRow = 41;
-                tempMap = 1; // FIRST LEVEL TESTING VALUES
-                tempCol = 22;
-                tempRow = 7;
-//                tempMap = 2; // SECOND LEVEL CORRECT VALUES
+                // FIRST LEVEL TESTING VALUES
+//                tempMap = 1;
+//                tempCol = 22;
+//                tempRow = 7;
+                // SECOND LEVEL CORRECT VALUES
+//                tempMap = 2;
 //                tempCol = 31;
 //                tempRow = 36;
 //                gp.player.lookingRight = false;
+//                // SECOND LEVEL TESTING VALUES
+                tempMap = 2;
+                tempCol = 36;
+                tempRow = 36;
                 break;
             case 1, 2:
                 tempMap = 0;

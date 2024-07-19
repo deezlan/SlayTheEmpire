@@ -189,20 +189,18 @@ public class KeyHandler implements KeyListener {
                 case 0:
                     // CHANGE CLASS TO WARRIOR
                     gp.player = new Player(gp, gp.keyH, gp.cursor, 0);
-                    gp.gameState = gp.playState;
                     break;
                 case 1:
                     // CHANGE CLASS TO KNIGHT
                     gp.player = new Player(gp, gp.keyH, gp.cursor, 1);
-                    gp.gameState = gp.playState;
                     break;
                 case 2:
                     // CHANGE CLASS TO ASSASSIN
                     gp.player = new Player(gp, gp.keyH, gp.cursor, 2);
-                    gp.gameState = gp.playState;
                     break;
             }
             gp.loadLevel();
+//            gp.gameState = gp.playState;
         }
     }
 

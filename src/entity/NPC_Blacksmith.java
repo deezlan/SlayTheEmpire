@@ -81,7 +81,9 @@ public class NPC_Blacksmith extends Entity {
                 gp.player.totalCoins -= shopItems.get(gp.ui.slotRow).price;
                 gp.player.hotbarList.remove(2);
                 gp.player.hotbarList.add(0, shopItems.get(gp.ui.slotRow));
-                gp.player.ownedWeapon.add(gp.ui.slotRow);
+                if (!gp.saveLoad.isloadPage) {
+                    gp.player.ownedWeapon.add(gp.ui.slotRow);
+                }
             }
         }
 

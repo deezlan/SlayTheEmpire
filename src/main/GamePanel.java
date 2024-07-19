@@ -15,8 +15,6 @@ import java.util.Comparator;
 import TileInteractive.InteractiveTIle;
 import ai.Pathfinder;
 import data.SaveLoad;
-import data.TrySaveLoad;
-import main.EventHandler;
 import entity.Cursor;
 import entity.Entity;
 import entity.Player;
@@ -77,7 +75,6 @@ public class GamePanel extends JPanel implements Runnable {
     public CollisionChecker cChecker = new CollisionChecker(this);
     public EventHandler eHandler = new EventHandler(this);
     public SaveLoad saveLoad = new SaveLoad(this, 3);
-    public TrySaveLoad trySaveLoad = new TrySaveLoad(this, 3);
 
     // PATHFINDER
     public Pathfinder pFinder = new Pathfinder(this);
@@ -104,13 +101,15 @@ public class GamePanel extends JPanel implements Runnable {
             startMenuState = 11,
             cutsceneState = 13,
             controlsState = 14,
-            savePageState = 15;
+            savePageState = 15,
+            checkLevelState = 16;
 
     public final int
                 easyMode = 1,
                 normalMode = 2,
                 hardMode = 3;
     public int gameMode = easyMode;
+    public int progressSaved = 1;
 
     public GamePanel() {
         this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
@@ -154,7 +153,7 @@ public class GamePanel extends JPanel implements Runnable {
         this.setCursor(blankCursor);
     }
 
-    private void showCursor() {
+    public void showCursor() {
         java.awt.Cursor defaultCursor = java.awt.Cursor.getDefaultCursor();
         this.setCursor(defaultCursor);
     }
@@ -202,6 +201,7 @@ public class GamePanel extends JPanel implements Runnable {
     public void loadLevel() {
         bossBattleOn = false;
         aSetter.loadAssets();
+        gameState = playState;
     }
 
     // MAP SETTINGS

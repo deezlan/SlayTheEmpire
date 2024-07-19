@@ -1,90 +1,86 @@
 package data;
 
+import entity.NPC_Blacksmith;
+import entity.Player;
 import main.GamePanel;
+import object.OBJ_ElectricBlaster;
+import object.OBJ_FireballCannon;
+import object.OBJ_Hammer;
+import object.OBJ_Raygun;
 
 import java.io.*;
 
-public class SaveLoad {
-
-    public boolean isloadPage;
-    public boolean slotCheck[];
+public class SaveLoad implements Serializable {
     GamePanel gp;
-    File saveFiles[];
     DataStorage ds = new DataStorage();
+    File trySaveFiles[];
+    public boolean isloadPage = false;
+    public int slot;
 
-
-
-    public SaveLoad(GamePanel gp, int numberOfSaveSlots){
+    public SaveLoad(GamePanel gp, int numberOfFiles){
         this.gp = gp;
-        this.saveFiles = new File[numberOfSaveSlots];
-        this.slotCheck = new boolean[numberOfSaveSlots];
-        isloadPage = false;
+        this.trySaveFiles = new File[numberOfFiles];
 
-        for (int i = 0; i < numberOfSaveSlots; i++) {
-            this.saveFiles[i] = new File("save" + (i + 1) + ".txt");
-            this.slotCheck[i] = false;
+        for(int i = 0; i < numberOfFiles; i++){
+            this.trySaveFiles[i] = new File("trySave" + (i+1) + ".dat");
         }
     }
 
-    public void clearSaveFile(int slot){
-        try(FileOutputStream fos = new FileOutputStream(saveFiles[slot])){
-
-        }catch(IOException e){
-            System.out.println("clear save file is not working" + e.getMessage());
-            e.printStackTrace();
-        }
-    }
 
     public void save(int slot){
-        if (slot < 0 || slot >= saveFiles.length) {
-            System.out.println("Invalid save slot.");
-            return;
-        }
+        try {
+            FileOutputStream fileOut = new FileOutputStream("trySave" + slot + ".dat" );
+            ObjectOutputStream out = new ObjectOutputStream(fileOut);
 
-        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(saveFiles[slot]))) {
-            ds.maxLife = gp.player.maxLife;
             ds.life = gp.player.currentLife;
-            ds.coin = gp.player.totalCoins;
+            ds.maxLife = gp.player.maxLife;
             ds.playerClass = gp.player.playerClass;
+            ds.coin = gp.player.totalCoins;
+            ds.weapons.addAll(gp.player.ownedWeapon);
 
-            // Write the DataStorage object
-            oos.write(gp.player.totalCoins);
-            oos.close();
-            System.out.println("succesfully saved");
+            out.writeObject(ds);
+            out.close();
 
-        }catch(Exception e){
-            System.out.println("Save Exception!");
+            System.out.println("trySave is saved successfully");
+
+        }catch(IOException i ){
+            System.out.println(i.getMessage());
         }
+
+        System.out.println(ds.playerClass);
+        System.out.println(ds.life);
+        System.out.println(ds.coin);
+        System.out.println(ds.maxLife);
     }
 
     public void load(int slot){
-        if(!isSaveFileEmpty(slot)){
-            System.out.println("saveFile empty!");
-            return;
+        try{
+            FileInputStream fileIn = new FileInputStream("trySave"+ slot +".dat");
+            ObjectInputStream in = new ObjectInputStream(fileIn);
+
+            ds = (DataStorage) in.readObject();
+            in.close();
+            fileIn.close();
+
+        }catch(IOException i ){
+            System.out.println(i.getMessage());
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
 
-        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(saveFiles[slot]))) {
-            // Read the DataStorage object
-
-            slotCheck[slot] = true;
-            gp.player.maxLife = ds.maxLife;
-            gp.player.currentLife = ds.life;
-            gp.player.playerClass = ds.playerClass;
-
-            ds = (DataStorage) ois.readObject();
-            gp.player.totalCoins = ds.coin;
-
-        }catch(Exception e){
-            System.out.println("Load Exception");
-        }
+        System.out.println(gp.player == null);
+        System.out.println(ds.playerClass);
+        gp.player = new Player(gp, gp.keyH, gp.cursor, ds.playerClass);
+        gp.player.maxLife = ds.maxLife;
+        gp.player.currentLife = ds.life;
+        gp.player.totalCoins = ds.coin;
+        gp.player.ownedWeapon.addAll(ds.weapons);
+        gp.loadLevel();
 
     }
+
     public boolean isSaveFileEmpty(int slot) {
-        File saveFile = saveFiles[slot];
-        boolean saveEmpty = !saveFile.exists() || saveFile.length() == 0;
-        if (!saveEmpty){
-            slotCheck[slot] = true;
-        }
-        return saveEmpty;
+        File saveFile = trySaveFiles[slot];
+        return !saveFile.exists() || saveFile.length() == 0;
     }
 }

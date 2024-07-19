@@ -77,6 +77,19 @@ public class UI {
             {"", "", ""},
     };
 
+    public String[][] controlScheme = {
+            {"Up", "W"},
+            {"Left", "A"},
+            {"Down", "S"},
+            {"Right", "D"},
+            {"Attack", "Mouse1"},
+            {"Options", "Esc"},
+            {"Pause", "P"},
+            {"Select", "Space"},
+            {"Goon", "???"},
+
+    };
+
     public UI(GamePanel gp) {
         this.gp = gp;
 
@@ -671,6 +684,7 @@ public class UI {
 
         if (gp.keyH.ePressed) drawDeathTransition();
     }
+
     public void drawSubWindow(int x, int y, int width,int height){
         Color custom = new Color(0,0,0,220);
         g2.setColor(custom);
@@ -996,11 +1010,35 @@ public class UI {
         String text = "(Esc to Exit)";
         g2.drawString(text,10,30);
 
+        int x, y;
+        // TITLE
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 40f));
+        text = "Options";
+        x = getXForCenteredText(text);
+        y = gp.TILE_SIZE;
+        g2.drawString(text, x, y);
+
         int frameX = 0;
         int frameY = gp.TILE_SIZE*2;
         int frameWidth = gp.SCREEN_WIDTH;
         int frameHeight = gp.SCREEN_HEIGHT - gp.TILE_SIZE*2;
         drawSubWindow(frameX, frameY, frameWidth, frameHeight);
+
+        int controlX = 0;
+        int controlY = gp.TILE_SIZE*3;
+        g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 35F));
+        for (String[] controlScheme : controlScheme) {
+            for (int j = 0; j < controlScheme.length; j++) {
+                String line = controlScheme[j];
+                if (j == 0) {
+                    controlX = getXForCenteredText(line) - 90;
+                } else if (j == 1) {
+                    controlX = getXForCenteredText(line) + 90;
+                }
+                g2.drawString(line, controlX, controlY);
+            }
+            controlY += 50;
+        }
     }
 
     public void drawDifficultySelect() {
@@ -1096,6 +1134,8 @@ public class UI {
         if (gp.gameState == gp.loginState) drawLoginScreen();
         // START MENU
         if (gp.gameState == gp.startMenuState) drawStartMenu();
+        // CONTROL MENU
+        if (gp.gameState == gp.controlsState) drawControls();
         // CREDITS
         if (gp.gameState == gp.creditsState) drawCredits(g2);
         // CHAR SELECTION

@@ -164,6 +164,9 @@ public class KeyHandler implements KeyListener {
             }
             gp.gameState = gp.difficultySelectState;
         }
+        if (code == KeyEvent.VK_ESCAPE) {
+            gp.gameState = gp.startMenuState;
+        }
     }
 
     public void playState(int code) {

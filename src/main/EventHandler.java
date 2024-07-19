@@ -163,13 +163,13 @@ public class EventHandler {
 //                        eventRect[1][31][13].eventDone = true;
                     }
 
-                    // UNLOCK FIRST ROOM GATES ONCE EVERY MOB SLAIN
-                    if (gp.mobArr[gp.currentMap][0] == null && gp.mobArr[gp.currentMap][1] == null) {
+                    // UNLOCK FIRST ROOM GATES ONCE CLEARED
+                    if (roomCleared(1, 0, 3)) {
                         for (int i = 0; i <= 4; i++)
                             gp.gateArr[gp.currentMap][i].unlocking = true;
                     }
 
-                    // UNLOCK FIRST ROOM GATES ONCE EVERY MOB SLAIN
+                    // UNLOCK MINI-BOSS ROOM GATES ONCE CLEARED
                     if (gp.mobArr[gp.currentMap][2] == null) {
                         for (int i = 16; i <= 19; i++)
                             gp.gateArr[gp.currentMap][i].unlocking = true;
@@ -266,6 +266,19 @@ public class EventHandler {
             eventRect[map][col][row].y = eventRect[map][col][row].eventRectDefaultY;
         }
         return hit;
+    }
+
+    public boolean roomCleared(int map, int firstMob, int lastMob) {
+        boolean cleared = true;
+
+        for (int i = firstMob; i <= lastMob; i++) {
+            if (gp.mobArr[map][i] != null) {
+                cleared = false;
+                break;
+            }
+        }
+
+        return cleared;
     }
 
     public void changeMap(){

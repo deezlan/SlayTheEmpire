@@ -178,7 +178,12 @@ public class Player extends Entity {
 
             // ADJUST FOR ATTACK
             switch (action) {
-                case "moveUp": worldY -= (playerRightAttackList.get(0).getHeight() - attackArea.height)/2; break;
+                case "moveUp":
+                    worldY -= (playerRightAttackList.get(0).getHeight() - attackArea.height)/2;
+                    if (playerClass == 0) worldY -= 50;
+                    if (playerClass == 1) worldY -= 70;
+                    if (playerClass == 2) worldY -= 55;
+                    break;
                 case "moveDown": worldY += (playerRightAttackList.get(0).getHeight() - attackArea.height)/2; break;
                 case "idleLeft", "moveLeft":
                     if (playerClass == 0) worldY -= 50;

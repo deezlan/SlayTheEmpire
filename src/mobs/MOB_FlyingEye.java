@@ -12,7 +12,7 @@ public class MOB_FlyingEye extends Entity {
     public MOB_FlyingEye(GamePanel gp, int worldX, int worldY) {
         super(gp, worldX, worldY);
         this.gp = gp;
-        setStatValues(0, 4, false, 8, 100);
+        setStatValues(1, 4, false, 8, 100);
         setCollisionValues(70, 80, 60, 45);
         setAttackValues(0, 0, 0, 0, true);
         setHitboxValues(60, 70, 80, 60);

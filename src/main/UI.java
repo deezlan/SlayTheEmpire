@@ -38,8 +38,8 @@ public class UI {
             blankErr, usernameErr, loginErr, usernameTakenErr;
     private final Image warriorSelected, knightSelected, assassinSelected;
     private final Image file1, file2, file3, emptySaveButton1, emptySaveButton2,
-            emptySaveButton3, saveNotFound, saveFound, saveFileBackground,
-            overrideBox, progressSavedBox, selectFileBox,
+            emptySaveButton3, saveNotFound, loadFile, saveFileBackground,
+            overrideBox, progressSavedBox, saveFile,
             startMenu, toStartMenuBox, savedProgressPage, continueButton, redoButton;
     private final Image bg;
     private final Image bg2;
@@ -157,11 +157,11 @@ public class UI {
         emptySaveButton1 = new ImageIcon("res/UI/emptySaveButton.png").getImage();
         emptySaveButton2 = new ImageIcon("res/UI/emptySaveButton.png").getImage();
         emptySaveButton3 = new ImageIcon("res/UI/emptySaveButton.png").getImage();
-        saveFound = new ImageIcon("res/UI/saveFound.png").getImage();
+        loadFile = new ImageIcon("res/UI/loadFile.png").getImage();
+        saveFile = new ImageIcon("res/UI/saveFile.png").getImage();
         saveNotFound = new ImageIcon("res/UI/saveNotFound.png").getImage();
         overrideBox = new ImageIcon("res/UI/overrideBox.png").getImage();
         progressSavedBox = new ImageIcon("res/UI/progressSavedBox.png").getImage();
-        selectFileBox = new ImageIcon("res/UI/selectFileBox.png").getImage();
         toStartMenuBox = new ImageIcon("res/UI/toStartMenuBox.png").getImage();
         savedProgressPage = new ImageIcon("res/UI/continueSavedProgressPage.png").getImage();
         continueButton = new ImageIcon("res/UI/continueButton.png").getImage();
@@ -169,7 +169,7 @@ public class UI {
 
         // INITIALIZE SAVE BUTTON POSITIONS & IMAGE BOUNDS
         saveButtonX = ((gp.SCREEN_WIDTH - emptySaveButton1.getWidth(null)) / 2);
-        saveButtonY = (gp.SCREEN_HEIGHT - emptySaveButton1.getHeight(null)) / 2;
+        saveButtonY = 70 + ((gp.SCREEN_HEIGHT - emptySaveButton1.getHeight(null)) / 2);
         saveButtonWidth = (int)(emptySaveButton1.getWidth(null)/ 1.1);
         saveButtonHeight = (int)(emptySaveButton1.getHeight(null)/ 1.1);
         saveButtonBounds1 = new Rectangle(saveButtonX, (saveButtonY - 100), saveButtonWidth, saveButtonHeight);
@@ -226,11 +226,15 @@ public class UI {
         g2.drawImage(toStartMenuBox, 20, 20, saveButtonWidth, saveButtonHeight, null);
         drawSaveButtons();
 
-        if(gp.saveLoad.isloadPage){
-            saveFileDialogue(2);
+        if(!gp.saveLoad.isAllFileEmpty()){
+            saveFileDialogue(2);  //5
+        } else if(gp.saveLoad.isloadPage){
+            saveFileDialogue(4);    //4
         } else{
-            saveFileDialogue(1);
+            saveFileDialogue(2);
         }
+
+        saveFileDialogue(0);
 
         if (gp.mouseH.leftClicked) {
             if (!gp.saveLoad.isloadPage) {
@@ -292,24 +296,26 @@ public class UI {
 
     // DRAW FILE DIALOGUE
     public void saveFileDialogue(int boxNumber){
-        int x  = ((gp.SCREEN_WIDTH - saveFound.getWidth(null)) / 2);
-        int y  = (((gp.SCREEN_HEIGHT - saveFound.getHeight(null)) / 2) + 220);
+        int x  = 550 + ((gp.SCREEN_WIDTH - loadFile.getWidth(null)) / 2);
+        int y  = (((gp.SCREEN_HEIGHT - loadFile.getHeight(null)) / 2) + 220);
+        int width = (loadFile.getWidth(null)/3);
+        int height = (loadFile.getHeight(null)/3);
 
         switch (boxNumber){
             case 0:
-                g2.drawImage(overrideBox, x, y, saveFound.getWidth(null), saveFound.getHeight(null), null);
+                g2.drawImage(overrideBox, x + 100, y - 350, overrideBox.getWidth(null), overrideBox.getHeight(null), null);
                 break;
             case 1:
-                g2.drawImage(progressSavedBox, x, y, saveFound.getWidth(null), saveFound.getHeight(null), null);
+                g2.drawImage(progressSavedBox, x, y, width, height, null);
                 break;
             case 2:
-                g2.drawImage(selectFileBox, x, y, saveFound.getWidth(null), saveFound.getHeight(null), null);
+                g2.drawImage(saveFile, x, y, width, height, null);
                 break;
             case 4:
-                g2.drawImage(saveFound, x, y, saveFound.getWidth(null), saveFound.getHeight(null), null);
+                g2.drawImage(loadFile, x, y, width, height, null);
                 break;
             case 5:
-                g2.drawImage(saveNotFound, x, y, saveFound.getWidth(null), saveFound.getHeight(null), null);
+                g2.drawImage(saveNotFound, x, y, width, height, null);
                 break;
         }
     }

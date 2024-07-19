@@ -9,20 +9,24 @@ import object.OBJ_Hammer;
 import object.OBJ_Raygun;
 
 import java.io.*;
+import java.lang.reflect.Array;
 
 public class SaveLoad implements Serializable {
     GamePanel gp;
     DataStorage ds = new DataStorage();
     File trySaveFiles[];
+    Boolean filledSaveFile[];
     public boolean isloadPage = false;
     public int slot;
 
     public SaveLoad(GamePanel gp, int numberOfFiles){
         this.gp = gp;
         this.trySaveFiles = new File[numberOfFiles];
+        this.filledSaveFile = new Boolean[numberOfFiles];
 
         for(int i = 0; i < numberOfFiles; i++){
             this.trySaveFiles[i] = new File("trySave" + (i+1) + ".dat");
+            this.filledSaveFile[i] = false;
         }
     }
 
@@ -83,6 +87,22 @@ public class SaveLoad implements Serializable {
 
     public boolean isSaveFileEmpty(int slot) {
         File saveFile = trySaveFiles[slot];
-        return !saveFile.exists() || saveFile.length() == 0;
+        boolean filledFile = !saveFile.exists() || saveFile.length() == 0;
+        filledSaveFile[slot] = filledFile;
+        return filledFile;
+    }
+
+    public boolean isAllFileEmpty(){
+        boolean firstElement = filledSaveFile[0];
+        for(int i = 1; i < filledSaveFile.length; i++){
+            if(filledSaveFile[i] != firstElement){
+                return false;
+            }
+        }
+        if (firstElement){
+            return false;
+        } else{
+            return true;
+        }
     }
 }

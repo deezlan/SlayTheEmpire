@@ -30,6 +30,7 @@ public class Sound {
         soundURL[10] = new File("res/sound/Victory.wav");
         soundURL[11] = new File("res/sound/volumeSelect.wav");
         soundURL[12] = new File("res/sound/fireball-whoosh-2-179126.wav");
+        soundURL[13] = new File("res/sound/shooting-star-2-104073.wav");
 
     }
 

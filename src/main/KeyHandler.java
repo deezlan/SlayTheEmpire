@@ -201,6 +201,9 @@ public class KeyHandler implements KeyListener {
                 if (gp.player.currentWeapon.name.equalsIgnoreCase("fireball cannon")) {
                     gp.playSE(12);
                 }
+                else if (gp.player.currentWeapon.name.equalsIgnoreCase("stickler")) {
+                    gp.playSE(13);
+                }
 
             }
 

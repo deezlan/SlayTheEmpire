@@ -162,12 +162,13 @@ public class EventHandler {
                         triggerGates(false, 0, 4);
 
                     // UNLOCK MINI-BOSS ROOM GATES ONCE CLEARED
-                    if (roomCleared(4, 4))
+                    if (roomCleared(4, 6))
                         triggerGates(false, 5, 15);
-//                    if (gp.mobArr[gp.currentMap][2] == null) {
-//                        for (int i = 16; i <= 19; i++)
-//                            gp.gateArr[gp.currentMap][i].unlocking = true;
-//                    }
+
+                    // UNLOCK FINAL BOSS ROOM GATES ONCE CLEARED
+                    if (roomCleared(7, 11))
+                        triggerGates(false, 16, 19);
+
                     break;
 
                 // LEVEL TWO
@@ -220,16 +221,16 @@ public class EventHandler {
 //                            gp.gateArr[gp.currentMap][i].unlocking = true;
                     }
 
-                    // UNLOCK BOSS ROOM GATES ONCE BOSS SLAIN
-                    if (gp.mobArr[gp.currentMap][2] == null) {
-//                        for (int i = 16; i <= 19; i++)
-//                            gp.gateArr[gp.currentMap][i].unlocking = true;
-                    }
-
                     // UNLOCK MINI BOSS GATE AFTER SLAIN
                     if (gp.mobArr[1][3] == null) {
 //                    for (int i = 9; i <= 15; i++)
 //                        gp.gateArr[gp.currentMap][i].unlocking = true;
+                    }
+
+                    // UNLOCK BOSS ROOM GATES ONCE BOSS SLAIN
+                    if (gp.mobArr[gp.currentMap][2] == null) {
+//                        for (int i = 16; i <= 19; i++)
+//                            gp.gateArr[gp.currentMap][i].unlocking = true;
                     }
             }
         }
@@ -290,9 +291,12 @@ public class EventHandler {
         System.out.println("Changing map - loadLevel() to " + gp.currentMap);
         switch (gp.currentMap) {
             case 0:
-                tempMap = 1; // FIRST LEVEL CORRECT VALUES
-                tempCol = 19;
-                tempRow = 41;
+//                tempMap = 1; // FIRST LEVEL CORRECT VALUES
+//                tempCol = 19;
+//                tempRow = 41;
+                tempMap = 1; // FIRST LEVEL TESTING VALUES
+                tempCol = 22;
+                tempRow = 7;
 //                tempMap = 2; // SECOND LEVEL CORRECT VALUES
 //                tempCol = 31;
 //                tempRow = 36;

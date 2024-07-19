@@ -47,9 +47,6 @@ public class AssetSetter {
         int i = 0;
 
         switch (gp.currentMap) {
-            case 0:
-                System.out.println("Loading 0 gates for lobby");
-                break;
             case 1:
             {
                 // FIRST ROOM GATES index (0-4)
@@ -172,22 +169,32 @@ public class AssetSetter {
         switch (gp.currentMap) {
             case 1:
             {
+                // FIRST ROOM index 0-3
                 gp.mobArr[gp.currentMap][i] = new MOB_RobotGuardian(gp, 1316, 1900); i++;
                 gp.mobArr[gp.currentMap][i] = new MOB_FlyingEye(gp, 1182, 1790); i++;
                 gp.mobArr[gp.currentMap][i] = new MOB_FlyingEye(gp, 1452, 1790); i++;
                 gp.mobArr[gp.currentMap][i] = new MOB_FlyingEye(gp, 1316, 2096); i++;
 
+                // MINI-BOSS ROOM index 4-6
+                gp.mobArr[gp.currentMap][i] = new MOB_Mushroom(gp, 1316, 900); i++;
+                gp.mobArr[gp.currentMap][i] = new MOB_Mushroom(gp, 1316, 1000); i++; // replace with fireworm
+                gp.mobArr[gp.currentMap][i] = new MOB_Mushroom(gp, 1316, 1150); i++;
+
+                // FINAL BOSS ROOM index 7-11
+                gp.mobArr[gp.currentMap][i] = new MOB_Ramses(gp, 1113, 100); i++;
+                gp.mobArr[gp.currentMap][i] = new MOB_Ramses(gp, 1520, 100); i++;
+                gp.mobArr[gp.currentMap][i] = new MOB_Canine(gp, 1154, 300); i++;
+                gp.mobArr[gp.currentMap][i] = new MOB_Canine(gp, 1479, 300); i++;
+
 //                gp.mobArr[gp.currentMap][i] = new MOB_ArmoredGuardian(gp, 400 + 48*17, 1968); i++;
-//                gp.mobArr[gp.currentMap][i] = new MOB_Canine(gp, 400 + 48*17, 1968); i++;
 //                gp.mobArr[gp.currentMap][i] = new MOB_Goblin(gp, 400 + 48*17, 1968); i++;
-                gp.mobArr[gp.currentMap][i] = new MOB_Mushroom(gp, 1316, 1000); i++;
-//                gp.mobArr[gp.currentMap][i] = new MOB_Ramses(gp, 400 + 48*17, 1968); i++;
+
 //                gp.mobArr[gp.currentMap][i] = new MOB_SkeletonKnight(gp, 400 + 48*17, 1968); i++;
 //                gp.mobArr[gp.currentMap][i] = new MOB_Skellington(gp, 475 + 48*17, 1968); i++;
 //                gp.mobArr[gp.currentMap][i] = new MOB_Slime(gp, 1216, 1850); i++;
 //                gp.mobArr[gp.currentMap][i] = new MOB_Slime(gp, 1216, 1968); i++;
 
-                gp.mobArr[gp.currentMap][i] = new BOSS_FrostGiant(gp, 400 + 48*17, 180); i++;
+                gp.mobArr[gp.currentMap][i] = new BOSS_FrostGiant(gp, 1216, 180); i++;
             }
                 break;
             case 2:

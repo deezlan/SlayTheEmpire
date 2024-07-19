@@ -16,6 +16,9 @@ public class MOB_Canine extends Entity {
         setAttackValues(1, 3, 60, 60, false);
         setHitboxValues(60, 90, 80, 20);
 
+        attRangeHorz = 76;
+        attRangeVert = 60;
+
         // Load mob sprites
         getMobSprites();
     }

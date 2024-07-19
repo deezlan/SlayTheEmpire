@@ -17,7 +17,7 @@ public class MOB_RobotGuardian extends Entity {
         setHitboxValues(60, 55, 80, 90);
 
         attRangeHorz = 96;
-        attRangeVert = 20;
+        attRangeVert = 96;
 
         // Load mob sprites
         getMobSprites();

@@ -16,6 +16,9 @@ public class MOB_Ramses extends Entity {
         setAttackValues(1, 3, 75, 75, false);
         setHitboxValues(60, 70, 80, 60);
 
+        attRangeHorz = 91;
+        attRangeVert = 75;
+
         // Load mob sprites
         getMobSprites();
     }

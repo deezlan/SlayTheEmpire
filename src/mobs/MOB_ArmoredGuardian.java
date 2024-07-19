@@ -17,6 +17,9 @@ public class MOB_ArmoredGuardian extends Entity {
         setHitboxValues(75, 75, 50, 50);
         projectile = new OBJ_Energyball(gp);
 
+        attRangeHorz = 96;
+        attRangeVert = 96;
+
         getMobSprites();
     }
 

@@ -16,6 +16,9 @@ public class MOB_Slime extends Entity {
         setAttackValues(1, 2, 50, 30, false);
         setHitboxValues(70, 100, 60, 45);
 
+        attRangeHorz = 66;
+        attRangeVert = 30;
+
         // Load mob sprites
         getMobSprites();
     }

@@ -19,6 +19,9 @@ public class MOB_FlyingEye extends Entity {
         projectile = new OBJ_Rock(gp);
         hasRanged = true;
 
+        attRangeHorz = 96;
+        attRangeVert = 96;
+
         // Load mob sprites
         getMobSprites();
     }

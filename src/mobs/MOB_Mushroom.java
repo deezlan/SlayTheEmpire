@@ -16,6 +16,9 @@ public class MOB_Mushroom extends Entity {
         setAttackValues(1, 6, gp.TILE_SIZE*2, gp.TILE_SIZE*2, false);
         setHitboxValues(80, 80, 40, 60);
 
+        attRangeHorz = 112;
+        attRangeVert = 96;
+
         // Load mob sprites
         getMobSprites();
     }

@@ -16,6 +16,9 @@ public class MOB_Skellington extends Entity {
         setAttackValues(1, 7, 80, 80, false);
         setHitboxValues(65, 55, 70, 95);
 
+        attRangeHorz = 96;
+        attRangeVert = 80;
+
         // Load mob sprites
         getMobSprites();
     }

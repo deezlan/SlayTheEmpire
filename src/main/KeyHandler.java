@@ -319,7 +319,7 @@ public class KeyHandler implements KeyListener {
                     // BACK TO LOBBY
                     case 3: {
                         if (gp.currentMap != 0) {
-                            gp.eHandler.changeMap();
+                            gp.eHandler.teleportLobby();
                             gp.gameState = gp.TRANSITION_STATE;
                         }
                         break;

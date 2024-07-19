@@ -278,6 +278,19 @@ public class EventHandler {
         canTouchEvent = false;
     }
 
+    public void teleportLobby() {
+        gp.gameState = gp.TRANSITION_STATE;
+
+        System.out.println("Changing map - loadLevel() to " + gp.currentMap);
+        switch (gp.currentMap) {
+            case 1, 2:
+                tempMap = 0;
+                tempCol = 8;
+                tempRow = 3;
+        }
+        canTouchEvent = false;
+    }
+
     public void drinkWater(int gameState){
         if(gp.keyH.ePressed){
             gp.gameState = gameState;

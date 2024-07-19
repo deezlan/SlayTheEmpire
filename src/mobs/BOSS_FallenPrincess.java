@@ -9,8 +9,8 @@ import java.io.IOException;
 public class BOSS_FallenPrincess extends Entity {
     GamePanel gp;
     public static final String monName = "Fallen Princess";
-    public BOSS_FallenPrincess(GamePanel gp) {
-        super(gp);
+    public BOSS_FallenPrincess(GamePanel gp, int worldX, int worldY) {
+        super(gp, worldX, worldY);
         this.gp = gp;
         name = monName;
         type = type_mob;
@@ -61,8 +61,8 @@ public class BOSS_FallenPrincess extends Entity {
         }
         // CHECK ATTACK ON PLAYER
         if(!attacking){
-            checkWithinAttackRange(30,gp.TILE_SIZE*5,gp.TILE_SIZE*5); // Original
-//            checkWithinAttackRange(30); // CHANGE ATTACK RANGE
+//            checkWithinAttackRange(30,gp.TILE_SIZE*5,gp.TILE_SIZE*5); // Original
+            checkWithinAttackRange(30); // CHANGE ATTACK RANGE
         }
     }
 

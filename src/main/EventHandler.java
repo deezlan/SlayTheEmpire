@@ -95,11 +95,11 @@ public class EventHandler {
                         for (int i = 0; i <= 4; i++)
                             gp.gateArr[gp.currentMap][i].locking = true;
 
-                        eventRect[1][24][40].eventDone = true;
-                        eventRect[1][25][41].eventDone = true;
-                        eventRect[1][25][42].eventDone = true;
-                        eventRect[1][25][43].eventDone = true;
-                        eventRect[1][24][44].eventDone = true;
+//                        eventRect[1][24][40].eventDone = true;
+//                        eventRect[1][25][41].eventDone = true;
+//                        eventRect[1][25][42].eventDone = true;
+//                        eventRect[1][25][43].eventDone = true;
+//                        eventRect[1][24][44].eventDone = true;
                     }
                     if ( // TRIGGER LEFT PATH GATES
                             hit(gp.currentMap, 25, 30, "any")

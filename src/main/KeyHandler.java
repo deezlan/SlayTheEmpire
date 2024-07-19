@@ -93,6 +93,27 @@ public class KeyHandler implements KeyListener {
         }
     }
 
+    public void blacksmithDialogueState(int code) {
+        if(code == KeyEvent.VK_ENTER){
+            enterPressed = true;
+        }
+
+        if (gp.ui.subState == 0) {
+            if(code == KeyEvent.VK_W) {
+                gp.ui.commandNum--;
+                if(gp.ui.commandNum < 0) {
+                    gp.ui.commandNum = 2;
+                }
+            }
+            if(code == KeyEvent.VK_S) {
+                gp.ui.commandNum++;
+                if(gp.ui.commandNum > 2) {
+                    gp.ui.commandNum = 0;
+                }
+            }
+        }
+    }
+
     public void dialogueMap(int code) {
         if(code == KeyEvent.VK_ENTER){
             if (gp.ui.commandNum < 2)
@@ -360,7 +381,7 @@ public class KeyHandler implements KeyListener {
                 }
             }
             if (code == KeyEvent.VK_E) { // DONT REMOVE THIS, TO EXIT FROM SHOP
-                gp.gameState = gp.PLAY_STATE;
+                gp.gameState = gp.BLACKSMITH_DIALOGUE_STATE;
             }
         }
     }
@@ -403,6 +424,8 @@ public class KeyHandler implements KeyListener {
             menuDiffState(code);
         } else if (gp.gameState == gp.MAP_SELECTION) {
             dialogueMap(code);
+        } else if (gp.gameState == gp.BLACKSMITH_DIALOGUE_STATE) {
+            blacksmithDialogueState(code);
         }
 
         if (code == KeyEvent.VK_T){

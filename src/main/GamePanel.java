@@ -102,6 +102,7 @@ public class GamePanel extends JPanel implements Runnable {
             DEATH_STATE = 15,
             TRANSITION_STATE = 16,
             MAP_SELECTION = 17,
+            BLACKSMITH_DIALOGUE_STATE = 18,
 
             // DIFFICULTY MODES
             EASY_MODE = 1,
@@ -318,7 +319,8 @@ public class GamePanel extends JPanel implements Runnable {
                 gameState == TRANSITION_STATE ||
                 gameState == CUTSCENE_STATE ||
                 gameState == DIFF_DIALOGUE_STATE ||
-                gameState == MAP_SELECTION) {
+                gameState == MAP_SELECTION ||
+                gameState == BLACKSMITH_DIALOGUE_STATE) {
 
             // DEBUG
             long drawStart = 0;

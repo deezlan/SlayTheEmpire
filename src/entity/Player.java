@@ -288,12 +288,6 @@ public class Player extends Entity {
         if (index != 999) {
             gp.npcArr[gp.currentMap][index].speak();
         }
-        if (index == 1) {
-            gp.gameState = gp.SHOP_STATE;
-        }
-        if (index == 3) {
-            gp.ui.difficultySelect();
-        }
     }
     public void interactMob (int index) {
         if (index != 999) {

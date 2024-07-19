@@ -22,11 +22,7 @@ public class NPC_Blacksmith extends Entity {
     }
 
     public void setDialog() {
-        dialogs[0][0] = "placeholder 1";
-        dialogs[0][1] = "placeholder 2";
-        dialogs[0][2] = "placeholder 3";
-        dialogs[0][3] = "placeholder 4";
-        dialogs[0][4] = "placeholder 4";
+        dialogs[0][0] = "Hello! How can i help you?";
     }
 
     public void getNpcSprites() {
@@ -79,5 +75,14 @@ public class NPC_Blacksmith extends Entity {
 
     public ArrayList<Entity> getShopItems(){
         return shopItems;
+    }
+
+    public void speak() {
+        startDialogue(this,dialogueSet);
+        dialogueSet++;
+        if(dialogs[dialogueSet][0] == null){
+            dialogueSet = 0;
+        }
+        gp.gameState = gp.BLACKSMITH_DIALOGUE_STATE;
     }
 }

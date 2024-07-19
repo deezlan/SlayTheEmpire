@@ -325,10 +325,10 @@ public abstract class Entity {
 
             if (enTopY > nextY && enLeftX >= nextX && enRightX < nextX + gp.TILE_SIZE) {
                 action = "moveUp";
-                currentList = moveRightList;
+                currentList = lookingRight ? moveRightList : moveLeftList;
             } else if (enTopY < nextY && enLeftX >= nextX && enRightX < nextX + gp.TILE_SIZE) {
                 action = "moveDown";
-                currentList = moveLeftList;
+                currentList = lookingRight ? moveRightList : moveLeftList;
             } else if (enTopY >= nextY && enBottomY < nextY + gp.TILE_SIZE) {
                 if (enLeftX > nextX) {
                     action = "moveLeft";
@@ -550,7 +550,7 @@ public abstract class Entity {
                 case "moveDown": worldY += (mobLeftAttackList.get(0).getHeight() - attackArea.height)/2; break;
                 case "moveLeft":
                     worldX -= (mobLeftAttackList.get(0).getWidth() - attackArea.width)/2;
-                    worldY -= (mobRightAttackList.get(0).getHeight())/4;;
+                    worldY -= (mobRightAttackList.get(0).getHeight())/4;
                     break;
                 case "moveRight":
                     worldX += (mobRightAttackList.get(0).getWidth() - attackArea.width)/2;

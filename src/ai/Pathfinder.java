@@ -82,15 +82,6 @@ public class Pathfinder { // USING A* ALGORITHM
                 node[col][row].solid = true;
             }
 
-            // CHECK INTRACTABLES
-            for(int i = 0; i < gp.iTile[1].length; i++) {
-                if(gp.iTile[gp.currentMap][i] != null && gp.iTile[gp.currentMap][i].destructible) {
-                    int itCol = gp.iTile[gp.currentMap][i].worldX/gp.TILE_SIZE;
-                    int itRow = gp.iTile[gp.currentMap][i].worldY/gp.TILE_SIZE;
-                    node[itCol][itRow].solid = true;
-                }
-            }
-
             // SET COST
             getCost(node[col][row]);
 

@@ -14,7 +14,7 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Comparator;
 
-import TileInteractive.InteractiveTIle;
+//import TileInteractive.InteractiveTIle;
 import ai.Pathfinder;
 import entity.Cursor;
 import entity.Entity;
@@ -74,7 +74,7 @@ public class GamePanel extends JPanel implements Runnable {
             mobArr = new Entity[MAX_MAP][20],
             gateArr = new Entity[MAX_MAP][50],
             projectileArr = new Entity[MAX_MAP][50];
-    public InteractiveTIle[][] iTile = new InteractiveTIle[MAX_MAP][50];
+//    public InteractiveTIle[][] iTile = new InteractiveTIle[MAX_MAP][50];
 
     // CUTSCENE
     public boolean bossBattleOn = false;
@@ -264,12 +264,6 @@ public class GamePanel extends JPanel implements Runnable {
                         mobArr[currentMap][mob].checkDrop();
                         mobArr[currentMap][mob] = null;
                     }
-                }
-            }
-            // INTERACTIVE TILES
-            for (int i = 0; i < iTile[1].length; i++) {
-                if(iTile[currentMap][i] != null){
-                    iTile[currentMap][i].update();
                 }
             }
             // PROJECTILES

@@ -222,9 +222,6 @@ public class Player extends Entity {
             int monsterIndex = gp.cChecker.checkEntityCollision(this, gp.mobArr);
             damageMonster(monsterIndex, damage,this);
 
-            int iTileIndex = gp.cChecker.checkEntityCollision(this,gp.iTile);
-            damageInteractiveTile(iTileIndex);
-
             // CHANGE BACK TO ORIGINAL
             worldX = currentWorldX;
             worldY = currentWorldY;
@@ -284,11 +281,6 @@ public class Player extends Entity {
         target.knockBackDirection = attacker.action;
         target.speed += 10;
         target.knockBack = true;
-    }
-    public void damageInteractiveTile(int i) {
-        if(i != 999 && gp.iTile[gp.currentMap][i].destructible){
-            gp.iTile[i] = null;
-        }
     }
 
     // INTERACT METHODS

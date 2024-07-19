@@ -546,9 +546,6 @@ public abstract class Entity {
                 // CHECK MONSTER COLLISION
                 int monsterIndex = gp.cChecker.checkEntityCollision(this, gp.mobArr);
                 gp.player.damageMonster(monsterIndex, attack, this);
-
-                int iTileIndex = gp.cChecker.checkEntityCollision(this, gp.iTile);
-                gp.player.damageInteractiveTile(iTileIndex);
             }
 
             // CHANGE BACK TO ORIGINAL

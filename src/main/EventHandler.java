@@ -181,6 +181,12 @@ public class EventHandler {
                     ) {
                         triggerGates(true, 0, 3);
                         wakeMonsters(0, 3);
+
+                        eventRect[1][27][13].eventDone = true;
+                        eventRect[1][28][12].eventDone = true;
+                        eventRect[1][29][12].eventDone = true;
+                        eventRect[1][30][12].eventDone = true;
+                        eventRect[1][31][13].eventDone = true;
                     }
                     if ( // TRIGGER MINI-BOSS ROOM GATES
                             hit(gp.currentMap, 12, 23, "any")

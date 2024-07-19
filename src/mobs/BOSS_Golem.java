@@ -46,7 +46,6 @@ public class BOSS_Golem extends Entity {
 
     @Override
     public void setAction() {
-
         if(!inRage && currentLife < maxLife/2) {
             inRage = true;
             defaultSpeed++;

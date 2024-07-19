@@ -189,7 +189,7 @@ public abstract class Entity {
 
         if (isBoss) {
             boss = true;
-            sleep = true;
+//            sleep = true;
             dialogueSet = 0;
             bossNum = mobBossNum;
         } else { mobNum = mobBossNum; }
@@ -258,56 +258,56 @@ public abstract class Entity {
     }
 
     // MOB COMBAT METHODS
-    public void getRandomDirection() {
-        actionLockCounter++;
-        // GET A RANDOM DIRECTION
-        if (actionLockCounter == 120) {
-            Random random = new Random();
-            int i = random.nextInt(250) + 1;
-
-            if (i <= 25) {
-                action = "moveUp";
-                currentList = moveRightList;
-            }
-            if (i > 25 && i <= 50) {
-                action = "moveDown";
-                currentList = moveLeftList;
-            }
-            if (i > 50 && i <= 75) {
-                action = "moveLeft";
-                currentList = moveLeftList;
-            }
-            if (i > 75 && i <= 100) {
-                action = "moveRight";
-                currentList = moveRightList;
-            }
-            if (i > 100 && i <= 125) {
-                action = "idleRight";
-                currentList = idleRightList;
-            }
-            if (i > 125 && i <= 150) {
-                action = "idleLeft";
-                currentList = idleLeftList;
-            }
-            if (i > 150 && i <= 175) {
-                action = "moveUpRight";
-                currentList = moveRightList;
-            }
-            if (i > 175 && i <= 200) {
-                action = "moveDownRight";
-                currentList = moveRightList;
-            }
-            if (i > 200 && i <= 225) {
-                action = "moveUpLeft";
-                currentList = moveLeftList;
-            }
-            if (i > 225) {
-                action = "moveDownLeft";
-                currentList = moveLeftList;
-            }
-            actionLockCounter = 0;
-        }
-    }
+//    public void getRandomDirection() {
+//        actionLockCounter++;
+//        // GET A RANDOM DIRECTION
+//        if (actionLockCounter == 120) {
+//            Random random = new Random();
+//            int i = random.nextInt(250) + 1;
+//
+//            if (i <= 25) {
+//                action = "moveUp";
+//                currentList = moveRightList;
+//            }
+//            if (i > 25 && i <= 50) {
+//                action = "moveDown";
+//                currentList = moveLeftList;
+//            }
+//            if (i > 50 && i <= 75) {
+//                action = "moveLeft";
+//                currentList = moveLeftList;
+//            }
+//            if (i > 75 && i <= 100) {
+//                action = "moveRight";
+//                currentList = moveRightList;
+//            }
+//            if (i > 100 && i <= 125) {
+//                action = "idleRight";
+//                currentList = idleRightList;
+//            }
+//            if (i > 125 && i <= 150) {
+//                action = "idleLeft";
+//                currentList = idleLeftList;
+//            }
+//            if (i > 150 && i <= 175) {
+//                action = "moveUpRight";
+//                currentList = moveRightList;
+//            }
+//            if (i > 175 && i <= 200) {
+//                action = "moveDownRight";
+//                currentList = moveRightList;
+//            }
+//            if (i > 200 && i <= 225) {
+//                action = "moveUpLeft";
+//                currentList = moveLeftList;
+//            }
+//            if (i > 225) {
+//                action = "moveDownLeft";
+//                currentList = moveLeftList;
+//            }
+//            actionLockCounter = 0;
+//        }
+//    }
     public void searchPath(int goalCol, int goalRow) {
         int startCol = (worldX + moveRightList.get(0).getWidth()/2) / gp.TILE_SIZE;
         int startRow = (worldY + moveRightList.get(0).getHeight()/2) / gp.TILE_SIZE;
@@ -386,9 +386,8 @@ public abstract class Entity {
             }
         } else {
             // CHECK IF START CHASING
-            checkStartChase(gp.player, 4 , 100);
-            // GET RANDOM DIRECTION
-            getRandomDirection();
+            if (!sleep)
+                checkStartChase(gp.player, 10, 100);
         }
         // CHECK ATTACK ON PLAYER
         if (!attacking) {

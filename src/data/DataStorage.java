@@ -1,9 +1,10 @@
 package data;
 
-import entity.Entity;
+import main.GamePanel;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+
 
 public class DataStorage implements Serializable {
 
@@ -15,4 +16,6 @@ public class DataStorage implements Serializable {
     int progressSaved;
 
     ArrayList<Integer> weapons = new ArrayList();
+
+
 }

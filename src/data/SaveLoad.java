@@ -3,7 +3,9 @@ package data;
 
 import entity.Player;
 import main.GamePanel;
+
 import java.io.*;
+
 
 public class SaveLoad implements Serializable {
     GamePanel gp;
@@ -19,7 +21,7 @@ public class SaveLoad implements Serializable {
         this.filledSaveFile = new Boolean[numberOfFiles];
 
         for(int i = 0; i < numberOfFiles; i++){
-            this.trySaveFiles[i] = new File("trySave" + (i+1) + ".dat");
+            this.trySaveFiles[i] = new File("Save" + (i+1) + ".dat");
             this.filledSaveFile[i] = false;
         }
     }
@@ -27,7 +29,7 @@ public class SaveLoad implements Serializable {
 
     public void save(int slot){
         try {
-            FileOutputStream fileOut = new FileOutputStream("trySave" + slot + ".dat" );
+            FileOutputStream fileOut = new FileOutputStream("Save" + slot + ".dat" );
             ObjectOutputStream out = new ObjectOutputStream(fileOut);
 
             ds.life = gp.player.currentLife;
@@ -40,8 +42,6 @@ public class SaveLoad implements Serializable {
             out.writeObject(ds);
             out.close();
 
-            System.out.println("trySave is saved successfully");
-
         }catch(IOException i ){
             System.out.println(i.getMessage());
         }
@@ -52,9 +52,10 @@ public class SaveLoad implements Serializable {
         System.out.println(ds.maxLife);
     }
 
+
     public void load(int slot){
         try{
-            FileInputStream fileIn = new FileInputStream("trySave"+ slot +".dat");
+            FileInputStream fileIn = new FileInputStream("Save"+ slot +".dat");
             ObjectInputStream in = new ObjectInputStream(fileIn);
 
             ds = (DataStorage) in.readObject();
@@ -67,9 +68,9 @@ public class SaveLoad implements Serializable {
             throw new RuntimeException(e);
         }
 
-        System.out.println(gp.player == null);
-        System.out.println(ds.playerClass);
+
         gp.player = new Player(gp, gp.keyH, gp.cursor, ds.playerClass);
+        System.out.println(gp.player.currentLife);
         gp.player.maxLife = ds.maxLife;
         gp.player.currentLife = ds.life;
         gp.player.totalCoins = ds.coin;

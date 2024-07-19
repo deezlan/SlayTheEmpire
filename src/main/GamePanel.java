@@ -95,6 +95,7 @@ public class GamePanel extends JPanel implements Runnable {
             transitionState = 6,
             loginState = 7,
             creditsState = 8,
+
             characterSelectionState = 9,
             optionState = 10,
             optionState2 = 12,
@@ -102,7 +103,7 @@ public class GamePanel extends JPanel implements Runnable {
             cutsceneState = 13,
             controlsState = 14,
             savePageState = 15,
-            checkLevelState = 16;
+            savePageState2 = 16;
 
     public final int
                 easyMode = 1,

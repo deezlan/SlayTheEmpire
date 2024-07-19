@@ -1,21 +1,15 @@
 package data;
 
-import entity.NPC_Blacksmith;
+
 import entity.Player;
 import main.GamePanel;
-import object.OBJ_ElectricBlaster;
-import object.OBJ_FireballCannon;
-import object.OBJ_Hammer;
-import object.OBJ_Raygun;
-
 import java.io.*;
-import java.lang.reflect.Array;
 
 public class SaveLoad implements Serializable {
     GamePanel gp;
     DataStorage ds = new DataStorage();
     File trySaveFiles[];
-    Boolean filledSaveFile[];
+    public Boolean filledSaveFile[];
     public boolean isloadPage = false;
     public int slot;
 
@@ -95,14 +89,14 @@ public class SaveLoad implements Serializable {
     public boolean isAllFileEmpty(){
         boolean firstElement = filledSaveFile[0];
         for(int i = 1; i < filledSaveFile.length; i++){
+            isSaveFileEmpty(i);
             if(filledSaveFile[i] != firstElement){
                 return false;
             }
         }
         if (firstElement){
             return false;
-        } else{
-            return true;
         }
+        return true;
     }
 }

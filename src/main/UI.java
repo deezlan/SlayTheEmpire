@@ -39,14 +39,14 @@ public class UI {
     private final Image warriorSelected, knightSelected, assassinSelected;
     private final Image file1, file2, file3, emptySaveButton1, emptySaveButton2,
             emptySaveButton3, saveNotFound, loadFile, saveFileBackground,
-            overrideBox, progressSavedBox, saveFile,
+            overrideBox, progressSavedBox, saveFile, yesButton, noButton,
             startMenu, toStartMenuBox, savedProgressPage, continueButton, redoButton;
     private final Image bg;
     private final Image bg2;
 
 
     Rectangle saveButtonBounds1, saveButtonBounds2, saveButtonBounds3, toStartMenuRect,
-            continueRect, redoRect;
+            continueRect, redoRect, yesRect, noRect;
 
     public String currentDialog = "";
     public int slotRow = 0;
@@ -166,6 +166,8 @@ public class UI {
         savedProgressPage = new ImageIcon("res/UI/continueSavedProgressPage.png").getImage();
         continueButton = new ImageIcon("res/UI/continueButton.png").getImage();
         redoButton = new ImageIcon("res/UI/redoButton.png").getImage();
+        yesButton = new ImageIcon("res/UI/yesButton.png").getImage();
+        noButton = new ImageIcon("res/UI/noButton.png").getImage();
 
         // INITIALIZE SAVE BUTTON POSITIONS & IMAGE BOUNDS
         saveButtonX = ((gp.SCREEN_WIDTH - emptySaveButton1.getWidth(null)) / 2);
@@ -227,37 +229,38 @@ public class UI {
         drawSaveButtons();
 
         if(!gp.saveLoad.isAllFileEmpty()){
-            saveFileDialogue(2);  //5
+            saveFileDialogue(5);
         } else if(gp.saveLoad.isloadPage){
-            saveFileDialogue(4);    //4
+            saveFileDialogue(4);    
         } else{
             saveFileDialogue(2);
         }
-
-        saveFileDialogue(0);
 
         if (gp.mouseH.leftClicked) {
             if (!gp.saveLoad.isloadPage) {
                 if (toStartMenuRect.contains(gp.cursor.getMouseX(), gp.cursor.getMouseY())) {
                     gp.gameState = gp.startMenuState;
                 } else if (saveButtonBounds1.contains(gp.cursor.getMouseX(), gp.cursor.getMouseY())) {
-                    gp.saveLoad.save(1);
+                    gp.saveLoad.slot = 1;
+                    gp.gameState = gp.savePageState2;
                 } else if (saveButtonBounds2.contains(gp.cursor.getMouseX(), gp.cursor.getMouseY())) {
-                    gp.saveLoad.save(2);
+                    gp.saveLoad.slot = 2;
+                    gp.gameState = gp.savePageState2;
                 } else if (saveButtonBounds3.contains(gp.cursor.getMouseX(), gp.cursor.getMouseY())) {
-                    gp.saveLoad.save(3);
+                    gp.saveLoad.slot = 3;
+                    gp.gameState = gp.savePageState2;
                 }
             } else {
                 if (toStartMenuRect.contains(gp.cursor.getMouseX(), gp.cursor.getMouseY())) {
                     gp.gameState = gp.startMenuState;
                 } else if (saveButtonBounds1.contains(gp.cursor.getMouseX(), gp.cursor.getMouseY())) {
-                    gp.gameState = gp.checkLevelState;
+                    gp.gameState = gp.savePageState2;
                     gp.saveLoad.slot = 1;
                 } else if (saveButtonBounds2.contains(gp.cursor.getMouseX(), gp.cursor.getMouseY())) {
-                    gp.gameState = gp.checkLevelState;
+                    gp.gameState = gp.savePageState2;
                     gp.saveLoad.slot = 2;
                 } else if (saveButtonBounds3.contains(gp.cursor.getMouseX(), gp.cursor.getMouseY())) {
-                    gp.gameState = gp.checkLevelState;
+                    gp.gameState = gp.savePageState2;
                     gp.saveLoad.slot = 3;
                 }
             }
@@ -265,31 +268,53 @@ public class UI {
         }
     }
 
-    public void drawCheckLevel() {
-        int imageWidth = (int) (gp.SCREEN_WIDTH / 1.0000000002);
-        int imageHeight = (int) (saveFileBackground.getHeight(null) * ((double) imageWidth / saveFileBackground.getWidth(null)));
-        int px = (gp.SCREEN_WIDTH - imageWidth) / 2;
-        int py = (gp.SCREEN_HEIGHT - imageHeight) / 2;
-        g2.drawImage(savedProgressPage, px, py, imageWidth, imageHeight, null);
+    public void drawSavePage2() {
+         int imageWidth = (int) (gp.SCREEN_WIDTH / 1.0000000002);
+         int imageHeight = (int) (saveFileBackground.getHeight(null) * ((double) imageWidth / saveFileBackground.getWidth(null)));
+         int px = (gp.SCREEN_WIDTH - imageWidth) / 2;
+         int py = (gp.SCREEN_HEIGHT - imageHeight) / 2;
 
-        int cx = 150;
-        int rx = 450;
-        int y = (gp.SCREEN_HEIGHT - emptySaveButton1.getHeight(null)) / 2;
+         int lx = 150;
+         int rx = 450;
+         int y = (gp.SCREEN_HEIGHT - emptySaveButton1.getHeight(null)) / 2;
 
-        continueRect = new Rectangle(cx, y, saveButtonWidth, saveButtonHeight);
-        redoRect = new Rectangle(rx, y, saveButtonWidth, saveButtonHeight);
+        if(gp.saveLoad.isloadPage) {
+            g2.drawImage(savedProgressPage, px, py, imageWidth, imageHeight, null);
 
-        g2.drawImage(continueButton, cx, y, saveButtonWidth, saveButtonHeight, null);
-        g2.drawImage(redoButton, rx, y, saveButtonWidth, saveButtonHeight, null);
+            continueRect = new Rectangle(lx, y, saveButtonWidth, saveButtonHeight);
+            redoRect = new Rectangle(rx, y, saveButtonWidth, saveButtonHeight);
 
-        if (gp.mouseH.leftClicked && redoRect.contains(gp.cursor.getMouseX(), gp.cursor.getMouseY())) {
+            g2.drawImage(continueButton, lx, y, saveButtonWidth, saveButtonHeight, null);
+            g2.drawImage(redoButton, rx, y, saveButtonWidth, saveButtonHeight, null);
+
+            if (gp.mouseH.leftClicked && redoRect.contains(gp.cursor.getMouseX(), gp.cursor.getMouseY())) {
+                gp.mouseH.clearMouseClick();
+                gp.saveLoad.load(gp.saveLoad.slot);
+                gp.progressSaved = 0;
+                gp.mouseH.clearMouseClick();
+            } else if (gp.mouseH.leftClicked && continueRect.contains(gp.cursor.getMouseX(), gp.cursor.getMouseY())) {
+                gp.mouseH.clearMouseClick();
+                gp.saveLoad.load(gp.saveLoad.slot);
+            }
+        } else if(!gp.saveLoad.isloadPage && gp.saveLoad.filledSaveFile[gp.saveLoad.slot]) {
             gp.mouseH.clearMouseClick();
-            gp.saveLoad.load(gp.saveLoad.slot);
-            gp.progressSaved = 0;
-            gp.mouseH.clearMouseClick();
-        } else if(gp.mouseH.leftClicked && continueRect.contains(gp.cursor.getMouseX(), gp.cursor.getMouseY())){
-            gp.mouseH.clearMouseClick();
-            gp.saveLoad.load(gp.saveLoad.slot);
+            g2.drawImage(saveFileBackground, px, py, imageWidth, imageHeight, null);
+            saveFileDialogue(0);
+
+            g2.drawImage(yesButton, lx, y, saveButtonWidth, saveButtonHeight, null);
+            g2.drawImage(noButton, rx, y, saveButtonWidth, saveButtonHeight, null);
+
+            yesRect = new Rectangle(lx, y, saveButtonWidth, saveButtonHeight);
+            noRect = new Rectangle(rx, y, saveButtonWidth, saveButtonHeight);
+
+            if(gp.mouseH.leftClicked && yesRect.contains(gp.cursor.getMouseX(), gp.cursor.getMouseY())){
+                gp.saveLoad.save(gp.saveLoad.slot);
+                gp.mouseH.clearMouseClick();
+                gp.gameState = gp.savePageState;
+            } else if (gp.mouseH.leftClicked && yesRect.contains(gp.cursor.getMouseX(), gp.cursor.getMouseY())) {
+                gp.mouseH.clearMouseClick();
+                gp.gameState = gp.savePageState;
+            }
         }
     }
 
@@ -297,13 +322,13 @@ public class UI {
     // DRAW FILE DIALOGUE
     public void saveFileDialogue(int boxNumber){
         int x  = 550 + ((gp.SCREEN_WIDTH - loadFile.getWidth(null)) / 2);
-        int y  = (((gp.SCREEN_HEIGHT - loadFile.getHeight(null)) / 2) + 220);
+        int y  = (((gp.SCREEN_HEIGHT - loadFile.getHeight(null)) / 2) - 130);
         int width = (loadFile.getWidth(null)/3);
         int height = (loadFile.getHeight(null)/3);
 
         switch (boxNumber){
             case 0:
-                g2.drawImage(overrideBox, x + 100, y - 350, overrideBox.getWidth(null), overrideBox.getHeight(null), null);
+                g2.drawImage(overrideBox, x, y, (overrideBox.getWidth(null)/3), (overrideBox.getHeight(null)/3), null);
                 break;
             case 1:
                 g2.drawImage(progressSavedBox, x, y, width, height, null);
@@ -1240,8 +1265,8 @@ public class UI {
             drawSavePage();
         }
 
-        if(gp.gameState == gp.checkLevelState){
-            drawCheckLevel();
+        if(gp.gameState == gp.savePageState2){
+            drawSavePage2();
         }
 
         if (gp.gameState == gp.optionState2) {

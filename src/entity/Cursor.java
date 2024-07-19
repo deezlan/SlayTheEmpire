@@ -14,10 +14,10 @@ public class Cursor{
     private int mouseX, mouseY;
     private double angle;
     private BufferedImage crosshairImage;
-    public int deltaX, deltaY, arrowX, arrowY;
+    public int deltaX, deltaY;
     public GamePanel gp;
 
-    public Cursor(GamePanel gp) {
+    public Cursor() {
         try {
             crosshairImage = UtilityTool.loadSprite("/crosshair/crosshair.png", "Missing crosshair");
         } catch(IOException e) {
@@ -46,7 +46,10 @@ public class Cursor{
             int crosshairWidth = (int)(crosshairImage.getWidth() * 1.75);
             int crosshairHeight = (int)(crosshairImage.getHeight() * 1.75);
 
-            g2.drawImage(crosshairImage, mouseX - crosshairWidth/ 2, mouseY - crosshairHeight/2, crosshairWidth, crosshairHeight, null);
+            g2.drawImage(crosshairImage,
+                    mouseX - crosshairWidth/ 2,
+                    mouseY - crosshairHeight/2,
+                    crosshairWidth, crosshairHeight, null);
         }
     }
 

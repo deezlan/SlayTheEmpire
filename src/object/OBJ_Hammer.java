@@ -20,8 +20,8 @@ public class OBJ_Hammer extends Entity {
             throw new IOException(errorMsg, e);
         }
 
-        projectile1 = new OBJ_Thunder(gp);
         System.out.println("Projectile initialized in Flamethrower: " + this.projectile1);
+        projectile1 = new OBJ_Thunder(gp);
         projectile2 = new OBJ_Thunder(gp);
         projectile3 = new OBJ_Thunder(gp);
         projectile4 = new OBJ_Thunder(gp);

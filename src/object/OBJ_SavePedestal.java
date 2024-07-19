@@ -10,18 +10,11 @@ public class OBJ_SavePedestal extends Entity {
     public OBJ_SavePedestal(GamePanel gp, int worldX, int worldY) {
         super(gp, worldX, worldY);
         message = "Saving not implemented... go away";
+        setCollisionValues(0, 50, 24, 60);
+        collision = true;
 
         // Load save pedestal sprites
         getObjectSprites();
-
-        // Set collision settings
-        solidArea.x = 0;
-        solidArea.y = 50;
-        solidArea.width = 24;
-        solidArea.height = 60;
-        solidAreaDefaultX = solidArea.x;
-        solidAreaDefaultY = solidArea.y;
-        collision = true;
     }
 
     public void getObjectSprites() {

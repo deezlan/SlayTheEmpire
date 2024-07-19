@@ -10,16 +10,10 @@ public class NPC_Mystery extends Entity {
         super(gp, worldX, worldY);
         action = "idleRight";
         type = type_npc;
+        setCollisionValues(20, 48, 48, 48);
         getNpcSprites();
         setDialog();
 
-        // Set collision settings
-        solidArea.x = 20;
-        solidArea.y = gp.TILE_SIZE;
-        solidArea.width = 48;
-        solidArea.height = 48;
-        solidAreaDefaultX = solidArea.x;
-        solidAreaDefaultY = solidArea.y;
         dialogueSet = -1;
     }
 
@@ -41,13 +35,23 @@ public class NPC_Mystery extends Entity {
         }
     }
     public void speak() {
-      startDialogue(this,dialogueSet);
+        if (gp.gameMode == gp.EASY_MODE) {
+            System.out.println("NORMAL NORMAL NORMAL NORMAL NORMAL NORMAL");
+            gp.gameMode = gp.NORMAL_MODE;
+        } else if (gp.gameMode == gp.NORMAL_MODE) {
+            System.out.println("HARD HARD HARD HARD HARD HARD");
+            gp.gameMode = gp.HARD_MODE;
+        } else {
+            System.out.println("EASY EASY EASY EASY EASY EASY");
+            gp.gameMode = gp.EASY_MODE;
+        }
+        startDialogue(this,dialogueSet);
         dialogueSet++;
         if(dialogs[dialogueSet][0] == null){
             dialogueSet = 0;
         }
 
-        gp.gameState = gp.difficultyState;
+        gp.gameState = gp.DIFF_DIALOGUE_STATE;
         gp.ui.npc = this;
 
     }

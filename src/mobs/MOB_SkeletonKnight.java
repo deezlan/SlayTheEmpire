@@ -11,56 +11,12 @@ public class MOB_SkeletonKnight extends Entity {
     public MOB_SkeletonKnight(GamePanel gp, int worldX, int worldY) {
         super(gp, worldX, worldY);
         this.gp = gp;
-        setStatValues(1, 4, false, false, 6);
-        setCollisionValues(98, 100, 28, 40);
-        setAttackValues(1, 6, 50, 50);
+        setStatValues(1, 4, false, 6, 66);
+        setCollisionValues(70, 90, 40, 40);
+        setAttackValues(1, 6, 50, 50, false);
 
-//        type = type_mob;
-//        defaultSpeed = 1;
-//        attack = 1;
-//        speed = defaultSpeed;
-//        maxLife = 4;
-//        currentLife = maxLife;
-//        action = "idleRight";
-//        mobNum = 6;
-//        damageSprite = 6; // HERE EXAMPLE NUMBER
-//
         // Load mob sprites
         getMobSprites();
-//
-//        // Set collision settings
-//        solidArea.x = 98;
-//        solidArea.y = 100;
-//        solidArea.width = 28;
-//        solidArea.height = 40;
-//        attackArea.width = 50;
-//        attackArea.height = 50;
-//        solidAreaDefaultX = solidArea.x;
-//        solidAreaDefaultY = solidArea.y;
-    }
-
-//    public void setAction() {
-//
-//        if(onPath) {
-//            // CHECK IF STOP CHASING
-//            checkStopChase(gp.player, 15, 100);
-//            // SEARCH DIRECTION TO GO
-//            searchPath(getGoalCol(gp.player),getGoalRow(gp.player));
-//        } else {
-//            // CHECK IF START CHASING
-//            checkStartChase(gp.player, 5 , 100);
-//            // GET RANDOM DIRECTION
-//            getRandomDirection();
-//        }
-//        // CHECK ATTACK ON PLAYER
-//        if(!attacking){
-//            checkWithinAttackRange(30,gp.TILE_SIZE*2,gp.TILE_SIZE*2); // CHANGE ATTACK RANGE
-//        }
-//    }
-
-    public void damageReaction() {
-        actionLockCounter = 0;
-        onPath = true;
     }
 
     public void getMobSprites() {
@@ -79,10 +35,10 @@ public class MOB_SkeletonKnight extends Entity {
             }
 
             UtilityTool.scaleEntityList(this, moveRightList, 200, 200);
-            UtilityTool.scaleEntityList(this,moveLeftList, 200, 200);
-            UtilityTool.scaleEntityList(this, mobLeftAttackList, 200, 180);
-            UtilityTool.scaleEntityList(this,mobRightAttackList, 200, 200);
-            UtilityTool.scaleEntityList(this,idleLeftList, 200, 200);
+            UtilityTool.scaleEntityList(this, moveLeftList, 200, 200);
+            UtilityTool.scaleEntityList(this, mobLeftAttackList, 200, 200);
+            UtilityTool.scaleEntityList(this, mobRightAttackList, 200, 200);
+            UtilityTool.scaleEntityList(this, idleLeftList, 200, 200);
             UtilityTool.scaleEntityList(this, idleRightList, 200, 200);
 
             System.out.println("Goblin sprites loaded successfully");

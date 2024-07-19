@@ -16,16 +16,8 @@ public class NPC_Blacksmith extends Entity {
         super(gp, worldX, worldY);
         action = "idleRight";
         type = type_npc;
+        setCollisionValues(20, 48, 48, 48);
         getNpcSprites();
-        setDialog();
-
-        // Set collision settings
-        solidArea.x = 20;
-        solidArea.y = gp.TILE_SIZE;
-        solidArea.width = 48;
-        solidArea.height = 48;
-        solidAreaDefaultX = solidArea.x;
-        solidAreaDefaultY = solidArea.y;
         setDialog();
     }
 
@@ -36,8 +28,6 @@ public class NPC_Blacksmith extends Entity {
         dialogs[0][3] = "placeholder 4";
         dialogs[0][4] = "placeholder 4";
     }
-
-
 
     public void getNpcSprites() {
         String dir = "/NPCs/blacksmith/";
@@ -62,7 +52,7 @@ public class NPC_Blacksmith extends Entity {
         shopItems.add(new OBJ_Hammer(gp));
     }
 
-    public void buy(){
+    public void buy() {
         if (gp.player.ownedWeapon.contains(gp.ui.slotRow) & !gp.player.hotbarList.contains(shopItems.get(gp.ui.slotRow))){
             if (gp.player.hotbarList.size() < 3){
                 gp.player.hotbarList.add(0, shopItems.get(gp.ui.slotRow));

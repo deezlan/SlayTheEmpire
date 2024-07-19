@@ -30,11 +30,8 @@ public class Player extends Entity {
     public int playerClass;
     private int delta;
 
-//    public ArrayList<Entity> inventory = new ArrayList<>(); temp commented
-//    public final int inventorySize = 8; temp commented
-
     public Player (GamePanel gp, KeyHandler keyH, Cursor cursor, int playerClass) {
-        super(gp);
+        super(gp,303,9);
         this.gp = gp;
         this.keyH = keyH;
         this.playerClass = playerClass;
@@ -44,17 +41,15 @@ public class Player extends Entity {
         switch (playerClass) {
             case 0:
                 screenX = (gp.SCREEN_WIDTH/2) - (gp.TILE_SIZE/2) - 90; // CENTERED PLAYER 0 POSITION
-                screenY = (gp.SCREEN_HEIGHT/2) - 72;
                 break;
             case 1:
                 screenX = (gp.SCREEN_WIDTH/2) - (gp.TILE_SIZE/2) - 72; // CENTERED PLAYER 1 POSITION
-                screenY = (gp.SCREEN_HEIGHT/2) - 72;
                 break;
             case 2:
                 default:
                 screenX = (gp.SCREEN_WIDTH/2) - (gp.TILE_SIZE/2) - 48; // CENTERED PLAYER 2 POSITION
-                screenY = (gp.SCREEN_HEIGHT/2) - 72;
         }
+        screenY = (gp.SCREEN_HEIGHT/2) - 72;
 
         setDefaultValues();
         setCollisionValues();
@@ -63,19 +58,45 @@ public class Player extends Entity {
         getPlayerAttackSprites();
     }
 
+//    @Override
+//    public void setStatValues(int defaultSpeed, int maxLife, boolean hasRanged, boolean isBoss, int mobBossNum) {
+//        super.setStatValues(defaultSpeed, maxLife, hasRanged, isBoss, mobBossNum);
+//    }
+//
+//    @Override
+//    public void setAttackValues(int damage, int damageSprite, int attWidth, int attHeight) {
+//        super.setAttackValues(damage, damageSprite, attWidth, attHeight);
+//    }
+
     // DEFAULT INITIALIZATION
     public void setDefaultValues() {
-        worldX = 303; // PLAYER SPAWN X
-        worldY = 9; // PLAYER SPAWN Y
-        defaultSpeed = 3;
-        speed = defaultSpeed;
         type = type_player;
 
-        // ATTRIBUTES
-        maxLife = 6;
-        currentLife = maxLife;
+        // ATTRIBUTES DEPENDING ON CHOSEN CLASS
+        switch (playerClass) {
+            case 0:
+                defaultSpeed = 3;
+                speed = defaultSpeed;
+                maxLife = 8;
+                currentLife = maxLife;
+                damage = 5;
+                break;
+            case 1:
+                defaultSpeed = 2;
+                speed = defaultSpeed;
+                maxLife = 10;
+                currentLife = maxLife;
+                damage = 3;
+                break;
+            case 2:
+                defaultSpeed = 4;
+                speed = defaultSpeed;
+                maxLife = 6;
+                currentLife = maxLife;
+                damage = 1;
+        }
+
         totalCoins = 500;
-        damage = 1;
         damageSprite = 2;
     }
     private void setCollisionValues() {
@@ -124,9 +145,9 @@ public class Player extends Entity {
         //add inventory
     }
     public void setDefaultPosition() {
+        worldX = 303;
+        worldY = 9;
         gp.currentMap = 0;
-        worldX = 303; // PLAYER SPAWN X
-        worldY = 9; // PLAYER SPAWN Y
         action = "idleRight";
     }
 
@@ -199,6 +220,7 @@ public class Player extends Entity {
             }
         }
     }
+    @Override
     public void runAttackAnimation() {
         animationCounter++;
         if (animationSpriteNum < playerRightAttackList.size() && animationCounter%5 == 0) {
@@ -214,16 +236,6 @@ public class Player extends Entity {
     public void startAttack(){
         checkDamageSprite();
         runAttackAnimation();
-//        switch (playerClass) {
-//            case 0:
-//                runAttackAnimation();
-//                break;
-//            case 1:
-//                runAttackAnimation();
-//                break;
-//            case 2:
-//                runAttackAnimation();
-//        }
     }
     public void damageMonster(int i, int attack, Entity attacker) {
         if (i != 999){
@@ -261,7 +273,7 @@ public class Player extends Entity {
                 gp.objArr[gp.currentMap][index].use(this);
                 gp.objArr[gp.currentMap][index] = null;
             } else if (type == type_shop){
-                gp.gameState = gp.shopState;
+                gp.gameState = gp.SHOP_STATE;
             } else {
                 if (!gp.objArr[gp.currentMap][index].message.isEmpty())
                     System.out.println(gp.objArr[gp.currentMap][index].message);
@@ -277,7 +289,7 @@ public class Player extends Entity {
             gp.npcArr[gp.currentMap][index].speak();
         }
         if (index == 1) {
-            gp.gameState = gp.shopState;
+            gp.gameState = gp.SHOP_STATE;
         }
         if (index == 3) {
             gp.ui.difficultySelect();
@@ -286,7 +298,7 @@ public class Player extends Entity {
     public void interactMob (int index) {
         if (index != 999) {
             if (!iframe && !gp.mobArr[gp.currentMap][index].dead){
-                currentLife -= 1;
+                currentLife -= gp.gameMode;
                 iframe = true;
             }
         }
@@ -297,18 +309,17 @@ public class Player extends Entity {
     public void update() {
         delta++;
         if(!keyH.godModeOn){
-            if (currentLife <= 0){
-                gp.gameState = gp.deathState;
-            }
+            if (currentLife <= 0)
+                gp.gameState = gp.DEATH_STATE;
         }
 
         if (currentLife > maxLife){
             currentLife = maxLife;
         }
 
-        if (attacking)
+        if (attacking) {
             startAttack();
-        else {
+        } else {
 
             if ((keyH.wPressed && keyH.sPressed) || (keyH.aPressed && keyH.dPressed)) {
                 action = "stuckOppositeDirection";
@@ -516,6 +527,7 @@ public class Player extends Entity {
             shotAvailableCounter++;
         }
     }
+    @Override
     public void draw(Graphics2D g2) {
         if (spriteNum > currentList.size() - 1)
             spriteNum = 0;
@@ -523,7 +535,7 @@ public class Player extends Entity {
 
         if (animationSpriteNum > playerRightAttackList.size())
             animationSpriteNum = 0;
-        BufferedImage animationImage = lookingRight? playerRightAttackList.get(animationSpriteNum) : playerLeftAttackList.get(animationSpriteNum);
+        BufferedImage animationImage = lookingRight ? playerRightAttackList.get(animationSpriteNum) : playerLeftAttackList.get(animationSpriteNum);
 
         switch (gp.currentMap){ // SWITCH TO SWITCH STATEMENT
             case 0:

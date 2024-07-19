@@ -10,8 +10,8 @@ import java.io.IOException;
 public class BOSS_Golem extends Entity {
     GamePanel gp;
     public static final String monName = "Golem";
-    public BOSS_Golem(GamePanel gp) {
-        super(gp);
+    public BOSS_Golem(GamePanel gp, int worldX, int worldY) {
+        super(gp, worldX, worldY);
         this.gp = gp;
         name = monName;
         type = type_mob;
@@ -65,19 +65,14 @@ public class BOSS_Golem extends Entity {
         }
         // CHECK ATTACK ON PLAYER
         if(!attacking){
-            checkWithinAttackRange(30,gp.TILE_SIZE*4,gp.TILE_SIZE*3); // CHANGE ATTACK RANGE
+//            checkWithinAttackRange(30,gp.TILE_SIZE*4,gp.TILE_SIZE*3); // Original
+            checkWithinAttackRange(30); // CHANGE ATTACK RANGE
         }
-    }
-
-    public void damageReaction() {
-        actionLockCounter = 0;
-        onPath = true;
     }
 
     public void setDialog() {
         dialogs[0][0] = "Who are you.....";
         dialogs[0][1] = "YOU WILL PAY... WITH ICE!";
-
     }
 
     public void getMobSprites() {

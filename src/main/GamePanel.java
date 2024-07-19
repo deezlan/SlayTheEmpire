@@ -1,11 +1,13 @@
 package main;
 
-import javax.swing.*;
-import java.awt.Dimension;
-import java.awt.Color;
+import javax.swing.JPanel;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.*;
+import java.awt.Dimension;
+import java.awt.Point;
+import java.awt.Font;
+import java.awt.Toolkit;
+import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
@@ -20,7 +22,6 @@ import entity.Player;
 import tile.TileManager;
 
 public class GamePanel extends JPanel implements Runnable {
-    // SCREEN SETTINGS
     Thread gameThread;
     BufferedImage tempScreen;
     Graphics2D g2;
@@ -33,80 +34,79 @@ public class GamePanel extends JPanel implements Runnable {
             TILE_SIZE = ORIGINAL_TILE_SIZE * SCALE,
             MAX_SCREEN_COL = 17,
             MAX_SCREEN_ROW = 13,
-            SCREEN_WIDTH = TILE_SIZE * MAX_SCREEN_COL,
-            SCREEN_HEIGHT = TILE_SIZE * MAX_SCREEN_ROW;
+            SCREEN_WIDTH = TILE_SIZE * MAX_SCREEN_COL, // 816 PIXELS
+            SCREEN_HEIGHT = TILE_SIZE * MAX_SCREEN_ROW; // 624 PIXELS
+
+    // HANDLERS
+    public UI ui = new UI(this);
+    public MouseHandler mouseH = new MouseHandler();
+    public KeyHandler keyH = new KeyHandler(this);
+    public CollisionChecker cChecker = new CollisionChecker(this);
+    public EventHandler eHandler = new EventHandler(this);
+    public Pathfinder pFinder = new Pathfinder(this);
+
+    // LOGIN
+    public LoginSystem loginSys = new LoginSystem(this);
+
+    // SOUND
+    Sound music = new Sound();
+    Sound effect = new Sound();
 
     // WORLD SETTINGS
     public int currentMap = 0;
     public final int
             MAX_WORLD_COL = 50,
             MAX_WORLD_ROW = 50,
-            maxMap = 3;
+            MAX_MAP = 3;
     public TileManager tileM = new TileManager(this);
 
-    // PLAYER SETTINGS
-    public int playerClass;
-    public KeyHandler keyH = new KeyHandler(this);
-
-    // LOGIN SETTINGS
-    public LoginSystem loginSys = new LoginSystem(this);
-
-    // PLAYER SETTINGS
-    Sound music = new Sound();
-    Sound effect = new Sound();
-    public Cursor cursor = new Cursor(this); // Initialize cursor
+    // PLAYER
     public Player player;
-    public MouseHandler mouseH = new MouseHandler();
-    public UI ui = new UI(this);
+    public int playerClass;
+    public Cursor cursor = new Cursor(); // Initialize cursor
 
     // ENTITY AND OBJECTS ARRAYS
     private final ArrayList<Entity> entityList = new ArrayList<>();
     public AssetSetter aSetter = new AssetSetter(this);
     public Entity[][]
-            objArr = new Entity[maxMap][30],
-            npcArr = new Entity[maxMap][10],
-            mobArr = new Entity[maxMap][20],
-            gateArr = new Entity[maxMap][50],
-            projectileArr = new Entity[maxMap][50];
-    public InteractiveTIle[][] iTile = new InteractiveTIle[maxMap][50];
-
-    // HANDLERS
-    public CollisionChecker cChecker = new CollisionChecker(this);
-    public EventHandler eHandler = new EventHandler(this);
-
-    // PATHFINDER
-    public Pathfinder pFinder = new Pathfinder(this);
+            objArr = new Entity[MAX_MAP][30],
+            npcArr = new Entity[MAX_MAP][10],
+            mobArr = new Entity[MAX_MAP][20],
+            gateArr = new Entity[MAX_MAP][50],
+            projectileArr = new Entity[MAX_MAP][50];
+    public InteractiveTIle[][] iTile = new InteractiveTIle[MAX_MAP][50];
 
     // CUTSCENE
     public boolean bossBattleOn = false;
     public CutsceneManager csManager = new CutsceneManager(this);
 
     // GAME SETTINGS
-    public int gameState;
+    public int gameState, gameMode;
     public final int
-            titleState = 0,
-            playState = 1,
-            pauseState = 2,
-            dialogueState = 3,
-            shopState = 4,
-            deathState = 5,
-            transitionState = 6,
-            loginState = 7,
-            creditsState = 8,
-            characterSelectionState = 9,
-            optionState = 10,
-            optionState2 = 12,
-            startMenuState = 11,
-            cutsceneState = 13,
-            controlsState = 14,
-            difficultyState = 15;
-    public int gameMode;
-    public final int
-                easyMode = 1,
-                normalMode = 2,
-                hardMode = 3;
+            // GAME STATES
+            TITLE_STATE = 0,
+            LOGIN_STATE = 1,
+            MAIN_MENU_STATE = 2,
+            CHAR_SELECT_STATE = 3,
+            DIFF_MENU_STATE = 4,
+            OPTIONS_MENU_STATE = 5,
+            CONTROLS_STATE = 6,
+            CREDITS_STATE = 7,
+            PLAY_STATE = 8,
+            PAUSE_STATE = 9,
+            SHOP_STATE = 10,
+            DIFF_DIALOGUE_STATE = 11,
+            DIALOGUE_STATE = 12,
+            OPTIONS_DIALOGUE_STATE = 13,
+            CUTSCENE_STATE = 14,
+            DEATH_STATE = 15,
+            TRANSITION_STATE = 16,
+            MAP_SELECTION = 17,
 
-
+            // DIFFICULTY MODES
+            EASY_MODE = 1,
+            NORMAL_MODE = 2,
+            HARD_MODE = 3;
 
     public GamePanel() {
         this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
@@ -115,9 +115,10 @@ public class GamePanel extends JPanel implements Runnable {
         this.addKeyListener(keyH);
         this.setFocusable(true); // pass the player instance variable to the KeyHandler constructor
 
-        // DEFAULT VOLUME
-        music.volumeScale = 3;
+        // DEFAULT SETTINGS
+        music.volumeScale = 1;
         effect.volumeScale = 3;
+        gameMode = EASY_MODE;
 
 //        hideCursor();
 
@@ -141,76 +142,11 @@ public class GamePanel extends JPanel implements Runnable {
         });
     }
 
-    private void hideCursor() {
-        BufferedImage cursorImg = new BufferedImage(16,16, BufferedImage.TYPE_INT_ARGB);
-
-        java.awt.Cursor blankCursor =
-                Toolkit.getDefaultToolkit().createCustomCursor
-                    (cursorImg, new Point(0,0), "blank cursor");
-        this.setCursor(blankCursor);
+    // GAME METHODS
+    public void startGameThread() {
+        gameThread = new Thread(this);
+        gameThread.start();
     }
-
-    private void showCursor() {
-        java.awt.Cursor defaultCursor = java.awt.Cursor.getDefaultCursor();
-        this.setCursor(defaultCursor);
-    }
-
-    public void playMusic(int i) {
-        music.setFile(i);
-        music.play();
-        music.loop();
-    }
-    // STOP MUSIC
-    public void stopMusic() {
-        music.stop();
-    }
-    // PLAY SOUND EFFECT
-    public void playSE(int i) {
-        effect.setFile(i);
-        effect.play();
-    }
-
-    public void setupGame() {
-        tempScreen = new BufferedImage(SCREEN_WIDTH,SCREEN_HEIGHT,BufferedImage.TYPE_INT_ARGB);
-        g2 = (Graphics2D) tempScreen.getGraphics();
-        gameState = titleState; // TESTING LOGIN RIGHT NOW
-        playMusic(0);
-    }
-
-    public void retry() {
-        player.setDefaultPosition();
-        player.restoreLife();
-        aSetter.setMonster();
-        aSetter.setNPC();
-        aSetter.setGates();
-    }
-
-//    public void restart() {
-//        player.setDefaultValues();
-//        player.setDefaultPosition();
-//        player.restoreLife();
-//        aSetter.setMonster();
-//        aSetter.setNPC();
-//        aSetter.setObject();
-//        aSetter.setInteractiveTile();
-//    }
-
-    public void loadLevel() {
-        bossBattleOn = false;
-        aSetter.loadAssets();
-    }
-
-    // MAP SETTINGS
-    public void setMapColor () {
-        switch (currentMap) {
-            case 0:
-                setBackground(Color.decode("#181425"));
-                break;
-            case 1, 2:
-                setBackground(Color.decode("#42393A"));
-        }
-    }
-
     // FPS SETTINGS
     @Override
     public void run() {
@@ -243,14 +179,76 @@ public class GamePanel extends JPanel implements Runnable {
             }
         }
     }
-
-    public void startGameThread() {
-        gameThread = new Thread(this);
-        gameThread.start();
+    public void setupGame() {
+        tempScreen = new BufferedImage(SCREEN_WIDTH,SCREEN_HEIGHT,BufferedImage.TYPE_INT_ARGB);
+        g2 = (Graphics2D) tempScreen.getGraphics();
+        gameState = TITLE_STATE; // TESTING LOGIN RIGHT NOW
+        playMusic(0);
     }
+
+    // CURSOR METHODS
+    private void hideCursor() {
+        BufferedImage cursorImg = new BufferedImage(16,16, BufferedImage.TYPE_INT_ARGB);
+
+        java.awt.Cursor blankCursor =
+                Toolkit.getDefaultToolkit().createCustomCursor
+                    (cursorImg, new Point(0,0), "blank cursor");
+        this.setCursor(blankCursor);
+    }
+    private void showCursor() {
+        java.awt.Cursor defaultCursor = java.awt.Cursor.getDefaultCursor();
+        this.setCursor(defaultCursor);
+    }
+
+    // SOUND METHODS
+    public void playMusic(int i) {
+        music.setFile(i);
+        music.play();
+        music.loop();
+    }
+    public void stopMusic() {
+        music.stop();
+    }
+    public void playSE(int i) {
+        effect.setFile(i);
+        effect.play();
+    }
+
+    // LEVEL METHODS
+    public void retry() {
+        player.setDefaultPosition();
+        player.restoreLife();
+        aSetter.setMonster();
+        aSetter.setNPC();
+        aSetter.setGates();
+    }
+//    public void restart() {
+//        player.setDefaultValues();
+//        player.setDefaultPosition();
+//        player.restoreLife();
+//        aSetter.setMonster();
+//        aSetter.setNPC();
+//        aSetter.setObject();
+//        aSetter.setInteractiveTile();
+//    }
+    public void loadLevel() {
+        bossBattleOn = false;
+        aSetter.loadAssets();
+        gameState = PLAY_STATE;
+    }
+    public void setMapColor() {
+        switch (currentMap) {
+            case 0:
+                setBackground(Color.decode("#181425"));
+                break;
+            case 1, 2:
+                setBackground(Color.decode("#42393A"));
+        }
+    }
+
     // GAME LOOP METHODS
     public void update() {
-        if (gameState == playState) {
+        if (gameState == PLAY_STATE) {
             hideCursor(); // HIDE CURSOR
             player.update();
 
@@ -307,19 +305,20 @@ public class GamePanel extends JPanel implements Runnable {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D)g;
 
-        if (gameState == optionState){
+        if (gameState == OPTIONS_MENU_STATE){
             showCursor();
         }
 
         // Title Screen
-        if (gameState == playState ||
-                gameState == shopState ||
-                gameState == dialogueState ||
-                gameState == pauseState ||
-                gameState == optionState ||
-                gameState == transitionState ||
-                gameState == cutsceneState ||
-                gameState == difficultyState) {
+        if (gameState == PLAY_STATE ||
+                gameState == SHOP_STATE ||
+                gameState == DIALOGUE_STATE ||
+                gameState == PAUSE_STATE ||
+                gameState == OPTIONS_MENU_STATE ||
+                gameState == TRANSITION_STATE ||
+                gameState == CUTSCENE_STATE ||
+                gameState == DIFF_DIALOGUE_STATE ||
+                gameState == MAP_SELECTION) {
 
             // DEBUG
             long drawStart = 0;

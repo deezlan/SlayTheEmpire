@@ -8,12 +8,12 @@ import java.io.IOException;
 
 public class OBJ_PickUpCoin extends Entity {
     GamePanel gp;
-    public OBJ_PickUpCoin(GamePanel gp, int worldX, int worldY){
+    public OBJ_PickUpCoin(GamePanel gp, int worldX, int worldY, int price){
         super(gp, worldX, worldY);
         this.gp=gp;
         type = type_pickup;
         name = "Coin";
-        price = 1;
+        this.price = price;
         getObjectSprites();
     }
 

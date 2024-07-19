@@ -11,33 +11,12 @@ public class MOB_RobotGuardian extends Entity {
     public MOB_RobotGuardian(GamePanel gp, int worldX, int worldY) {
         super(gp, worldX, worldY);
         this.gp = gp;
-        setStatValues(1, 6, false, false, 3);
+        setStatValues(1, 6, false, 3, 200);
         setCollisionValues(70, 90, 40, 40);
-        setAttackValues(1, 7, 60, 60);
+        setAttackValues(1, 7, gp.TILE_SIZE*2, gp.TILE_SIZE*2, false);
 
         // Load mob sprites
         getMobSprites();
-    }
-
-//    public void setAction() {
-//        if(onPath) {
-//            // SEARCH DIRECTION TO GO
-//            searchPath(getGoalCol(gp.player),getGoalRow(gp.player));
-//        } else {
-//            // CHECK IF START CHASING
-//            checkStartChase(gp.player, 5 , 100);
-//            // GET RANDOM DIRECTION
-//            getRandomDirection();
-//        }
-//        // CHECK ATTACK ON PLAYER
-//        if(!attacking){
-//            checkWithinAttackRange(30,gp.TILE_SIZE*2,gp.TILE_SIZE*2); // CHANGE ATTACK RANGE
-//        }
-//    }
-
-    public void damageReaction() {
-        actionLockCounter = 0;
-        onPath = true;
     }
 
     public void getMobSprites() {

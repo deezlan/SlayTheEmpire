@@ -90,8 +90,9 @@ public class EventHandler {
                                     || hit(gp.currentMap, 25, 43, "any")
                                     || hit(gp.currentMap, 24, 44, "any")
                     ) {
-                        for (int i = 0; i <= 4; i++)
-                            gp.gateArr[gp.currentMap][i].locking = true;
+//                        for (int i = 0; i <= 4; i++)
+//                            gp.gateArr[gp.currentMap][i].locking = true;
+                        triggerGates(true, 0, 4);
 
                         eventRect[1][24][40].eventDone = true;
                         eventRect[1][25][41].eventDone = true;
@@ -106,8 +107,8 @@ public class EventHandler {
                         for (int i = 5; i <= 6; i++)
                             gp.gateArr[gp.currentMap][i].locking = true;
 
-//                        eventRect[1][25][30].eventDone = true;
-//                        eventRect[1][25][31].eventDone = true;
+                        eventRect[1][25][30].eventDone = true;
+                        eventRect[1][25][31].eventDone = true;
                     }
                     if ( // TRIGGER RIGHT PATH GATES
                             hit(gp.currentMap, 33, 30, "any")
@@ -116,8 +117,8 @@ public class EventHandler {
                         for (int i = 7; i <= 8; i++)
                             gp.gateArr[gp.currentMap][i].locking = true;
 
-//                        eventRect[1][33][30].eventDone = true;
-//                        eventRect[1][33][31].eventDone = true;
+                        eventRect[1][33][30].eventDone = true;
+                        eventRect[1][33][31].eventDone = true;
                     }
                     if ( // TRIGGER MINI-BOSS ROOM GATES
                             hit(1, 24, 22, "any")
@@ -164,16 +165,16 @@ public class EventHandler {
                     }
 
                     // UNLOCK FIRST ROOM GATES ONCE CLEARED
-                    if (roomCleared(1, 0, 3)) {
-                        for (int i = 0; i <= 4; i++)
-                            gp.gateArr[gp.currentMap][i].unlocking = true;
-                    }
+                    if (roomCleared(0, 3))
+                        triggerGates(false, 0, 4);
 
                     // UNLOCK MINI-BOSS ROOM GATES ONCE CLEARED
-                    if (gp.mobArr[gp.currentMap][2] == null) {
-                        for (int i = 16; i <= 19; i++)
-                            gp.gateArr[gp.currentMap][i].unlocking = true;
-                    }
+                    if (roomCleared(4, 4))
+                        triggerGates(false, 5, 15);
+//                    if (gp.mobArr[gp.currentMap][2] == null) {
+//                        for (int i = 16; i <= 19; i++)
+//                            gp.gateArr[gp.currentMap][i].unlocking = true;
+//                    }
                     break;
 
                 // LEVEL TWO
@@ -268,11 +269,20 @@ public class EventHandler {
         return hit;
     }
 
-    public boolean roomCleared(int map, int firstMob, int lastMob) {
+    public void triggerGates(boolean lock, int firstGate, int lastGate) {
+        for (int i = firstGate; i <= lastGate; i++) {
+            if (lock)
+                gp.gateArr[gp.currentMap][i].locking = true;
+            else
+                gp.gateArr[gp.currentMap][i].unlocking = true;
+        }
+    }
+
+    public boolean roomCleared(int firstMob, int lastMob) {
         boolean cleared = true;
 
         for (int i = firstMob; i <= lastMob; i++) {
-            if (gp.mobArr[map][i] != null) {
+            if (gp.mobArr[gp.currentMap][i] != null) {
                 cleared = false;
                 break;
             }

@@ -37,18 +37,19 @@ public class Player extends Entity {
         this.playerClass = playerClass;
         this.cursor = cursor;
 
-        // CENTER PLAYER SCREEN POSITION BASED ON PLAYER CLASS
-        switch (playerClass) {
-            case 0:
-                screenX = (gp.SCREEN_WIDTH/2) - (gp.TILE_SIZE/2) - 72; // CENTERED PLAYER 0 POSITION
-                break;
-            case 1:
-                screenX = (gp.SCREEN_WIDTH/2) - (gp.TILE_SIZE/2) - 72; // CENTERED PLAYER 1 POSITION
-                break;
-            case 2:
-                default:
-                screenX = (gp.SCREEN_WIDTH/2) - (gp.TILE_SIZE/2) - 72; // CENTERED PLAYER 2 POSITION
-        }
+        // CENTER PLAYER SCREEN POSITION
+        screenX = (gp.SCREEN_WIDTH/2) - (gp.TILE_SIZE/2) - 72; // CENTERED PLAYER 0 POSITION
+//        switch (playerClass) {
+//            case 0:
+//                screenX = (gp.SCREEN_WIDTH/2) - (gp.TILE_SIZE/2) - 72; // CENTERED PLAYER 0 POSITION
+//                break;
+//            case 1:
+//                screenX = (gp.SCREEN_WIDTH/2) - (gp.TILE_SIZE/2) - 72; // CENTERED PLAYER 1 POSITION
+//                break;
+//            case 2:
+//                default:
+//                screenX = (gp.SCREEN_WIDTH/2) - (gp.TILE_SIZE/2) - 72; // CENTERED PLAYER 2 POSITION
+//        }
         screenY = (gp.SCREEN_HEIGHT/2) - 72;
 
         setStatValues(3, 8, false, 0, 0);

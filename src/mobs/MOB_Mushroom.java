@@ -13,7 +13,7 @@ public class MOB_Mushroom extends Entity {
         this.gp = gp;
         setStatValues(1, 4, false, 9, 350);
         setCollisionValues(150, 150, 28, 40);
-        setAttackValues(1, 6, gp.TILE_SIZE*2, gp.TILE_SIZE*2, false);
+        setAttackValues(50, 6, gp.TILE_SIZE*2, gp.TILE_SIZE*2, false);
 
         // Load mob sprites
         getMobSprites();

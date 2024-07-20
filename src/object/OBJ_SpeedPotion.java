@@ -7,7 +7,6 @@ import main.UtilityTool;
 import java.io.IOException;
 
 public class OBJ_SpeedPotion extends Entity {
-    int count;
     public OBJ_SpeedPotion(GamePanel gp) throws IOException {
         super(gp);
 
@@ -20,6 +19,15 @@ public class OBJ_SpeedPotion extends Entity {
         } catch (IOException e){
             String errorMsg = "Speed Potion sprite not loaded";
             throw new IOException(errorMsg, e);
+        }
+    }
+
+    @Override
+    public void consume() {
+        int curCount = gp.player.ownedPotion.get(name);
+        if (curCount > 0){
+            gp.player.ownedPotion.put(name, curCount-1);
+            gp.player.setSpeedBuff(true);
         }
     }
 }

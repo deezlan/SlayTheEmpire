@@ -4,6 +4,8 @@ import entity.*;
 import mobs.*;
 import object.*;
 
+import java.io.IOException;
+
 public class AssetSetter {
     GamePanel gp;
 
@@ -25,7 +27,11 @@ public class AssetSetter {
         switch (gp.currentMap) {
             case 0:
                 // SHOP & SAVE PEDESTAL
-                gp.objArr[gp.currentMap][i] = new OBJ_Shop(gp, 516, -10); i++;
+                try {
+                    gp.objArr[gp.currentMap][i] = new OBJ_Shop(gp, 516, -10); i++;
+                }catch (IOException e){
+                    e.printStackTrace(System.out);
+                }
                 gp.objArr[gp.currentMap][i] = new OBJ_SavePedestal(gp, 272, 490); i++;
 
                 // CHAT BUBBLES - Blacksmith, Maiden, Shady, Merchant

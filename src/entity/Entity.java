@@ -208,6 +208,8 @@ public abstract class Entity {
     public void use(Entity entity) {} // PLAYER
     public void speak() {} // NPC
 
+    // POTION OVERRIDE
+    public void consume() {}
     // MOB
     public void specialAttack() {}
     public void damageReaction() {
@@ -386,12 +388,23 @@ public abstract class Entity {
     }
     public void damagePlayer(int attack) {
         if (!gp.player.iframe) {
-            int damage = attack;
-            if (damage < 0) {
-                damage = 0;
+            if (gp.player.getShieldBuff()){
+                int damage = attack/2;
+                if (damage < 0) {
+                    damage = 0;
+                }
+                gp.player.currentLife -= damage;
+                gp.player.iframe = true;
+                System.out.println(damage);
+            } else {
+                int damage = attack;
+                if (damage < 0) {
+                    damage = 0;
+                }
+                gp.player.currentLife -= damage;
+                gp.player.iframe = true;
+                System.out.println(damage);
             }
-            gp.player.currentLife -= damage;
-            gp.player.iframe = true;
         }
     }
     public void checkShoot(int rate, int xOffset, int yOffset, int shotInterval) {

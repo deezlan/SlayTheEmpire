@@ -6,6 +6,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 import entity.Player;
+import object.OBJ_Shop;
 
 public class KeyHandler implements KeyListener {
     GamePanel gp;
@@ -296,9 +297,10 @@ public class KeyHandler implements KeyListener {
                 }
             }
             if (code == KeyEvent.VK_ENTER){
-                NPC_Blacksmith bs = (NPC_Blacksmith) gp.npcArr[gp.currentMap][1];
-                if (gp.player.totalCoins >= bs.getShopItems().get(gp.ui.slotRow).price)
-                    bs.buy();
+//                NPC_Blacksmith bs = (NPC_Blacksmith) gp.npcArr[gp.currentMap][1];
+                OBJ_Shop shop = (OBJ_Shop) gp.objArr[gp.currentMap][0];
+                if (gp.player.totalCoins >= shop.getShopItems().get(gp.ui.slotRow).price)
+                    shop.buy();
 
                 gp.gameState = gp.playState;
             }

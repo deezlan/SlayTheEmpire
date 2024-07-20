@@ -18,6 +18,8 @@ public class OBJ_Shop extends Entity {
         getObjectSprites();
         setShopItems();
 
+        gp.player.currentPotion = shopItems.get(0);
+
         // Set shop collision settings
         solidArea.x = 20;
         solidArea.y = 0;
@@ -34,8 +36,8 @@ public class OBJ_Shop extends Entity {
         try {
             shopItems.add(new OBJ_HealthPotion(gp));
             shopItems.add(new OBJ_SpeedPotion(gp));
-            shopItems.add(new OBJ_SmallHealthPotion(gp));
-            shopItems.add(new OBJ_SmallSpeedPotion(gp));
+            shopItems.add(new OBJ_MagicPotion(gp));
+            shopItems.add(new OBJ_WaterPotion(gp));
         } catch (IOException e){
             e.printStackTrace(System.out);
         }
@@ -46,7 +48,12 @@ public class OBJ_Shop extends Entity {
     }
 
     public void buy(){
-
+            gp.player.totalCoins -= shopItems.get(gp.ui.slotRow).price;
+            if (gp.player.ownedPotion.containsKey(shopItems.get(gp.ui.slotRow).name)){
+                    int curVal = gp.player.ownedPotion.get(shopItems.get(gp.ui.slotRow).name);
+                    gp.player.ownedPotion.put(shopItems.get(gp.ui.slotRow).name, curVal + 1);
+            }
+            gp.player.currentPotion = shopItems.get(gp.ui.slotRow);
     }
 
     public void getObjectSprites() {

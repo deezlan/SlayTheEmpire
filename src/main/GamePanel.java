@@ -113,9 +113,9 @@ public class GamePanel extends JPanel implements Runnable {
         this.setFocusable(true); // pass the player instance variable to the KeyHandler constructor
 
         // DEFAULT SETTINGS
-        music.volumeScale = 3;
-        effect.volumeScale = 3;
-        gameState = easyMode;
+        music.volumeScale = 0;
+        effect.volumeScale = 0;
+        gameMode = easyMode;
 
 //        hideCursor();
 

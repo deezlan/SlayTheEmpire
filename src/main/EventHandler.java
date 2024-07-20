@@ -290,7 +290,7 @@ public class EventHandler {
         return cleared;
     }
 
-    public void changeMap(){
+    public void changeMap(int nextMap){
         gp.gameState = gp.TRANSITION_STATE;
         if (gp.currentMap == 0) {
             tempMap = nextMap;

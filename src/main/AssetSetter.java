@@ -219,5 +219,11 @@ public class AssetSetter {
                 gp.mobArr[gp.currentMap][i] = new MOB_Skellington(gp, 1551, 180); // replace with princess
             }
         }
+
+        // RESET MONSTERS TO SLEEP ON LEVEL LOAD
+        for (Entity mon : gp.mobArr[gp.currentMap]) {
+            if (mon != null)
+                mon.sleep = true;
+        }
     }
 }

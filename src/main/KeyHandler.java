@@ -9,6 +9,7 @@ import entity.Player;
 
 public class KeyHandler implements KeyListener {
     GamePanel gp;
+    Player player;
     boolean musicPlaying = false; // check if music is already playing
 
     public boolean
@@ -77,19 +78,10 @@ public class KeyHandler implements KeyListener {
             enterPressed = true;
         }
 
-        if (gp.ui.subState == 0) {
-            if(code == KeyEvent.VK_W) {
-                gp.ui.commandNum--;
-                if(gp.ui.commandNum < 0) {
-                    gp.ui.commandNum = 3;
-                }
-            }
-            if(code == KeyEvent.VK_S) {
-                gp.ui.commandNum++;
-                if(gp.ui.commandNum > 3) {
-                    gp.ui.commandNum = 0;
-                }
-            }
+        if (code == KeyEvent.VK_W || code == KeyEvent.VK_S) {
+            gp.ui.commandNum += (code == KeyEvent.VK_W) ? -1 : 1;
+            gp.ui.commandNum = Math.max(0, Math.min(gp.ui.commandNum, 3));
+            gp.playSE(1);
         }
     }
 
@@ -100,12 +92,28 @@ public class KeyHandler implements KeyListener {
                     gp.gameState = gp.SHOP_STATE;
                     break;
                 case 1:
+                    // TALK
                     gp.gameState= gp.DIALOGUE_STATE;
-                    gp.ui.currentDialog = "I used to work for the princess\nbut now im here";
+                    switch (gp.playerClass) {
+                        // WARRIOR
+                        case 0 -> gp.ui.currentDialog = "Not interested in chitchat with savages.";
+                        // KNIGHT
+                        case 1 -> gp.ui.currentDialog = "The princess you seek was a kind lady. \n She is innocent in all this, I can guarantee. \n Please save her.";
+                        // ASSASSIN
+                        case 2 -> gp.ui.currentDialog = "You got guts, facing the monstrosities down there \n as an assassin.";
+                    }
                     break;
                 case 2:
+                    // EXIT DIALOGUE
                     gp.gameState= gp.DIALOGUE_STATE;
-                    gp.ui.currentDialog = "I used to work for the princess\nbut now im here";
+                    switch (gp.playerClass) {
+                        // WARRIOR
+                        case 0 -> gp.ui.currentDialog = "Get outta my sight.";
+                        // KNIGHT
+                        case 1 -> gp.ui.currentDialog = "Pleasure doing business with ye.";
+                        // ASSASSIN
+                        case 2 -> gp.ui.currentDialog = "Good luck.";
+                    }
                     break;
             }
         }

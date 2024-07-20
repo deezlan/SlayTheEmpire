@@ -25,11 +25,11 @@ public class NPC_Blacksmith extends Entity {
 
     public void setDialog() {
         // CHANGES DIALOG DEPENDING ON PLAYER CLASS
-        switch (gp.playerClass) {
+        switch (gp.player.playerClass) {
             // WARRIOR
             case 0 -> dialogs[0][0] = "Greetings, savage of the sand dunes. \n Cough up the coin, then I'll help.";
             // KNIGHT
-            case 1 -> dialogs[0][0] = "Welcome, Sir. What services do you seek of me?";
+            case 1 -> dialogs[0][0] = "Welcome, Sir. What services do you seek of \n me?";
             // ASSASSIN
             case 2 -> dialogs[0][0] = "Hello, shadow walker.";
 

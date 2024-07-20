@@ -52,7 +52,7 @@ public class KeyHandler implements KeyListener {
                     case 1 -> System.out.println("My name is Yoshikage Kira. I'm 33 years old. My house is in the northeast section of Morioh, where all the villas are, and I am not married. I work as an employee for the Kame Yu department stores, and I get home every day by 8 PM at the latest. \n I don't smoke, but I occasionally drink. I'm in bed by 11 PM, and make sure I get eight hours of sleep, no matter what. After having a glass of warm milk and doing about twenty minutes of stretches before going to bed, I usually have no problems sleeping until morning. \n Just like a baby, I wake up without any fatigue or stress in the morning. I was told there were no issues at my last check-up. I'm trying to explain that I'm a person who wishes to live a very quiet life. I take care not to trouble myself with any enemies, like winning and losing, that would cause me to lose sleep at night. \n That is how I deal with society, and I know that is what brings me happiness. Although, if I were to fight I wouldn't lose to anyone."); // LOAD GAME
                     case 2 -> gp.gameState = gp.CREDITS_STATE;
                     case 3 -> {
-                        gp.gameState = gp.OPTIONS_DIALOGUE_STATE;
+                        gp.gameState = gp.MAIN_OPTIONS_STATE;
                         // DEFAULT TO FIRST OPTION
                         gp.ui.commandNum = 0;
                     }
@@ -170,7 +170,7 @@ public class KeyHandler implements KeyListener {
 
     public void controlsState(int code) {
         if (code == KeyEvent.VK_ESCAPE) {
-            gp.gameState = gp.startMenuState;
+            gp.gameState = gp.MAIN_MENU_STATE;
         }
     }
 
@@ -189,31 +189,8 @@ public class KeyHandler implements KeyListener {
                 }
                 case 3: {
                     gp.ui.commandNum = 0;
-                    gp.gameState = gp.characterSelectionState;
-                    break;
-                }
-            }
-        }
-        if (code == KeyEvent.VK_ESCAPE) gp.gameState = gp.characterSelectionState;
-    }
-
-    public void menuDiffState(int code) {
-        if (code == KeyEvent.VK_W || code == KeyEvent.VK_S) {
-            gp.ui.commandNum += (code == KeyEvent.VK_W) ? -1 : 1;
-            gp.ui.commandNum = Math.max(0, Math.min(gp.ui.commandNum, 3));
-            gp.playSE(1);
-        }
-        if (code == KeyEvent.VK_SPACE) {
-            gp.playSE(2);
-            switch (gp.ui.commandNum) {
-                case 0, 1, 2: {
-                    gp.gameMode = gp.ui.commandNum + 1;
-                    gp.loadLevel();
-                    break;
-                }
-                case 3: {
-                    gp.ui.commandNum = 0;
                     gp.gameState = gp.CHAR_SELECT_STATE;
+                    break;
                 }
             }
         }
@@ -298,7 +275,7 @@ public class KeyHandler implements KeyListener {
             }
 
             // GO TO OPTIONS
-            if (code == KeyEvent.VK_ESCAPE) gp.gameState = gp.OPTIONS_MENU_STATE;
+            if (code == KeyEvent.VK_ESCAPE) gp.gameState = gp.INGAME_OPTIONS_STATE;
 
             // PLAYER ACTIONS
             if (code == KeyEvent.VK_W) wPressed = true;
@@ -342,23 +319,30 @@ public class KeyHandler implements KeyListener {
 
     private void optionState(int code) {
         if (code == KeyEvent.VK_ESCAPE) {
-            gp.gameState = (gp.gameState == gp.PLAY_STATE) ? gp.OPTIONS_MENU_STATE : (gp.gameState == gp.OPTIONS_MENU_STATE) ? gp.PLAY_STATE : gp.gameState;
+            gp.gameState = (gp.gameState == gp.PLAY_STATE) ? gp.INGAME_OPTIONS_STATE : (gp.gameState == gp.INGAME_OPTIONS_STATE) ? gp.PLAY_STATE : gp.gameState;
         }
 
         // OPTION SELECT
-        if (gp.gameState == gp.OPTIONS_MENU_STATE || gp.gameState == gp.OPTIONS_DIALOGUE_STATE) {
+        if (gp.gameState == gp.INGAME_OPTIONS_STATE || gp.gameState == gp.MAIN_OPTIONS_STATE) {
             if (code == KeyEvent.VK_W || code == KeyEvent.VK_S) {
                 gp.ui.commandNum += (code == KeyEvent.VK_W) ? -1 : 1;
                 gp.ui.commandNum = Math.max(0, Math.min(gp.ui.commandNum, 6));
                 gp.playSE(1);
 
                 // skip through 2 empty button for option 2
-                if (gp.gameState == gp.OPTIONS_DIALOGUE_STATE) {
+                if (gp.gameState == gp.MAIN_OPTIONS_STATE) {
                     if (gp.ui.commandNum == 3) {
                         gp.ui.commandNum += (code == KeyEvent.VK_W) ? -1 : 2;
                     }
                     if (gp.ui.commandNum == 4) {
                         gp.ui.commandNum += (code == KeyEvent.VK_W) ? -2 : 1;
+                    }
+                }
+
+                // NOT ALLOW PLAYER TO GO BACK TO LOBBY WHILE IN LOBBY
+                if (gp.gameState == gp.INGAME_OPTIONS_STATE && gp.currentMap == 0) {
+                    if (gp.ui.commandNum == 3) {
+                        gp.ui.commandNum += (code == KeyEvent.VK_W) ? -1 : 1;
                     }
                 }
             }
@@ -406,8 +390,9 @@ public class KeyHandler implements KeyListener {
                     }
                     // Back to Start Menu
                     case 4: {
-                        if (gp.gameState == gp.OPTIONS_MENU_STATE) {
+                        if (gp.gameState == gp.INGAME_OPTIONS_STATE) {
                             gp.gameState = gp.MAIN_MENU_STATE;
+                            gp.ui.commandNum = 0;
                         }
                         break;
                     }
@@ -417,13 +402,13 @@ public class KeyHandler implements KeyListener {
                         gp.ui.inpUser = "";
                         gp.ui.inpPass = "";
                         gp.ui.inpPassHidden = "";
-                        gp.gameState = gp.loginState;
+                        gp.gameState = gp.LOGIN_STATE;
                         break;
                     }
 
                     // BACK
                     case 6: {
-                        gp.gameState = (gp.gameState == gp.optionState) ? gp.playState : gp.startMenuState;
+                        gp.gameState = (gp.gameState == gp.INGAME_OPTIONS_STATE) ? gp.PLAY_STATE : gp.MAIN_MENU_STATE;
                         gp.ui.commandNum = 0;
                         break;
                     }
@@ -477,7 +462,7 @@ public class KeyHandler implements KeyListener {
             characterSelectionState(code);
         } else if (gp.gameState == gp.PLAY_STATE) {
             playState(code);
-        } else if (gp.gameState == gp.OPTIONS_MENU_STATE || gp.gameState == gp.OPTIONS_DIALOGUE_STATE) {
+        } else if (gp.gameState == gp.INGAME_OPTIONS_STATE || gp.gameState == gp.MAIN_OPTIONS_STATE) {
             optionState(code);
         } else if (gp.gameState == gp.SHOP_STATE) {
             shopState(code);
@@ -494,7 +479,7 @@ public class KeyHandler implements KeyListener {
         } else if (gp.gameState == gp.DIFF_DIALOGUE_STATE) {
             dialogueDiffState(code);
         } else if (gp.gameState == gp.DIFF_MENU_STATE) {
-            menuDiffState(code);
+            difficultySelectState(code);
         } else if (gp.gameState == gp.MAP_SELECTION) {
             dialogueMap(code);
         } else if (gp.gameState == gp.BLACKSMITH_DIALOGUE_STATE) {

@@ -81,15 +81,28 @@ public class UI {
     };
 
     public String[][] controlScheme = {
+            // MOVEMENT
             {"Up", "W"},
             {"Left", "A"},
             {"Down", "S"},
             {"Right", "D"},
-            {"Attack", "Mouse1"},
+
+            // INGAME
+            {"Attack", "Right-Click"},
+            {"Use Weapon", "Left-Click"},
+            {"Weapon 1", "1"},
+            {"Weapon 2", "2"},
+            {"Weapon 3", "3"},
+            {"Potion", "E"},
+
+            // MENU
             {"Options", "Esc"},
             {"Pause", "P"},
             {"Select", "Space"},
-            {"Goon", "???"},
+
+            // Extra
+            {"Ohio", "Sigma"},
+            {"Skibidi", "Rizz"},
 
     };
 
@@ -664,50 +677,43 @@ public class UI {
     }
 
     public void mapSelect() {
-        try {
-            InputStream is = new FileInputStream("ARCADE_N.TTF");
-            Font arcade = Font.createFont(Font.TRUETYPE_FONT, is);
-            arcade = arcade.deriveFont(Font.PLAIN, 16);
-            int frameX = (gp.TILE_SIZE * 6) - 24;
-            int frameY = gp.TILE_SIZE * 3;
-            int frameWidth = (gp.TILE_SIZE * 6);
-            int frameHeight= (gp.TILE_SIZE * 6);
-            int x = gp.TILE_SIZE * 6 - 24;
-            int y = gp.TILE_SIZE * 3;
-            g2.setFont(arcade);
+        g2.setFont(g2.getFont().deriveFont(Font.PLAIN,16));
+        int frameX = (gp.TILE_SIZE * 6) - 24;
+        int frameY = gp.TILE_SIZE * 3;
+        int frameWidth = (gp.TILE_SIZE * 6);
+        int frameHeight= (gp.TILE_SIZE * 6);
+        int x = gp.TILE_SIZE * 6 - 24;
+        int y = gp.TILE_SIZE * 3;
 
-            g2.setColor(Color.BLACK);
-            g2.fillRoundRect(frameX,frameY,frameWidth,frameHeight,0,0);
+        g2.setColor(Color.BLACK);
+        g2.fillRoundRect(frameX,frameY,frameWidth,frameHeight,0,0);
 
-            g2.setColor(Color.WHITE);
-            g2.setStroke(new BasicStroke((5)));
-            g2.drawRoundRect(frameX,frameY,frameWidth,frameHeight,0,0);
+        g2.setColor(Color.WHITE);
+        g2.setStroke(new BasicStroke((5)));
+        g2.drawRoundRect(frameX,frameY,frameWidth,frameHeight,0,0);
 
-            g2.setColor(Color.WHITE);
+        g2.setColor(Color.WHITE);
 
-            x += gp.TILE_SIZE;
-            y += gp.TILE_SIZE;
-            String text = "Map Selection";
-            g2.drawString(text,x,y);
-            y += gp.TILE_SIZE;
-            g2.drawString("Map 1",x,y);
-            if (commandNum == 0) {
-                g2.drawString(">", x-24,y);
-            }
-            y += gp.TILE_SIZE;
-            g2.drawString("Map 2",x,y);
-            if (commandNum == 1) {
-                g2.drawString(">", x-24,y);
-            }
-            y += gp.TILE_SIZE;
-            g2.drawString("Exit",x,y);
-            if (commandNum == 2) {
-                g2.drawString(">", x-24,y);
-            }
-
-        } catch (FontFormatException | IOException e) {
-            e.printStackTrace(System.out);
+        x += gp.TILE_SIZE;
+        y += gp.TILE_SIZE;
+        String text = "Map Selection";
+        g2.drawString(text,x,y);
+        y += gp.TILE_SIZE;
+        g2.drawString("Map 1",x,y);
+        if (commandNum == 0) {
+            g2.drawString(">", x-24,y);
         }
+        y += gp.TILE_SIZE;
+        g2.drawString("Map 2",x,y);
+        if (commandNum == 1) {
+            g2.drawString(">", x-24,y);
+        }
+        y += gp.TILE_SIZE;
+        g2.drawString("Exit",x,y);
+        if (commandNum == 2) {
+            g2.drawString(">", x-24,y);
+        }
+
     }
 
     public void dialogueDifficultySelect() {
@@ -960,14 +966,14 @@ public class UI {
         int frameWidth = gp.TILE_SIZE*8;
         int frameHeight = gp.TILE_SIZE*10;
 
-        if (gp.gameState == gp.OPTIONS_MENU_STATE) {
+        if (gp.gameState == gp.INGAME_OPTIONS_STATE) {
             subState = 0;
-        } else if (gp.gameState == gp.OPTIONS_DIALOGUE_STATE) {
+        } else if (gp.gameState == gp.MAIN_OPTIONS_STATE) {
             subState = 1;
         }
 
         switch (subState) {
-            case 0: drawSubWindow(frameX, frameY, frameWidth, frameHeight); options_PLAY_STATE(frameX, frameY);  break;
+            case 0: drawSubWindow(frameX, frameY, frameWidth, frameHeight + 30); options_PLAY_STATE(frameX, frameY);  break;
             case 1: options_startMenu(frameY); break;
             case 2: break;
         }
@@ -976,7 +982,7 @@ public class UI {
     private void drawVolumeBar(int volumeScale, int x, int y) {
         int barWidth = 240;
         int barHeight = 20;
-        if (gp.gameState == gp.OPTIONS_MENU_STATE) {
+        if (gp.gameState == gp.INGAME_OPTIONS_STATE) {
             barWidth = 180;
         }
         int fillColor = (int) (barWidth * (volumeScale / 5.0f));
@@ -1032,11 +1038,18 @@ public class UI {
 
         text = "Back to Lobby";
         y += (int) (gp.TILE_SIZE * 1.2);
-        g2.setColor(gp.ui.commandNum == 3? Color.YELLOW : Color.WHITE);
-        g2.drawString(text, x, y);
-        if (gp.ui.commandNum == 3) {
-            g2.drawString(">", x - 25, y);
+        if (gp.currentMap == 0) {
+            g2.setColor(Color.GRAY);
+            g2.drawString(text, x, y);
+        } else {
+            g2.setColor(gp.ui.commandNum == 3? Color.YELLOW : Color.WHITE);
+            g2.drawString(text, x, y);
+            if (gp.ui.commandNum == 3) {
+                g2.drawString(">", x - 25, y);
+            }
         }
+
+
 
         // START MENU
         text = "Start Menu";
@@ -1136,6 +1149,7 @@ public class UI {
     }
 
     public void drawControls() {
+        g2.setColor(Color.WHITE);
         g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 20F));
         String text = "(Esc to Exit)";
         g2.drawString(text,10,30);
@@ -1143,9 +1157,9 @@ public class UI {
         int x, y;
         // TITLE
         g2.setFont(g2.getFont().deriveFont(Font.BOLD, 40f));
-        text = "Options";
+        text = "Controls";
         x = getXForCenteredText(text);
-        y = gp.TILE_SIZE;
+        y = (int) (gp.TILE_SIZE*1.5);
         g2.drawString(text, x, y);
 
         int frameX = 0;
@@ -1156,18 +1170,25 @@ public class UI {
 
         int controlX = 0;
         int controlY = gp.TILE_SIZE*3;
+        int offsetX = 90;
         g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 35F));
+        int columnCount = 0;
+        int columnWidth = gp.SCREEN_WIDTH/2;
         for (String[] controlScheme : controlScheme) {
             for (int j = 0; j < controlScheme.length; j++) {
                 String line = controlScheme[j];
                 if (j == 0) {
-                    controlX = getXForCenteredText(line) - 90;
+                    controlX = (getXForCenteredText(line) - 180) + columnCount * columnWidth - offsetX;
                 } else if (j == 1) {
-                    controlX = getXForCenteredText(line) + 90;
+                    controlX = getXForCenteredText(line) + columnCount * columnWidth - offsetX;
                 }
                 g2.drawString(line, controlX, controlY);
             }
             controlY += 50;
+            if (controlY > gp.SCREEN_HEIGHT) {
+                controlY = gp.TILE_SIZE*3;
+                columnCount++;
+            }
         }
     }
 
@@ -1308,8 +1329,8 @@ public class UI {
         // DIFFICULTY SELECTION
         if (gp.gameState == gp.DIFF_MENU_STATE) drawDifficultySelect();
         // MENU OPTION & GAMEPLAY OPTION
-        if (gp.gameState == gp.OPTIONS_MENU_STATE) drawOptions();
-        if (gp.gameState == gp.OPTIONS_DIALOGUE_STATE) {
+        if (gp.gameState == gp.INGAME_OPTIONS_STATE) drawOptions();
+        if (gp.gameState == gp.MAIN_OPTIONS_STATE) {
             drawBG();
             drawOptions();
         }
@@ -1336,5 +1357,6 @@ public class UI {
         if (gp.gameState == gp.MAP_SELECTION) mapSelect();
         // BLACK SMITH DIALOGUE SELECTION
         if (gp.gameState == gp.BLACKSMITH_DIALOGUE_STATE) dialogueBlackSmithSelect();
+        if (gp.gameState == gp.CONTROLS_STATE) drawControls();
     }
 }

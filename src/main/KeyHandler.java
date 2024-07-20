@@ -450,7 +450,7 @@ public class KeyHandler implements KeyListener {
                     gp.ui.slotRow--;
                 }
             }
-            if (code == KeyEvent.VK_ENTER){
+            if (code == KeyEvent.VK_SPACE){
 //                NPC_Blacksmith bs = (NPC_Blacksmith) gp.npcArr[gp.currentMap][1];
                 OBJ_Shop shop = (OBJ_Shop) gp.objArr[gp.currentMap][0];
                 if (gp.player.totalCoins >= shop.getShopItems().get(gp.ui.slotRow).price)
@@ -465,7 +465,7 @@ public class KeyHandler implements KeyListener {
                 }
             }
             if (code == KeyEvent.VK_ESCAPE) { // DONT REMOVE THIS, TO EXIT FROM SHOP
-                gp.gameState = gp.BLACKSMITH_DIALOGUE_STATE;
+                gp.gameState = gp.PLAY_STATE;
             }
         }
     }

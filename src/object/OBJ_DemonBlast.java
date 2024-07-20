@@ -11,6 +11,7 @@ public class OBJ_DemonBlast extends Projectile {
     public OBJ_DemonBlast(GamePanel gp) {
         super(gp);
         this.gp = gp;
+        setCollisionValues(0, 0, gp.TILE_SIZE * 5, gp.TILE_SIZE * 5);
 
         name = "Demon Blast";
         speed = 0;
@@ -19,8 +20,8 @@ public class OBJ_DemonBlast extends Projectile {
         damage = 3;
         alive = false;
         getImage();
-        solidArea.width = gp.TILE_SIZE*5;
-        solidArea.height = gp.TILE_SIZE*5;
+//        solidArea.width = gp.TILE_SIZE*5;
+//        solidArea.height = gp.TILE_SIZE*5;
     }
 
     public void getImage(){

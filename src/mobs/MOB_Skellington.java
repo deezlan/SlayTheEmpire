@@ -12,8 +12,12 @@ public class MOB_Skellington extends Entity {
         super(gp, worldX, worldY);
         this.gp = gp;
         setStatValues(1, 8, false, 2, 300);
-        setCollisionValues(58, 98, 50, 30);
-        setAttackValues(1, 7, 60, 60, false);
+        setCollisionValues(70, 90, 50, 30);
+        setAttackValues(1, 7, 80, 80, false);
+        setHitboxValues(65, 55, 70, 95);
+
+        attRangeHorz = 96;
+        attRangeVert = 80;
 
         // Load mob sprites
         getMobSprites();
@@ -31,14 +35,14 @@ public class MOB_Skellington extends Entity {
                 mobLeftAttackList.add(i, UtilityTool.loadSprite(dir + "attackLeft/" + i + ".png", "Missing idleRight " + i));
             }
 
-            UtilityTool.scaleEntityList(this, moveRightList, 150, 150);
-            UtilityTool.scaleEntityList(this,moveLeftList, 150, 150);
-            UtilityTool.scaleEntityList(this,mobLeftAttackList, 150, 150);
-            UtilityTool.scaleEntityList(this, mobRightAttackList, 150, 150);
-            UtilityTool.scaleEntityList(this,idleLeftList, 150, 150);
-            UtilityTool.scaleEntityList(this, idleRightList, 150, 150);
+            UtilityTool.scaleEntityList(this, moveRightList, 200, 200);
+            UtilityTool.scaleEntityList(this, moveLeftList, 200, 200);
+            UtilityTool.scaleEntityList(this, mobLeftAttackList, 200, 200);
+            UtilityTool.scaleEntityList(this, mobRightAttackList, 200, 200);
+            UtilityTool.scaleEntityList(this, idleLeftList, 200, 200);
+            UtilityTool.scaleEntityList(this, idleRightList, 200, 200);
 
-            System.out.println("Goblin sprites loaded successfully");
+            System.out.println("Skellington sprites loaded successfully");
         } catch (IOException e) {
             e.printStackTrace(System.out);
         }

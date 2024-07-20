@@ -10,26 +10,15 @@ public class OBJ_Gate extends Entity {
     int gateForm;
 
     public OBJ_Gate (GamePanel gp, int gateForm, int col, int row) {
-        super(gp);
+        super(gp, col * gp.TILE_SIZE, row * gp.TILE_SIZE);
         this.gp = gp;
         this.gateForm = gateForm;
         type = type_gate;
-        locked = false;
+        setCollisionValues(0, 0, 48, 48);
 
-        // Set position
-        worldX = col * gp.TILE_SIZE;
-        worldY = row * gp.TILE_SIZE;
 
         // Load save pedestal sprites
         getObjectSprites();
-
-        // Set collision settings
-        solidArea.x = 0;
-        solidArea.y = 0;
-        solidArea.width = 48;
-        solidArea.height = 48;
-        solidAreaDefaultX = solidArea.x;
-        solidAreaDefaultY = solidArea.y;
     }
 
     @Override

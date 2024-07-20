@@ -11,6 +11,7 @@ public class OBJ_Thunder extends Projectile {
     public OBJ_Thunder(GamePanel gp) {
         super(gp);
         this.gp = gp;
+        setCollisionValues(0, 0, gp.TILE_SIZE * 3, gp.TILE_SIZE * 3);
 
         speed = 0;
         maxLife = 50;
@@ -18,8 +19,6 @@ public class OBJ_Thunder extends Projectile {
         damage = 5;
         alive = false;
         getImage();
-        solidArea.width = gp.TILE_SIZE*3;
-        solidArea.height = gp.TILE_SIZE*3;
     }
 
     public void getImage() {

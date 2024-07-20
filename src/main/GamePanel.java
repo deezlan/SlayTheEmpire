@@ -199,7 +199,7 @@ public class GamePanel extends JPanel implements Runnable {
                     (cursorImg, new Point(0,0), "blank cursor");
         this.setCursor(blankCursor);
     }
-    private void showCursor() {
+    public void showCursor() {
         java.awt.Cursor defaultCursor = java.awt.Cursor.getDefaultCursor();
         this.setCursor(defaultCursor);
     }

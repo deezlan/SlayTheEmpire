@@ -756,27 +756,16 @@ public class UI {
         g2.drawString("Buy Items",x,y);
         if (commandNum == 0) {
             g2.drawString(">", x-24,y);
-            if (gp.keyH.enterPressed) {
-                gp.gameState = gp.SHOP_STATE;
-            }
         }
         y += gp.TILE_SIZE;
         g2.drawString("Talk",x,y);
         if (commandNum == 1) {
             g2.drawString(">", x-24,y);
-            if (gp.keyH.enterPressed) {
-                gp.gameState= gp.DIALOGUE_STATE;
-                currentDialog = "I used to work for the princess\nbut now im here";
-            }
         }
         y += gp.TILE_SIZE;
         g2.drawString("Exit",x,y);
         if (commandNum == 2) {
             g2.drawString(">", x-24,y);
-            if (gp.keyH.enterPressed) {
-                gp.gameState = gp.DIALOGUE_STATE;
-                currentDialog = "Come Again!";
-            }
         }
     }
 

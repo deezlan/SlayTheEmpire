@@ -55,9 +55,9 @@ public class CutsceneManager {
         }
         if (scenePhase == 2) {
             for (int i = 0; i < gp.mobArr[1].length; i++) {
-                if (gp.mobArr[gp.currentMap][i] != null && gp.mobArr[gp.currentMap][i].name.equals(BOSS_FrostGiant.monName)) {
-//                    gp.mobArr[gp.currentMap][i].sleep = false;
-                    gp.ui.npc = gp.mobArr[gp.currentMap][i];
+                if (gp.mobArr[gp.currentMap][12] != null && gp.mobArr[gp.currentMap][12].name.equals(BOSS_FrostGiant.monName)) {
+                    gp.mobArr[gp.currentMap][12].sleep = false;
+                    gp.ui.npc = gp.mobArr[gp.currentMap][12];
                     scenePhase++;
                     break;
                 }
@@ -66,8 +66,8 @@ public class CutsceneManager {
         if (scenePhase == 3) {
             gp.ui.drawDialogScreen();
             for (int i = 0; i < gp.mobArr[1].length; i++) {
-                if (gp.mobArr[gp.currentMap][i] != null && gp.mobArr[gp.currentMap][i].name.equals(BOSS_FrostGiant.monName)) {
-                    gp.mobArr[gp.currentMap][i].onPath = true;
+                if (gp.mobArr[gp.currentMap][12] != null && gp.mobArr[gp.currentMap][12].name.equals(BOSS_FrostGiant.monName)) {
+                    gp.mobArr[gp.currentMap][12].onPath = true;
                     break;
                 }
             }

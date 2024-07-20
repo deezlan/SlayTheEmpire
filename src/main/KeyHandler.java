@@ -14,7 +14,7 @@ public class KeyHandler implements KeyListener {
     public boolean
             wPressed, sPressed, aPressed, dPressed,
             ePressed, pPressed,
-            enterPressed, shotKeyPressed,
+            enterPressed, shotKeyPressed, spacePressed,
             onePressed, twoPressed, threePressed,
             escapePressed,
             showDebug, // DEBUG
@@ -94,24 +94,28 @@ public class KeyHandler implements KeyListener {
     }
 
     public void blacksmithDialogueState(int code) {
-        if(code == KeyEvent.VK_ENTER){
-            enterPressed = true;
+        if(code == KeyEvent.VK_SPACE){
+            switch(gp.ui.commandNum) {
+                case 0:
+                    gp.gameState = gp.SHOP_STATE;
+                    break;
+                case 1:
+                    gp.gameState= gp.DIALOGUE_STATE;
+                    gp.ui.currentDialog = "I used to work for the princess\nbut now im here";
+                    break;
+                case 2:
+                    gp.gameState= gp.DIALOGUE_STATE;
+                    gp.ui.currentDialog = "I used to work for the princess\nbut now im here";
+                    break;
+            }
         }
-
         if (gp.ui.subState == 0) {
-            if(code == KeyEvent.VK_W) {
-                gp.ui.commandNum--;
-                if(gp.ui.commandNum < 0) {
-                    gp.ui.commandNum = 2;
-                }
-            }
-            if(code == KeyEvent.VK_S) {
-                gp.ui.commandNum++;
-                if(gp.ui.commandNum > 2) {
-                    gp.ui.commandNum = 0;
-                }
-            }
+            if(code == KeyEvent.VK_W) gp.ui.commandNum--;
+            if(code == KeyEvent.VK_S) gp.ui.commandNum++;
         }
+        // LOOP BACK SELECTION
+        if(gp.ui.commandNum < 0) gp.ui.commandNum = 2;
+        if(gp.ui.commandNum > 2) gp.ui.commandNum = 0;
     }
 
     public void dialogueMap(int code) {
@@ -250,6 +254,7 @@ public class KeyHandler implements KeyListener {
             if (code == KeyEvent.VK_3) threePressed = true;
             if (code == KeyEvent.VK_G) godModeOn = !godModeOn;
             if (code == KeyEvent.VK_R) gp.player.restoreLife();
+            if (code == KeyEvent.VK_SPACE) spacePressed = true;
         }
     }
 
@@ -265,10 +270,10 @@ public class KeyHandler implements KeyListener {
     }
 
     public void dialogState(int code) {
-        if (code == KeyEvent.VK_E) {
-            ePressed = true;
-            if (gp.gameState == gp.SHOP_STATE)
-                gp.gameState = gp.PLAY_STATE;
+        if (code == KeyEvent.VK_SPACE) {
+            spacePressed = true;
+        } if (gp.gameState == gp.DIALOGUE_STATE) {
+            gp.gameState = gp.PLAY_STATE;
         }
     }
 
@@ -367,12 +372,12 @@ public class KeyHandler implements KeyListener {
                     gp.ui.slotRow--;
                 }
             }
-            if (code == KeyEvent.VK_ENTER){
+            if (code == KeyEvent.VK_SPACE){
                 NPC_Blacksmith bs = (NPC_Blacksmith) gp.npcArr[gp.currentMap][1];
                 if (gp.player.totalCoins >= bs.getShopItems().get(gp.ui.slotRow).price)
                     bs.buy();
 
-                gp.gameState = gp.PLAY_STATE;
+                gp.gameState = gp.BLACKSMITH_DIALOGUE_STATE;
             }
             if (code == KeyEvent.VK_S) {
                 if (gp.ui.slotRowMove != 3){
@@ -380,7 +385,7 @@ public class KeyHandler implements KeyListener {
                     gp.ui.slotRow++;
                 }
             }
-            if (code == KeyEvent.VK_E) { // DONT REMOVE THIS, TO EXIT FROM SHOP
+            if (code == KeyEvent.VK_ESCAPE) { // DONT REMOVE THIS, TO EXIT FROM SHOP
                 gp.gameState = gp.BLACKSMITH_DIALOGUE_STATE;
             }
         }

@@ -15,7 +15,7 @@ public class DataStorage implements Serializable {
     int playerClass;
     int progressSaved;
 
-    ArrayList<Integer> weapons = new ArrayList();
+    ArrayList<Integer> weapons = new ArrayList<>();
 
 
 }

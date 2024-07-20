@@ -10,8 +10,8 @@ import java.io.*;
 public class SaveLoad implements Serializable {
     GamePanel gp;
     DataStorage ds = new DataStorage();
-    File trySaveFiles[];
-    public Boolean filledSaveFile[];
+    File[] trySaveFiles;
+    public Boolean[] filledSaveFile;
     public boolean isloadPage = false;
     public int slot;
 
@@ -95,9 +95,6 @@ public class SaveLoad implements Serializable {
                 return false;
             }
         }
-        if (firstElement){
-            return false;
-        }
-        return true;
+        return !firstElement;
     }
 }

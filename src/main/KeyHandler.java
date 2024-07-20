@@ -93,12 +93,13 @@ public class KeyHandler implements KeyListener {
                     break;
                 }
                 case 3: {
+                    gp.ui.commandNum = 0;
                     gp.gameState = gp.characterSelectionState;
                     break;
                 }
             }
         }
-
+        if (code == KeyEvent.VK_ESCAPE) gp.gameState = gp.characterSelectionState;
     }
 
     public void loginState(int code) {
@@ -167,9 +168,7 @@ public class KeyHandler implements KeyListener {
             }
             gp.gameState = gp.difficultySelectState;
         }
-        if (code == KeyEvent.VK_ESCAPE) {
-            gp.gameState = gp.startMenuState;
-        }
+        if (code == KeyEvent.VK_ESCAPE) gp.gameState = gp.startMenuState;
     }
 
     public void playState(int code) {

@@ -165,26 +165,6 @@ public class UI {
         g2.drawImage(bg2, 0, 0, null);
     }
 
-    public void drawCharacterSelectPreview() {
-        int gifX = 300;
-        int gifY = 150;
-
-        switch (gp.ui.commandNum) {
-            case 0 -> {
-                g2.drawImage(warriorSelected, 0, 0, null);
-                g2.drawImage(warriorGif, (gp.SCREEN_WIDTH - gifX)/2 - 225,  (gp.SCREEN_HEIGHT - gifY)/3 + 40, gifX, gifY, null);
-            }
-            case 1 -> {
-                g2.drawImage(knightSelected, 0, 0, null);
-                g2.drawImage(knightGif, (gp.SCREEN_WIDTH - gifX)/2, (gp.SCREEN_HEIGHT - gifY)/3 + 50, gifX, gifY, null);
-            }
-            case 2 -> {
-                g2.drawImage(assassinSelected, 0, 0, null);
-                g2.drawImage(assassinGif, (gp.SCREEN_WIDTH - gifX)/2 + 225, (gp.SCREEN_HEIGHT - gifY)/3 + 40, gifX, gifY, null);
-            }
-        }
-    }
-
     public void drawHotbar() {
         int frameX = gp.TILE_SIZE/2;
         int frameY = gp.TILE_SIZE*11-5;
@@ -589,6 +569,26 @@ public class UI {
         }
     }
 
+    public void drawCharacterSelectPreview() {
+        int gifX = 300;
+        int gifY = 150;
+
+        switch (gp.ui.commandNum) {
+            case 0 -> {
+                g2.drawImage(warriorSelected, 0, 0, null);
+                g2.drawImage(warriorGif, (gp.SCREEN_WIDTH - gifX)/2 - 225,  (gp.SCREEN_HEIGHT - gifY)/3 + 40, gifX, gifY, null);
+            }
+            case 1 -> {
+                g2.drawImage(knightSelected, 0, 0, null);
+                g2.drawImage(knightGif, (gp.SCREEN_WIDTH - gifX)/2, (gp.SCREEN_HEIGHT - gifY)/3 + 50, gifX, gifY, null);
+            }
+            case 2 -> {
+                g2.drawImage(assassinSelected, 0, 0, null);
+                g2.drawImage(assassinGif, (gp.SCREEN_WIDTH - gifX)/2 + 225, (gp.SCREEN_HEIGHT - gifY)/3 + 40, gifX, gifY, null);
+            }
+        }
+    }
+
     // CHARACTER SELECTION SCREEN
     public void drawCharacterSelection() {
         g2.setColor(Color.BLACK);
@@ -599,11 +599,6 @@ public class UI {
 
         g2.setColor(Color.WHITE);
         g2.setFont(g2.getFont().deriveFont(Font.BOLD, 40F));
-//
-//        String text = "Select Your Class";
-//        int x = getXForCenteredText(text);
-//        int y = gp.TILE_SIZE*3;
-//        g2.drawString(text, x, y);
 
         g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 20F));
         String text = "(Esc to Exit)";
@@ -1173,6 +1168,6 @@ public class UI {
         // DEATH
         if (gp.gameState == gp.deathState) drawDeathScreen();
         // TRANSITION
-        if(gp.gameState == gp.transitionState) drawTransition();
+        if (gp.gameState == gp.transitionState) drawTransition();
     }
 }

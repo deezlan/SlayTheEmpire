@@ -236,10 +236,10 @@ public class KeyHandler implements KeyListener {
                 // skip through 2 empty button for option 2
                 if (gp.gameState == gp.optionState2) {
                     if (gp.ui.commandNum == 3) {
-                        gp.ui.commandNum += (code == KeyEvent.VK_W) ? -1 : 3;
+                        gp.ui.commandNum += (code == KeyEvent.VK_W) ? -1 : 2;
                     }
                     if (gp.ui.commandNum == 4) {
-                        gp.ui.commandNum += (code == KeyEvent.VK_W) ? -3 : 1;
+                        gp.ui.commandNum += (code == KeyEvent.VK_W) ? -2 : 1;
                     }
                 }
             }

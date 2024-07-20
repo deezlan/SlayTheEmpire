@@ -34,6 +34,16 @@ public class KeyHandler implements KeyListener {
         }
     }
 
+    public void saveState(int code){
+        if(code == KeyEvent.VK_ESCAPE){
+            if(gp.saveLoad.isloadPage){
+                gp.gameState = gp.MAIN_MENU_STATE;
+            } else{
+                gp.gameState = gp.PLAY_STATE;
+            }
+        }
+    }
+
     public void startMenuState(int code) {
         if (gp.gameState == gp.MAIN_MENU_STATE){
             if (code == KeyEvent.VK_W || code == KeyEvent.VK_S) {
@@ -388,6 +398,10 @@ public class KeyHandler implements KeyListener {
             dialogueDiffState(code);
         } else if (gp.gameState == gp.DIFF_MENU_STATE) {
             menuDiffState(code);
+        } else if(gp.gameState == gp.SAVEPAGE_STATE){
+            saveState(code);
+        }else if(gp.gameState == gp.SAVEPAGE2_STATE){
+            saveState(code);
         }
 
         if (code == KeyEvent.VK_T){

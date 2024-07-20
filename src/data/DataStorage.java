@@ -1,7 +1,5 @@
 package data;
 
-import main.GamePanel;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 

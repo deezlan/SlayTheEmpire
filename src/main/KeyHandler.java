@@ -29,36 +29,33 @@ public class KeyHandler implements KeyListener {
     public void titleState(int code) {
         gp.playMusic(1);
         if (code == KeyEvent.VK_SPACE) {
-            if (gp.gameState == gp.TITLE_STATE){
-                gp.playSE(2);
-                gp.gameState = gp.LOGIN_STATE;
-            }
+            gp.playSE(2);
+            gp.gameState = gp.LOGIN_STATE;
+            gp.mouseH.clearMouseClick();
         }
     }
 
     public void startMenuState(int code) {
-        if (gp.gameState == gp.MAIN_MENU_STATE){
-            if (code == KeyEvent.VK_W || code == KeyEvent.VK_S) {
-                gp.ui.commandNum += (code == KeyEvent.VK_W) ? -1 : 1;
-                gp.playSE(1);
-                gp.ui.commandNum = Math.max(0, Math.min(gp.ui.commandNum, 4));
-            }
+        if (code == KeyEvent.VK_W || code == KeyEvent.VK_S) {
+            gp.ui.commandNum += (code == KeyEvent.VK_W) ? -1 : 1;
+            gp.playSE(1);
+            gp.ui.commandNum = Math.max(0, Math.min(gp.ui.commandNum, 4));
+        }
 
-            // SELECT OPTION
-            if (code == KeyEvent.VK_SPACE) {
-                //SOUND EFFECT
-                gp.playSE(2);
-                switch (gp.ui.commandNum) {
-                    case 0 -> gp.gameState = gp.CHAR_SELECT_STATE; // GO TO LOGIN
-                    case 1 -> System.out.println("My name is Yoshikage Kira. I'm 33 years old. My house is in the northeast section of Morioh, where all the villas are, and I am not married. I work as an employee for the Kame Yu department stores, and I get home every day by 8 PM at the latest. \n I don't smoke, but I occasionally drink. I'm in bed by 11 PM, and make sure I get eight hours of sleep, no matter what. After having a glass of warm milk and doing about twenty minutes of stretches before going to bed, I usually have no problems sleeping until morning. \n Just like a baby, I wake up without any fatigue or stress in the morning. I was told there were no issues at my last check-up. I'm trying to explain that I'm a person who wishes to live a very quiet life. I take care not to trouble myself with any enemies, like winning and losing, that would cause me to lose sleep at night. \n That is how I deal with society, and I know that is what brings me happiness. Although, if I were to fight I wouldn't lose to anyone."); // LOAD GAME
-                    case 2 -> gp.gameState = gp.CREDITS_STATE;
-                    case 3 -> {
-                        gp.gameState = gp.MAIN_OPTIONS_STATE;
-                        // DEFAULT TO FIRST OPTION
-                        gp.ui.commandNum = 0;
-                    }
-                    case 4 -> System.exit(0); // EXIT GAME
+        // SELECT OPTION
+        if (code == KeyEvent.VK_SPACE) {
+            //SOUND EFFECT
+            gp.playSE(2);
+            switch (gp.ui.commandNum) {
+                case 0 -> gp.gameState = gp.CHAR_SELECT_STATE; // GO TO LOGIN
+                case 1 -> System.out.println("My name is Yoshikage Kira. I'm 33 years old. My house is in the northeast section of Morioh, where all the villas are, and I am not married. I work as an employee for the Kame Yu department stores, and I get home every day by 8 PM at the latest. \n I don't smoke, but I occasionally drink. I'm in bed by 11 PM, and make sure I get eight hours of sleep, no matter what. After having a glass of warm milk and doing about twenty minutes of stretches before going to bed, I usually have no problems sleeping until morning. \n Just like a baby, I wake up without any fatigue or stress in the morning. I was told there were no issues at my last check-up. I'm trying to explain that I'm a person who wishes to live a very quiet life. I take care not to trouble myself with any enemies, like winning and losing, that would cause me to lose sleep at night. \n That is how I deal with society, and I know that is what brings me happiness. Although, if I were to fight I wouldn't lose to anyone."); // LOAD GAME
+                case 2 -> gp.gameState = gp.CREDITS_STATE;
+                case 3 -> {
+                    gp.gameState = gp.MAIN_OPTIONS_STATE;
+                    // DEFAULT TO FIRST OPTION
+                    gp.ui.commandNum = 0;
                 }
+                case 4 -> System.exit(0); // EXIT GAME
             }
         }
     }
@@ -199,10 +196,6 @@ public class KeyHandler implements KeyListener {
     }
 
     public void loginState(int code) {
-        if (code == KeyEvent.VK_ESCAPE) {
-            gp.gameState = gp.TITLE_STATE;
-        }
-
         if (gp.ui.typingUsername) {
             if (code == KeyEvent.VK_BACK_SPACE) {
                 System.out.println("Test backspace");
@@ -268,30 +261,28 @@ public class KeyHandler implements KeyListener {
     }
 
     public void playState(int code) {
-        if (gp.gameState == gp.PLAY_STATE){
-            if (!musicPlaying) {
-                gp.music.stopAll();
-                gp.playMusic(4);
-                musicPlaying = true;
-            }
-
-            // GO TO OPTIONS
-            if (code == KeyEvent.VK_ESCAPE) gp.gameState = gp.INGAME_OPTIONS_STATE;
-
-            // PLAYER ACTIONS
-            if (code == KeyEvent.VK_W) wPressed = true;
-            if (code == KeyEvent.VK_S) sPressed = true;
-            if (code == KeyEvent.VK_A) aPressed = true;
-            if (code == KeyEvent.VK_D) dPressed = true;
-            if (code == KeyEvent.VK_E) ePressed = true;
-            if (code == KeyEvent.VK_F) shotKeyPressed = true;
-            if (code == KeyEvent.VK_1) onePressed = true;
-            if (code == KeyEvent.VK_2) twoPressed = true;
-            if (code == KeyEvent.VK_3) threePressed = true;
-            if (code == KeyEvent.VK_G) godModeOn = !godModeOn;
-            if (code == KeyEvent.VK_R) gp.player.restoreLife();
-            if (code == KeyEvent.VK_SPACE) spacePressed = true;
+        if (!musicPlaying) {
+            gp.music.stopAll();
+            gp.playMusic(4);
+            musicPlaying = true;
         }
+
+        // GO TO OPTIONS
+        if (code == KeyEvent.VK_ESCAPE) gp.gameState = gp.INGAME_OPTIONS_STATE;
+
+        // PLAYER ACTIONS
+        if (code == KeyEvent.VK_W) wPressed = true;
+        if (code == KeyEvent.VK_S) sPressed = true;
+        if (code == KeyEvent.VK_A) aPressed = true;
+        if (code == KeyEvent.VK_D) dPressed = true;
+        if (code == KeyEvent.VK_E) ePressed = true;
+        if (code == KeyEvent.VK_F) shotKeyPressed = true;
+        if (code == KeyEvent.VK_1) onePressed = true;
+        if (code == KeyEvent.VK_2) twoPressed = true;
+        if (code == KeyEvent.VK_3) threePressed = true;
+        if (code == KeyEvent.VK_G) godModeOn = !godModeOn;
+        if (code == KeyEvent.VK_R) gp.player.restoreLife();
+        if (code == KeyEvent.VK_SPACE) spacePressed = true;
     }
 
     public void pauseState(int code) {
@@ -419,54 +410,50 @@ public class KeyHandler implements KeyListener {
     }
 
     public void shopState(int code) {
-        if (gp.gameState == gp.SHOP_STATE){
-            if (code == KeyEvent.VK_W) {
-                if (gp.ui.slotRowMove != 0){
-                    gp.ui.slotRowMove -= 1;
-                    gp.ui.slotRow--;
-                }
+        if (code == KeyEvent.VK_W) {
+            if (gp.ui.slotRowMove != 0){
+                gp.ui.slotRowMove -= 1;
+                gp.ui.slotRow--;
             }
-            if (code == KeyEvent.VK_SPACE){
-                NPC_Blacksmith bs = (NPC_Blacksmith) gp.npcArr[gp.currentMap][1];
-                if (gp.player.totalCoins >= bs.getShopItems().get(gp.ui.slotRow).price)
-                    bs.buy();
+        }
+        if (code == KeyEvent.VK_SPACE){
+            NPC_Blacksmith bs = (NPC_Blacksmith) gp.npcArr[gp.currentMap][1];
+            if (gp.player.totalCoins >= bs.getShopItems().get(gp.ui.slotRow).price)
+                bs.buy();
 
-                gp.gameState = gp.BLACKSMITH_DIALOGUE_STATE;
-            }
-            if (code == KeyEvent.VK_S) {
-                if (gp.ui.slotRowMove != 3){
-                    gp.ui.slotRowMove += 1;
-                    gp.ui.slotRow++;
-                }
+            gp.gameState = gp.BLACKSMITH_DIALOGUE_STATE;
+        }
+        if (code == KeyEvent.VK_S) {
+            if (gp.ui.slotRowMove != 3){
+                gp.ui.slotRowMove += 1;
+                gp.ui.slotRow++;
             }
         }
     }
 
     public void potionShopState(int code){
-        if (gp.gameState == gp.POTION_SHOP_STATE){
-            if (code == KeyEvent.VK_W) {
-                if (gp.ui.slotRowMove != 0){
-                    gp.ui.slotRowMove -= 1;
-                    gp.ui.slotRow--;
-                }
+        if (code == KeyEvent.VK_W) {
+            if (gp.ui.slotRowMove != 0){
+                gp.ui.slotRowMove -= 1;
+                gp.ui.slotRow--;
             }
-            if (code == KeyEvent.VK_SPACE){
+        }
+        if (code == KeyEvent.VK_SPACE){
 //                NPC_Blacksmith bs = (NPC_Blacksmith) gp.npcArr[gp.currentMap][1];
-                OBJ_Shop shop = (OBJ_Shop) gp.objArr[gp.currentMap][0];
-                if (gp.player.totalCoins >= shop.getShopItems().get(gp.ui.slotRow).price)
-                    shop.buy();
+            OBJ_Shop shop = (OBJ_Shop) gp.objArr[gp.currentMap][0];
+            if (gp.player.totalCoins >= shop.getShopItems().get(gp.ui.slotRow).price)
+                shop.buy();
 
-                gp.gameState = gp.PLAY_STATE;
+            gp.gameState = gp.PLAY_STATE;
+        }
+        if (code == KeyEvent.VK_S) {
+            if (gp.ui.slotRowMove != 3){
+                gp.ui.slotRowMove += 1;
+                gp.ui.slotRow++;
             }
-            if (code == KeyEvent.VK_S) {
-                if (gp.ui.slotRowMove != 3){
-                    gp.ui.slotRowMove += 1;
-                    gp.ui.slotRow++;
-                }
-            }
-            if (code == KeyEvent.VK_ESCAPE) { // DONT REMOVE THIS, TO EXIT FROM SHOP
-                gp.gameState = gp.PLAY_STATE;
-            }
+        }
+        if (code == KeyEvent.VK_ESCAPE) { // DONT REMOVE THIS, TO EXIT FROM SHOP
+            gp.gameState = gp.PLAY_STATE;
         }
     }
 
@@ -514,17 +501,7 @@ public class KeyHandler implements KeyListener {
             blacksmithDialogueState(code);
         }
 
-        if (code == KeyEvent.VK_T){
-            showDebug = !showDebug;
-        }
-
-        // !!!!! LOGIN+START MENU !!!!!
-        if (code == KeyEvent.VK_SPACE) {
-            if (gp.gameState == gp.TITLE_STATE){
-                gp.playSE(2);
-                gp.gameState = gp.MAIN_MENU_STATE;
-            }
-        }
+        if (code == KeyEvent.VK_T) { showDebug = !showDebug; }
     }
     @Override
     public void keyReleased(KeyEvent e) {
@@ -537,11 +514,9 @@ public class KeyHandler implements KeyListener {
         if (code == KeyEvent.VK_P) { pPressed = false; }
         if (code == KeyEvent.VK_ENTER) { enterPressed = false; }
         if (code == KeyEvent.VK_F) { shotKeyPressed = false; }
-        if (code == KeyEvent.VK_1){ onePressed = false; }
-        if (code == KeyEvent.VK_2){ twoPressed = false; }
-        if (code == KeyEvent.VK_3){ threePressed = false; }
-        if (code == KeyEvent.VK_ESCAPE) {
-            escapePressed = false;
-        }
+        if (code == KeyEvent.VK_1) { onePressed = false; }
+        if (code == KeyEvent.VK_2) { twoPressed = false; }
+        if (code == KeyEvent.VK_3) { threePressed = false; }
+        if (code == KeyEvent.VK_ESCAPE) { escapePressed = false; }
     }
 }

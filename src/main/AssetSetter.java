@@ -13,10 +13,9 @@ public class AssetSetter {
 
     public void loadAssets() {
         setGates();
+        setObject();
         setNPC();
         setMonster();
-        setObject();
-        setGates();
     }
 
     public void setObject() {
@@ -33,9 +32,6 @@ public class AssetSetter {
                 gp.objArr[gp.currentMap][i] = new OBJ_ChatBubble(gp, 410, 230); i++;
                 gp.objArr[gp.currentMap][i] = new OBJ_ChatBubble(gp, 540, 410); i++;
                 gp.objArr[gp.currentMap][i] = new OBJ_ChatBubble(gp, 650, 80);
-
-                // TEST GATE - DELETE AFTER
-                gp.gateArr[gp.currentMap][0] = new OBJ_Gate(gp, 1, 12, 8);
                 break;
             case 1:
                 // TELEPORTING OBELISK
@@ -51,9 +47,6 @@ public class AssetSetter {
         int i = 0;
 
         switch (gp.currentMap) {
-            case 0:
-                System.out.println("Loading 0 gates for lobby");
-                break;
             case 1:
             {
                 // FIRST ROOM GATES index (0-4)
@@ -176,23 +169,48 @@ public class AssetSetter {
         switch (gp.currentMap) {
             case 1:
             {
-                gp.mobArr[gp.currentMap][i] = new MOB_RobotGuardian(gp, 400 + 48*17, 1968); i++;
-                gp.mobArr[gp.currentMap][i] = new MOB_Mushroom(gp, 350 + 48*17, 1968); i++;
-//                gp.mobArr[gp.currentMap][i] = new MOB_FlyingEye(gp, 350, 1968); i++;
-//                gp.mobArr[gp.currentMap][i] = new MOB_ArmoredGuardian(gp, 400, 1968); i++;
-//                gp.mobArr[gp.currentMap][i] = new MOB_SkeletonKnight(gp, 350, 1968); i++;
-//                gp.mobArr[gp.currentMap][i] = new MOB_Canine(gp, 350, 1968); i++;
-//                gp.mobArr[gp.currentMap][i] = new MOB_Slime(gp, 350, 1968); i++;
-//                gp.mobArr[gp.currentMap][i] = new MOB_Goblin(gp, 350, 1968); i++;
-//                gp.mobArr[gp.currentMap][i] = new MOB_Ramses(gp, 350, 1968); i++;
-//                gp.mobArr[gp.currentMap][i] = new MOB_Skellington(gp, 350, 1968); i++;
-                gp.mobArr[gp.currentMap][i] = new BOSS_FrostGiant(gp, 400 + 48*17, 180); i++;
-        }
+                // FIRST ROOM index 0-4
+                gp.mobArr[gp.currentMap][i] = new MOB_Goblin(gp, 1220, 1846); i++;
+                gp.mobArr[gp.currentMap][i] = new MOB_Goblin(gp, 1220, 1998); i++;
+                gp.mobArr[gp.currentMap][i] = new MOB_Slime(gp, 1460, 1764); i++;
+                gp.mobArr[gp.currentMap][i] = new MOB_Slime(gp, 1388, 1910); i++;
+                gp.mobArr[gp.currentMap][i] = new MOB_Slime(gp, 1460, 2054); i++;
+
+                // MINI-BOSS ROOM index 5-7
+                gp.mobArr[gp.currentMap][i] = new MOB_Mushroom(gp, 1316, 900); i++;
+                gp.mobArr[gp.currentMap][i] = new MOB_Mushroom(gp, 1316, 1000); i++; // replace with fireworm
+                gp.mobArr[gp.currentMap][i] = new MOB_Mushroom(gp, 1316, 1150); i++;
+
+                // FINAL BOSS ROOM index 8-12
+                gp.mobArr[gp.currentMap][i] = new MOB_Ramses(gp, 1113, 100); i++;
+                gp.mobArr[gp.currentMap][i] = new MOB_Ramses(gp, 1520, 100); i++;
+                gp.mobArr[gp.currentMap][i] = new MOB_Canine(gp, 1154, 300); i++;
+                gp.mobArr[gp.currentMap][i] = new MOB_Canine(gp, 1479, 300); i++;
+                gp.mobArr[gp.currentMap][i] = new BOSS_FrostGiant(gp, 1216, 180);
+            }
                 break;
             case 2:
             {
-                gp.mobArr[gp.currentMap][i] = new MOB_Canine(gp, 1600, 1968); i++;
-                gp.mobArr[gp.currentMap][i] = new MOB_Skellington(gp, 1700, 1968);
+                // FIRST ROOM index 0-3
+                gp.mobArr[gp.currentMap][i] = new MOB_RobotGuardian(gp, 910, 1660); i++;
+                gp.mobArr[gp.currentMap][i] = new MOB_FlyingEye(gp, 780, 1544); i++;
+                gp.mobArr[gp.currentMap][i] = new MOB_FlyingEye(gp, 1040, 1544); i++;
+                gp.mobArr[gp.currentMap][i] = new MOB_FlyingEye(gp, 908, 1792); i++;
+
+                // MINI-BOSS ROOM index 4-6
+                gp.mobArr[gp.currentMap][i] = new MOB_SkeletonKnight(gp, 460, 947); i++;
+                gp.mobArr[gp.currentMap][i] = new MOB_SkeletonKnight(gp, 460, 1248); i++;
+                gp.mobArr[gp.currentMap][i] = new MOB_SkeletonKnight(gp, 200, 1098); i++; // replace with demon slime
+
+                // 'FINAL' BOSS ROOM index 7-10
+                gp.mobArr[gp.currentMap][i] = new MOB_ArmoredGuardian(gp, 100, 96); i++;
+                gp.mobArr[gp.currentMap][i] = new MOB_ArmoredGuardian(gp, 422, 96); i++;
+                gp.mobArr[gp.currentMap][i] = new MOB_Skellington(gp, 266, 220); i++;
+                gp.mobArr[gp.currentMap][i] = new MOB_SkeletonKnight(gp, 254, 48); i++; // replace with stone golem
+
+                // STORY BOSS ROOM index 11-12
+                gp.mobArr[gp.currentMap][i] = new MOB_Skellington(gp, 1475, 180); i++; // replace with king
+                gp.mobArr[gp.currentMap][i] = new MOB_Skellington(gp, 1551, 180); // replace with princess
             }
         }
     }

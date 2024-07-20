@@ -131,7 +131,7 @@ public class KeyHandler implements KeyListener {
     }
 
     public void dialogueMap(int code) {
-        if(code == KeyEvent.VK_ENTER){
+        if(code == KeyEvent.VK_SPACE){
             if (gp.ui.commandNum < 2)
                 gp.eHandler.changeMap(gp.ui.commandNum + 1);
             else

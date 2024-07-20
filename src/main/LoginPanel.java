@@ -87,7 +87,7 @@ public class LoginPanel extends JPanel {
 
         if (userData.containsKey(username) && userData.get(username).equals(password)) {
             // Login successful, switch to play state
-            gp.gameState = gp.playState;
+            gp.gameState = gp.PLAY_STATE;
         } else {
             JOptionPane.showMessageDialog(this, "Invalid username or password", "Login Failed", JOptionPane.ERROR_MESSAGE);
         }

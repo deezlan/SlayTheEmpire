@@ -21,8 +21,8 @@ public class OBJ_Raygun extends Entity {
             throw new IOException(errorMsg, e);
         }
 
-        projectile1 = new OBJ_ChaosBall(gp);
         System.out.println("Projectile initialized in Flamethrower: " + this.projectile1);
+        projectile1 = new OBJ_ChaosBall(gp);
         projectile2 = new OBJ_ChaosBall(gp);
         projectile3 = new OBJ_ChaosBall(gp);
 

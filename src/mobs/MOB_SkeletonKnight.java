@@ -14,6 +14,10 @@ public class MOB_SkeletonKnight extends Entity {
         setStatValues(1, 4, false, 6, 66);
         setCollisionValues(70, 90, 40, 40);
         setAttackValues(1, 6, 50, 50, false);
+        setHitboxValues(80, 70, 40, 60);
+
+        attRangeHorz = 66;
+        attRangeVert = 50;
 
         // Load mob sprites
         getMobSprites();

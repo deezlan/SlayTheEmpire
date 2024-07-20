@@ -30,77 +30,78 @@ public class Player extends Entity {
     public int playerClass;
     private int delta;
 
-//    public ArrayList<Entity> inventory = new ArrayList<>(); temp commented
-//    public final int inventorySize = 8; temp commented
-
     public Player (GamePanel gp, KeyHandler keyH, Cursor cursor, int playerClass) {
-        super(gp);
+        super(gp,303,9);
         this.gp = gp;
         this.keyH = keyH;
         this.playerClass = playerClass;
         this.cursor = cursor;
 
-        // CENTER PLAYER SCREEN POSITION BASED ON PLAYER CLASS
-        switch (playerClass) {
-            case 0:
-                screenX = (gp.SCREEN_WIDTH/2) - (gp.TILE_SIZE/2) - 90; // CENTERED PLAYER 0 POSITION
-                screenY = (gp.SCREEN_HEIGHT/2) - 72;
-                break;
-            case 1:
-                screenX = (gp.SCREEN_WIDTH/2) - (gp.TILE_SIZE/2) - 72; // CENTERED PLAYER 1 POSITION
-                screenY = (gp.SCREEN_HEIGHT/2) - 72;
-                break;
-            case 2:
-                default:
-                screenX = (gp.SCREEN_WIDTH/2) - (gp.TILE_SIZE/2) - 48; // CENTERED PLAYER 2 POSITION
-                screenY = (gp.SCREEN_HEIGHT/2) - 72;
-        }
+        // CENTER PLAYER SCREEN POSITION
+        screenX = (gp.SCREEN_WIDTH/2) - (gp.TILE_SIZE/2) - 72; // CENTERED PLAYER 0 POSITION
+//        switch (playerClass) {
+//            case 0:
+//                screenX = (gp.SCREEN_WIDTH/2) - (gp.TILE_SIZE/2) - 72; // CENTERED PLAYER 0 POSITION
+//                break;
+//            case 1:
+//                screenX = (gp.SCREEN_WIDTH/2) - (gp.TILE_SIZE/2) - 72; // CENTERED PLAYER 1 POSITION
+//                break;
+//            case 2:
+//                default:
+//                screenX = (gp.SCREEN_WIDTH/2) - (gp.TILE_SIZE/2) - 72; // CENTERED PLAYER 2 POSITION
+//        }
+        screenY = (gp.SCREEN_HEIGHT/2) - 72;
 
-        setDefaultValues();
-        setCollisionValues();
+        setStatValues(3, 8, false, 0, 0);
+        setCollisionValues(80, 60, 40, 30);
+        setHitboxValues(75, 20, 50, 60);
+        setAttackValues(5, 2, 50, 75, false);
         setItems();
         getPlayerSprites();
         getPlayerAttackSprites();
     }
 
-    @Override
-    public void setStatValues(int defaultSpeed, int maxLife, boolean hasRanged, boolean isBoss, int mobBossNum) {
-        super.setStatValues(defaultSpeed, maxLife, hasRanged, isBoss, mobBossNum);
-    }
-
-    @Override
-    public void setAttackValues(int damage, int damageSprite, int attWidth, int attHeight) {
-        super.setAttackValues(damage, damageSprite, attWidth, attHeight);
-    }
-
     // DEFAULT INITIALIZATION
-    public void setDefaultValues() {
-        worldX = 303; // PLAYER SPAWN X
-        worldY = 9; // PLAYER SPAWN Y
-        defaultSpeed = 3;
-        speed = defaultSpeed;
-        type = type_player;
 
-        // ATTRIBUTES
-        maxLife = 6;
-        currentLife = maxLife;
+    @Override
+    public void setStatValues(int defaultSpeed, int maxLife, boolean isBoss, int mobBossNum, int coinValue) {
+        type = type_player;
         totalCoins = 500;
-        damage = 1;
-        damageSprite = 2;
+
+        // ATTRIBUTES DEPENDING ON CHOSEN CLASS
+        switch (playerClass) {
+            case 0:
+                this.defaultSpeed = defaultSpeed;
+                this.speed = this.defaultSpeed;
+                this.maxLife = maxLife;
+                currentLife = maxLife;
+                break;
+            case 1:
+                this.defaultSpeed = 3;
+                this.speed = this.defaultSpeed;
+                this.maxLife = 10;
+                this.currentLife = this.maxLife;
+                break;
+            case 2:
+                this.defaultSpeed = 4;
+                this.speed = defaultSpeed;
+                this.maxLife = 6;
+                currentLife = this.maxLife;
+        }
     }
-    private void setCollisionValues() {
+    @Override
+    public void setCollisionValues(int x, int y, int width, int height) {
         // Set collision settings based on character class
+
         switch (playerClass) {
             case 0:
                 solidArea = new Rectangle(); // draws a square at the centre of the player
-                solidArea.x = 90; // position of actual collision square
-                solidArea.y = 60;
+                solidArea.x = x; // position of actual collision square
+                solidArea.y = y;
                 solidAreaDefaultX = solidArea.x;
                 solidAreaDefaultY = solidArea.y;
-                solidArea.width = 40; // outer area of collision square
-                solidArea.height = 30;
-                attackArea.width = gp.TILE_SIZE*2;
-                attackArea.height = gp.TILE_SIZE*3;
+                solidArea.width = width; // outer area of collision square
+                solidArea.height = height;
                 break;
             case 1:
                 solidArea = new Rectangle(); // draws a square at the centre of the player
@@ -108,35 +109,55 @@ public class Player extends Entity {
                 solidArea.y = 60;
                 solidAreaDefaultX = solidArea.x;
                 solidAreaDefaultY = solidArea.y;
-                solidArea.width = 50; // outer area of collision square
+                solidArea.width = 40; // outer area of collision square
                 solidArea.height = 30;
 
                 // IMPLEMENT THESE VALUES
-                attackArea.width = gp.TILE_SIZE*2;
-                attackArea.height = gp.TILE_SIZE*3;
-
+                attackArea.width = 50;
+                attackArea.height = 85;
                 break;
             case 2:
                 solidArea = new Rectangle(); // draws a square at the centre of the player
-                solidArea.x = 75; // position of actual collision square
-                solidArea.y = 60;
+                solidArea.x = 85; // position of actual collision square
+                solidArea.y = 50;
                 solidAreaDefaultX = solidArea.x;
                 solidAreaDefaultY = solidArea.y;
                 solidArea.width = 30; // outer area of collision square
-                solidArea.height = 30;
+                solidArea.height = 40;
 
                 // IMPLEMENT THESE VALUES
-                attackArea.width = gp.TILE_SIZE*2;
-                attackArea.height = gp.TILE_SIZE*3;
+                attackArea.width = 1;
+                attackArea.height = 75;
+        }
+    }
+    @Override
+    public void setAttackValues(int damage, int damageSprite, int attWidth, int attHeight, boolean hasRanged) {
+        this.damageSprite = 2;
+
+        switch (playerClass) {
+            case 0:
+                this.damage = damage;
+                attackArea.width = attWidth;
+                attackArea.height = attHeight;
+                break;
+            case 1:
+                this.damage = 3;
+                attackArea.width = 50;
+                attackArea.height = 85;
+                break;
+            case 2:
+                this.damage = 4;
+                attackArea.width = 1;
+                attackArea.height = 75;
         }
     }
     public void setItems() {
         //add inventory
     }
     public void setDefaultPosition() {
+        worldX = 303;
+        worldY = 9;
         gp.currentMap = 0;
-        worldX = 303; // PLAYER SPAWN X
-        worldY = 9; // PLAYER SPAWN Y
         action = "idleRight";
     }
 
@@ -158,10 +179,25 @@ public class Player extends Entity {
 
             // ADJUST FOR ATTACK
             switch (action) {
-                case "idleRight", "moveRight": worldX += attackArea.width; break;
-                case "idleLeft", "moveLeft": worldX -= attackArea.width; break;
-                case "moveUp": worldY -= attackArea.height; break;
-                case "moveDown": worldY += attackArea.height; break;
+                case "moveUp":
+                    worldY -= (playerRightAttackList.get(0).getHeight() - attackArea.height)/2;
+                    if (playerClass == 0) worldY -= 50;
+                    if (playerClass == 1) worldY -= 70;
+                    if (playerClass == 2) worldY -= 55;
+                    break;
+                case "moveDown": worldY += (playerRightAttackList.get(0).getHeight() - attackArea.height)/4; break;
+                case "idleLeft", "moveLeft":
+                    if (playerClass == 0) worldY -= 50;
+                    if (playerClass == 1) worldY -= 70;
+                    if (playerClass == 2) worldY -= 55;
+                    worldX -= (playerRightAttackList.get(0).getWidth() - attackArea.width)/2;
+                    break;
+                case "idleRight", "moveRight":
+                    if (playerClass == 0) worldY -= 50;
+                    if (playerClass == 1) worldY -= 70;
+                    if (playerClass == 2) worldY -= 55;
+                    worldX += (playerRightAttackList.get(0).getWidth() - attackArea.width)/2;
+                    break;
                 case "moveUpRight":
                     worldX += attackArea.width;
                     worldY -= attackArea.height;
@@ -185,9 +221,6 @@ public class Player extends Entity {
             // CHECK MONSTER COLLISION
             int monsterIndex = gp.cChecker.checkEntityCollision(this, gp.mobArr);
             damageMonster(monsterIndex, damage,this);
-
-            int iTileIndex = gp.cChecker.checkEntityCollision(this,gp.iTile);
-            damageInteractiveTile(iTileIndex);
 
             // CHANGE BACK TO ORIGINAL
             worldX = currentWorldX;
@@ -249,16 +282,11 @@ public class Player extends Entity {
         target.speed += 10;
         target.knockBack = true;
     }
-    public void damageInteractiveTile(int i) {
-        if(i != 999 && gp.iTile[gp.currentMap][i].destructible){
-            gp.iTile[i] = null;
-        }
-    }
 
     // INTERACT METHODS
     public void interactObject (int index) {
         if (index == 1){
-            gp.gameState = gp.savePageState;
+            gp.gameState = gp.SAVEPAGE_STATE;
             gp.saveLoad.isloadPage = false;
             gp.showCursor();
         }
@@ -267,7 +295,7 @@ public class Player extends Entity {
                 gp.objArr[gp.currentMap][index].use(this);
                 gp.objArr[gp.currentMap][index] = null;
             } else if (type == type_shop){
-                gp.gameState = gp.shopState;
+                gp.gameState = gp.SHOP_STATE;
             } else {
                 if (!gp.objArr[gp.currentMap][index].message.isEmpty())
                     System.out.println(gp.objArr[gp.currentMap][index].message);
@@ -283,7 +311,10 @@ public class Player extends Entity {
             gp.npcArr[gp.currentMap][index].speak();
         }
         if (index == 1) {
-            gp.gameState = gp.shopState;
+            gp.gameState = gp.SHOP_STATE;
+        }
+        if (index == 3) {
+            gp.ui.difficultySelect();
         }
     }
     public void interactMob (int index) {
@@ -300,18 +331,17 @@ public class Player extends Entity {
     public void update() {
         delta++;
         if(!keyH.godModeOn){
-            if (currentLife <= 0){
-                gp.gameState = gp.deathState;
-            }
+            if (currentLife <= 0)
+                gp.gameState = gp.DEATH_STATE;
         }
 
         if (currentLife > maxLife){
             currentLife = maxLife;
         }
 
-        if (attacking)
+        if (attacking) {
             startAttack();
-        else {
+        } else {
 
             if ((keyH.wPressed && keyH.sPressed) || (keyH.aPressed && keyH.dPressed)) {
                 action = "stuckOppositeDirection";
@@ -410,27 +440,9 @@ public class Player extends Entity {
 
             // CALCULATE CENTRAL AXIS OF CURSOR
             if (gp.currentMap == 0) {
-                if (playerClass == 0) {
-                    // WARRIOR
-                    cursor.calculateAngle((int)(worldX + gp.TILE_SIZE * 2.3), worldY + gp.TILE_SIZE + 10);
-                } else if (playerClass == 1) {
-                    // KNIGHT
-                    cursor.calculateAngle((worldX + gp.TILE_SIZE * 2 + 5), worldY + gp.TILE_SIZE);
-                } else if (playerClass == 2) {
-                    // ASSASSIN
-                    cursor.calculateAngle((int)(worldX + gp.TILE_SIZE * 1.9), worldY + gp.TILE_SIZE);
-                }
+                cursor.calculateAngle(worldX + gp.TILE_SIZE * 2 + 3, worldY + gp.TILE_SIZE);
             } else {
-                if (playerClass == 0) {
-                    // WARRIOR
-                    cursor.calculateAngle((int)(screenX + gp.TILE_SIZE * 2.3), screenY + gp.TILE_SIZE + 10);
-                } else if (playerClass == 1) {
-                    // KNIGHT
-                    cursor.calculateAngle((screenX + gp.TILE_SIZE * 2 + 5), screenY + gp.TILE_SIZE);
-                } else if (playerClass == 2) {
-                    // ASSASSIN
-                    cursor.calculateAngle((int)(screenX + gp.TILE_SIZE * 1.9), screenY + gp.TILE_SIZE);
-                }
+                cursor.calculateAngle((screenX + gp.TILE_SIZE * 2 + 3), screenY + gp.TILE_SIZE);
             }
         }
 
@@ -527,7 +539,7 @@ public class Player extends Entity {
 
         if (animationSpriteNum > playerRightAttackList.size())
             animationSpriteNum = 0;
-        BufferedImage animationImage = lookingRight? playerRightAttackList.get(animationSpriteNum) : playerLeftAttackList.get(animationSpriteNum);
+        BufferedImage animationImage = lookingRight ? playerRightAttackList.get(animationSpriteNum) : playerLeftAttackList.get(animationSpriteNum);
 
         switch (gp.currentMap){ // SWITCH TO SWITCH STATEMENT
             case 0:
@@ -559,31 +571,10 @@ public class Player extends Entity {
                 }
         }
         // Draw arrow
-        switch (gp.currentMap){
-            case 0:
-                if (playerClass == 0) {
-                    // WARRIOR
-                    cursor.draw(g2, (int)(worldX + gp.TILE_SIZE * 2.3), worldY + gp.TILE_SIZE);
-                } else if (playerClass == 1) {
-                    // KNIGHT
-                    cursor.draw(g2, worldX + gp.TILE_SIZE * 2 + 5, worldY + gp.TILE_SIZE); // For fixed camera
-                } else if (playerClass == 2) {
-                    // ASSASSIN
-                    cursor.draw(g2, (int)(worldX + gp.TILE_SIZE * 1.9), worldY + gp.TILE_SIZE); // For fixed camera
-                }
-                break;
-            case 1,2:
-                if (playerClass == 0) {
-                    // WARRIOR
-                    cursor.draw(g2, (int)(screenX + gp.TILE_SIZE * 2.3), screenY + gp.TILE_SIZE);
-                } else if (playerClass == 1) {
-                    // KNIGHT
-                    cursor.draw(g2, (int)(screenX + gp.TILE_SIZE * 2.09), screenY + gp.TILE_SIZE);
-                } else if (playerClass == 2) {
-                    // ASSASSIN
-                    cursor.draw(g2, (int)(screenX + gp.TILE_SIZE * 1.86), screenY + gp.TILE_SIZE);
-                }
-                break;
+        if (gp.currentMap == 0) {
+            cursor.draw(g2, worldX + gp.TILE_SIZE * 2 + 3, worldY + gp.TILE_SIZE);
+        } else {
+            cursor.draw(g2, (int)(screenX + gp.TILE_SIZE * 2.09), screenY + gp.TILE_SIZE);
         }
     }
 
@@ -606,10 +597,10 @@ public class Player extends Entity {
                     }
 
                     // Scale sprites up
-                    UtilityTool.scaleEntityList(this, moveRightList, 220, 96);
-                    UtilityTool.scaleEntityList(this, moveLeftList, 220, 96);
-                    UtilityTool.scaleEntityList(this, idleRightList, 220, 96);
-                    UtilityTool.scaleEntityList(this, idleLeftList, 220, 96);
+                    UtilityTool.scaleEntityList(this, moveRightList, 200, 96);
+                    UtilityTool.scaleEntityList(this, moveLeftList, 200, 96);
+                    UtilityTool.scaleEntityList(this, idleRightList, 200, 96);
+                    UtilityTool.scaleEntityList(this, idleLeftList, 200, 96);
                     break;
                 case 1: // KNIGHT
                     System.out.println("Player is a Knight");
@@ -646,10 +637,10 @@ public class Player extends Entity {
                     }
 
                     // Scale sprites up
-                    UtilityTool.scaleEntityList(this, moveRightList, 180, 96);
-                    UtilityTool.scaleEntityList(this, moveLeftList, 180, 96);
-                    UtilityTool.scaleEntityList(this, idleRightList, 180, 96);
-                    UtilityTool.scaleEntityList(this, idleLeftList, 180, 96);
+                    UtilityTool.scaleEntityList(this, moveRightList, 200, 96);
+                    UtilityTool.scaleEntityList(this, moveLeftList, 200, 96);
+                    UtilityTool.scaleEntityList(this, idleRightList, 200, 96);
+                    UtilityTool.scaleEntityList(this, idleLeftList, 200, 96);
                     break;
             }
         } catch (IOException e) {
@@ -668,8 +659,8 @@ public class Player extends Entity {
                     }
 
                     // Scale sprites up
-                    UtilityTool.scaleEntityList(this, playerRightAttackList, 220, 96);
-                    UtilityTool.scaleEntityList(this, playerLeftAttackList, 220, 96);
+                    UtilityTool.scaleEntityList(this, playerRightAttackList, 200, 96);
+                    UtilityTool.scaleEntityList(this, playerLeftAttackList, 200, 96);
                     break;
                 case 1: // KNIGHT
                     dir = "/player/Knight/";
@@ -689,8 +680,8 @@ public class Player extends Entity {
                         playerLeftAttackList.add(i, UtilityTool.loadSprite(dir + "attackLeft/" + i + ".png", "Missing attackLeft " + i));
                     }
                     // Scale sprites up
-                    UtilityTool.scaleEntityList(this, playerRightAttackList, 180, 96);
-                    UtilityTool.scaleEntityList(this, playerLeftAttackList, 180, 96);
+                    UtilityTool.scaleEntityList(this, playerRightAttackList, 200, 96);
+                    UtilityTool.scaleEntityList(this, playerLeftAttackList, 200, 96);
             }
         } catch (IOException e){
             e.printStackTrace(System.out);

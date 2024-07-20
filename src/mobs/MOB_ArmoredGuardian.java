@@ -11,9 +11,14 @@ public class MOB_ArmoredGuardian extends Entity {
     public MOB_ArmoredGuardian(GamePanel gp, int worldX, int worldY) {
         super(gp, worldX, worldY);
         this.gp = gp;
-        setStatValues(1, 4, true, false, 7);
-        setCollisionValues(58, 98, 28, 30);
+        setStatValues(1, 4, false, 7, 200);
+        setCollisionValues(70, 90, 40, 40);
+        setAttackValues(0, 0, 0, 0, true);
+        setHitboxValues(75, 75, 50, 50);
         projectile = new OBJ_Energyball(gp);
+
+        attRangeHorz = 96;
+        attRangeVert = 96;
 
         getMobSprites();
     }
@@ -32,12 +37,12 @@ public class MOB_ArmoredGuardian extends Entity {
                 mobLeftAttackList.add(i, UtilityTool.loadSprite(dir + "idleLeft/" + i + ".png", "Missing  Guardian Attack Animation " + i));
             }
 
-            UtilityTool.scaleEntityList(this, moveRightList, 150, 150);
-            UtilityTool.scaleEntityList(this,moveLeftList, 150, 150);
-            UtilityTool.scaleEntityList(this, mobLeftAttackList, 150, 150);
-            UtilityTool.scaleEntityList(this, mobRightAttackList, 150, 150);
-            UtilityTool.scaleEntityList(this,idleLeftList, 150, 150);
-            UtilityTool.scaleEntityList(this, idleRightList, 150, 150);
+            UtilityTool.scaleEntityList(this, moveRightList, 200, 200);
+            UtilityTool.scaleEntityList(this,moveLeftList, 200, 200);
+            UtilityTool.scaleEntityList(this, mobLeftAttackList, 200, 200);
+            UtilityTool.scaleEntityList(this, mobRightAttackList, 200, 200);
+            UtilityTool.scaleEntityList(this,idleLeftList, 200, 200);
+            UtilityTool.scaleEntityList(this, idleRightList, 200, 200);
             System.out.println("ATTACK is LOADED!");
 
             System.out.println("Slime sprites loaded successfully");

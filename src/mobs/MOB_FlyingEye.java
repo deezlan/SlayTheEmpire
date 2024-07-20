@@ -12,9 +12,15 @@ public class MOB_FlyingEye extends Entity {
     public MOB_FlyingEye(GamePanel gp, int worldX, int worldY) {
         super(gp, worldX, worldY);
         this.gp = gp;
-        setStatValues(1, 4, true, false, 8);
-        setCollisionValues(150, 170, 38, 30);
+        setStatValues(1, 4, false, 8, 100);
+        setCollisionValues(70, 80, 60, 45);
+        setAttackValues(0, 0, 0, 0, true);
+        setHitboxValues(60, 70, 80, 60);
         projectile = new OBJ_Rock(gp);
+        hasRanged = true;
+
+        attRangeHorz = 96;
+        attRangeVert = 96;
 
         // Load mob sprites
         getMobSprites();
@@ -32,12 +38,12 @@ public class MOB_FlyingEye extends Entity {
                 mobRightAttackList.add(i, UtilityTool.loadSprite(dir + "idleRight/" + i + ".png", "Missing idleRight " + i));
             }
 
-            UtilityTool.scaleEntityList(this, moveRightList, 300, 300);
-            UtilityTool.scaleEntityList(this, moveLeftList, 300, 300);
-            UtilityTool.scaleEntityList(this, mobLeftAttackList, 300, 300);
-            UtilityTool.scaleEntityList(this, mobRightAttackList, 300, 300);
-            UtilityTool.scaleEntityList(this, idleLeftList, 300, 300);
-            UtilityTool.scaleEntityList(this, idleRightList, 300, 300);
+            UtilityTool.scaleEntityList(this, moveRightList, 200, 200);
+            UtilityTool.scaleEntityList(this, moveLeftList, 200, 200);
+            UtilityTool.scaleEntityList(this, mobLeftAttackList, 200, 200);
+            UtilityTool.scaleEntityList(this, mobRightAttackList, 200, 200);
+            UtilityTool.scaleEntityList(this, idleLeftList, 200, 200);
+            UtilityTool.scaleEntityList(this, idleRightList, 200, 200);
 
             System.out.println("Slime sprites loaded successfully");
         } catch (IOException e) {

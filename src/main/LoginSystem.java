@@ -2,6 +2,9 @@ package main;
 
 import javax.swing.*;
 import java.io.*;
+import java.math.BigInteger;
+import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
 import java.util.Scanner;
 import java.security.NoSuchAlgorithmException;
 import java.security.MessageDigest;
@@ -10,70 +13,59 @@ public class LoginSystem extends JPanel {
     GamePanel gp;
     PrintWriter output;
     Scanner input;
-    boolean found;
     String encryptedPass;
-    String[] dbCredentials;
-    File file = new File("res/userData.txt");
+    String[] accUser;
+    HashMap<String, String> accDatabase;
+    File file;
 
     public LoginSystem(GamePanel gp) {
         this.gp = gp;
+        file = new File("res/userData.txt");
+        accDatabase = new HashMap<>();
+
         try {
             file.createNewFile();
         } catch (IOException e) { e.printStackTrace(System.out); }
     }
 
-    public void authLogin() {
+    public void loadUsers() {
+        accDatabase.clear();
         try {
             input = new Scanner(file);
-        } catch (IOException e) {
-            e.printStackTrace(System.out);
+        } catch (IOException e) { e.printStackTrace(System.out); }
+
+        while (input.hasNext()) {
+            accUser = input.nextLine().split(":");
+            accDatabase.put(accUser[0], accUser[1]);
         }
-        found = false;
+    }
+
+    public void authLogin() {
+        loadUsers();
 
         encryptPass();
-        // Loop through every entry in the file
-        while (input.hasNext() && !found) {
-            dbCredentials = input.nextLine().split(":");
-
-            if (dbCredentials[0].equalsIgnoreCase(gp.ui.inpUser)){
-                if (dbCredentials[1].equalsIgnoreCase(encryptedPass)){
-                    found = true;
-//                    gp.ui.validLogin = true;
-                    gp.gameState = gp.startMenuState;
-                    break;
-                }
-            }
-        }
-
-        if(!found) {
+        if (accDatabase.containsKey(gp.ui.inpUser)) {
+            if (accDatabase.get(gp.ui.inpUser).equals(encryptedPass)) {
+                gp.gameState = gp.MAIN_MENU_STATE;
+            } else { gp.ui.isInvalidLogin = true; }
+        } else {
             gp.ui.isInvalidLogin = true;
         }
     }
 
     public void authRegister() {
-        try {
-            input = new Scanner(file);
-            FileWriter fw = new FileWriter(file, true);
-            BufferedWriter bw = new BufferedWriter(fw);
-            output = new PrintWriter(bw);
-        } catch (IOException e) {
-            e.printStackTrace(System.out);
-        }
-        found = false;
+        loadUsers();
 
-        encryptPass();
-        // Loop through every entry in the file
-        while(input.hasNext() && !found) {
-            dbCredentials = input.nextLine().split(":");
+        if (accDatabase.containsKey(gp.ui.inpUser)) {
+            gp.ui.isUserTaken = true;
+        } else {
+            try {
+                FileWriter fw = new FileWriter(file, true);
+                BufferedWriter bw = new BufferedWriter(fw);
+                output = new PrintWriter(bw);
+            } catch (IOException e) { e.printStackTrace(System.out); }
 
-            if (dbCredentials[0].equalsIgnoreCase(gp.ui.inpUser)){
-                found = true;
-                gp.ui.usernameTaken = true;
-                break;
-            }
-        }
-
-        if (!found) {
+            encryptPass();
             output.print(gp.ui.inpUser + ":" + encryptedPass + "\n");
             output.close();
         }
@@ -81,20 +73,16 @@ public class LoginSystem extends JPanel {
 
     public void encryptPass() {
         try {
-            // Initialize MD5 Hashing Algorithm
-            MessageDigest m = MessageDigest.getInstance("MD5");
-            m.update(gp.ui.inpPass.getBytes());
+            MessageDigest md = MessageDigest.getInstance("SHA-256");
 
-            // Convert Hash value into bytes
-            byte[] bytes = m.digest();
+            BigInteger number = new BigInteger(1, md.digest(gp.ui.inpPass.getBytes(StandardCharsets.UTF_8)));
+            StringBuilder hexString = new StringBuilder(number.toString(16));
 
-            // Convert into hexadecimal format
-            StringBuilder s = new StringBuilder();
-            for (byte aByte : bytes)
-                s.append(Integer.toString((aByte & 0xff) + 0x100, 16).substring(1));
+            while (hexString.length() < 32) {
+                hexString.insert(0, '0');
+            }
 
-            // Store in String
-            encryptedPass = s.toString();
+            encryptedPass = hexString.toString();
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace(System.out);
         }

@@ -16,6 +16,7 @@ import java.util.Comparator;
 
 //import TileInteractive.InteractiveTIle;
 import ai.Pathfinder;
+import data.SaveLoad;
 import entity.Cursor;
 import entity.Entity;
 import entity.Player;
@@ -47,6 +48,8 @@ public class GamePanel extends JPanel implements Runnable {
 
     // LOGIN
     public LoginSystem loginSys = new LoginSystem(this);
+    public SaveLoad saveLoad;
+//    public SaveLoad saveLoad = new SaveLoad(this, 3, ui.inpUser);
 
     // SOUND
     Sound music = new Sound();
@@ -64,6 +67,7 @@ public class GamePanel extends JPanel implements Runnable {
     public Player player;
     public int playerClass;
     public Cursor cursor = new Cursor(); // Initialize cursor
+    public int progressSaved;
 
     // ENTITY AND OBJECTS ARRAYS
     private final ArrayList<Entity> entityList = new ArrayList<>();
@@ -74,7 +78,6 @@ public class GamePanel extends JPanel implements Runnable {
             mobArr = new Entity[MAX_MAP][20],
             gateArr = new Entity[MAX_MAP][50],
             projectileArr = new Entity[MAX_MAP][50];
-//    public InteractiveTIle[][] iTile = new InteractiveTIle[MAX_MAP][50];
 
     // CUTSCENE
     public boolean bossBattleOn = false;
@@ -90,7 +93,6 @@ public class GamePanel extends JPanel implements Runnable {
             CHAR_SELECT_STATE = 3,
             DIFF_MENU_STATE = 4,
             INGAME_OPTIONS_STATE = 5,
-            MAIN_OPTIONS_STATE = 13,
             CONTROLS_STATE = 6,
             CREDITS_STATE = 7,
             PLAY_STATE = 8,
@@ -98,12 +100,15 @@ public class GamePanel extends JPanel implements Runnable {
             SHOP_STATE = 10,
             DIFF_DIALOGUE_STATE = 11,
             DIALOGUE_STATE = 12,
+            MAIN_OPTIONS_STATE = 13,
             CUTSCENE_STATE = 14,
             DEATH_STATE = 15,
             TRANSITION_STATE = 16,
-            MAP_SELECTION = 17,
-            BLACKSMITH_DIALOGUE_STATE = 18,
-            POTION_SHOP_STATE = 19,
+            SAVEPAGE_STATE = 17,
+            SAVEPAGE2_STATE = 18,
+            MAP_SELECTION = 19,
+            BLACKSMITH_DIALOGUE_STATE = 20,
+            POTION_SHOP_STATE = 21,
 
             // DIFFICULTY MODES
             EASY_MODE = 1,
@@ -118,7 +123,7 @@ public class GamePanel extends JPanel implements Runnable {
         this.setFocusable(true); // pass the player instance variable to the KeyHandler constructor
 
         // DEFAULT SETTINGS
-        music.volumeScale = 2;
+        music.volumeScale = 1;
         effect.volumeScale = 3;
         gameMode = EASY_MODE;
 
@@ -149,6 +154,7 @@ public class GamePanel extends JPanel implements Runnable {
         gameThread = new Thread(this);
         gameThread.start();
     }
+    // FPS SETTINGS
     @Override
     public void run() {
         // FPS SETTINGS
@@ -196,7 +202,7 @@ public class GamePanel extends JPanel implements Runnable {
                     (cursorImg, new Point(0,0), "blank cursor");
         this.setCursor(blankCursor);
     }
-    private void showCursor() {
+    public void showCursor() {
         java.awt.Cursor defaultCursor = java.awt.Cursor.getDefaultCursor();
         this.setCursor(defaultCursor);
     }

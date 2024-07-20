@@ -299,6 +299,11 @@ public class Player extends Entity {
 
     // INTERACT METHODS
     public void interactObject (int index) {
+        if (index == 1){
+            gp.gameState = gp.SAVEPAGE_STATE;
+            gp.saveLoad.isLoadPage = false;
+            gp.showCursor();
+        }
         if (index != 999) {
             if (gp.objArr[gp.currentMap][index].type == type_pickup) {
                 gp.objArr[gp.currentMap][index].use(this);

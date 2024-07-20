@@ -11,8 +11,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class NPC_Blacksmith extends Entity {
-    Player player;
-
     public static ArrayList<Entity> shopItems = new ArrayList<>();
     public NPC_Blacksmith(GamePanel gp, int worldX, int worldY) {
         super(gp, worldX, worldY);
@@ -24,15 +22,16 @@ public class NPC_Blacksmith extends Entity {
     }
 
     public void setDialog() {
-        // CHANGES DIALOG DEPENDING ON PLAYER CLASS
-        switch (gp.player.playerClass) {
-            // WARRIOR
-            case 0 -> dialogs[0][0] = "Greetings, savage of the sand dunes. \n Cough up the coin, then I'll help.";
-            // KNIGHT
-            case 1 -> dialogs[0][0] = "Welcome, Sir. What services do you seek of \n me?";
-            // ASSASSIN
-            case 2 -> dialogs[0][0] = "Hello, shadow walker.";
-
+        switch(gp.player.playerClass) {
+            case 0:
+                dialogs[0][0] = "Greetings, savage of the sand dunes.\n Cough up the coin, then I'll help.";
+                break;
+            case 1:
+                dialogs[0][0] = "Welcome, Sir. \nWhat services do you seek of me?";
+                break;
+            case 2:
+                dialogs[0][0] = "Hello, shadow walker.";
+                break;
         }
     }
 

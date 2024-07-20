@@ -9,7 +9,6 @@ import entity.Player;
 
 public class KeyHandler implements KeyListener {
     GamePanel gp;
-    Player player;
     boolean musicPlaying = false; // check if music is already playing
 
     public boolean
@@ -97,11 +96,6 @@ public class KeyHandler implements KeyListener {
                     break;
             }
         }
-        if (code == KeyEvent.VK_W || code == KeyEvent.VK_S) {
-            gp.ui.commandNum += (code == KeyEvent.VK_W) ? -1 : 1;
-            gp.ui.commandNum = Math.max(0, Math.min(gp.ui.commandNum, 3));
-            gp.playSE(1);
-        }
         if (gp.ui.subState == 0) {
             if(code == KeyEvent.VK_W) gp.ui.commandNum--;
             if(code == KeyEvent.VK_S) gp.ui.commandNum++;
@@ -118,27 +112,31 @@ public class KeyHandler implements KeyListener {
                     gp.gameState = gp.SHOP_STATE;
                     break;
                 case 1:
-                    // TALK
                     gp.gameState= gp.DIALOGUE_STATE;
-                    switch (gp.player.playerClass) {
-                        // WARRIOR
-                        case 0 -> gp.ui.currentDialog = "Not interested in chitchat with savages.";
-                        // KNIGHT
-                        case 1 -> gp.ui.currentDialog = "The princess you seek was a kind lady. \n She is innocent in all this, I can guarantee. \n Please save her.";
-                        // ASSASSIN
-                        case 2 -> gp.ui.currentDialog = "You got guts, facing the monstrosities \n down there as an assassin.";
+                    switch(gp.player.playerClass) {
+                        case 0:
+                            gp.ui.currentDialog = "Not interested in chitchat with savages.";
+                            break;
+                        case 1:
+                            gp.ui.currentDialog = "The princess you seek was a kind lady. \n She is innocent in all this, I can guarantee. \n Please save her.";
+                            break;
+                        case 2:
+                            gp.ui.currentDialog = "You got guts, facing the monstrosities \n down there as an assassin.";
+                            break;
                     }
                     break;
                 case 2:
-                    // EXIT DIALOGUE
                     gp.gameState= gp.DIALOGUE_STATE;
-                    switch (gp.player.playerClass) {
-                        // WARRIOR
-                        case 0 -> gp.ui.currentDialog = "Get outta my sight.";
-                        // KNIGHT
-                        case 1 -> gp.ui.currentDialog = "Pleasure doing business with ye.";
-                        // ASSASSIN
-                        case 2 -> gp.ui.currentDialog = "Good luck.";
+                    switch(gp.player.playerClass) {
+                        case 0:
+                            gp.ui.currentDialog = "Get outta my sight.";
+                            break;
+                        case 1:
+                            gp.ui.currentDialog = "Pleasure doing business with ye.";
+                            break;
+                        case 2:
+                            gp.ui.currentDialog = "Good Luck.";
+                            break;
                     }
                     break;
             }
@@ -306,8 +304,8 @@ public class KeyHandler implements KeyListener {
     public void dialogState(int code) {
         if (code == KeyEvent.VK_SPACE) {
             spacePressed = true;
-        } if (gp.gameState == gp.DIALOGUE_STATE) {
-            gp.gameState = gp.PLAY_STATE;
+            if (gp.gameState == gp.SHOP_STATE)
+                gp.gameState = gp.PLAY_STATE;
         }
     }
 

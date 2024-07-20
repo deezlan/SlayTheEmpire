@@ -14,7 +14,7 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Comparator;
 
-import TileInteractive.InteractiveTIle;
+//import TileInteractive.InteractiveTIle;
 import ai.Pathfinder;
 import entity.Cursor;
 import entity.Entity;
@@ -74,7 +74,7 @@ public class GamePanel extends JPanel implements Runnable {
             mobArr = new Entity[MAX_MAP][20],
             gateArr = new Entity[MAX_MAP][50],
             projectileArr = new Entity[MAX_MAP][50];
-    public InteractiveTIle[][] iTile = new InteractiveTIle[MAX_MAP][50];
+//    public InteractiveTIle[][] iTile = new InteractiveTIle[MAX_MAP][50];
 
     // CUTSCENE
     public boolean bossBattleOn = false;
@@ -152,7 +152,7 @@ public class GamePanel extends JPanel implements Runnable {
     @Override
     public void run() {
         // FPS SETTINGS
-        int FPS = 60;
+        final int FPS = 60;
         double drawInterval = (double) 1000000000 / FPS;
         double delta = 0;
         long lastTime = System.nanoTime();
@@ -183,7 +183,7 @@ public class GamePanel extends JPanel implements Runnable {
     public void setupGame() {
         tempScreen = new BufferedImage(SCREEN_WIDTH,SCREEN_HEIGHT,BufferedImage.TYPE_INT_ARGB);
         g2 = (Graphics2D) tempScreen.getGraphics();
-        gameState = TITLE_STATE; // TESTING LOGIN RIGHT NOW
+        gameState = CHAR_SELECT_STATE; // TESTING LOGIN RIGHT NOW
         playMusic(0);
     }
 
@@ -223,15 +223,6 @@ public class GamePanel extends JPanel implements Runnable {
         aSetter.setNPC();
         aSetter.setGates();
     }
-//    public void restart() {
-//        player.setDefaultValues();
-//        player.setDefaultPosition();
-//        player.restoreLife();
-//        aSetter.setMonster();
-//        aSetter.setNPC();
-//        aSetter.setObject();
-//        aSetter.setInteractiveTile();
-//    }
     public void loadLevel() {
         bossBattleOn = false;
         aSetter.loadAssets();
@@ -275,12 +266,6 @@ public class GamePanel extends JPanel implements Runnable {
                         mobArr[currentMap][mob].checkDrop();
                         mobArr[currentMap][mob] = null;
                     }
-                }
-            }
-            // INTERACTIVE TILES
-            for (int i = 0; i < iTile[1].length; i++) {
-                if(iTile[currentMap][i] != null){
-                    iTile[currentMap][i].update();
                 }
             }
             // PROJECTILES

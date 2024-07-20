@@ -43,8 +43,11 @@ public class EventHandler {
     }
 
     public void setDialogue() {
+        // FOR DRINKING EVENT
         eventMaster.dialogs[0][0] = "Drank Possibly Toilet Water";
         eventMaster.dialogs[0][1] = "Why does it taste like pee";
+
+        // FOR MAP SELECTION EVENT
         eventMaster.dialogs[1][0] = "Turned Back";
 
     }

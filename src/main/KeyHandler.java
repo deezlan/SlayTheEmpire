@@ -114,13 +114,13 @@ public class KeyHandler implements KeyListener {
                 case 1:
                     gp.gameState= gp.DIALOGUE_STATE;
                     switch(gp.player.playerClass) {
-                        case 0:
+                        case 0: // WARRIOR
                             gp.ui.currentDialog = "Not interested in chitchat with savages.";
                             break;
-                        case 1:
+                        case 1: // KNIGHT
                             gp.ui.currentDialog = "The princess you seek was a kind lady. \n She is innocent in all this, I can guarantee. \n Please save her.";
                             break;
-                        case 2:
+                        case 2: // ASSASSIN
                             gp.ui.currentDialog = "You got guts, facing the monstrosities \n down there as an assassin.";
                             break;
                     }
@@ -128,13 +128,13 @@ public class KeyHandler implements KeyListener {
                 case 2:
                     gp.gameState= gp.DIALOGUE_STATE;
                     switch(gp.player.playerClass) {
-                        case 0:
+                        case 0: // WARRIOR
                             gp.ui.currentDialog = "Get outta my sight.";
                             break;
-                        case 1:
+                        case 1: // KNIGHT
                             gp.ui.currentDialog = "Pleasure doing business with ye.";
                             break;
-                        case 2:
+                        case 2: // ASSASSIN
                             gp.ui.currentDialog = "Good Luck.";
                             break;
                     }

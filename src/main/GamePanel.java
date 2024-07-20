@@ -66,6 +66,7 @@ public class GamePanel extends JPanel implements Runnable {
     public Player player;
     public int playerClass;
     public Cursor cursor = new Cursor(); // Initialize cursor
+    public int progressSaved;
 
     // ENTITY AND OBJECTS ARRAYS
     private final ArrayList<Entity> entityList = new ArrayList<>();

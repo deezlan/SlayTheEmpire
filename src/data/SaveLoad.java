@@ -6,29 +6,32 @@ import main.GamePanel;
 import java.io.*;
 
 public class SaveLoad implements Serializable {
-
     GamePanel gp;
     DataStorage ds = new DataStorage();
     File[] SaveFiles;
     public Boolean[] filledSaveFile;
-    public boolean isloadPage = false;
+    public boolean isLoadPage = false;
     public int slot;
 
-    public SaveLoad(GamePanel gp, int numberOfFiles) {
+    public SaveLoad(GamePanel gp, int numberOfFiles, String user) {
         this.gp = gp;
         this.SaveFiles = new File[numberOfFiles];
         this.filledSaveFile = new Boolean[numberOfFiles];
 
         for (int i = 0; i < numberOfFiles; i++) {
-            this.SaveFiles[i] = new File("Save" + i + ".dat");
+            this.SaveFiles[i] = new File("res/saves/" + user + "/" +"Save" + i + ".dat");
             this.filledSaveFile[i] = false;
         }
+        File dir = new File("res/saves");
+        System.out.println("Save Dir Created: " + dir.mkdir());
         isAllFileEmpty();
     }
 
     public void save(int slot) {
         try {
-            FileOutputStream fileOut = new FileOutputStream("Save" + slot + ".dat");
+            File userDir = new File("res/saves/" + gp.ui.inpUser);
+            System.out.println("Created User Dir: " + userDir.mkdir());
+            FileOutputStream fileOut = new FileOutputStream("res/saves/" + gp.ui.inpUser + "/Save" + slot + ".dat");
             ObjectOutputStream out = new ObjectOutputStream(fileOut);
 
             ds.life = gp.player.currentLife;
@@ -37,8 +40,6 @@ public class SaveLoad implements Serializable {
             ds.coin = gp.player.totalCoins;
             ds.progressSaved = gp.progressSaved;
             ds.weapons.addAll(gp.player.ownedWeapon);
-            System.out.println("file" + slot + " saved");
-
             out.writeObject(ds);
             out.close();
 
@@ -48,22 +49,16 @@ public class SaveLoad implements Serializable {
         } catch (IOException i) {
             System.out.println(i.getMessage());
         }
-
-        System.out.println(ds.playerClass);
-        System.out.println(ds.life);
-        System.out.println(ds.coin);
-        System.out.println(ds.maxLife);
     }
 
     public void load(int slot) {
         try {
-            FileInputStream fileIn = new FileInputStream("Save" + slot + ".dat");
+            FileInputStream fileIn = new FileInputStream("res/saves/" + gp.ui.inpUser + "/Save" + slot + ".dat");
             ObjectInputStream in = new ObjectInputStream(fileIn);
 
             ds = (DataStorage) in.readObject();
             in.close();
             fileIn.close();
-
         } catch (IOException i) {
             System.out.println(i.getMessage());
         } catch (ClassNotFoundException e) {
@@ -71,7 +66,6 @@ public class SaveLoad implements Serializable {
         }
 
         gp.player = new Player(gp, gp.keyH, gp.cursor, ds.playerClass);
-        System.out.println(gp.player.currentLife);
         gp.player.maxLife = ds.maxLife;
         gp.player.currentLife = ds.life;
         gp.player.totalCoins = ds.coin;
@@ -95,6 +89,6 @@ public class SaveLoad implements Serializable {
                 return false;
             }
         }
-        return firstElement;
+        return !firstElement;
     }
 }

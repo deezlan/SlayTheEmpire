@@ -15,7 +15,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.awt.Font;
 import java.awt.GraphicsEnvironment;
-import java.io.InputStream;
 
 public class UI {
 
@@ -663,16 +662,16 @@ public class UI {
         g2.drawImage(saveFileBackground, x, y, imageWidth, imageHeight, null);
         drawSaveButtons();
 
-        if(gp.saveLoad.isAllFileEmpty()){
+        if (gp.saveLoad.isAllFileEmpty()){
             drawSaveFileDialogue(5);
-        } else if(gp.saveLoad.isloadPage){
+        } else if (gp.saveLoad.isLoadPage){
             drawSaveFileDialogue(4);
-        } else{
+        } else {
             drawSaveFileDialogue(2);
         }
 
         if (gp.mouseH.leftClicked) {
-            if (!gp.saveLoad.isloadPage) {
+            if (!gp.saveLoad.isLoadPage) {
                 if (saveButtonBounds1.contains(gp.cursor.getMouseX(), gp.cursor.getMouseY())) {
                     gp.saveLoad.slot = 0;
                     if (gp.saveLoad.filledSaveFile[gp.saveLoad.slot]){
@@ -734,7 +733,7 @@ public class UI {
         int rx = 450;
         int y = (gp.SCREEN_HEIGHT - emptySaveButton1.getHeight(null)) / 2;
 
-        if(gp.saveLoad.isloadPage) {
+        if(gp.saveLoad.isLoadPage) {
             g2.drawImage(savedProgressPage, px, py, imageWidth, imageHeight, null);
 
             continueRect = new Rectangle(lx, y, saveButtonWidth, saveButtonHeight);
@@ -1547,20 +1546,18 @@ public class UI {
             g2.drawRoundRect(frameX+3, cursorY, cursorWidth+3, cursorHeight, 0, 0);
 
             //DESC FRAME
-            int descX = frameX;
             int descY = frameY + frameHeight;
-            int descWidth = frameWidth;
             int descHeight = gp.TILE_SIZE*3;
-            drawSubWindow(descX, descY, descWidth, descHeight);
+            drawSubWindow(frameX, descY, frameWidth, descHeight);
 
             g2.setColor(Color.BLACK);
-            g2.fillRoundRect(descX, descY, descWidth, descHeight, 0, 0);
+            g2.fillRoundRect(frameX, descY, frameWidth, descHeight, 0, 0);
 
             g2.setColor(Color.WHITE);
             g2.setStroke(new BasicStroke((5)));
-            g2.drawRoundRect(descX, descY, descWidth, descHeight, 0, 0);
+            g2.drawRoundRect(frameX, descY, frameWidth, descHeight, 0, 0);
             //DRAW DESC TEXT
-            int textX = descX + 20;
+            int textX = frameX + 20;
             int textY= descY + gp.TILE_SIZE;
             if (slotRow == 0){
                 g2.drawString(shop.getShopItems().get(0).description, textX, textY);

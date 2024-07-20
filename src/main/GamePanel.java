@@ -48,7 +48,8 @@ public class GamePanel extends JPanel implements Runnable {
 
     // LOGIN
     public LoginSystem loginSys = new LoginSystem(this);
-    public SaveLoad saveLoad = new SaveLoad(this, 3);
+    public SaveLoad saveLoad;
+//    public SaveLoad saveLoad = new SaveLoad(this, 3, ui.inpUser);
 
     // SOUND
     Sound music = new Sound();
@@ -201,7 +202,7 @@ public class GamePanel extends JPanel implements Runnable {
                     (cursorImg, new Point(0,0), "blank cursor");
         this.setCursor(blankCursor);
     }
-    private void showCursor() {
+    public void showCursor() {
         java.awt.Cursor defaultCursor = java.awt.Cursor.getDefaultCursor();
         this.setCursor(defaultCursor);
     }

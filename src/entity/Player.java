@@ -301,7 +301,7 @@ public class Player extends Entity {
     public void interactObject (int index) {
         if (index == 1){
             gp.gameState = gp.SAVEPAGE_STATE;
-            gp.saveLoad.isloadPage = false;
+            gp.saveLoad.isLoadPage = false;
             gp.showCursor();
         }
         if (index != 999) {

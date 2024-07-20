@@ -37,7 +37,7 @@ public class KeyHandler implements KeyListener {
 
     public void saveState(int code){
         if(code == KeyEvent.VK_ESCAPE){
-            if(gp.saveLoad.isloadPage){
+            if(gp.saveLoad.isLoadPage){
                 gp.gameState = gp.MAIN_MENU_STATE;
             } else{
                 gp.gameState = gp.PLAY_STATE;
@@ -60,14 +60,10 @@ public class KeyHandler implements KeyListener {
                 case 0 -> gp.gameState = gp.CHAR_SELECT_STATE; // GO TO LOGIN
                 case 1 -> {
                     gp.gameState = gp.SAVEPAGE_STATE;
-                    gp.saveLoad.isloadPage = true;
+                    gp.saveLoad.isLoadPage = true;
                 }
                 case 2 -> gp.gameState = gp.CREDITS_STATE;
-                case 3 -> {
-                    gp.gameState = gp.MAIN_OPTIONS_STATE;
-                    // DEFAULT TO FIRST OPTION
-//                    gp.ui.commandNum = 0;
-                }
+                case 3 -> gp.gameState = gp.MAIN_OPTIONS_STATE;
                 case 4 -> System.exit(0); // EXIT GAME
             }
             gp.ui.commandNum = 0;
@@ -183,7 +179,7 @@ public class KeyHandler implements KeyListener {
     public void controlsState(int code) {
         if (code == KeyEvent.VK_ESCAPE) {
             if (gp.player == null)
-                gp.gameState = gp.MAIN_MENU_STATE;
+                gp.gameState = gp.MAIN_OPTIONS_STATE;
             else
                 gp.gameState = gp.PLAY_STATE;
         }
@@ -273,6 +269,7 @@ public class KeyHandler implements KeyListener {
                     gp.player = new Player(gp, gp.keyH, gp.cursor, 2);
             }
             gp.gameState = gp.DIFF_MENU_STATE;
+            gp.ui.commandNum = 1;
         }
         if (code == KeyEvent.VK_ESCAPE) gp.gameState = gp.MAIN_MENU_STATE;
     }

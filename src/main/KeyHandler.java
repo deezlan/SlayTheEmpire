@@ -74,15 +74,41 @@ public class KeyHandler implements KeyListener {
     }
 
     public void dialogueDiffState(int code) {
-        if(code == KeyEvent.VK_ENTER){
-            enterPressed = true;
+        if(code == KeyEvent.VK_SPACE){
+            switch(gp.ui.commandNum){
+                case 0:
+                    gp.gameMode = 1;
+                    gp.gameState = gp.DIALOGUE_STATE;
+                    gp.ui.currentDialog = "Going Easy are we?";
+                    break;
+                case 1:
+                    gp.gameMode = 2;
+                    gp.gameState = gp.DIALOGUE_STATE;
+                    gp.ui.currentDialog = "Okay we are getting somewhere";
+                    break;
+                case 2:
+                    gp.gameMode = 3;
+                    gp.gameState = gp.DIALOGUE_STATE;
+                    gp.ui.currentDialog = "We have a big boy here";
+                    break;
+                case 3:
+                    gp.gameState = gp.DIALOGUE_STATE;
+                    gp.ui.currentDialog = "Pish, you are a coward";
+                    break;
+            }
         }
-
         if (code == KeyEvent.VK_W || code == KeyEvent.VK_S) {
             gp.ui.commandNum += (code == KeyEvent.VK_W) ? -1 : 1;
             gp.ui.commandNum = Math.max(0, Math.min(gp.ui.commandNum, 3));
             gp.playSE(1);
         }
+        if (gp.ui.subState == 0) {
+            if(code == KeyEvent.VK_W) gp.ui.commandNum--;
+            if(code == KeyEvent.VK_S) gp.ui.commandNum++;
+        }
+        // LOOP BACK SELECTION
+        if(gp.ui.commandNum < 0) gp.ui.commandNum = 3;
+        if(gp.ui.commandNum > 3) gp.ui.commandNum = 0;
     }
 
     public void blacksmithDialogueState(int code) {
@@ -127,7 +153,7 @@ public class KeyHandler implements KeyListener {
     }
 
     public void dialogueMap(int code) {
-        if(code == KeyEvent.VK_ENTER){
+        if(code == KeyEvent.VK_SPACE){
             if (gp.ui.commandNum < 2)
                 gp.eHandler.changeMap(gp.ui.commandNum + 1);
             else

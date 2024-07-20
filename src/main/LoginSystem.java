@@ -49,7 +49,7 @@ public class LoginSystem extends JPanel {
         if (accDatabase.containsKey(gp.ui.inpUser)) {
             if (accDatabase.get(gp.ui.inpUser).equals(encryptedPass)) {
                 gp.gameState = gp.MAIN_MENU_STATE;
-                gp.saveLoad = new SaveLoad(gp, 3, gp.ui.inpUser);
+                gp.saveLoad = new SaveLoad(gp, 3);
                 System.out.println("Current User: " + gp.ui.inpUser);
             } else { gp.ui.isInvalidLogin = true; }
         } else {

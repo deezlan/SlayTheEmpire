@@ -399,7 +399,6 @@ public class UI {
     public void drawPlayerLife(){
         int posX = gp.TILE_SIZE/2;
         int posY = gp.TILE_SIZE/2;
-        int i = 0;
         double length = 182*((double) gp.player.currentLife/ (double) gp.player.maxLife);
 
         g2.setColor(Color.RED);
@@ -673,7 +672,6 @@ public class UI {
 
         if (gp.mouseH.leftClicked) {
             if (!gp.saveLoad.isLoadPage) {
-                boolean saved = false;
                 if (saveButtonBounds1.contains(gp.cursor.getMouseX(), gp.cursor.getMouseY())) {
                     gp.saveLoad.slot = 0;
                     if (gp.saveLoad.filledSaveFile[gp.saveLoad.slot]) {
@@ -699,6 +697,8 @@ public class UI {
                         gp.saveLoad.save(gp.saveLoad.slot);
                         gp.saveLoad.isSaveCompleted = true;
                     }
+                } else {
+                    gp.saveLoad.isSaveCompleted = false;
                 }
             } else {
                 if (saveButtonBounds1.contains(gp.cursor.getMouseX(), gp.cursor.getMouseY())) {

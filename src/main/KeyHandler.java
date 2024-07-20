@@ -6,6 +6,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 import entity.Player;
+import object.OBJ_Shop;
 
 public class KeyHandler implements KeyListener {
     GamePanel gp;
@@ -438,6 +439,31 @@ public class KeyHandler implements KeyListener {
                     gp.ui.slotRow++;
                 }
             }
+        }
+    }
+
+    public void potionShopState(int code){
+        if (gp.gameState == gp.POTION_SHOP_STATE){
+            if (code == KeyEvent.VK_W) {
+                if (gp.ui.slotRowMove != 0){
+                    gp.ui.slotRowMove -= 1;
+                    gp.ui.slotRow--;
+                }
+            }
+            if (code == KeyEvent.VK_ENTER){
+//                NPC_Blacksmith bs = (NPC_Blacksmith) gp.npcArr[gp.currentMap][1];
+                OBJ_Shop shop = (OBJ_Shop) gp.objArr[gp.currentMap][0];
+                if (gp.player.totalCoins >= shop.getShopItems().get(gp.ui.slotRow).price)
+                    shop.buy();
+
+                gp.gameState = gp.PLAY_STATE;
+            }
+            if (code == KeyEvent.VK_S) {
+                if (gp.ui.slotRowMove != 3){
+                    gp.ui.slotRowMove += 1;
+                    gp.ui.slotRow++;
+                }
+            }
             if (code == KeyEvent.VK_ESCAPE) { // DONT REMOVE THIS, TO EXIT FROM SHOP
                 gp.gameState = gp.BLACKSMITH_DIALOGUE_STATE;
             }
@@ -476,6 +502,8 @@ public class KeyHandler implements KeyListener {
             creditsState(code);
         } else if (gp.gameState == gp.CONTROLS_STATE) {
             controlsState(code);
+        } else if (gp.gameState == gp.POTION_SHOP_STATE){
+            potionShopState(code);
         } else if (gp.gameState == gp.DIFF_DIALOGUE_STATE) {
             dialogueDiffState(code);
         } else if (gp.gameState == gp.DIFF_MENU_STATE) {

@@ -12,6 +12,7 @@ public class SaveLoad implements Serializable {
     File[] SaveFiles;
     public Boolean[] filledSaveFile;
     public boolean isloadPage = false;
+    public boolean isSaveCompleted = false;
     public int slot;
 
     public SaveLoad(GamePanel gp, int numberOfFiles) {
@@ -95,6 +96,6 @@ public class SaveLoad implements Serializable {
                 return false;
             }
         }
-        return firstElement;
+        return !firstElement;
     }
 }

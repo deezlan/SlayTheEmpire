@@ -641,14 +641,15 @@ public class UI {
         int imageHeight = (int) (saveFileBackground.getHeight(null) * ((double) imageWidth / saveFileBackground.getWidth(null)));
         int x = 0;
         int y = (gp.SCREEN_HEIGHT - imageHeight) / 2;
-
         g2.drawImage(saveFileBackground, x, y, imageWidth, imageHeight, null);
         drawSaveButtons();
 
-        if(gp.saveLoad.isAllFileEmpty()){
+        if(gp.saveLoad.isAllFileEmpty() && gp.saveLoad.isloadPage){
             drawSaveFileDialogue(5);
         } else if(gp.saveLoad.isloadPage){
             drawSaveFileDialogue(4);
+        } else if (gp.saveLoad.isSaveCompleted){
+            drawSaveFileDialogue(1);
         } else{
             drawSaveFileDialogue(2);
         }
@@ -659,29 +660,26 @@ public class UI {
                     gp.saveLoad.slot = 0;
                     if (gp.saveLoad.filledSaveFile[gp.saveLoad.slot]){
                         gp.gameState = gp.SAVEPAGE2_STATE;
-                        drawSaveFileDialogue(1);
                     }else{
                         gp.saveLoad.save(gp.saveLoad.slot);
                     }
+                    gp.saveLoad.isSaveCompleted = true;
                 } else if (saveButtonBounds2.contains(gp.cursor.getMouseX(), gp.cursor.getMouseY())) {
                     gp.saveLoad.slot = 1;
                     if (gp.saveLoad.filledSaveFile[gp.saveLoad.slot]){
                         gp.gameState = gp.SAVEPAGE2_STATE;
-                        drawSaveFileDialogue(1);
-
                     }else{
                         gp.saveLoad.save(gp.saveLoad.slot);
                     }
-
+                    gp.saveLoad.isSaveCompleted = true;
                 } else if (saveButtonBounds3.contains(gp.cursor.getMouseX(), gp.cursor.getMouseY())) {
                     gp.saveLoad.slot = 2;
                     if (gp.saveLoad.filledSaveFile[gp.saveLoad.slot]){
                         gp.gameState = gp.SAVEPAGE2_STATE;
-                        drawSaveFileDialogue(1);
-
                     }else{
                         gp.saveLoad.save(gp.saveLoad.slot);
                     }
+                    gp.saveLoad.isSaveCompleted = true;
                 }
             } else {
                 if (saveButtonBounds1.contains(gp.cursor.getMouseX(), gp.cursor.getMouseY())) {

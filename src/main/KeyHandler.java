@@ -26,6 +26,7 @@ public class KeyHandler implements KeyListener {
 
     // GAME STATE METHODS
     public void titleState(int code) {
+        gp.playMusic(1);
         if (code == KeyEvent.VK_SPACE) {
             if (gp.gameState == gp.titleState){
                 gp.playSE(2);
@@ -73,7 +74,9 @@ public class KeyHandler implements KeyListener {
     }
 
     public void controlsState(int code) {
-
+        if (code == KeyEvent.VK_ESCAPE) {
+            gp.gameState = gp.startMenuState;
+        }
     }
 
     public void difficultySelectState(int code) {
@@ -228,16 +231,16 @@ public class KeyHandler implements KeyListener {
         if (gp.gameState == gp.optionState || gp.gameState == gp.optionState2) {
             if (code == KeyEvent.VK_W || code == KeyEvent.VK_S) {
                 gp.ui.commandNum += (code == KeyEvent.VK_W) ? -1 : 1;
-                gp.ui.commandNum = Math.max(0, Math.min(gp.ui.commandNum, 5));
+                gp.ui.commandNum = Math.max(0, Math.min(gp.ui.commandNum, 6));
                 gp.playSE(1);
 
                 // skip through 2 empty button for option 2
                 if (gp.gameState == gp.optionState2) {
                     if (gp.ui.commandNum == 3) {
-                        gp.ui.commandNum += (code == KeyEvent.VK_W) ? -1 : 2;
+                        gp.ui.commandNum += (code == KeyEvent.VK_W) ? -1 : 3;
                     }
                     if (gp.ui.commandNum == 4) {
-                        gp.ui.commandNum += (code == KeyEvent.VK_W) ? -2 : 1;
+                        gp.ui.commandNum += (code == KeyEvent.VK_W) ? -3 : 1;
                     }
                 }
             }
@@ -287,8 +290,17 @@ public class KeyHandler implements KeyListener {
                         }
                         break;
                     }
-                    // BACK
+                    // log out
                     case 5: {
+                        // RESET USER AND PASS
+                        gp.ui.inpUser = "";
+                        gp.ui.inpPass = "";
+                        gp.gameState = gp.loginState;
+                        break;
+                    }
+
+                    // BACK
+                    case 6: {
                         gp.gameState = (gp.gameState == gp.optionState) ? gp.playState : gp.startMenuState;
                         gp.ui.commandNum = 0;
                         break;

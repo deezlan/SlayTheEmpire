@@ -853,7 +853,7 @@ public class UI {
         }
 
         switch(subState) {
-            case 0: drawSubWindow(frameX, frameY, frameWidth, frameHeight); options_playState(frameX, frameY);  break;
+            case 0: drawSubWindow(frameX, frameY, frameWidth, frameHeight + 50); options_playState(frameX, frameY);  break;
             case 1: options_startMenu(frameY); break;
             case 2: break;
         }
@@ -924,8 +924,8 @@ public class UI {
             g2.drawString(">", x - 25, y);
         }
 
-        // END GAME
-        text = "End Game";
+        // START MENU
+        text = "Start Menu";
         y += (int) (gp.TILE_SIZE * 1.2);
         g2.setColor(gp.ui.commandNum == 4? Color.YELLOW : Color.WHITE);
         g2.drawString(text, x, y);
@@ -933,12 +933,21 @@ public class UI {
             g2.drawString(">", x - 25, y);
         }
 
-        // BACK
-        text = "Back";
-        y += (gp.TILE_SIZE * 2);
+        // LOG OUT
+        text = "Log Out";
+        y += (int) (gp.TILE_SIZE * 1.2);
         g2.setColor(gp.ui.commandNum == 5? Color.YELLOW : Color.WHITE);
         g2.drawString(text, x, y);
         if (gp.ui.commandNum == 5) {
+            g2.drawString(">", x - 25, y);
+        }
+
+        // BACK
+        text = "Back";
+        y += (gp.TILE_SIZE * 2);
+        g2.setColor(gp.ui.commandNum == 6? Color.YELLOW : Color.WHITE);
+        g2.drawString(text, x, y);
+        if (gp.ui.commandNum == 6) {
             g2.drawString(">", x - 25, y);
         }
 
@@ -992,7 +1001,7 @@ public class UI {
         text = "Back";
         x = getXForCenteredText(text);
         y += gp.TILE_SIZE*3;
-        g2.setColor(gp.ui.commandNum == 5? Color.YELLOW : Color.WHITE);
+        g2.setColor(gp.ui.commandNum == 6? Color.YELLOW : Color.WHITE);
         g2.drawString(text,x,y);
 
         // VOLUME BAR

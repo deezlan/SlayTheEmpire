@@ -6,6 +6,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 import entity.Player;
+import object.OBJ_Shop;
 
 public class KeyHandler implements KeyListener {
     GamePanel gp;
@@ -14,7 +15,7 @@ public class KeyHandler implements KeyListener {
     public boolean
             wPressed, sPressed, aPressed, dPressed,
             ePressed, pPressed,
-            enterPressed, shotKeyPressed,
+            enterPressed, shotKeyPressed, spacePressed,
             onePressed, twoPressed, threePressed,
             escapePressed,
             showDebug, // DEBUG
@@ -26,11 +27,11 @@ public class KeyHandler implements KeyListener {
 
     // GAME STATE METHODS
     public void titleState(int code) {
+        gp.playMusic(1);
         if (code == KeyEvent.VK_SPACE) {
-            if (gp.gameState == gp.TITLE_STATE){
-                gp.playSE(2);
-                gp.gameState = gp.LOGIN_STATE;
-            }
+            gp.playSE(2);
+            gp.gameState = gp.LOGIN_STATE;
+            gp.mouseH.clearMouseClick();
         }
     }
 
@@ -45,32 +46,31 @@ public class KeyHandler implements KeyListener {
     }
 
     public void startMenuState(int code) {
-        if (gp.gameState == gp.MAIN_MENU_STATE){
-            if (code == KeyEvent.VK_W || code == KeyEvent.VK_S) {
-                gp.ui.commandNum += (code == KeyEvent.VK_W) ? -1 : 1;
-                gp.playSE(1);
-                gp.ui.commandNum = Math.max(0, Math.min(gp.ui.commandNum, 4));
-            }
+        if (code == KeyEvent.VK_W || code == KeyEvent.VK_S) {
+            gp.ui.commandNum += (code == KeyEvent.VK_W) ? -1 : 1;
+            gp.playSE(1);
+            gp.ui.commandNum = Math.max(0, Math.min(gp.ui.commandNum, 4));
+        }
 
-            // SELECT OPTION
-            if (code == KeyEvent.VK_SPACE) {
-                //SOUND EFFECT
-                gp.playSE(2);
-                switch (gp.ui.commandNum) {
-                    case 0 -> gp.gameState = gp.CHAR_SELECT_STATE; // GO TO LOGIN
-                    case 1 -> {
-                        gp.gameState = gp.SAVEPAGE_STATE;
-                        gp.saveLoad.isloadPage = true;
-                    }
-                    case 2 -> gp.gameState = gp.CREDITS_STATE;
-                    case 3 -> {
-                        gp.gameState = gp.OPTIONS_DIALOGUE_STATE;
-                        // DEFAULT TO FIRST OPTION
-                        gp.ui.commandNum = 0;
-                    }
-                    case 4 -> System.exit(0); // EXIT GAME
+        // SELECT OPTION
+        if (code == KeyEvent.VK_SPACE) {
+            //SOUND EFFECT
+            gp.playSE(2);
+            switch (gp.ui.commandNum) {
+                case 0 -> gp.gameState = gp.CHAR_SELECT_STATE; // GO TO LOGIN
+                case 1 -> {
+                    gp.gameState = gp.SAVEPAGE_STATE;
+                    gp.saveLoad.isloadPage = true;
                 }
+                case 2 -> gp.gameState = gp.CREDITS_STATE;
+                case 3 -> {
+                    gp.gameState = gp.MAIN_OPTIONS_STATE;
+                    // DEFAULT TO FIRST OPTION
+//                    gp.ui.commandNum = 0;
+                }
+                case 4 -> System.exit(0); // EXIT GAME
             }
+            gp.ui.commandNum = 0;
         }
     }
 
@@ -86,31 +86,110 @@ public class KeyHandler implements KeyListener {
     }
 
     public void dialogueDiffState(int code) {
-        if(code == KeyEvent.VK_ENTER){
-            enterPressed = true;
+        if(code == KeyEvent.VK_SPACE){
+            switch(gp.ui.commandNum){
+                case 0:
+                    gp.gameMode = 1;
+                    gp.gameState = gp.DIALOGUE_STATE;
+                    gp.ui.currentDialog = "Going Easy are we?";
+                    break;
+                case 1:
+                    gp.gameMode = 2;
+                    gp.gameState = gp.DIALOGUE_STATE;
+                    gp.ui.currentDialog = "Okay we are getting somewhere";
+                    break;
+                case 2:
+                    gp.gameMode = 3;
+                    gp.gameState = gp.DIALOGUE_STATE;
+                    gp.ui.currentDialog = "We have a big boy here";
+                    break;
+                case 3:
+                    gp.gameState = gp.DIALOGUE_STATE;
+                    gp.ui.currentDialog = "Pish, you are a coward";
+                    break;
+            }
+        }
+        if (gp.ui.subState == 0) {
+            if(code == KeyEvent.VK_W) gp.ui.commandNum--;
+            if(code == KeyEvent.VK_S) gp.ui.commandNum++;
+        }
+        // LOOP BACK SELECTION
+        if(gp.ui.commandNum < 0) gp.ui.commandNum = 3;
+        if(gp.ui.commandNum > 3) gp.ui.commandNum = 0;
+    }
+
+    public void blacksmithDialogueState(int code) {
+        if(code == KeyEvent.VK_SPACE){
+            switch(gp.ui.commandNum) {
+                case 0:
+                    gp.gameState = gp.SHOP_STATE;
+                    break;
+                case 1:
+                    gp.gameState= gp.DIALOGUE_STATE;
+                    switch(gp.player.playerClass) {
+                        case 0: // WARRIOR
+                            gp.ui.currentDialog = "Not interested in chitchat with savages.";
+                            break;
+                        case 1: // KNIGHT
+                            gp.ui.currentDialog = "The princess you seek was a kind lady. \n She is innocent in all this, I can guarantee. \n Please save her.";
+                            break;
+                        case 2: // ASSASSIN
+                            gp.ui.currentDialog = "You got guts, facing the monstrosities \n down there as an assassin.";
+                            break;
+                    }
+                    break;
+                case 2:
+                    gp.gameState= gp.DIALOGUE_STATE;
+                    switch(gp.player.playerClass) {
+                        case 0: // WARRIOR
+                            gp.ui.currentDialog = "Get outta my sight.";
+                            break;
+                        case 1: // KNIGHT
+                            gp.ui.currentDialog = "Pleasure doing business with ye.";
+                            break;
+                        case 2: // ASSASSIN
+                            gp.ui.currentDialog = "Good Luck.";
+                            break;
+                    }
+                    break;
+            }
+        }
+        if (gp.ui.subState == 0) {
+            if(code == KeyEvent.VK_W) gp.ui.commandNum--;
+            if(code == KeyEvent.VK_S) gp.ui.commandNum++;
+        }
+        // LOOP BACK SELECTION
+        if(gp.ui.commandNum < 0) gp.ui.commandNum = 2;
+        if(gp.ui.commandNum > 2) gp.ui.commandNum = 0;
+    }
+
+    public void dialogueMap(int code) {
+        if(code == KeyEvent.VK_SPACE){
+            if (gp.ui.commandNum < 2)
+                gp.eHandler.changeMap(gp.ui.commandNum + 1);
+            else
+                gp.eHandler.eventMaster.startDialogue(gp.eHandler.eventMaster,1);
         }
 
         if (gp.ui.subState == 0) {
-            if(code == KeyEvent.VK_W) {
-                gp.ui.commandNum--;
-                if(gp.ui.commandNum < 0) {
-                    gp.ui.commandNum = 3;
-                }
-            }
-            if(code == KeyEvent.VK_S) {
-                gp.ui.commandNum++;
-                if(gp.ui.commandNum > 3) {
-                    gp.ui.commandNum = 0;
-                }
-            }
+            if(code == KeyEvent.VK_W) gp.ui.commandNum--;
+            if(code == KeyEvent.VK_S) gp.ui.commandNum++;
         }
+        // LOOP BACK SELECTION
+        if(gp.ui.commandNum < 0) gp.ui.commandNum = 2;
+        if(gp.ui.commandNum > 2) gp.ui.commandNum = 0;
     }
 
     public void controlsState(int code) {
-
+        if (code == KeyEvent.VK_ESCAPE) {
+            if (gp.player == null)
+                gp.gameState = gp.MAIN_MENU_STATE;
+            else
+                gp.gameState = gp.PLAY_STATE;
+        }
     }
 
-    public void menuDiffState(int code) {
+    public void difficultySelectState(int code) {
         if (code == KeyEvent.VK_W || code == KeyEvent.VK_S) {
             gp.ui.commandNum += (code == KeyEvent.VK_W) ? -1 : 1;
             gp.ui.commandNum = Math.max(0, Math.min(gp.ui.commandNum, 3));
@@ -120,13 +199,13 @@ public class KeyHandler implements KeyListener {
             gp.playSE(2);
             switch (gp.ui.commandNum) {
                 case 0, 1, 2: {
-                    gp.gameMode = gp.ui.commandNum + 1;
                     gp.loadLevel();
                     break;
                 }
                 case 3: {
                     gp.ui.commandNum = 0;
                     gp.gameState = gp.CHAR_SELECT_STATE;
+                    break;
                 }
             }
         }
@@ -134,10 +213,6 @@ public class KeyHandler implements KeyListener {
     }
 
     public void loginState(int code) {
-        if (code == KeyEvent.VK_ESCAPE) {
-            gp.gameState = gp.TITLE_STATE;
-        }
-
         if (gp.ui.typingUsername) {
             if (code == KeyEvent.VK_BACK_SPACE) {
                 System.out.println("Test backspace");
@@ -152,7 +227,6 @@ public class KeyHandler implements KeyListener {
                 System.out.println("Username is: " + gp.ui.inpUser);
             }
         }
-
 
         if (gp.ui.typingPassword) {
             if (code == KeyEvent.VK_BACK_SPACE) {
@@ -204,29 +278,28 @@ public class KeyHandler implements KeyListener {
     }
 
     public void playState(int code) {
-        if (gp.gameState == gp.PLAY_STATE){
-            if (!musicPlaying) {
-                gp.music.stopAll();
-                gp.playMusic(4);
-                musicPlaying = true;
-            }
-
-            // GO TO OPTIONS
-            if (code == KeyEvent.VK_ESCAPE) gp.gameState = gp.OPTIONS_MENU_STATE;
-
-            // PLAYER ACTIONS
-            if (code == KeyEvent.VK_W) wPressed = true;
-            if (code == KeyEvent.VK_S) sPressed = true;
-            if (code == KeyEvent.VK_A) aPressed = true;
-            if (code == KeyEvent.VK_D) dPressed = true;
-            if (code == KeyEvent.VK_E) ePressed = true;
-            if (code == KeyEvent.VK_F) shotKeyPressed = true;
-            if (code == KeyEvent.VK_1) onePressed = true;
-            if (code == KeyEvent.VK_2) twoPressed = true;
-            if (code == KeyEvent.VK_3) threePressed = true;
-            if (code == KeyEvent.VK_G) godModeOn = !godModeOn;
-            if (code == KeyEvent.VK_R) gp.player.restoreLife();
+        if (!musicPlaying) {
+            gp.music.stopAll();
+            gp.playMusic(4);
+            musicPlaying = true;
         }
+
+        // GO TO OPTIONS
+        if (code == KeyEvent.VK_ESCAPE) gp.gameState = gp.INGAME_OPTIONS_STATE;
+
+        // PLAYER ACTIONS
+        if (code == KeyEvent.VK_W) wPressed = true;
+        if (code == KeyEvent.VK_S) sPressed = true;
+        if (code == KeyEvent.VK_A) aPressed = true;
+        if (code == KeyEvent.VK_D) dPressed = true;
+        if (code == KeyEvent.VK_E) ePressed = true;
+        if (code == KeyEvent.VK_F) shotKeyPressed = true;
+        if (code == KeyEvent.VK_1) onePressed = true;
+        if (code == KeyEvent.VK_2) twoPressed = true;
+        if (code == KeyEvent.VK_3) threePressed = true;
+        if (code == KeyEvent.VK_G) godModeOn = !godModeOn;
+        if (code == KeyEvent.VK_R) gp.player.restoreLife();
+        if (code == KeyEvent.VK_SPACE) spacePressed = true;
     }
 
     public void pauseState(int code) {
@@ -241,8 +314,8 @@ public class KeyHandler implements KeyListener {
     }
 
     public void dialogState(int code) {
-        if (code == KeyEvent.VK_E) {
-            ePressed = true;
+        if (code == KeyEvent.VK_SPACE) {
+            spacePressed = true;
             if (gp.gameState == gp.SHOP_STATE)
                 gp.gameState = gp.PLAY_STATE;
         }
@@ -255,23 +328,30 @@ public class KeyHandler implements KeyListener {
 
     private void optionState(int code) {
         if (code == KeyEvent.VK_ESCAPE) {
-            gp.gameState = (gp.gameState == gp.PLAY_STATE) ? gp.OPTIONS_MENU_STATE : (gp.gameState == gp.OPTIONS_MENU_STATE) ? gp.PLAY_STATE : gp.gameState;
+            gp.gameState = (gp.gameState == gp.PLAY_STATE) ? gp.INGAME_OPTIONS_STATE : (gp.gameState == gp.INGAME_OPTIONS_STATE) ? gp.PLAY_STATE : gp.gameState;
         }
 
         // OPTION SELECT
-        if (gp.gameState == gp.OPTIONS_MENU_STATE || gp.gameState == gp.OPTIONS_DIALOGUE_STATE) {
+        if (gp.gameState == gp.INGAME_OPTIONS_STATE || gp.gameState == gp.MAIN_OPTIONS_STATE) {
             if (code == KeyEvent.VK_W || code == KeyEvent.VK_S) {
                 gp.ui.commandNum += (code == KeyEvent.VK_W) ? -1 : 1;
-                gp.ui.commandNum = Math.max(0, Math.min(gp.ui.commandNum, 5));
+                gp.ui.commandNum = Math.max(0, Math.min(gp.ui.commandNum, 6));
                 gp.playSE(1);
 
                 // skip through 2 empty button for option 2
-                if (gp.gameState == gp.OPTIONS_DIALOGUE_STATE) {
+                if (gp.gameState == gp.MAIN_OPTIONS_STATE) {
                     if (gp.ui.commandNum == 3) {
                         gp.ui.commandNum += (code == KeyEvent.VK_W) ? -1 : 2;
                     }
                     if (gp.ui.commandNum == 4) {
                         gp.ui.commandNum += (code == KeyEvent.VK_W) ? -2 : 1;
+                    }
+                }
+
+                // NOT ALLOW PLAYER TO GO BACK TO LOBBY WHILE IN LOBBY
+                if (gp.gameState == gp.INGAME_OPTIONS_STATE && gp.currentMap == 0) {
+                    if (gp.ui.commandNum == 3) {
+                        gp.ui.commandNum += (code == KeyEvent.VK_W) ? -1 : 1;
                     }
                 }
             }
@@ -312,21 +392,33 @@ public class KeyHandler implements KeyListener {
                     // BACK TO LOBBY
                     case 3: {
                         if (gp.currentMap != 0) {
-                            gp.eHandler.changeMap();
+                            gp.eHandler.changeMap(0);
                             gp.gameState = gp.TRANSITION_STATE;
                         }
                         break;
                     }
                     // Back to Start Menu
                     case 4: {
-                        if (gp.gameState == gp.OPTIONS_MENU_STATE) {
+//                        if (gp.gameState == gp.INGAME_OPTIONS_STATE) {
                             gp.gameState = gp.MAIN_MENU_STATE;
-                        }
+                            gp.ui.commandNum = 0;
+                            gp.player = null; // DELOAD PLAYER
+//                        }
                         break;
                     }
-                    // BACK
+                    // log out
                     case 5: {
-                        gp.gameState = (gp.gameState == gp.OPTIONS_MENU_STATE) ? gp.PLAY_STATE : gp.MAIN_MENU_STATE;
+                        // RESET USER AND PASS
+                        gp.ui.inpUser = "";
+                        gp.ui.inpPass = "";
+                        gp.ui.inpPassHidden = "";
+                        gp.gameState = gp.LOGIN_STATE;
+                        break;
+                    }
+
+                    // BACK
+                    case 6: {
+                        gp.gameState = (gp.gameState == gp.INGAME_OPTIONS_STATE) ? gp.PLAY_STATE : gp.MAIN_MENU_STATE;
                         gp.ui.commandNum = 0;
                         break;
                     }
@@ -336,29 +428,50 @@ public class KeyHandler implements KeyListener {
     }
 
     public void shopState(int code) {
-        if (gp.gameState == gp.SHOP_STATE){
-            if (code == KeyEvent.VK_W) {
-                if (gp.ui.slotRowMove != 0){
-                    gp.ui.slotRowMove -= 1;
-                    gp.ui.slotRow--;
-                }
+        if (code == KeyEvent.VK_W) {
+            if (gp.ui.slotRowMove != 0){
+                gp.ui.slotRowMove -= 1;
+                gp.ui.slotRow--;
             }
-            if (code == KeyEvent.VK_ENTER){
-                NPC_Blacksmith bs = (NPC_Blacksmith) gp.npcArr[gp.currentMap][1];
-                if (gp.player.totalCoins >= bs.getShopItems().get(gp.ui.slotRow).price)
-                    bs.buy();
+        }
+        if (code == KeyEvent.VK_SPACE){
+            NPC_Blacksmith bs = (NPC_Blacksmith) gp.npcArr[gp.currentMap][1];
+            if (gp.player.totalCoins >= bs.getShopItems().get(gp.ui.slotRow).price)
+                bs.buy();
 
-                gp.gameState = gp.PLAY_STATE;
+            gp.gameState = gp.BLACKSMITH_DIALOGUE_STATE;
+        }
+        if (code == KeyEvent.VK_S) {
+            if (gp.ui.slotRowMove != 3){
+                gp.ui.slotRowMove += 1;
+                gp.ui.slotRow++;
             }
-            if (code == KeyEvent.VK_S) {
-                if (gp.ui.slotRowMove != 3){
-                    gp.ui.slotRowMove += 1;
-                    gp.ui.slotRow++;
-                }
+        }
+    }
+
+    public void potionShopState(int code){
+        if (code == KeyEvent.VK_W) {
+            if (gp.ui.slotRowMove != 0){
+                gp.ui.slotRowMove -= 1;
+                gp.ui.slotRow--;
             }
-            if (code == KeyEvent.VK_E) { // DONT REMOVE THIS, TO EXIT FROM SHOP
-                gp.gameState = gp.PLAY_STATE;
+        }
+        if (code == KeyEvent.VK_SPACE){
+//                NPC_Blacksmith bs = (NPC_Blacksmith) gp.npcArr[gp.currentMap][1];
+            OBJ_Shop shop = (OBJ_Shop) gp.objArr[gp.currentMap][0];
+            if (gp.player.totalCoins >= shop.getShopItems().get(gp.ui.slotRow).price)
+                shop.buy();
+
+            gp.gameState = gp.PLAY_STATE;
+        }
+        if (code == KeyEvent.VK_S) {
+            if (gp.ui.slotRowMove != 3){
+                gp.ui.slotRowMove += 1;
+                gp.ui.slotRow++;
             }
+        }
+        if (code == KeyEvent.VK_ESCAPE) { // DONT REMOVE THIS, TO EXIT FROM SHOP
+            gp.gameState = gp.PLAY_STATE;
         }
     }
 
@@ -380,7 +493,7 @@ public class KeyHandler implements KeyListener {
             characterSelectionState(code);
         } else if (gp.gameState == gp.PLAY_STATE) {
             playState(code);
-        } else if (gp.gameState == gp.OPTIONS_MENU_STATE || gp.gameState == gp.OPTIONS_DIALOGUE_STATE) {
+        } else if (gp.gameState == gp.INGAME_OPTIONS_STATE || gp.gameState == gp.MAIN_OPTIONS_STATE) {
             optionState(code);
         } else if (gp.gameState == gp.SHOP_STATE) {
             shopState(code);
@@ -394,27 +507,21 @@ public class KeyHandler implements KeyListener {
             creditsState(code);
         } else if (gp.gameState == gp.CONTROLS_STATE) {
             controlsState(code);
+        } else if (gp.gameState == gp.POTION_SHOP_STATE){
+            potionShopState(code);
         } else if (gp.gameState == gp.DIFF_DIALOGUE_STATE) {
             dialogueDiffState(code);
         } else if (gp.gameState == gp.DIFF_MENU_STATE) {
-            menuDiffState(code);
-        } else if(gp.gameState == gp.SAVEPAGE_STATE){
-            saveState(code);
-        }else if(gp.gameState == gp.SAVEPAGE2_STATE){
+            difficultySelectState(code);
+        } else if (gp.gameState == gp.MAP_SELECTION) {
+            dialogueMap(code);
+        } else if (gp.gameState == gp.BLACKSMITH_DIALOGUE_STATE) {
+            blacksmithDialogueState(code);
+        } else if (gp.gameState == gp.SAVEPAGE_STATE || gp.gameState == gp.SAVEPAGE2_STATE){
             saveState(code);
         }
 
-        if (code == KeyEvent.VK_T){
-            showDebug = !showDebug;
-        }
-
-        // !!!!! LOGIN+START MENU !!!!!
-        if (code == KeyEvent.VK_SPACE) {
-            if (gp.gameState == gp.TITLE_STATE){
-                gp.playSE(2);
-                gp.gameState = gp.MAIN_MENU_STATE;
-            }
-        }
+        if (code == KeyEvent.VK_T) { showDebug = !showDebug; }
     }
     @Override
     public void keyReleased(KeyEvent e) {
@@ -427,11 +534,9 @@ public class KeyHandler implements KeyListener {
         if (code == KeyEvent.VK_P) { pPressed = false; }
         if (code == KeyEvent.VK_ENTER) { enterPressed = false; }
         if (code == KeyEvent.VK_F) { shotKeyPressed = false; }
-        if (code == KeyEvent.VK_1){ onePressed = false; }
-        if (code == KeyEvent.VK_2){ twoPressed = false; }
-        if (code == KeyEvent.VK_3){ threePressed = false; }
-        if (code == KeyEvent.VK_ESCAPE) {
-            escapePressed = false;
-        }
+        if (code == KeyEvent.VK_1) { onePressed = false; }
+        if (code == KeyEvent.VK_2) { twoPressed = false; }
+        if (code == KeyEvent.VK_3) { threePressed = false; }
+        if (code == KeyEvent.VK_ESCAPE) { escapePressed = false; }
     }
 }

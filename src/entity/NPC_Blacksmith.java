@@ -22,11 +22,17 @@ public class NPC_Blacksmith extends Entity {
     }
 
     public void setDialog() {
-        dialogs[0][0] = "placeholder 1";
-        dialogs[0][1] = "placeholder 2";
-        dialogs[0][2] = "placeholder 3";
-        dialogs[0][3] = "placeholder 4";
-        dialogs[0][4] = "placeholder 4";
+        switch(gp.player.playerClass) {
+            case 0: // WARRIOR
+                dialogs[0][0] = "Greetings, savage of the sand dunes.\n Cough up the coin, then I'll help.";
+                break;
+            case 1: // KNIGHT
+                dialogs[0][0] = "Welcome, Sir. \nWhat services do you seek of me?";
+                break;
+            case 2: // ASSASSIN
+                dialogs[0][0] = "Hello, shadow walker.";
+                break;
+        }
     }
 
     public void getNpcSprites() {
@@ -54,22 +60,22 @@ public class NPC_Blacksmith extends Entity {
 
     public void buy() {
         if (gp.player.ownedWeapon.contains(gp.ui.slotRow) & !gp.player.hotbarList.contains(shopItems.get(gp.ui.slotRow))){
-            if (gp.player.hotbarList.size() < 3){
+            if (gp.player.hotbarList.size() < 2){
                 gp.player.hotbarList.add(0, shopItems.get(gp.ui.slotRow));
             } else{
-                gp.player.hotbarList.remove(2);
+                gp.player.hotbarList.remove(1);
                 gp.player.hotbarList.add(0, shopItems.get(gp.ui.slotRow));
             }
         } else if (gp.player.hotbarList.contains(shopItems.get(gp.ui.slotRow))) {
 
         } else {
-            if (gp.player.hotbarList.size() < 3){
+            if (gp.player.hotbarList.size() < 2){
                 gp.player.totalCoins -= shopItems.get(gp.ui.slotRow).price;
                 gp.player.hotbarList.add(0, shopItems.get(gp.ui.slotRow));
                 gp.player.ownedWeapon.add(gp.ui.slotRow);
             } else {
                 gp.player.totalCoins -= shopItems.get(gp.ui.slotRow).price;
-                gp.player.hotbarList.remove(2);
+                gp.player.hotbarList.remove(1);
                 gp.player.hotbarList.add(0, shopItems.get(gp.ui.slotRow));
                 if (!gp.saveLoad.isloadPage) {
                     gp.player.ownedWeapon.add(gp.ui.slotRow);
@@ -81,5 +87,14 @@ public class NPC_Blacksmith extends Entity {
 
     public ArrayList<Entity> getShopItems(){
         return shopItems;
+    }
+
+    public void speak() {
+        startDialogue(this,dialogueSet);
+        dialogueSet++;
+        if(dialogs[dialogueSet][0] == null){
+            dialogueSet = 0;
+        }
+        gp.gameState = gp.BLACKSMITH_DIALOGUE_STATE;
     }
 }

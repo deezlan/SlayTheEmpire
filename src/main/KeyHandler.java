@@ -209,7 +209,7 @@ public class KeyHandler implements KeyListener {
     }
 
     public void dialogState(int code) {
-        if (code == KeyEvent.VK_E) {
+        if (code == KeyEvent.VK_SPACE) {
             ePressed = true;
             if (gp.gameState == gp.shopState)
                 gp.gameState = gp.playState;

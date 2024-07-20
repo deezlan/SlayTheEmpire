@@ -92,7 +92,7 @@ public class UI {
             {"Use Weapon", "Left-Click"},
             {"Weapon 1", "1"},
             {"Weapon 2", "2"},
-            {"Consumable", "3"},
+            {"Consumables", "3"},
             {"Use Cons", "E"},
 
             // MENU
@@ -100,9 +100,6 @@ public class UI {
             {"Pause", "P"},
             {"Select", "Space"},
 
-            // Extra
-            {"Ohio", "Sigma"},
-            {"Skibidi", "Rizz"},
     };
 
     public UI(GamePanel gp) {

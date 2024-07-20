@@ -616,15 +616,15 @@ public class UI {
                 currentDialog = combinedText;
                 charIndex++;
             }
-            if (gp.keyH.ePressed){
+            if (gp.keyH.spacePressed){
                 charIndex = 0;
                 combinedText = "";
                 if(gp.gameState == gp.DIALOGUE_STATE){
                     npc.dialogueIndex++;
-                    gp.keyH.ePressed = false;
+                    gp.keyH.spacePressed = false;
                 } else if (gp.gameState == gp.CUTSCENE_STATE) {
                     npc.dialogueIndex++;
-                    gp.keyH.ePressed = false;
+                    gp.keyH.spacePressed = false;
                 }
             }
         } else {
@@ -705,40 +705,21 @@ public class UI {
         g2.drawString("Easy",x,y);
         if (commandNum == 0) {
             g2.drawString(">", x-24,y);
-            if (gp.keyH.enterPressed) {
-                gp.gameMode = 1;
-                gp.gameState = gp.DIALOGUE_STATE;
-                currentDialog = "Going Easy are we?";
-            }
         }
         y += gp.TILE_SIZE;
         g2.drawString("Medium",x,y);
         if (commandNum == 1) {
             g2.drawString(">", x-24,y);
-            if (gp.keyH.enterPressed) {
-                gp.gameMode = 2;
-                gp.gameState = gp.DIALOGUE_STATE;
-                currentDialog = "Okay we are getting somewhere";
-            }
         }
         y += gp.TILE_SIZE;
         g2.drawString("Hard",x,y);
         if (commandNum == 2) {
             g2.drawString(">", x-24,y);
-            if (gp.keyH.enterPressed) {
-                gp.gameMode = 3;
-                gp.gameState = gp.DIALOGUE_STATE;
-                currentDialog = "We have a big boy here";
-            }
         }
         y += gp.TILE_SIZE;
         g2.drawString("No",x,y);
         if (commandNum == 3) {
             g2.drawString(">", x-24,y);
-            if (gp.keyH.enterPressed) {
-                gp.gameState = gp.DIALOGUE_STATE;
-                currentDialog = "Pish, you are a coward";
-            }
         }
     }
     public void dialogueBlackSmithSelect() {

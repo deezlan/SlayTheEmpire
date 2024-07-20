@@ -73,24 +73,36 @@ public class KeyHandler implements KeyListener {
     }
 
     public void dialogueDiffState(int code) {
-        if(code == KeyEvent.VK_ENTER){
-            enterPressed = true;
+        if(code == KeyEvent.VK_SPACE){
+            switch(gp.ui.commandNum){
+                case 0:
+                    gp.gameMode = 1;
+                    gp.gameState = gp.DIALOGUE_STATE;
+                    gp.ui.currentDialog = "Going Easy are we?";
+                    break;
+                case 1:
+                    gp.gameMode = 2;
+                    gp.gameState = gp.DIALOGUE_STATE;
+                    gp.ui.currentDialog = "Okay we are getting somewhere";
+                    break;
+                case 2:
+                    gp.gameMode = 3;
+                    gp.gameState = gp.DIALOGUE_STATE;
+                    gp.ui.currentDialog = "We have a big boy here";
+                    break;
+                case 3:
+                    gp.gameState = gp.DIALOGUE_STATE;
+                    gp.ui.currentDialog = "Pish, you are a coward";
+                    break;
+            }
         }
-
         if (gp.ui.subState == 0) {
-            if(code == KeyEvent.VK_W) {
-                gp.ui.commandNum--;
-                if(gp.ui.commandNum < 0) {
-                    gp.ui.commandNum = 3;
-                }
-            }
-            if(code == KeyEvent.VK_S) {
-                gp.ui.commandNum++;
-                if(gp.ui.commandNum > 3) {
-                    gp.ui.commandNum = 0;
-                }
-            }
+            if(code == KeyEvent.VK_W) gp.ui.commandNum--;
+            if(code == KeyEvent.VK_S) gp.ui.commandNum++;
         }
+        // LOOP BACK SELECTION
+        if(gp.ui.commandNum < 0) gp.ui.commandNum = 3;
+        if(gp.ui.commandNum > 3) gp.ui.commandNum = 0;
     }
 
     public void blacksmithDialogueState(int code) {
@@ -105,7 +117,7 @@ public class KeyHandler implements KeyListener {
                     break;
                 case 2:
                     gp.gameState= gp.DIALOGUE_STATE;
-                    gp.ui.currentDialog = "I used to work for the princess\nbut now im here";
+                    gp.ui.currentDialog = "Come Again";
                     break;
             }
         }
@@ -272,8 +284,8 @@ public class KeyHandler implements KeyListener {
     public void dialogState(int code) {
         if (code == KeyEvent.VK_SPACE) {
             spacePressed = true;
-        } if (gp.gameState == gp.DIALOGUE_STATE) {
-            gp.gameState = gp.PLAY_STATE;
+            if (gp.gameState == gp.SHOP_STATE)
+                gp.gameState = gp.PLAY_STATE;
         }
     }
 

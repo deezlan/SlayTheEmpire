@@ -168,7 +168,10 @@ public class KeyHandler implements KeyListener {
 
     public void controlsState(int code) {
         if (code == KeyEvent.VK_ESCAPE) {
-            gp.gameState = gp.MAIN_MENU_STATE;
+            if (gp.player == null)
+                gp.gameState = gp.MAIN_MENU_STATE;
+            else
+                gp.gameState = gp.PLAY_STATE;
         }
     }
 
@@ -382,10 +385,11 @@ public class KeyHandler implements KeyListener {
                     }
                     // Back to Start Menu
                     case 4: {
-                        if (gp.gameState == gp.INGAME_OPTIONS_STATE) {
+//                        if (gp.gameState == gp.INGAME_OPTIONS_STATE) {
                             gp.gameState = gp.MAIN_MENU_STATE;
                             gp.ui.commandNum = 0;
-                        }
+                            gp.player = null; // DELOAD PLAYER
+//                        }
                         break;
                     }
                     // log out

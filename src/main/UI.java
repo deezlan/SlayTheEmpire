@@ -658,46 +658,46 @@ public class UI {
         int imageHeight = (int) (saveFileBackground.getHeight(null) * ((double) imageWidth / saveFileBackground.getWidth(null)));
         int x = 0;
         int y = (gp.SCREEN_HEIGHT - imageHeight) / 2;
-
         g2.drawImage(saveFileBackground, x, y, imageWidth, imageHeight, null);
         drawSaveButtons();
 
-        if (gp.saveLoad.isAllFileEmpty()){
+        if (gp.saveLoad.isAllFileEmpty() && gp.saveLoad.isLoadPage) {
             drawSaveFileDialogue(5);
-        } else if (gp.saveLoad.isLoadPage){
+        } else if (gp.saveLoad.isLoadPage) {
             drawSaveFileDialogue(4);
+        } else if (gp.saveLoad.isSaveCompleted) {
+            drawSaveFileDialogue(1);
         } else {
             drawSaveFileDialogue(2);
         }
 
         if (gp.mouseH.leftClicked) {
             if (!gp.saveLoad.isLoadPage) {
+                boolean saved = false;
                 if (saveButtonBounds1.contains(gp.cursor.getMouseX(), gp.cursor.getMouseY())) {
                     gp.saveLoad.slot = 0;
-                    if (gp.saveLoad.filledSaveFile[gp.saveLoad.slot]){
+                    if (gp.saveLoad.filledSaveFile[gp.saveLoad.slot]) {
                         gp.gameState = gp.SAVEPAGE2_STATE;
-                        drawSaveFileDialogue(1);
-                    }else{
+                    } else {
                         gp.saveLoad.save(gp.saveLoad.slot);
+                        gp.saveLoad.isSaveCompleted = true;
                     }
+
                 } else if (saveButtonBounds2.contains(gp.cursor.getMouseX(), gp.cursor.getMouseY())) {
                     gp.saveLoad.slot = 1;
-                    if (gp.saveLoad.filledSaveFile[gp.saveLoad.slot]){
+                    if (gp.saveLoad.filledSaveFile[gp.saveLoad.slot]) {
                         gp.gameState = gp.SAVEPAGE2_STATE;
-                        drawSaveFileDialogue(1);
-
-                    }else{
+                    } else {
                         gp.saveLoad.save(gp.saveLoad.slot);
+                        gp.saveLoad.isSaveCompleted = true;
                     }
-
                 } else if (saveButtonBounds3.contains(gp.cursor.getMouseX(), gp.cursor.getMouseY())) {
                     gp.saveLoad.slot = 2;
-                    if (gp.saveLoad.filledSaveFile[gp.saveLoad.slot]){
+                    if (gp.saveLoad.filledSaveFile[gp.saveLoad.slot]) {
                         gp.gameState = gp.SAVEPAGE2_STATE;
-                        drawSaveFileDialogue(1);
-
-                    }else{
+                    } else {
                         gp.saveLoad.save(gp.saveLoad.slot);
+                        gp.saveLoad.isSaveCompleted = true;
                     }
                 }
             } else {
@@ -761,10 +761,11 @@ public class UI {
             yesRect = new Rectangle(lx, y, saveButtonWidth, saveButtonHeight);
             noRect = new Rectangle(rx, y, saveButtonWidth, saveButtonHeight);
 
-            if(gp.mouseH.leftClicked && yesRect.contains(gp.cursor.getMouseX(), gp.cursor.getMouseY())){
+            if (gp.mouseH.leftClicked && yesRect.contains(gp.cursor.getMouseX(), gp.cursor.getMouseY())){
                 gp.saveLoad.save(gp.saveLoad.slot);
                 gp.mouseH.clearMouseClick();
                 gp.gameState = gp.SAVEPAGE_STATE;
+                gp.saveLoad.isSaveCompleted = true;
             } else if (gp.mouseH.leftClicked && noRect.contains(gp.cursor.getMouseX(), gp.cursor.getMouseY())){
                 gp.mouseH.clearMouseClick();
                 gp.gameState = gp.SAVEPAGE_STATE;

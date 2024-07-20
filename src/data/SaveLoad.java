@@ -11,15 +11,16 @@ public class SaveLoad implements Serializable {
     File[] SaveFiles;
     public Boolean[] filledSaveFile;
     public boolean isLoadPage = false;
+    public boolean isSaveCompleted = false;
     public int slot;
 
-    public SaveLoad(GamePanel gp, int numberOfFiles, String user) {
+    public SaveLoad(GamePanel gp, int numberOfFiles) {
         this.gp = gp;
         this.SaveFiles = new File[numberOfFiles];
         this.filledSaveFile = new Boolean[numberOfFiles];
 
         for (int i = 0; i < numberOfFiles; i++) {
-            this.SaveFiles[i] = new File("res/saves/" + user + "/" +"Save" + i + ".dat");
+            this.SaveFiles[i] = new File("res/saves/" + gp.ui.inpUser + "/" +"Save" + i + ".dat");
             this.filledSaveFile[i] = false;
         }
         File dir = new File("res/saves");

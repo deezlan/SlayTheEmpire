@@ -11,9 +11,8 @@ public class BOSS_DemonSlime extends Entity {
     int specialAttackCounter;
     GamePanel gp;
     public static final String monName = "Demon Slime";
-    public BOSS_DemonSlime(GamePanel gp) {
-        super(gp);
-        this.gp = gp;
+    public BOSS_DemonSlime(GamePanel gp, int worldX, int worldY) {
+        super(gp, worldX, worldY);
         name = monName;
         type = type_mob;
         boss = true;
@@ -73,8 +72,8 @@ public class BOSS_DemonSlime extends Entity {
             spriteNum = 1;
             checkShoot(0,24,144,0);
         } else if (!attacking & !specialAttacking){
-            checkWithinAttackRange(30,gp.TILE_SIZE*6,gp.TILE_SIZE*6); // Original
-//            checkWithinAttackRange(30); // CHANGE ATTACK RANGE
+//            checkWithinAttackRange(30,gp.TILE_SIZE*6,gp.TILE_SIZE*6); // Original
+            checkWithinAttackRange(30); // CHANGE ATTACK RANGE
         }
     }
 

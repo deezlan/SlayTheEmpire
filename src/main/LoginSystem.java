@@ -46,7 +46,7 @@ public class LoginSystem extends JPanel {
         encryptPass();
         if (accDatabase.containsKey(gp.ui.inpUser)) {
             if (accDatabase.get(gp.ui.inpUser).equals(encryptedPass)) {
-                gp.gameState = gp.startMenuState;
+                gp.gameState = gp.MAIN_MENU_STATE;
             } else { gp.ui.isInvalidLogin = true; }
         } else {
             gp.ui.isInvalidLogin = true;
@@ -57,7 +57,7 @@ public class LoginSystem extends JPanel {
         loadUsers();
 
         if (accDatabase.containsKey(gp.ui.inpUser)) {
-            gp.ui.usernameTaken = true;
+            gp.ui.isUserTaken = true;
         } else {
             try {
                 FileWriter fw = new FileWriter(file, true);

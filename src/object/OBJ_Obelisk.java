@@ -12,16 +12,10 @@ public class OBJ_Obelisk extends Entity {
         name = "Obelisk";
         message = "teleport";
         type = type_obelisk;
+        setCollisionValues(48, 160, 20, 30);
         // Load sprites
         getObjectSprites();
 
-        // Set collision settings
-        solidArea.x = 48;
-        solidArea.y = 160;
-        solidArea.width = 20;
-        solidArea.height = 30;
-        solidAreaDefaultX = solidArea.x;
-        solidAreaDefaultY = solidArea.y;
         collision = true;
     }
 

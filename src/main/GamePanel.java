@@ -1,18 +1,20 @@
 package main;
 
-import javax.swing.*;
-import java.awt.Dimension;
-import java.awt.Color;
+import javax.swing.JPanel;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.*;
+import java.awt.Dimension;
+import java.awt.Point;
+import java.awt.Font;
+import java.awt.Toolkit;
+import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Comparator;
 
-import TileInteractive.InteractiveTIle;
+//import TileInteractive.InteractiveTIle;
 import ai.Pathfinder;
 import entity.Cursor;
 import entity.Entity;
@@ -32,8 +34,8 @@ public class GamePanel extends JPanel implements Runnable {
             TILE_SIZE = ORIGINAL_TILE_SIZE * SCALE,
             MAX_SCREEN_COL = 17,
             MAX_SCREEN_ROW = 13,
-            SCREEN_WIDTH = TILE_SIZE * MAX_SCREEN_COL,
-            SCREEN_HEIGHT = TILE_SIZE * MAX_SCREEN_ROW;
+            SCREEN_WIDTH = TILE_SIZE * MAX_SCREEN_COL, // 816 PIXELS
+            SCREEN_HEIGHT = TILE_SIZE * MAX_SCREEN_ROW; // 624 PIXELS
 
     // HANDLERS
     public UI ui = new UI(this);
@@ -55,7 +57,7 @@ public class GamePanel extends JPanel implements Runnable {
     public final int
             MAX_WORLD_COL = 50,
             MAX_WORLD_ROW = 50,
-            maxMap = 3;
+            MAX_MAP = 3;
     public TileManager tileM = new TileManager(this);
 
     // PLAYER
@@ -67,12 +69,12 @@ public class GamePanel extends JPanel implements Runnable {
     private final ArrayList<Entity> entityList = new ArrayList<>();
     public AssetSetter aSetter = new AssetSetter(this);
     public Entity[][]
-            objArr = new Entity[maxMap][30],
-            npcArr = new Entity[maxMap][10],
-            mobArr = new Entity[maxMap][20],
-            gateArr = new Entity[maxMap][50],
-            projectileArr = new Entity[maxMap][50];
-    public InteractiveTIle[][] iTile = new InteractiveTIle[maxMap][50];
+            objArr = new Entity[MAX_MAP][30],
+            npcArr = new Entity[MAX_MAP][10],
+            mobArr = new Entity[MAX_MAP][20],
+            gateArr = new Entity[MAX_MAP][50],
+            projectileArr = new Entity[MAX_MAP][50];
+//    public InteractiveTIle[][] iTile = new InteractiveTIle[MAX_MAP][50];
 
     // CUTSCENE
     public boolean bossBattleOn = false;
@@ -82,28 +84,29 @@ public class GamePanel extends JPanel implements Runnable {
     public int gameState, gameMode;
     public final int
             // GAME STATES
-            titleState = 0,
-            playState = 1,
-            pauseState = 2,
-            dialogueState = 3,
-            shopState = 4,
-            deathState = 5,
-            transitionState = 6,
-            loginState = 7,
-            creditsState = 8,
-            characterSelectionState = 9,
-            optionState = 10,
-            optionState2 = 12,
-            startMenuState = 11,
-            cutsceneState = 13,
-            controlsState = 14,
-            potionShopState = 15,
-
+            TITLE_STATE = 0,
+            LOGIN_STATE = 1,
+            MAIN_MENU_STATE = 2,
+            CHAR_SELECT_STATE = 3,
+            DIFF_MENU_STATE = 4,
+            OPTIONS_MENU_STATE = 5,
+            CONTROLS_STATE = 6,
+            CREDITS_STATE = 7,
+            PLAY_STATE = 8,
+            PAUSE_STATE = 9,
+            SHOP_STATE = 10,
+            DIFF_DIALOGUE_STATE = 11,
+            DIALOGUE_STATE = 12,
+            OPTIONS_DIALOGUE_STATE = 13,
+            CUTSCENE_STATE = 14,
+            DEATH_STATE = 15,
+            TRANSITION_STATE = 16,
+            POTION_SHOP_STATE = 17,
 
             // DIFFICULTY MODES
-            easyMode = 1,
-            normalMode = 2,
-            hardMode = 3;
+            EASY_MODE = 1,
+            NORMAL_MODE = 2,
+            HARD_MODE = 3;
 
     public GamePanel() {
         this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
@@ -113,9 +116,9 @@ public class GamePanel extends JPanel implements Runnable {
         this.setFocusable(true); // pass the player instance variable to the KeyHandler constructor
 
         // DEFAULT SETTINGS
-        music.volumeScale = 0;
-        effect.volumeScale = 0;
-        gameMode = easyMode;
+        music.volumeScale = 1;
+        effect.volumeScale = 3;
+        gameMode = EASY_MODE;
 
 //        hideCursor();
 
@@ -148,7 +151,7 @@ public class GamePanel extends JPanel implements Runnable {
     @Override
     public void run() {
         // FPS SETTINGS
-        int FPS = 60;
+        final int FPS = 60;
         double drawInterval = (double) 1000000000 / FPS;
         double delta = 0;
         long lastTime = System.nanoTime();
@@ -179,7 +182,7 @@ public class GamePanel extends JPanel implements Runnable {
     public void setupGame() {
         tempScreen = new BufferedImage(SCREEN_WIDTH,SCREEN_HEIGHT,BufferedImage.TYPE_INT_ARGB);
         g2 = (Graphics2D) tempScreen.getGraphics();
-        gameState = characterSelectionState; // TESTING LOGIN RIGHT NOW
+        gameState = CHAR_SELECT_STATE; // TESTING LOGIN RIGHT NOW
         playMusic(0);
     }
 
@@ -219,19 +222,10 @@ public class GamePanel extends JPanel implements Runnable {
         aSetter.setNPC();
         aSetter.setGates();
     }
-//    public void restart() {
-//        player.setDefaultValues();
-//        player.setDefaultPosition();
-//        player.restoreLife();
-//        aSetter.setMonster();
-//        aSetter.setNPC();
-//        aSetter.setObject();
-//        aSetter.setInteractiveTile();
-//    }
     public void loadLevel() {
         bossBattleOn = false;
         aSetter.loadAssets();
-        gameState = playState;
+        gameState = PLAY_STATE;
     }
     public void setMapColor() {
         switch (currentMap) {
@@ -245,7 +239,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     // GAME LOOP METHODS
     public void update() {
-        if (gameState == playState) {
+        if (gameState == PLAY_STATE) {
             hideCursor(); // HIDE CURSOR
             player.update();
 
@@ -273,12 +267,6 @@ public class GamePanel extends JPanel implements Runnable {
                     }
                 }
             }
-            // INTERACTIVE TILES
-            for (int i = 0; i < iTile[1].length; i++) {
-                if(iTile[currentMap][i] != null){
-                    iTile[currentMap][i].update();
-                }
-            }
             // PROJECTILES
             for (int i = 0; i < projectileArr[1].length; i++){
                 if (projectileArr[currentMap][i] != null){
@@ -302,19 +290,20 @@ public class GamePanel extends JPanel implements Runnable {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D)g;
 
-        if (gameState == optionState){
+        if (gameState == OPTIONS_MENU_STATE){
             showCursor();
         }
 
         // Title Screen
-        if (gameState == playState ||
-                gameState == shopState ||
-                gameState == dialogueState ||
-                gameState == pauseState ||
-                gameState == optionState ||
-                gameState == transitionState ||
-                gameState == cutsceneState ||
-                gameState == potionShopState){
+        if (gameState == PLAY_STATE ||
+                gameState == SHOP_STATE ||
+                gameState == DIALOGUE_STATE ||
+                gameState == PAUSE_STATE ||
+                gameState == OPTIONS_MENU_STATE ||
+                gameState == TRANSITION_STATE ||
+                gameState == CUTSCENE_STATE ||
+                gameState == DIFF_DIALOGUE_STATE ||
+                gameState == POTION_SHOP_STATE) {
 
             // DEBUG
             long drawStart = 0;

@@ -13,6 +13,8 @@ public class OBJ_Shop extends Entity {
         super(gp, worldX, worldY);
         message = "Shop closed bitch";
         type = type_shop;
+        setCollisionValues(20, 0, 172, 130);
+        collision = true;
 
         // Load shop sprites
         getObjectSprites();

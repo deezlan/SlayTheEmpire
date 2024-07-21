@@ -14,6 +14,10 @@ public class MOB_Goblin extends Entity {
         setStatValues(1, 4, false, 5, 25);
         setCollisionValues(70, 90, 40, 40);
         setAttackValues(1, 4, 50, 50, false);
+        setHitboxValues(70, 80, 60, 60);
+
+        attRangeHorz = 66;
+        attRangeVert = 50;
 
         // Load mob sprites
         getMobSprites();

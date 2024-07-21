@@ -45,15 +45,23 @@ public class EventHandler {
     }
 
     public void setDialogue() {
+        // FOR DRINKING EVENT
         eventMaster.dialogs[0][0] = "Drank Possibly Toilet Water";
         eventMaster.dialogs[0][1] = "Why does it taste like pee";
+
+        // FOR MAP SELECTION EVENT
+        eventMaster.dialogs[1][0] = "Turned Back";
+
     }
+
     // check tile for event;
     public void checkEvent() {
         // check tile if player i one tile away from the tile
         int xDistance = Math.abs(gp.player.worldX - previousEventX);
         int yDistance = Math.abs(gp.player.worldY - previousEventY);
         int distance = Math.max(xDistance, yDistance);
+
+        if (distance > gp.TILE_SIZE) canTouchEvent = true;
 
         switch (gp.currentMap) {
             // LOBBY
@@ -91,16 +99,13 @@ public class EventHandler {
             }
         }
 
-        if (distance > gp.TILE_SIZE) {
-            canTouchEvent = true;
-        }
-        if (canTouchEvent) {// use else if to add more events
+        if (canTouchEvent) { // use else if to add more events
             switch (gp.currentMap) {
                 // LOBBY
                 case 0:
-
+                {
                     if (hit(0, 8, 13, "any")) {
-                        changeMap();
+                        gp.gameState = gp.MAP_SELECTION;
                     } else if (
                             hit(0, 2, 9, "any")
                                     || hit(gp.currentMap, 3, 10, "any")
@@ -108,17 +113,13 @@ public class EventHandler {
                                     || hit(gp.currentMap, 13, 10, "any")
                     ) {
                         drinkWater(gp.DIALOGUE_STATE);
-                    } else if (hit(0, 8, 4, "any")) {
-                        gp.gateArr[gp.currentMap][0].locking = true;
-//                eventRect[0][8][4].eventDone = true;
-                    } else if (hit(0, 11, 4, "any")) {
-                        gp.gateArr[gp.currentMap][0].unlocking = true;
-//                eventRect[0][8][4].eventDone = true;
                     }
                     break;
-
+                }
                 // LEVEL ONE
                 case 1:
+                {
+                    // TRIGGER FROST GIANT CUTSCENE
                     if (hit(gp.currentMap,29, 16, "any")) {
                         FrostGiant();
                     }
@@ -129,8 +130,8 @@ public class EventHandler {
                                     || hit(gp.currentMap, 25, 43, "any")
                                     || hit(gp.currentMap, 24, 44, "any")
                     ) {
-                        for (int i = 0; i <= 4; i++)
-                            gp.gateArr[gp.currentMap][i].locking = true;
+                        triggerGates(true, 0, 4);
+                        wakeMonsters(0, 4);
 
                         eventRect[1][24][40].eventDone = true;
                         eventRect[1][25][41].eventDone = true;
@@ -142,21 +143,19 @@ public class EventHandler {
                             hit(gp.currentMap, 25, 30, "any")
                                     || hit(gp.currentMap, 25, 31, "any")
                     ) {
-                        for (int i = 5; i <= 6; i++)
-                            gp.gateArr[gp.currentMap][i].locking = true;
+                        triggerGates(true, 5, 6);
 
-//                        eventRect[1][25][30].eventDone = true;
-//                        eventRect[1][25][31].eventDone = true;
+                        eventRect[1][25][30].eventDone = true;
+                        eventRect[1][25][31].eventDone = true;
                     }
                     if ( // TRIGGER RIGHT PATH GATES
                             hit(gp.currentMap, 33, 30, "any")
                                     || hit(1, 33, 31, "any")
                     ) {
-                        for (int i = 7; i <= 8; i++)
-                            gp.gateArr[gp.currentMap][i].locking = true;
+                        triggerGates(true, 7, 8);
 
-//                        eventRect[1][33][30].eventDone = true;
-//                        eventRect[1][33][31].eventDone = true;
+                        eventRect[1][33][30].eventDone = true;
+                        eventRect[1][33][31].eventDone = true;
                     }
                     if ( // TRIGGER MINI-BOSS ROOM GATES
                             hit(1, 24, 22, "any")
@@ -171,19 +170,19 @@ public class EventHandler {
                                     || hit(1, 33, 25, "any")
                                     || hit(1, 34, 26, "any")
                     ) {
-//                        for (int i = 9; i <= 15; i++)
-//                            gp.gateArr[gp.currentMap][i].locking = true;
+                        triggerGates(true, 9, 15);
+                        wakeMonsters(5, 7);
 
-//                        eventRect[1][24][22].eventDone = true;
-//                        eventRect[1][25][23].eventDone = true;
-//                        eventRect[1][25][24].eventDone = true;
-//                        eventRect[1][25][25].eventDone = true;
-//                        eventRect[1][24][26].eventDone = true;
-//                        eventRect[1][34][22].eventDone = true;
-//                        eventRect[1][33][23].eventDone = true;
-//                        eventRect[1][33][24].eventDone = true;
-//                        eventRect[1][33][25].eventDone = true;
-//                        eventRect[1][34][26].eventDone = true;
+                        eventRect[1][24][22].eventDone = true;
+                        eventRect[1][25][23].eventDone = true;
+                        eventRect[1][25][24].eventDone = true;
+                        eventRect[1][25][25].eventDone = true;
+                        eventRect[1][24][26].eventDone = true;
+                        eventRect[1][34][22].eventDone = true;
+                        eventRect[1][33][23].eventDone = true;
+                        eventRect[1][33][24].eventDone = true;
+                        eventRect[1][33][25].eventDone = true;
+                        eventRect[1][34][26].eventDone = true;
                     }
                     if ( // TRIGGER FINAL BOSS ROOM GATES
                             hit(1, 27, 13, "any")
@@ -192,31 +191,33 @@ public class EventHandler {
                                     || hit(1, 30, 12, "any")
                                     || hit(1, 31, 13, "any")
                     ) {
-                        for (int i = 16; i <= 19; i++)
-                            gp.gateArr[gp.currentMap][i].locking = true;
+                        triggerGates(true, 16, 19);
+                        wakeMonsters(8, 12);
 
-//                        eventRect[1][27][13].eventDone = true;
-//                        eventRect[1][28][12].eventDone = true;
-//                        eventRect[1][29][12].eventDone = true;
-//                        eventRect[1][30][12].eventDone = true;
-//                        eventRect[1][31][13].eventDone = true;
+                        eventRect[1][27][13].eventDone = true;
+                        eventRect[1][28][12].eventDone = true;
+                        eventRect[1][29][12].eventDone = true;
+                        eventRect[1][30][12].eventDone = true;
+                        eventRect[1][31][13].eventDone = true;
                     }
 
-                    // UNLOCK FIRST ROOM GATES ONCE EVERY MOB SLAIN
-                    if (gp.mobArr[gp.currentMap][0] == null && gp.mobArr[gp.currentMap][1] == null) {
-                        for (int i = 0; i <= 4; i++)
-                            gp.gateArr[gp.currentMap][i].unlocking = true;
-                    }
+                    // UNLOCK FIRST ROOM GATES ONCE CLEARED
+                    if (roomCleared(0, 4))
+                        triggerGates(false, 0, 4);
 
-                    // UNLOCK FIRST ROOM GATES ONCE EVERY MOB SLAIN
-                    if (gp.mobArr[gp.currentMap][2] == null) {
-                        for (int i = 16; i <= 19; i++)
-                            gp.gateArr[gp.currentMap][i].unlocking = true;
-                    }
+                    // UNLOCK MINI-BOSS ROOM GATES ONCE CLEARED
+                    if (roomCleared(5, 7))
+                        triggerGates(false, 5, 15);
+
+                    // UNLOCK FINAL BOSS ROOM GATES ONCE CLEARED
+                    if (roomCleared(8, 12))
+                        triggerGates(false, 16, 19);
+
                     break;
-
+                }
                 // LEVEL TWO
                 case 2:
+                {
                     if ( // TRIGGER 1ST ROOM GATES
                             hit(gp.currentMap, 25, 35, "any")
                                     || hit(gp.currentMap, 24, 36, "any")
@@ -224,8 +225,14 @@ public class EventHandler {
                                     || hit(gp.currentMap, 24, 38, "any")
                                     || hit(gp.currentMap, 25, 39, "any")
                     ) {
-//                        for (int i = 0; i <= 3; i++)
-//                            gp.gateArr[gp.currentMap][i].locking = true;
+                        triggerGates(true, 0, 3);
+                        wakeMonsters(0, 3);
+
+                        eventRect[1][25][35].eventDone = true;
+                        eventRect[1][24][36].eventDone = true;
+                        eventRect[1][24][37].eventDone = true;
+                        eventRect[1][24][38].eventDone = true;
+                        eventRect[1][25][39].eventDone = true;
                     }
                     if ( // TRIGGER MINI-BOSS ROOM GATES
                             hit(gp.currentMap, 12, 23, "any")
@@ -234,8 +241,14 @@ public class EventHandler {
                                     || hit(gp.currentMap, 11, 26, "any")
                                     || hit(gp.currentMap, 12, 27, "any")
                     ) {
-//                        for (int i = 4; i <= 8; i++)
-//                            gp.gateArr[gp.currentMap][i].locking = true;
+                        triggerGates(true, 4, 8);
+                        wakeMonsters(4, 6);
+
+                        eventRect[1][12][23].eventDone = true;
+                        eventRect[1][11][24].eventDone = true;
+                        eventRect[1][11][25].eventDone = true;
+                        eventRect[1][11][26].eventDone = true;
+                        eventRect[1][12][27].eventDone = true;
                     }
                     if ( // TRIGGER FINAL BOSS ROOM GATES
                             hit(gp.currentMap, 5, 10, "any")
@@ -244,8 +257,14 @@ public class EventHandler {
                                     || hit(gp.currentMap, 8, 9, "any")
                                     || hit(gp.currentMap, 9, 10, "any")
                     ) {
-//                        for (int i = 9; i <= 14; i++)
-//                            gp.gateArr[gp.currentMap][i].locking = true;
+                        triggerGates(true, 9, 14);
+                        wakeMonsters(7, 10);
+
+                        eventRect[1][5][10].eventDone = true;
+                        eventRect[1][6][9].eventDone = true;
+                        eventRect[1][7][9].eventDone = true;
+                        eventRect[1][8][9].eventDone = true;
+                        eventRect[1][9][10].eventDone = true;
                     }
                     if ( // TRIGGER PLOT TWIST FINAL BOSS ROOM GATES
                             hit(gp.currentMap, 26, 4, "any")
@@ -255,27 +274,33 @@ public class EventHandler {
                                     || hit(gp.currentMap, 27, 8, "any")
                                     || hit(gp.currentMap, 26, 9, "any")
                     ) {
-//                        for (int i = 15; i <= 20; i++)
-//                            gp.gateArr[gp.currentMap][i].locking = true;
+                        triggerGates(true, 15, 20);
+                        wakeMonsters(11, 12);
+
+                        eventRect[1][26][4].eventDone = true;
+                        eventRect[1][27][5].eventDone = true;
+                        eventRect[1][27][6].eventDone = true;
+                        eventRect[1][27][7].eventDone = true;
+                        eventRect[1][27][8].eventDone = true;
+                        eventRect[1][26][9].eventDone = true;
                     }
 
-                    // UNLOCK FIRST ROOM GATES ONCE EVERY MOB SLAIN
-                    if (gp.mobArr[gp.currentMap][0] == null && gp.mobArr[gp.currentMap][1] == null) {
-//                        for (int i = 0; i <= 4; i++)
-//                            gp.gateArr[gp.currentMap][i].unlocking = true;
-                    }
+                    // UNLOCK FIRST ROOM GATES ONCE CLEAR
+                    if (roomCleared(0, 3))
+                        triggerGates(false, 0, 3);
 
-                    // UNLOCK BOSS ROOM GATES ONCE BOSS SLAIN
-                    if (gp.mobArr[gp.currentMap][2] == null) {
-//                        for (int i = 16; i <= 19; i++)
-//                            gp.gateArr[gp.currentMap][i].unlocking = true;
-                    }
+                    // UNLOCK MINI BOSS GATE ONCE CLEAR
+                    if (roomCleared(4, 6))
+                        triggerGates(false, 4, 8);
 
-                    // UNLOCK MINI BOSS GATE AFTER SLAIN
-                    if (gp.mobArr[1][3] == null) {
-//                    for (int i = 9; i <= 15; i++)
-//                        gp.gateArr[gp.currentMap][i].unlocking = true;
-                    }
+                    // UNLOCK FINAL BOSS ROOM GATES ONCE CLEAR
+                    if (roomCleared(7, 10))
+                        triggerGates(false, 9, 14);
+
+                    // UNLOCK STORY BOSS ROOM GATES ONCE CLEAR
+                    if (roomCleared(11, 12))
+                        triggerGates(false, 15, 20);
+                }
             }
         }
     }
@@ -307,35 +332,102 @@ public class EventHandler {
         return hit;
     }
 
-    public void changeMap(){
-        gp.gameState = gp.TRANSITION_STATE;
+    public void triggerGates(boolean lock, int firstGate, int lastGate) {
+        for (int i = firstGate; i <= lastGate; i++) {
+            if (lock)
+                gp.gateArr[gp.currentMap][i].locking = true;
+            else
+                gp.gateArr[gp.currentMap][i].unlocking = true;
+        }
+    }
 
-        System.out.println("Changing map - loadLevel() to " + gp.currentMap);
-        switch (gp.currentMap) {
-            case 0:
-                tempMap = 1; // FIRST LEVEL CORRECT VALUES
-                tempCol = 19;
-                tempRow = 41;
-//                tempMap = 2; // SECOND LEVEL CORRECT VALUES
-//                tempCol = 31;
-//                tempRow = 36;
-//                gp.player.lookingRight = false;
+    public boolean roomCleared(int firstMob, int lastMob) {
+        boolean cleared = true;
+
+        for (int i = firstMob; i <= lastMob; i++) {
+            if (gp.mobArr[gp.currentMap][i] != null) {
+                cleared = false;
                 break;
-            case 1, 2:
-                tempMap = 0;
-                tempCol = 6;
-                tempRow = 2;
+            }
         }
 
+        return cleared;
+    }
+
+    public void changeMap(int nextMap){
+        gp.gameState = gp.TRANSITION_STATE;
+        if (gp.currentMap == 0) {
+            tempMap = nextMap;
+            if (nextMap == 1) {
+                tempCol = 19;
+                tempRow = 41;
+            } else {
+                tempCol = 31;
+                tempRow = 36;
+            }
+        } else {
+            tempMap = nextMap;
+            tempCol = 6;
+            tempRow = 2;
+        }
+
+        // RESET TILE EVENTS
         musicStopped = false;
         musicPlayed = false;
-        canTouchEvent = false;
+        if (nextMap == 1) {
+            eventRect[1][24][40].eventDone = false;
+            eventRect[1][25][41].eventDone = false;
+            eventRect[1][25][42].eventDone = false;
+            eventRect[1][25][43].eventDone = false;
+            eventRect[1][24][44].eventDone = false;
+            eventRect[1][24][22].eventDone = false;
+            eventRect[1][25][23].eventDone = false;
+            eventRect[1][25][24].eventDone = false;
+            eventRect[1][25][25].eventDone = false;
+            eventRect[1][24][26].eventDone = false;
+            eventRect[1][34][22].eventDone = false;
+            eventRect[1][33][23].eventDone = false;
+            eventRect[1][33][24].eventDone = false;
+            eventRect[1][33][25].eventDone = false;
+            eventRect[1][34][26].eventDone = false;
+            eventRect[1][27][13].eventDone = false;
+            eventRect[1][28][12].eventDone = false;
+            eventRect[1][29][12].eventDone = false;
+            eventRect[1][30][12].eventDone = false;
+            eventRect[1][31][13].eventDone = false;
+        } else if (nextMap == 2) {
+            eventRect[1][27][13].eventDone = false;
+            eventRect[1][28][12].eventDone = false;
+            eventRect[1][29][12].eventDone = false;
+            eventRect[1][30][12].eventDone = false;
+            eventRect[1][31][13].eventDone = false;
+            eventRect[1][12][23].eventDone = false;
+            eventRect[1][11][24].eventDone = false;
+            eventRect[1][11][25].eventDone = false;
+            eventRect[1][11][26].eventDone = false;
+            eventRect[1][12][27].eventDone = false;
+            eventRect[1][5][10].eventDone = false;
+            eventRect[1][6][9].eventDone = false;
+            eventRect[1][7][9].eventDone = false;
+            eventRect[1][8][9].eventDone = false;
+            eventRect[1][9][10].eventDone = false;
+            eventRect[1][26][4].eventDone = false;
+            eventRect[1][27][5].eventDone = false;
+            eventRect[1][27][6].eventDone = false;
+            eventRect[1][27][7].eventDone = false;
+            eventRect[1][27][8].eventDone = false;
+            eventRect[1][26][9].eventDone = false;
+        }
+    }
+
+    public void wakeMonsters(int firstMob, int lastMob) {
+        for (int i = firstMob; i <= lastMob; i++)
+            gp.mobArr[gp.currentMap][i].sleep = false;
     }
 
     public void drinkWater(int gameState){
         if(gp.keyH.ePressed){
             gp.gameState = gameState;
-            gp.ui.currentDialog = "Drank Possibly Toilet Water";
             eventMaster.startDialogue(eventMaster,0);
             gp.player.currentLife = gp.player.maxLife;
             canTouchEvent = false;

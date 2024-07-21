@@ -14,6 +14,10 @@ public class MOB_Ramses extends Entity {
         setStatValues(1, 4, false, 4, 125);
         setCollisionValues(70, 90, 40, 30);
         setAttackValues(1, 3, 75, 75, false);
+        setHitboxValues(60, 70, 80, 60);
+
+        attRangeHorz = 91;
+        attRangeVert = 75;
 
         // Load mob sprites
         getMobSprites();

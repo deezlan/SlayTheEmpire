@@ -13,10 +13,14 @@ public class MOB_FlyingEye extends Entity {
         super(gp, worldX, worldY);
         this.gp = gp;
         setStatValues(1, 4, false, 8, 100);
-        setCollisionValues(70, 90, 40, 40);
+        setCollisionValues(70, 80, 60, 45);
         setAttackValues(0, 0, 0, 0, true);
+        setHitboxValues(60, 70, 80, 60);
         projectile = new OBJ_Rock(gp);
         hasRanged = true;
+
+        attRangeHorz = 96;
+        attRangeVert = 96;
 
         // Load mob sprites
         getMobSprites();

@@ -9,7 +9,6 @@ import java.io.IOException;
 public class OBJ_SavePedestal extends Entity {
     public OBJ_SavePedestal(GamePanel gp, int worldX, int worldY) {
         super(gp, worldX, worldY);
-        message = "Saving not implemented... go away";
         setCollisionValues(0, 50, 24, 60);
         collision = true;
 

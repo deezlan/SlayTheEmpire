@@ -195,6 +195,7 @@ public class KeyHandler implements KeyListener {
             gp.playSE(2);
             switch (gp.ui.commandNum) {
                 case 0, 1, 2: {
+                    gp.gameMode = gp.ui.commandNum + 1;
                     gp.loadLevel();
                     break;
                 }
@@ -211,35 +212,22 @@ public class KeyHandler implements KeyListener {
     public void loginState(int code) {
         if (gp.ui.typingUsername) {
             if (code == KeyEvent.VK_BACK_SPACE) {
-                System.out.println("Test backspace");
                 if (!gp.ui.inpUser.isEmpty()) {
                     gp.ui.inpUser = gp.ui.inpUser.substring(0, gp.ui.inpUser.length() - 1);
                 }
             } else if (code!= KeyEvent.VK_SHIFT && code!= KeyEvent.VK_SPACE && code!= KeyEvent.VK_CAPS_LOCK) {
-                System.out.println("Test any key");
-
-                System.out.println(gp.ui.inpUser);
                 gp.ui.inpUser = gp.ui.inpUser.concat(String.valueOf((char) code).toLowerCase());
-                System.out.println("Username is: " + gp.ui.inpUser);
             }
         }
 
         if (gp.ui.typingPassword) {
             if (code == KeyEvent.VK_BACK_SPACE) {
-                System.out.println("Test backspace");
                 if (!gp.ui.inpPass.isEmpty()) {
                     gp.ui.inpPass = gp.ui.inpPass.substring(0, gp.ui.inpPass.length() - 1);
                     gp.ui.inpPassHidden = gp.ui.inpPassHidden.substring(0, gp.ui.inpPassHidden.length() - 1);
                 }
-            } else if (code!= KeyEvent.VK_SHIFT && code!= KeyEvent.VK_SPACE && code!= KeyEvent.VK_CAPS_LOCK) {
-                System.out.println("Test any key");
-
-                System.out.println(gp.ui.inpPass);
-                gp.ui.inpPass = gp.ui.inpPass.concat(String.valueOf((char) code).toLowerCase());
+            } else if (code!= KeyEvent.VK_SHIFT && code!= KeyEvent.VK_SPACE && code!= KeyEvent.VK_CAPS_LOCK) {gp.ui.inpPass = gp.ui.inpPass.concat(String.valueOf((char) code).toLowerCase());
                 gp.ui.inpPassHidden = gp.ui.inpPassHidden.concat("*");
-
-                System.out.println("Password is: " + gp.ui.inpPass);
-                System.out.println("Password Hidden is: " + gp.ui.inpPassHidden);
             }
         }
     }

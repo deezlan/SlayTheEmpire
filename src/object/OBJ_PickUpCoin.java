@@ -10,7 +10,7 @@ public class OBJ_PickUpCoin extends Entity {
     GamePanel gp;
     public OBJ_PickUpCoin(GamePanel gp, int worldX, int worldY, int price){
         super(gp, worldX, worldY);
-        this.gp=gp;
+        this.gp = gp;
         type = type_pickup;
         name = "Coin";
         this.price = price;

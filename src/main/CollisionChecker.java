@@ -19,7 +19,7 @@ public class CollisionChecker {
         int entityTopRow = entityTopWorldY/gp.TILE_SIZE;
         int entityBottomRow = entityBottomWorldY/gp.TILE_SIZE;
 
-        int tileNum1, tileNum2, tileNum3; //only need to check three tiles
+        int tileNum1, tileNum2, tileNum3; // only need to check three tiles
 
         // Temp Direction for knockback
         String action = entity.action;
@@ -361,8 +361,8 @@ public class CollisionChecker {
                 entity.solidArea.x = entity.worldX + entity.solidArea.x;
                 entity.solidArea.y = entity.worldY + entity.solidArea.y;
 
-                if (target[gp.currentMap][i].type == entity.type_mob) { // for testing hitboxes
-//                if (entity.attacking) {
+//                if (target[gp.currentMap][i].type == entity.type_mob) { // for testing hitboxes
+                if (entity.attacking) {
                     target[gp.currentMap][i].hitboxArea.x = target[gp.currentMap][i].worldX + target[gp.currentMap][i].hitboxArea.x;
                     target[gp.currentMap][i].hitboxArea.y = target[gp.currentMap][i].worldY + target[gp.currentMap][i].hitboxArea.y;
 
@@ -541,8 +541,6 @@ public class CollisionChecker {
         entity.solidArea.y = entity.worldY + entity.solidArea.y;
 
         // Get the object's solid area position
-//        gp.player.solidArea.x = gp.player.worldX + gp.player.solidArea.x;
-//        gp.player.solidArea.y = gp.player.worldY + gp.player.solidArea.y;
         gp.player.hitboxArea.x = gp.player.worldX + gp.player.hitboxArea.x;
         gp.player.hitboxArea.y = gp.player.worldY + gp.player.hitboxArea.y;
 

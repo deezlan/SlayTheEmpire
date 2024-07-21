@@ -13,11 +13,11 @@ public class MOB_Goblin extends Entity {
         this.gp = gp;
         setStatValues(1, 4, false, 5, 25);
         setCollisionValues(70, 90, 40, 40);
-        setAttackValues(1, 4, 50, 50, false);
+        setAttackValues(5, 4, 96, 96, false);
         setHitboxValues(70, 80, 60, 60);
 
-        attRangeHorz = 66;
-        attRangeVert = 50;
+        attRangeHorz = 96;
+        attRangeVert = 96;
 
         // Load mob sprites
         getMobSprites();

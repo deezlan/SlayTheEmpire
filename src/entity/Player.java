@@ -46,21 +46,10 @@ public class Player extends Entity {
         this.cursor = cursor;
 
         // CENTER PLAYER SCREEN POSITION
-        screenX = (gp.SCREEN_WIDTH/2) - (gp.TILE_SIZE/2) - 72; // CENTERED PLAYER 0 POSITION
-//        switch (playerClass) {
-//            case 0:
-//                screenX = (gp.SCREEN_WIDTH/2) - (gp.TILE_SIZE/2) - 72; // CENTERED PLAYER 0 POSITION
-//                break;
-//            case 1:
-//                screenX = (gp.SCREEN_WIDTH/2) - (gp.TILE_SIZE/2) - 72; // CENTERED PLAYER 1 POSITION
-//                break;
-//            case 2:
-//                default:
-//                screenX = (gp.SCREEN_WIDTH/2) - (gp.TILE_SIZE/2) - 72; // CENTERED PLAYER 2 POSITION
-//        }
+        screenX = (gp.SCREEN_WIDTH/2) - (gp.TILE_SIZE/2) - 72;
         screenY = (gp.SCREEN_HEIGHT/2) - 72;
 
-        setStatValues(3, 8, false, 0, 0);
+        setStatValues(3, 50, false, 0, 0);
         setCollisionValues(80, 60, 40, 30);
         setHitboxValues(75, 20, 50, 60);
         setAttackValues(5, 2, 50, 75, false);
@@ -70,7 +59,6 @@ public class Player extends Entity {
     }
 
     // DEFAULT INITIALIZATION
-
     @Override
     public void setStatValues(int defaultSpeed, int maxLife, boolean isBoss, int mobBossNum, int coinValue) {
         type = type_player;
@@ -299,7 +287,7 @@ public class Player extends Entity {
 
     // INTERACT METHODS
     public void interactObject (int index) {
-        if (index == 1){
+        if (index == 1 && gp.currentMap == 0){
             gp.gameState = gp.SAVEPAGE_STATE;
             gp.saveLoad.isLoadPage = false;
             gp.showCursor();
@@ -319,7 +307,7 @@ public class Player extends Entity {
                 }
             }
         }
-        if (index == 0){
+        if (index == 0 && gp.currentMap == 0){
             gp.gameState = gp.POTION_SHOP_STATE;
         }
     }

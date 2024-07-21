@@ -29,10 +29,10 @@ public class UI {
     private final Image
             bg, bg2,
             // TITLE STATE
-            titleGif, titleImage,
+            titleGif,
             // LOGIN STATE
             loginDefault, typeUsername, typePassword, errorBG,
-            blankErr, usernameErr, loginErr, usernameTakenErr,
+            blankErr, usernameErr, loginErr, usernameTakenErr, regComplete,
             // MAIN MENU STATE
             startMenu,
             // CHARACTER SELECTION STATE
@@ -73,7 +73,8 @@ public class UI {
             isInvalidLogin = false,
             isUserTaken = false,
             typingUsername = false,
-            typingPassword = false;
+            typingPassword = false,
+            regSuccessful = false;
 
     public String[] musicCredits = {
             "Music/SFX by:",
@@ -142,14 +143,10 @@ public class UI {
             e.printStackTrace(System.out);
         }
 
-        // INITIALIZE TITLE VIDEO
-        ImageIcon icon = new ImageIcon("res/UI/Title.gif");
-        titleGif = icon.getImage();
+        // INITIALIZE TITLE SCREEN UI
+        titleGif = new ImageIcon("res/UI/Title.gif").getImage();
 
-        // INITIALIZE TITLE
-        titleImage = new ImageIcon("res/UI/Title.png").getImage();
-
-        // INITIALIZE LOGIN SCREEN
+        // INITIALIZE LOGIN SCREEN UI
         loginDefault = new ImageIcon("res/UI/login/loginDefault.png").getImage();
         typeUsername = new ImageIcon("res/UI/login/loginUsername.png").getImage();
         typePassword = new ImageIcon("res/UI/login/loginPassword.png").getImage();
@@ -158,24 +155,22 @@ public class UI {
         loginErr = new ImageIcon("res/UI/login/invalidLogin.png").getImage();
         usernameErr = new ImageIcon("res/UI/login/invalidChar.png").getImage();
         usernameTakenErr = new ImageIcon("res/UI/login/userTaken.png").getImage();
+        regComplete = new ImageIcon("res/UI/login/regComplete.png").getImage();
 
         // INITIALIZE START MENU UI
         bg = new ImageIcon("res/UI/bg.png").getImage();
         bg2 = new ImageIcon("res/UI/bg2.png").getImage();
         startMenu = new ImageIcon("res/UI/startMenu.png").getImage();
 
-        // INITIALIZE CHARACTER SELECT ASSETS
+        // INITIALIZE CHARACTER SELECT UI
         warriorSelected = new ImageIcon("res/UI/character_select/warriorSelected.png").getImage();
         knightSelected = new ImageIcon("res/UI/character_select/knightSelected.png").getImage();
         assassinSelected = new ImageIcon("res/UI/character_select/assassinSelected.png").getImage();
 
         // INITIALIZE PLAYER PREVIEW
-        ImageIcon warrior = new ImageIcon("res/player/WarriorIdle.gif");
-        warriorGif = warrior.getImage();
-        ImageIcon knight = new ImageIcon("res/player/KnightIdle.gif");
-        knightGif = knight.getImage();
-        ImageIcon assassin = new ImageIcon("res/player/AssassinIdle.gif");
-        assassinGif = assassin.getImage();
+        warriorGif = new ImageIcon("res/player/WarriorIdle.gif").getImage();
+        knightGif = new ImageIcon("res/player/KnightIdle.gif").getImage();
+        assassinGif = new ImageIcon("res/player/AssassinIdle.gif").getImage();
 
         // INITIALIZE ICONS
         easy_icon = new ImageIcon("res/UI/difficulty/easy_icon.png").getImage();
@@ -451,16 +446,6 @@ public class UI {
         g2.drawImage(titleGif, 0, 0, gp.SCREEN_WIDTH, gp.SCREEN_HEIGHT, null);
     }
 
-    // DRAW TITLE IMAGE
-    public void drawTitleImage() {
-        int imageWidth = (int)(gp.SCREEN_WIDTH/1.3);
-        int imageHeight = (int) (titleImage.getHeight(null) * ((double) imageWidth / titleImage.getWidth(null)));
-        int x = (gp.SCREEN_WIDTH - imageWidth) / 2;
-        int y = (gp.SCREEN_HEIGHT - imageHeight) / 4;
-
-        g2.drawImage(titleImage, x, y, imageWidth, imageHeight, null);
-    }
-
     // Draw Login Screen
     public void drawLoginScreen() {
         g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 18F));
@@ -493,11 +478,9 @@ public class UI {
 
         if (gp.mouseH.leftClicked) {
             if (nameRect.contains(gp.cursor.getMouseX(), gp.cursor.getMouseY())) {
-                System.out.println("I am within username.");
                 typingUsername = true;
                 typingPassword = false;
             } else if (passRect.contains(gp.cursor.getMouseX(), gp.cursor.getMouseY())) {
-                System.out.println("I am within password.");
                 typingUsername = false;
                 typingPassword = true;
             } else {
@@ -509,6 +492,7 @@ public class UI {
             hasInvalidChar = false;
             isInvalidLogin = false;
             isUserTaken = false;
+            regSuccessful = false;
 
             // Execute user registration on Register button click
             if (registerRect.contains(gp.cursor.getMouseX(), gp.cursor.getMouseY()))
@@ -520,7 +504,7 @@ public class UI {
             gp.mouseH.clearMouseClick();
         }
 
-        if (hasBlankField || hasInvalidChar || isInvalidLogin || isUserTaken) {
+        if (hasBlankField || hasInvalidChar || isInvalidLogin || isUserTaken || regSuccessful) {
             g2.drawImage(errorBG, 0, 0, errorBG.getWidth(null), errorBG.getHeight(null), null);
         }
         if (hasBlankField)
@@ -531,6 +515,8 @@ public class UI {
             g2.drawImage(loginErr, 209, 243, 397, 137, null);
         if (isUserTaken)
             g2.drawImage(usernameTakenErr, 209, 243, 397, 137, null);
+        if (regSuccessful)
+            g2.drawImage(regComplete, 209, 243, 397, 137, null);
 
         g2.setColor(Color.WHITE);
         g2.setStroke(new BasicStroke(3f));
@@ -545,10 +531,8 @@ public class UI {
         if (inpUser.isEmpty() || inpPass.isEmpty()) {
             hasBlankField = true;
         } else if (!inpUser.matches("[a-zA-Z0-9.\\-_]*")) {
-            System.out.println("Has illegal");
             hasInvalidChar = true;
         } else {
-            System.out.println("Good login path");
             gp.loginSys.authLogin();
         }
     }
@@ -559,7 +543,6 @@ public class UI {
         } else if (!inpUser.matches("[a-zA-Z0-9.\\-_]*")) {
             hasInvalidChar = true;
         } else {
-            System.out.println("Good reg path");
             gp.loginSys.authRegister();
         }
     }
@@ -578,38 +561,38 @@ public class UI {
         int y = gp.SCREEN_HEIGHT - imgHeight;
         g2.drawImage(startMenu, x, y, imgWidth, imgHeight, null);
 
-        int leftx = (int) ((double) gp.SCREEN_WIDTH /2 - gp.TILE_SIZE*5.5);
-        int rightx = (gp.SCREEN_WIDTH/2 + gp.TILE_SIZE*5);
+        int leftX = (int) ((double) gp.SCREEN_WIDTH /2 - gp.TILE_SIZE*5.5);
+        int rightX = (gp.SCREEN_WIDTH/2 + gp.TILE_SIZE*5);
         y = gp.SCREEN_HEIGHT/2 - 60;
         switch (commandNum) {
             case 0: {
                 // 0.5 SCALE DIFF
-                g2.drawString(">", leftx, y);
-                g2.drawString("<", rightx, y);
+                g2.drawString(">", leftX, y);
+                g2.drawString("<", rightX, y);
                 break;
             }
             case 1: {
                 y += (int) (gp.TILE_SIZE*1.5);
-                g2.drawString(">", leftx, y);
-                g2.drawString("<", rightx, y);
+                g2.drawString(">", leftX, y);
+                g2.drawString("<", rightX, y);
                 break;
             }
             case 2: {
                 y += gp.TILE_SIZE*3;
-                g2.drawString(">", leftx, y);
-                g2.drawString("<", rightx, y);
+                g2.drawString(">", leftX, y);
+                g2.drawString("<", rightX, y);
                 break;
             }
             case 3: {
                 y += (int) (gp.TILE_SIZE*4.5);
-                g2.drawString(">", leftx, y);
+                g2.drawString(">", leftX, y);
                 g2.drawString("<", (gp.SCREEN_WIDTH/2 - 18), y);
                 break;
             }
             case 4: {
                 y += (int) (gp.TILE_SIZE*4.5);
                 g2.drawString(">", (gp.SCREEN_WIDTH/2 - 5), y);
-                g2.drawString("<", rightx, y);
+                g2.drawString("<", rightX, y);
                 break;
             }
         }
@@ -835,10 +818,9 @@ public class UI {
         dialogX += gp.TILE_SIZE;
         dialogY += gp.TILE_SIZE;
 
-        if(npc.dialogs[npc.dialogueSet][npc.dialogueIndex] != null){
-//            currentDialog = npc.dialogs[npc.dialogueSet][npc.dialogueIndex];
+        if (npc.dialogs[npc.dialogueSet][npc.dialogueIndex] != null){
             char[] characters = npc.dialogs[npc.dialogueSet][npc.dialogueIndex].toCharArray(); // DISABLE IF YOU WANT ALL TEXT TO DISPLAY
-            if(charIndex < characters.length){
+            if (charIndex < characters.length){
                 String s = String.valueOf(characters[charIndex]);
                 combinedText = combinedText + s;
                 currentDialog = combinedText;
@@ -849,7 +831,6 @@ public class UI {
                 combinedText = "";
                 if(gp.gameState == gp.DIALOGUE_STATE){
                     npc.dialogueIndex++;
-//                    gp.keyH.spacePressed = false;
                 } else if (gp.gameState == gp.CUTSCENE_STATE) {
                     npc.dialogueIndex++;
                 }

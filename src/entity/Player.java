@@ -488,13 +488,13 @@ public class Player extends Entity {
                     gp.projectileArr[gp.currentMap][1] = projectile1;
                 } else if (currentWeapon.name.equalsIgnoreCase("hammer") && delta>200) {
                     delta = 0;
-                    projectile1.set(gp.player.worldX+48, gp.player.worldY-24, action, true, this, gp.cursor.deltaX, gp.cursor.deltaY);
+                    projectile1.set(gp.player.worldX+96, gp.player.worldY, action, true, this, gp.cursor.deltaX, gp.cursor.deltaY);
                     gp.projectileArr[gp.currentMap][47] = projectile1;
-                    projectile2.set(gp.player.worldX-72, gp.player.worldY-24, action, true, this, gp.cursor.deltaX, gp.cursor.deltaY);
+                    projectile2.set(gp.player.worldX+24, gp.player.worldY, action, true, this, gp.cursor.deltaX, gp.cursor.deltaY);
                     gp.projectileArr[gp.currentMap][48] = projectile2;
-                    projectile3.set(gp.player.worldX-12, gp.player.worldY+24, action, true, this, gp.cursor.deltaX, gp.cursor.deltaY);
+                    projectile3.set(gp.player.worldX+60, gp.player.worldY+24, action, true, this, gp.cursor.deltaX, gp.cursor.deltaY);
                     gp.projectileArr[gp.currentMap][49] = projectile3;
-                    projectile4.set(gp.player.worldX-12, gp.player.worldY-72, action, true, this, gp.cursor.deltaX, gp.cursor.deltaY);
+                    projectile4.set(gp.player.worldX+60, gp.player.worldY-24, action, true, this, gp.cursor.deltaX, gp.cursor.deltaY);
                     gp.projectileArr[gp.currentMap][46] = projectile4;
                 }
 
@@ -510,7 +510,7 @@ public class Player extends Entity {
         }
 
         if (gp.keyH.onePressed){
-            if (hotbarList.get(0) != null){
+            if (!hotbarList.isEmpty()){
                 currentWeapon = hotbarList.get(0);
                 projectile1 = currentWeapon.projectile1;
                 projectile2 = currentWeapon.projectile2;
@@ -523,7 +523,7 @@ public class Player extends Entity {
             }
         }
         if (gp.keyH.twoPressed){
-            if (hotbarList.get(1) != null){
+            if (!hotbarList.isEmpty()){
                 currentWeapon = hotbarList.get(1);
                 projectile1 = currentWeapon.projectile1;
                 projectile2 = currentWeapon.projectile2;

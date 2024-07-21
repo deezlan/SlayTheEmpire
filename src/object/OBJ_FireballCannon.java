@@ -25,7 +25,7 @@ public class OBJ_FireballCannon extends Entity {
         }
 
         projectile1 = new OBJ_Fireball(gp);
-        System.out.println("Projectile initialized in Snowball Cannon: " + this.projectile1);
+        System.out.println("Projectile initialized in Fireball Cannon: " + this.projectile1);
 
         weaponSprite = UtilityTool.scaleImage(weaponSprite, 30, 30);
         damage = 2;

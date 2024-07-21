@@ -10,7 +10,6 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 
 public class Player extends Entity {
@@ -63,7 +62,7 @@ public class Player extends Entity {
     @Override
     public void setStatValues(int defaultSpeed, int maxLife, boolean isBoss, int mobBossNum, int coinValue) {
         type = type_player;
-        totalCoins = 500;
+        totalCoins = 0;
 
         //INITIAL POTS
         ownedPotion.put("Health Potion", 1);
@@ -389,8 +388,6 @@ public class Player extends Entity {
                 if (keyH.wPressed && keyH.aPressed) action = "moveUpLeft";
                 if (keyH.sPressed && keyH.aPressed) action = "moveDownLeft";
 
-                if (keyH.enterPressed) attacking = true;
-
                 if (!upCollisionOn)
                     if (keyH.wPressed) worldY -= speed;
                 if (!downCollisionOn)
@@ -442,8 +439,6 @@ public class Player extends Entity {
             } else {
                 action = lookingRight ? "idleRight" : "idleLeft";
                 currentList = action.equals("idleRight") ? idleRightList : idleLeftList;
-
-                if (keyH.enterPressed) attacking = true;
             }
 
             if (iframe) {
@@ -472,10 +467,11 @@ public class Player extends Entity {
             }
         }
 
-        if (gp.keyH.shotKeyPressed && shotAvailableCounter == 30){
-            if (currentWeapon == null){
-                attacking = true;
-            } else {
+        if (gp.keyH.fPressed)
+            attacking = true;
+
+        if (gp.keyH.ctrlPressed){
+            if (currentWeapon != null){
                 if (currentWeapon.name.equalsIgnoreCase("fireball cannon") && delta>60){
                     delta = 0;
                     projectile1.set(worldX + currentList.get(0).getWidth()/2 - projectile1.currentList.get(0).getWidth()/2,
@@ -503,15 +499,6 @@ public class Player extends Entity {
                     projectile4.set(gp.player.worldX+60, gp.player.worldY-24, action, true, this, gp.cursor.deltaX, gp.cursor.deltaY);
                     gp.projectileArr[gp.currentMap][46] = projectile4;
                 }
-
-                shotAvailableCounter = 0; // ADDED COOL-DOWN
-//                for (int i = 0; i < gp.projectileList[1].length; i++) {
-//                    if(gp.projectileList[gp.currentMap][i] == null){
-//                        gp.projectileList[gp.currentMap][i] = projectile;
-//                        break;
-//                    }
-//                }
-
             }
         }
 
@@ -566,10 +553,6 @@ public class Player extends Entity {
                     potionCooldown = false;
                 }
             }
-        }
-
-        if(shotAvailableCounter < 30){
-            shotAvailableCounter++;
         }
     }
     @Override

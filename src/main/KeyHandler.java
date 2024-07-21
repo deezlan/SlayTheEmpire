@@ -15,7 +15,7 @@ public class KeyHandler implements KeyListener {
     public boolean
             wPressed, sPressed, aPressed, dPressed,
             ePressed, pPressed,
-            enterPressed, shotKeyPressed, spacePressed,
+            ctrlPressed, fPressed, spacePressed,
             onePressed, twoPressed, threePressed,
             escapePressed,
             showDebug, // DEBUG
@@ -279,7 +279,8 @@ public class KeyHandler implements KeyListener {
         if (code == KeyEvent.VK_A) aPressed = true;
         if (code == KeyEvent.VK_D) dPressed = true;
         if (code == KeyEvent.VK_E) ePressed = true;
-        if (code == KeyEvent.VK_F) shotKeyPressed = true;
+        if (code == KeyEvent.VK_CONTROL) ctrlPressed = true;
+        if (code == KeyEvent.VK_F) fPressed = true;
         if (code == KeyEvent.VK_1) onePressed = true;
         if (code == KeyEvent.VK_2) twoPressed = true;
         if (code == KeyEvent.VK_3) threePressed = true;
@@ -517,8 +518,8 @@ public class KeyHandler implements KeyListener {
         if (code == KeyEvent.VK_A) { aPressed = false; }
         if (code == KeyEvent.VK_D) { dPressed = false; }
         if (code == KeyEvent.VK_P) { pPressed = false; }
-        if (code == KeyEvent.VK_ENTER) { enterPressed = false; }
-        if (code == KeyEvent.VK_F) { shotKeyPressed = false; }
+        if (code == KeyEvent.VK_F) { fPressed = false; }
+        if (code == KeyEvent.VK_CONTROL) { ctrlPressed = false; }
         if (code == KeyEvent.VK_1) { onePressed = false; }
         if (code == KeyEvent.VK_2) { twoPressed = false; }
         if (code == KeyEvent.VK_3) { threePressed = false; }

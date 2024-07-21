@@ -8,6 +8,7 @@ import java.awt.event.KeyListener;
 import entity.Player;
 import object.OBJ_Shop;
 
+
 public class KeyHandler implements KeyListener {
     GamePanel gp;
     boolean musicPlaying = false; // check if music is already playing
@@ -275,19 +276,17 @@ public class KeyHandler implements KeyListener {
     }
 
     public void playState(int code) {
-        if (gp.gameState == gp.PLAY_STATE){
+        if (gp.gameState == gp.PLAY_STATE) {
             if (!musicPlaying) {
                 gp.music.stopAll();
                 gp.playMusic(4);
                 musicPlaying = true;
             }
-            if(code == KeyEvent.VK_F){
+            if (code == KeyEvent.VK_F) {
 
                 if (gp.player.currentWeapon.name.equalsIgnoreCase("fireball cannon")) {
                     gp.playSE(12);
-                }
-
-                else if (gp.player.currentWeapon.name.equalsIgnoreCase("stickler")) {
+                } else if (gp.player.currentWeapon.name.equalsIgnoreCase("stickler")) {
                     gp.playSE(13);
                 }
 
@@ -298,23 +297,23 @@ public class KeyHandler implements KeyListener {
             }
 
 
+            // GO TO OPTIONS
+            if (code == KeyEvent.VK_ESCAPE) gp.gameState = gp.INGAME_OPTIONS_STATE;
 
-        // GO TO OPTIONS
-        if (code == KeyEvent.VK_ESCAPE) gp.gameState = gp.INGAME_OPTIONS_STATE;
-
-        // PLAYER ACTIONS
-        if (code == KeyEvent.VK_W) wPressed = true;
-        if (code == KeyEvent.VK_S) sPressed = true;
-        if (code == KeyEvent.VK_A) aPressed = true;
-        if (code == KeyEvent.VK_D) dPressed = true;
-        if (code == KeyEvent.VK_E) ePressed = true;
-        if (code == KeyEvent.VK_F) shotKeyPressed = true;
-        if (code == KeyEvent.VK_1) onePressed = true;
-        if (code == KeyEvent.VK_2) twoPressed = true;
-        if (code == KeyEvent.VK_3) threePressed = true;
-        if (code == KeyEvent.VK_G) godModeOn = !godModeOn;
-        if (code == KeyEvent.VK_R) gp.player.restoreLife();
-        if (code == KeyEvent.VK_SPACE) spacePressed = true;
+            // PLAYER ACTIONS
+            if (code == KeyEvent.VK_W) wPressed = true;
+            if (code == KeyEvent.VK_S) sPressed = true;
+            if (code == KeyEvent.VK_A) aPressed = true;
+            if (code == KeyEvent.VK_D) dPressed = true;
+            if (code == KeyEvent.VK_E) ePressed = true;
+            if (code == KeyEvent.VK_F) shotKeyPressed = true;
+            if (code == KeyEvent.VK_1) onePressed = true;
+            if (code == KeyEvent.VK_2) twoPressed = true;
+            if (code == KeyEvent.VK_3) threePressed = true;
+            if (code == KeyEvent.VK_G) godModeOn = !godModeOn;
+            if (code == KeyEvent.VK_R) gp.player.restoreLife();
+            if (code == KeyEvent.VK_SPACE) spacePressed = true;
+        }
     }
 
     public void pauseState(int code) {

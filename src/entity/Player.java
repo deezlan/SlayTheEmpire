@@ -236,6 +236,7 @@ public class Player extends Entity {
     public void startAttack(){
         checkDamageSprite();
         runAttackAnimation();
+
     }
     public void damageMonster(int i, int attack, Entity attacker) {
         if (i != 999){
@@ -444,14 +445,24 @@ public class Player extends Entity {
 
         if (gp.keyH.shotKeyPressed && shotAvailableCounter == 30){
             if (currentWeapon == null){
-                attacking = true;
+                if (!attacking) {
+                    attacking = true;
+                    // SFX
+                    gp.playSE(15); // Play SFX only once
+                }
             } else {
                 if (currentWeapon.name.equalsIgnoreCase("fireball cannon") && delta>60){
+                    // SFX
+                    gp.playSE(12);
+                    // SFX
                     delta = 0;
                     projectile1.set(worldX + currentList.get(0).getWidth()/2 - projectile1.currentList.get(0).getWidth()/2,
                             worldY + currentList.get(0).getHeight()/2 - projectile1.currentList.get(0).getHeight()/2, action, true, this, gp.cursor.deltaX, gp.cursor.deltaY);
                     gp.projectileArr[gp.currentMap][1] = projectile1;
                 } else if (currentWeapon.name.equalsIgnoreCase("stickler") && delta>120) {
+                    // SFX
+                    gp.playSE(13);
+                    // SFX
                     delta = 0;
                     projectile1.set(worldX, worldY-48, action, true, this, gp.cursor.deltaX, gp.cursor.deltaY);
                     gp.projectileArr[gp.currentMap][47] = projectile1;
@@ -460,9 +471,15 @@ public class Player extends Entity {
                     projectile3.set(worldX-48, worldY+48, action, true, this, gp.cursor.deltaX, gp.cursor.deltaY);
                     gp.projectileArr[gp.currentMap][49] = projectile3;
                 } else if (currentWeapon.name.equalsIgnoreCase("electric blaster")) {
+                    // SFX
+                    gp.playSE(16);
+                    // SFX
                     projectile1.set(worldX, worldY, action, true, this, gp.cursor.deltaX, gp.cursor.deltaY);
                     gp.projectileArr[gp.currentMap][1] = projectile1;
                 } else if (currentWeapon.name.equalsIgnoreCase("hammer") && delta>200) {
+                    // SFX
+                    gp.playSE(14);
+                    // SFX
                     delta = 0;
                     projectile1.set(gp.player.worldX+48, gp.player.worldY-24, action, true, this, gp.cursor.deltaX, gp.cursor.deltaY);
                     gp.projectileArr[gp.currentMap][47] = projectile1;

@@ -696,6 +696,7 @@ public class UI {
     }
 
     public void drawDeathScreen() {
+
         g2.setColor(new Color(0,0,0,150));
         g2.fillRect(0,0, gp.SCREEN_WIDTH , gp.SCREEN_HEIGHT);
         int x, y;

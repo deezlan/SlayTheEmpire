@@ -9,6 +9,8 @@ public class EventHandler {
     int previousEventX, previousEventY; // prevent event from happening again immediately
     int tempMap, tempCol, tempRow;
     boolean canTouchEvent = true;
+    boolean musicPlayed = false;
+    boolean musicStopped = false;
 
     public EventHandler(GamePanel gp){
         this.gp = gp;
@@ -53,6 +55,42 @@ public class EventHandler {
         int yDistance = Math.abs(gp.player.worldY - previousEventY);
         int distance = Math.max(xDistance, yDistance);
 
+        switch (gp.currentMap) {
+            // LOBBY
+            case 0: {
+                if (!musicStopped) {
+                    gp.stopMusic();
+                    musicStopped = true;
+                }
+                if (!musicPlayed) {
+                    gp.playMusic(4);
+                    musicPlayed = true;
+                }
+            };
+            // STAGE 1
+            case 1: {
+                if (!musicStopped) {
+                    gp.stopMusic();
+                    musicStopped = true;
+                }
+                if (!musicPlayed) {
+                    gp.playMusic(5);
+                    musicPlayed = true;
+                }
+            }
+            // STAGE 2
+            case 2: {
+                if (!musicStopped) {
+                    gp.stopMusic();
+                    musicStopped = true;
+                }
+                if (!musicPlayed) {
+                    gp.playMusic(7);
+                    musicPlayed = true;
+                }
+            }
+        }
+
         if (distance > gp.TILE_SIZE) {
             canTouchEvent = true;
         }
@@ -60,6 +98,7 @@ public class EventHandler {
             switch (gp.currentMap) {
                 // LOBBY
                 case 0:
+
                     if (hit(0, 8, 13, "any")) {
                         changeMap();
                     } else if (
@@ -288,6 +327,8 @@ public class EventHandler {
                 tempRow = 2;
         }
 
+        musicStopped = false;
+        musicPlayed = false;
         canTouchEvent = false;
     }
 

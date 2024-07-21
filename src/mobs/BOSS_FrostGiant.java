@@ -8,6 +8,8 @@ import java.io.IOException;
 
 public class BOSS_FrostGiant extends Entity {
     GamePanel gp;
+    int soundEffectInterval = 60;
+    int soundEffectCounter = 0;
     public static final String monName = "Frost Giant";
     public BOSS_FrostGiant(GamePanel gp, int worldX, int worldY) {
         super(gp, worldX, worldY);
@@ -39,11 +41,16 @@ public class BOSS_FrostGiant extends Entity {
         solidAreaDefaultX = solidArea.x;
         solidAreaDefaultY = solidArea.y;
         dialogueSet = 0;
+
+        if (currentLife <= 0) {
+            gp.playSE(10);
+        }
     }
 
 
     @Override
     public void setAction() {
+
 
         if(!inRage && currentLife < maxLife/2) {
             inRage = true;
@@ -57,6 +64,14 @@ public class BOSS_FrostGiant extends Entity {
             checkStopChase(gp.player, 15, 100);
             // SEARCH DIRECTION TO GO
             searchPath(getGoalCol(gp.player),getGoalRow(gp.player));
+            soundEffectCounter++;
+
+            // FOOTSTEP SFX
+            if (soundEffectCounter >= soundEffectInterval) {
+                gp.playSE(18);
+                soundEffectCounter = 0;
+            }
+
         } else {
             // CHECK IF START CHASING
             checkStartChase(gp.player, 5 , 100);

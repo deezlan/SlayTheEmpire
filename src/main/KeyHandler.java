@@ -196,21 +196,6 @@ public class KeyHandler implements KeyListener {
                 gp.playMusic(4);
                 musicPlaying = true;
             }
-            if(code == KeyEvent.VK_F){
-
-                if (gp.player.currentWeapon.name.equalsIgnoreCase("fireball cannon")) {
-                    gp.playSE(12);
-                }
-
-                else if (gp.player.currentWeapon.name.equalsIgnoreCase("stickler")) {
-                    gp.playSE(13);
-                }
-
-//                else if (gp.player.currentWeapon.name.equalsIgnoreCase("hammer")) {
-//                    gp.playSE(14);
-//                }
-
-            }
 
 
 
@@ -283,7 +268,7 @@ public class KeyHandler implements KeyListener {
             if (gp.ui.commandNum == 0 || gp.ui.commandNum == 1) {
                 if (code == KeyEvent.VK_A || code == KeyEvent.VK_D) {
                     int adjustment = (code == KeyEvent.VK_A) ? -1 : 1;
-                    gp.playSE(1);
+                    gp.playSE(11);
 
                     switch (gp.ui.commandNum) {
                         case 0: {

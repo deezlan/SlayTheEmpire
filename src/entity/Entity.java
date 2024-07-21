@@ -2,6 +2,7 @@ package entity;
 
 import main.GamePanel;
 import main.UtilityTool;
+import mobs.BOSS_FrostGiant;
 import object.OBJ_PickUpCoin;
 
 import java.awt.*;
@@ -44,15 +45,18 @@ public abstract class Entity {
     // PLAYER & MOB ATTRIBUTES
     public int
             // STATUS VALUES
-            defaultSpeed, speed,
-            maxLife, currentLife,
-            mobNum = 0,
-            bossNum,
-            coinValue,
-            attack,
+            defaultSpeed;
+    public int speed;
+    public int maxLife;
+    public int currentLife;
+    public int mobNum = 0;
+    public int bossNum;
+    public int coinValue;
+    public int attack;
 
-            // COLLISION ATTRIBUTES
-            solidAreaDefaultX, solidAreaDefaultY;
+    public int// COLLISION ATTRIBUTES
+            solidAreaDefaultX;
+    public int solidAreaDefaultY;
     public Rectangle solidArea = new Rectangle(0, 0, 48, 48); // draw area around entities
     public String action = "idleRight"; // DEFAULT ACTION
     public boolean
@@ -392,6 +396,9 @@ public abstract class Entity {
             }
             gp.player.currentLife -= damage;
             gp.player.iframe = true;
+
+            // DAMAGE SFX
+            gp.playSE(19);
         }
     }
     public void checkShoot(int rate, int xOffset, int yOffset, int shotInterval) {
@@ -792,6 +799,3 @@ public abstract class Entity {
         }
     }
 }
-
-
-

@@ -19,13 +19,13 @@ public class NPC_Maiden extends Entity {
 
     public void setDialog() {
         dialogs[0][0] = "I'm Cleaning";
-        dialogs[0][1] = "I ain't no bitch";
+        dialogs[0][1] = "People Here Don't know How to Keep Clean";
 
         dialogs[1][0] = "You are disturbing me";
-        dialogs[1][1] = "Fk off";
+        dialogs[1][1] = "Please Leave";
 
-        dialogs[2][0] = "Hello my name is jeff,\nim a a good,\nintelij is stupid,\ntest est essd";
-        dialogs[2][1] = "You are a bitch";
+        dialogs[2][0] = "Our Princess?";
+        dialogs[2][1] = "She went missing a long time ago...";
     }
 
     public void getNpcSprites() {

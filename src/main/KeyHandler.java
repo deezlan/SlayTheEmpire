@@ -433,6 +433,9 @@ public class KeyHandler implements KeyListener {
                 gp.ui.slotRow++;
             }
         }
+        if (code == KeyEvent.VK_ESCAPE) {
+            gp.gameState = gp.BLACKSMITH_DIALOGUE_STATE;
+        }
     }
 
     public void potionShopState(int code){

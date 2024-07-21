@@ -18,12 +18,13 @@ public class NPC_Merchant extends Entity {
     }
 
     public void setDialog() {
-        dialogs[0][0] = "placeholder 1";
-        dialogs[0][1] = "placeholder 2";
-        dialogs[0][2] = "placeholder 3";
-        dialogs[0][3] = "placeholder 4";
-        dialogs[0][4] = "placeholder 4";
+        dialogs[0][0] = "Come Get Your Potions!!!!";
+        dialogs[0][1] = "No Chemicals Are Added!!!";
+
+        dialogs[1][0] = "Get Your Potions!!!!";
+        dialogs[1][1] = "Side Effects Are Not Covered!";
     }
+
 
     public void getNpcSprites() {
         String dir = "/NPCs/merchant/";

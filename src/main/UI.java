@@ -101,8 +101,8 @@ public class UI {
             {"Right", "D"},
 
             // INGAME
-            {"Attack", "Right-Click"},
-            {"Use Weapon", "Left-Click"},
+            {"Attack", "F"},
+            {"Use Weapon", "Ctrl"},
             {"Weapon 1", "1"},
             {"Weapon 2", "2"},
             {"Consumables", "3"},

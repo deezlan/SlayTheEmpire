@@ -62,9 +62,9 @@ public class BOSS_FrostGiant extends Entity {
     }
 
     public void setDialog() {
-        dialogs[0][0] = "Who are you.....";
-        dialogs[0][1] = "YOU WILL PAY... WITH ICE!";
-
+        dialogs[0][0] = "Who are you.....\nIts... so cold.....";
+        dialogs[0][1] = "Please help me....\nEnd my suffering";
+        dialogs[0][2] = "GET LOST!";
     }
 
     public void getMobSprites() {

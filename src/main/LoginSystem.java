@@ -1,5 +1,7 @@
 package main;
 
+import data.SaveLoad;
+
 import javax.swing.*;
 import java.io.*;
 import java.math.BigInteger;
@@ -47,6 +49,8 @@ public class LoginSystem extends JPanel {
         if (accDatabase.containsKey(gp.ui.inpUser)) {
             if (accDatabase.get(gp.ui.inpUser).equals(encryptedPass)) {
                 gp.gameState = gp.MAIN_MENU_STATE;
+                gp.saveLoad = new SaveLoad(gp, 3);
+                System.out.println("Current User: " + gp.ui.inpUser);
             } else { gp.ui.isInvalidLogin = true; }
         } else {
             gp.ui.isInvalidLogin = true;

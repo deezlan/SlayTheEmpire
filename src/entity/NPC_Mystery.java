@@ -50,9 +50,7 @@ public class NPC_Mystery extends Entity {
         if(dialogs[dialogueSet][0] == null){
             dialogueSet = 0;
         }
-
         gp.gameState = gp.DIFF_DIALOGUE_STATE;
         gp.ui.npc = this;
-
     }
 }

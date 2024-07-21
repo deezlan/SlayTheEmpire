@@ -5,6 +5,7 @@ import main.GamePanel;
 public class Projectile extends Entity{
     Entity user;
     double dx, dy, speedX, speedY;
+    public int type = 0;
 
     public Projectile(GamePanel gp) {
         super(gp);
@@ -28,82 +29,106 @@ public class Projectile extends Entity{
         speedY = (int) (dy / speed);
 
         if (user == gp.player) {
-            if (gp.player.currentWeapon.name.equalsIgnoreCase("fireball cannon")) {
+            if (type == 1){
+                if (gp.player.currentPotion.name.equalsIgnoreCase("Magic Potion")
+                        || gp.player.currentWeapon == null & !gp.player.currentPotion.name.equalsIgnoreCase("Water Potion")) {
+                    int offset = 0;
+                    worldX = (int) (gp.player.worldX - 5 + (offset * Math.cos(gp.cursor.getAngle())));
+                    worldY = (int) (gp.player.worldY - 12 + (offset * Math.sin(gp.cursor.getAngle())));
+                    int monsterIndex = gp.cChecker.checkEntityCollision(this, gp.mobArr);
+                    if (monsterIndex != 999) {
+                        System.out.println("HIT!");
+                        gp.player.damageMonster(monsterIndex, damage, this);
+                    }
+                } else if (gp.player.currentPotion.name.equalsIgnoreCase("Water Potion")){
+                    int offset = 0;
+                    worldX = (int) (gp.player.worldX + 42 + (offset * Math.cos(gp.cursor.getAngle())));
+                    worldY = (int) (gp.player.worldY - 2 + (offset * Math.sin(gp.cursor.getAngle())));
+                    int monsterIndex = gp.cChecker.checkEntityCollision(this, gp.mobArr);
+                    if (monsterIndex != 999) {
+                        System.out.println("HIT!");
+                        gp.player.damageMonster(monsterIndex, damage, this);
+                    }
+                }
+            }
 
-                upCollisionOn = false;
-                downCollisionOn = false;
-                leftCollisionOn = false;
-                rightCollisionOn = false;
-                gp.cChecker.checkTile(this);
-                if (upCollisionOn || downCollisionOn || leftCollisionOn || rightCollisionOn) {
-                    alive = false;
-                    System.out.println("collision detected");
-                }
-                delta++;
-                if (Math.sqrt(dx * dx + dy * dy) < 200) {
-                    dx *= 3;
-                    dy *= 3;
-                }
-                int monsterIndex = gp.cChecker.checkEntityCollision(this, gp.mobArr);
-                if (monsterIndex != 999) {
-                    System.out.println("HIT!");
-                    gp.player.damageMonster(monsterIndex, damage, this);
-                    alive = false;
-                }
-                if (delta >= 4) {
-                    worldX += (int) (dx / 10);
-                    worldY += (int) (dy / 10);
-                    delta = 0;
-                }
-            } else if (gp.player.currentWeapon.name.equalsIgnoreCase("electric blaster")) {
-                int offset = 50;
-                worldX = (int) (gp.player.worldX + 36 + (offset * Math.cos(gp.cursor.getAngle())));
-                worldY = (int) (gp.player.worldY - 12 + (offset * Math.sin(gp.cursor.getAngle())));
-                int monsterIndex = gp.cChecker.checkEntityCollision(this, gp.mobArr);
-                if (monsterIndex != 999) {
-                    System.out.println("HIT!");
-                    gp.player.damageMonster(monsterIndex, damage, this);
-                }
-            } else if (gp.player.currentWeapon.name.equalsIgnoreCase("stickler")) {
+            if (type == 0){
+                if (gp.player.currentWeapon.name.equalsIgnoreCase("fireball cannon")) {
+                    upCollisionOn = false;
+                    downCollisionOn = false;
+                    leftCollisionOn = false;
+                    rightCollisionOn = false;
+                    gp.cChecker.checkTile(this);
+                    if (upCollisionOn || downCollisionOn || leftCollisionOn || rightCollisionOn) {
+                        alive = false;
+                        System.out.println("collision detected");
+                    }
+                    delta++;
+                    if (Math.sqrt(dx * dx + dy * dy) < 200) {
+                        dx *= 3;
+                        dy *= 3;
+                    }
+                    int monsterIndex = gp.cChecker.checkEntityCollision(this, gp.mobArr);
+                    if (monsterIndex != 999) {
+                        System.out.println("HIT!");
+                        gp.player.damageMonster(monsterIndex, damage, this);
+                        alive = false;
+                    }
+                    if (delta >= 4) {
+                        worldX += (int) (dx / 10);
+                        worldY += (int) (dy / 10);
+                        delta = 0;
+                    }
+                } else if (gp.player.currentWeapon.name.equalsIgnoreCase("electric blaster")) {
+                    int offset = 50;
+                    worldX = (int) (gp.player.worldX + 36 + (offset * Math.cos(gp.cursor.getAngle())));
+                    worldY = (int) (gp.player.worldY - 12 + (offset * Math.sin(gp.cursor.getAngle())));
+                    int monsterIndex = gp.cChecker.checkEntityCollision(this, gp.mobArr);
+                    if (monsterIndex != 999) {
+                        System.out.println("HIT!");
+                        gp.player.damageMonster(monsterIndex, damage, this);
+                    }
+                } else if (gp.player.currentWeapon.name.equalsIgnoreCase("stickler")) {
 
-                upCollisionOn = false;
-                downCollisionOn = false;
-                leftCollisionOn = false;
-                rightCollisionOn = false;
-                gp.cChecker.checkTile(this);
-                if (upCollisionOn || downCollisionOn || leftCollisionOn || rightCollisionOn) {
-                    alive = false;
-                }
-                delta++;
-                if (Math.sqrt(dx * dx + dy * dy) < 200) {
-                    dx *= 3;
-                    dy *= 3;
-                }
-                int monsterIndex = gp.cChecker.checkEntityCollision(this, gp.mobArr);
-                if (monsterIndex != 999) {
-                    dy = 0;
-                    dx = 0;
+                    upCollisionOn = false;
+                    downCollisionOn = false;
+                    leftCollisionOn = false;
+                    rightCollisionOn = false;
+                    gp.cChecker.checkTile(this);
+                    if (upCollisionOn || downCollisionOn || leftCollisionOn || rightCollisionOn) {
+                        alive = false;
+                    }
+                    delta++;
+                    if (Math.sqrt(dx * dx + dy * dy) < 200) {
+                        dx *= 3;
+                        dy *= 3;
+                    }
+                    int monsterIndex = gp.cChecker.checkEntityCollision(this, gp.mobArr);
+                    if (monsterIndex != 999) {
+                        dy = 0;
+                        dx = 0;
 
-                    System.out.println("HIT!");
-                    gp.player.damageMonster(monsterIndex, damage, this);
-                }
-                if (delta >= 4) {
-                    worldX += (int) ((dx) / 10);
-                    worldY += (int) ((dy) / 10);
-                    delta = 0;
-                }
-            } else if (gp.player.currentWeapon.name.equalsIgnoreCase("hammer")) {
-                int monsterIndex = gp.cChecker.checkEntityCollision(this, gp.mobArr);
-                if (monsterIndex != 999) {
-                    System.out.println("HIT!");
-                    gp.player.damageMonster(monsterIndex, damage, this);
-                }
-                dx = gp.cursor.deltaX;
-                dy = gp.cursor.deltaY;
-                monsterIndex = gp.cChecker.checkEntityCollision(this, gp.mobArr);
-                if (monsterIndex != 999) {
-                    System.out.println("HIT!");
-                    gp.player.damageMonster(monsterIndex, damage, this);
+                        System.out.println("HIT!");
+                        gp.player.damageMonster(monsterIndex, damage, this);
+                    }
+                    if (delta >= 4) {
+                        worldX += (int) ((dx) / 10);
+                        worldY += (int) ((dy) / 10);
+                        delta = 0;
+                    }
+                } else if (gp.player.currentWeapon.name.equalsIgnoreCase("hammer")) {
+                    int monsterIndex = gp.cChecker.checkEntityCollision(this, gp.mobArr);
+                    if (monsterIndex != 999) {
+                        System.out.println("HIT!");
+                        gp.player.damageMonster(monsterIndex, damage, this);
+                    }
+                    dx = gp.cursor.deltaX;
+                    dy = gp.cursor.deltaY;
+                    monsterIndex = gp.cChecker.checkEntityCollision(this, gp.mobArr);
+                    if (monsterIndex != 999) {
+                        System.out.println("HIT!");
+                        gp.player.damageMonster(monsterIndex, damage, this);
+                    }
                 }
             }
         }

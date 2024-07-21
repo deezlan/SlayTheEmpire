@@ -10,6 +10,7 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Player extends Entity {
     GamePanel gp;
@@ -19,6 +20,8 @@ public class Player extends Entity {
     public ArrayList<Entity> hotbarList = new ArrayList<>();
     public ArrayList<Integer> ownedWeapon = new ArrayList<>();
     public Entity currentWeapon = null;
+    public HashMap<String, Integer> ownedPotion = new HashMap<>();
+    public Entity currentPotion = null;
     private final Cursor cursor;
 
     // PLAYER POSITION
@@ -29,6 +32,11 @@ public class Player extends Entity {
     public int totalCoins;
     public int playerClass;
     private int delta;
+    private int potionCooldownTimer = 0;
+    private boolean potionCooldown = false;
+    private boolean speedBuff = false;
+    private boolean shieldBuff = false;
+    private int BuffTimer = 0;
 
     public Player (GamePanel gp, KeyHandler keyH, Cursor cursor, int playerClass) {
         super(gp,303,9);
@@ -67,6 +75,12 @@ public class Player extends Entity {
     public void setStatValues(int defaultSpeed, int maxLife, boolean isBoss, int mobBossNum, int coinValue) {
         type = type_player;
         totalCoins = 500;
+
+        //INITIAL POTS
+        ownedPotion.put("Health Potion", 1);
+        ownedPotion.put("Speed Potion", 0);
+        ownedPotion.put("Magic Potion", 0);
+        ownedPotion.put("Water Potion", 0);
 
         // ATTRIBUTES DEPENDING ON CHOSEN CLASS
         switch (playerClass) {
@@ -285,6 +299,11 @@ public class Player extends Entity {
 
     // INTERACT METHODS
     public void interactObject (int index) {
+        if (index == 1){
+            gp.gameState = gp.SAVEPAGE_STATE;
+            gp.saveLoad.isLoadPage = false;
+            gp.showCursor();
+        }
         if (index != 999) {
             if (gp.objArr[gp.currentMap][index].type == type_pickup) {
                 gp.objArr[gp.currentMap][index].use(this);
@@ -300,16 +319,13 @@ public class Player extends Entity {
                 }
             }
         }
+        if (index == 0){
+            gp.gameState = gp.POTION_SHOP_STATE;
+        }
     }
     public void interactNPC (int index) {
         if (index != 999) {
             gp.npcArr[gp.currentMap][index].speak();
-        }
-        if (index == 1) {
-            gp.gameState = gp.SHOP_STATE;
-        }
-        if (index == 3) {
-            gp.ui.difficultySelect();
         }
     }
     public void interactMob (int index) {
@@ -325,6 +341,27 @@ public class Player extends Entity {
     @Override
     public void update() {
         delta++;
+        if (!potionCooldown){
+            potionCooldownTimer++;
+        }
+        if (potionCooldownTimer > 120){
+            potionCooldown = true;
+            potionCooldownTimer = 0;
+        }
+        if (speedBuff & BuffTimer < 180){
+            speed = 6;
+            BuffTimer++;
+        } else if (speedBuff & BuffTimer >= 180){
+            speedBuff = false;
+            speed = 3;
+            BuffTimer = 0;
+        }
+        if (shieldBuff & BuffTimer < 300){
+            BuffTimer++;
+        } else if (shieldBuff & BuffTimer >= 300){
+            shieldBuff = false;
+            BuffTimer = 0;
+        }
         if(!keyH.godModeOn){
             if (currentLife <= 0)
                 gp.gameState = gp.DEATH_STATE;
@@ -511,14 +548,29 @@ public class Player extends Entity {
             }
         }
         if (gp.keyH.threePressed){
-            if (hotbarList.get(2) != null){
-                currentWeapon = hotbarList.get(2);
-                projectile1 = currentWeapon.projectile1;
-                projectile2 = currentWeapon.projectile2;
-                projectile3 = currentWeapon.projectile3;
-                projectile4 = currentWeapon.projectile4;
+            if (currentPotion.name.equalsIgnoreCase("Magic Potion")){
+                int count = ownedPotion.get("Magic Potion");
+                if (count > 0 & potionCooldown){
+                    currentPotion.consume();
+                    projectile4 =  currentPotion.projectile;
+                    projectile4.set(gp.player.worldX+48, gp.player.worldY-24, action, true, this, gp.cursor.deltaX, gp.cursor.deltaY);
+                    gp.projectileArr[gp.currentMap][20] = projectile4;
+                    potionCooldown = false;
+                }
+            } else if (currentPotion.name.equalsIgnoreCase("Water Potion")){
+                int count = ownedPotion.get("Water Potion");
+                if (count > 0 & potionCooldown){
+                    currentPotion.consume();
+                    projectile4 =  currentPotion.projectile;
+                    projectile4.set(gp.player.worldX+48, gp.player.worldY-24, action, true, this, gp.cursor.deltaX, gp.cursor.deltaY);
+                    gp.projectileArr[gp.currentMap][24] = projectile4;
+                    potionCooldown = false;
+                }
             } else {
-                System.out.println("No weapon");
+                if (potionCooldown){
+                    currentPotion.consume();
+                    potionCooldown = false;
+                }
             }
         }
 
@@ -641,6 +693,16 @@ public class Player extends Entity {
         } catch (IOException e) {
             e.printStackTrace(System.out);
         }
+    }
+
+    public void setSpeedBuff(boolean bool){
+        speedBuff = bool;
+    }
+    public void setShieldBuff(boolean bool){
+        shieldBuff = bool;
+    }
+    public boolean getShieldBuff(){
+        return shieldBuff;
     }
     public void getPlayerAttackSprites() {
         try {

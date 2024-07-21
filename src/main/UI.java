@@ -4,23 +4,23 @@ import entity.Entity;
 import entity.NPC_Blacksmith;
 import object.OBJ_Coin;
 import object.OBJ_Heart;
-//import object.SuperObject;
+import object.OBJ_Shop;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.awt.Font;
 import java.awt.GraphicsEnvironment;
-import java.io.InputStream;
 
 public class UI {
 
     public Entity npc;
     GamePanel gp;
-    BufferedImage fullHeart, halfHeart, emptyHeart, hotbar;
+    BufferedImage fullHeart, halfHeart, emptyHeart, hotbar, lifebar;
     Graphics2D g2;
     Entity coin;
     Font gameFont;
@@ -37,7 +37,18 @@ public class UI {
             startMenu,
             // CHARACTER SELECTION STATE
             warriorGif, knightGif, assassinGif,
-            warriorSelected, knightSelected, assassinSelected;
+            warriorSelected, knightSelected, assassinSelected,
+            // DIFFICULTY SELECTION STATE
+            easy_icon, normal_icon, hard_icon,
+            // SAVE PAGE STATE
+            file1, file2, file3, emptySaveButton1, emptySaveButton2,
+            emptySaveButton3, saveNotFound, loadFile, saveFileBackground,
+            overrideBox, saveFile, yesButton, noButton,
+            progressSavedBox, savedProgressPage, continueButton, redoButton;
+
+    // SAVE PAGE RECTANGLES
+    Rectangle saveButtonBounds1, saveButtonBounds2, saveButtonBounds3,
+            continueRect, redoRect, yesRect, noRect;
 
     public String currentDialog = "",
             combinedText = "";
@@ -45,6 +56,10 @@ public class UI {
         charIndex = 0;
     // OPTIONS
     public int commandNum = 0;
+    int saveButtonX;
+    int saveButtonY;
+    int saveButtonWidth;
+    int saveButtonHeight;
     int subState = 0;
 
     public int slotRow = 0,
@@ -77,6 +92,27 @@ public class UI {
             {"", "", ""},
     };
 
+    public String[][] controlScheme = {
+            // MOVEMENT
+            {"Up", "W"},
+            {"Left", "A"},
+            {"Down", "S"},
+            {"Right", "D"},
+
+            // INGAME
+            {"Attack", "Right-Click"},
+            {"Use Weapon", "Left-Click"},
+            {"Weapon 1", "1"},
+            {"Weapon 2", "2"},
+            {"Consumables", "3"},
+            {"Use Cons", "E"},
+
+            // MENU
+            {"Options", "Esc"},
+            {"Pause", "P"},
+            {"Select", "Space"},
+    };
+
     public UI(GamePanel gp) {
         this.gp = gp;
 
@@ -86,6 +122,8 @@ public class UI {
         halfHeart = heart.defaultList.get(1);
         emptyHeart = heart.defaultList.get(0);
         try {
+            lifebar = UtilityTool.loadSprite("/objects/life/syringe-empty-1.png", "no life bar");
+            lifebar = UtilityTool.scaleImage(lifebar, gp.TILE_SIZE*5, gp.TILE_SIZE);
             hotbar = UtilityTool.loadSprite("/objects/hotbar/hotbar.png", "Cannot load hotbar");
             hotbar = UtilityTool.scaleImage(hotbar, gp.TILE_SIZE+24, gp.TILE_SIZE+24);
         } catch (IOException e){
@@ -138,6 +176,39 @@ public class UI {
         knightGif = knight.getImage();
         ImageIcon assassin = new ImageIcon("res/player/AssassinIdle.gif");
         assassinGif = assassin.getImage();
+
+        // INITIALIZE ICONS
+        easy_icon = new ImageIcon("res/UI/difficulty/easy_icon.png").getImage();
+        normal_icon = new ImageIcon("res/UI/difficulty/normal_icon.png").getImage();
+        hard_icon = new ImageIcon("res/UI/difficulty/hard_icon.png").getImage();
+
+        //INITIALIZE SAVE MENU UI
+        file1 = new ImageIcon("res/UI/file1.png").getImage();
+        file2 = new ImageIcon("res/UI/file2.png").getImage();
+        file3 = new ImageIcon("res/UI/file3.png").getImage();
+        saveFileBackground = new ImageIcon("res/UI/saveFileBackground.png").getImage();
+        emptySaveButton1 = new ImageIcon("res/UI/emptySaveButton.png").getImage();
+        emptySaveButton2 = new ImageIcon("res/UI/emptySaveButton.png").getImage();
+        emptySaveButton3 = new ImageIcon("res/UI/emptySaveButton.png").getImage();
+        loadFile = new ImageIcon("res/UI/loadFile.png").getImage();
+        saveFile = new ImageIcon("res/UI/saveFile.png").getImage();
+        saveNotFound = new ImageIcon("res/UI/saveNotFound.png").getImage();
+        overrideBox = new ImageIcon("res/UI/overrideBox.png").getImage();
+        savedProgressPage = new ImageIcon("res/UI/continueSavedProgressPage.png").getImage();
+        continueButton = new ImageIcon("res/UI/continueButton.png").getImage();
+        redoButton = new ImageIcon("res/UI/redoButton.png").getImage();
+        yesButton = new ImageIcon("res/UI/yesButton.png").getImage();
+        noButton = new ImageIcon("res/UI/noButton.png").getImage();
+        progressSavedBox =  new ImageIcon("res/UI/progressSaved.png").getImage();
+
+        // INITIALIZE SAVE BUTTON POSITIONS & IMAGE BOUNDS
+        saveButtonX = ((gp.SCREEN_WIDTH - emptySaveButton1.getWidth(null)) / 2);
+        saveButtonY = 70 + ((gp.SCREEN_HEIGHT - emptySaveButton1.getHeight(null)) / 2);
+        saveButtonWidth = (int)(emptySaveButton1.getWidth(null)/ 1.1);
+        saveButtonHeight = (int)(emptySaveButton1.getHeight(null)/ 1.1);
+        saveButtonBounds1 = new Rectangle(saveButtonX, (saveButtonY - 100), saveButtonWidth, saveButtonHeight);
+        saveButtonBounds2 = new Rectangle(saveButtonX, saveButtonY, saveButtonWidth, saveButtonHeight);
+        saveButtonBounds3 = new Rectangle(saveButtonX, (saveButtonY + 100), saveButtonWidth, saveButtonHeight);
     }
 
     private Font loadFont() throws FontFormatException, IOException {
@@ -154,6 +225,7 @@ public class UI {
     }
 
     public void drawHotbar() {
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 20f));
         int frameX = gp.TILE_SIZE/2;
         int frameY = gp.TILE_SIZE*11-5;
         int frameWidth = (gp.TILE_SIZE + gp.TILE_SIZE/2)*3;
@@ -166,27 +238,30 @@ public class UI {
             g2.drawImage(hotbar, frameX+((gp.TILE_SIZE + gp.TILE_SIZE/2)*i), frameY, null);
         }
         int x = 0;
+        g2.setColor(Color.WHITE);
         for (Entity i : gp.player.hotbarList){
             BufferedImage image = i.weaponSprite;
             image = UtilityTool.scaleImage(image, gp.TILE_SIZE-8, gp.TILE_SIZE-8);
             g2.drawImage(image, frameX+16+((gp.TILE_SIZE + gp.TILE_SIZE/2)*x), frameY+16, null);
             x++;
         }
+        if (gp.player.currentPotion != null){
+            g2.drawImage(gp.player.currentPotion.weaponSprite, frameX+16+((gp.TILE_SIZE + gp.TILE_SIZE/2)*2), frameY+16, null);
+            String count = Integer.toString(gp.player.ownedPotion.get(gp.player.currentPotion.name));
+            g2.drawString(count, frameX+41+((gp.TILE_SIZE + gp.TILE_SIZE/2)*2), frameY+56);
+        }
 
     }
 
     public void drawShop() {
-        try {
         NPC_Blacksmith bs = (NPC_Blacksmith) gp.npcArr[gp.currentMap][1];
-        InputStream is = new FileInputStream("ARCADE_N.TTF");
-        Font arcade = Font.createFont(Font.TRUETYPE_FONT, is);
-        arcade = arcade.deriveFont(Font.PLAIN, 16);
+        g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 25f));
+
 
         int frameX = gp.TILE_SIZE*2;
         int frameY = gp.TILE_SIZE;
         int frameWidth = (gp.TILE_SIZE*9) + 25;
         int frameHeight= (gp.TILE_SIZE*4) + 40;
-        g2.setFont(arcade);
 
         g2.setColor(Color.BLACK);
         g2.fillRoundRect(frameX,frameY,frameWidth,frameHeight,0,0);
@@ -240,7 +315,6 @@ public class UI {
         //DRAW DESC TEXT
         int textX = frameX + 20;
         int textY= descY + gp.TILE_SIZE;
-        g2.setFont(arcade);
         if (slotRow == 0){
             g2.drawString(bs.getShopItems().get(0).description, textX, textY);
             g2.drawString("Damage: " + bs.getShopItems().get(0).damage, textX, textY+30);
@@ -273,9 +347,6 @@ public class UI {
             } else if (gp.player.totalCoins < bs.getShopItems().get(slotRow).price){
                 g2.drawString("You don't have money!", textX, textY+60);
             }
-        }
-        } catch (FontFormatException | IOException e){
-            e.printStackTrace(System.out);
         }
     }
 
@@ -328,25 +399,11 @@ public class UI {
     public void drawPlayerLife(){
         int posX = gp.TILE_SIZE/2;
         int posY = gp.TILE_SIZE/2;
-        int i = 0;
+        double length = 182*((double) gp.player.currentLife/ (double) gp.player.maxLife);
 
-        while (i < gp.player.maxLife/2){
-            g2.drawImage(emptyHeart, posX, posY, null);
-            i++;
-            posX += gp.TILE_SIZE;
-        }
-
-        posX = gp.TILE_SIZE/2;
-        i = 0;
-
-        while (i < gp.player.currentLife){
-            g2.drawImage (halfHeart, posX, posY, null);
-            i++;
-            if (i < gp.player.currentLife)
-                g2.drawImage(fullHeart, posX, posY, null);
-            i++;
-            posX += gp.TILE_SIZE;
-        }
+        g2.setColor(Color.RED);
+        g2.fillRect(posX+gp.TILE_SIZE, posY+16, (int) length, 18);
+        g2.drawImage(lifebar, posX, posY, null);
     }
 
     public void drawPlayerMoney() {
@@ -594,6 +651,177 @@ public class UI {
         g2.drawString(text,10,30);
     }
 
+    // DRAW SAVE PAGE
+    public void drawSavePage() {
+        int imageWidth = (int) (gp.SCREEN_WIDTH / 1.0000000002);
+        int imageHeight = (int) (saveFileBackground.getHeight(null) * ((double) imageWidth / saveFileBackground.getWidth(null)));
+        int x = 0;
+        int y = (gp.SCREEN_HEIGHT - imageHeight) / 2;
+        g2.drawImage(saveFileBackground, x, y, imageWidth, imageHeight, null);
+        drawSaveButtons();
+
+        if (gp.saveLoad.isAllFileEmpty() && gp.saveLoad.isLoadPage) {
+            drawSaveFileDialogue(5);
+        } else if (gp.saveLoad.isLoadPage) {
+            drawSaveFileDialogue(4);
+        } else if (gp.saveLoad.isSaveCompleted) {
+            drawSaveFileDialogue(1);
+        } else {
+            drawSaveFileDialogue(2);
+        }
+
+        if (gp.mouseH.leftClicked) {
+            if (!gp.saveLoad.isLoadPage) {
+                if (saveButtonBounds1.contains(gp.cursor.getMouseX(), gp.cursor.getMouseY())) {
+                    gp.saveLoad.slot = 0;
+                    if (gp.saveLoad.filledSaveFile[gp.saveLoad.slot]) {
+                        gp.gameState = gp.SAVEPAGE2_STATE;
+                    } else {
+                        gp.saveLoad.save(gp.saveLoad.slot);
+                        gp.saveLoad.isSaveCompleted = true;
+                    }
+
+                } else if (saveButtonBounds2.contains(gp.cursor.getMouseX(), gp.cursor.getMouseY())) {
+                    gp.saveLoad.slot = 1;
+                    if (gp.saveLoad.filledSaveFile[gp.saveLoad.slot]) {
+                        gp.gameState = gp.SAVEPAGE2_STATE;
+                    } else {
+                        gp.saveLoad.save(gp.saveLoad.slot);
+                        gp.saveLoad.isSaveCompleted = true;
+                    }
+                } else if (saveButtonBounds3.contains(gp.cursor.getMouseX(), gp.cursor.getMouseY())) {
+                    gp.saveLoad.slot = 2;
+                    if (gp.saveLoad.filledSaveFile[gp.saveLoad.slot]) {
+                        gp.gameState = gp.SAVEPAGE2_STATE;
+                    } else {
+                        gp.saveLoad.save(gp.saveLoad.slot);
+                        gp.saveLoad.isSaveCompleted = true;
+                    }
+                } else {
+                    gp.saveLoad.isSaveCompleted = false;
+                }
+            } else {
+                if (saveButtonBounds1.contains(gp.cursor.getMouseX(), gp.cursor.getMouseY())) {
+                    if (gp.saveLoad.filledSaveFile[0]){
+                        gp.gameState = gp.SAVEPAGE2_STATE;
+                    }
+                    gp.saveLoad.slot = 0;
+                } else if (saveButtonBounds2.contains(gp.cursor.getMouseX(), gp.cursor.getMouseY())) {
+                    if (gp.saveLoad.filledSaveFile[1]){
+                        gp.gameState = gp.SAVEPAGE2_STATE;
+                    }
+                    gp.saveLoad.slot = 1;
+                } else if (saveButtonBounds3.contains(gp.cursor.getMouseX(), gp.cursor.getMouseY())) {
+                    if (gp.saveLoad.filledSaveFile[2]){
+                        gp.gameState = gp.SAVEPAGE2_STATE;
+                    }
+                    gp.saveLoad.slot = 2;
+                }
+            }
+        }
+        gp.mouseH.clearMouseClick();
+
+    }
+
+    public void drawSavePage2() {
+        int imageWidth = (int) (gp.SCREEN_WIDTH / 1.0000000002);
+        int imageHeight = (int) (saveFileBackground.getHeight(null) * ((double) imageWidth / saveFileBackground.getWidth(null)));
+        int px = 0;
+        int py = (gp.SCREEN_HEIGHT - imageHeight) / 2;
+
+        int lx = 150;
+        int rx = 450;
+        int y = (gp.SCREEN_HEIGHT - emptySaveButton1.getHeight(null)) / 2;
+
+        if(gp.saveLoad.isLoadPage) {
+            g2.drawImage(savedProgressPage, px, py, imageWidth, imageHeight, null);
+
+            continueRect = new Rectangle(lx, y, saveButtonWidth, saveButtonHeight);
+            redoRect = new Rectangle(rx, y, saveButtonWidth, saveButtonHeight);
+
+            g2.drawImage(continueButton, lx, y, saveButtonWidth, saveButtonHeight, null);
+            g2.drawImage(redoButton, rx, y, saveButtonWidth, saveButtonHeight, null);
+
+            if (gp.mouseH.leftClicked && redoRect.contains(gp.cursor.getMouseX(), gp.cursor.getMouseY())) {
+                gp.mouseH.clearMouseClick();
+                gp.saveLoad.load(gp.saveLoad.slot);
+                gp.progressSaved = 0;
+                gp.mouseH.clearMouseClick();
+            } else if (gp.mouseH.leftClicked && continueRect.contains(gp.cursor.getMouseX(), gp.cursor.getMouseY())) {
+                gp.mouseH.clearMouseClick();
+                gp.saveLoad.load(gp.saveLoad.slot);
+            }
+        } else if (gp.saveLoad.isSaveFileFilled(gp.saveLoad.slot)) {
+            g2.drawImage(saveFileBackground, px, py, imageWidth, imageHeight, null);
+            drawSaveFileDialogue(0);
+
+            g2.drawImage(yesButton, lx, y, saveButtonWidth, saveButtonHeight, null);
+            g2.drawImage(noButton, rx, y, saveButtonWidth, saveButtonHeight, null);
+
+            yesRect = new Rectangle(lx, y, saveButtonWidth, saveButtonHeight);
+            noRect = new Rectangle(rx, y, saveButtonWidth, saveButtonHeight);
+
+            if (gp.mouseH.leftClicked && yesRect.contains(gp.cursor.getMouseX(), gp.cursor.getMouseY())){
+                gp.saveLoad.save(gp.saveLoad.slot);
+                gp.mouseH.clearMouseClick();
+                gp.gameState = gp.SAVEPAGE_STATE;
+                gp.saveLoad.isSaveCompleted = true;
+            } else if (gp.mouseH.leftClicked && noRect.contains(gp.cursor.getMouseX(), gp.cursor.getMouseY())){
+                gp.mouseH.clearMouseClick();
+                gp.gameState = gp.SAVEPAGE_STATE;
+            }
+        }
+    }
+
+
+    // DRAW FILE DIALOGUE
+    public void drawSaveFileDialogue(int boxNumber){
+        int x  = 550 + ((gp.SCREEN_WIDTH - loadFile.getWidth(null)) / 2);
+        int y  = (((gp.SCREEN_HEIGHT - loadFile.getHeight(null)) / 2) - 130);
+        int width = (loadFile.getWidth(null)/3);
+        int height = (loadFile.getHeight(null)/3);
+
+        switch (boxNumber){
+            case 0:
+                g2.drawImage(overrideBox, x, y, (overrideBox.getWidth(null)/3), (overrideBox.getHeight(null)/3), null);
+                break;
+            case 1:
+                g2.drawImage(progressSavedBox, x, y, width, height, null);
+                break;
+            case 2:
+                g2.drawImage(saveFile, x, y, width, height, null);
+                break;
+            case 4:
+                g2.drawImage(loadFile, x, y, width, height, null);
+                break;
+            case 5:
+                g2.drawImage(saveNotFound, x, y, width, height, null);
+                break;
+        }
+    }
+
+    // DRAW SAVE BUTTONS
+    public void drawSaveButtons(){
+        if(!gp.saveLoad.isSaveFileFilled(0)){
+            g2.drawImage(emptySaveButton1, saveButtonX, (saveButtonY - 100), saveButtonWidth, saveButtonHeight, null);
+        } else{
+            g2.drawImage(file1, saveButtonX, (saveButtonY - 100), saveButtonWidth, saveButtonHeight, null);
+        }
+
+        if(!gp.saveLoad.isSaveFileFilled(1)){
+            g2.drawImage(emptySaveButton2, saveButtonX, saveButtonY, saveButtonWidth, saveButtonHeight, null);
+        } else{
+            g2.drawImage(file2, saveButtonX, saveButtonY, saveButtonWidth, saveButtonHeight, null);
+        }
+
+        if(!gp.saveLoad.isSaveFileFilled(2)){
+            g2.drawImage(emptySaveButton3, saveButtonX, (saveButtonY + 100), saveButtonWidth, saveButtonHeight, null);
+        } else{
+            g2.drawImage(file3, saveButtonX, (saveButtonY + 100), saveButtonWidth, saveButtonHeight, null);
+        }
+
+    }
+
     //Draw dialog
     public void drawDialogScreen() {
         // WINDOW
@@ -616,16 +844,16 @@ public class UI {
                 currentDialog = combinedText;
                 charIndex++;
             }
-            if (gp.keyH.ePressed){
+            if (gp.keyH.spacePressed){
                 charIndex = 0;
                 combinedText = "";
                 if(gp.gameState == gp.DIALOGUE_STATE){
                     npc.dialogueIndex++;
-                    gp.keyH.ePressed = false;
+//                    gp.keyH.spacePressed = false;
                 } else if (gp.gameState == gp.CUTSCENE_STATE) {
                     npc.dialogueIndex++;
-                    gp.keyH.ePressed = false;
                 }
+                gp.keyH.spacePressed = false;
             }
         } else {
             npc.dialogueIndex = 0;
@@ -642,7 +870,47 @@ public class UI {
         }
     }
 
-    public void difficultySelect() {
+    public void mapSelect() {
+        g2.setFont(g2.getFont().deriveFont(Font.PLAIN,35));
+        int frameX = (gp.TILE_SIZE * 6) - 24;
+        int frameY = gp.TILE_SIZE * 3;
+        int frameWidth = (gp.TILE_SIZE * 6);
+        int frameHeight= (gp.TILE_SIZE * 6);
+        int x = gp.TILE_SIZE * 6 - 24;
+        int y = gp.TILE_SIZE * 3;
+
+        g2.setColor(Color.BLACK);
+        g2.fillRoundRect(frameX,frameY,frameWidth,frameHeight,0,0);
+
+        g2.setColor(Color.WHITE);
+        g2.setStroke(new BasicStroke((5)));
+        g2.drawRoundRect(frameX,frameY,frameWidth,frameHeight,0,0);
+
+        g2.setColor(Color.WHITE);
+
+        x += gp.TILE_SIZE;
+        y += gp.TILE_SIZE;
+        String text = "Map Selection";
+        g2.drawString(text,x,y);
+        y += gp.TILE_SIZE;
+        g2.drawString("Map 1",x,y);
+        if (commandNum == 0) {
+            g2.drawString(">", x-24,y);
+        }
+        y += gp.TILE_SIZE;
+        g2.drawString("Map 2",x,y);
+        if (commandNum == 1) {
+            g2.drawString(">", x-24,y);
+        }
+        y += gp.TILE_SIZE;
+        g2.drawString("Exit",x,y);
+        if (commandNum == 2) {
+            g2.drawString(">", x-24,y);
+        }
+
+    }
+
+    public void dialogueDifficultySelect() {
         drawDialogScreen();
 
         // DRAW WINDOW
@@ -658,40 +926,49 @@ public class UI {
         g2.drawString("Easy",x,y);
         if (commandNum == 0) {
             g2.drawString(">", x-24,y);
-            if (gp.keyH.enterPressed) {
-                gp.gameMode = 1;
-                gp.gameState = gp.DIALOGUE_STATE;
-                currentDialog = "Going Easy are we?";
-            }
         }
         y += gp.TILE_SIZE;
         g2.drawString("Medium",x,y);
         if (commandNum == 1) {
             g2.drawString(">", x-24,y);
-            if (gp.keyH.enterPressed) {
-                gp.gameMode = 2;
-                gp.gameState = gp.DIALOGUE_STATE;
-                currentDialog = "Okay we are getting somewhere";
-            }
         }
         y += gp.TILE_SIZE;
         g2.drawString("Hard",x,y);
         if (commandNum == 2) {
             g2.drawString(">", x-24,y);
-            if (gp.keyH.enterPressed) {
-                gp.gameMode = 3;
-                gp.gameState = gp.DIALOGUE_STATE;
-                currentDialog = "We have a big boy here";
-            }
         }
         y += gp.TILE_SIZE;
         g2.drawString("No",x,y);
         if (commandNum == 3) {
             g2.drawString(">", x-24,y);
-            if (gp.keyH.enterPressed) {
-                gp.gameState = gp.DIALOGUE_STATE;
-                currentDialog = "Pish, you are a coward";
-            }
+        }
+    }
+
+    public void dialogueBlackSmithSelect() {
+        drawDialogScreen();
+
+        // DRAW WINDOW
+        int x = gp.TILE_SIZE * 12;
+        int y = gp.TILE_SIZE * 4;
+        int width = gp.TILE_SIZE * 4;
+        int height = (gp.TILE_SIZE * 4);
+        drawSubWindow(x,y,width,height);
+
+        x += gp.TILE_SIZE;
+        y += gp.TILE_SIZE;
+        g2.drawString("Buy Items",x,y);
+        if (commandNum == 0) {
+            g2.drawString(">", x-24,y);
+        }
+        y += gp.TILE_SIZE;
+        g2.drawString("Talk",x,y);
+        if (commandNum == 1) {
+            g2.drawString(">", x-24,y);
+        }
+        y += gp.TILE_SIZE;
+        g2.drawString("Exit",x,y);
+        if (commandNum == 2) {
+            g2.drawString(">", x-24,y);
         }
     }
 
@@ -721,6 +998,7 @@ public class UI {
 
         if (gp.keyH.ePressed) drawDeathTransition();
     }
+
     public void drawSubWindow(int x, int y, int width,int height){
         Color custom = new Color(0,0,0,220);
         g2.setColor(custom);
@@ -765,23 +1043,23 @@ public class UI {
                     g2.setColor(new Color(35, 35, 35));
                     switch (mob.mobNum) {
                         // SLIME
-                        case 1: g2.fillRect(mob.getScreenX() + 81, mob.getScreenY() + 161, gp.TILE_SIZE, 10); break;
+                        case 1: g2.fillRect(mob.getScreenX() + 80, mob.getScreenY() + 160, gp.TILE_SIZE, 10); break;
                         // SKELLINGTON
-                        case 2: g2.fillRect(mob.getScreenX() + 71, mob.getScreenY() + 161, gp.TILE_SIZE, 10); break;
+                        case 2: g2.fillRect(mob.getScreenX() + 70, mob.getScreenY() + 160, gp.TILE_SIZE, 10); break;
                         // ROBOT GUARDIAN
-                        case 3: g2.fillRect(mob.getScreenX() + 81, mob.getScreenY() + 161, gp.TILE_SIZE, 10); break;
+                        case 3: g2.fillRect(mob.getScreenX() + 80, mob.getScreenY() + 160, gp.TILE_SIZE, 10); break;
                         // RAMSES
-                        case 4: g2.fillRect(mob.getScreenX() + 81, mob.getScreenY() + 141, gp.TILE_SIZE, 10); break;
+                        case 4: g2.fillRect(mob.getScreenX() + 80, mob.getScreenY() + 140, gp.TILE_SIZE, 10); break;
                         // GOBLIN & SKELETON KNIGHT
-                        case 5, 6: g2.fillRect(mob.getScreenX() + 81, mob.getScreenY() + 141, gp.TILE_SIZE, 10); break;
+                        case 5, 6: g2.fillRect(mob.getScreenX() + 80, mob.getScreenY() + 140, gp.TILE_SIZE, 10); break;
                         // ARMORED GUARDIAN
-                        case 7: g2.fillRect(mob.getScreenX() + 71, mob.getScreenY() + 141, gp.TILE_SIZE, 10); break;
+                        case 7: g2.fillRect(mob.getScreenX() + 70, mob.getScreenY() + 140, gp.TILE_SIZE, 10); break;
                         // FLYING EYE
-                        case 8: g2.fillRect(mob.getScreenX() + 81, mob.getScreenY() + 131, gp.TILE_SIZE, 10); break;
+                        case 8: g2.fillRect(mob.getScreenX() + 80, mob.getScreenY() + 130, gp.TILE_SIZE, 10); break;
                         // MUSHROOM
-                        case 9: g2.fillRect(mob.getScreenX() + 81, mob.getScreenY() + 161, gp.TILE_SIZE, 10); break;
+                        case 9: g2.fillRect(mob.getScreenX() + 80, mob.getScreenY() + 160, gp.TILE_SIZE, 10); break;
                         // CANINE
-                        case 10: g2.fillRect(mob.getScreenX() + 81, mob.getScreenY() + 141, gp.TILE_SIZE, 10);
+                        case 10: g2.fillRect(mob.getScreenX() + 80, mob.getScreenY() + 140, gp.TILE_SIZE, 10);
                     }
 
                     // FILL CURRENT HP
@@ -882,14 +1160,14 @@ public class UI {
         int frameWidth = gp.TILE_SIZE*8;
         int frameHeight = gp.TILE_SIZE*10;
 
-        if (gp.gameState == gp.OPTIONS_MENU_STATE) {
+        if (gp.gameState == gp.INGAME_OPTIONS_STATE) {
             subState = 0;
-        } else if (gp.gameState == gp.OPTIONS_DIALOGUE_STATE) {
+        } else if (gp.gameState == gp.MAIN_OPTIONS_STATE) {
             subState = 1;
         }
 
         switch (subState) {
-            case 0: drawSubWindow(frameX, frameY, frameWidth, frameHeight); options_PLAY_STATE(frameX, frameY);  break;
+            case 0: drawSubWindow(frameX, frameY, frameWidth, frameHeight + 30); options_PLAY_STATE(frameX, frameY);  break;
             case 1: options_startMenu(frameY); break;
             case 2: break;
         }
@@ -898,7 +1176,7 @@ public class UI {
     private void drawVolumeBar(int volumeScale, int x, int y) {
         int barWidth = 240;
         int barHeight = 20;
-        if (gp.gameState == gp.OPTIONS_MENU_STATE) {
+        if (gp.gameState == gp.INGAME_OPTIONS_STATE) {
             barWidth = 180;
         }
         int fillColor = (int) (barWidth * (volumeScale / 5.0f));
@@ -954,16 +1232,19 @@ public class UI {
 
         text = "Back to Lobby";
         y += (int) (gp.TILE_SIZE * 1.2);
-        g2.setColor(gp.ui.commandNum == 3 ? Color.YELLOW : Color.WHITE);
-        if (gp.currentMap == 0)
+        if (gp.currentMap == 0) {
             g2.setColor(Color.GRAY);
-        g2.drawString(text, x, y);
-        if (gp.ui.commandNum == 3) {
-            g2.drawString(">", x - 25, y);
+            g2.drawString(text, x, y);
+        } else {
+            g2.setColor(gp.ui.commandNum == 3? Color.YELLOW : Color.WHITE);
+            g2.drawString(text, x, y);
+            if (gp.ui.commandNum == 3) {
+                g2.drawString(">", x - 25, y);
+            }
         }
 
-        // END GAME
-        text = "End Game";
+        // START MENU
+        text = "Start Menu";
         y += (int) (gp.TILE_SIZE * 1.2);
         g2.setColor(gp.ui.commandNum == 4? Color.YELLOW : Color.WHITE);
         g2.drawString(text, x, y);
@@ -971,12 +1252,21 @@ public class UI {
             g2.drawString(">", x - 25, y);
         }
 
-        // BACK
-        text = "Back";
-        y += (gp.TILE_SIZE * 2);
+        // LOG OUT
+        text = "Log Out";
+        y += (int) (gp.TILE_SIZE * 1.2);
         g2.setColor(gp.ui.commandNum == 5? Color.YELLOW : Color.WHITE);
         g2.drawString(text, x, y);
         if (gp.ui.commandNum == 5) {
+            g2.drawString(">", x - 25, y);
+        }
+
+        // BACK
+        text = "Back";
+        y += (gp.TILE_SIZE * 2);
+        g2.setColor(gp.ui.commandNum == 6? Color.YELLOW : Color.WHITE);
+        g2.drawString(text, x, y);
+        if (gp.ui.commandNum == 6) {
             g2.drawString(">", x - 25, y);
         }
 
@@ -1008,7 +1298,7 @@ public class UI {
         text = "Music";
         x = getXForCenteredText(text);
         y += (int) (gp.TILE_SIZE*1.2);
-        g2.setColor(gp.ui.commandNum == 0? Color.YELLOW : Color.WHITE);
+        g2.setColor(gp.ui.commandNum == 0? Color.YELLOW : Color.LIGHT_GRAY);
         g2.drawString(text,x,y);
 
 
@@ -1016,21 +1306,28 @@ public class UI {
         text = "SFX";
         x = getXForCenteredText(text);
         y += (int) (gp.TILE_SIZE*2.4);
-        g2.setColor(gp.ui.commandNum == 1? Color.YELLOW : Color.WHITE);
+        g2.setColor(gp.ui.commandNum == 1? Color.YELLOW : Color.LIGHT_GRAY);
         g2.drawString(text,x,y);
 
         // CONTROL
         text = "Controls";
         x = getXForCenteredText(text);
         y += (int) (gp.TILE_SIZE*2.4);
-        g2.setColor(gp.ui.commandNum == 2? Color.YELLOW : Color.WHITE);
+        g2.setColor(gp.ui.commandNum == 2? Color.YELLOW : Color.LIGHT_GRAY);
+        g2.drawString(text,x,y);
+
+        // LOG OUT
+        text = "Log Out";
+        x = getXForCenteredText(text);
+        y += (int) (gp.TILE_SIZE*1.5);
+        g2.setColor(gp.ui.commandNum == 5? Color.YELLOW : Color.LIGHT_GRAY);
         g2.drawString(text,x,y);
 
         // BACK
         text = "Back";
         x = getXForCenteredText(text);
-        y += gp.TILE_SIZE*3;
-        g2.setColor(gp.ui.commandNum == 5? Color.YELLOW : Color.WHITE);
+        y += (int) (gp.TILE_SIZE*1.5);
+        g2.setColor(gp.ui.commandNum == 6? Color.YELLOW : Color.LIGHT_GRAY);
         g2.drawString(text,x,y);
 
         // VOLUME BAR
@@ -1044,22 +1341,52 @@ public class UI {
     }
 
     public void drawControls() {
+        g2.setColor(Color.WHITE);
         g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 20F));
         String text = "(Esc to Exit)";
         g2.drawString(text,10,30);
+
+        int x, y;
+        // TITLE
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 40f));
+        text = "Controls";
+        x = getXForCenteredText(text);
+        y = (int) (gp.TILE_SIZE*1.5);
+        g2.drawString(text, x, y);
 
         int frameX = 0;
         int frameY = gp.TILE_SIZE*2;
         int frameWidth = gp.SCREEN_WIDTH;
         int frameHeight = gp.SCREEN_HEIGHT - gp.TILE_SIZE*2;
         drawSubWindow(frameX, frameY, frameWidth, frameHeight);
+
+        int controlX = 0;
+        int controlY = gp.TILE_SIZE*3;
+        int offsetX = 90;
+        g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 35F));
+        int columnCount = 0;
+        int columnWidth = gp.SCREEN_WIDTH/2;
+        for (String[] controlScheme : controlScheme) {
+            for (int j = 0; j < controlScheme.length; j++) {
+                String line = controlScheme[j];
+                if (j == 0) {
+                    controlX = (getXForCenteredText(line) - 180) + columnCount * columnWidth - offsetX;
+                } else if (j == 1) {
+                    controlX = getXForCenteredText(line) + columnCount * columnWidth - offsetX;
+                }
+                g2.drawString(line, controlX, controlY);
+            }
+            controlY += 50;
+            if (controlY > gp.SCREEN_HEIGHT) {
+                controlY = gp.TILE_SIZE*3;
+                columnCount++;
+            }
+        }
     }
 
     public void drawDifficultySelect() {
-        drawBG();
-        g2.setColor(Color.BLACK);
-        g2.fillRect(0,0, gp.SCREEN_WIDTH, gp.SCREEN_HEIGHT);
-        g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 50f));
+        drawBG2();
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 55f));
         String text;
         int x;
         int y;
@@ -1067,7 +1394,7 @@ public class UI {
         // DIFFICULTY
         text = "Difficulty Selection";
         x = getXForCenteredText(text);
-        y = gp.TILE_SIZE*2;
+        y = gp.TILE_SIZE*3;
         g2.setColor(Color.WHITE);
         g2.drawString(text,x,y);
 
@@ -1075,53 +1402,77 @@ public class UI {
         g2.drawLine(x, y + 5, x + g2.getFontMetrics().stringWidth(text), y + 5);
 
         // MODES
+        g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 50f));
+
         text = "Easy";
         x = getXForCenteredText(text);
         y += gp.TILE_SIZE*2;
-        g2.setColor(gp.ui.commandNum == 0? Color.YELLOW : Color.WHITE);
+        g2.setColor(gp.ui.commandNum == 0? Color.YELLOW : Color.LIGHT_GRAY);
         g2.drawString(text,x,y);
         if (gp.ui.commandNum == 0) {
-            g2.drawString(">", x - 25, y);
+            g2.drawImage(easy_icon, x - 65, y - 50, 50, 50, null);
+            g2.drawImage(easy_icon, x + 100, y - 50, 50, 50, null);
+            //            g2.drawString(">", x - 25, y);
         }
 
         text = "Medium";
         x = getXForCenteredText(text);
         y += gp.TILE_SIZE;
-        g2.setColor(gp.ui.commandNum == 1? Color.BLUE : Color.WHITE);
+        g2.setColor(gp.ui.commandNum == 1? Color.ORANGE : Color.LIGHT_GRAY);
         g2.drawString(text,x,y);
         if (gp.ui.commandNum == 1) {
-            g2.drawString(">", x - 25, y);
+            g2.drawImage(normal_icon, x - 55, y - 35, 40, 40, null);
+
+            // Flip Image Horizontally
+            AffineTransform tx = AffineTransform.getScaleInstance(-1, 1);
+            // Correct position after Transform
+            tx.translate(-normal_icon.getWidth(null), 0);
+
+            AffineTransform old = g2.getTransform();
+
+            // Apply transform
+            g2.translate(x + 165, y - 35);
+            g2.transform(tx);
+
+            // Draw image
+            g2.drawImage(normal_icon, 0, 0, 40, 40, null);
+
+            // Restore original transform
+            g2.setTransform(old);
         }
 
         text = "Hard";
         x = getXForCenteredText(text);
         y += gp.TILE_SIZE;
-        g2.setColor(gp.ui.commandNum == 2? Color.RED : Color.WHITE);
+        g2.setColor(gp.ui.commandNum == 2? Color.RED : Color.LIGHT_GRAY);
         g2.drawString(text,x,y);
         if (gp.ui.commandNum == 2) {
-            g2.drawString(">", x - 25, y);
+            g2.drawImage(hard_icon, x - 55, y - 40, 50, 50, null);
+            g2.drawImage(hard_icon, x + 85 , y - 40, 50, 50, null);
+
+//            g2.drawString(">", x - 25, y);
         }
 
-        y += gp.TILE_SIZE*3;
+        y += gp.TILE_SIZE*2;
         switch (gp.ui.commandNum) {
             case 0: {
                 text = "For newborns.";
                 x = getXForCenteredText(text);
-                g2.setColor(gp.ui.commandNum == 0? Color.YELLOW : Color.WHITE);
+                g2.setColor(gp.ui.commandNum == 0? Color.YELLOW : Color.LIGHT_GRAY);
                 g2.drawString(text, x, y);
                 break;
             }
             case 1: {
                 text = "For regular people.";
                 x = getXForCenteredText(text);
-                g2.setColor(gp.ui.commandNum == 1? Color.BLUE : Color.WHITE);
+                g2.setColor(gp.ui.commandNum == 1? Color.ORANGE : Color.LIGHT_GRAY);
                 g2.drawString(text, x, y);
                 break;
             }
             case 2: {
                 text = "For renowned legends.";
                 x = getXForCenteredText(text);
-                g2.setColor(gp.ui.commandNum == 2? Color.RED : Color.WHITE);
+                g2.setColor(gp.ui.commandNum == 2? Color.RED : Color.LIGHT_GRAY);
                 g2.drawString(text, x, y);
                 break;
             }
@@ -1129,12 +1480,100 @@ public class UI {
 
         text = "Back";
         x = getXForCenteredText(text);
-        y += gp.TILE_SIZE*3;
-        g2.setColor(gp.ui.commandNum == 3? Color.YELLOW : Color.WHITE);
+        y += gp.TILE_SIZE*2;
+        g2.setColor(gp.ui.commandNum == 3? Color.YELLOW : Color.LIGHT_GRAY);
         g2.drawString(text,x,y);
         if (gp.ui.commandNum == 3) {
             g2.drawString(">", x - 25, y);
         }
+
+        int gifX = 300;
+        int gifY = 150;
+
+        switch (gp.player.playerClass) {
+            case 0 -> g2.drawImage(warriorGif, -50,  (gp.SCREEN_HEIGHT - gifY)/3 + 250, gifX, gifY, null);
+            case 1 -> g2.drawImage(knightGif,-45 , (gp.SCREEN_HEIGHT - gifY)/3 + 260, gifX-10, gifY-10, null);
+            case 2 -> g2.drawImage(assassinGif, -45, (gp.SCREEN_HEIGHT - gifY)/3 + 255, gifX, gifY, null);
+        }
+    }
+
+    public void drawPotionShop(){
+        if (gp.currentMap == 0){
+            OBJ_Shop shop = (OBJ_Shop) gp.objArr[gp.currentMap][0];
+            g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 25f));
+
+
+            int frameX = gp.TILE_SIZE*2;
+            int frameY = gp.TILE_SIZE;
+            int frameWidth = (gp.TILE_SIZE*9) + 25;
+            int frameHeight= (gp.TILE_SIZE*4) + 40;
+
+            g2.setColor(Color.BLACK);
+            g2.fillRoundRect(frameX,frameY,frameWidth,frameHeight,0,0);
+
+            g2.setColor(Color.WHITE);
+            g2.setStroke(new BasicStroke((5)));
+            g2.drawRoundRect(frameX,frameY,frameWidth,frameHeight,0,0);
+
+            g2.setColor(Color.WHITE);
+
+            //SLOT
+            final int slotXstart = frameX + 15;
+            final int slotYstart = frameY + 38;
+            int slotY = slotYstart;
+            g2.drawString("Item", frameX + 15, frameY + 30);
+            g2.drawString("Price", frameX + gp.TILE_SIZE*8 - 15, frameY + 30);
+            //DRAW SHOP
+            for (int i = 0; i < 4; i++){
+                BufferedImage BI = shop.getShopItems().get(i).weaponSprite;
+                BufferedImage coinImage = coin.defaultList.get(0);
+                coinImage = UtilityTool.scaleImage(coinImage, 36, 36);
+
+                g2.drawImage(BI, slotXstart + gp.TILE_SIZE/4, slotY + gp.TILE_SIZE/6, null);
+                g2.drawString(shop.getShopItems().get(i).name, slotXstart + gp.TILE_SIZE + 10, slotY + 32);
+                g2.drawString(Integer.toString(shop.getShopItems().get(i).price), slotXstart + gp.TILE_SIZE*8 - 40, slotY + 32);
+                g2.drawImage(coinImage, slotXstart + gp.TILE_SIZE*8+15, slotY+7, null);
+
+                slotY += gp.TILE_SIZE;
+            }
+
+            //CURSOR
+            int cursorY = slotYstart + (gp.TILE_SIZE * slotRowMove);
+            int cursorWidth = gp.TILE_SIZE*9+15;
+            int cursorHeight = gp.TILE_SIZE;
+            //DRAW CURSOR
+            g2.setColor(Color.WHITE);
+            g2.setStroke(new BasicStroke(3));
+            g2.drawRoundRect(frameX+3, cursorY, cursorWidth+3, cursorHeight, 0, 0);
+
+            //DESC FRAME
+            int descY = frameY + frameHeight;
+            int descHeight = gp.TILE_SIZE*3;
+            drawSubWindow(frameX, descY, frameWidth, descHeight);
+
+            g2.setColor(Color.BLACK);
+            g2.fillRoundRect(frameX, descY, frameWidth, descHeight, 0, 0);
+
+            g2.setColor(Color.WHITE);
+            g2.setStroke(new BasicStroke((5)));
+            g2.drawRoundRect(frameX, descY, frameWidth, descHeight, 0, 0);
+            //DRAW DESC TEXT
+            int textX = frameX + 20;
+            int textY= descY + gp.TILE_SIZE;
+            if (slotRow == 0){
+                g2.drawString(shop.getShopItems().get(0).description, textX, textY);
+//                g2.drawString("Damage: " + shop.getShopItems().get(0).damage, textX, textY+30);
+            } else if (slotRow == 1) {
+                g2.drawString(shop.getShopItems().get(1).description, textX, textY);
+//                g2.drawString("Damage: " + bs.getShopItems().get(1).damage, textX, textY+30);
+            } else if (slotRow == 2) {
+                g2.drawString(shop.getShopItems().get(2).description, textX, textY);
+//                g2.drawString("Damage: " + bs.getShopItems().get(2).damage, textX, textY+30);
+            } else if (slotRow == 3) {
+                g2.drawString(shop.getShopItems().get(3).description, textX, textY);
+//                g2.drawString("Damage: " + bs.getShopItems().get(3).damage, textX, textY+30);
+            }
+         }
     }
 
     public void draw(Graphics2D g2){
@@ -1154,11 +1593,15 @@ public class UI {
         // DIFFICULTY SELECTION
         if (gp.gameState == gp.DIFF_MENU_STATE) drawDifficultySelect();
         // MENU OPTION & GAMEPLAY OPTION
-        if (gp.gameState == gp.OPTIONS_MENU_STATE) drawOptions();
-        if (gp.gameState == gp.OPTIONS_DIALOGUE_STATE) {
+        if (gp.gameState == gp.INGAME_OPTIONS_STATE) drawOptions();
+        if (gp.gameState == gp.MAIN_OPTIONS_STATE) {
             drawBG();
             drawOptions();
         }
+        // SAVE & LOAD
+        if(gp.gameState == gp.SAVEPAGE_STATE) drawSavePage();
+        if(gp.gameState == gp.SAVEPAGE2_STATE) drawSavePage2();
+
         // GAMEPLAY
         if (gp.gameState == gp.PLAY_STATE) {
             drawPlayerMoney();
@@ -1172,11 +1615,17 @@ public class UI {
         if(gp.gameState == gp.DIALOGUE_STATE) drawDialogScreen();
         // SHOP
         if (gp.gameState == gp.SHOP_STATE) drawShop();
+        if (gp.gameState == gp.POTION_SHOP_STATE) drawPotionShop();
         // DEATH
         if (gp.gameState == gp.DEATH_STATE) drawDeathScreen();
         // TRANSITION
         if (gp.gameState == gp.TRANSITION_STATE) drawTransition();
         // NPC DIALOGUE DIFFICULTY SELECT
-        if (gp.gameState == gp.DIFF_DIALOGUE_STATE) difficultySelect();
+        if (gp.gameState == gp.DIFF_DIALOGUE_STATE) dialogueDifficultySelect();
+        // MAP SELECTION
+        if (gp.gameState == gp.MAP_SELECTION) mapSelect();
+        // BLACK SMITH DIALOGUE SELECTION
+        if (gp.gameState == gp.BLACKSMITH_DIALOGUE_STATE) dialogueBlackSmithSelect();
+        if (gp.gameState == gp.CONTROLS_STATE) drawControls();
     }
 }

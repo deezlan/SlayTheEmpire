@@ -235,10 +235,12 @@ public class UI {
         int x = 0;
         g2.setColor(Color.WHITE);
         for (Entity i : gp.player.hotbarList){
-            BufferedImage image = i.weaponSprite;
-            image = UtilityTool.scaleImage(image, gp.TILE_SIZE-8, gp.TILE_SIZE-8);
-            g2.drawImage(image, frameX+16+((gp.TILE_SIZE + gp.TILE_SIZE/2)*x), frameY+16, null);
-            x++;
+            if (i != null){
+                BufferedImage image = i.weaponSprite;
+                image = UtilityTool.scaleImage(image, gp.TILE_SIZE-8, gp.TILE_SIZE-8);
+                g2.drawImage(image, frameX+16+((gp.TILE_SIZE + gp.TILE_SIZE/2)*x), frameY+16, null);
+                x++;
+            }
         }
         if (gp.player.currentPotion != null){
             g2.drawImage(gp.player.currentPotion.weaponSprite, frameX+16+((gp.TILE_SIZE + gp.TILE_SIZE/2)*2), frameY+16, null);

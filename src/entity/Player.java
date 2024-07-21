@@ -10,6 +10,7 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 
 public class Player extends Entity {
@@ -69,6 +70,11 @@ public class Player extends Entity {
         ownedPotion.put("Speed Potion", 0);
         ownedPotion.put("Magic Potion", 0);
         ownedPotion.put("Water Potion", 0);
+
+        hotbarList.add(null);
+        hotbarList.add(null);
+        hotbarList.add(null);
+
 
         // ATTRIBUTES DEPENDING ON CHOSEN CLASS
         switch (playerClass) {
@@ -510,7 +516,7 @@ public class Player extends Entity {
         }
 
         if (gp.keyH.onePressed){
-            if (!hotbarList.isEmpty()){
+            if (hotbarList.get(0) != null){
                 currentWeapon = hotbarList.get(0);
                 projectile1 = currentWeapon.projectile1;
                 projectile2 = currentWeapon.projectile2;
@@ -523,7 +529,7 @@ public class Player extends Entity {
             }
         }
         if (gp.keyH.twoPressed){
-            if (!hotbarList.isEmpty()){
+            if (hotbarList.get(1) != null){
                 currentWeapon = hotbarList.get(1);
                 projectile1 = currentWeapon.projectile1;
                 projectile2 = currentWeapon.projectile2;

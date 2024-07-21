@@ -46,8 +46,8 @@ public class LoginSystem extends JPanel {
     public void authLogin() {
         loadUsers();
 
-        encryptPass();
         if (accDatabase.containsKey(gp.ui.inpUser)) {
+            encryptPass();
             if (accDatabase.get(gp.ui.inpUser).equals(encryptedPass)) {
                 gp.gameState = gp.MAIN_MENU_STATE;
                 gp.saveLoad = new SaveLoad(gp, 3);

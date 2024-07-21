@@ -19,7 +19,7 @@ public class CollisionChecker {
         int entityTopRow = entityTopWorldY/gp.TILE_SIZE;
         int entityBottomRow = entityBottomWorldY/gp.TILE_SIZE;
 
-        int tileNum1, tileNum2, tileNum3; // only need to check three tiles
+        int tileNum1, tileNum2, tileNum3;
 
         // Temp Direction for knockback
         String action = entity.action;
@@ -113,7 +113,7 @@ public class CollisionChecker {
                         entity.rightCollisionOn = true;
                 }
                 break;
-            case "moveUpLeft": //check both corners on the right if hitting any tile
+            case "moveUpLeft":
                 entityTopRow = (entityTopWorldY - entity.speed)/gp.TILE_SIZE;
                 entityLeftCol = (entityLeftWorldX - entity.speed)/gp.TILE_SIZE;
                 tileNum1 = gp.tileM.mapTileNum[gp.currentMap][entityRightCol][entityTopRow];
@@ -277,7 +277,8 @@ public class CollisionChecker {
                     case "moveUp":
                         entity.solidArea.y -= entity.speed;
                         if (entity.solidArea.intersects(gp.gateArr[gp.currentMap][i].solidArea)) {
-                            if (gp.gateArr[gp.currentMap][i].collision || !player) entity.upCollisionOn = true;
+                            if (gp.gateArr[gp.currentMap][i].collision || !player)
+                                entity.upCollisionOn = true;
                         }
                         break;
                     case "moveDown":

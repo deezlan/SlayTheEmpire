@@ -460,15 +460,14 @@ public class UI {
             g2.drawImage(loginDefault, 0, 0, loginDefault.getWidth(null), loginDefault.getHeight(null), null);
         }
 
-        Rectangle nameRect = new Rectangle(264, 264, 288, 29);
+        Rectangle nameRect = new Rectangle(264, 265, 287, 28);
         Rectangle passRect = new Rectangle(264, 331, 288, 28);
         Rectangle registerRect = new Rectangle(345, 380, 130, 28);
         Rectangle loginRect = new Rectangle(365, 425, 90, 28);
 
+        g2.setColor(Color.BLACK);
         g2.draw(nameRect);
         g2.draw(passRect);
-
-        g2.setColor(Color.BLACK);
         g2.draw(registerRect);
         g2.draw(loginRect);
 
@@ -477,6 +476,14 @@ public class UI {
         g2.drawString(inpUser, 275, 285);
 //        g2.drawString(password, 275, 351);  // ENABLE TO VIEW PASSWORD DATA
         g2.drawString(inpPassHidden, 275, 355); // ENABLE TO HIDE PASSWORD DATA
+
+        g2.setColor(Color.WHITE);
+        g2.setStroke(new BasicStroke(3f));
+        if (registerRect.contains(gp.cursor.getMouseX(), gp.cursor.getMouseY())) {
+            g2.drawRect(355, 410, 110, 0);
+        } else if (loginRect.contains(gp.cursor.getMouseX(), gp.cursor.getMouseY())) {
+            g2.drawRect(375, 455, 72, 0);
+        }
 
         if (gp.mouseH.leftClicked) {
             if (nameRect.contains(gp.cursor.getMouseX(), gp.cursor.getMouseY())) {
@@ -519,14 +526,6 @@ public class UI {
             g2.drawImage(usernameTakenErr, 209, 243, 397, 137, null);
         if (regSuccessful)
             g2.drawImage(regComplete, 209, 243, 397, 137, null);
-
-        g2.setColor(Color.WHITE);
-        g2.setStroke(new BasicStroke(3f));
-        if (registerRect.contains(gp.cursor.getMouseX(), gp.cursor.getMouseY())) {
-            g2.drawRect(355, 410, 110, 0);
-        } else if (loginRect.contains(gp.cursor.getMouseX(), gp.cursor.getMouseY())) {
-            g2.drawRect(375, 455, 72, 0);
-        }
     }
 
     public void checkLogin () {

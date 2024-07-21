@@ -226,7 +226,8 @@ public class KeyHandler implements KeyListener {
                     gp.ui.inpPass = gp.ui.inpPass.substring(0, gp.ui.inpPass.length() - 1);
                     gp.ui.inpPassHidden = gp.ui.inpPassHidden.substring(0, gp.ui.inpPassHidden.length() - 1);
                 }
-            } else if (code!= KeyEvent.VK_SHIFT && code!= KeyEvent.VK_SPACE && code!= KeyEvent.VK_CAPS_LOCK) {gp.ui.inpPass = gp.ui.inpPass.concat(String.valueOf((char) code).toLowerCase());
+            } else if (code!= KeyEvent.VK_SHIFT && code!= KeyEvent.VK_SPACE && code!= KeyEvent.VK_CAPS_LOCK) {
+                gp.ui.inpPass = gp.ui.inpPass.concat(String.valueOf((char) code).toLowerCase());
                 gp.ui.inpPassHidden = gp.ui.inpPassHidden.concat("*");
             }
         }

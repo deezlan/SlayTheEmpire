@@ -1055,7 +1055,7 @@ public class UI {
                         // RAMSES
                         case 4: g2.fillRect(mob.getScreenX() + 80, mob.getScreenY() + 140, (int) hpBarValue, 9); break;
                         // GOBLIN & SKELETON KNIGHT
-                        case 5, 6: g2.fillRect(mob.getScreenX() + 75, mob.getScreenY() + 140, (int) hpBarValue, 9); break;
+                        case 5, 6: g2.fillRect(mob.getScreenX() + 80, mob.getScreenY() + 140, (int) hpBarValue, 9); break;
                         // ARMORED GUARDIAN
                         case 7: g2.fillRect(mob.getScreenX() + 70, mob.getScreenY() + 140, (int) hpBarValue, 9); break;
                         // FLYING EYE

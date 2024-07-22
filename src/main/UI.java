@@ -406,7 +406,8 @@ public class UI {
     public void drawPlayerMoney() {
         coin.spriteCounter++;
         if (coin.spriteCounter > 10) coin.runCurrentListAnimation();
-        g2.setFont(new Font("Purisa", Font.BOLD, 48));
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 50));
+
         g2.setColor(Color.WHITE);
         String input = "" + gp.player.totalCoins;
         FontMetrics fontMetrics = g2.getFontMetrics();

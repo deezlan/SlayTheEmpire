@@ -470,6 +470,7 @@ public class Player extends Entity {
 
         if (gp.keyH.fPressed) {
             if (!attacking) {
+                gp.playSE(15);
                 attacking = true;
             }
         }

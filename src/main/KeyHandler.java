@@ -491,6 +491,7 @@ public class KeyHandler implements KeyListener {
         } else if (gp.gameState == gp.DIALOGUE_STATE || gp.gameState == gp.CUTSCENE_STATE) {
             dialogState(code);
         } else if (gp.gameState == gp.DEATH_STATE) {
+            gp.stopMusic();
             deathState(code);
         } else if (gp.gameState == gp.CREDITS_STATE) {
             creditsState(code);

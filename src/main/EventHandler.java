@@ -358,14 +358,23 @@ public class EventHandler {
         gp.gameState = gp.TRANSITION_STATE;
         if (gp.currentMap == 0) {
             tempMap = nextMap;
+            // 1ST MAP
             if (nextMap == 1) {
+                gp.stopMusic();
+                gp.playMusic(5);
                 tempCol = 19;
                 tempRow = 41;
+            // 2ND MAP
             } else {
+                gp.stopMusic();
+                gp.playMusic(7);
                 tempCol = 31;
                 tempRow = 36;
             }
+            // LOBBY
         } else {
+            gp.stopMusic();
+            gp.playMusic(4);
             tempMap = nextMap;
             tempCol = 6;
             tempRow = 2;

@@ -68,6 +68,10 @@ public class KeyHandler implements KeyListener {
             }
             gp.ui.commandNum = 0;
         }
+
+        if (code == KeyEvent.VK_ESCAPE) {
+            gp.gameState = gp.TITLE_STATE;
+        }
     }
 
     public void creditsState(int code) {
@@ -168,7 +172,7 @@ public class KeyHandler implements KeyListener {
         if (code == KeyEvent.VK_W || code == KeyEvent.VK_S) {
             gp.ui.commandNum += (code == KeyEvent.VK_W) ? -1 : 1;
             gp.playSE(1);
-            gp.ui.commandNum = Math.max(0, Math.min(gp.ui.commandNum, 4));
+            gp.ui.commandNum = Math.max(0, Math.min(gp.ui.commandNum, 2));
         }
     }
 

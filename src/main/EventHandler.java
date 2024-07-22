@@ -63,41 +63,6 @@ public class EventHandler {
 
         if (distance > gp.TILE_SIZE) canTouchEvent = true;
 
-        switch (gp.currentMap) {
-            // LOBBY
-            case 0: {
-                if (!musicStopped) {
-                    gp.stopMusic();
-                    musicStopped = true;
-                }
-                if (!musicPlayed) {
-                    gp.playMusic(4);
-                    musicPlayed = true;
-                }
-            };
-            // STAGE 1
-            case 1: {
-                if (!musicStopped) {
-                    gp.stopMusic();
-                    musicStopped = true;
-                }
-                if (!musicPlayed) {
-                    gp.playMusic(5);
-                    musicPlayed = true;
-                }
-            }
-            // STAGE 2
-            case 2: {
-                if (!musicStopped) {
-                    gp.stopMusic();
-                    musicStopped = true;
-                }
-                if (!musicPlayed) {
-                    gp.playMusic(7);
-                    musicPlayed = true;
-                }
-            }
-        }
 
         if (canTouchEvent) { // use else if to add more events
             switch (gp.currentMap) {
@@ -360,21 +325,39 @@ public class EventHandler {
             tempMap = nextMap;
             // 1ST MAP
             if (nextMap == 1) {
-                gp.stopMusic();
-                gp.playMusic(5);
+                if (!musicStopped) {
+                    gp.stopMusic();
+                    musicStopped = true;
+                }
+                if (!musicPlayed) {
+                    gp.playMusic(5);
+                    musicPlayed = true;
+                }
                 tempCol = 19;
                 tempRow = 41;
             // 2ND MAP
             } else {
-                gp.stopMusic();
-                gp.playMusic(7);
+                if (!musicStopped) {
+                    gp.stopMusic();
+                    musicStopped = true;
+                }
+                if (!musicPlayed) {
+                    gp.playMusic(7);
+                    musicPlayed = true;
+                }
                 tempCol = 31;
                 tempRow = 36;
             }
             // LOBBY
         } else {
-            gp.stopMusic();
-            gp.playMusic(4);
+            if (!musicStopped) {
+                gp.stopMusic();
+                musicStopped = true;
+            }
+            if (!musicPlayed) {
+                    gp.playMusic(4);
+                    musicPlayed = true;
+                }
             tempMap = nextMap;
             tempCol = 6;
             tempRow = 2;

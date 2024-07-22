@@ -28,6 +28,14 @@ public class CollisionChecker {
         }
 
         switch (action) {
+            case "idleRight", "idleLeft": // check both corners on the right if hitting any tile
+                entityRightCol = (entityRightWorldX + entity.speed)/gp.TILE_SIZE;
+                tileNum1 = gp.tileM.mapTileNum[gp.currentMap][entityRightCol][entityTopRow];
+                tileNum2 = gp.tileM.mapTileNum[gp.currentMap][entityRightCol][entityBottomRow];
+
+                if (gp.tileM.tile[tileNum1].collision || gp.tileM.tile[tileNum2].collision)
+                    entity.rightCollisionOn = true;
+                break;
             case "moveUp": // check if top corners of the square hitting any tiles
                 entityTopRow = (entityTopWorldY - entity.speed)/gp.TILE_SIZE;
                 tileNum1 = gp.tileM.mapTileNum[gp.currentMap][entityLeftCol][entityTopRow];

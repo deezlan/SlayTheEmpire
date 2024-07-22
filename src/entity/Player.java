@@ -62,7 +62,7 @@ public class Player extends Entity {
     @Override
     public void setStatValues(int defaultSpeed, int maxLife, boolean isBoss, int mobBossNum, int coinValue) {
         type = type_player;
-        totalCoins = 0;
+        totalCoins = 1000;
 
         //INITIAL POTS
         ownedPotion.put("Health Potion", 1);
@@ -73,7 +73,6 @@ public class Player extends Entity {
         hotbarList.add(null);
         hotbarList.add(null);
         hotbarList.add(null);
-
 
         // ATTRIBUTES DEPENDING ON CHOSEN CLASS
         switch (playerClass) {

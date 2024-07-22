@@ -93,18 +93,18 @@ public class TileManager {
                 WORLD_ROW++;
             }
         }
-        if(drawPath){ // for viewing the move path of entities
-            g2.setColor(new Color(255,0,0,70));
-
-            for(int i = 0; i < gp.pFinder.pathList.size(); i++){
-                int worldX = gp.pFinder.pathList.get(i).col * gp.TILE_SIZE;
-                int worldY = gp.pFinder.pathList.get(i).row * gp.TILE_SIZE;
-                int screenX = worldX - gp.player.worldX + gp.player.screenX;
-                int screenY = worldY - gp.player.worldY + gp.player.screenY;
-
-                g2.fillRect(screenX,screenY,gp.TILE_SIZE,gp.TILE_SIZE);
-            }
-        }
+//        if(drawPath){ // for viewing the move path of entities
+//            g2.setColor(new Color(255,0,0,70));
+//
+//            for(int i = 0; i < gp.pFinder.pathList.size(); i++){
+//                int worldX = gp.pFinder.pathList.get(i).col * gp.TILE_SIZE;
+//                int worldY = gp.pFinder.pathList.get(i).row * gp.TILE_SIZE;
+//                int screenX = worldX - gp.player.worldX + gp.player.screenX;
+//                int screenY = worldY - gp.player.worldY + gp.player.screenY;
+//
+//                g2.fillRect(screenX,screenY,gp.TILE_SIZE,gp.TILE_SIZE);
+//            }
+//        }
     }
 
     public void getTileImage() {

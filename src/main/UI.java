@@ -106,7 +106,6 @@ public class UI {
             {"Weapon 1", "1"},
             {"Weapon 2", "2"},
             {"Consumables", "3"},
-            {"Use Cons", "E"},
 
             // MENU
             {"Options", "Esc"},

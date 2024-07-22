@@ -662,6 +662,10 @@ public class UI {
     }
 
     // DRAW SAVE PAGE
+    /*
+    draws the first save page, where users can see what files have been saved
+    and where they can save/load the file
+     */
     public void drawSavePage() {
         int imageWidth = (int) (gp.SCREEN_WIDTH / 1.0000000002);
         int imageHeight = (int) (saveFileBackground.getHeight(null) * ((double) imageWidth / saveFileBackground.getWidth(null)));
@@ -681,6 +685,12 @@ public class UI {
         }
 
         if (gp.mouseH.leftClicked) {
+            /*
+            condition !gp.saveLoad.isLoadPage, checks whether the user came from
+            the main menu or from the save pedestal
+            if the user came from main menu they will only be able to load the game
+            if user came from the save pedestal they will only be able to save their progress
+             */
             if (!gp.saveLoad.isLoadPage) {
                 if (saveButtonBounds1.contains(gp.cursor.getMouseX(), gp.cursor.getMouseY())) {
                     gp.saveLoad.slot = 0;
@@ -733,6 +743,7 @@ public class UI {
 
     }
 
+    // DRAWS SECOND PAGE OF THE SAVE PAGE
     public void drawSavePage2() {
         int imageWidth = (int) (gp.SCREEN_WIDTH / 1.0000000002);
         int imageHeight = (int) (saveFileBackground.getHeight(null) * ((double) imageWidth / saveFileBackground.getWidth(null)));
@@ -743,6 +754,13 @@ public class UI {
         int rx = 450;
         int y = (gp.SCREEN_HEIGHT - emptySaveButton1.getHeight(null)) / 2;
 
+        /*
+        The second page provides purpose for when users want to load the game or
+        save their progress in a save file.
+        For the load page, it is to see if they want to redo the levels or continue
+        For the save page, if the user is trying to save a file on an existing file
+        it will ask for confirmation if they would like to rewrite the file with new data.
+         */
         if(gp.saveLoad.isLoadPage) {
             g2.drawImage(savedProgressPage, px, py, imageWidth, imageHeight, null);
 
@@ -784,7 +802,7 @@ public class UI {
     }
 
 
-    // DRAW FILE DIALOGUE
+    // DRAW SAVE PAGE TEXT DIALOGUE
     public void drawSaveFileDialogue(int boxNumber){
         int x  = 550 + ((gp.SCREEN_WIDTH - loadFile.getWidth(null)) / 2);
         int y  = (((gp.SCREEN_HEIGHT - loadFile.getHeight(null)) / 2) - 130);

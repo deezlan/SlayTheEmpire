@@ -14,6 +14,6 @@ public class DataStorage implements Serializable {
     int progressSaved;
 
     ArrayList<Integer> weapons = new ArrayList<>();
-
-
 }
+
+

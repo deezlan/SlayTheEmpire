@@ -2,6 +2,7 @@ package entity;
 
 import main.GamePanel;
 import main.UtilityTool;
+import mobs.BOSS_FrostGiant;
 import object.OBJ_PickUpCoin;
 
 import java.awt.*;
@@ -35,11 +36,10 @@ public abstract class Entity {
             type_player = 0,
             type_mob = 1,
             type_npc = 2,
-            type_consumable = 3,
+            type_obelisk = 3,
             type_pickup = 4,
             type_gate = 5,
-            type_shop = 6,
-            type_obelisk = 7;
+            type_shop = 6;
 
     // PLAYER & MOB ATTRIBUTES
     public int
@@ -62,7 +62,6 @@ public abstract class Entity {
     public boolean
             sleep,
             boss,
-            tempScene = false,
             drawing = true;
 
     // PLAYER & MOB COLLISION DIRECTION
@@ -253,10 +252,10 @@ public abstract class Entity {
         return (getDistanceX(target) + getDistanceY(target)) / gp.TILE_SIZE;
     }
     public int getGoalCol(Entity target) {
-        return (target.worldX + target.solidArea.x) / gp.TILE_SIZE;
+        return (target.worldX + target.moveRightList.get(0).getWidth()/2) / gp.TILE_SIZE;
     }
     public int getGoalRow(Entity target) {
-        return (target.worldY + target.solidArea.y) / gp.TILE_SIZE;
+        return (target.worldY + target.moveRightList.get(0).getHeight()/2) / gp.TILE_SIZE;
     }
 
     // MOB COMBAT METHODS
@@ -322,10 +321,10 @@ public abstract class Entity {
             int nextY = gp.pFinder.pathList.get(0).row * gp.TILE_SIZE;
 
             // ENTITY SOLID AREA POSITION
-            int enLeftX = worldX + solidArea.x;
-            int enRightX = worldX + solidArea.x;
-            int enTopY = worldY + solidArea.y;
-            int enBottomY = worldY + solidArea.y;
+            int enLeftX = worldX + moveRightList.get(0).getWidth()/2;
+            int enRightX = worldX + moveRightList.get(0).getWidth()/2;
+            int enTopY = worldY + moveRightList.get(0).getHeight()/2;
+            int enBottomY = worldY + moveRightList.get(0).getHeight()/2;
 
             if (enTopY > nextY && enLeftX >= nextX && enRightX < nextX + gp.TILE_SIZE) {
                 action = "moveUp";
@@ -379,7 +378,7 @@ public abstract class Entity {
         }
     }
     public void setAction() {
-        if(onPath) {
+        if (onPath) {
             // SEARCH DIRECTION TO GO
             searchPath(getGoalCol(gp.player),getGoalRow(gp.player));
 
@@ -403,6 +402,9 @@ public abstract class Entity {
     }
     public void damagePlayer(int attack) {
         if (!gp.player.iframe) {
+            // DAMAGE SFX
+            gp.playSE(19);
+
             if (gp.player.getShieldBuff()){
                 int damage = attack/2;
                 if (damage < 0) {
@@ -418,7 +420,6 @@ public abstract class Entity {
                 }
                 gp.player.currentLife -= damage;
                 gp.player.iframe = true;
-                System.out.println(damage);
             }
         }
     }
@@ -822,6 +823,3 @@ public abstract class Entity {
         }
     }
 }
-
-
-

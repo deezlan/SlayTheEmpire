@@ -9,6 +9,8 @@ public class EventHandler {
     int previousEventX, previousEventY; // prevent event from happening again immediately
     int tempMap, tempCol, tempRow;
     boolean canTouchEvent = true;
+    boolean musicPlayed = false;
+    boolean musicStopped = false;
 
     public EventHandler(GamePanel gp){
         this.gp = gp;
@@ -44,8 +46,8 @@ public class EventHandler {
 
     public void setDialogue() {
         // FOR DRINKING EVENT
-        eventMaster.dialogs[0][0] = "Drank Possibly Toilet Water";
-        eventMaster.dialogs[0][1] = "Why does it taste like pee";
+        eventMaster.dialogs[0][0] = "Drank Strange Water";
+        eventMaster.dialogs[0][1] = "You Feel Rejuvenated";
 
         // FOR MAP SELECTION EVENT
         eventMaster.dialogs[1][0] = "Turned Back";
@@ -60,6 +62,7 @@ public class EventHandler {
         int distance = Math.max(xDistance, yDistance);
 
         if (distance > gp.TILE_SIZE) canTouchEvent = true;
+
 
         if (canTouchEvent) { // use else if to add more events
             switch (gp.currentMap) {
@@ -95,11 +98,11 @@ public class EventHandler {
                         triggerGates(true, 0, 4);
                         wakeMonsters(0, 4);
 
-                        eventRect[1][24][40].eventDone = true;
-                        eventRect[1][25][41].eventDone = true;
-                        eventRect[1][25][42].eventDone = true;
-                        eventRect[1][25][43].eventDone = true;
-                        eventRect[1][24][44].eventDone = true;
+                        eventRect[gp.currentMap][24][40].eventDone = true;
+                        eventRect[gp.currentMap][25][41].eventDone = true;
+                        eventRect[gp.currentMap][25][42].eventDone = true;
+                        eventRect[gp.currentMap][25][43].eventDone = true;
+                        eventRect[gp.currentMap][24][44].eventDone = true;
                     }
                     if ( // TRIGGER LEFT PATH GATES
                             hit(gp.currentMap, 25, 30, "any")
@@ -107,8 +110,8 @@ public class EventHandler {
                     ) {
                         triggerGates(true, 5, 6);
 
-                        eventRect[1][25][30].eventDone = true;
-                        eventRect[1][25][31].eventDone = true;
+                        eventRect[gp.currentMap][25][30].eventDone = true;
+                        eventRect[gp.currentMap][25][31].eventDone = true;
                     }
                     if ( // TRIGGER RIGHT PATH GATES
                             hit(gp.currentMap, 33, 30, "any")
@@ -116,8 +119,8 @@ public class EventHandler {
                     ) {
                         triggerGates(true, 7, 8);
 
-                        eventRect[1][33][30].eventDone = true;
-                        eventRect[1][33][31].eventDone = true;
+                        eventRect[gp.currentMap][33][30].eventDone = true;
+                        eventRect[gp.currentMap][33][31].eventDone = true;
                     }
                     if ( // TRIGGER MINI-BOSS ROOM GATES
                             hit(1, 24, 22, "any")
@@ -135,16 +138,16 @@ public class EventHandler {
                         triggerGates(true, 9, 15);
                         wakeMonsters(5, 7);
 
-                        eventRect[1][24][22].eventDone = true;
-                        eventRect[1][25][23].eventDone = true;
-                        eventRect[1][25][24].eventDone = true;
-                        eventRect[1][25][25].eventDone = true;
-                        eventRect[1][24][26].eventDone = true;
-                        eventRect[1][34][22].eventDone = true;
-                        eventRect[1][33][23].eventDone = true;
-                        eventRect[1][33][24].eventDone = true;
-                        eventRect[1][33][25].eventDone = true;
-                        eventRect[1][34][26].eventDone = true;
+                        eventRect[gp.currentMap][24][22].eventDone = true;
+                        eventRect[gp.currentMap][25][23].eventDone = true;
+                        eventRect[gp.currentMap][25][24].eventDone = true;
+                        eventRect[gp.currentMap][25][25].eventDone = true;
+                        eventRect[gp.currentMap][24][26].eventDone = true;
+                        eventRect[gp.currentMap][34][22].eventDone = true;
+                        eventRect[gp.currentMap][33][23].eventDone = true;
+                        eventRect[gp.currentMap][33][24].eventDone = true;
+                        eventRect[gp.currentMap][33][25].eventDone = true;
+                        eventRect[gp.currentMap][34][26].eventDone = true;
                     }
                     if ( // TRIGGER FINAL BOSS ROOM GATES
                             hit(1, 27, 13, "any")
@@ -156,11 +159,11 @@ public class EventHandler {
                         triggerGates(true, 16, 19);
                         wakeMonsters(8, 12);
 
-                        eventRect[1][27][13].eventDone = true;
-                        eventRect[1][28][12].eventDone = true;
-                        eventRect[1][29][12].eventDone = true;
-                        eventRect[1][30][12].eventDone = true;
-                        eventRect[1][31][13].eventDone = true;
+                        eventRect[gp.currentMap][27][13].eventDone = true;
+                        eventRect[gp.currentMap][28][12].eventDone = true;
+                        eventRect[gp.currentMap][29][12].eventDone = true;
+                        eventRect[gp.currentMap][30][12].eventDone = true;
+                        eventRect[gp.currentMap][31][13].eventDone = true;
                     }
 
                     // UNLOCK FIRST ROOM GATES ONCE CLEARED
@@ -190,11 +193,11 @@ public class EventHandler {
                         triggerGates(true, 0, 3);
                         wakeMonsters(0, 3);
 
-                        eventRect[1][25][35].eventDone = true;
-                        eventRect[1][24][36].eventDone = true;
-                        eventRect[1][24][37].eventDone = true;
-                        eventRect[1][24][38].eventDone = true;
-                        eventRect[1][25][39].eventDone = true;
+                        eventRect[gp.currentMap][25][35].eventDone = true;
+                        eventRect[gp.currentMap][24][36].eventDone = true;
+                        eventRect[gp.currentMap][24][37].eventDone = true;
+                        eventRect[gp.currentMap][24][38].eventDone = true;
+                        eventRect[gp.currentMap][25][39].eventDone = true;
                     }
                     if ( // TRIGGER MINI-BOSS ROOM GATES
                             hit(gp.currentMap, 12, 23, "any")
@@ -206,11 +209,11 @@ public class EventHandler {
                         triggerGates(true, 4, 8);
                         wakeMonsters(4, 6);
 
-                        eventRect[1][12][23].eventDone = true;
-                        eventRect[1][11][24].eventDone = true;
-                        eventRect[1][11][25].eventDone = true;
-                        eventRect[1][11][26].eventDone = true;
-                        eventRect[1][12][27].eventDone = true;
+                        eventRect[gp.currentMap][12][23].eventDone = true;
+                        eventRect[gp.currentMap][11][24].eventDone = true;
+                        eventRect[gp.currentMap][11][25].eventDone = true;
+                        eventRect[gp.currentMap][11][26].eventDone = true;
+                        eventRect[gp.currentMap][12][27].eventDone = true;
                     }
                     if ( // TRIGGER FINAL BOSS ROOM GATES
                             hit(gp.currentMap, 5, 10, "any")
@@ -222,11 +225,11 @@ public class EventHandler {
                         triggerGates(true, 9, 14);
                         wakeMonsters(7, 10);
 
-                        eventRect[1][5][10].eventDone = true;
-                        eventRect[1][6][9].eventDone = true;
-                        eventRect[1][7][9].eventDone = true;
-                        eventRect[1][8][9].eventDone = true;
-                        eventRect[1][9][10].eventDone = true;
+                        eventRect[gp.currentMap][5][10].eventDone = true;
+                        eventRect[gp.currentMap][6][9].eventDone = true;
+                        eventRect[gp.currentMap][7][9].eventDone = true;
+                        eventRect[gp.currentMap][8][9].eventDone = true;
+                        eventRect[gp.currentMap][9][10].eventDone = true;
                     }
                     if ( // TRIGGER PLOT TWIST FINAL BOSS ROOM GATES
                             hit(gp.currentMap, 26, 4, "any")
@@ -239,12 +242,12 @@ public class EventHandler {
                         triggerGates(true, 15, 20);
                         wakeMonsters(11, 12);
 
-                        eventRect[1][26][4].eventDone = true;
-                        eventRect[1][27][5].eventDone = true;
-                        eventRect[1][27][6].eventDone = true;
-                        eventRect[1][27][7].eventDone = true;
-                        eventRect[1][27][8].eventDone = true;
-                        eventRect[1][26][9].eventDone = true;
+                        eventRect[gp.currentMap][26][4].eventDone = true;
+                        eventRect[gp.currentMap][27][5].eventDone = true;
+                        eventRect[gp.currentMap][27][6].eventDone = true;
+                        eventRect[gp.currentMap][27][7].eventDone = true;
+                        eventRect[gp.currentMap][27][8].eventDone = true;
+                        eventRect[gp.currentMap][26][9].eventDone = true;
                     }
 
                     // UNLOCK FIRST ROOM GATES ONCE CLEAR
@@ -320,20 +323,49 @@ public class EventHandler {
         gp.gameState = gp.TRANSITION_STATE;
         if (gp.currentMap == 0) {
             tempMap = nextMap;
+            // 1ST MAP
             if (nextMap == 1) {
+                if (!musicStopped) {
+                    gp.stopMusic();
+                    musicStopped = true;
+                }
+                if (!musicPlayed) {
+                    gp.playMusic(5);
+                    musicPlayed = true;
+                }
                 tempCol = 19;
                 tempRow = 41;
+            // 2ND MAP
             } else {
+                if (!musicStopped) {
+                    gp.stopMusic();
+                    musicStopped = true;
+                }
+                if (!musicPlayed) {
+                    gp.playMusic(7);
+                    musicPlayed = true;
+                }
                 tempCol = 31;
                 tempRow = 36;
             }
+            // LOBBY
         } else {
+            if (!musicStopped) {
+                gp.stopMusic();
+                musicStopped = true;
+            }
+            if (!musicPlayed) {
+                    gp.playMusic(4);
+                    musicPlayed = true;
+                }
             tempMap = nextMap;
             tempCol = 6;
             tempRow = 2;
         }
 
         // RESET TILE EVENTS
+        musicStopped = false;
+        musicPlayed = false;
         if (nextMap == 1) {
             eventRect[1][24][40].eventDone = false;
             eventRect[1][25][41].eventDone = false;
@@ -356,27 +388,27 @@ public class EventHandler {
             eventRect[1][30][12].eventDone = false;
             eventRect[1][31][13].eventDone = false;
         } else if (nextMap == 2) {
-            eventRect[1][27][13].eventDone = false;
-            eventRect[1][28][12].eventDone = false;
-            eventRect[1][29][12].eventDone = false;
-            eventRect[1][30][12].eventDone = false;
-            eventRect[1][31][13].eventDone = false;
-            eventRect[1][12][23].eventDone = false;
-            eventRect[1][11][24].eventDone = false;
-            eventRect[1][11][25].eventDone = false;
-            eventRect[1][11][26].eventDone = false;
-            eventRect[1][12][27].eventDone = false;
-            eventRect[1][5][10].eventDone = false;
-            eventRect[1][6][9].eventDone = false;
-            eventRect[1][7][9].eventDone = false;
-            eventRect[1][8][9].eventDone = false;
-            eventRect[1][9][10].eventDone = false;
-            eventRect[1][26][4].eventDone = false;
-            eventRect[1][27][5].eventDone = false;
-            eventRect[1][27][6].eventDone = false;
-            eventRect[1][27][7].eventDone = false;
-            eventRect[1][27][8].eventDone = false;
-            eventRect[1][26][9].eventDone = false;
+            eventRect[2][27][13].eventDone = false;
+            eventRect[2][28][12].eventDone = false;
+            eventRect[2][29][12].eventDone = false;
+            eventRect[2][30][12].eventDone = false;
+            eventRect[2][31][13].eventDone = false;
+            eventRect[2][12][23].eventDone = false;
+            eventRect[2][11][24].eventDone = false;
+            eventRect[2][11][25].eventDone = false;
+            eventRect[2][11][26].eventDone = false;
+            eventRect[2][12][27].eventDone = false;
+            eventRect[2][5][10].eventDone = false;
+            eventRect[2][6][9].eventDone = false;
+            eventRect[2][7][9].eventDone = false;
+            eventRect[2][8][9].eventDone = false;
+            eventRect[2][9][10].eventDone = false;
+            eventRect[2][26][4].eventDone = false;
+            eventRect[2][27][5].eventDone = false;
+            eventRect[2][27][6].eventDone = false;
+            eventRect[2][27][7].eventDone = false;
+            eventRect[2][27][8].eventDone = false;
+            eventRect[2][26][9].eventDone = false;
         }
     }
 

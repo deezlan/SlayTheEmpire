@@ -8,42 +8,36 @@ import java.io.IOException;
 
 public class BOSS_FrostGiant extends Entity {
     GamePanel gp;
+    int soundEffectInterval = 60;
+    int soundEffectCounter = 0;
     public static final String monName = "Frost Giant";
     public BOSS_FrostGiant(GamePanel gp, int worldX, int worldY) {
         super(gp, worldX, worldY);
         this.gp = gp;
         name = monName;
-        type = type_mob;
-        boss = true;
-        bossNum = 1;
-        defaultSpeed = 1;
-        speed = defaultSpeed;
-        attack = 1;
-        maxLife = 10;
-        currentLife = maxLife;
-        action = "idleRight";
-        damageSprite = 7;
-        sleep = true;
+
+        setStatValues(1, 10, true, 1, 500);
+        setCollisionValues(100, 150, 200, 50);
+        setAttackValues(15, 7, gp.TILE_SIZE * 4, gp.TILE_SIZE * 4, false);
+        setHitboxValues(100, 25, 200, 250);
 
         // Load mob sprites
         getMobSprites();
         setDialog();
-
-        // Set collision settings
-        solidArea.x = 150;
-        solidArea.y = 180;
-        solidArea.width = 80;
-        solidArea.height = 100;
-        attackArea.width = 140;
-        attackArea.height = 140;
-        solidAreaDefaultX = solidArea.x;
-        solidAreaDefaultY = solidArea.y;
         dialogueSet = 0;
+
+        attRangeHorz = gp.TILE_SIZE * 4;
+        attRangeVert = gp.TILE_SIZE * 4;
+
+        if (currentLife <= 0) {
+            gp.playSE(10);
+        }
     }
 
 
     @Override
     public void setAction() {
+
 
         if(!inRage && currentLife < maxLife/2) {
             inRage = true;
@@ -52,26 +46,41 @@ public class BOSS_FrostGiant extends Entity {
             attack = 2;
         }
 
-        if(onPath) {
-            // CHECK IF STOP CHASING
-            checkStopChase(gp.player, 15, 100);
+        if (onPath) {
             // SEARCH DIRECTION TO GO
             searchPath(getGoalCol(gp.player),getGoalRow(gp.player));
+
+            if (hasRanged) {
+                checkShoot(200, idleRightList.get(0).getWidth()/2, idleRightList.get(0).getHeight()/2, 0);
+            }
+
+            soundEffectCounter++;
+            // FOOTSTEP SFX
+            if (soundEffectCounter >= soundEffectInterval) {
+                gp.playSE(18);
+                soundEffectCounter = 0;
+            }
+
         } else {
             // CHECK IF START CHASING
-            checkStartChase(gp.player, 5 , 100);
+            if (!sleep)
+                checkStartChase(gp.player, 10, 100);
         }
         // CHECK ATTACK ON PLAYER
-        if(!attacking){
-//            checkWithinAttackRange(30,gp.TILE_SIZE*6,gp.TILE_SIZE*6); // Original
-            checkWithinAttackRange(30); // CHANGE ATTACK RANGE
+        if (!attacking) {
+            if (hasRanged) {
+                checkWithinAttackRange(30); // CHANGE ATTACK RANGE
+                checkShoot(200, idleRightList.get(0).getWidth()/2, idleRightList.get(0).getHeight()/2, 0);
+            } else {
+                checkWithinAttackRange(30); // CHANGE ATTACK RANGE
+            }
         }
     }
 
     public void setDialog() {
-        dialogs[0][0] = "Who are you.....";
-        dialogs[0][1] = "YOU WILL PAY... WITH ICE!";
-
+        dialogs[0][0] = "Who are you.....\nIts... so cold.....";
+        dialogs[0][1] = "Please help me....\nEnd my suffering";
+        dialogs[0][2] = "GET LOST!";
     }
 
     public void getMobSprites() {
@@ -98,8 +107,6 @@ public class BOSS_FrostGiant extends Entity {
             UtilityTool.scaleEntityList(this,mobRightAttackList, 400, 300);
             UtilityTool.scaleEntityList(this,idleLeftList, 400, 300);
             UtilityTool.scaleEntityList(this, idleRightList, 400, 300);
-
-            System.out.println("Robot Guardian sprites loaded successfully");
         } catch (IOException e) {
             e.printStackTrace(System.out);
         }

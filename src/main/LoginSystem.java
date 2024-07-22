@@ -26,6 +26,7 @@ public class LoginSystem extends JPanel {
         accDatabase = new HashMap<>();
 
         try {
+            // CREATES FILE IF DOESN'T EXIST
             file.createNewFile();
         } catch (IOException e) { e.printStackTrace(System.out); }
     }
@@ -45,12 +46,11 @@ public class LoginSystem extends JPanel {
     public void authLogin() {
         loadUsers();
 
-        encryptPass();
         if (accDatabase.containsKey(gp.ui.inpUser)) {
+            encryptPass();
             if (accDatabase.get(gp.ui.inpUser).equals(encryptedPass)) {
                 gp.gameState = gp.MAIN_MENU_STATE;
                 gp.saveLoad = new SaveLoad(gp, 3);
-                System.out.println("Current User: " + gp.ui.inpUser);
             } else { gp.ui.isInvalidLogin = true; }
         } else {
             gp.ui.isInvalidLogin = true;
@@ -72,6 +72,7 @@ public class LoginSystem extends JPanel {
             encryptPass();
             output.print(gp.ui.inpUser + ":" + encryptedPass + "\n");
             output.close();
+            gp.ui.regSuccessful = true;
         }
     }
 

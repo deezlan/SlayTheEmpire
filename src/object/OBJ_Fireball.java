@@ -20,8 +20,6 @@ public class OBJ_Fireball extends Projectile {
         damage = 2;
         alive = false;
         getImage();
-//        solidArea.width = gp.TILE_SIZE;
-//        solidArea.height = gp.TILE_SIZE;
     }
 
     public void getImage(){

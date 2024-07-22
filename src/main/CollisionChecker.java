@@ -19,7 +19,7 @@ public class CollisionChecker {
         int entityTopRow = entityTopWorldY/gp.TILE_SIZE;
         int entityBottomRow = entityBottomWorldY/gp.TILE_SIZE;
 
-        int tileNum1, tileNum2, tileNum3; //only need to check three tiles
+        int tileNum1, tileNum2, tileNum3;
 
         // Temp Direction for knockback
         String action = entity.action;
@@ -28,6 +28,14 @@ public class CollisionChecker {
         }
 
         switch (action) {
+            case "idleRight", "idleLeft": // check both corners on the right if hitting any tile
+                entityRightCol = (entityRightWorldX + entity.speed)/gp.TILE_SIZE;
+                tileNum1 = gp.tileM.mapTileNum[gp.currentMap][entityRightCol][entityTopRow];
+                tileNum2 = gp.tileM.mapTileNum[gp.currentMap][entityRightCol][entityBottomRow];
+
+                if (gp.tileM.tile[tileNum1].collision || gp.tileM.tile[tileNum2].collision)
+                    entity.rightCollisionOn = true;
+                break;
             case "moveUp": // check if top corners of the square hitting any tiles
                 entityTopRow = (entityTopWorldY - entity.speed)/gp.TILE_SIZE;
                 tileNum1 = gp.tileM.mapTileNum[gp.currentMap][entityLeftCol][entityTopRow];
@@ -113,7 +121,7 @@ public class CollisionChecker {
                         entity.rightCollisionOn = true;
                 }
                 break;
-            case "moveUpLeft": //check both corners on the right if hitting any tile
+            case "moveUpLeft":
                 entityTopRow = (entityTopWorldY - entity.speed)/gp.TILE_SIZE;
                 entityLeftCol = (entityLeftWorldX - entity.speed)/gp.TILE_SIZE;
                 tileNum1 = gp.tileM.mapTileNum[gp.currentMap][entityRightCol][entityTopRow];
@@ -277,7 +285,8 @@ public class CollisionChecker {
                     case "moveUp":
                         entity.solidArea.y -= entity.speed;
                         if (entity.solidArea.intersects(gp.gateArr[gp.currentMap][i].solidArea)) {
-                            if (gp.gateArr[gp.currentMap][i].collision || !player) entity.upCollisionOn = true;
+                            if (gp.gateArr[gp.currentMap][i].collision || !player)
+                                entity.upCollisionOn = true;
                         }
                         break;
                     case "moveDown":
@@ -361,8 +370,8 @@ public class CollisionChecker {
                 entity.solidArea.x = entity.worldX + entity.solidArea.x;
                 entity.solidArea.y = entity.worldY + entity.solidArea.y;
 
-                if (target[gp.currentMap][i].type == entity.type_mob) { // for testing hitboxes
-//                if (entity.attacking) {
+//                if (target[gp.currentMap][i].type == entity.type_mob) { // for testing hitboxes
+                if (entity.attacking) {
                     target[gp.currentMap][i].hitboxArea.x = target[gp.currentMap][i].worldX + target[gp.currentMap][i].hitboxArea.x;
                     target[gp.currentMap][i].hitboxArea.y = target[gp.currentMap][i].worldY + target[gp.currentMap][i].hitboxArea.y;
 
@@ -541,8 +550,6 @@ public class CollisionChecker {
         entity.solidArea.y = entity.worldY + entity.solidArea.y;
 
         // Get the object's solid area position
-//        gp.player.solidArea.x = gp.player.worldX + gp.player.solidArea.x;
-//        gp.player.solidArea.y = gp.player.worldY + gp.player.solidArea.y;
         gp.player.hitboxArea.x = gp.player.worldX + gp.player.hitboxArea.x;
         gp.player.hitboxArea.y = gp.player.worldY + gp.player.hitboxArea.y;
 

@@ -10,7 +10,6 @@ public class MouseHandler implements MouseListener {
     public void mouseClicked(MouseEvent e) {
         if (e.getButton() == MouseEvent.BUTTON1) {
             leftClicked = true;
-            System.out.println("mouseclicked");
         }
     }
 

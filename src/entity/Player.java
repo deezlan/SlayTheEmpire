@@ -49,7 +49,7 @@ public class Player extends Entity {
         screenX = (gp.SCREEN_WIDTH/2) - (gp.TILE_SIZE/2) - 72;
         screenY = (gp.SCREEN_HEIGHT/2) - 72;
 
-        setStatValues(3, 50, false, 0, 0);
+        setStatValues(3, 8, false, 0, 0);
         setCollisionValues(80, 60, 40, 30);
         setHitboxValues(75, 20, 50, 60);
         setAttackValues(5, 2, 50, 75, false);

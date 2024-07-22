@@ -393,14 +393,38 @@ public class UI {
         g2.drawString(text,10,30);
     }
 
+//    public void drawPlayerLife(){
+//        int posX = gp.TILE_SIZE/2;
+//        int posY = gp.TILE_SIZE/2;
+//        double length = 182*((double) gp.player.currentLife/ (double) gp.player.maxLife);
+//
+//        g2.setColor(Color.RED);
+//        g2.fillRect(posX+gp.TILE_SIZE, posY+16, (int) length, 18);
+//        g2.drawImage(lifebar, posX, posY, null);
+//    }
+
     public void drawPlayerLife(){
         int posX = gp.TILE_SIZE/2;
         int posY = gp.TILE_SIZE/2;
-        double length = 182*((double) gp.player.currentLife/ (double) gp.player.maxLife);
+        int i = 0;
 
-        g2.setColor(Color.RED);
-        g2.fillRect(posX+gp.TILE_SIZE, posY+16, (int) length, 18);
-        g2.drawImage(lifebar, posX, posY, null);
+        while (i < gp.player.maxLife/2){
+            g2.drawImage(emptyHeart, posX, posY, null);
+            i++;
+            posX += gp.TILE_SIZE;
+        }
+
+        posX = gp.TILE_SIZE/2;
+        i = 0;
+
+        while (i < gp.player.currentLife){
+            g2.drawImage (halfHeart, posX, posY, null);
+            i++;
+            if (i < gp.player.currentLife)
+                g2.drawImage(fullHeart, posX, posY, null);
+            i++;
+            posX += gp.TILE_SIZE;
+        }
     }
 
     public void drawPlayerMoney() {

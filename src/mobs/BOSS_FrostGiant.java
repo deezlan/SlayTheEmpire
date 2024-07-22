@@ -17,7 +17,7 @@ public class BOSS_FrostGiant extends Entity {
         setStatValues(1, 10, true, 1, 200);
         setCollisionValues(100, 150, 200, 50);
         setAttackValues(15, 7, gp.TILE_SIZE * 4, gp.TILE_SIZE * 4, false);
-        setHitboxValues(100, 50, 200, 100);
+        setHitboxValues(100, 25, 200, 250);
 
         // Load mob sprites
         getMobSprites();

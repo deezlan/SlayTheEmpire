@@ -406,11 +406,11 @@ public class UI {
     public void drawPlayerMoney() {
         coin.spriteCounter++;
         if (coin.spriteCounter > 10) coin.runCurrentListAnimation();
-        g2.setFont(new Font("Purisa", Font.BOLD, 48));
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 50F));
         g2.setColor(Color.WHITE);
         String input = "" + gp.player.totalCoins;
         FontMetrics fontMetrics = g2.getFontMetrics();
-        g2.drawString(String.format(input, new BasicStroke(50), Color.BLACK), 100 - fontMetrics.stringWidth(input), 119);
+        g2.drawString(String.format(input, new BasicStroke(50), Color.BLACK), 110 - fontMetrics.stringWidth(input), 119);
         if (coin.spriteNum == coin.defaultList.size() - 1)
             coin.spriteNum = 0;
         g2.drawImage(coin.defaultList.get(coin.spriteNum), 118, 78, null);

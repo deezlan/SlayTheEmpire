@@ -52,7 +52,7 @@ public class Player extends Entity {
         setStatValues(3, 8, false, 0, 0);
         setCollisionValues(80, 60, 40, 30);
         setHitboxValues(75, 20, 50, 60);
-        setAttackValues(5, 2, 50, 75, false);
+        setAttackValues(3, 2, 50, 75, false);
         setItems();
         getPlayerSprites();
         getPlayerAttackSprites();
@@ -62,7 +62,7 @@ public class Player extends Entity {
     @Override
     public void setStatValues(int defaultSpeed, int maxLife, boolean isBoss, int mobBossNum, int coinValue) {
         type = type_player;
-        totalCoins = 1000;
+        totalCoins = 300;
 
         //INITIAL POTS
         ownedPotion.put("Health Potion", 1);

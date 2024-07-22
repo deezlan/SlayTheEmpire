@@ -100,7 +100,7 @@ public class UI {
             {"Down", "S"},
             {"Right", "D"},
 
-            // INGAME
+            // IN-GAME
             {"Attack", "F"},
             {"Use Weapon", "Ctrl"},
             {"Weapon 1", "1"},

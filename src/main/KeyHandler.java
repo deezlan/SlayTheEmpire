@@ -8,7 +8,6 @@ import java.awt.event.KeyListener;
 import entity.Player;
 import object.OBJ_Shop;
 
-
 public class KeyHandler implements KeyListener {
     GamePanel gp;
     boolean musicPlaying = false; // check if music is already playing
@@ -16,7 +15,7 @@ public class KeyHandler implements KeyListener {
     public boolean
             wPressed, sPressed, aPressed, dPressed,
             ePressed, pPressed,
-            enterPressed, shotKeyPressed, spacePressed,
+            ctrlPressed, fPressed, spacePressed,
             onePressed, twoPressed, threePressed,
             escapePressed,
             showDebug, // DEBUG
@@ -196,6 +195,7 @@ public class KeyHandler implements KeyListener {
             gp.playSE(2);
             switch (gp.ui.commandNum) {
                 case 0, 1, 2: {
+                    gp.gameMode = gp.ui.commandNum + 1;
                     gp.loadLevel();
                     break;
                 }
@@ -212,35 +212,23 @@ public class KeyHandler implements KeyListener {
     public void loginState(int code) {
         if (gp.ui.typingUsername) {
             if (code == KeyEvent.VK_BACK_SPACE) {
-                System.out.println("Test backspace");
                 if (!gp.ui.inpUser.isEmpty()) {
                     gp.ui.inpUser = gp.ui.inpUser.substring(0, gp.ui.inpUser.length() - 1);
                 }
             } else if (code!= KeyEvent.VK_SHIFT && code!= KeyEvent.VK_SPACE && code!= KeyEvent.VK_CAPS_LOCK) {
-                System.out.println("Test any key");
-
-                System.out.println(gp.ui.inpUser);
                 gp.ui.inpUser = gp.ui.inpUser.concat(String.valueOf((char) code).toLowerCase());
-                System.out.println("Username is: " + gp.ui.inpUser);
             }
         }
 
         if (gp.ui.typingPassword) {
             if (code == KeyEvent.VK_BACK_SPACE) {
-                System.out.println("Test backspace");
                 if (!gp.ui.inpPass.isEmpty()) {
                     gp.ui.inpPass = gp.ui.inpPass.substring(0, gp.ui.inpPass.length() - 1);
                     gp.ui.inpPassHidden = gp.ui.inpPassHidden.substring(0, gp.ui.inpPassHidden.length() - 1);
                 }
             } else if (code!= KeyEvent.VK_SHIFT && code!= KeyEvent.VK_SPACE && code!= KeyEvent.VK_CAPS_LOCK) {
-                System.out.println("Test any key");
-
-                System.out.println(gp.ui.inpPass);
                 gp.ui.inpPass = gp.ui.inpPass.concat(String.valueOf((char) code).toLowerCase());
                 gp.ui.inpPassHidden = gp.ui.inpPassHidden.concat("*");
-
-                System.out.println("Password is: " + gp.ui.inpPass);
-                System.out.println("Password Hidden is: " + gp.ui.inpPassHidden);
             }
         }
     }
@@ -284,24 +272,23 @@ public class KeyHandler implements KeyListener {
             }
 
 
-
             // GO TO OPTIONS
             if (code == KeyEvent.VK_ESCAPE) gp.gameState = gp.INGAME_OPTIONS_STATE;
 
-            // PLAYER ACTIONS
-            if (code == KeyEvent.VK_W) wPressed = true;
-            if (code == KeyEvent.VK_S) sPressed = true;
-            if (code == KeyEvent.VK_A) aPressed = true;
-            if (code == KeyEvent.VK_D) dPressed = true;
-            if (code == KeyEvent.VK_E) ePressed = true;
-            if (code == KeyEvent.VK_F) shotKeyPressed = true;
-            if (code == KeyEvent.VK_1) onePressed = true;
-            if (code == KeyEvent.VK_2) twoPressed = true;
-            if (code == KeyEvent.VK_3) threePressed = true;
-            if (code == KeyEvent.VK_G) godModeOn = !godModeOn;
-            if (code == KeyEvent.VK_R) gp.player.restoreLife();
-            if (code == KeyEvent.VK_SPACE) spacePressed = true;
-        }
+        // PLAYER ACTIONS
+        if (code == KeyEvent.VK_W) wPressed = true;
+        if (code == KeyEvent.VK_S) sPressed = true;
+        if (code == KeyEvent.VK_A) aPressed = true;
+        if (code == KeyEvent.VK_D) dPressed = true;
+        if (code == KeyEvent.VK_E) ePressed = true;
+        if (code == KeyEvent.VK_CONTROL) ctrlPressed = true;
+        if (code == KeyEvent.VK_F) fPressed = true;
+        if (code == KeyEvent.VK_1) onePressed = true;
+        if (code == KeyEvent.VK_2) twoPressed = true;
+        if (code == KeyEvent.VK_3) threePressed = true;
+        if (code == KeyEvent.VK_G) godModeOn = !godModeOn;
+        if (code == KeyEvent.VK_R) gp.player.restoreLife();
+        if (code == KeyEvent.VK_SPACE) spacePressed = true;
     }
 
     public void pauseState(int code) {
@@ -384,7 +371,7 @@ public class KeyHandler implements KeyListener {
             }
 
             if (code == KeyEvent.VK_SPACE) {
-                gp.playSE(1);
+                gp.playSE(2);
                 switch (gp.ui.commandNum) {
                     // CONTROLS
                     case 2: {
@@ -401,11 +388,10 @@ public class KeyHandler implements KeyListener {
                     }
                     // Back to Start Menu
                     case 4: {
-//                        if (gp.gameState == gp.INGAME_OPTIONS_STATE) {
                             gp.gameState = gp.MAIN_MENU_STATE;
                             gp.ui.commandNum = 0;
+                            gp.currentMap = 0; // RESET TO LOBBY
                             gp.player = null; // DELOAD PLAYER
-//                        }
                         break;
                     }
                     // log out
@@ -448,6 +434,9 @@ public class KeyHandler implements KeyListener {
                 gp.ui.slotRowMove += 1;
                 gp.ui.slotRow++;
             }
+        }
+        if (code == KeyEvent.VK_ESCAPE) {
+            gp.gameState = gp.BLACKSMITH_DIALOGUE_STATE;
         }
     }
 
@@ -534,8 +523,8 @@ public class KeyHandler implements KeyListener {
         if (code == KeyEvent.VK_A) { aPressed = false; }
         if (code == KeyEvent.VK_D) { dPressed = false; }
         if (code == KeyEvent.VK_P) { pPressed = false; }
-        if (code == KeyEvent.VK_ENTER) { enterPressed = false; }
-        if (code == KeyEvent.VK_F) { shotKeyPressed = false; }
+        if (code == KeyEvent.VK_F) { fPressed = false; }
+        if (code == KeyEvent.VK_CONTROL) { ctrlPressed = false; }
         if (code == KeyEvent.VK_1) { onePressed = false; }
         if (code == KeyEvent.VK_2) { twoPressed = false; }
         if (code == KeyEvent.VK_3) { threePressed = false; }

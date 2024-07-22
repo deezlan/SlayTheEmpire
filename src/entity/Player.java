@@ -46,21 +46,10 @@ public class Player extends Entity {
         this.cursor = cursor;
 
         // CENTER PLAYER SCREEN POSITION
-        screenX = (gp.SCREEN_WIDTH/2) - (gp.TILE_SIZE/2) - 72; // CENTERED PLAYER 0 POSITION
-//        switch (playerClass) {
-//            case 0:
-//                screenX = (gp.SCREEN_WIDTH/2) - (gp.TILE_SIZE/2) - 72; // CENTERED PLAYER 0 POSITION
-//                break;
-//            case 1:
-//                screenX = (gp.SCREEN_WIDTH/2) - (gp.TILE_SIZE/2) - 72; // CENTERED PLAYER 1 POSITION
-//                break;
-//            case 2:
-//                default:
-//                screenX = (gp.SCREEN_WIDTH/2) - (gp.TILE_SIZE/2) - 72; // CENTERED PLAYER 2 POSITION
-//        }
+        screenX = (gp.SCREEN_WIDTH/2) - (gp.TILE_SIZE/2) - 72;
         screenY = (gp.SCREEN_HEIGHT/2) - 72;
 
-        setStatValues(3, 8, false, 0, 0);
+        setStatValues(3, 50, false, 0, 0);
         setCollisionValues(80, 60, 40, 30);
         setHitboxValues(75, 20, 50, 60);
         setAttackValues(5, 2, 50, 75, false);
@@ -70,17 +59,21 @@ public class Player extends Entity {
     }
 
     // DEFAULT INITIALIZATION
-
     @Override
     public void setStatValues(int defaultSpeed, int maxLife, boolean isBoss, int mobBossNum, int coinValue) {
         type = type_player;
-        totalCoins = 500;
+        totalCoins = 0;
 
         //INITIAL POTS
         ownedPotion.put("Health Potion", 1);
         ownedPotion.put("Speed Potion", 0);
         ownedPotion.put("Magic Potion", 0);
         ownedPotion.put("Water Potion", 0);
+
+        hotbarList.add(null);
+        hotbarList.add(null);
+        hotbarList.add(null);
+
 
         // ATTRIBUTES DEPENDING ON CHOSEN CLASS
         switch (playerClass) {
@@ -300,7 +293,7 @@ public class Player extends Entity {
 
     // INTERACT METHODS
     public void interactObject (int index) {
-        if (index == 1){
+        if (index == 1 && gp.currentMap == 0){
             gp.gameState = gp.SAVEPAGE_STATE;
             gp.saveLoad.isLoadPage = false;
             gp.showCursor();
@@ -320,7 +313,7 @@ public class Player extends Entity {
                 }
             }
         }
-        if (index == 0){
+        if (index == 0 && gp.currentMap == 0){
             gp.gameState = gp.POTION_SHOP_STATE;
         }
     }
@@ -396,8 +389,6 @@ public class Player extends Entity {
                 if (keyH.wPressed && keyH.aPressed) action = "moveUpLeft";
                 if (keyH.sPressed && keyH.aPressed) action = "moveDownLeft";
 
-                if (keyH.enterPressed) attacking = true;
-
                 if (!upCollisionOn)
                     if (keyH.wPressed) worldY -= speed;
                 if (!downCollisionOn)
@@ -449,8 +440,6 @@ public class Player extends Entity {
             } else {
                 action = lookingRight ? "idleRight" : "idleLeft";
                 currentList = action.equals("idleRight") ? idleRightList : idleLeftList;
-
-                if (keyH.enterPressed) attacking = true;
             }
 
             if (iframe) {
@@ -479,14 +468,14 @@ public class Player extends Entity {
             }
         }
 
-        if (gp.keyH.shotKeyPressed && shotAvailableCounter == 30){
-            if (currentWeapon == null){
-                if (!attacking) {
-                    attacking = true;
-                    // SFX
-                    gp.playSE(15); // Play SFX only once
-                }
-            } else {
+        if (gp.keyH.fPressed) {
+            if (!attacking) {
+                attacking = true;
+            }
+        }
+
+        if (gp.keyH.ctrlPressed){
+            if (currentWeapon != null){
                 if (currentWeapon.name.equalsIgnoreCase("fireball cannon") && delta>60){
                     // SFX
                     gp.playSE(12);
@@ -517,24 +506,15 @@ public class Player extends Entity {
                     gp.playSE(14);
                     // SFX
                     delta = 0;
-                    projectile1.set(gp.player.worldX+48, gp.player.worldY-24, action, true, this, gp.cursor.deltaX, gp.cursor.deltaY);
+                    projectile1.set(gp.player.worldX+96, gp.player.worldY, action, true, this, gp.cursor.deltaX, gp.cursor.deltaY);
                     gp.projectileArr[gp.currentMap][47] = projectile1;
-                    projectile2.set(gp.player.worldX-72, gp.player.worldY-24, action, true, this, gp.cursor.deltaX, gp.cursor.deltaY);
+                    projectile2.set(gp.player.worldX+24, gp.player.worldY, action, true, this, gp.cursor.deltaX, gp.cursor.deltaY);
                     gp.projectileArr[gp.currentMap][48] = projectile2;
-                    projectile3.set(gp.player.worldX-12, gp.player.worldY+24, action, true, this, gp.cursor.deltaX, gp.cursor.deltaY);
+                    projectile3.set(gp.player.worldX+60, gp.player.worldY+24, action, true, this, gp.cursor.deltaX, gp.cursor.deltaY);
                     gp.projectileArr[gp.currentMap][49] = projectile3;
-                    projectile4.set(gp.player.worldX-12, gp.player.worldY-72, action, true, this, gp.cursor.deltaX, gp.cursor.deltaY);
+                    projectile4.set(gp.player.worldX+60, gp.player.worldY-24, action, true, this, gp.cursor.deltaX, gp.cursor.deltaY);
                     gp.projectileArr[gp.currentMap][46] = projectile4;
                 }
-
-                shotAvailableCounter = 0; // ADDED COOL-DOWN
-//                for (int i = 0; i < gp.projectileList[1].length; i++) {
-//                    if(gp.projectileList[gp.currentMap][i] == null){
-//                        gp.projectileList[gp.currentMap][i] = projectile;
-//                        break;
-//                    }
-//                }
-
             }
         }
 
@@ -589,10 +569,6 @@ public class Player extends Entity {
                     potionCooldown = false;
                 }
             }
-        }
-
-        if(shotAvailableCounter < 30){
-            shotAvailableCounter++;
         }
     }
     @Override

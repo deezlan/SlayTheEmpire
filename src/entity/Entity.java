@@ -2,6 +2,7 @@ package entity;
 
 import main.GamePanel;
 import main.UtilityTool;
+import mobs.BOSS_FrostGiant;
 import object.OBJ_PickUpCoin;
 
 import java.awt.*;
@@ -401,6 +402,9 @@ public abstract class Entity {
     }
     public void damagePlayer(int attack) {
         if (!gp.player.iframe) {
+            // DAMAGE SFX
+            gp.playSE(19);
+
             if (gp.player.getShieldBuff()){
                 int damage = attack/2;
                 if (damage < 0) {
@@ -819,6 +823,3 @@ public abstract class Entity {
         }
     }
 }
-
-
-

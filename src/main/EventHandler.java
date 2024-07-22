@@ -9,6 +9,8 @@ public class EventHandler {
     int previousEventX, previousEventY; // prevent event from happening again immediately
     int tempMap, tempCol, tempRow;
     boolean canTouchEvent = true;
+    boolean musicPlayed = false;
+    boolean musicStopped = false;
 
     public EventHandler(GamePanel gp){
         this.gp = gp;
@@ -60,6 +62,7 @@ public class EventHandler {
         int distance = Math.max(xDistance, yDistance);
 
         if (distance > gp.TILE_SIZE) canTouchEvent = true;
+
 
         if (canTouchEvent) { // use else if to add more events
             switch (gp.currentMap) {
@@ -320,20 +323,49 @@ public class EventHandler {
         gp.gameState = gp.TRANSITION_STATE;
         if (gp.currentMap == 0) {
             tempMap = nextMap;
+            // 1ST MAP
             if (nextMap == 1) {
+                if (!musicStopped) {
+                    gp.stopMusic();
+                    musicStopped = true;
+                }
+                if (!musicPlayed) {
+                    gp.playMusic(5);
+                    musicPlayed = true;
+                }
                 tempCol = 19;
                 tempRow = 41;
+            // 2ND MAP
             } else {
+                if (!musicStopped) {
+                    gp.stopMusic();
+                    musicStopped = true;
+                }
+                if (!musicPlayed) {
+                    gp.playMusic(7);
+                    musicPlayed = true;
+                }
                 tempCol = 31;
                 tempRow = 36;
             }
+            // LOBBY
         } else {
+            if (!musicStopped) {
+                gp.stopMusic();
+                musicStopped = true;
+            }
+            if (!musicPlayed) {
+                    gp.playMusic(4);
+                    musicPlayed = true;
+                }
             tempMap = nextMap;
             tempCol = 6;
             tempRow = 2;
         }
 
         // RESET TILE EVENTS
+        musicStopped = false;
+        musicPlayed = false;
         if (nextMap == 1) {
             eventRect[1][24][40].eventDone = false;
             eventRect[1][25][41].eventDone = false;

@@ -15,6 +15,7 @@ public class CutsceneManager {
     public final int NA = 0;
     public final int frostGiant = 1;
     public final int demonSlime = 2;
+    boolean BossFightStarted;
 
     public CutsceneManager(GamePanel gp) {
         this.gp = gp;
@@ -30,6 +31,7 @@ public class CutsceneManager {
     }
 
     public void scene_FrostGiant() {
+        BossFightStarted = false;
         if (scenePhase == 0) {
             gp.bossBattleOn = true;
 
@@ -84,7 +86,15 @@ public class CutsceneManager {
             sceneNum = NA;
             scenePhase = 0;
             gp.gameState = gp.PLAY_STATE;
+            BossFightStarted = true;
+
         }
+
+        if (BossFightStarted) {
+            gp.stopMusic();
+            gp.playMusic(6);
+        }
+        BossFightStarted = false;
     }
 
     public void scene_DemonSlime() {

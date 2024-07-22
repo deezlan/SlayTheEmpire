@@ -369,7 +369,7 @@ public class KeyHandler implements KeyListener {
             }
 
             if (code == KeyEvent.VK_SPACE) {
-                gp.playSE(1);
+                gp.playSE(2);
                 switch (gp.ui.commandNum) {
                     // CONTROLS
                     case 2: {

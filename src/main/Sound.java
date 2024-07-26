@@ -54,6 +54,11 @@ public class Sound {
         // MISC SFX
         soundURL[18] = new File("res/sound/heavy_footstep.wav");
         soundURL[19] = new File("res/sound/hurt.wav");
+        soundURL[20] = new File("res/sound/demon_laugh.wav");
+        soundURL[21] = new File("res/sound/heavy_breath.wav");
+
+
+
 
     }
 

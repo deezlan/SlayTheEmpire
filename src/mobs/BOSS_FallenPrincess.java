@@ -8,6 +8,8 @@ import java.io.IOException;
 
 public class BOSS_FallenPrincess extends Entity {
     GamePanel gp;
+    int soundEffectInterval = 240;
+    int soundEffectCounter = 0;
     public static final String monName = "Fallen Princess";
     public BOSS_FallenPrincess(GamePanel gp, int worldX, int worldY) {
         super(gp, worldX, worldY);
@@ -48,6 +50,13 @@ public class BOSS_FallenPrincess extends Entity {
 
             if (hasRanged) {
                 checkShoot(200, idleRightList.get(0).getWidth()/2, idleRightList.get(0).getHeight()/2, 0);
+            }
+
+            soundEffectCounter++;
+            // Breathing SFX
+            if (soundEffectCounter >= soundEffectInterval) {
+                gp.playSE(21);
+                soundEffectCounter = 0;
             }
 
         } else {

@@ -65,6 +65,10 @@ public class BOSS_Cultist extends Entity {
                 checkWithinAttackRange(30); // CHANGE ATTACK RANGE
             }
         }
+
+        if (attacking) {
+            gp.playSE(18);
+        }
     }
 
     public void setDialog() {

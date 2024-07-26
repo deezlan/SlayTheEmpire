@@ -50,6 +50,8 @@ public class BOSS_DemonSlime extends Entity {
                 checkShoot(200, idleRightList.get(0).getWidth()/2, idleRightList.get(0).getHeight()/2, 0);
             }
 
+
+
         } else {
             // CHECK IF START CHASING
             if (!sleep)

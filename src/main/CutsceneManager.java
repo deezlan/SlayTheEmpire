@@ -1,6 +1,7 @@
 package main;
 
 import entity.PlayerDummy;
+import mobs.BOSS_Cultist;
 import mobs.BOSS_FrostGiant;
 
 import java.awt.*;
@@ -14,7 +15,7 @@ public class CutsceneManager {
     // SCENE NUMBERS
     public final int NA = 0;
     public final int frostGiant = 1;
-    public final int demonSlime = 2;
+    public final int finalBoss = 2;
     boolean BossFightStarted;
 
     public CutsceneManager(GamePanel gp) {
@@ -26,7 +27,7 @@ public class CutsceneManager {
 
         switch (sceneNum) {
             case frostGiant: scene_FrostGiant(); break;
-            case demonSlime: scene_DemonSlime(); break; // (WIP)
+            case finalBoss: scene_finalBoss(); break;
         }
     }
 
@@ -97,7 +98,69 @@ public class CutsceneManager {
         BossFightStarted = false;
     }
 
-    public void scene_DemonSlime() {
-        // (WIP)
+    public void scene_finalBoss() {
+        BossFightStarted = false;
+        if (scenePhase == 0) {
+            gp.bossBattleOn = true;
+
+            for (int i = 0; i < gp.npcArr[1].length; i++) {
+                if (gp.npcArr[gp.currentMap][i] == null) {
+                    PlayerDummy dummy = new PlayerDummy(gp);
+                    dummy.updatePlayerClassSprites(); // DRAW UPDATED PLAYER
+                    dummy.worldX = gp.player.worldX;
+                    dummy.worldY = gp.player.worldY;
+                    dummy.action = gp.player.action;
+                    gp.npcArr[gp.currentMap][i] = dummy;
+                    break;
+                }
+            }
+            gp.player.drawing = false;
+            scenePhase++;
+        }
+        if (scenePhase == 1) {
+            gp.player.worldX += 2;
+            if (gp.player.worldX > gp.TILE_SIZE * 31) {
+                scenePhase++;
+            }
+        }
+        if (scenePhase == 2) {
+            for (int i = 0; i < gp.mobArr[1].length; i++) {
+                if (gp.mobArr[gp.currentMap][11] != null && gp.mobArr[gp.currentMap][11].name.equals(BOSS_Cultist.monName)) {
+                    gp.ui.npc = gp.mobArr[gp.currentMap][11];
+                    scenePhase++;
+                    break;
+                }
+            }
+        }
+        if (scenePhase == 3) {
+            gp.ui.drawDialogScreen();
+            for (int i = 0; i < gp.mobArr[1].length; i++) {
+                if (gp.mobArr[gp.currentMap][11] != null && gp.mobArr[gp.currentMap][11].name.equals(BOSS_Cultist.monName)) {
+                    gp.mobArr[gp.currentMap][11].onPath = true;
+                    gp.mobArr[gp.currentMap][12].onPath = true;
+                    break;
+                }
+            }
+        }
+        if (scenePhase == 4) {
+            for (int i = 0; i < gp.npcArr[1].length; i++) {
+                if (gp.npcArr[gp.currentMap][i] != null && gp.npcArr[gp.currentMap][i].name.equals(PlayerDummy.npcName)) {
+                    gp.player.worldX = gp.npcArr[gp.currentMap][i].worldX;
+                    gp.player.worldY = gp.npcArr[gp.currentMap][i].worldY;
+                    gp.npcArr[gp.currentMap][i] = null;
+                    break;
+                }
+            }
+            gp.player.drawing = true;
+            sceneNum = NA;
+            scenePhase = 0;
+            gp.gameState = gp.PLAY_STATE;
+            BossFightStarted = true;
+        }
+        if (BossFightStarted) {
+            gp.stopMusic();
+            gp.playMusic(6);
+        }
+        BossFightStarted = false;
     }
 }

@@ -183,6 +183,12 @@ public class EventHandler {
                 // LEVEL TWO
                 case 2:
                 {
+                    // FINAL BOSS CUTSCENE
+                    if(hit(gp.currentMap , 25,6, "any")
+                            || hit(gp.currentMap , 25,5, "any")
+                            || hit(gp.currentMap , 25,7, "any")) {
+                        FinalBoss();
+                    }
                     if ( // TRIGGER 1ST ROOM GATES
                             hit(gp.currentMap, 25, 35, "any")
                                     || hit(gp.currentMap, 24, 36, "any")
@@ -430,6 +436,13 @@ public class EventHandler {
         if(!gp.bossBattleOn) {
             gp.gameState = gp.CUTSCENE_STATE;
             gp.csManager.sceneNum = gp.csManager.frostGiant;
+        }
+    }
+
+    public void FinalBoss() {
+        if(!gp.bossBattleOn) {
+            gp.gameState = gp.CUTSCENE_STATE;
+            gp.csManager.sceneNum = gp.csManager.finalBoss;
         }
     }
 }

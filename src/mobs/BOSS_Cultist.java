@@ -13,36 +13,28 @@ public class BOSS_Cultist extends Entity {
         super(gp, worldX, worldY);
         this.gp = gp;
         name = monName;
-        type = type_mob;
-        boss = true;
-        bossNum = 4;
-        defaultSpeed = 1;
-        speed = defaultSpeed;
-        attack = 1;
-        maxLife = 10;
-        currentLife = maxLife;
-        action = "idleRight";
-        damageSprite = 3;
-        sleep = true;
+
+        setStatValues(1, 10, true, 4, 500);
+        setCollisionValues(48, 80, 50, 100);
+        setAttackValues(15, 7, gp.TILE_SIZE * 4, gp.TILE_SIZE * 4, false);
+        setHitboxValues(48, 80, 200, 250);
+
         // Load mob sprites
         getMobSprites();
         setDialog();
-
-        // Set collision settings
-        solidArea.x = 48;
-        solidArea.y = 60;
-        solidArea.width = gp.TILE_SIZE;
-        solidArea.height = gp.TILE_SIZE*2;
-        attackArea.width = 100;
-        attackArea.height = 100;
-        solidAreaDefaultX = solidArea.x;
-        solidAreaDefaultY = solidArea.y;
         dialogueSet = 0;
-    }
 
+        attRangeHorz = gp.TILE_SIZE * 4;
+        attRangeVert = gp.TILE_SIZE * 4;
+
+        if (currentLife <= 0) {
+            gp.playSE(10);
+        }
+    }
 
     @Override
     public void setAction() {
+
 
         if(!inRage && currentLife < maxLife/2) {
             inRage = true;
@@ -51,26 +43,35 @@ public class BOSS_Cultist extends Entity {
             attack = 2;
         }
 
-        if(onPath) {
-            // CHECK IF STOP CHASING
-            checkStopChase(gp.player, 15, 100);
+        if (onPath) {
             // SEARCH DIRECTION TO GO
             searchPath(getGoalCol(gp.player),getGoalRow(gp.player));
+
+            if (hasRanged) {
+                checkShoot(200, idleRightList.get(0).getWidth()/2, idleRightList.get(0).getHeight()/2, 0);
+            }
+
         } else {
             // CHECK IF START CHASING
-            checkStartChase(gp.player, 5 , 100);
+            if (!sleep)
+                checkStartChase(gp.player, 10, 100);
         }
         // CHECK ATTACK ON PLAYER
-        if(!attacking){
-//            checkWithinAttackRange(30,gp.TILE_SIZE*5,gp.TILE_SIZE*5); // Original
-            checkWithinAttackRange(30); // CHANGE ATTACK RANGE
+        if (!attacking) {
+            if (hasRanged) {
+                checkWithinAttackRange(30); // CHANGE ATTACK RANGE
+                checkShoot(200, idleRightList.get(0).getWidth()/2, idleRightList.get(0).getHeight()/2, 0);
+            } else {
+                checkWithinAttackRange(30); // CHANGE ATTACK RANGE
+            }
         }
     }
 
     public void setDialog() {
-        dialogs[0][0] = "Who are you.....";
-        dialogs[0][1] = "YOU WILL PAY... WITH ICE!";
-
+        dialogs[0][0] = "MUAHAHAHAAH....";
+        dialogs[0][1] = "YES IMBUE DARKNESS INTO MY DAUGHTER";
+        dialogs[0][2] = "YOU ARE TOO LATE.....";
+        dialogs[0][3] = "KILL HIM....";
     }
 
     public void getMobSprites() {

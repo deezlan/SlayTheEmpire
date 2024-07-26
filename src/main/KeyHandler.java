@@ -391,7 +391,7 @@ public class KeyHandler implements KeyListener {
                             gp.gameState = gp.MAIN_MENU_STATE;
                             gp.ui.commandNum = 0;
                             gp.currentMap = 0; // RESET TO LOBBY
-                            gp.player = null; // DELOAD PLAYER
+                            gp.player = null; // RELOAD PLAYER
 //                        }
                         break;
                     }
@@ -436,6 +436,9 @@ public class KeyHandler implements KeyListener {
                 gp.ui.slotRow++;
             }
         }
+        if (code == KeyEvent.VK_ESCAPE) {
+            gp.gameState = gp.BLACKSMITH_DIALOGUE_STATE;
+        }
     }
 
     public void potionShopState(int code){
@@ -446,7 +449,6 @@ public class KeyHandler implements KeyListener {
             }
         }
         if (code == KeyEvent.VK_SPACE){
-//                NPC_Blacksmith bs = (NPC_Blacksmith) gp.npcArr[gp.currentMap][1];
             OBJ_Shop shop = (OBJ_Shop) gp.objArr[gp.currentMap][0];
             if (gp.player.totalCoins >= shop.getShopItems().get(gp.ui.slotRow).price)
                 shop.buy();
@@ -459,7 +461,7 @@ public class KeyHandler implements KeyListener {
                 gp.ui.slotRow++;
             }
         }
-        if (code == KeyEvent.VK_ESCAPE) { // DONT REMOVE THIS, TO EXIT FROM SHOP
+        if (code == KeyEvent.VK_ESCAPE) {
             gp.gameState = gp.PLAY_STATE;
         }
     }

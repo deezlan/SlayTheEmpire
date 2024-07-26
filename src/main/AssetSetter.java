@@ -215,8 +215,8 @@ public class AssetSetter {
                 gp.mobArr[gp.currentMap][i] = new MOB_SkeletonKnight(gp, 254, 48); i++; // replace with stone golem
 
                 // STORY BOSS ROOM index 11-12
-                gp.mobArr[gp.currentMap][i] = new MOB_Skellington(gp, 1475, 180); i++; // replace with king
-                gp.mobArr[gp.currentMap][i] = new MOB_Skellington(gp, 1551, 180); // replace with princess
+                gp.mobArr[gp.currentMap][i] = new BOSS_Cultist(gp, 1475, 180); i++; // replace with king
+                gp.mobArr[gp.currentMap][i] = new BOSS_FallenPrincess(gp, 1551, 180); // replace with princess
             }
         }
 

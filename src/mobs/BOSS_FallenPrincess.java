@@ -8,7 +8,7 @@ import java.io.IOException;
 
 public class BOSS_FallenPrincess extends Entity {
     GamePanel gp;
-    int soundEffectInterval = 240;
+    int soundEffectInterval = 500;
     int soundEffectCounter = 0;
     public static final String monName = "Fallen Princess";
     public BOSS_FallenPrincess(GamePanel gp, int worldX, int worldY) {

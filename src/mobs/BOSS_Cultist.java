@@ -8,6 +8,8 @@ import java.io.IOException;
 
 public class BOSS_Cultist extends Entity {
     GamePanel gp;
+    int soundEffectInterval = 600;
+    int soundEffectCounter = 0;
     public static final String monName = "Cultist";
     public BOSS_Cultist(GamePanel gp, int worldX, int worldY) {
         super(gp, worldX, worldY);
@@ -49,6 +51,13 @@ public class BOSS_Cultist extends Entity {
 
             if (hasRanged) {
                 checkShoot(200, idleRightList.get(0).getWidth()/2, idleRightList.get(0).getHeight()/2, 0);
+            }
+
+            soundEffectCounter++;
+            // Breathing SFX
+            if (soundEffectCounter >= soundEffectInterval) {
+                gp.playSE(20);
+                soundEffectCounter = 0;
             }
 
         } else {

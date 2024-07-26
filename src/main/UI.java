@@ -1103,24 +1103,19 @@ public class UI {
                     double hpBarValue = oneScale * mob.currentLife;
                     int x = gp.SCREEN_WIDTH/2 - gp.TILE_SIZE*2;
                     int y = gp.SCREEN_HEIGHT - 40;
-                    // DRAW BOX
-                    g2.setColor(new Color(35, 35, 35));
-                    g2.fillRect(x-1, y-1, gp.TILE_SIZE*8 + 2, 22);
-                    g2.setColor(new Color(255, 0, 30));
                     // FILL HP
                     switch(mob.bossNum){
-                        case 1:
-                            g2.fillRect(x, y, (int) hpBarValue, 20); break;
-                        case 2:
-                            g2.fillRect(x, y, (int) hpBarValue, 20); break;
-                        case 3:
-                            g2.fillRect(x, y, (int) hpBarValue, 20); break;
-                        case 4:
-                            g2.fillRect(x, y, (int) hpBarValue, 20); break;
-                        case 5:
+                        case 1, 2, 3, 4, 5:
+                            g2.setColor(new Color(35, 35, 35));
+                            g2.fillRect(x-1, y-1, gp.TILE_SIZE*8 + 2, 22);
+                            g2.setColor(new Color(255, 0, 30));
                             g2.fillRect(x, y, (int) hpBarValue, 20); break;
                         case 6:
-                            g2.fillRect(x, y, (int) hpBarValue, 20); break;
+                            g2.setColor(new Color(35, 35, 35));
+                            g2.fillRect(x-1, y - 81, gp.TILE_SIZE*8 + 2, 22);
+                            g2.setColor(new Color(255, 0, 30));
+                            g2.fillRect(x, y - 80, (int) hpBarValue, 20);
+                            break;
                     }
                     // DRAW NAME
                     g2.setFont(g2.getFont().deriveFont(Font.BOLD,24f));
@@ -1137,7 +1132,7 @@ public class UI {
                         case 5:
                             g2.drawString(mob.name,x+4,y-10); break;
                         case 6:
-                            g2.drawString(mob.name,x+4,y-10); break;
+                            g2.drawString(mob.name,x+4,y - 92); break;
                     }
                 }
             }

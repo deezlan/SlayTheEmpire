@@ -184,7 +184,7 @@ public class AssetSetter {
 
                 // MINI-BOSS ROOM index 5-7
                 gp.mobArr[gp.currentMap][i] = new MOB_Mushroom(gp, 1316, 900); i++;
-                gp.mobArr[gp.currentMap][i] = new MOB_Mushroom(gp, 1316, 1000); i++; // replace with fireworm
+                gp.mobArr[gp.currentMap][i] = new BOSS_FireWorm(gp, 1316, 1070); i++;
                 gp.mobArr[gp.currentMap][i] = new MOB_Mushroom(gp, 1316, 1150); i++;
 
                 // FINAL BOSS ROOM index 8-12
@@ -206,17 +206,17 @@ public class AssetSetter {
                 // MINI-BOSS ROOM index 4-6
                 gp.mobArr[gp.currentMap][i] = new MOB_SkeletonKnight(gp, 460, 947); i++;
                 gp.mobArr[gp.currentMap][i] = new MOB_SkeletonKnight(gp, 460, 1248); i++;
-                gp.mobArr[gp.currentMap][i] = new MOB_SkeletonKnight(gp, 200, 1098); i++; // replace with demon slime
+                gp.mobArr[gp.currentMap][i] = new BOSS_DemonSlime(gp, 170, 970); i++;
 
                 // 'FINAL' BOSS ROOM index 7-10
                 gp.mobArr[gp.currentMap][i] = new MOB_ArmoredGuardian(gp, 100, 96); i++;
                 gp.mobArr[gp.currentMap][i] = new MOB_ArmoredGuardian(gp, 422, 96); i++;
                 gp.mobArr[gp.currentMap][i] = new MOB_Skellington(gp, 266, 220); i++;
-                gp.mobArr[gp.currentMap][i] = new MOB_SkeletonKnight(gp, 254, 48); i++; // replace with stone golem
+                gp.mobArr[gp.currentMap][i] = new BOSS_Golem(gp, 220, 48); i++;
 
                 // STORY BOSS ROOM index 11-12
-                gp.mobArr[gp.currentMap][i] = new BOSS_Cultist(gp, 1475, 180); i++; // replace with king
-                gp.mobArr[gp.currentMap][i] = new BOSS_FallenPrincess(gp, 1551, 180); // replace with princess
+                gp.mobArr[gp.currentMap][i] = new BOSS_Cultist(gp, 1475, 180); i++;
+                gp.mobArr[gp.currentMap][i] = new BOSS_FallenPrincess(gp, 1551, 180);
             }
         }
 

@@ -14,7 +14,7 @@ public class BOSS_Cultist extends Entity {
         this.gp = gp;
         name = monName;
 
-        setStatValues(1, 10, true, 4, 500);
+        setStatValues(1, 10, true, 5, 500);
         setCollisionValues(48, 80, 50, 100);
         setAttackValues(15, 7, gp.TILE_SIZE * 4, gp.TILE_SIZE * 4, false);
         setHitboxValues(48, 80, 200, 250);

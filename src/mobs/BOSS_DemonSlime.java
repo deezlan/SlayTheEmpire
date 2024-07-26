@@ -13,34 +13,28 @@ public class BOSS_DemonSlime extends Entity {
     public static final String monName = "Demon Slime";
     public BOSS_DemonSlime(GamePanel gp, int worldX, int worldY) {
         super(gp, worldX, worldY);
+        this.gp = gp;
         name = monName;
         type = type_mob;
-        boss = true;
-        bossNum = 2;
-        defaultSpeed = 1;
-        speed = defaultSpeed;
-        attack = 1;
-        maxLife = 10;
-        currentLife = maxLife;
-        action = "idleRight";
-        damageSprite = 9;
-        sleep = true;
-        projectile = new OBJ_DemonBlast(gp);
+        setStatValues(1, 10, true, 3, 500);
+        setCollisionValues(190, 180, 50, 100);
+        setAttackValues(15, 8, gp.TILE_SIZE * 4, gp.TILE_SIZE * 4, false);
+        setHitboxValues(48, 80, 200, 250);
 
         // Load mob sprites
         getMobSprites();
-        setDialog();
 
-        // Set collision settings
-        setCollisionValues(180, 230, 60, 80);
-        attackArea.width = 140;
-        attackArea.height = 140;
-        dialogueSet = 0;
+        attRangeHorz = gp.TILE_SIZE * 4;
+        attRangeVert = gp.TILE_SIZE * 4;
+
+        if (currentLife <= 0) {
+            gp.playSE(10);
+        }
     }
 
     @Override
     public void setAction() {
-        specialAttackCounter++;
+
         if(!inRage && currentLife < maxLife/2) {
             inRage = true;
             defaultSpeed++;
@@ -48,17 +42,28 @@ public class BOSS_DemonSlime extends Entity {
             attack = 2;
         }
 
-        if(onPath) {
-            // CHECK IF STOP CHASING
-            checkStopChase(gp.player, 15, 100);
+        if (onPath) {
             // SEARCH DIRECTION TO GO
             searchPath(getGoalCol(gp.player),getGoalRow(gp.player));
+
+            if (hasRanged) {
+                checkShoot(200, idleRightList.get(0).getWidth()/2, idleRightList.get(0).getHeight()/2, 0);
+            }
+
         } else {
             // CHECK IF START CHASING
-            checkStartChase(gp.player, 5 , 100);
+            if (!sleep)
+                checkStartChase(gp.player, 10, 100);
         }
         // CHECK ATTACK ON PLAYER
-        attackCheck();
+        if (!attacking) {
+            if (hasRanged) {
+                checkWithinAttackRange(30); // CHANGE ATTACK RANGE
+                checkShoot(200, idleRightList.get(0).getWidth()/2, idleRightList.get(0).getHeight()/2, 0);
+            } else {
+                checkWithinAttackRange(30); // CHANGE ATTACK RANGE
+            }
+        }
     }
 
     void attackCheck(){
@@ -79,7 +84,6 @@ public class BOSS_DemonSlime extends Entity {
 
     @Override
     public void specialAttack(){
-        System.out.println("now cumming");
         speed = 0;
         currentList = mobSpecialAttackList;
 
@@ -95,12 +99,6 @@ public class BOSS_DemonSlime extends Entity {
                 break;
             }
         }
-    }
-
-    public void setDialog() {
-        dialogs[0][0] = "Who are you.....";
-        dialogs[0][1] = "YOU WILL PAY... WITH ICE!";
-
     }
 
     public void getMobSprites() {

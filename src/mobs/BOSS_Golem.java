@@ -14,38 +14,28 @@ public class BOSS_Golem extends Entity {
         super(gp, worldX, worldY);
         this.gp = gp;
         name = monName;
-        type = type_mob;
-        boss = true;
-        bossNum = 3;
-        defaultSpeed = 1;
-        speed = defaultSpeed;
-        attack = 1;
-        maxLife = 10;
-        currentLife = maxLife;
-        action = "idleRight";
-        damageSprite = 5;
-        sleep = true;
-        projectile = new OBJ_Energyball(gp);
+        setStatValues(1, 10, true, 4, 500);
+        setCollisionValues(190, 140, 50, 100);
+        setAttackValues(15, 6, gp.TILE_SIZE * 4, gp.TILE_SIZE * 4, false);
+        setHitboxValues(48, 25, 200, 250);
 
         // Load mob sprites
         getMobSprites();
         setDialog();
-
-        // Set collision settings
-        solidArea.x = 100;
-        solidArea.y = 148;
-        solidArea.width = gp.TILE_SIZE*2;
-        solidArea.height = gp.TILE_SIZE*2;
-        attackArea.width = 300;
-        attackArea.height = 300;
-        solidAreaDefaultX = solidArea.x;
-        solidAreaDefaultY = solidArea.y;
         dialogueSet = 0;
+
+        attRangeHorz = gp.TILE_SIZE * 4;
+        attRangeVert = gp.TILE_SIZE * 4;
+
+        if (currentLife <= 0) {
+            gp.playSE(10);
+        }
     }
 
 
     @Override
     public void setAction() {
+
         if(!inRage && currentLife < maxLife/2) {
             inRage = true;
             defaultSpeed++;
@@ -53,19 +43,27 @@ public class BOSS_Golem extends Entity {
             attack = 2;
         }
 
-        if(onPath) {
-            // CHECK IF STOP CHASING
-            checkStopChase(gp.player, 15, 100);
+        if (onPath) {
             // SEARCH DIRECTION TO GO
             searchPath(getGoalCol(gp.player),getGoalRow(gp.player));
+
+            if (hasRanged) {
+                checkShoot(200, idleRightList.get(0).getWidth()/2, idleRightList.get(0).getHeight()/2, 0);
+            }
+
         } else {
             // CHECK IF START CHASING
-            checkStartChase(gp.player, 5 , 100);
+            if (!sleep)
+                checkStartChase(gp.player, 10, 100);
         }
         // CHECK ATTACK ON PLAYER
-        if(!attacking){
-//            checkWithinAttackRange(30,gp.TILE_SIZE*4,gp.TILE_SIZE*3); // Original
-            checkWithinAttackRange(30); // CHANGE ATTACK RANGE
+        if (!attacking) {
+            if (hasRanged) {
+                checkWithinAttackRange(30); // CHANGE ATTACK RANGE
+                checkShoot(200, idleRightList.get(0).getWidth()/2, idleRightList.get(0).getHeight()/2, 0);
+            } else {
+                checkWithinAttackRange(30); // CHANGE ATTACK RANGE
+            }
         }
     }
 

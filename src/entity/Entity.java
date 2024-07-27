@@ -256,58 +256,6 @@ public abstract class Entity {
     public int getGoalRow(Entity target) {
         return (target.worldY + target.moveRightList.get(0).getHeight()/2) / gp.TILE_SIZE;
     }
-
-    // MOB COMBAT METHODS
-//    public void getRandomDirection() {
-//        actionLockCounter++;
-//        // GET A RANDOM DIRECTION
-//        if (actionLockCounter == 120) {
-//            Random random = new Random();
-//            int i = random.nextInt(250) + 1;
-//
-//            if (i <= 25) {
-//                action = "moveUp";
-//                currentList = moveRightList;
-//            }
-//            if (i > 25 && i <= 50) {
-//                action = "moveDown";
-//                currentList = moveLeftList;
-//            }
-//            if (i > 50 && i <= 75) {
-//                action = "moveLeft";
-//                currentList = moveLeftList;
-//            }
-//            if (i > 75 && i <= 100) {
-//                action = "moveRight";
-//                currentList = moveRightList;
-//            }
-//            if (i > 100 && i <= 125) {
-//                action = "idleRight";
-//                currentList = idleRightList;
-//            }
-//            if (i > 125 && i <= 150) {
-//                action = "idleLeft";
-//                currentList = idleLeftList;
-//            }
-//            if (i > 150 && i <= 175) {
-//                action = "moveUpRight";
-//                currentList = moveRightList;
-//            }
-//            if (i > 175 && i <= 200) {
-//                action = "moveDownRight";
-//                currentList = moveRightList;
-//            }
-//            if (i > 200 && i <= 225) {
-//                action = "moveUpLeft";
-//                currentList = moveLeftList;
-//            }
-//            if (i > 225) {
-//                action = "moveDownLeft";
-//                currentList = moveLeftList;
-//            }
-//            actionLockCounter = 0;
-//        }
-//    }
     public void searchPath(int goalCol, int goalRow) {
         int startCol = (worldX + moveRightList.get(0).getWidth()/2) / gp.TILE_SIZE;
         int startRow = (worldY + moveRightList.get(0).getHeight()/2) / gp.TILE_SIZE;
@@ -405,7 +353,7 @@ public abstract class Entity {
             gp.playSE(19);
 
             if (gp.player.getShieldBuff()){
-                int damage = attack/2;
+                int damage = attack - 2;
                 if (damage < 0) {
                     damage = 0;
                 }
@@ -733,10 +681,10 @@ public abstract class Entity {
     }
     public void draw(Graphics2D g2) {
         BufferedImage image;
+
+        // RESET ANIMATION SPRITE
         if (spriteNum >= currentList.size()) spriteNum = 0;
-//        if (animationSpriteNum >= mobRightAttackList.size()) animationSpriteNum = 0;
         if (specialSpriteNum >= currentList.size()) specialSpriteNum = 0;
-//        if (interactSpriteNum >= interactList.size()) interactSpriteNum = 0;
 
         if (!alive) return;
 

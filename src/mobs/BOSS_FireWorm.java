@@ -3,7 +3,6 @@ package mobs;
 import entity.Entity;
 import main.GamePanel;
 import main.UtilityTool;
-import object.OBJ_Fireball;
 
 import java.io.IOException;
 
@@ -15,9 +14,9 @@ public class BOSS_FireWorm extends Entity {
         this.gp = gp;
         name = monName;
         setStatValues(1, 10, true, 1, 500);
-        setCollisionValues(48, 80, 50, 100);
-        setAttackValues(15, 7, gp.TILE_SIZE * 4, gp.TILE_SIZE * 4, false);
-        setHitboxValues(48, 80, 200, 250);
+        setCollisionValues(75, 80, 50, 40);
+        setAttackValues(5, 12, gp.TILE_SIZE * 3, gp.TILE_SIZE * 3, false);
+        setHitboxValues(65, 65, 70, 70);
 
         // Load mob sprites
         getMobSprites();
@@ -91,12 +90,12 @@ public class BOSS_FireWorm extends Entity {
                 mobRightAttackList.add(i, UtilityTool.loadSprite(dir + "attackRight/" + i + ".png", "Missing idleRight " + i));
             }
 
-            UtilityTool.scaleEntityList(this, moveRightList, 150, 150);
-            UtilityTool.scaleEntityList(this,moveLeftList, 150, 150);
-            UtilityTool.scaleEntityList(this, mobLeftAttackList, 150, 150);
-            UtilityTool.scaleEntityList(this,mobRightAttackList, 150, 150);
-            UtilityTool.scaleEntityList(this,idleLeftList, 150, 150);
-            UtilityTool.scaleEntityList(this, idleRightList, 150, 150);
+            UtilityTool.scaleEntityList(this, moveRightList, 200, 200);
+            UtilityTool.scaleEntityList(this,moveLeftList, 200, 200);
+            UtilityTool.scaleEntityList(this, mobLeftAttackList, 200, 200);
+            UtilityTool.scaleEntityList(this,mobRightAttackList, 200, 200);
+            UtilityTool.scaleEntityList(this,idleLeftList, 200, 200);
+            UtilityTool.scaleEntityList(this, idleRightList, 200, 200);
 
         } catch (IOException e) {
             e.printStackTrace(System.out);

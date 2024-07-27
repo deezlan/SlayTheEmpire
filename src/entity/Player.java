@@ -334,6 +334,8 @@ public class Player extends Entity {
     @Override
     public void update() {
         delta++;
+
+        // POTIONS
         if (!potionCooldown){
             potionCooldownTimer++;
         }
@@ -349,21 +351,26 @@ public class Player extends Entity {
             speed = 3;
             BuffTimer = 0;
         }
-        if (shieldBuff & BuffTimer < 300){
+        if (shieldBuff & BuffTimer < 300) {
             BuffTimer++;
-        } else if (shieldBuff & BuffTimer >= 300){
+        } else if (shieldBuff & BuffTimer >= 300) {
             shieldBuff = false;
             BuffTimer = 0;
         }
-        if(!keyH.godModeOn){
+
+        // HEALTH
+        if (!keyH.godModeOn) {
             if (currentLife <= 0)
                 gp.gameState = gp.DEATH_STATE;
         }
-
-        if (currentLife > maxLife){
+        if (currentLife > maxLife) {
             currentLife = maxLife;
         }
+        if (keyH.godModeOn && currentLife < 0) {
+            currentLife = 0;
+        }
 
+        // COMBAT & MOVEMENT
         if (attacking) {
             startAttack();
         } else {
@@ -559,7 +566,7 @@ public class Player extends Entity {
                 if (count > 0 & potionCooldown){
                     currentPotion.consume();
                     projectile4 =  currentPotion.projectile;
-                    projectile4.set(gp.player.worldX+48, gp.player.worldY-24, action, true, this, gp.cursor.deltaX, gp.cursor.deltaY);
+                    projectile4.set(gp.player.worldX + 48, gp.player.worldY - 24, action, true, this, gp.cursor.deltaX, gp.cursor.deltaY);
                     gp.projectileArr[gp.currentMap][24] = projectile4;
                     potionCooldown = false;
                 }

@@ -392,16 +392,6 @@ public class UI {
         g2.drawString(text,10,30);
     }
 
-//    public void drawPlayerLife(){
-//        int posX = gp.TILE_SIZE/2;
-//        int posY = gp.TILE_SIZE/2;
-//        double length = 182*((double) gp.player.currentLife/ (double) gp.player.maxLife);
-//
-//        g2.setColor(Color.RED);
-//        g2.fillRect(posX+gp.TILE_SIZE, posY+16, (int) length, 18);
-//        g2.drawImage(lifebar, posX, posY, null);
-//    }
-
     public void drawPlayerLife(){
         int posX = gp.TILE_SIZE/2;
         int posY = gp.TILE_SIZE/2;
@@ -576,8 +566,6 @@ public class UI {
 
     // Draw Start Menu
     public void drawStartMenu() {
-//        g2.setColor(Color.BLACK);
-//        g2.fillRect(0,0, gp.SCREEN_WIDTH, gp.SCREEN_HEIGHT);
         g2.setColor(Color.WHITE);
         g2.setFont(g2.getFont().deriveFont(Font.BOLD, 60F));
 

@@ -244,19 +244,7 @@ public class KeyHandler implements KeyListener {
         if (code == KeyEvent.VK_SPACE) {
             // SELECT SOUND EFFECT
             gp.playSE(2);
-            switch (gp.ui.commandNum) {
-                case 0:
-                    // CHANGE CLASS TO WARRIOR
-                    gp.player = new Player(gp, gp.keyH, gp.cursor, 0);
-                    break;
-                case 1:
-                    // CHANGE CLASS TO KNIGHT
-                    gp.player = new Player(gp, gp.keyH, gp.cursor, 1);
-                    break;
-                case 2:
-                    // CHANGE CLASS TO ASSASSIN
-                    gp.player = new Player(gp, gp.keyH, gp.cursor, 2);
-            }
+            gp.player = new Player(gp, gp.keyH, gp.cursor, gp.ui.commandNum);
             gp.gameState = gp.DIFF_MENU_STATE;
             gp.ui.commandNum = 1;
         }
@@ -271,25 +259,25 @@ public class KeyHandler implements KeyListener {
                 musicPlaying = true;
             }
 
-
             // GO TO OPTIONS
             if (code == KeyEvent.VK_ESCAPE) gp.gameState = gp.INGAME_OPTIONS_STATE;
 
-        // PLAYER ACTIONS
-        if (code == KeyEvent.VK_W) wPressed = true;
-        if (code == KeyEvent.VK_S) sPressed = true;
-        if (code == KeyEvent.VK_A) aPressed = true;
-        if (code == KeyEvent.VK_D) dPressed = true;
-        if (code == KeyEvent.VK_E) ePressed = true;
-        if (code == KeyEvent.VK_CONTROL) ctrlPressed = true;
-        if (code == KeyEvent.VK_F) fPressed = true;
-        if (code == KeyEvent.VK_1) onePressed = true;
-        if (code == KeyEvent.VK_2) twoPressed = true;
-        if (code == KeyEvent.VK_3) threePressed = true;
-        if (code == KeyEvent.VK_G) godModeOn = !godModeOn;
-        if (code == KeyEvent.VK_R) gp.player.restoreLife();
-        if (code == KeyEvent.VK_SPACE) spacePressed = true;
-    }}
+            // PLAYER ACTIONS
+            if (code == KeyEvent.VK_W) wPressed = true;
+            if (code == KeyEvent.VK_S) sPressed = true;
+            if (code == KeyEvent.VK_A) aPressed = true;
+            if (code == KeyEvent.VK_D) dPressed = true;
+            if (code == KeyEvent.VK_E) ePressed = true;
+            if (code == KeyEvent.VK_CONTROL) ctrlPressed = true;
+            if (code == KeyEvent.VK_F) fPressed = true;
+            if (code == KeyEvent.VK_1) onePressed = true;
+            if (code == KeyEvent.VK_2) twoPressed = true;
+            if (code == KeyEvent.VK_3) threePressed = true;
+            if (code == KeyEvent.VK_G) godModeOn = !godModeOn;
+            if (code == KeyEvent.VK_R) gp.player.restoreLife();
+            if (code == KeyEvent.VK_SPACE) spacePressed = true;
+        }
+    }
 
     public void pauseState(int code) {
         if (code == KeyEvent.VK_P) {

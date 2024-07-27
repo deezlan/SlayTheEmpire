@@ -10,7 +10,6 @@ public class Projectile extends Entity{
     public Projectile(GamePanel gp) {
         super(gp);
     }
-//    String direction;
     int delta;
 
     public void set(int worldX, int worldY, String action, boolean alive, Entity user, int mouseX, int mouseY) {
@@ -32,18 +31,16 @@ public class Projectile extends Entity{
             if (type == 1){
                 if (gp.player.currentPotion.name.equalsIgnoreCase("Magic Potion")
                         || gp.player.currentWeapon == null & !gp.player.currentPotion.name.equalsIgnoreCase("Water Potion")) {
-                    int offset = 0;
-                    worldX = (int) (gp.player.worldX - 5 + (offset * Math.cos(gp.cursor.getAngle())));
-                    worldY = (int) (gp.player.worldY - 12 + (offset * Math.sin(gp.cursor.getAngle())));
+                    worldX = gp.player.worldX + 28;
+                    worldY = gp.player.worldY - 20;
                     int monsterIndex = gp.cChecker.checkEntityCollision(this, gp.mobArr);
                     if (monsterIndex != 999) {
                         System.out.println("HIT!");
                         gp.player.damageMonster(monsterIndex, damage, this);
                     }
                 } else if (gp.player.currentPotion.name.equalsIgnoreCase("Water Potion")){
-                    int offset = 0;
-                    worldX = (int) (gp.player.worldX + 42 + (offset * Math.cos(gp.cursor.getAngle())));
-                    worldY = (int) (gp.player.worldY - 2 + (offset * Math.sin(gp.cursor.getAngle())));
+                    worldX = gp.player.worldX + 28;
+                    worldY = gp.player.worldY - 20;
                     int monsterIndex = gp.cChecker.checkEntityCollision(this, gp.mobArr);
                     if (monsterIndex != 999) {
                         System.out.println("HIT!");

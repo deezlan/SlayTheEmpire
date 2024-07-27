@@ -619,6 +619,7 @@ public class CollisionChecker {
                 }
         }
 
+        // PREVENT PLAYERS FROM GETTING STUCK IF DAMAGED
         if (gp.player.iframe) {
             entity.solidArea.x = 0;
             entity.solidArea.y = 0;

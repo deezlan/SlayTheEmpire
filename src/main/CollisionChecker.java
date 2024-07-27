@@ -620,14 +620,13 @@ public class CollisionChecker {
         }
 
         if (gp.player.iframe) {
-            gp.player.upCollisionOn = false;
-            gp.player.downCollisionOn = false;
-            gp.player.leftCollisionOn = false;
-            gp.player.rightCollisionOn = false;
+            entity.solidArea.x = 0;
+            entity.solidArea.y = 0;
+        } else {
+            entity.solidArea.x = entity.solidAreaDefaultX;
+            entity.solidArea.y = entity.solidAreaDefaultY;
         }
 
-        entity.solidArea.x = entity.solidAreaDefaultX;
-        entity.solidArea.y = entity.solidAreaDefaultY;
         gp.player.hitboxArea.x = gp.player.hitboxAreaDefaultX;
         gp.player.hitboxArea.y = gp.player.hitboxAreaDefaultY;
         return contactPlayer;

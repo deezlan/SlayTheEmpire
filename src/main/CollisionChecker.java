@@ -543,7 +543,7 @@ public class CollisionChecker {
         return index;
     }
 
-    public boolean checkPLayer(Entity entity){
+    public boolean checkPlayer(Entity entity){
         boolean contactPlayer  = false;
         // Get entity's solid area position
         entity.solidArea.x = entity.worldX + entity.solidArea.x;
@@ -607,7 +607,6 @@ public class CollisionChecker {
                     entity.leftCollisionOn = true;
                     entity.upCollisionOn = true;
                     contactPlayer = true;
-
                 }
                 break;
             case "moveDownLeft":
@@ -618,6 +617,13 @@ public class CollisionChecker {
                     entity.leftCollisionOn = true;
                     contactPlayer = true;
                 }
+        }
+
+        if (gp.player.iframe) {
+            gp.player.upCollisionOn = false;
+            gp.player.downCollisionOn = false;
+            gp.player.leftCollisionOn = false;
+            gp.player.rightCollisionOn = false;
         }
 
         entity.solidArea.x = entity.solidAreaDefaultX;

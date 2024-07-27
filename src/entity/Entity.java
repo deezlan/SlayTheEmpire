@@ -2,7 +2,6 @@ package entity;
 
 import main.GamePanel;
 import main.UtilityTool;
-import mobs.BOSS_FrostGiant;
 import object.OBJ_PickUpCoin;
 
 import java.awt.*;
@@ -438,14 +437,6 @@ public abstract class Entity {
             }
         }
     }
-    public void checkStopChase(Entity target, int distance, int rate) {
-        if (getTileDistance(target) > distance) {
-            int i = new Random().nextInt(rate);
-            if (i == 0) {
-                onPath = false;
-            }
-        }
-    }
     public void dyingAnimation(Graphics2D g2) { // BLINKING EFFECT
         dyingCounter++;
         if (dyingCounter <= 5) UtilityTool.changeAlpha(g2, 0f);
@@ -478,10 +469,10 @@ public abstract class Entity {
         rightCollisionOn = false;
         gp.cChecker.checkObject(this, false);
         gp.cChecker.checkGate(this, false);
-        gp.cChecker.checkPLayer(this);
+        gp.cChecker.checkPlayer(this);
         gp.cChecker.checkTile(this);
         gp.cChecker.checkEntityCollision(this, gp.npcArr);
-        boolean contactPlayer = gp.cChecker.checkPLayer(this);
+        boolean contactPlayer = gp.cChecker.checkPlayer(this);
 
         if (this.type == type_mob && contactPlayer) {
             if (!gp.player.iframe) {
@@ -555,7 +546,7 @@ public abstract class Entity {
             }
 
             if (type == 1) { // FOR MOB
-                if (gp.cChecker.checkPLayer(this)) damagePlayer(attack);
+                if (gp.cChecker.checkPlayer(this)) damagePlayer(attack);
             } else { // FOR PLAYER
                 // CHECK MONSTER COLLISION
                 int monsterIndex = gp.cChecker.checkEntityCollision(this, gp.mobArr);

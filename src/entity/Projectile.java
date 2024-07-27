@@ -133,7 +133,7 @@ public class Projectile extends Entity{
             }
         }
         if (user != gp.player) { // FIXED WAS IN PLAYER BRACKET
-            boolean contactPlayer = gp.cChecker.checkPLayer(this);
+            boolean contactPlayer = gp.cChecker.checkPlayer(this);
 
             switch (action) {
                 case "moveUp":

@@ -67,12 +67,12 @@ public class CutsceneManager {
         }
         if (scenePhase == 3) {
             gp.ui.drawDialogScreen();
-            for (int i = 0; i < gp.mobArr[1].length; i++) {
-                if (gp.mobArr[gp.currentMap][12] != null && gp.mobArr[gp.currentMap][12].name.equals(BOSS_FrostGiant.monName)) {
-                    gp.mobArr[gp.currentMap][12].onPath = true;
-                    break;
-                }
-            }
+//            for (int i = 0; i < gp.mobArr[1].length; i++) {
+//                if (gp.mobArr[gp.currentMap][12] != null && gp.mobArr[gp.currentMap][12].name.equals(BOSS_FrostGiant.monName)) {
+//                    gp.mobArr[gp.currentMap][12].onPath = true;
+//                    break;
+//                }
+//            }
         }
         if (scenePhase == 4) {
             for (int i = 0; i < gp.npcArr[1].length; i++) {
@@ -88,7 +88,6 @@ public class CutsceneManager {
             scenePhase = 0;
             gp.gameState = gp.PLAY_STATE;
             BossFightStarted = true;
-
         }
 
         if (BossFightStarted) {
@@ -134,13 +133,13 @@ public class CutsceneManager {
         }
         if (scenePhase == 3) {
             gp.ui.drawDialogScreen();
-            for (int i = 0; i < gp.mobArr[1].length; i++) {
-                if (gp.mobArr[gp.currentMap][11] != null && gp.mobArr[gp.currentMap][11].name.equals(BOSS_Cultist.monName)) {
-                    gp.mobArr[gp.currentMap][11].onPath = true;
-                    gp.mobArr[gp.currentMap][12].onPath = true;
-                    break;
-                }
-            }
+//            for (int i = 0; i < gp.mobArr[1].length; i++) {
+//                if (gp.mobArr[gp.currentMap][11] != null && gp.mobArr[gp.currentMap][11].name.equals(BOSS_Cultist.monName)) {
+//                    gp.mobArr[gp.currentMap][11].onPath = true;
+//                    gp.mobArr[gp.currentMap][12].onPath = true;
+//                    break;
+//                }
+//            }
         }
         if (scenePhase == 4) {
             for (int i = 0; i < gp.npcArr[1].length; i++) {

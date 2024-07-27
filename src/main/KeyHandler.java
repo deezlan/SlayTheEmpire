@@ -109,10 +109,11 @@ public class KeyHandler implements KeyListener {
                     break;
             }
         }
-        if (gp.ui.subState == 0) {
-            if(code == KeyEvent.VK_W) gp.ui.commandNum--;
-            if(code == KeyEvent.VK_S) gp.ui.commandNum++;
-        }
+
+        // SCROLL THROUGH CHOICES
+        if(code == KeyEvent.VK_W) gp.ui.commandNum--;
+        if(code == KeyEvent.VK_S) gp.ui.commandNum++;
+
         // LOOP BACK SELECTION
         if(gp.ui.commandNum < 0) gp.ui.commandNum = 3;
         if(gp.ui.commandNum > 3) gp.ui.commandNum = 0;

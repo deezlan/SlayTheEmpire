@@ -7,7 +7,7 @@ import main.UtilityTool;
 import java.io.IOException;
 
 public class OBJ_HealthPotion extends Entity {
-    int Heal = 20;
+    int Heal = 3;
     public OBJ_HealthPotion(GamePanel gp) throws IOException {
         super(gp);
 
@@ -27,13 +27,9 @@ public class OBJ_HealthPotion extends Entity {
     public void consume() {
         int curCount = gp.player.ownedPotion.get(name);
         if (curCount > 0){
-            gp.player.ownedPotion.put(name, curCount-1);
-            if (gp.player.currentLife <= 80){
+            gp.player.ownedPotion.put(name, curCount - 1);
+            if (gp.player.currentLife < gp.player.maxLife){
                 gp.player.currentLife += Heal;
-            } else if (gp.player.currentLife == 100){
-                gp.player.currentLife += 0;
-            } else {
-                gp.player.currentLife += 100-gp.player.currentLife;
             }
         }
     }

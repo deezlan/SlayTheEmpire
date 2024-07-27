@@ -41,11 +41,18 @@ public class AssetSetter {
                 break;
             case 1:
                 // TELEPORTING OBELISK
-                gp.objArr[gp.currentMap][i] = new OBJ_Obelisk(gp, 63 + gp.TILE_SIZE*17, 168);
+                gp.objArr[gp.currentMap][i] = new OBJ_Obelisk(gp, 63 + gp.TILE_SIZE*17, 168); i++;
+
+                // PICK UP CHOICES
+                gp.objArr[gp.currentMap][i] = new OBJ_PickUpCoin(gp, gp.TILE_SIZE * 20 + 24, gp.TILE_SIZE * 26 + 20, 100); i++;
+                gp.objArr[gp.currentMap][i] = new OBJ_PickUpHealth(gp, gp.TILE_SIZE * 37 + 24, gp.TILE_SIZE * 26 + 20);
                 break;
             case 2:
                 // TELEPORTING OBELISK
-                gp.objArr[gp.currentMap][i] = new OBJ_Obelisk(gp, 1551, 650);
+                gp.objArr[gp.currentMap][i] = new OBJ_Obelisk(gp, 1551, 650); i++;
+
+                // SECRET COINS
+                gp.objArr[gp.currentMap][i] = new OBJ_PickUpCoin(gp, gp.TILE_SIZE * 30 + 24, gp.TILE_SIZE * 25 + 20, 100);
         }
     }
 

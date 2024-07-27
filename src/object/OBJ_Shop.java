@@ -43,7 +43,6 @@ public class OBJ_Shop extends Entity {
         } catch (IOException e){
             e.printStackTrace(System.out);
         }
-
     }
     public ArrayList<Entity> getShopItems(){
         return shopItems;

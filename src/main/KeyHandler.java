@@ -174,6 +174,10 @@ public class KeyHandler implements KeyListener {
             gp.ui.commandNum += (code == KeyEvent.VK_W) ? -1 : 1;
             gp.playSE(1);
             gp.ui.commandNum = Math.max(0, Math.min(gp.ui.commandNum, 2));
+
+            if (gp.ui.commandNum == 1 && gp.progressSaved == 0) {
+                gp.ui.commandNum += (code == KeyEvent.VK_W) ? -1 : 1;
+            }
         }
     }
 
@@ -203,9 +207,9 @@ public class KeyHandler implements KeyListener {
                 case 3: {
                     gp.ui.commandNum = 0;
                     gp.gameState = gp.CHAR_SELECT_STATE;
-                    break;
                 }
             }
+            gp.progressSaved = 0;
         }
         if (code == KeyEvent.VK_ESCAPE) gp.gameState = gp.CHAR_SELECT_STATE;
     }

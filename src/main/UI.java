@@ -894,10 +894,16 @@ public class UI {
             g2.drawString(">", x-24,y);
         }
         y += gp.TILE_SIZE;
-        g2.drawString("Map 2",x,y);
-        if (commandNum == 1) {
-            g2.drawString(">", x-24,y);
+        if (gp.progressSaved == 0) {
+            g2.setColor(Color.GRAY);
+        } else {
+            if (commandNum == 1) {
+                g2.drawString(">", x - 24, y);
+            }
         }
+        g2.drawString("Map 2",x,y);
+        g2.setColor(Color.WHITE);
+
         y += gp.TILE_SIZE;
         g2.drawString("Exit",x,y);
         if (commandNum == 2) {

@@ -611,6 +611,10 @@ public abstract class Entity {
             if (type == type_obelisk)
                 gp.eHandler.changeMap(0);
         }
+
+        if (type == type_obelisk) {
+            gp.progressSaved = (gp.currentMap == gp.progressSaved + 1) ? gp.currentMap : gp.progressSaved;
+        }
     }
 
     // GATE METHODS
